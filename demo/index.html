@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <link rel="import" href="../dist/ws-header.html" />
+    </head>
+    <body class="refills-patterns refills-components">
+        <ws-header
+            userservicehosturl="http://localhost:8080/https://users.auth.zalando.com/api/employees"
+            tokeninfourl="http://localhost:8080/info.services.auth.zalando.com:443/oauth2/tokeninfo"
+            redirecturl="/app/authin"
+            clientId="abc"
+            on-login-status-changed="loginChanged($event.detail.loggedIn, $event.detail.token)">
+
+            <div class="logo">
+                <img alt="Logo" src="images/touch/icon-128x128.png">
+                <span>Block Orders</span>
+            </div>
+            <div class="header-items">
+                <span>bla bla bla</span>
+            </div>
+        </ws-header>
+    </body>
+</html>

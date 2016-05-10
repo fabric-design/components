@@ -1,0 +1,56 @@
+@import "node_modules/wholesale-styleguide-scss/index";
+
+.flag {
+  display: inline-block;
+	width: 16px;
+	height: 11px;
+	background:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAWCAYAAAChWZ5EAAAACXBIWXMAAA7EAAAOxAGVKw4bAAADuUlEQVRIibWVXWjWdRTHP/9nz6KYVG5Ggk4x3NLCUS41bEtZvlCkqwulUClNHNJFgUTtIswmUQoaEolgoxvR0JQIJS8ctCE6kprLlyYbilFT2sqs+f+9ntPF88wRCF38nw4czuH3wvmcL/zOL1FVstiyZYuUmIIIlOVxQXA+oOIB+c/7+UzVAe9TNm16GwARQUSIMRDjaAyEUHTvCTEQgsd7z+HDB7MD5HI5AE539xYKhID3Hucczjqss1g75sYYrDE0v9AElECBauB+EaqLxYNzBO/x1uKtxTmHNwZnDdZafGqwzjIx+NIAvOQt9TFS7z3qHDoarUWtRYxFrCnmBk0t4gzlPpAvBYB6h8YIzqHOo9agziG3AYrFrUXS9DaUeoeWBAAghn937RxqDGLMGEiaos4SjS2cjZ5YCgA/H6hVtEzQKIgXxMfbuQYtRohe0QDiFX0iwXSVQoE60MmCjo+IFFwlIjGgIoiEwvOMEYlaXAOtSpDFJQDAgQYP5bPJ4UgkouJIJIB6VCIqHpWAakQ1oBrABXIjkGSdhEd2PqZ3RxAHWgY2Lcw/vRdyBiSCK4PoCnl5DsQAZXDTQbJrT4fWNtTR1XmJ60MAkSiRd1bP4twHn6AxMuvdN3hzRzfqc4zcMlTX3ENTzzEuP7+SrevmJ1kayFfeN46l/R0saVnBwM8jnPphkKgJNdMqqX28ApxFp1Xy7NxqfIg0PFrFnM49cGgbu45ezKQeQK6jP+XExEUk+w8w/Uo3a5qnMzhoSRLg7AD09pMkcHVYaSnvp67rAMlbbXz+ZR8fvX86OwDAL4N/sHmojqvxIWLbe7RufKSwm/4FaQrA9su7qVjSQN+L62h67gDnfrqJsTYzAH0Dwyqid7YVK1SXL7/jlojqmQvXVVXJ4vkft35M7ewKONsP3oNzY1EEtZawcGFhvHqPOAcxkp8xieNn/qb+ysn/UYHGRg1znxztWVVVY4waYlAfgnafv5ZZgdyGLSfZ0d7DqpbjnL9wA34fxq1/FQAdKXweBVN+faaJzr3fMHlKOy+v/5p5T7dl6x7IGRN4sOou9u1ZytRDO/nzs3ZeG98CUPhInANVnlq4nwknOpiTXKNncSd1c6aChOwAq9fUsKp5BubDVnoXrGHLrXlUjouoQjJzEsnMiagq1Q9XsvqVQ3TNbOSBvXvZ+N1mXl/bmBkgP/jbMJ8u2cCRmgV8v+9bfEgJMbJ2ZQ3HTt1AQ2DpxSG++OoESOTg0U4mTBlP6/ZtXGrdDazKBPAP38BUStCEE90AAAAASUVORK5CYII=');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+
+  &.flag-de {background-position: -16px 0;}
+  &.flag-en {background-position: 0 -11px;}
+}
+
+header.navigation {
+  .navigation-wrapper {
+    z-index: 3;
+  }
+  a {
+    box-sizing: content-box;
+  }
+  .logo {
+    & > span {
+      display: block;
+      float: right;
+      margin-left: 10px;
+      padding-top: 18px;
+    }
+    & img {
+      padding: 1.2em 0;
+    }
+  }
+  li.nav-link {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+    &:hover {
+      color: white;
+    }
+    a:after {
+      position: relative !important;
+    }
+  }
+  .dropdown-menu {
+    .flag {
+      margin-top: 25px;
+    }
+    .submenu > li a{
+      padding-top: 0em !important;
+    }
+  }
+}
+
+// light dom
+::content {
+  @extend header.navigation;
+}

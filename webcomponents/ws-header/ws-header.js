@@ -1,5 +1,5 @@
 //Get the contents of the template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
-let template = document.currentScript.ownerDocument.querySelector('template');
+var template = document.currentScript.ownerDocument.querySelector('template');
 var availableLanguages = ['de','en'];
 var state = {
     tokenName: "zalando-internal-access_token",
@@ -12,7 +12,7 @@ var state = {
     clientId: null,
     redirectUrl: null,
     userServiceHostUrl: null,
-    tokenInfoUrl: null
+    tokenInfoUrl: null,
 }
 
 class WSHeader extends HTMLElement {
@@ -35,8 +35,12 @@ class WSHeader extends HTMLElement {
         clientId: this.getAttribute('clientid'),
         redirectUrl: this.getAttribute('redirecturl'),
         userServiceHostUrl: this.getAttribute('userservicehosturl'),
-        tokenInfoUrl: this.getAttribute('tokeninfourl')
+        tokenInfoUrl: this.getAttribute('tokeninfourl'),
         });
+    }
+
+    setupLogo() {
+
     }
 
     setupLanguages() {

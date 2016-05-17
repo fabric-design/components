@@ -19,17 +19,6 @@ header.navigation {
   a {
     box-sizing: content-box;
   }
-  .logo {
-    & > span {
-      display: block;
-      float: right;
-      margin-left: 10px;
-      padding-top: 18px;
-    }
-    & img {
-      padding: 1.2em 0;
-    }
-  }
   li.nav-link {
     cursor: pointer;
     color: rgba(255, 255, 255, 0.7);
@@ -52,5 +41,46 @@ header.navigation {
 
 // light dom
 ::content {
-  @extend header.navigation;
+  .logo {
+    float: left;
+    max-height: 60px;
+    padding-left: 1em;
+    padding-right: 2em;
+    line-height: 60px;
+    padding-top: 0;
+
+    background-color: transparent;
+    color: #00abf2;
+    text-decoration: none;
+    transition: color .1s linear;
+
+    img {
+      padding: 1.2em 0;
+      height: 20px;
+    }
+
+    & > span {
+      display: block;
+      float: right;
+      margin-left: 10px;
+    }
+    & img {
+      padding: 1.2em 0;
+    }
+  }
+
+  li.nav-link {
+    background: transparent;
+    display: inline;
+    line-height: 60px;
+    text-decoration: none;
+    width: auto;
+
+    a {
+      padding-right: 1em;
+      color: rgba(255,255,255,0.7);
+      display: inline-block;
+      text-decoration: none;
+    }
+  }
 }

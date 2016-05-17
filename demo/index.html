@@ -2,7 +2,7 @@
     <head>
         <link rel="import" href="../dist/ws-header.html" />
     </head>
-    <body class="refills-patterns refills-components">
+    <body class="refills-patterns refills-components" style="margin: 0;">
         <ws-header
             userservicehosturl="http://localhost:8080/https://users.auth.zalando.com/api/employees"
             tokeninfourl="http://localhost:8080/info.services.auth.zalando.com:443/oauth2/tokeninfo"
@@ -10,13 +10,13 @@
             clientId="abc"
             on-login-status-changed="loginChanged($event.detail.loggedIn, $event.detail.token)">
 
-            <div class="logo">
-                <img alt="Logo" src="images/touch/icon-128x128.png">
+            <a href="/" class="logo" ui-sref="main.overview">
+                <img alt="Logo" src="https://block-orders-frontend-release.goodbuy-staging.zalan.do/assets/images/justbuy-white.png">
                 <span>Block Orders</span>
-            </div>
-            <div class="header-items">
-                <span>bla bla bla</span>
-            </div>
+            </a>
+            <li class="nav-link">
+                <a href="javascript:void(0)">Contact</a>
+            </li>
         </ws-header>
     </body>
 </html>

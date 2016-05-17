@@ -10,6 +10,9 @@ var sass = require('gulp-sass');
 var purify = require('gulp-purifycss');
 var cssnano = require('gulp-cssnano');
 var autoprefixer = require('gulp-autoprefixer');
+var uglifyjs = require('gulp-uglify');
+var uglifycss = require('gulp-uglifycss');
+const babel = require('gulp-babel');
 
 var utils = require('./utils.js');
 var config = require('./config.js').default;
@@ -22,7 +25,7 @@ gulp.task('createDistFiles', ['clean'], folders(config.webcomponentsFolder, func
   .pipe(gulp.dest(config.dest));
 }));
 
-gulp.task('inject', ['sass', 'createDistFiles'], function() {
+gulp.task('inject', ['scripts', 'sass', 'createDistFiles'], function() {
     var emptyComponents = config.dest + '/*.html';
 
     function injectScripts(folder) {
@@ -63,7 +66,7 @@ gulp.task('inject', ['sass', 'createDistFiles'], function() {
         return stream
         .pipe(injectHtml(config.webcomponentsFolder + '/' + componentName))
         .pipe(injectStyles(config.temp + '/' + componentName))
-        .pipe(injectScripts(config.webcomponentsFolder + '/' + componentName))
+        .pipe(injectScripts(config.temp + '/' + componentName))
         .pipe(gulp.dest(config.dest));
       }));
 });
@@ -74,13 +77,23 @@ gulp.task('sass', function () {
   .pipe(flatmap(function(stream, file){
     var componentName = utils.getComponentName(file);
     return stream
-    //.pipe(purify([config.webcomponentsFolder + '/' + componentName + '/*.js', config.webcomponentsFolder + '/' + componentName + '/*.html']));
+    .pipe(purify([config.webcomponentsFolder + '/' + componentName + '/*.js', config.webcomponentsFolder + '/' + componentName + '/*.html']));
   }))
   .pipe(autoprefixer({
     browsers: ['last 2 versions'],
     cascade: false
   }))
   .pipe(gutil.env.type === 'production' ? cssnano() : gutil.noop())
+  .pipe(uglifycss())
+  .pipe(gulp.dest(config.temp));
+});
+
+gulp.task('scripts', function () {
+  return gulp.src(config.webcomponentsFolder + '/**/*.js')
+  .pipe(babel({
+    presets: ['es2015']
+  }))
+  .pipe(uglifyjs().on('error', gutil.log))
   .pipe(gulp.dest(config.temp));
 });
 

@@ -7,11 +7,11 @@ var state = {
     languageName: 'language',
     cookiePath: '/',
     cookieDomain: '.zalan.do',
-    lang: availableLanguages[0],
-    loggedIn: false,
+    lang: null,
+    loggedIn: null,
     clientId: null,
     redirectUrl: null,
-    userServiceHostUrl: null,
+    userServiceUrl: null,
     tokenInfoUrl: null,
 }
 
@@ -27,20 +27,36 @@ class WSHeader extends HTMLElement {
         this.getAttributes();
 
         this.setupLanguages();
-        this.showLanguage(this.getLanguage());
+
+        // would fire initial before
+        document.addEventListener("DOMContentLoaded", () => {
+            let lang = this.getLanguage();
+            this.setLanguage(lang);
+
+            this.checkIsLoggedIn()
+            .then(() => this.getTokenInfo())
+            .then(() => this.getUser())
+            .then(() => this.showUser())
+            .catch(() => this.propagateError("Getting Token-/User-Info failed!"));
+        });
+    }
+
+    propagateError(reason) {
+        let event = new CustomEvent("error", {
+                detail: {
+                    message: reason
+                }
+            });
+        this.dispatchEvent(event);
     }
 
     getAttributes() {
         this.state = Object.assign({}, this.state, {
-        clientId: this.getAttribute('clientid'),
-        redirectUrl: this.getAttribute('redirecturl'),
-        userServiceHostUrl: this.getAttribute('userservicehosturl'),
-        tokenInfoUrl: this.getAttribute('tokeninfourl'),
+            clientId: this.getAttribute('client-id'),
+            redirectUrl: this.getAttribute('redirect-url'),
+            userServiceUrl: this.getAttribute('userservice-url'),
+            tokenInfoUrl: this.getAttribute('tokeninfo-url'),
         });
-    }
-
-    setupLogo() {
-
     }
 
     setupLanguages() {
@@ -58,18 +74,30 @@ class WSHeader extends HTMLElement {
     }
 
     getLanguage() {
-        return window.localStorage.getItem(this.state.languageName) || this.state.lang;
+        return this.state.lang || window.localStorage.getItem(this.state.languageName) || availableLanguages[0];
     }
 
     setLanguage(lang) {
-        this.state.lang = lang;
-        window.localStorage.setItem(this.state.languageName, lang);
-        this.showLanguage(lang);
+        if (this.state.lang != lang) {
+            this.state.lang = lang;
+            window.localStorage.setItem(this.state.languageName, lang);
+            this.showLanguage(lang);
+            this.propagateLanguageChange(lang);
+        }
     }
 
     showLanguage(lang) {
         this.shadowRoot.querySelector('#selectedLanguageFlag').className = "flag flag-" + lang;
         this.shadowRoot.querySelector('#selectedLanguage').innerText = lang;
+    }
+
+    propagateLanguageChange(lang) {
+        let event = new CustomEvent("language-changed", {
+            detail: {
+                language: lang
+            }
+        });
+        this.dispatchEvent(event);
     }
 
     login() {
@@ -90,32 +118,32 @@ class WSHeader extends HTMLElement {
 
     checkIsLoggedIn() {
         return new Promise((resolve, reject) => {
-        this.getToken()
-        .then((token) => {
-            this.showLoggedIn();
+            this.getToken(window.location.href)
+            .then((token) => {
+                this.showLoggedIn();
 
-            this.propagateLoginStatusChange(true, token);
-            resolve();
-        }, () => {
-            this.showLoggedOut();
+                this.propagateLoginStatusChange(true, token);
+                resolve();
+            }, () => {
+                this.showLoggedOut();
 
-            this.propagateLoginStatusChange(false);
-            reject();
-        });
+                this.propagateLoginStatusChange(false);
+                reject();
+            });
         });
     }
 
     propagateLoginStatusChange(isLoggedIn, token) {
-        if(this.state.loggedIn != isLoggedIn){
-        this.state.loggedIn = isLoggedIn;
+        if(this.state.loggedIn !== isLoggedIn){
+            this.state.loggedIn = isLoggedIn;
 
-        let event = new CustomEvent("login-status-changed", {
-            detail: {
-            loggedIn: isLoggedIn,
-            token: token
-            }
-        });
-        this.dispatchEvent(event);
+            let event = new CustomEvent("login-status-changed", {
+                detail: {
+                    loggedIn: isLoggedIn,
+                    token: token || null
+                }
+            });
+            this.dispatchEvent(event);
         }
     }
 
@@ -152,47 +180,54 @@ class WSHeader extends HTMLElement {
         return valid;
     }
 
-    getToken() {
+    getToken(url) {
         return new Promise((resolve, reject) => {
-        let url = window.location.href;
-        let urlQueryTokenPart = /access_token=([^&]+)/.exec(url);
-        var token = urlQueryTokenPart != null ? urlQueryTokenPart[1] : null;
-        if (token) {
-            let urlQueryStatePart = /state=([^&]+)/.exec(url);
-            var sessionState = urlQueryStatePart[1];
-            if (this.checkSessionState(sessionState)) {
-            this.setCookie(token);
-            return token;
+            var token = this.getTokenFromUrl(url);
+            if (token) {
+                var sessionState = this.getStateFromUrl(url);
+                if (this.checkSessionState(sessionState)) {
+                    this.setCookie(token);
+                    return resolve(token);
+                }
             }
-        }
-        token = this.getCookieValue(this.state.tokenName);
-        if (token) {
-            this.setCookie(token);
-            return resolve(token);
-        }
+            token = this.getCookieValue(this.state.tokenName);
+            if (token) {
+                this.setCookie(token);
+                return resolve(token);
+            }
 
-        reject();
+            reject();
         });
+    }
+
+    getTokenFromUrl(url) {
+        let urlQueryTokenPart = /access_token=([^&]+)/.exec(url);
+        return urlQueryTokenPart != null ? urlQueryTokenPart[1] : null;
+    }
+
+    getStateFromUrl(url) {
+        let urlQueryStatePart = /state=([^&]+)/.exec(url);
+        return urlQueryStatePart[1];
     }
 
     getTokenInfo() {
         return new Promise((resolve, reject) => {
-        this.request('GET', this.state.tokenInfoUrl)
-        .then((data) => {
-            this.state = Object.assign({}, this.state, {
-                userUID: data.uid
+            this.request('GET', this.state.tokenInfoUrl)
+            .then((data) => {
+                this.state = Object.assign({}, this.state, {
+                    userUID: data.uid
+                });
+                resolve(data.uid);
+            }, () => {
+                this.logout();
+                reject();
             });
-            resolve(data.uid);
-        }, () => {
-            this.logout();
-            reject();
-        });
         });
     }
 
     getUser() {
         return new Promise((resolve, reject) => {
-        this.request('GET', `${this.state.userServiceHostUrl}?q=${this.state.userUID}`)
+        this.request('GET', `${this.state.userServiceUrl}?q=${this.state.userUID}`)
         .then((data) => {
             let user = data[0];
             let userInfo = {
@@ -242,37 +277,32 @@ class WSHeader extends HTMLElement {
     // Method: 'GET', 'POST'
     request(method, url) {
         let headers = new Headers();
-        return this.getToken()
+        return this.getToken(window.location.href)
         .then((token) => {
-        headers.append("Authorization", `Bearer ${token}`);
-        return Promise.resolve();
+            headers.append("Authorization", `Bearer ${token}`);
+            return Promise.resolve();
         })
         .then(() => {
-        return fetch(url, {
-            method: method,
-            headers: headers,
-            mode: 'cors',
-            cache: 'default'
-        })
-        .then(function(response) {
-            return response.json();
-        })
+            return fetch(url, {
+                method: method,
+                headers: headers,
+                mode: 'cors',
+                cache: 'default'
+            })
+            .then(function(response) {
+                return response.json();
+            });
         });
     }
 
     // You can also define the other lifecycle methods.
-    attachedCallback() {
-        this.checkIsLoggedIn()
-        .then(() => this.getTokenInfo())
-        .then(() => this.getUser())
-        .then(() => this.showUser());
-    }
+    attachedCallback() { }
     detachedCallback() { }
     attributeChangedCallback(attrName, oldVal, newVal) {
         switch (attrName) {
-            case "redirecturl":
-            case "clientid":
-            case "userservicehosturl":
+            case "redirect-url":
+            case "client-id":
+            case "userservice-url":
                 this.getAttributes();
                 break;
         }

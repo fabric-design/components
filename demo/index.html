@@ -4,11 +4,11 @@
     </head>
     <body class="refills-patterns refills-components" style="margin: 0;">
         <ws-header
-            userservicehosturl="http://localhost:8080/https://users.auth.zalando.com/api/employees"
-            tokeninfourl="http://localhost:8080/info.services.auth.zalando.com:443/oauth2/tokeninfo"
-            redirecturl="/app/authin"
-            clientId="abc"
-            on-login-status-changed="loginChanged($event.detail.loggedIn, $event.detail.token)">
+            id="header"
+            userservice-url="http://localhost:8080/https://users.auth.zalando.com/api/employees"
+            tokeninfo-url="http://localhost:8080/info.services.auth.zalando.com:443/oauth2/tokeninfo"
+            redirect-url="/app/authin"
+            client-id="abc">
 
             <a href="/" class="logo" ui-sref="main.overview">
                 <img alt="Logo" src="https://block-orders-frontend-release.goodbuy-staging.zalan.do/assets/images/justbuy-white.png">
@@ -18,5 +18,19 @@
                 <a href="javascript:void(0)">Contact</a>
             </li>
         </ws-header>
+        <script>
+            document.querySelector('#header').addEventListener('error',
+            function({ detail: {message} }) {
+                console.log(message);
+            });
+            document.querySelector('#header').addEventListener('login-status-changed',
+            function({ detail: {loggedIn, token}}) {
+                console.log('logged in state: ' + loggedIn + ' with token: ' + token);
+            });
+            document.querySelector('#header').addEventListener('language-changed',
+            function({ detail: { language }}) {
+                console.log('language select: ' + language);
+            });
+        </script>
     </body>
 </html>

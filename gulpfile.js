@@ -19,4 +19,4 @@ wrench.readdirSyncRecursive('./gulp').filter(function(file) {
   require('./gulp/' + file);
 });
 
-gulp.task('default', ['build']);
+gulp.task('default', ['build','watch']);

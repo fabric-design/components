@@ -90,10 +90,10 @@ gulp.task('sass', function () {
 
 gulp.task('scripts', function () {
   return gulp.src(config.webcomponentsFolder + '/**/*.js')
-  .pipe(babel({
-    presets: ['es2015']
-  }))
-  .pipe(uglifyjs().on('error', gutil.log))
+  // .pipe(babel({
+  //   presets: ['es2015']
+  // }))
+  // .pipe(uglifyjs().on('error', gutil.log))
   .pipe(gulp.dest(config.temp));
 });
 

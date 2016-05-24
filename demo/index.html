@@ -1,9 +1,11 @@
 <html>
     <head>
         <link rel="import" href="../dist/ws-header.html" />
+        <link rel="import" href="../dist/ws-date-picker.html" />
     </head>
     <body class="refills-patterns refills-components" style="margin: 0;">
         <ws-header
+            style="display: none"
             id="header"
             userservice-url="http://localhost:8080/https://users.auth.zalando.com/api/employees"
             tokeninfo-url="http://localhost:8080/info.services.auth.zalando.com:443/oauth2/tokeninfo"
@@ -18,6 +20,7 @@
                 <a href="javascript:void(0)">Contact</a>
             </li>
         </ws-header>
+        <ws-date-picker></ws-date-picker>
         <script>
             document.querySelector('#header').addEventListener('error',
             function({ detail: {message} }) {

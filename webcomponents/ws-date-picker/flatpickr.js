@@ -353,7 +353,8 @@ flatpickr.init = function (element, instanceConfig) {
   };
 
   documentClick = function (event) {
-    if (wrapperElement.classList.contains("open") && !wrapperElement.contains(event.target))
+    // TO DO: Find better way to deal with event propagation
+    if (wrapperElement.classList.contains("open") && (event.target.tagName != 'WS-DATE-PICKER'))
       self.close();
 
   };
@@ -626,6 +627,8 @@ flatpickr.init = function (element, instanceConfig) {
   };
 
   self.open = function (e) {
+    console.log(self);
+    e.preventDefault();
 
     if (self.input.disabled || self.config.inline)
       return;

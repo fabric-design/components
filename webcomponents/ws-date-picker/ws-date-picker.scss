@@ -105,14 +105,17 @@
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-weekdays {
   font-size: 90%;
   background: 0 0;
-  padding: 2px 0 4px
+  padding: 2px 0 4px;
+}
+
+.flatpickr-weekdays {
+  background-color: $french-pass;
 }
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-weekdays span {
-  color: #999;
+  color: $dark-mischka;
   text-align: center;
   display: inline-block;
-  width: 14.2857142857%;
   font-weight: 700
 }
 

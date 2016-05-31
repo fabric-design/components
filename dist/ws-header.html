@@ -38,7 +38,7 @@
 </template>
 
 <script>
-{
+(function(){
     /* inject:js */
     //Get the contents of the template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
 var template = document.currentScript.ownerDocument.querySelector('template');
@@ -355,5 +355,5 @@ class WSHeader extends HTMLElement {
 //Register the element with the document
 document.registerElement('ws-header', WSHeader);
     /* endinject */
-}
+})()
 </script>

@@ -627,7 +627,6 @@ flatpickr.init = function (element, instanceConfig) {
   };
 
   self.open = function (e) {
-    console.log(self);
     e.preventDefault();
 
     if (self.input.disabled || self.config.inline)
@@ -756,7 +755,7 @@ flatpickr.init.prototype = {
     noCalendar: false,
     wrap: false,
     clickOpens: true,
-    dateFormat: 'Y-m-d',
+    dateFormat: 'd-m-Y',
     altInput: false,
     altFormat: "F j, Y",
     defaultDate: null,

@@ -1,3 +1,7 @@
+@import "node_modules/wholesale-styleguide-scss/quark";
+@import "node_modules/bourbon/app/assets/stylesheets/bourbon";
+@import "node_modules/bourbon-neat/app/assets/stylesheets/neat";
+
 .flatpickr-wrapper {
   display: inline-block;
   width: 100%;
@@ -51,16 +55,17 @@
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-month {
   background: 0 0;
   color: #000;
-  padding: 4px 5px 2px;
+  padding: 13px 0;
   text-align: center;
   position: relative
 }
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-month .flatpickr-next-month,
-
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-month .flatpickr-prev-month {
   text-decoration: none;
-  cursor: pointer
+  cursor: pointer;
+  color: $ghost;
+  padding: 0 23px;
 }
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-month .flatpickr-next-month i,
@@ -89,13 +94,15 @@
 }
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-month .flatpickr-current-month .cur_month {
-  font-weight: 700;
-  color: #000
+  color: $ghost;
+  font-size: 16px;
 }
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-month .flatpickr-current-month .cur_year {
   cursor: default;
-  padding: 0 2px
+  padding: 0 2px;
+  color: $ghost;
+  font-size: 16px;
 }
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-month .flatpickr-current-month .cur_year:hover {
@@ -104,23 +111,24 @@
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-weekdays {
   font-size: 90%;
-  background: 0 0;
-  padding: 2px 0 4px;
-}
-
-.flatpickr-weekdays {
-  background-color: $french-pass;
+  background-color: $pattens-blue;
+  padding: 8px 19px;
 }
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-weekdays span {
-  color: $dark-mischka;
+  color: $ghost;
   text-align: center;
   display: inline-block;
-  font-weight: 700
+  font-size: 14px;
+  padding-left: 18px;
+}
+
+.flatpickr-wrapper .flatpickr-calendar .flatpickr-weekdays span:first-child {
+  padding-left: 0;
 }
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-days {
-  padding-top: 1px
+  padding: 7px;
 }
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-day {
@@ -128,41 +136,35 @@
   border: 1px solid transparent;
   border-radius: 150px;
   box-sizing: border-box;
+  font-size: 13px;
   color: #393939;
   cursor: pointer;
   display: inline-block;
-  width: 34px;
-  height: 34px;
-  line-height: 33px;
+  width: 32px;
+  height: 32px;
+  line-height: 31px;
   margin: 0 1px 1px;
   text-align: center
 }
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-day:hover {
-  background: #e6e6e6;
-  border-color: #e6e6e6
+  background-color: $pattens-blue;
 }
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-day.today {
-  border-color: #f64747
-}
-
-.flatpickr-wrapper .flatpickr-calendar .flatpickr-day.today:hover {
-  border-color: #f64747;
-  background: #f64747;
-  color: #fff
+  background-color: $cerulean;
+  color: $white;
 }
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-day.selected,
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-day.selected:hover {
-  background: #446cb3;
-  color: #fff;
-  border-color: #446cb3
+  background-color: $cerulean;
+  color: $white;
 }
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-day.disabled,
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-day.disabled:hover {
-  color: rgba(57,57,57,.3);
+  color: $ghost;
   background: 0 0;
   border-color: transparent;
   cursor: default

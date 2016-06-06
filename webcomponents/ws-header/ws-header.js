@@ -14,6 +14,8 @@ var state = {
     userServiceUrl: null,
     tokenInfoUrl: null,
 }
+// Remember url at loadtime to not have sideeffects by ie Angular2
+var urlAtStart = window.location.href;
 
 class WSHeader extends HTMLElement {
     // Use createdCallback instead of constructor to init an element.
@@ -118,7 +120,7 @@ class WSHeader extends HTMLElement {
 
     checkIsLoggedIn() {
         return new Promise((resolve, reject) => {
-            this.getToken(window.location.href)
+            this.getToken(urlAtStart)
             .then((token) => {
                 this.showLoggedIn();
 
@@ -277,7 +279,7 @@ class WSHeader extends HTMLElement {
     // Method: 'GET', 'POST'
     request(method, url) {
         let headers = new Headers();
-        return this.getToken(window.location.href)
+        return this.getToken(urlAtStart)
         .then((token) => {
             headers.append("Authorization", `Bearer ${token}`);
             return Promise.resolve();

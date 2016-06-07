@@ -1,20 +1,42 @@
 .time-wrapper {
-  position: relative
-  width: 100px;
+  width: 125px;
+  position: relative;
 }
 
-.ws-time-picker {
-  width: 100px;
+input.ws-time-picker {
+  width: 100%;
 }
 
 .time-picker {
+  width: 100%;
   height: 100px;
-  width: 50%;
-  background-color: black;
-  display: none;
+  background-color: whitesmoke;
   position: absolute;
+  display: none;
 }
 
 .opened {
   display: block;
+}
+
+.hours, .minutes {
+  width: 25px;
+  height: 25px;
+  display: inline;
+  margin: 0 5px;
+}
+
+.hourUp, .hourDown,
+.minuteUp, .minuteDown {
+  width: 20px;
+  padding: 0 15px;
+}
+
+.hourUp, .minuteUp {
+  float: left;
+}
+
+.hourDown, .minuteDown {
+  padding: 0 5px;
+  display: inline;
 }

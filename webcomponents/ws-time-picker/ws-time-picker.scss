@@ -1,13 +1,15 @@
+@import "node_modules/wholesale-styleguide-scss/quark";
+
 .time-wrapper {
-  width: 125px;
+  width: 150px;
   position: relative;
 }
 
-input.ws-time-picker {
+.time-wrapper > input.ws-time-picker {
   width: 100%;
 }
 
-.time-picker {
+.time-wrapper > .time-picker {
   width: 100%;
   height: 100px;
   background-color: whitesmoke;
@@ -15,28 +17,47 @@ input.ws-time-picker {
   display: none;
 }
 
-.opened {
+.time-wrapper > .opened {
   display: block;
 }
 
-.hours, .minutes {
-  width: 25px;
-  height: 25px;
+.time-wrapper > .closed {
+  display: none;
+}
+
+.time-wrapper > .time-picker > .hours, .minutes {
+  width: 35px;
+  height: 35px;
   display: inline;
-  margin: 0 5px;
+  margin: 0 5px 8px 8px;
+  padding: 6px;
+  font-size: 14px;
 }
 
-.hourUp, .hourDown,
-.minuteUp, .minuteDown {
-  width: 20px;
-  padding: 0 15px;
+.time-wrapper > .time-picker > .hours {
+  margin: 0 9px 8px 19px;
 }
 
-.hourUp, .minuteUp {
+.time-wrapper > .time-picker > .hourUp, .time-wrapper > .time-picker > .minuteUp {
   float: left;
+  width: 30px;
+  padding: 19px 5px 8px 28px;
 }
 
-.hourDown, .minuteDown {
-  padding: 0 5px;
+.time-wrapper > .time-picker > .hourDown, .time-wrapper > .time-picker > .minuteDown {
+  padding: 13px 4px 0 18px;
+  width: 30px;
   display: inline;
+}
+
+.time-wrapper > .time-picker > .line {
+  height: 1px;
+  width: 128px;
+  background-color: gray;
+  margin: 19px 11px;
+}
+
+.cancel, .ok {
+  margin: 0 19px 19px 19px;
+  color: $cerulean;
 }

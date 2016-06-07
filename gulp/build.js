@@ -12,6 +12,7 @@ var cssnano = require('gulp-cssnano');
 var autoprefixer = require('gulp-autoprefixer');
 var uglifyjs = require('gulp-uglify');
 var uglifycss = require('gulp-uglifycss');
+var rev = require('gulp-rev');
 const babel = require('gulp-babel');
 
 var utils = require('./utils.js');
@@ -22,12 +23,10 @@ gulp.task('build', ['inject']);
 gulp.task('createDistFiles', ['clean'], folders(config.webcomponentsFolder, function(folder){
   return gulp.src(config.templateFile)
   .pipe(rename(folder + '.html'))
-  .pipe(gulp.dest(config.dest));
+  .pipe(gulp.dest(config.tempTemplates));
 }));
 
 gulp.task('inject', ['scripts', 'sass', 'createDistFiles'], function() {
-    var emptyComponents = config.dest + '/*.html';
-
     function injectScripts(folder) {
       return inject(gulp.src(folder + '/*.js'), {
           starttag: '/* inject:js */',
@@ -60,13 +59,14 @@ gulp.task('inject', ['scripts', 'sass', 'createDistFiles'], function() {
         });
     }
 
-    return gulp.src(emptyComponents)
+    return gulp.src(config.tempTemplates + '/*.html')
       .pipe(flatmap(function(stream, file){
         var componentName = utils.getComponentName(file);
         return stream
         .pipe(injectHtml(config.webcomponentsFolder + '/' + componentName))
         .pipe(injectStyles(config.temp + '/' + componentName))
         .pipe(injectScripts(config.temp + '/' + componentName))
+        .pipe(rev())
         .pipe(gulp.dest(config.dest));
       }));
 });
@@ -90,14 +90,14 @@ gulp.task('sass', function () {
 
 gulp.task('scripts', function () {
   return gulp.src(config.webcomponentsFolder + '/**/*.js')
-  // .pipe(babel({
-  //   presets: ['es2015']
-  // }))
-  // .pipe(uglifyjs().on('error', gutil.log))
+  .pipe(babel({
+    presets: ['es2015']
+  }))
+  .pipe(uglifyjs().on('error', gutil.log))
   .pipe(gulp.dest(config.temp));
 });
 
 gulp.task('clean', function () {
-	return gulp.src(config.dest, {read: false})
+	return gulp.src([config.dest, config.temp], {read: false})
 		.pipe(clean());
 });

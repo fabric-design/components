@@ -1,17 +1,18 @@
 //Get the contents of the template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
 var template = document.currentScript.ownerDocument.querySelector('template');
+var input, div;
 
 class WSTimePicker extends HTMLElement {
   createdCallback() {
     let clone = document.importNode(template.content, true);
     this.createShadowRoot().appendChild(clone);
-    var wsTimePicker = this.shadowRoot.querySelector('.ws-time-picker');
-    var divTimePicker = this.shadowRoot.querySelector('.time-picker');
-    document.addEventListener('click', this.timePickerClick);
+    input = this.shadowRoot.querySelector('.ws-time-picker');
+    div = this.shadowRoot.querySelector('.time-picker');
+    this.shadowRoot.addEventListener('click', this.openTimePicker);
   }
   
-  timePickerClick(e) {
-    event.target.tagName != 'WS-TIME-PICKER' ? console.log(1) : console.log(2);
+  openTimePicker() {
+    div.className += ' opened';
   }
 }
 

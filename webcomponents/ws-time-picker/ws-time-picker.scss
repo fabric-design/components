@@ -1,10 +1,20 @@
-.ws-time-picker {
+.time-wrapper {
+  position: relative
+  width: 100px;
+}
 
+.ws-time-picker {
+  width: 100px;
 }
 
 .time-picker {
   height: 100px;
-  width: 100px;
+  width: 50%;
   background-color: black;
-  visibility: hidden;
+  display: none;
+  position: absolute;
+}
+
+.opened {
+  display: block;
 }

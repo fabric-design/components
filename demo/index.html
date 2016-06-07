@@ -1,6 +1,7 @@
 <html>
     <head>
         <link rel="import" href="../dist/ws-header.html" />
+        <link rel="import" href="../dist/ws-time-picker.html" />
     </head>
     <body class="refills-patterns refills-components" style="margin: 0;">
         <ws-header
@@ -18,6 +19,9 @@
                 <a href="javascript:void(0)">Contact</a>
             </li>
         </ws-header>
+
+        <ws-time-picker></ws-time-picker>
+
         <script>
             document.querySelector('#header').addEventListener('error',
             function({ detail: {message} }) {

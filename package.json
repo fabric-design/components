@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "build": "gulp --env=prod build",
+    "serve": "gulp & lite-server"
   },
   "repository": {
     "type": "git",
@@ -39,6 +41,8 @@
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^1.0.1",
     "karma-jasmine": "^1.0.2",
+    "lite-server": "^2.2.0",
+    "run-sequence": "^1.2.1",
     "wrench": "^1.5.9"
   },
   "dependencies": {

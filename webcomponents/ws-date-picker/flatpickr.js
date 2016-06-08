@@ -6,13 +6,13 @@ Date.prototype.fp_incr = function(days){
   );
 };
 
-var flatpickr = function (selector, config) {
+var flatpickr = function (context, selector, config) {
   'use strict';
   let elements, instances, createInstance = element => {
     if (element._flatpickr)
       element._flatpickr.destroy();
 
-    element._flatpickr = new flatpickr.init(element, config);
+    element._flatpickr = new flatpickr.init(context, element, config);
     return element._flatpickr;
   };
 
@@ -45,7 +45,7 @@ var flatpickr = function (selector, config) {
 };
 };
 
-flatpickr.init = function (element, instanceConfig) {
+flatpickr.init = function (context, element, instanceConfig) {
   'use strict';
 
   // functions
@@ -77,6 +77,7 @@ flatpickr.init = function (element, instanceConfig) {
 
   // elements & variables
   var calendarContainer = document.createElement('div'),
+    icon = document.createElement('div'),
     navigationCurrentMonth = document.createElement('span'),
     monthsNav = document.createElement('div'),
     prevMonthNav = document.createElement('span'),
@@ -91,6 +92,7 @@ flatpickr.init = function (element, instanceConfig) {
     am_pm,
     clickEvt;
 
+    icon.setAttribute('id', 'date-picker-icon');
 
   init = function () {
 
@@ -381,16 +383,20 @@ flatpickr.init = function (element, instanceConfig) {
       updateValue();
       buildDays();
 
-      if ( !self.config.inline && !self.config.enableTime )
-        updateDateValue(self.selectedDateObj);
+      if ( !self.config.inline && !self.config.enableTime ) {
+        let event = new CustomEvent("date-changed", {
+          detail: {
+            date: self.selectedDateObj
+          }
+        });
+        context.dispatchEvent(event);
         self.close();
-
+      }
     }
 
   };
 
   buildCalendar = function () {
-
     if ( !self.config.noCalendar) {
       buildMonthNavigation();
       buildWeekdays();
@@ -398,6 +404,8 @@ flatpickr.init = function (element, instanceConfig) {
       calendarContainer.appendChild(calendar);
     }
 
+    wrapperElement.appendChild(icon);
+    icon.addEventListener('click', self.close);
     wrapperElement.appendChild(calendarContainer);
 
     if(self.config.enableTime)
@@ -629,7 +637,7 @@ flatpickr.init = function (element, instanceConfig) {
 
   self.open = function (e) {
     e.preventDefault();
-
+    self.input.className = 'ws-date-picker focused';
     if (self.input.disabled || self.config.inline)
       return;
 
@@ -661,6 +669,7 @@ flatpickr.init = function (element, instanceConfig) {
   };
 
   self.close = function () {
+    self.input.className = 'ws-date-picker';
     self.element.parentNode.classList.remove('open');
     self.input.classList.remove('active');
     if (self.altInput)

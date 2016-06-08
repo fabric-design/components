@@ -14,13 +14,37 @@
 
 .flatpickr-wrapper {
   display: inline-block;
-  width: 100%;
   position: relative;
 }
 
-.flatpickr-wrapper input {
+.flatpickr-wrapper > input {
+  width: 150px;
+  height: 26px;
+  font-size: 14px;
+  padding-left: 11px;
+  border-color: #d2d7e1;
   cursor: pointer;
   z-index: 1;
+}
+
+.flatpickr-wrapper > input.focused {
+  border-color: #00abf2;
+}
+
+.flatpickr-wrapper > #date-picker-icon {
+  right: 11px;
+  background: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDUxMS42MzQgNTExLjYzNCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTExLjYzNCA1MTEuNjM0OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHBhdGggZD0iTTQ4Mi41MTMsODMuOTQyYy03LjIyNS03LjIzMy0xNS43OTctMTAuODUtMjUuNjk0LTEwLjg1aC0zNi41NDF2LTI3LjQxYzAtMTIuNTYtNC40NzctMjMuMzE1LTEzLjQyMi0zMi4yNjEgICBDMzk3LjkwNiw0LjQ3NSwzODcuMTU3LDAsMzc0LjU5MSwwaC0xOC4yNjhjLTEyLjU2NSwwLTIzLjMxOCw0LjQ3NS0zMi4yNjQsMTMuNDIyYy04Ljk0OSw4Ljk0NS0xMy40MjIsMTkuNzAxLTEzLjQyMiwzMi4yNjF2MjcuNDEgICBoLTEwOS42M3YtMjcuNDFjMC0xMi41Ni00LjQ3NS0yMy4zMTUtMTMuNDIyLTMyLjI2MUMxNzguNjQsNC40NzUsMTY3Ljg4NiwwLDE1NS4zMjEsMEgxMzcuMDUgICBjLTEyLjU2MiwwLTIzLjMxNyw0LjQ3NS0zMi4yNjQsMTMuNDIyYy04Ljk0NSw4Ljk0NS0xMy40MjEsMTkuNzAxLTEzLjQyMSwzMi4yNjF2MjcuNDFINTQuODIzYy05LjksMC0xOC40NjQsMy42MTctMjUuNjk3LDEwLjg1ICAgYy03LjIzMyw3LjIzMi0xMC44NSwxNS44LTEwLjg1LDI1LjY5N3YzNjUuNDUzYzAsOS44OSwzLjYxNywxOC40NTYsMTAuODUsMjUuNjkzYzcuMjMyLDcuMjMxLDE1Ljc5NiwxMC44NDksMjUuNjk3LDEwLjg0OWg0MDEuOTg5ICAgYzkuODk3LDAsMTguNDctMy42MTcsMjUuNjk0LTEwLjg0OWM3LjIzNC03LjIzNCwxMC44NTItMTUuODA0LDEwLjg1Mi0yNS42OTNWMTA5LjYzOSAgIEM0OTMuMzU3LDk5LjczOSw0ODkuNzQzLDkxLjE3NSw0ODIuNTEzLDgzLjk0MnogTTM0Ny4xODcsNDUuNjg2YzAtMi42NjcsMC44NDktNC44NTgsMi41Ni02LjU2NyAgIGMxLjcxMS0xLjcxMSwzLjkwMS0yLjU2OCw2LjU3LTIuNTY4aDE4LjI2OGMyLjY3LDAsNC44NTMsMC44NTQsNi41NywyLjU2OGMxLjcxMiwxLjcxMiwyLjU2NywzLjkwMywyLjU2Nyw2LjU2N3Y4Mi4yMjQgICBjMCwyLjY2Ni0wLjg1NSw0Ljg1My0yLjU2Nyw2LjU2N2MtMS43MTgsMS43MDktMy45LDIuNTY4LTYuNTcsMi41NjhoLTE4LjI2OGMtMi42NjksMC00Ljg1OS0wLjg1NS02LjU3LTIuNTY4ICAgYy0xLjcxMS0xLjcxNS0yLjU2LTMuOTAxLTIuNTYtNi41NjdWNDUuNjg2eiBNMTI3LjkxNSw0NS42ODZjMC0yLjY2NywwLjg1NS00Ljg1OCwyLjU2OC02LjU2NyAgIGMxLjcxNC0xLjcxMSwzLjkwMS0yLjU2OCw2LjU2Ny0yLjU2OGgxOC4yNzFjMi42NjcsMCw0Ljg1OCwwLjg1NCw2LjU2NywyLjU2OGMxLjcxMSwxLjcxMiwyLjU3LDMuOTAzLDIuNTcsNi41Njd2ODIuMjI0ICAgYzAsMi42NjYtMC44NTUsNC44NTYtMi41Nyw2LjU2N2MtMS43MTMsMS43MDktMy45LDIuNTY4LTYuNTY3LDIuNTY4SDEzNy4wNWMtMi42NjYsMC00Ljg1Ni0wLjg1NS02LjU2Ny0yLjU2OCAgIGMtMS43MDktMS43MTUtMi41NjgtMy45MDEtMi41NjgtNi41NjdWNDUuNjg2eiBNNDU2LjgxMiw0NzUuMDg4SDU0LjgyM3YtMjkyLjM2aDQwMS45ODlWNDc1LjA4OHoiIGZpbGw9IiMwMDAwMDAiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K);
+  top: 8px;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+}
+
+.flatpickr-wrapper > input.focused + #date-picker-icon {
+  width: 12px;
+  height: 12px;
+  top: 10px;
+  background: center url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDk1LjkzOSA5NS45MzkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDk1LjkzOSA5NS45Mzk7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8cGF0aCBkPSJNNjIuODE5LDQ3Ljk3bDMyLjUzMy0zMi41MzRjMC43ODEtMC43ODEsMC43ODEtMi4wNDcsMC0yLjgyOEw4My4zMzMsMC41ODZDODIuOTU4LDAuMjExLDgyLjQ0OCwwLDgxLjkxOSwwICAgYy0wLjUzLDAtMS4wMzksMC4yMTEtMS40MTQsMC41ODZMNDcuOTcsMzMuMTIxTDE1LjQzNSwwLjU4NmMtMC43NS0wLjc1LTIuMDc4LTAuNzUtMi44MjgsMEwwLjU4NywxMi42MDggICBjLTAuNzgxLDAuNzgxLTAuNzgxLDIuMDQ3LDAsMi44MjhMMzMuMTIxLDQ3Ljk3TDAuNTg3LDgwLjUwNGMtMC43ODEsMC43ODEtMC43ODEsMi4wNDcsMCwyLjgyOGwxMi4wMiwxMi4wMjEgICBjMC4zNzUsMC4zNzUsMC44ODQsMC41ODYsMS40MTQsMC41ODZjMC41MywwLDEuMDM5LTAuMjExLDEuNDE0LTAuNTg2TDQ3Ljk3LDYyLjgxOGwzMi41MzUsMzIuNTM1ICAgYzAuMzc1LDAuMzc1LDAuODg0LDAuNTg2LDEuNDE0LDAuNTg2YzAuNTI5LDAsMS4wMzktMC4yMTEsMS40MTQtMC41ODZsMTIuMDItMTIuMDIxYzAuNzgxLTAuNzgxLDAuNzgxLTIuMDQ4LDAtMi44MjhMNjIuODE5LDQ3Ljk3ICAgeiIgZmlsbD0iIzAwMDAwMCIvPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
 }
 
 .flatpickr-wrapper .flatpickr-calendar {
@@ -31,34 +55,11 @@
   position: absolute;
   top: 100%;
   left: 0;
-  margin-top: 3px;
+  margin-top: 8px;
   opacity: 0;
   visibility: hidden;
   transition: opacity 75ms;
   width: 256px;
-}
-
-.flatpickr-wrapper .flatpickr-calendar:after,.flatpickr-wrapper .flatpickr-calendar:before {
-  position: absolute;
-  pointer-events: none;
-  border: solid transparent;
-  content: '';
-  height: 0;
-  width: 0;
-  bottom: 100%;
-  left: 22px;
-}
-
-.flatpickr-wrapper .flatpickr-calendar:before {
-  border-width: 5px;
-  margin: 0 -5px;
-  border-bottom-color: #ddd;
-}
-
-.flatpickr-wrapper .flatpickr-calendar:after {
-  border-width: 4px;
-  margin: 0 -4px;
-  border-bottom-color: #fff;
 }
 
 .flatpickr-wrapper .flatpickr-calendar .flatpickr-month {
@@ -249,7 +250,7 @@ Date.prototype.fp_incr = function (days) {
   return new Date(this.getFullYear(), this.getMonth(), this.getDate() + parseInt(days, 10));
 };
 
-var flatpickr = function flatpickr(selector, config) {
+var flatpickr = function flatpickr(context, selector, config) {
   'use strict';
 
   var elements = void 0,
@@ -257,7 +258,7 @@ var flatpickr = function flatpickr(selector, config) {
       createInstance = function createInstance(element) {
     if (element._flatpickr) element._flatpickr.destroy();
 
-    element._flatpickr = new flatpickr.init(element, config);
+    element._flatpickr = new flatpickr.init(context, element, config);
     return element._flatpickr;
   };
 
@@ -282,7 +283,7 @@ var flatpickr = function flatpickr(selector, config) {
   };
 };
 
-flatpickr.init = function (element, instanceConfig) {
+flatpickr.init = function (context, element, instanceConfig) {
   'use strict';
 
   // functions
@@ -315,6 +316,7 @@ flatpickr.init = function (element, instanceConfig) {
 
   // elements & variables
   var calendarContainer = document.createElement('div'),
+      icon = document.createElement('div'),
       navigationCurrentMonth = document.createElement('span'),
       monthsNav = document.createElement('div'),
       prevMonthNav = document.createElement('span'),
@@ -328,6 +330,8 @@ flatpickr.init = function (element, instanceConfig) {
       minuteElement,
       am_pm,
       clickEvt;
+
+  icon.setAttribute('id', 'date-picker-icon');
 
   init = function init() {
 
@@ -603,13 +607,19 @@ flatpickr.init = function (element, instanceConfig) {
       updateValue();
       buildDays();
 
-      if (!self.config.inline && !self.config.enableTime) updateDateValue(self.selectedDateObj);
-      self.close();
+      if (!self.config.inline && !self.config.enableTime) {
+        var event = new CustomEvent("date-changed", {
+          detail: {
+            date: self.selectedDateObj
+          }
+        });
+        context.dispatchEvent(event);
+        self.close();
+      }
     }
   };
 
   buildCalendar = function buildCalendar() {
-
     if (!self.config.noCalendar) {
       buildMonthNavigation();
       buildWeekdays();
@@ -617,6 +627,8 @@ flatpickr.init = function (element, instanceConfig) {
       calendarContainer.appendChild(calendar);
     }
 
+    wrapperElement.appendChild(icon);
+    icon.addEventListener('click', self.close);
     wrapperElement.appendChild(calendarContainer);
 
     if (self.config.enableTime) buildTime();
@@ -836,7 +848,7 @@ flatpickr.init = function (element, instanceConfig) {
 
   self.open = function (e) {
     e.preventDefault();
-
+    self.input.className = 'ws-date-picker focused';
     if (self.input.disabled || self.config.inline) return;
 
     self.input.blur();
@@ -863,6 +875,7 @@ flatpickr.init = function (element, instanceConfig) {
   };
 
   self.close = function () {
+    self.input.className = 'ws-date-picker';
     self.element.parentNode.classList.remove('open');
     self.input.classList.remove('active');
     if (self.altInput) self.altInput.classList.remove('active');
@@ -1017,15 +1030,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var template = document.currentScript.ownerDocument.querySelector('template');
 
-function updateDateValue(value) {
-  var event = new CustomEvent("date-changed", {
-    detail: {
-      date: value
-    }
-  });
-  document.dispatchEvent(event);
-}
-
 var WSDatePicker = function (_HTMLInputElement) {
   _inherits(WSDatePicker, _HTMLInputElement);
 
@@ -1042,7 +1046,7 @@ var WSDatePicker = function (_HTMLInputElement) {
       // This element uses Shadow DOM.
       this.createShadowRoot().appendChild(clone);
       var wsDatePicker = this.shadowRoot.querySelector('.ws-date-picker');
-      flatpickr(wsDatePicker);
+      flatpickr(this.shadowRoot, wsDatePicker);
     }
   }]);
 

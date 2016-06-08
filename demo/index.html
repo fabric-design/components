@@ -19,7 +19,7 @@
                 <a href="javascript:void(0)">Contact</a>
             </li>
         </ws-header>
-        <ws-date-picker></ws-date-picker>
+        <ws-date-picker id="ws-datepicker"></ws-date-picker>
         <script>
             document.querySelector('#header').addEventListener('error',
             function({ detail: {message} }) {
@@ -33,7 +33,7 @@
             function({ detail: { language }}) {
                 console.log('language select: ' + language);
             });
-            document.addEventListener('date-changed', function({ detail: { date }}) {
+            document.querySelector('#ws-datepicker').addEventListener('date-changed', function({ detail: { date }}) {
                 console.log('date selected: ' + date);
             });
         </script>

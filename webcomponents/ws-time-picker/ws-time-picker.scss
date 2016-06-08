@@ -10,6 +10,21 @@
   width: 100%;
   height: 32px;
   line-height: 32px;
+  padding-left: 11px;
+  border-color: $dark-mischka;
+  font-size: 14px;
+}
+
+.time-wrapper > input.ws-time-picker:focus {
+  outline: 0;
+  border-color: $cerulean;
+}
+
+.time-wrapper > input.ws-time-picker:focus + #time-picker-icon {
+  width: 12px;
+  height: 12px;
+  top: 10px;
+  background: center url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDk1LjkzOSA5NS45MzkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDk1LjkzOSA5NS45Mzk7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8cGF0aCBkPSJNNjIuODE5LDQ3Ljk3bDMyLjUzMy0zMi41MzRjMC43ODEtMC43ODEsMC43ODEtMi4wNDcsMC0yLjgyOEw4My4zMzMsMC41ODZDODIuOTU4LDAuMjExLDgyLjQ0OCwwLDgxLjkxOSwwICAgYy0wLjUzLDAtMS4wMzksMC4yMTEtMS40MTQsMC41ODZMNDcuOTcsMzMuMTIxTDE1LjQzNSwwLjU4NmMtMC43NS0wLjc1LTIuMDc4LTAuNzUtMi44MjgsMEwwLjU4NywxMi42MDggICBjLTAuNzgxLDAuNzgxLTAuNzgxLDIuMDQ3LDAsMi44MjhMMzMuMTIxLDQ3Ljk3TDAuNTg3LDgwLjUwNGMtMC43ODEsMC43ODEtMC43ODEsMi4wNDcsMCwyLjgyOGwxMi4wMiwxMi4wMjEgICBjMC4zNzUsMC4zNzUsMC44ODQsMC41ODYsMS40MTQsMC41ODZjMC41MywwLDEuMDM5LTAuMjExLDEuNDE0LTAuNTg2TDQ3Ljk3LDYyLjgxOGwzMi41MzUsMzIuNTM1ICAgYzAuMzc1LDAuMzc1LDAuODg0LDAuNTg2LDEuNDE0LDAuNTg2YzAuNTI5LDAsMS4wMzktMC4yMTEsMS40MTQtMC41ODZsMTIuMDItMTIuMDIxYzAuNzgxLTAuNzgxLDAuNzgxLTIuMDQ4LDAtMi44MjhMNjIuODE5LDQ3Ljk3ICAgeiIgZmlsbD0iIzAwMDAwMCIvPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
 }
 
 .time-wrapper > #time-picker-icon {
@@ -22,13 +37,13 @@
 }
 
 .time-wrapper > .time-picker {
-  top: 33px;
+  top: 40px;
   width: 100%;
   padding-bottom: 19px;
   background-color: $white;
   position: absolute;
   display: none;
-  box-shadow:  1px 2px 4px #3f5a54;
+  box-shadow: 2px 3px 28px 3px rgba(184,184,184,1);
 }
 
 .time-wrapper > .opened {

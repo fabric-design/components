@@ -1,11 +1,22 @@
+function checkHourValidity(hour) {
+  return hour <= 23 && Number.isInteger(Number(hour)) == true && hour.length == 2 ? true : false;
+}
+
+function checkMinutesValidity(hour) {
+  return hour <= 59 && Number.isInteger(Number(hour)) == true && minutes.length == 2 ? true : false;
+}
+
 //Get the contents of the template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
 var template = document.currentScript.ownerDocument.querySelector('template');
+
+var hoursValue, minutesValue;
 
 class WSTimePicker extends HTMLElement {
   createdCallback() {
     let clone = document.importNode(template.content, true);
     this.createShadowRoot().appendChild(clone);
-    this.one = 1;
+    this.hour = new Date().getHours();
+    this.minutes = new Date().getMinutes();
     this.input = this.shadowRoot.querySelector('.ws-time-picker');
     this.div = this.shadowRoot.querySelector('.time-picker');
     this.hoursInput = this.shadowRoot.querySelector('.hours');
@@ -16,44 +27,82 @@ class WSTimePicker extends HTMLElement {
     this.minuteDownButton = this.shadowRoot.querySelector('.minuteDown');
     this.cancelButton = this.shadowRoot.querySelector('.cancel');
     this.okButton = this.shadowRoot.querySelector('.ok');
-    this.shadowRoot.addEventListener('click', () => this.openTimePicker());
-    hourUpButton.addEventListener('click', () => this.hourUp());
-    hourDownButton.addEventListener('click', () => this.hourDown());
-    minuteUpButton.addEventListener('click', () => this.minuteUp());
-    minuteDownButton.addEventListener('click', () => this.minuteDown());
-    cancelButton.addEventListener('click', () => this.cancel());
-    okButton.addEventListener('click', () => this.ok());
+    this.hoursInput.addEventListener('change', () => this.hourChange());
+    this.minutesInput.addEventListener('change', () => this.minutesChange());
+    this.input.addEventListener('click', () => this.openTimePicker());
+    this.hourUpButton.addEventListener('click', () => this.hourUp());
+    this.hourDownButton.addEventListener('click', () => this.hourDown());
+    this.minuteUpButton.addEventListener('click', () => this.minuteUp());
+    this.minuteDownButton.addEventListener('click', () => this.minuteDown());
+    this.cancelButton.addEventListener('click', () => this.cancel());
+    this.okButton.addEventListener('click', () => this.ok());
   }
-  
+
   openTimePicker() {
-    const date = new Date();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    this.hoursInput.value = hours < 10 ? '0' + hours : hours;
-    this.minutesInput.value = minutes < 10 ? '0' + minutes : minutes;
     this.div.className = 'time-picker opened';
+    if (!this.hoursInput.value && !this.minutesInput.value) {
+      this.hoursInput.value = this.hour < 10 ? '0' + this.hour : this.hour;
+      this.minutesInput.value = this.minutes < 10 ? '0' + this.minutes : this.minutes;
+    }
+  }
+
+  hourChange() {
+    if (!checkHourValidity(this.hoursInput.value)) {
+      this.hoursInput.value = this.hour;
+    }
+  }
+
+  minutesChange() {
+    if (!checkMinutesValidity(this.minutesInput.value)) {
+      this.minutesInput.value = this.minutes;
+    }
   }
 
   hourUp() {
-    console.log(hoursInput.value);
-    this.shadowRoot.querySelector('.hours').value = Number(this.shadowRoot.querySelector('.hours').value) + 1;
-    console.log(hoursInput.value);
+    var newHour = Number(this.hoursInput.value) + 1;
+    if (newHour == 24) {
+      this.hoursInput.value = 0;
+    } else {
+      this.hoursInput.value = newHour;
+    }
   }
 
   hourDown() {
-    this.hoursInput.value = Number(this.hoursInput.value) - 1;
+    var newHour = Number(this.hoursInput.value) - 1;
+    if (newHour == 0) {
+      this.hoursInput.value = 23;
+    } else {
+      this.hoursInput.value = newHour;
+    }
   }
 
   minuteUp() {
-    this.minutesInput.value += 5;
+    var newMinutes = Number(this.minutesInput.value) + 5;
+    if (newMinutes >= 60) {
+      this.minutesInput.value = newMinutes - 60;
+    } else {
+      this.minutesInput.value = newMinutes;
+    }
   }
 
   minuteDown() {
-    this.hoursInput.value = Number(this.minutesInput.value) - 5;
+    var newMinutes = Number(this.minutesInput.value) - 5;
+    if (newMinutes <= 0) {
+      this.minutesInput.value = 60 + newMinutes;
+    } else {
+      this.minutesInput.value = newMinutes;
+    }
   }
 
   ok() {
     this.input.value = this.hoursInput.value + ':' + this.minutesInput.value;
+    var event = new CustomEvent('time-changed', {
+      detail: {
+        hours: this.hoursInput.value,
+        minutes: this.minutesInput.value
+      }
+    });
+    this.dispatchEvent(event);
     this.div.className = 'time-picker';
   }
 

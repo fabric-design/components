@@ -33,6 +33,9 @@
             function({ detail: { language }}) {
                 console.log('language select: ' + language);
             });
+            document.addEventListener('date-changed', function({ detail: { date }}) {
+                console.log('date selected: ' + date);
+            });
         </script>
     </body>
 </html>

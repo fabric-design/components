@@ -1,3 +1,5 @@
+var currentDate = '';
+
 Date.prototype.fp_incr = function(days){
   return new Date(
     this.getFullYear(),
@@ -382,6 +384,7 @@ flatpickr.init = function (element, instanceConfig) {
       buildDays();
 
       if ( !self.config.inline && !self.config.enableTime )
+        updateDateValue(self.selectedDateObj);
         self.close();
 
     }
@@ -665,8 +668,9 @@ flatpickr.init = function (element, instanceConfig) {
     if (self.altInput)
       self.altInput.classList.remove('active');
 
-    if (self.config.onClose)
+    if (self.config.onClose) {
       self.config.onClose();
+    }
   };
 
   self.clear = function() {

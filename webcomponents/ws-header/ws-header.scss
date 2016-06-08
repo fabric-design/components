@@ -383,6 +383,7 @@ header.navigation {
     transition: color .1s linear;
 
     img {
+      box-sizing: content-box;
       padding: 1.2em 0;
       height: 20px;
     }

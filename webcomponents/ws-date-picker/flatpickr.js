@@ -1,5 +1,3 @@
-var currentDate = '';
-
 Date.prototype.fp_incr = function(days){
   return new Date(
     this.getFullYear(),

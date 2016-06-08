@@ -245,8 +245,6 @@
     /* inject:js */
     'use strict';
 
-var currentDate = '';
-
 Date.prototype.fp_incr = function (days) {
   return new Date(this.getFullYear(), this.getMonth(), this.getDate() + parseInt(days, 10));
 };

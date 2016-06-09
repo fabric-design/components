@@ -8,6 +8,7 @@
 
 var gulp = require('gulp');
 var wrench = require('wrench');
+var runSequence = require('run-sequence');
 
 /**
  *  This will load all js or coffee files in the gulp directory
@@ -19,4 +20,6 @@ wrench.readdirSyncRecursive('./gulp').filter(function(file) {
   require('./gulp/' + file);
 });
 
-gulp.task('default', ['build','watch']);
+gulp.task('default', function(callback) {
+  runSequence('build', 'watch', callback);
+});

@@ -8,7 +8,7 @@ function checkHourValidity(hour) {
 function checkMinutesValidity(minutes) {
   return minutes <= 59 &&
          Number.isInteger(Number(minutes)) == true &&
-         minutes.length == 2 || hour.length == 1 &&
+         minutes.length == 2 || minutes.length == 1 &&
          minutes >= 0 ? true : false;
 }
 
@@ -54,19 +54,17 @@ class WSTimePicker extends HTMLElement {
 
   hourChange() {
     if (!checkHourValidity(this.hoursInput.value)) {
-      if (this.hoursInput.value.length == 1) {
-        this.hoursInput.value = '0'+this.hour;
-      }
-      this.hoursInput.value = this.hour;
+      this.hoursInput.value = !this.input.value ? this.hour : this.input.value.split(':')[0];
+    } else if (checkHourValidity(this.hoursInput.value) && this.hoursInput.value.length == 1){
+      this.hoursInput.value = '0'+ this.hoursInput.value;
     }
   }
 
   minutesChange() {
     if (!checkMinutesValidity(this.minutesInput.value)) {
-      if (this.minutesInput.value.length == 1) {
-        this.minutesInput.value = '0'+this.minutes;
-      }
-      this.minutesInput.value = this.minutes;
+      this.minutesInput.value = !this.input.value ? this.minutes : this.input.value.split(':')[1];
+    } else if (checkMinutesValidity(this.minutesInput.value) && this.minutesInput.value.length == 1){
+      this.minutesInput.value = '0'+ this.minutesInput.value;
     }
   }
 
@@ -74,6 +72,8 @@ class WSTimePicker extends HTMLElement {
     var newHour = Number(this.hoursInput.value) + 1;
     if (newHour == 24) {
       this.hoursInput.value = '00';
+    } else if (Number(newHour)<10) {
+      this.hoursInput.value = '0'+newHour;
     } else {
       this.hoursInput.value = newHour;
     }
@@ -83,6 +83,8 @@ class WSTimePicker extends HTMLElement {
     var newHour = Number(this.hoursInput.value) - 1;
     if (newHour == 0) {
       this.hoursInput.value = 23;
+    } else if (Number(newHour)<10) {
+      this.hoursInput.value = '0'+newHour;
     } else {
       this.hoursInput.value = newHour;
     }
@@ -91,9 +93,9 @@ class WSTimePicker extends HTMLElement {
   minuteUp() {
     var newMinutes = Number(this.minutesInput.value) + 5;
     if (newMinutes >= 60) {
-      this.minutesInput.value = newMinutes - 60;
+      this.minutesInput.value = '0' + (newMinutes - 60);
     } else {
-      this.minutesInput.value = newMinutes;
+      this.minutesInput.value = newMinutes<10 ? '0'+newMinutes : newMinutes;
     }
   }
 
@@ -102,7 +104,7 @@ class WSTimePicker extends HTMLElement {
     if (newMinutes <= 0) {
       this.minutesInput.value = 60 + newMinutes;
     } else {
-      this.minutesInput.value = newMinutes;
+      this.minutesInput.value = newMinutes<10 ? '0'+newMinutes : newMinutes;
     }
   }
 

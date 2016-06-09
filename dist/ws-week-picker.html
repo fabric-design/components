@@ -1,0 +1,131 @@
+<template>
+    <!-- inject:html -->
+    <div class="ws-week-wrapper">
+  <input type="text" class="ws-week-input" /> <span id="ws-week-icon"></span>
+  <div class="ws-week-picker">
+    111
+  </div>
+</div>
+    <!-- endinject -->
+    <style>
+        /* inject:styles */
+        .ws-week-wrapper {
+  width: 150px;
+  display: inline-block;
+  position: relative;
+}
+
+.ws-week-wrapper > input.ws-week-input {
+  width: 100%;
+  height: 32px;
+  line-height: 32px;
+  padding-left: 11px;
+  border-color: #d2d7e1;
+  font-size: 14px;
+}
+
+.ws-week-wrapper > input.ws-week-input:focus {
+  outline: 0;
+  border-color: #00abf2;
+}
+
+.ws-week-wrapper > input.ws-week-wrapper:focus + #ws-week-icon {
+  width: 12px;
+  height: 12px;
+  top: 10px;
+  background: center url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDk1LjkzOSA5NS45MzkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDk1LjkzOSA5NS45Mzk7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8cGF0aCBkPSJNNjIuODE5LDQ3Ljk3bDMyLjUzMy0zMi41MzRjMC43ODEtMC43ODEsMC43ODEtMi4wNDcsMC0yLjgyOEw4My4zMzMsMC41ODZDODIuOTU4LDAuMjExLDgyLjQ0OCwwLDgxLjkxOSwwICAgYy0wLjUzLDAtMS4wMzksMC4yMTEtMS40MTQsMC41ODZMNDcuOTcsMzMuMTIxTDE1LjQzNSwwLjU4NmMtMC43NS0wLjc1LTIuMDc4LTAuNzUtMi44MjgsMEwwLjU4NywxMi42MDggICBjLTAuNzgxLDAuNzgxLTAuNzgxLDIuMDQ3LDAsMi44MjhMMzMuMTIxLDQ3Ljk3TDAuNTg3LDgwLjUwNGMtMC43ODEsMC43ODEtMC43ODEsMi4wNDcsMCwyLjgyOGwxMi4wMiwxMi4wMjEgICBjMC4zNzUsMC4zNzUsMC44ODQsMC41ODYsMS40MTQsMC41ODZjMC41MywwLDEuMDM5LTAuMjExLDEuNDE0LTAuNTg2TDQ3Ljk3LDYyLjgxOGwzMi41MzUsMzIuNTM1ICAgYzAuMzc1LDAuMzc1LDAuODg0LDAuNTg2LDEuNDE0LDAuNTg2YzAuNTI5LDAsMS4wMzktMC4yMTEsMS40MTQtMC41ODZsMTIuMDItMTIuMDIxYzAuNzgxLTAuNzgxLDAuNzgxLTIuMDQ4LDAtMi44MjhMNjIuODE5LDQ3Ljk3ICAgeiIgZmlsbD0iIzAwMDAwMCIvPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
+}
+
+.ws-week-wrapper > #ws-week-icon {
+  right: 11px;
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0ndXRmLTgnPz4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDEyOSAxMjkiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMjkgMTI5Ij4KICA8Zz4KICAgIDxnPgogICAgICA8cGF0aCBkPSJNNjQuNSwxMjIuM2MzMiwwLDU3LjktMjYsNTcuOS01Ny45YzAtMzItMjYtNTcuOS01Ny45LTU3LjlTNi42LDMyLjQsNi42LDY0LjRDNi42LDk2LjMsMzIuNSwxMjIuMyw2NC41LDEyMi4zeiAgICAgTTY0LjUsMTQuNmMyNy41LDAsNDkuOCwyMi4zLDQ5LjgsNDkuOGMwLDI3LjUtMjIuMyw0OS44LTQ5LjgsNDkuOFMxNC43LDkxLjgsMTQuNyw2NC40QzE0LjcsMzYuOSwzNywxNC42LDY0LjUsMTQuNnoiLz4KICAgICAgPHBhdGggZD0ibTYxLjgsNzEuMmgxOS4zYzIuMywwIDQuMS0xLjggNC4xLTQuMSAwLTIuMy0xLjgtNC4xLTQuMS00LjFoLTE1LjJ2LTIzLjhjMC0yLjMtMS44LTQuMS00LjEtNC4xcy00LjEsMS44LTQuMSw0LjF2MjcuOWMwLDIuMyAxLjgsNC4xIDQuMSw0LjF6Ii8+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K);
+  top: 8px;
+  position: absolute;
+  width: 16px;
+  height: 16px;
+}
+
+.ws-week-wrapper > .ws-week-picker {
+  top: 40px;
+  width: 100%;
+  padding-bottom: 19px;
+  background-color: #ffffff;
+  position: absolute;
+  display: none;
+  box-shadow: 2px 3px 28px 3px #b8b8b8;
+}
+
+.ws-week-wrapper > .ws-week-picker.opened {
+  display: block;
+}
+        /* endinject */
+    </style>
+</template>
+
+<script>
+(function(){
+    /* inject:js */
+    'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+//Get the contents of the template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
+var template = document.currentScript.ownerDocument.querySelector('template');
+
+var WSWeekPicker = function (_HTMLElement) {
+  _inherits(WSWeekPicker, _HTMLElement);
+
+  function WSWeekPicker() {
+    _classCallCheck(this, WSWeekPicker);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(WSWeekPicker).apply(this, arguments));
+  }
+
+  _createClass(WSWeekPicker, [{
+    key: 'createdCallback',
+    value: function createdCallback() {
+      var _this2 = this;
+
+      var clone = document.importNode(template.content, true);
+      this.createShadowRoot().appendChild(clone);
+      this.wrapper = this.shadowRoot.querySelector('.ws-week-wrapper');
+      this.input = this.shadowRoot.querySelector('.ws-week-input');
+      this.picker = this.shadowRoot.querySelector('.ws-week-picker');
+      document.addEventListener('click', function (e) {
+        return _this2.closeWeekPicker(e);
+      });
+      this.input.addEventListener('click', function () {
+        return _this2.openWeekPicker();
+      });
+    }
+  }, {
+    key: 'openWeekPicker',
+    value: function openWeekPicker() {
+      this.picker.className = 'ws-week-picker opened';
+    }
+  }, {
+    key: 'closeWeekPicker',
+    value: function closeWeekPicker(e) {
+      console.log(e.target);
+      if (e.target.id != 'WS-WEEK-PICKER') {
+        this.picker.className = 'ws-week-picker';
+      }
+    }
+  }]);
+
+  return WSWeekPicker;
+}(HTMLElement);
+
+//Register the element with the document
+
+
+document.registerElement('ws-week-picker', WSWeekPicker);
+    /* endinject */
+})()
+</script>

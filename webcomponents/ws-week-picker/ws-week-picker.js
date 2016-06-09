@@ -17,8 +17,7 @@ class WSWeekPicker extends HTMLElement {
   }
 
   closeWeekPicker(e) {
-    console.log(e.target);
-    if (e.target.id != 'WS-WEEK-PICKER'){
+    if (e.target.tagName != 'WS-WEEK-PICKER'){
       this.picker.className = 'ws-week-picker';
     }
   }

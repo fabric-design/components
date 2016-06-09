@@ -1,9 +1,15 @@
 function checkHourValidity(hour) {
-  return hour <= 23 && Number.isInteger(Number(hour)) == true && hour.length == 2 ? true : false;
+  return hour <= 23 &&
+         Number.isInteger(Number(hour)) == true &&
+         hour.length == 2 || hour.length == 1 &&
+         hour >= 0 ? true : false;
 }
 
-function checkMinutesValidity(hour) {
-  return hour <= 59 && Number.isInteger(Number(hour)) == true && minutes.length == 2 ? true : false;
+function checkMinutesValidity(minutes) {
+  return minutes <= 59 &&
+         Number.isInteger(Number(minutes)) == true &&
+         minutes.length == 2 || hour.length == 1 &&
+         minutes >= 0 ? true : false;
 }
 
 //Get the contents of the template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
@@ -48,12 +54,18 @@ class WSTimePicker extends HTMLElement {
 
   hourChange() {
     if (!checkHourValidity(this.hoursInput.value)) {
+      if (this.hoursInput.value.length == 1) {
+        this.hoursInput.value = '0'+this.hour;
+      }
       this.hoursInput.value = this.hour;
     }
   }
 
   minutesChange() {
     if (!checkMinutesValidity(this.minutesInput.value)) {
+      if (this.minutesInput.value.length == 1) {
+        this.minutesInput.value = '0'+this.minutes;
+      }
       this.minutesInput.value = this.minutes;
     }
   }
@@ -61,7 +73,7 @@ class WSTimePicker extends HTMLElement {
   hourUp() {
     var newHour = Number(this.hoursInput.value) + 1;
     if (newHour == 24) {
-      this.hoursInput.value = 0;
+      this.hoursInput.value = '00';
     } else {
       this.hoursInput.value = newHour;
     }

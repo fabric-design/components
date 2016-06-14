@@ -1,17 +1,3 @@
-function checkHourValidity(hour) {
-  return hour <= 23 &&
-         Number.isInteger(Number(hour)) == true &&
-         hour.length == 2 || hour.length == 1 &&
-         hour >= 0 ? true : false;
-}
-
-function checkMinutesValidity(minutes) {
-  return minutes <= 59 &&
-         Number.isInteger(Number(minutes)) == true &&
-         minutes.length == 2 || minutes.length == 1 &&
-         minutes >= 0 ? true : false;
-}
-
 //Get the contents of the template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
 var template = document.currentScript.ownerDocument.querySelector('template');
 
@@ -46,25 +32,44 @@ class WSTimePicker extends HTMLElement {
 
   openTimePicker() {
     this.div.className = 'time-picker opened';
-    if (!this.hoursInput.value && !this.minutesInput.value) {
+    if (!this.hoursInput.value && !this.minutesInput.value ||
+         this.minutesInput.className != 'minutes fail' || this.hoursInput.className != 'hours fail') {
+      this.minutesInput.className = 'minutes';
+      this.hoursInput.className = 'hours';
       this.hoursInput.value = this.hour < 10 ? '0' + this.hour : this.hour;
       this.minutesInput.value = this.minutes < 10 ? '0' + this.minutes : this.minutes;
     }
   }
 
   hourChange() {
-    if (!checkHourValidity(this.hoursInput.value)) {
-      this.hoursInput.value = !this.input.value ? this.hour : this.input.value.split(':')[0];
-    } else if (checkHourValidity(this.hoursInput.value) && this.hoursInput.value.length == 1){
-      this.hoursInput.value = '0'+ this.hoursInput.value;
+    if (this.checkHourValidity(this.hoursInput.value)) {
+      this.hoursInput.className = 'hours';
+      this.hoursInput.value = this.hoursInput.value < 10 ? '0'+ this.hoursInput.value : this.hoursInput.value;
+    }
+  }
+
+  checkHourValidity(hour) {
+    if (hour <= 23 && Number.isInteger(Number(hour)) == true &&
+      hour.length == 2 || hour.length == 1 && hour >= 0) {
+      return true;
+    } else {
+      this.hoursInput.className = 'hours fail';
     }
   }
 
   minutesChange() {
-    if (!checkMinutesValidity(this.minutesInput.value)) {
-      this.minutesInput.value = !this.input.value ? this.minutes : this.input.value.split(':')[1];
-    } else if (checkMinutesValidity(this.minutesInput.value) && this.minutesInput.value.length == 1){
-      this.minutesInput.value = '0'+ this.minutesInput.value;
+    if (this.checkMinutesValidity(this.minutesInput.value)) {
+      this.minutesInput.className = 'minutes';
+      this.minutesInput.value = this.minutesInput.value < 10 ? '0'+ this.minutesInput.value : this.minutesInput.value;
+    }
+  }
+
+  checkMinutesValidity(minutes) {
+    if (minutes <= 59 && Number.isInteger(Number(minutes)) == true &&
+      minutes.length == 2 || minutes.length == 1 && minutes >= 0) {
+      return true;
+    } else {
+      this.minutesInput.className = 'minutes fail';
     }
   }
 
@@ -109,15 +114,17 @@ class WSTimePicker extends HTMLElement {
   }
 
   ok() {
-    this.input.value = this.hoursInput.value + ':' + this.minutesInput.value;
-    var event = new CustomEvent('time-changed', {
-      detail: {
-        hours: this.hoursInput.value,
-        minutes: this.minutesInput.value
-      }
-    });
-    this.dispatchEvent(event);
-    this.div.className = 'time-picker';
+    if (this.hoursInput.className != 'hours fail' && this.minutesInput.className != 'minutes fail') {
+      this.input.value = this.hoursInput.value + ':' + this.minutesInput.value;
+      var event = new CustomEvent('time-changed', {
+        detail: {
+          hours: this.hoursInput.value,
+          minutes: this.minutesInput.value
+        }
+      });
+      this.dispatchEvent(event);
+      this.div.className = 'time-picker';
+    }
   }
 
   cancel() {

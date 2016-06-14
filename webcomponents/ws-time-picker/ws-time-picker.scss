@@ -67,6 +67,11 @@
   margin: 0 9px 8px 19px;
 }
 
+.time-wrapper > .time-picker > .hours.fail,
+.time-wrapper > .time-picker > .minutes.fail {
+  border-color: $flamingo;
+}
+
 .time-wrapper > .time-picker > .hourUp,
 .time-wrapper > .time-picker > .minuteUp {
   float: left;

@@ -13,6 +13,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var uglifyjs = require('gulp-uglify');
 var uglifycss = require('gulp-uglifycss');
 var rev = require('gulp-rev');
+var runSequence = require('run-sequence');
 const babel = require('gulp-babel');
 
 var utils = require('./utils.js');
@@ -26,7 +27,11 @@ gulp.task('createDistFiles', ['clean'], folders(config.webcomponentsFolder, func
   .pipe(gulp.dest(config.tempTemplates));
 }));
 
-gulp.task('inject', ['scripts', 'sass', 'createDistFiles'], function() {
+gulp.task('prepareFiles', function(done) {
+  	runSequence('createDistFiles', ['scripts', 'sass'], done);
+})
+
+gulp.task('inject', ['prepareFiles'], function() {
     function injectScripts(folder) {
       return inject(gulp.src(folder + '/*.js'), {
           starttag: '/* inject:js */',
@@ -66,7 +71,7 @@ gulp.task('inject', ['scripts', 'sass', 'createDistFiles'], function() {
         .pipe(injectHtml(config.webcomponentsFolder + '/' + componentName))
         .pipe(injectStyles(config.temp + '/' + componentName))
         .pipe(injectScripts(config.temp + '/' + componentName))
-        .pipe(rev())
+        .pipe(gutil.env.type === 'production' ? rev() : gutil.noop())
         .pipe(gulp.dest(config.dest));
       }));
 });
@@ -84,7 +89,7 @@ gulp.task('sass', function () {
     cascade: false
   }))
   .pipe(gutil.env.type === 'production' ? cssnano() : gutil.noop())
-  .pipe(uglifycss())
+  .pipe(gutil.env.type === 'production' ? uglifycss() : gutil.noop())
   .pipe(gulp.dest(config.temp));
 });
 
@@ -93,7 +98,7 @@ gulp.task('scripts', function () {
   .pipe(babel({
     presets: ['es2015']
   }))
-  .pipe(uglifyjs().on('error', gutil.log))
+  .pipe(gutil.env.type === 'production' ? uglifyjs().on('error', gutil.log) : gutil.noop())
   .pipe(gulp.dest(config.temp));
 });
 

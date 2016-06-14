@@ -183,6 +183,9 @@ class WSHeader extends HTMLElement {
     }
 
     getToken(url) {
+        if (!url) {
+            url = window.location.href;
+        }
         return new Promise((resolve, reject) => {
             var token = this.getTokenFromUrl(url);
             if (token) {

@@ -162,7 +162,7 @@ class WSHeader extends HTMLElement {
         loggedInInfo.innerHTML =
             `<span translate="global.menu.signedinas"></span>
             <span id="userName">Loading...</span>
-            <a class="auto-size"><i class="fa fa-power-off fa-1x"></i></a>`;
+            <a class="auto-size" id="logOutButton" type="button"><div id="logOutIcon"></div></a>`;
         loggedInInfo.removeEventListener("click", this.login);
         loggedInInfo.addEventListener("click", this.logout.bind(this));
     }

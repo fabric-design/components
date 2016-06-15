@@ -59,7 +59,7 @@ class WSWeekPicker extends HTMLElement {
 
   calendarClick(e) {
     // If user pick on week number take all elements to return result to input field and close calendar
-    if (e.target.className == 'week') {
+    if (e.target.className == 'week' || e.target.className == 'week now') {
       if (e.target.parentElement.parentElement.parentElement.className == 'prev-year') {
         this.pickedWeekYear = e.target.parentElement.parentElement.parentElement.children[1].firstElementChild.innerHTML
       } else {

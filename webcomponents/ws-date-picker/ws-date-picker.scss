@@ -5,6 +5,7 @@
 .flatpickr-wrapper {
   display: inline-block;
   position: relative;
+  font-family: $base-font-family;
 
   > input {
     width: 150px;

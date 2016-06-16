@@ -4,6 +4,7 @@
   width: 150px;
   display: inline-block;
   position: relative;
+  font-family: $base-font-family;
 
   > #time-picker-icon {
     right: 11px;
@@ -51,7 +52,7 @@
       height: 35px;
       display: inline;
       margin: 0 5px 8px 8px;
-      padding: 6px;
+      padding: 7px;
       font-size: 14px;
 
       &.fail {
@@ -91,7 +92,7 @@
 
     > .cancel,
     > .ok {
-      margin: 0 19px;
+      margin: 0 17px;
       color: $cerulean;
     }
   }

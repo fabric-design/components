@@ -2,7 +2,6 @@
   "name": "styleguide-web-components",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "gulp test",
     "serve": "gulp & lite-server",
@@ -17,6 +16,9 @@
     "styleguide",
     "web",
     "components"
+  ],
+  "files": [
+    "dist"
   ],
   "author": "Fabian Weber",
   "license": "MIT",

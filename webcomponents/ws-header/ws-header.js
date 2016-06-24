@@ -36,7 +36,6 @@ class WSHeader extends HTMLElement {
             this.setLanguage(lang);
 
             this.checkIsLoggedIn()
-            .then(() => this.getTokenInfo())
             .then(() => this.getUser())
             .then(() => this.showUser())
             .catch(() => this.propagateError("Getting Token-/User-Info failed!"));
@@ -122,15 +121,19 @@ class WSHeader extends HTMLElement {
         return new Promise((resolve, reject) => {
             this.getToken(urlAtStart)
             .then((token) => {
-                this.showLoggedIn();
+                // checking that token is still valid
+                this.getTokenInfo()
+                .then(() => {
+                    this.showLoggedIn();
 
-                this.propagateLoginStatusChange(true, token);
-                resolve();
-            }, () => {
-                this.showLoggedOut();
+                    this.propagateLoginStatusChange(true, token);
+                    resolve();
+                }, () => {
+                    this.showLoggedOut();
 
-                this.propagateLoginStatusChange(false);
-                reject();
+                    this.propagateLoginStatusChange(false);
+                    reject();
+                });
             });
         });
     }
@@ -162,7 +165,7 @@ class WSHeader extends HTMLElement {
         loggedInInfo.innerHTML =
             `<span translate="global.menu.signedinas"></span>
             <span id="userName">Loading...</span>
-            <a class="auto-size"><i class="fa fa-power-off fa-1x"></i></a>`;
+            <a class="auto-size" id="logOutButton" type="button"><div id="logOutIcon"></div></a>`;
         loggedInInfo.removeEventListener("click", this.login);
         loggedInInfo.addEventListener("click", this.logout.bind(this));
     }
@@ -183,6 +186,9 @@ class WSHeader extends HTMLElement {
     }
 
     getToken(url) {
+        if (!url) {
+            url = window.location.href;
+        }
         return new Promise((resolve, reject) => {
             var token = this.getTokenFromUrl(url);
             if (token) {
@@ -232,6 +238,9 @@ class WSHeader extends HTMLElement {
         this.request('GET', `${this.state.userServiceUrl}?q=${this.state.userUID}`)
         .then((data) => {
             let user = data[0];
+            if (!user) {
+                reject();
+            }
             let userInfo = {
                 userName: user.name,
                 userEmail: user.email
@@ -291,10 +300,21 @@ class WSHeader extends HTMLElement {
                 mode: 'cors',
                 cache: 'default'
             })
+            .then(checkStatus)
             .then(function(response) {
                 return response.json();
             });
         });
+    }
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            return response
+        } else {
+            var error = new Error(response.statusText)
+            error.response = response
+            throw error
+        }
     }
 
     // You can also define the other lifecycle methods.

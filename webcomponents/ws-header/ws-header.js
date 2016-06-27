@@ -33,22 +33,21 @@ class WSHeader extends HTMLElement {
         // would fire initial before
         document.addEventListener("DOMContentLoaded", () => {
             let lang = this.getLanguage();
-            this.setLanguage(lang);
+        this.setLanguage(lang);
 
-            this.checkIsLoggedIn()
-            .then(() => this.getTokenInfo())
-            .then(() => this.getUser())
-            .then(() => this.showUser())
-            .catch(() => this.propagateError("Getting Token-/User-Info failed!"));
-        });
+        this.checkIsLoggedIn()
+          .then(() => this.getUser())
+    .then(() => this.showUser())
+    .catch(() => this.propagateError("Getting Token-/User-Info failed!"));
+    });
     }
 
     propagateError(reason) {
         let event = new CustomEvent("error", {
-                detail: {
-                    message: reason
-                }
-            });
+            detail: {
+                message: reason
+            }
+        });
         this.dispatchEvent(event);
     }
 
@@ -66,13 +65,13 @@ class WSHeader extends HTMLElement {
 
         availableLanguages.map((lang) => {
             let dummy = document.createElement( 'div' );
-            dummy.innerHTML = `<li>
+        dummy.innerHTML = `<li>
                 <a><span class="flag flag-${lang}"></span> <span translate="global.language.{{lang}}">${lang}</span></a>
             </li>`;
-            let node = dummy.childNodes[0];
-            node.addEventListener("click", () => this.setLanguage(lang));
-            languagesElem.appendChild(node);
-        });
+        let node = dummy.childNodes[0];
+        node.addEventListener("click", () => this.setLanguage(lang));
+        languagesElem.appendChild(node);
+    });
     }
 
     getLanguage() {
@@ -104,9 +103,9 @@ class WSHeader extends HTMLElement {
 
     login() {
         let url = "https://auth.zalando.com/z/oauth2/authorize?realm=employees&response_type=token&scope=uid" +
-        "&client_id=" + this.state.clientId +
-        "&redirect_uri=" + this.state.redirectUrl +
-        "&state=" + this.setSessionState();
+          "&client_id=" + this.state.clientId +
+          "&redirect_uri=" + this.state.redirectUrl +
+          "&state=" + this.setSessionState();
 
         window.location.href = url;
     }
@@ -120,19 +119,23 @@ class WSHeader extends HTMLElement {
 
     checkIsLoggedIn() {
         return new Promise((resolve, reject) => {
-            this.getToken(urlAtStart)
+              this.getToken(urlAtStart)
             .then((token) => {
-                this.showLoggedIn();
+              // checking that token is still valid
+              this.getTokenInfo()
+            .then(() => {
+              this.showLoggedIn();
 
-                this.propagateLoginStatusChange(true, token);
-                resolve();
-            }, () => {
-                this.showLoggedOut();
+        this.propagateLoginStatusChange(true, token);
+        resolve();
+    }, () => {
+            this.showLoggedOut();
 
-                this.propagateLoginStatusChange(false);
-                reject();
-            });
+            this.propagateLoginStatusChange(false);
+            reject();
         });
+    });
+    });
     }
 
     propagateLoginStatusChange(isLoggedIn, token) {
@@ -152,7 +155,7 @@ class WSHeader extends HTMLElement {
     showLoggedOut() {
         let loggedInInfo = this.shadowRoot.querySelector('#loggedInInfo');
         loggedInInfo.innerHTML =
-            `<a class="auto-size"><span translate="global.menu.signein">Login</span></i></a>`;
+          `<a class="auto-size"><span translate="global.menu.signein">Login</span></i></a>`;
         loggedInInfo.removeEventListener("click", this.logout);
         loggedInInfo.addEventListener("click", this.login.bind(this));
     }
@@ -160,9 +163,9 @@ class WSHeader extends HTMLElement {
     showLoggedIn() {
         let loggedInInfo = this.shadowRoot.querySelector('#loggedInInfo');
         loggedInInfo.innerHTML =
-            `<span translate="global.menu.signedinas"></span>
+          `<span translate="global.menu.signedinas"></span>
             <span id="userName">Loading...</span>
-            <a class="auto-size"><i class="fa fa-power-off fa-1x"></i></a>`;
+            <a class="auto-size" id="logOutButton" type="button"><div id="logOutIcon"></div></a>`;
         loggedInInfo.removeEventListener("click", this.login);
         loggedInInfo.addEventListener("click", this.logout.bind(this));
     }
@@ -183,23 +186,26 @@ class WSHeader extends HTMLElement {
     }
 
     getToken(url) {
+        if (!url) {
+            url = window.location.href;
+        }
         return new Promise((resolve, reject) => {
-            var token = this.getTokenFromUrl(url);
-            if (token) {
-                var sessionState = this.getStateFromUrl(url);
-                if (this.checkSessionState(sessionState)) {
-                    this.setCookie(token);
-                    return resolve(token);
-                }
-            }
-            token = this.getCookieValue(this.state.tokenName);
-            if (token) {
+              var token = this.getTokenFromUrl(url);
+        if (token) {
+            var sessionState = this.getStateFromUrl(url);
+            if (this.checkSessionState(sessionState)) {
                 this.setCookie(token);
                 return resolve(token);
             }
+        }
+        token = this.getCookieValue(this.state.tokenName);
+        if (token) {
+            this.setCookie(token);
+            return resolve(token);
+        }
 
-            reject();
-        });
+        reject();
+    });
     }
 
     getTokenFromUrl(url) {
@@ -215,34 +221,37 @@ class WSHeader extends HTMLElement {
     getTokenInfo() {
         return new Promise((resolve, reject) => {
             this.request('GET', this.state.tokenInfoUrl)
-            .then((data) => {
-                this.state = Object.assign({}, this.state, {
-                    userUID: data.uid
-                });
-                resolve(data.uid);
-            }, () => {
-                this.logout();
-                reject();
-            });
+          .then((data) => {
+            this.state = Object.assign({}, this.state, {
+            userUID: data.uid
         });
+        resolve(data.uid);
+    }, () => {
+            this.logout();
+            reject();
+        });
+    });
     }
 
     getUser() {
         return new Promise((resolve, reject) => {
-        this.request('GET', `${this.state.userServiceUrl}?q=${this.state.userUID}`)
-        .then((data) => {
-            let user = data[0];
-            let userInfo = {
-                userName: user.name,
-                userEmail: user.email
-            };
-            this.state = Object.assign({}, this.state, userInfo);
-            resolve(userInfo);
-        }, () => {
+              this.request('GET', `${this.state.userServiceUrl}?q=${this.state.userUID}`)
+            .then((data) => {
+              let user = data[0];
+        if (!user) {
+            reject();
+        }
+        let userInfo = {
+            userName: user.name,
+            userEmail: user.email
+        };
+        this.state = Object.assign({}, this.state, userInfo);
+        resolve(userInfo);
+    }, () => {
             this.logout();
             reject();
         });
-        });
+    });
     }
 
     showUser() {
@@ -269,9 +278,9 @@ class WSHeader extends HTMLElement {
 
     guid() {
         function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
+            return Math.floor((1 + Math.random()) * 0x10000)
+              .toString(16)
+              .substring(1);
         }
         return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
     }
@@ -280,21 +289,32 @@ class WSHeader extends HTMLElement {
     request(method, url) {
         let headers = new Headers();
         return this.getToken(urlAtStart)
-        .then((token) => {
-            headers.append("Authorization", `Bearer ${token}`);
-            return Promise.resolve();
-        })
-        .then(() => {
+            .then((token) => {
+              headers.append("Authorization", `Bearer ${token}`);
+        return Promise.resolve();
+    })
+    .then(() => {
             return fetch(url, {
                 method: method,
                 headers: headers,
                 mode: 'cors',
                 cache: 'default'
             })
-            .then(function(response) {
-                return response.json();
-            });
-        });
+              .then(checkStatus)
+              .then(function(response) {
+                  return response.json();
+              });
+    });
+    }
+
+    checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            return response
+        } else {
+            var error = new Error(response.statusText)
+            error.response = response
+            throw error
+        }
     }
 
     // You can also define the other lifecycle methods.

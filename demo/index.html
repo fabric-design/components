@@ -6,13 +6,13 @@
     <body class="refills-patterns refills-components" style="margin: 0;">
         <ws-header
             id="header"
-            userservice-url="http://localhost:8080/https://users.auth.zalando.com/api/employees"
-            tokeninfo-url="http://localhost:8080/info.services.auth.zalando.com:443/oauth2/tokeninfo"
-            redirect-url="/app/authin"
-            client-id="abc">
+            userservice-url="https://cors-proxy-service.alpha.zalan.do/https://users.auth.zalando.com/api/employees"
+            tokeninfo-url="https://cors-proxy-service.alpha.zalan.do/https://info.services.auth.zalando.com:443/oauth2/tokeninfo"
+            redirect-url="https://org-structure.wholesale.zalan.do/login"
+            client-id="stups_org-structure-fe_b786e05a-9a44-48a2-a233-519263fa8a93">
 
             <a href="/" class="logo" ui-sref="main.overview">
-                <img alt="Logo" src="https://block-orders-frontend-release.goodbuy-staging.zalan.do/assets/images/justbuy-white.png">
+                <img alt="Logo" src="#">
                 <span>Block Orders</span>
             </a>
             <li class="nav-link">

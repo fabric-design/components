@@ -122,9 +122,7 @@
   margin-left: -5px;
 }
 
-.ws-week-wrapper > .ws-week-picker > .prev-year > .weeks > .weekNumbers > .month,
-.ws-week-wrapper > .ws-week-picker > .cur-year > .weeks > .weekNumbers > .month,
-.ws-week-wrapper > .ws-week-picker > .next-year > .weeks > .weekNumbers > .month {
+.ws-week-wrapper > .ws-week-picker .month {
   box-sizing: border-box;
   color: $ghost;
   display: inline-block;
@@ -138,25 +136,19 @@
   background-color: $pattens-blue;
 }
 
-.ws-week-wrapper > .ws-week-picker > .prev-year > .weeks > .weekNumbers:last-child > .month,
-.ws-week-wrapper > .ws-week-picker > .cur-year > .weeks > .weekNumbers:last-child > .month,
-.ws-week-wrapper > .ws-week-picker > .next-year > .weeks > .weekNumbers:last-child > .month {
+.ws-week-wrapper > .ws-week-picker .weeks > .weekNumbers:last-child > .month {
   padding-left: 0;
   width: 45px;
 }
 
-.ws-week-wrapper > .ws-week-picker > .prev-year > .weeks > .weekNumbers,
-.ws-week-wrapper > .ws-week-picker > .cur-year > .weeks > .weekNumbers,
-.ws-week-wrapper > .ws-week-picker > .next-year > .weeks > .weekNumbers {
+.ws-week-wrapper > .ws-week-picker .weekNumbers {
   width: 35.3px;
   height: 35.3px;
   float: left;
   font-size: 14px;
 }
 
-.ws-week-wrapper > .ws-week-picker > .prev-year > .weeks > .weekNumbers > .week,
-.ws-week-wrapper > .ws-week-picker > .cur-year > .weeks > .weekNumbers > .week,
-.ws-week-wrapper > .ws-week-picker > .next-year > .weeks > .weekNumbers > .week {
+.ws-week-wrapper > .ws-week-picker .week {
   background: 0 0;
   border: 1px solid transparent;
   border-radius: 150px;
@@ -170,18 +162,12 @@
   text-align: center;
   margin: 3px 6px;
 }
-.ws-week-wrapper > .ws-week-picker > .prev-year > .weeks > .weekNumbers > .week.now,
-.ws-week-wrapper > .ws-week-picker > .prev-year > .weeks > .weekNumbers > .week.now:hover,
-.ws-week-wrapper > .ws-week-picker > .cur-year > .weeks > .weekNumbers > .week.now,
-.ws-week-wrapper > .ws-week-picker > .cur-year > .weeks > .weekNumbers > .week.now:hover,
-.ws-week-wrapper > .ws-week-picker > .next-year > .weeks > .weekNumbers > .week.now,
-.ws-week-wrapper > .ws-week-picker > .next-year > .weeks > .weekNumbers > .week.now:hover {
+.ws-week-wrapper > .ws-week-picker .week.now,
+.ws-week-wrapper > .ws-week-picker .week.now:hover {
   background-color: $cerulean;
   color: $white;
 }
 
-.ws-week-wrapper > .ws-week-picker > .prev-year > .weeks > .weekNumbers > .week:hover,
-.ws-week-wrapper > .ws-week-picker > .cur-year > .weeks > .weekNumbers > .week:hover,
-.ws-week-wrapper > .ws-week-picker > .next-year > .weeks > .weekNumbers > .week:hover {
+.ws-week-wrapper > .ws-week-picker .week:hover {
   background-color: $pattens-blue;
 }

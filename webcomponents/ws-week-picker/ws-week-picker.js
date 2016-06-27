@@ -134,21 +134,21 @@ class WSWeekPicker extends HTMLElement {
   }
   // Calculate week number of year depending on current day
   getWeek(year,month,day) {
-    function y2k(number) { return (number < 1000) ? number + 1900 : number; }
-    let when = new Date(year,month,day);
-    let newYear = new Date(year,0,1);
+    let y2k = number => number < 1000 ? number + 1900 : number;
+    let when = new Date(year, month, day);
+    let newYear = new Date(year, 0, 1);
     let modDay = newYear.getDay();
-    if (modDay == 0) modDay=6; else modDay--;
-
-    let daynum = ((Date.UTC(y2k(year),when.getMonth(),when.getDate(),0,0,0) - Date.UTC(y2k(year),0,1,0,0,0)) /1000/60/60/24) + 1;
+    if (modDay == 0) modDay = 6; else modDay--;
+    // Days between current day and 1st of January
+    let daynum = ((Date.UTC(y2k(year), when.getMonth(), when.getDate(), 0, 0, 0) - Date.UTC(y2k(year), 0, 1, 0, 0, 0)) / 1000 / 60 / 60 / 24) + 1;
 
     if (modDay < 4 ) {
-      var weeknum = Math.floor((daynum+modDay-1)/7)+1;
+      var weeknum = Math.floor((daynum+modDay - 1) / 7) + 1;
     } else {
-      var weeknum = Math.floor((daynum+modDay-1)/7);
+      var weeknum = Math.floor((daynum+modDay - 1) / 7);
       if (weeknum == 0) {
         year--;
-        let prevNewYear = new Date(year,0,1);
+        let prevNewYear = new Date(year, 0, 1);
         let prevmodDay = prevNewYear.getDay();
         if (prevmodDay == 0) prevmodDay = 6; else prevmodDay--;
         if (prevmodDay < 4) weeknum = 53; else weeknum = 52;
@@ -161,9 +161,9 @@ class WSWeekPicker extends HTMLElement {
   // January is explicitly to other months, because need to calculate first week of year
   // It can be week number from previous year
   janWeekNumbers(year) {
-    var firstMonthWeeks = [];
-    var firstWeek = this.getWeek(year, 0, 1);
-    var lastWeek = this.getWeek(year, 0, 31);
+    let firstMonthWeeks = [];
+    let firstWeek = this.getWeek(year, 0, 1);
+    let lastWeek = this.getWeek(year, 0, 31);
     if (firstWeek != 1) {
       firstMonthWeeks[0] = firstWeek;
       for (let j=1; j<=lastWeek; j++) {
@@ -178,9 +178,9 @@ class WSWeekPicker extends HTMLElement {
   }
   // Return array of all week numbers of year in month
   weekNumbersByMonth(year, month) {
-    var monthWeeks = [];
-    var firstWeek = this.getWeek(year, month, 1);
-    var lastWeek = this.getWeek(year, month, 31);
+    let monthWeeks = [];
+    let firstWeek = this.getWeek(year, month, 1);
+    let lastWeek = this.getWeek(year, month, 31);
     for (let j=firstWeek; j<=lastWeek; j++) {
       monthWeeks.push(j);
     }
@@ -188,7 +188,7 @@ class WSWeekPicker extends HTMLElement {
   }
   // Array of all weeks in year, splited by month
   weeksNumbersForYear(year){
-    var weeks = [];
+    let weeks = [];
     weeks[0] = this.janWeekNumbers(year);
     for (let i=1; i<=11; i++){
       weeks[i] = this.weekNumbersByMonth(year, i);
@@ -211,25 +211,25 @@ class WSWeekPicker extends HTMLElement {
                                           <span class="month">${self.months[i+10]}</span>
                                           <span class="week">${month.join('</span><span class="week">')}</span>
                                        </span>`;
-  });
+    });
     this.curYearWeeksNumbers = this.weeksNumbersForYear(this.curYear);
     this.curYearWeeksNumbers.forEach((month, i) => {
       this.curYearWeeks.innerHTML += `<span class="weekNumbers">
                                           <span class="month">${self.months[i]}</span>
                                           <span class="week">${month.join('</span><span class="week">')}</span>
                                        </span>`;
-  });
+    });
     this.nextYearWeeksNumbers = this.weeksNumbersForYear(this.nextYear).slice(0,2);
     this.nextYearWeeksNumbers.forEach((month, i) => {
       this.nextYearWeeks.innerHTML += `<span class="weekNumbers">
                                           <span class="month">${self.months[i]}</span>
                                           <span class="week">${month.join('</span><span class="week">')}</span>
                                        </span>`;
-  });
+    });
   }
   // Define what is current week number
   defineCurrent() {
-    var self = this;
+    const self = this;
     let wholeWeeks = this.shadowRoot.querySelectorAll('.cur-year .week');
     for (let i=0; i<wholeWeeks.length; i++) {
       if (wholeWeeks[i].innerHTML == self.curWeek &&

@@ -11,6 +11,11 @@ class WSWeekPicker extends HTMLElement {
     this.curYear = this.date.getFullYear();
     this.curMonth = this.months[this.date.getMonth()];
     this.curWeek = this.getWeek(this.curYear, this.date.getMonth(), this.date.getDate());
+    this.getElements();
+    this.addListeners();
+  }
+  // Take all elements from week picker
+  getElements() {
     this.wrapper = this.shadowRoot.querySelector('.ws-week-wrapper');
     this.input = this.shadowRoot.querySelector('.ws-week-input');
     this.calendar = this.shadowRoot.querySelector('.ws-week-picker');
@@ -28,7 +33,9 @@ class WSWeekPicker extends HTMLElement {
     this.nextYear = this.curYear+1;
     this.nextYearNumber = this.shadowRoot.querySelector('.next-year > .year');
     this.nextYearWeeks = this.shadowRoot.querySelector('.next-year > .weeks');
-    // All event listeners
+  }
+  // Attach all event liteners
+  addListeners() {
     document.addEventListener('click', (e) => this.closeWeekPicker(e));
     this.input.addEventListener('click', () => this.openWeekPicker());
     this.crossIcon.addEventListener('click', () => this.cancel());
@@ -128,12 +135,12 @@ class WSWeekPicker extends HTMLElement {
   // Calculate week number of year depending on current day
   getWeek(year,month,day) {
     function y2k(number) { return (number < 1000) ? number + 1900 : number; }
-    var when = new Date(year,month,day);
-    var newYear = new Date(year,0,1);
-    var modDay = newYear.getDay();
+    let when = new Date(year,month,day);
+    let newYear = new Date(year,0,1);
+    let modDay = newYear.getDay();
     if (modDay == 0) modDay=6; else modDay--;
 
-    var daynum = ((Date.UTC(y2k(year),when.getMonth(),when.getDate(),0,0,0) - Date.UTC(y2k(year),0,1,0,0,0)) /1000/60/60/24) + 1;
+    let daynum = ((Date.UTC(y2k(year),when.getMonth(),when.getDate(),0,0,0) - Date.UTC(y2k(year),0,1,0,0,0)) /1000/60/60/24) + 1;
 
     if (modDay < 4 ) {
       var weeknum = Math.floor((daynum+modDay-1)/7)+1;
@@ -141,14 +148,14 @@ class WSWeekPicker extends HTMLElement {
       var weeknum = Math.floor((daynum+modDay-1)/7);
       if (weeknum == 0) {
         year--;
-        var prevNewYear = new Date(year,0,1);
-        var prevmodDay = prevNewYear.getDay();
+        let prevNewYear = new Date(year,0,1);
+        let prevmodDay = prevNewYear.getDay();
         if (prevmodDay == 0) prevmodDay = 6; else prevmodDay--;
         if (prevmodDay < 4) weeknum = 53; else weeknum = 52;
       }
     }
 
-    return + weeknum;
+    return weeknum;
   }
   // Calculate all week numbers of year in January and save them in array
   // January is explicitly to other months, because need to calculate first week of year

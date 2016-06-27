@@ -47,7 +47,8 @@ class WSTimePicker extends HTMLElement {
   hourChange() {
     if (this.checkHourValidity(this.hoursInput.value)) {
       this.hoursInput.className = 'hours';
-      this.hoursInput.value = this.hoursInput.value < 10 ? '0'+ this.hoursInput.value : this.hoursInput.value;
+      this.hoursInput.value = this.hoursInput.value < 10
+                              ? '0'+ this.hoursInput.value : this.hoursInput.value;
     }
   }
   // Check if changed value is integer number and between 0 and 23
@@ -62,7 +63,8 @@ class WSTimePicker extends HTMLElement {
   minutesChange() {
     if (this.checkMinutesValidity(this.minutesInput.value)) {
       this.minutesInput.className = 'minutes';
-      this.minutesInput.value = this.minutesInput.value < 10 ? '0'+ this.minutesInput.value : this.minutesInput.value;
+      this.minutesInput.value = this.minutesInput.value < 10
+                                ? '0'+ this.minutesInput.value : this.minutesInput.value;
     }
   }
   // Check if changed value is integer number and between 0 and 59
@@ -78,9 +80,9 @@ class WSTimePicker extends HTMLElement {
     var newHour = Number(this.hoursInput.value) + 1;
     if (newHour == 24) {
       this.hoursInput.value = '00';
-    } else if (Number(newHour)<10) {
+    } else if (Number(newHour) < 10) {
       // Add leading zero if number less then 10
-      this.hoursInput.value = '0'+newHour;
+      this.hoursInput.value = '0' + newHour;
     } else {
       this.hoursInput.value = newHour;
     }
@@ -90,8 +92,8 @@ class WSTimePicker extends HTMLElement {
     var newHour = Number(this.hoursInput.value) - 1;
     if (newHour == 0) {
       this.hoursInput.value = 23;
-    } else if (Number(newHour)<10) {
-      this.hoursInput.value = '0'+newHour;
+    } else if (Number(newHour) < 10) {
+      this.hoursInput.value = '0' + newHour;
     } else {
       this.hoursInput.value = newHour;
     }
@@ -102,7 +104,7 @@ class WSTimePicker extends HTMLElement {
     if (newMinutes >= 60) {
       this.minutesInput.value = '0' + (newMinutes - 60);
     } else {
-      this.minutesInput.value = newMinutes<10 ? '0'+newMinutes : newMinutes;
+      this.minutesInput.value = newMinutes < 10 ? '0' + newMinutes : newMinutes;
     }
   }
   // Invoke when user click on DOWN arrow at minutes input field
@@ -111,7 +113,7 @@ class WSTimePicker extends HTMLElement {
     if (newMinutes <= 0) {
       this.minutesInput.value = 60 + newMinutes;
     } else {
-      this.minutesInput.value = newMinutes<10 ? '0'+newMinutes : newMinutes;
+      this.minutesInput.value = newMinutes < 10 ? '0' + newMinutes : newMinutes;
     }
   }
   // Invoke when user click OK label and if there are no fails add picked time to input field

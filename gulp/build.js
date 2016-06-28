@@ -19,13 +19,42 @@ const babel = require('gulp-babel');
 var utils = require('./utils.js');
 var config = require('./config.js').default;
 
-gulp.task('build', ['inject']);
+gulp.task('clean', function () {
+	return gulp.src([config.dest + '/**/*', config.temp + '/**/*'], {read: false})
+		.pipe(clean());
+});
 
-gulp.task('createDistFiles', ['clean'], folders(config.webcomponentsFolder, function(folder){
+gulp.task('createDistFiles', folders(config.webcomponentsFolder, function(folder){
   return gulp.src(config.templateFile)
   .pipe(rename(folder + '.html'))
   .pipe(gulp.dest(config.tempTemplates));
 }));
+
+gulp.task('sass', function () {
+  return gulp.src(config.webcomponentsFolder + '/**/*.scss')
+  .pipe(sass().on('error', sass.logError))
+  .pipe(flatmap(function(stream, file){
+    var componentName = utils.getComponentName(file);
+    return stream
+    .pipe(purify([config.webcomponentsFolder + '/' + componentName + '/*.js', config.webcomponentsFolder + '/' + componentName + '/*.html']));
+  }))
+  .pipe(autoprefixer({
+    browsers: ['last 2 versions'],
+    cascade: false
+  }))
+  .pipe(gutil.env.type === 'production' ? cssnano() : gutil.noop())
+  .pipe(gutil.env.type === 'production' ? uglifycss() : gutil.noop())
+  .pipe(gulp.dest(config.temp));
+});
+
+gulp.task('scripts', function () {
+  return gulp.src(config.webcomponentsFolder + '/**/*.js')
+  .pipe(babel({
+    presets: ['es2015']
+  }))
+  .pipe(gutil.env.type === 'production' ? uglifyjs().on('error', gutil.log) : gutil.noop())
+  .pipe(gulp.dest(config.temp));
+});
 
 gulp.task('prepareFiles', function(done) {
   	runSequence('createDistFiles', ['scripts', 'sass'], done);
@@ -67,6 +96,7 @@ gulp.task('inject', ['prepareFiles'], function() {
     return gulp.src(config.tempTemplates + '/*.html')
       .pipe(flatmap(function(stream, file){
         var componentName = utils.getComponentName(file);
+        console.log(componentName);
         return stream
         .pipe(injectHtml(config.webcomponentsFolder + '/' + componentName))
         .pipe(injectStyles(config.temp + '/' + componentName))
@@ -76,33 +106,6 @@ gulp.task('inject', ['prepareFiles'], function() {
       }));
 });
 
-gulp.task('sass', function () {
-  return gulp.src(config.webcomponentsFolder + '/**/*.scss')
-  .pipe(sass().on('error', sass.logError))
-  .pipe(flatmap(function(stream, file){
-    var componentName = utils.getComponentName(file);
-    return stream
-    .pipe(purify([config.webcomponentsFolder + '/' + componentName + '/*.js', config.webcomponentsFolder + '/' + componentName + '/*.html']));
-  }))
-  .pipe(autoprefixer({
-    browsers: ['last 2 versions'],
-    cascade: false
-  }))
-  .pipe(gutil.env.type === 'production' ? cssnano() : gutil.noop())
-  .pipe(gutil.env.type === 'production' ? uglifycss() : gutil.noop())
-  .pipe(gulp.dest(config.temp));
-});
-
-gulp.task('scripts', function () {
-  return gulp.src(config.webcomponentsFolder + '/**/*.js')
-  .pipe(babel({
-    presets: ['es2015']
-  }))
-  .pipe(gutil.env.type === 'production' ? uglifyjs().on('error', gutil.log) : gutil.noop())
-  .pipe(gulp.dest(config.temp));
-});
-
-gulp.task('clean', function () {
-	return gulp.src([config.dest, config.temp], {read: false})
-		.pipe(clean());
+gulp.task('build', function(callback) {
+  runSequence('clean', 'inject', callback);
 });

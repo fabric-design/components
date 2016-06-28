@@ -34,7 +34,7 @@
             function({ detail: { language }}) {
                 console.log('language select: ' + language);
             });
-            document.querySelector('#ws-datepicker').addEventListener('date-changed', function({ detail: { date }}) {
+            document.querySelector('#ws-datepicker').addEventListener('change', function({ detail: { date }}) {
                 console.log('date selected: ' + date);
             });
         </script>

@@ -398,12 +398,6 @@ flatpickr.init = function (context, element, instanceConfig) {
       buildDays();
 
       if ( !self.config.inline && !self.config.enableTime ) {
-        let event = new CustomEvent("date-changed", {
-          detail: {
-            date: self.selectedDateObj
-          }
-        });
-        context.dispatchEvent(event);
         self.close();
       }
     }

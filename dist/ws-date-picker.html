@@ -4,35 +4,54 @@
     <!-- endinject -->
     <style>
         /* inject:styles */
-        html {
-  box-sizing: border-box;
-}
+        /**
+ * Parse a numeric value from a string
+ */
 
-*,*::after,*::before {
-  box-sizing: inherit;
-}
+/**
+ * Convert a pixel value to rem
+ */
+
+/**
+ * Convert a list of pixel values to rem values
+ */
+
+/**
+* Z-index function for managing the values
+*/
 
 .flatpickr-wrapper {
-  display: inline-block;
+  display: block;
   position: relative;
   font-family: acuminpro, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: normal;
 }
 
 .flatpickr-wrapper > input {
-  width: 150px;
-  height: 26px;
-  font-size: 14px;
-  padding-left: 11px;
-  border-color: #d2d7e1;
-  cursor: pointer;
-  z-index: 1;
+  padding: 0.5rem;
+  border: 1px solid #babfcc;
+  box-shadow: inset 0px 1px 3px 0px #e6e8ed;
+  box-sizing: border-box;
+  outline: none;
+  background-color: white;
+  height: 2.125rem;
+  font-weight: normal;
+  transition: border-color .2s linear, box-shadow .2s linear;
+  font-family: inherit;
+  color: inherit;
+  width: 100%;
 }
 
-.flatpickr-wrapper > input.focused {
+.flatpickr-wrapper > input:focus {
   border-color: #00abf2;
+  box-shadow: inset 0 1px 3px 0px #bfecff;
 }
 
-.flatpickr-wrapper > input.focused + #date-picker-icon {
+.flatpickr-wrapper > input:disabled {
+  background-color: #f2f7f9;
+}
+
+.flatpickr-wrapper > input.active + #date-picker-icon {
   width: 12px;
   height: 12px;
   top: 10px;
@@ -46,6 +65,7 @@
   position: absolute;
   width: 16px;
   height: 16px;
+  opacity: 0.6;
 }
 
 .flatpickr-wrapper > .flatpickr-calendar {
@@ -634,12 +654,6 @@ flatpickr.init = function (context, element, instanceConfig) {
       buildDays();
 
       if (!self.config.inline && !self.config.enableTime) {
-        var event = new CustomEvent("date-changed", {
-          detail: {
-            date: self.selectedDateObj
-          }
-        });
-        context.dispatchEvent(event);
         self.close();
       }
     }
@@ -1078,28 +1092,52 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var template = document.currentScript.ownerDocument.querySelector('template');
 
 var WSDatePicker = function (_HTMLInputElement) {
-  _inherits(WSDatePicker, _HTMLInputElement);
+    _inherits(WSDatePicker, _HTMLInputElement);
 
-  function WSDatePicker() {
-    _classCallCheck(this, WSDatePicker);
+    function WSDatePicker() {
+        _classCallCheck(this, WSDatePicker);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(WSDatePicker).apply(this, arguments));
-  }
-
-  _createClass(WSDatePicker, [{
-    key: 'createdCallback',
-    value: function createdCallback() {
-      var clone = document.importNode(template.content, true);
-      // This element uses Shadow DOM.
-      this.createShadowRoot().appendChild(clone);
-      var wsDatePicker = this.shadowRoot.querySelector('.ws-date-picker');
-      // All logic in flatpickr.js file
-      // API and guide how to use: https://chmln.github.io/flatpickr/
-      flatpickr(this.shadowRoot, wsDatePicker);
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(WSDatePicker).apply(this, arguments));
     }
-  }]);
 
-  return WSDatePicker;
+    _createClass(WSDatePicker, [{
+        key: 'createdCallback',
+        value: function createdCallback() {
+            var _this2 = this;
+
+            var clone = document.importNode(template.content, true);
+            // This element uses Shadow DOM.
+            this.createShadowRoot().appendChild(clone);
+            var wsDatePicker = this.shadowRoot.querySelector('.ws-date-picker');
+            wsDatePicker.setAttribute('placeholder', this.getAttribute('placeholder'));
+            // All logic in flatpickr.js file
+            // API and guide how to use: https://chmln.github.io/flatpickr/
+            this.pickr = flatpickr(this.shadowRoot, wsDatePicker, {
+                onChange: function onChange(date, value) {
+                    _this2.dispatchEvent(new CustomEvent('change', { detail: { date: date, value: value } }));
+                }
+            });
+        }
+    }, {
+        key: 'value',
+        get: function get() {
+            return this.pickr && this.pickr.selectedDateObj || null;
+        },
+        set: function set(val) {
+            val = typeof val === 'string' ? new Date(val) : val;
+            this.pickr.setDate(val, false);
+        }
+    }, {
+        key: 'type',
+        get: function get() {
+            return this._type || 'text';
+        },
+        set: function set(value) {
+            this._type = value;
+        }
+    }]);
+
+    return WSDatePicker;
 }(HTMLInputElement);
 
 document.registerElement('ws-date-picker', WSDatePicker);

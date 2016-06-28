@@ -42,8 +42,8 @@ gulp.task('sass', function () {
     browsers: ['last 2 versions'],
     cascade: false
   }))
-  .pipe(gutil.env.type === 'prod' ? cssnano() : gutil.noop())
-  .pipe(gutil.env.type === 'prod' ? uglifycss() : gutil.noop())
+  .pipe(gutil.env.type === 'production' ? cssnano() : gutil.noop())
+  .pipe(gutil.env.type === 'production' ? uglifycss() : gutil.noop())
   .pipe(gulp.dest(config.temp));
 });
 
@@ -52,11 +52,15 @@ gulp.task('scripts', function () {
   .pipe(babel({
     presets: ['es2015']
   }))
-  .pipe(gutil.env.type === 'prod' ? uglifyjs().on('error', gutil.log) : gutil.noop())
+  .pipe(gutil.env.type === 'production' ? uglifyjs().on('error', gutil.log) : gutil.noop())
   .pipe(gulp.dest(config.temp));
 });
 
-gulp.task('inject', ['createDistFiles', 'scripts', 'sass'], function() {
+gulp.task('prepareFiles', function(done) {
+  	runSequence('createDistFiles', ['scripts', 'sass'], done);
+})
+
+gulp.task('inject', ['prepareFiles'], function() {
     function injectScripts(folder) {
       return inject(gulp.src(folder + '/*.js'), {
           starttag: '/* inject:js */',
@@ -97,7 +101,7 @@ gulp.task('inject', ['createDistFiles', 'scripts', 'sass'], function() {
         .pipe(injectHtml(config.webcomponentsFolder + '/' + componentName))
         .pipe(injectStyles(config.temp + '/' + componentName))
         .pipe(injectScripts(config.temp + '/' + componentName))
-        .pipe(gutil.env.type === 'prod' ? rev() : gutil.noop())
+        .pipe(gutil.env.type === 'production' ? rev() : gutil.noop())
         .pipe(gulp.dest(config.dest));
       }));
 });

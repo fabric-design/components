@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "gulp test",
-    "build": "gulp --type=prod build",
-    "serve": "gulp & lite-server"
+    "serve": "gulp & lite-server",
+    "watch": "gulp --type=development",
+    "build": "gulp --type=production build"
   },
   "repository": {
     "type": "git",

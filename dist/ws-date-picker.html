@@ -472,8 +472,10 @@ flatpickr.init = function (context, element, instanceConfig) {
   };
 
   updateValue = function updateValue() {
+    var prev_date = void 0;
 
     if (self.selectedDateObj && self.config.enableTime) {
+      prev_date = self.selectedDateObj.getTime();
 
       // update time
       var hour = parseInt(hourElement.value),
@@ -492,7 +494,9 @@ flatpickr.init = function (context, element, instanceConfig) {
 
     if (self.selectedDateObj) self.input.value = formatDate(self.config.dateFormat);
 
-    triggerChange();
+    if (prev_date && self.selectedDateObj.getTime() !== prev_date) {
+      triggerChange();
+    }
   };
 
   pad = function pad(num) {
@@ -651,6 +655,7 @@ flatpickr.init = function (context, element, instanceConfig) {
       self.selectedDateObj = new Date(self.currentYear, self.currentMonth, e.target.innerHTML);
 
       updateValue();
+      triggerChange();
       buildDays();
 
       if (!self.config.inline && !self.config.enableTime) {
@@ -1115,6 +1120,9 @@ var WSDatePicker = function (_HTMLInputElement) {
             this.pickr = flatpickr(this.shadowRoot, wsDatePicker, {
                 onChange: function onChange(date, value) {
                     _this2.dispatchEvent(new CustomEvent('change', { detail: { date: date, value: value } }));
+                },
+                onClose: function onClose() {
+                    _this2.dispatchEvent(new CustomEvent('close'));
                 }
             });
         }

@@ -13,6 +13,9 @@ class WSDatePicker extends HTMLInputElement {
         this.pickr = flatpickr(this.shadowRoot, wsDatePicker, {
             onChange: (date, value) => {
                 this.dispatchEvent(new CustomEvent('change', {detail: {date, value}}));
+            },
+            onClose: () => {
+                this.dispatchEvent(new CustomEvent('close'));
             }
         });
     }

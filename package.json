@@ -18,6 +18,16 @@
     "web",
     "components"
   ],
+  "files": [
+    "dist"
+  ],
+  "jspm": {
+    "registry": "npm",
+    "jspmPackage": true,
+    "directories": {
+      "dist": "dist"
+    }
+  },
   "author": "Fabian Weber",
   "license": "MIT",
   "devDependencies": {

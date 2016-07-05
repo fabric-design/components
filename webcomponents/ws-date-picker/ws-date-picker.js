@@ -1,4 +1,4 @@
-var template = document._currentScript.ownerDocument.querySelector('template');
+var template = document.currentScript.ownerDocument.querySelector('template');
 
 class WSDatePicker extends HTMLInputElement {
 

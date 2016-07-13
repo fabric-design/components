@@ -50,7 +50,7 @@ gulp.task('sass', function () {
 gulp.task('scripts', function () {
   return gulp.src(config.webcomponentsFolder + '/**/*.js')
   .pipe(babel({
-    presets: ['es2015']
+    presets: ['es2015', 'stage-1']
   }))
   .pipe(gutil.env.type === 'production' ? uglifyjs().on('error', gutil.log) : gutil.noop())
   .pipe(gulp.dest(config.temp));

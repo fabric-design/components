@@ -225,8 +225,10 @@ flatpickr.init = function (context, element, instanceConfig) {
   };
 
   updateValue = function(){
+    let prev_date;
 
     if (self.selectedDateObj && self.config.enableTime ){
+      prev_date = self.selectedDateObj.getTime();
 
       // update time
       var hour = parseInt(hourElement.value),
@@ -250,8 +252,9 @@ flatpickr.init = function (context, element, instanceConfig) {
     if ( self.selectedDateObj )
       self.input.value = formatDate(self.config.dateFormat);
 
-    triggerChange();
-
+    if(prev_date && self.selectedDateObj.getTime() !== prev_date){
+      triggerChange();
+    }
   };
 
   pad = num =>("0" + num).slice(-2);
@@ -395,15 +398,10 @@ flatpickr.init = function (context, element, instanceConfig) {
       );
 
       updateValue();
+      triggerChange();
       buildDays();
 
       if ( !self.config.inline && !self.config.enableTime ) {
-        let event = new CustomEvent("date-changed", {
-          detail: {
-            date: self.selectedDateObj
-          }
-        });
-        context.dispatchEvent(event);
         self.close();
       }
     }

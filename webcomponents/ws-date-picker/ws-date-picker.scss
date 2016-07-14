@@ -1,0 +1,211 @@
+$export-form-css: false;
+$icon-close: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDk1LjkzOSA5NS45MzkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDk1LjkzOSA5NS45Mzk7IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8cGF0aCBkPSJNNjIuODE5LDQ3Ljk3bDMyLjUzMy0zMi41MzRjMC43ODEtMC43ODEsMC43ODEtMi4wNDcsMC0yLjgyOEw4My4zMzMsMC41ODZDODIuOTU4LDAuMjExLDgyLjQ0OCwwLDgxLjkxOSwwICAgYy0wLjUzLDAtMS4wMzksMC4yMTEtMS40MTQsMC41ODZMNDcuOTcsMzMuMTIxTDE1LjQzNSwwLjU4NmMtMC43NS0wLjc1LTIuMDc4LTAuNzUtMi44MjgsMEwwLjU4NywxMi42MDggICBjLTAuNzgxLDAuNzgxLTAuNzgxLDIuMDQ3LDAsMi44MjhMMzMuMTIxLDQ3Ljk3TDAuNTg3LDgwLjUwNGMtMC43ODEsMC43ODEtMC43ODEsMi4wNDcsMCwyLjgyOGwxMi4wMiwxMi4wMjEgICBjMC4zNzUsMC4zNzUsMC44ODQsMC41ODYsMS40MTQsMC41ODZjMC41MywwLDEuMDM5LTAuMjExLDEuNDE0LTAuNTg2TDQ3Ljk3LDYyLjgxOGwzMi41MzUsMzIuNTM1ICAgYzAuMzc1LDAuMzc1LDAuODg0LDAuNTg2LDEuNDE0LDAuNTg2YzAuNTI5LDAsMS4wMzktMC4yMTEsMS40MTQtMC41ODZsMTIuMDItMTIuMDIxYzAuNzgxLTAuNzgxLDAuNzgxLTIuMDQ4LDAtMi44MjhMNjIuODE5LDQ3Ljk3ICAgeiIgZmlsbD0iIzAwMDAwMCIvPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=);
+$icon-calendar: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDUxMS42MzQgNTExLjYzNCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTExLjYzNCA1MTEuNjM0OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHBhdGggZD0iTTQ4Mi41MTMsODMuOTQyYy03LjIyNS03LjIzMy0xNS43OTctMTAuODUtMjUuNjk0LTEwLjg1aC0zNi41NDF2LTI3LjQxYzAtMTIuNTYtNC40NzctMjMuMzE1LTEzLjQyMi0zMi4yNjEgICBDMzk3LjkwNiw0LjQ3NSwzODcuMTU3LDAsMzc0LjU5MSwwaC0xOC4yNjhjLTEyLjU2NSwwLTIzLjMxOCw0LjQ3NS0zMi4yNjQsMTMuNDIyYy04Ljk0OSw4Ljk0NS0xMy40MjIsMTkuNzAxLTEzLjQyMiwzMi4yNjF2MjcuNDEgICBoLTEwOS42M3YtMjcuNDFjMC0xMi41Ni00LjQ3NS0yMy4zMTUtMTMuNDIyLTMyLjI2MUMxNzguNjQsNC40NzUsMTY3Ljg4NiwwLDE1NS4zMjEsMEgxMzcuMDUgICBjLTEyLjU2MiwwLTIzLjMxNyw0LjQ3NS0zMi4yNjQsMTMuNDIyYy04Ljk0NSw4Ljk0NS0xMy40MjEsMTkuNzAxLTEzLjQyMSwzMi4yNjF2MjcuNDFINTQuODIzYy05LjksMC0xOC40NjQsMy42MTctMjUuNjk3LDEwLjg1ICAgYy03LjIzMyw3LjIzMi0xMC44NSwxNS44LTEwLjg1LDI1LjY5N3YzNjUuNDUzYzAsOS44OSwzLjYxNywxOC40NTYsMTAuODUsMjUuNjkzYzcuMjMyLDcuMjMxLDE1Ljc5NiwxMC44NDksMjUuNjk3LDEwLjg0OWg0MDEuOTg5ICAgYzkuODk3LDAsMTguNDctMy42MTcsMjUuNjk0LTEwLjg0OWM3LjIzNC03LjIzNCwxMC44NTItMTUuODA0LDEwLjg1Mi0yNS42OTNWMTA5LjYzOSAgIEM0OTMuMzU3LDk5LjczOSw0ODkuNzQzLDkxLjE3NSw0ODIuNTEzLDgzLjk0MnogTTM0Ny4xODcsNDUuNjg2YzAtMi42NjcsMC44NDktNC44NTgsMi41Ni02LjU2NyAgIGMxLjcxMS0xLjcxMSwzLjkwMS0yLjU2OCw2LjU3LTIuNTY4aDE4LjI2OGMyLjY3LDAsNC44NTMsMC44NTQsNi41NywyLjU2OGMxLjcxMiwxLjcxMiwyLjU2NywzLjkwMywyLjU2Nyw2LjU2N3Y4Mi4yMjQgICBjMCwyLjY2Ni0wLjg1NSw0Ljg1My0yLjU2Nyw2LjU2N2MtMS43MTgsMS43MDktMy45LDIuNTY4LTYuNTcsMi41NjhoLTE4LjI2OGMtMi42NjksMC00Ljg1OS0wLjg1NS02LjU3LTIuNTY4ICAgYy0xLjcxMS0xLjcxNS0yLjU2LTMuOTAxLTIuNTYtNi41NjdWNDUuNjg2eiBNMTI3LjkxNSw0NS42ODZjMC0yLjY2NywwLjg1NS00Ljg1OCwyLjU2OC02LjU2NyAgIGMxLjcxNC0xLjcxMSwzLjkwMS0yLjU2OCw2LjU2Ny0yLjU2OGgxOC4yNzFjMi42NjcsMCw0Ljg1OCwwLjg1NCw2LjU2NywyLjU2OGMxLjcxMSwxLjcxMiwyLjU3LDMuOTAzLDIuNTcsNi41Njd2ODIuMjI0ICAgYzAsMi42NjYtMC44NTUsNC44NTYtMi41Nyw2LjU2N2MtMS43MTMsMS43MDktMy45LDIuNTY4LTYuNTY3LDIuNTY4SDEzNy4wNWMtMi42NjYsMC00Ljg1Ni0wLjg1NS02LjU2Ny0yLjU2OCAgIGMtMS43MDktMS43MTUtMi41NjgtMy45MDEtMi41NjgtNi41NjdWNDUuNjg2eiBNNDU2LjgxMiw0NzUuMDg4SDU0LjgyM3YtMjkyLjM2aDQwMS45ODlWNDc1LjA4OHoiIGZpbGw9IiMwMDAwMDAiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K);
+
+@import "../../../Styleguide-SCSS/quark";
+@import "../../../Styleguide-SCSS/util";
+@import "../../../Styleguide-SCSS/components/base/forms";
+
+.flatpickr-wrapper {
+    display: block;
+    position: relative;
+    font-family: $base-font-family;
+    font-weight: normal;
+    > input {
+        @include default-input();
+        font-family: inherit;
+        color: inherit;
+        width: 100%;
+        &.active + #date-picker-icon {
+            width: 12px;
+            height: 12px;
+            top: 10px;
+            background: center $icon-close;
+        }
+    }
+    > #date-picker-icon {
+        right: 11px;
+        background: $icon-calendar;
+        top: 8px;
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        opacity: 0.6;
+    }
+    > .flatpickr-calendar {
+        background: #fff;
+        border: 1px solid #ddd;
+        font-size: 90%;
+        border-radius: 4px;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        margin-top: 8px;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 75ms;
+        width: 300px;
+        > .flatpickr-month {
+            background: 0 0;
+            color: #000;
+            padding: 13px 0;
+            text-align: center;
+            position: relative;
+            > .flatpickr-next-month,
+            > .flatpickr-prev-month {
+                text-decoration: none;
+                cursor: pointer;
+                color: $ghost;
+                padding: 0 23px;
+                &:hover {
+                    color: $ghost-gray;
+                }
+                > i {
+                    position: relative;
+                    bottom: -4px
+                }
+            }
+            > .flatpickr-prev-month {
+                float: left
+            }
+            > .flatpickr-next-month {
+                float: right
+            }
+            > .flatpickr-current-month {
+                font-size: 135%;
+                font-weight: 300;
+                color: rgba(0, 0, 0, .7);
+                > .cur_month {
+                    color: $ghost;
+                    font-size: 16px;
+                }
+                > .cur_year {
+                    cursor: default;
+                    padding: 0 2px;
+                    color: $ghost;
+                    font-size: 16px;
+                }
+            }
+        }
+        > .flatpickr-weekdays {
+            font-size: 90%;
+            background-color: $pattens-blue;
+            padding: 8px 7px;
+            > span {
+                color: $ghost;
+                text-align: center;
+                display: inline-block;
+                font-size: 14px;
+                width: 32px;
+                padding-left: 2px;
+                &:first-child {
+                    padding-left: 7px;
+                }
+                &:nth-child(2) {
+                    padding-left: 5px;
+                }
+            }
+        }
+        > .flatpickr-days {
+            padding: 7px;
+        }
+        > .flatpickr-weeks {
+            width: 32px;
+            float: left;
+            padding: 7px 7px 7px 10px;
+        }
+        & .flatpickr-day {
+            background: 0 0;
+            border: 1px solid transparent;
+            border-radius: 150px;
+            box-sizing: border-box;
+            font-size: 13px;
+            color: #393939;
+            cursor: pointer;
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            line-height: 31px;
+            margin: 0 1px 1px;
+            text-align: center;
+            &:hover {
+                background-color: $pattens-blue;
+            }
+            &.today {
+                background-color: $cerulean;
+                color: $white;
+            }
+            &.selected,
+            &.selected:hover {
+                background-color: $cerulean;
+                color: $white;
+            }
+            &.disabled, &.disabled:hover {
+                color: $ghost;
+                background: 0 0;
+                border-color: transparent;
+                cursor: default
+            }
+        }
+    }
+    &.inline > .flatpickr-calendar,
+    &.open > .flatpickr-calendar {
+        z-index: 100;
+        opacity: 1;
+        visibility: visible;
+    }
+    &.inline > .flatpickr-calendar {
+        position: static;
+    }
+    > .flatpickr-time {
+        overflow: auto;
+        border-top: 1px solid #ddd;
+        text-align: center;
+        > .flatpickr-hour,
+        > .flatpickr-minute {
+            background: 0 0;
+            -webkit-appearance: none;
+            -moz-appearance: textfield;
+            box-shadow: none;
+            border: 0;
+            border-radius: 0;
+            display: inline-block;
+            width: 33%;
+            min-width: 33%;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 38px;
+            line-height: 38px;
+            cursor: pointer;
+            font-weight: 700;
+            color: #393939;
+            &:hover {
+                background: #f0f0f0;
+            }
+            &:focus {
+                outline: 0;
+                border: 0;
+            }
+        }
+        > .flatpickr-minute {
+            width: 26%;
+            font-weight: 300
+        }
+    }
+    > .flatpickr-am-pm:hover {
+        background: #f0f0f0
+    }
+    > .flatpickr-am-pm,
+    > .flatpickr-time-separator {
+        height: 38px;
+        display: inline-block;
+        line-height: 38px
+    }
+    > .flatpickr-am-pm {
+        width: 21%;
+        padding: 0 2%;
+        cursor: pointer;
+        text-align: left
+    }
+}

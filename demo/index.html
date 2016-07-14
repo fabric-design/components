@@ -1,5 +1,6 @@
 <html>
     <head>
+        <script src="webcomponents.min.js"></script>
         <link rel="import" href="../dist/ws-header.html" />
         <link rel="import" href="../dist/ws-week-picker.html" />
     </head>
@@ -19,9 +20,7 @@
                 <a href="javascript:void(0)">Contact</a>
             </li>
         </ws-header>
-
-        <ws-week-picker id="ws-week-picker"></ws-week-picker>
-
+        <ws-date-picker id="ws-datepicker"></ws-date-picker>
         <script>
             document.querySelector('#header').addEventListener('error',
             function({ detail: {message} }) {
@@ -34,6 +33,9 @@
             document.querySelector('#header').addEventListener('language-changed',
             function({ detail: { language }}) {
                 console.log('language select: ' + language);
+            });
+            document.querySelector('#ws-datepicker').addEventListener('change', function({ detail: { date }}) {
+                console.log('date selected: ' + date);
             });
         </script>
     </body>

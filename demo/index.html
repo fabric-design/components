@@ -20,6 +20,7 @@
                 <a href="javascript:void(0)">Contact</a>
             </li>
         </ws-header>
+        <ws-time-picker id="time-picker"></ws-time-picker>
         <ws-date-picker id="ws-datepicker"></ws-date-picker>
         <script>
             document.querySelector('#header').addEventListener('error',
@@ -34,7 +35,12 @@
             function({ detail: { language }}) {
                 console.log('language select: ' + language);
             });
-            document.querySelector('#ws-datepicker').addEventListener('change', function({ detail: { date }}) {
+            document.querySelector('#time-picker').addEventListener('time-changed',
+            function({ detail: { hours, minutes }}) {
+               console.log('time select: ' + hours + ':' + minutes);
+            });
+            document.querySelector('#ws-datepicker').addEventListener('change',
+            function({ detail: { date }}) {
                 console.log('date selected: ' + date);
             });
         </script>

@@ -107,11 +107,7 @@ class WSHeader extends HTMLElement {
           "&client_id=" + this.state.clientId +
           "&redirect_uri=" + this.state.redirectUrl +
           "&state=" + this.setSessionState();
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 9589ffa1d1f5c91acd2631f948fd0814c0e60d40
         window.location.href = url;
     }
     
@@ -130,20 +126,12 @@ class WSHeader extends HTMLElement {
               this.getTokenInfo()
             .then(() => {
               this.showLoggedIn();
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 9589ffa1d1f5c91acd2631f948fd0814c0e60d40
         this.propagateLoginStatusChange(true, token);
         resolve();
     }, () => {
             this.showLoggedOut();
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> 9589ffa1d1f5c91acd2631f948fd0814c0e60d40
             this.propagateLoginStatusChange(false);
             reject();
         });
@@ -216,11 +204,7 @@ class WSHeader extends HTMLElement {
             this.setCookie(token);
             return resolve(token);
         }
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 9589ffa1d1f5c91acd2631f948fd0814c0e60d40
         reject();
     });
     }

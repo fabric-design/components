@@ -3,6 +3,7 @@
         <script src="webcomponents.min.js"></script>
         <link rel="import" href="../dist/ws-header.html" />
         <link rel="import" href="../dist/ws-week-picker.html" />
+        <link rel="import" href="../dist/ws-notification.html" />
     </head>
     <body class="refills-patterns refills-components" style="margin: 0;">
         <ws-header
@@ -43,6 +44,14 @@
             function({ detail: { date }}) {
                 console.log('date selected: ' + date);
             });
+            setTimeout(function() {
+                wsNotification.init(); // Can pass any wrapper element
+                wsNotification.create({title: 'This is a info', lifetime: 0});
+                wsNotification.create({title: 'This is a warning', description: 'Because we want to show a warning', type: 'warning'});
+                wsNotification.create({title: 'This is a error', type: 'error', lifetime: 6000});
+                wsNotification.create({title: 'This was successfull', type: 'success', lifetime: 3000});
+                wsNotification.create({title: 'This will disappear in 10 seconds', lifetime: 10000});
+            }, 1000);
         </script>
     </body>
 </html>

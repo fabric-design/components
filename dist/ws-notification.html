@@ -215,7 +215,7 @@ var Notification = function (_HTMLDivElement) {
     _createClass(Notification, [{
         key: 'createdCallback',
         value: function createdCallback() {
-            this.context = { title: '', type: 'info', description: '', lifetime: 5000 };
+            this.context = { title: '', type: 'info', description: '', lifetime: 10000 };
             // Create shadow root if not done yet
             if (!this.shadowRoot) {
                 this.createShadowRoot();
@@ -293,6 +293,10 @@ var NotificationHandler = function () {
 
         this.notifications = [];
         this.list = null;
+        // Bind functions to this scope
+        this.isInitialized = this.isInitialized.bind(this);
+        this.init = this.init.bind(this);
+        this.create = this.create.bind(this);
     }
 
     _createClass(NotificationHandler, [{

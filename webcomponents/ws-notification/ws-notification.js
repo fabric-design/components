@@ -29,7 +29,7 @@ function interpolate(string, parameters) {
 class Notification extends HTMLDivElement {
 
     createdCallback() {
-        this.context = {title: '', type: 'info', description: '', lifetime: 5000};
+        this.context = {title: '', type: 'info', description: '', lifetime: 10000};
         // Create shadow root if not done yet
         if (!this.shadowRoot) {
             this.createShadowRoot();
@@ -86,6 +86,10 @@ class NotificationHandler {
     constructor() {
         this.notifications = [];
         this.list = null;
+        // Bind functions to this scope
+        this.isInitialized = this.isInitialized.bind(this);
+        this.init = this.init.bind(this);
+        this.create = this.create.bind(this);
     }
 
     isInitialized() {

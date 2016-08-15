@@ -564,11 +564,12 @@ var WSHeader = function (_HTMLElement) {
                         _this4.propagateLoginStatusChange(true, token);
                         resolve();
                     }, function () {
-                        _this4.showLoggedOut();
-
-                        _this4.propagateLoginStatusChange(false);
+                        _this4.logout();
                         reject();
                     });
+                }, function () {
+                    _this4.logout();
+                    reject();
                 });
             });
         }
@@ -639,7 +640,6 @@ var WSHeader = function (_HTMLElement) {
                 }
                 token = _this5.getCookieValue(_this5.state.tokenName);
                 if (token) {
-                    _this5.setCookie(token);
                     return resolve(token);
                 }
 

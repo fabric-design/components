@@ -130,12 +130,13 @@ class WSHeader extends HTMLElement {
         this.propagateLoginStatusChange(true, token);
         resolve();
     }, () => {
-            this.showLoggedOut();
-
-            this.propagateLoginStatusChange(false);
+            this.logout();
             reject();
         });
-    });
+    }, () => {
+            this.logout();
+            reject();
+        });
     });
     }
     
@@ -201,7 +202,6 @@ class WSHeader extends HTMLElement {
         }
         token = this.getCookieValue(this.state.tokenName);
         if (token) {
-            this.setCookie(token);
             return resolve(token);
         }
 

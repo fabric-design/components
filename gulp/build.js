@@ -100,7 +100,7 @@ gulp.task('inject', ['prepareFiles'], function() {
         .pipe(injectHtml(config.webcomponentsFolder + '/' + componentName))
         .pipe(injectStyles(config.temp + '/' + componentName))
         .pipe(injectScripts(config.temp + '/' + componentName))
-        .pipe(gutil.env.type === 'production' ? rev() : gutil.noop())
+        // .pipe(gutil.env.type === 'production' ? rev() : gutil.noop())
         .pipe(gulp.dest(config.dest));
     }));
 });

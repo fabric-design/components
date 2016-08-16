@@ -20,6 +20,6 @@ wrench.readdirSyncRecursive('./gulp').filter(function(file) {
   require('./gulp/' + file);
 });
 
-gulp.task('default', function(callback) {
+gulp.task('default', ['sass:styleguide'], function(callback) {
   runSequence('build', 'watch', callback);
 });

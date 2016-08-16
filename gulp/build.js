@@ -20,7 +20,7 @@ var utils = require('./utils.js');
 var config = require('./config.js').default;
 
 gulp.task('clean', function () {
-	return gulp.src([config.dest + '/**/*', config.temp + '/**/*'], {read: false})
+	return gulp.src([config.dest, config.temp], {read: false})
 		.pipe(clean());
 });
 
@@ -36,7 +36,7 @@ gulp.task('sass', function () {
   .pipe(flatmap(function(stream, file){
     var componentName = utils.getComponentName(file);
     return stream
-    .pipe(purify([config.webcomponentsFolder + '/' + componentName + '/*.js', config.webcomponentsFolder + '/' + componentName + '/*.html']));
+    // .pipe(purify([config.webcomponentsFolder + '/' + componentName + '/*.js', config.webcomponentsFolder + '/' + componentName + '/*.html']));
   }))
   .pipe(autoprefixer({
     browsers: ['last 2 versions'],
@@ -45,6 +45,17 @@ gulp.task('sass', function () {
   .pipe(gutil.env.type === 'production' ? cssnano() : gutil.noop())
   .pipe(gutil.env.type === 'production' ? uglifycss() : gutil.noop())
   .pipe(gulp.dest(config.temp));
+});
+
+gulp.task('sass:styleguide', function () {
+  return gulp.src(config.styleguide)
+      .pipe(sass().on('error', sass.logError))
+      .pipe(autoprefixer({
+        browsers: ['last 2 versions'],
+        cascade: false
+      }))
+      .pipe(rename('styleguide.css'))
+      .pipe(gulp.dest(config.demo));
 });
 
 gulp.task('scripts', function () {

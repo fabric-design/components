@@ -1,0 +1,859 @@
+<template>
+    <!-- inject:html -->
+    <template id="ws-dropdown-button">
+    <div class="dropdown-container">
+        <p class="dropdown-description">Test</p>
+        <a class="dropdown-button">
+            <content></content>
+        </a>
+        <ws-dropdown></ws-dropdown>
+    </div>
+</template>
+    <template id="ws-dropdown-menu">
+    <ul class="dropdown-menu">
+    </ul>
+
+    <template id="ws-dropdown-menu-item">
+        <li class="dropdown-item">
+            <a class="text"></a>
+            <ws-dropdown-menu></ws-dropdown-menu>
+        </li>
+    </template>
+
+    <template id="ws-dropdown-menu-back-item">
+        <li class="dropdown-item">
+            <a class="text">
+                &lsaquo; Back
+            </a>
+        </li>
+    </template>
+</template>
+
+    <template id="ws-dropdown-select">
+    <div class="select-box ${classes}">
+        <slot show.bind="!value"></slot>
+        <span if.bind="value">${value}</span>
+    </div>
+    <ws-dropdown items.bind="items" value.bind="value">
+        <slot name="menu"></slot>
+    </ws-dropdown>
+</template>
+    <template id="ws-dropdown">
+    <ws-dropdown-menu></ws-dropdown-menu>
+    <div class="dropdown-arrow"></div>
+</template>
+    <!-- endinject -->
+    <style>
+        /* inject:styles */
+        html {
+  box-sizing: border-box; }
+
+*, *::after, *::before {
+  box-sizing: inherit; }
+
+.dropdown-description {
+  background: #ffffff;
+  border-bottom-left-radius: 3px;
+  border-bottom: 1px solid silver;
+  border-left: 1px solid silver;
+  border-top-left-radius: 3px;
+  border-top: 1px solid silver;
+  color: #ccd0d7;
+  float: left;
+  font-size: 0.7em;
+  line-height: 2rem;
+  margin: 0;
+  padding: 0 0.5em 0 1em; }
+  @media screen and (min-width: 53.75em) {
+    .dropdown-description {
+      font-size: 1em; } }
+
+.dropdown-container {
+  display: inline-block;
+  position: relative;
+  text-align: center; }
+
+.dropdown-button {
+  background: #ffffff;
+  border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+  border-top: 1px solid silver;
+  border-right: 1px solid silver;
+  border-bottom: 1px solid silver;
+  cursor: pointer;
+  float: right;
+  line-height: 2rem;
+  margin: 0;
+  padding: 0 2em 0 1em;
+  position: relative; }
+  @media screen and (min-width: 53.75em) {
+    .dropdown-button {
+      padding: 0 2em 0 1em; } }
+
+.dropdown-button:hover {
+  background-color: #def5fe; }
+
+.dropdown-button:after {
+  color: #5e6979;
+  content: "\25BE";
+  display: block;
+  position: absolute;
+  right: 1em;
+  top: 0; }
+
+        html {
+  box-sizing: border-box; }
+
+*, *::after, *::before {
+  box-sizing: inherit; }
+
+.dropdown-menu {
+  transition: all 0.2s ease-in-out;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+  color: #5e6979;
+  cursor: pointer;
+  display: none;
+  margin: 0;
+  overflow: show;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 50px;
+  width: 228px;
+  z-index: 99999; }
+  .dropdown-menu:before {
+    position: absolute;
+    top: 0;
+    right: 1em;
+    bottom: 0;
+    left: 0;
+    color: #ffffff;
+    content: "\25b2";
+    pointer-events: none;
+    text-shadow: 0 -2px 2px rgba(0, 0, 0, 0.3);
+    top: -0.9em; }
+
+.dropdown-menu li {
+  color: #5e6979;
+  list-style: none;
+  padding: 0.5em; }
+
+.dropdown-menu li:hover {
+  background: #def5fe; }
+
+.dropdown-menu li:first-child {
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px; }
+
+.dropdown-menu li:last-child {
+  border: none;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px; }
+
+.show-menu {
+  display: block; }
+
+        /* endinject */
+    </style>
+</template>
+
+<script>
+(function(){
+    /* inject:js */
+    'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
+
+var state = {
+    items: []
+};
+
+var WSDropdownButton = function (_HTMLButtonElement) {
+    _inherits(WSDropdownButton, _HTMLButtonElement);
+
+    function WSDropdownButton() {
+        _classCallCheck(this, WSDropdownButton);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(WSDropdownButton).apply(this, arguments));
+    }
+
+    _createClass(WSDropdownButton, [{
+        key: 'createdCallback',
+
+        // Use createdCallback instead of constructor to init an element.
+        value: function createdCallback() {
+            var clone = document.importNode(template.content.getElementById('ws-dropdown-button').content, true);
+            var styleElement = template.content.querySelector('style').cloneNode(true);
+
+            // This element uses Shadow DOM.
+            this.createShadowRoot().appendChild(clone);
+            this.shadowRoot.appendChild(styleElement);
+
+            this.state = state;
+            this.grabElements();
+            this.getAttributes();
+            this.draw();
+            this.setupListeners();
+        }
+    }, {
+        key: 'grabElements',
+        value: function grabElements() {
+            this.dropdownElement = this.shadowRoot.querySelector('ws-dropdown');
+            this.button = this.shadowRoot.querySelector('.dropdown-button');
+        }
+    }, {
+        key: 'getAttributes',
+        value: function getAttributes() {
+            var itemsAttributeValue = this.getAttribute('items');
+            this.state = Object.assign({}, this.state, {
+                items: itemsAttributeValue && JSON.parse(itemsAttributeValue)
+            });
+        }
+    }, {
+        key: 'draw',
+        value: function draw() {
+            this.dropdownElement.setAttribute('items', JSON.stringify(this.state.items));
+        }
+    }, {
+        key: 'setupListeners',
+        value: function setupListeners() {
+            var _this2 = this;
+
+            this.dropdownElement.addEventListener('change', function (e) {
+                return _this2.onChange(e);
+            });
+            this.button.addEventListener('click', function (e) {
+                return _this2.open(e);
+            });
+        }
+    }, {
+        key: 'onChange',
+        value: function onChange(event) {
+            event.stopPropagation();
+            this.element.dispatchEvent(event);
+        }
+    }, {
+        key: 'open',
+        value: function open(event) {
+            event.stopPropagation();
+            event.preventDefault();
+            this.dropdownElement.open();
+            document.body.addEventListener('click', this.hide.bind(this));
+        }
+
+        /**
+         * Hide the drop down on clicking outside of dropdown
+         */
+
+    }, {
+        key: 'hide',
+        value: function hide() {
+            document.body.removeEventListener('click', this.hide.bind(this));
+            this.dropdownElement.close();
+        }
+    }, {
+        key: 'propagateError',
+        value: function propagateError(reason) {
+            var event = new CustomEvent("error", {
+                detail: {
+                    message: reason
+                }
+            });
+            this.dispatchEvent(event);
+        }
+
+        // You can also define the other lifecycle methods.
+
+    }, {
+        key: 'attachedCallback',
+        value: function attachedCallback() {}
+    }, {
+        key: 'detachedCallback',
+        value: function detachedCallback() {}
+    }, {
+        key: 'attributeChangedCallback',
+        value: function attributeChangedCallback(attrName, oldVal, newVal) {
+            switch (attrName) {
+                case "items":
+                    this.getAttributes();
+                    this.draw();
+                    break;
+            }
+        }
+    }]);
+
+    return WSDropdownButton;
+}(HTMLButtonElement);
+
+//Register the element with the document
+
+
+document.registerElement('ws-dropdown-button', WSDropdownButton);
+    'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
+
+var GO_BACK_EVENT = 'go-back';
+var GO_NEXT_EVENT = 'go-next';
+var state = {
+    hasParent: false,
+    items: []
+};
+
+var WSDropdownMenu = function (_HTMLElement) {
+    _inherits(WSDropdownMenu, _HTMLElement);
+
+    function WSDropdownMenu() {
+        _classCallCheck(this, WSDropdownMenu);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(WSDropdownMenu).apply(this, arguments));
+    }
+
+    _createClass(WSDropdownMenu, [{
+        key: 'createdCallback',
+
+        // Use createdCallback instead of constructor to init an element.
+        value: function createdCallback() {
+            this.rootTemplate = template.content.getElementById('ws-dropdown-menu').content;
+            var clone = document.importNode(this.rootTemplate, true);
+            var styleElement = template.content.querySelector('style').cloneNode(true);
+
+            // This element uses Shadow DOM.
+            this.createShadowRoot().appendChild(clone);
+            this.shadowRoot.appendChild(styleElement);
+
+            this.state = state;
+            this.grabElements();
+            this.getAttributes();
+        }
+    }, {
+        key: 'grabElements',
+        value: function grabElements() {
+            this.menuContainer = this.shadowRoot.querySelector('.dropdown-menu');
+        }
+    }, {
+        key: 'draw',
+        value: function draw() {
+            var _state = this.state;
+            var hasParent = _state.hasParent;
+            var items = _state.items;
+
+            this.cleanListItems();
+            this.checkIfRoot(hasParent, items);
+            this.addItems(items);
+        }
+    }, {
+        key: 'getAttributes',
+        value: function getAttributes() {
+            try {
+                var itemsAttributeValue = this.getAttribute('items');
+                var hasParentAttribute = this.getAttribute('has-parent');
+                this.state = Object.assign({}, this.state, {
+                    items: itemsAttributeValue && JSON.parse(itemsAttributeValue),
+                    hasParent: hasParentAttribute ? JSON.parse(hasParentAttribute) : false
+                });
+
+                // if attributes change redraw
+                this.draw();
+            } catch (e) {
+                var message = 'Getting Attributes failed: ' + e.message;
+                console.log(message);
+                this.propagateError(message);
+            }
+        }
+    }, {
+        key: 'checkIfRoot',
+        value: function checkIfRoot(hasParent, items) {
+            var _this2 = this;
+
+            var classes = 'dropdown-menu';
+            if (!hasParent) {
+                classes += ' dropdown-root-menu';
+            } else {
+                var goBackItem = document.importNode(this.rootTemplate.getElementById('ws-dropdown-menu-back-item').content);
+                goBackItem.onclick = function () {
+                    return _this2.emitGoBackEvent();
+                };
+                this.menuContainer.appendChild(goBackItem);
+            }
+            this.menuContainer.className = classes;
+        }
+    }, {
+        key: 'addItems',
+        value: function addItems(items) {
+            var _this3 = this;
+
+            if (!items) {
+                return;
+            }
+            items.forEach(function (item) {
+                var listItem = _this3.prepareListItem(item);
+                _this3.menuContainer.appendChild(listItem);
+            });
+        }
+    }, {
+        key: 'cleanListItems',
+        value: function cleanListItems() {
+            this.menuContainer.innerHTML = '';
+        }
+    }, {
+        key: 'prepareListItem',
+        value: function prepareListItem(item) {
+            var _this4 = this;
+
+            var classes = 'dropdown-menu';
+            var listItem = document.importNode(this.rootTemplate.getElementById('ws-dropdown-menu-item').content, true);
+            var linkItem = listItem.querySelector('a');
+            var selected = item.selected;
+            var href = item.href;
+            var icon = item.icon;
+            var label = item.label;
+            var children = item.children;
+
+
+            if (selected) {
+                classes += ' is-active';
+            }
+            linkItem.className = classes;
+
+            // having a link and an item is not desired
+            if (href) {
+                linkItem.setAttribute('href', href);
+            } else {
+                linkItem.onclick = function () {
+                    return _this4.propagateGoNext(item);
+                };
+            }
+
+            if (icon) {
+                var iconItem = document.createElement("i");
+                iconItem.className = 'icon ' + icon;
+                linkItem.appendChild(iconItem);
+            }
+
+            linkItem.textContent = label || item;
+
+            var subMenuItem = listItem.querySelector('ws-dropdown-menu');
+            if (children && children.length > 0) {
+                subMenuItem.setAttribute('items', JSON.stringify(children));
+                subMenuItem.setAttribute('has-parent', true);
+            } else {
+                subMenuItem.remove();
+            }
+
+            return listItem;
+        }
+    }, {
+        key: 'setupListeners',
+        value: function setupListeners(listItemElement) {
+            var _this5 = this;
+
+            listItemElement.on(GO_BACK_EVENT, function (e) {
+                e.preventDefault();
+                _this5.propagateGoBack();
+            });
+            listItemElement.on(GO_NEXT_EVENT, function (e) {
+                e.preventDefault();
+                _this5.propagateGoNext(e.detail.item);
+            });
+        }
+    }, {
+        key: 'propagateGoBack',
+        value: function propagateGoBack() {
+            var event = new CustomEvent(GO_BACK_EVENT);
+            this.dispatchEvent(event);
+        }
+    }, {
+        key: 'propagateGoNext',
+        value: function propagateGoNext(item) {
+            var event = new CustomEvent(GO_NEXT_EVENT, {
+                detail: {
+                    item: item
+                }
+            });
+            this.dispatchEvent(event);
+        }
+    }, {
+        key: 'propagateError',
+        value: function propagateError(reason) {
+            var event = new CustomEvent("error", {
+                detail: {
+                    message: reason
+                }
+            });
+            this.dispatchEvent(event);
+        }
+
+        // You can also define the other lifecycle methods.
+
+    }, {
+        key: 'attachedCallback',
+        value: function attachedCallback() {}
+    }, {
+        key: 'detachedCallback',
+        value: function detachedCallback() {}
+    }, {
+        key: 'attributeChangedCallback',
+        value: function attributeChangedCallback(attrName, oldVal, newVal) {
+            switch (attrName) {
+                case "items":
+                case "has-parent":
+                    this.getAttributes();
+                    break;
+            }
+        }
+    }]);
+
+    return WSDropdownMenu;
+}(HTMLElement);
+
+//Register the element with the document
+
+
+document.registerElement('ws-dropdown-menu', WSDropdownMenu);
+    'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
+
+var state = {};
+
+var WSDropdown = function (_HTMLSelectElement) {
+    _inherits(WSDropdown, _HTMLSelectElement);
+
+    function WSDropdown() {
+        _classCallCheck(this, WSDropdown);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(WSDropdown).apply(this, arguments));
+    }
+
+    _createClass(WSDropdown, [{
+        key: 'createdCallback',
+
+        // Use createdCallback instead of constructor to init an element.
+        value: function createdCallback() {
+            var clone = document.importNode(template.content.getElementById('ws-dropdown-select').content, true);
+
+            // This element uses Shadow DOM.
+            this.createShadowRoot().appendChild(clone);
+
+            this.state = state;
+            this.getAttributes();
+        }
+    }, {
+        key: 'propagateError',
+        value: function propagateError(reason) {
+            var event = new CustomEvent("error", {
+                detail: {
+                    message: reason
+                }
+            });
+            this.dispatchEvent(event);
+        }
+    }, {
+        key: 'getAttributes',
+        value: function getAttributes() {
+            this.state = Object.assign({}, this.state, {});
+        }
+
+        // You can also define the other lifecycle methods.
+
+    }, {
+        key: 'attachedCallback',
+        value: function attachedCallback() {}
+    }, {
+        key: 'detachedCallback',
+        value: function detachedCallback() {}
+    }, {
+        key: 'attributeChangedCallback',
+        value: function attributeChangedCallback(attrName, oldVal, newVal) {
+            switch (attrName) {}
+        }
+    }]);
+
+    return WSDropdown;
+}(HTMLSelectElement);
+
+//Register the element with the document
+
+
+document.registerElement('ws-dropdown-select', WSDropdown);
+    'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
+
+var GO_BACK_EVENT = 'go-back';
+var GO_NEXT_EVENT = 'go-next';
+var state = {
+    items: [],
+    value: null
+};
+
+var animationEndEvents = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
+
+var WSDropdown = function (_HTMLElement) {
+    _inherits(WSDropdown, _HTMLElement);
+
+    function WSDropdown() {
+        _classCallCheck(this, WSDropdown);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(WSDropdown).apply(this, arguments));
+    }
+
+    _createClass(WSDropdown, [{
+        key: 'createdCallback',
+
+        // Use createdCallback instead of constructor to init an element.
+        value: function createdCallback() {
+            var clone = document.importNode(template.content.getElementById('ws-dropdown').content, true);
+
+            // This element uses Shadow DOM.
+            this.createShadowRoot().appendChild(clone);
+
+            this.state = state;
+            this.grabElements();
+            this.getAttributes();
+            this.draw();
+        }
+    }, {
+        key: 'grabElements',
+        value: function grabElements() {
+            this.dropdownContainer = this.shadowRoot.querySelector('.dropdown-container');
+            this.dropdownMenu = this.shadowRoot.querySelector('ws-dropdown-menu');
+        }
+    }, {
+        key: 'getAttributes',
+        value: function getAttributes() {
+            var itemsAttributeValue = this.getAttribute('items');
+            this.state = Object.assign({}, this.state, {
+                items: itemsAttributeValue && JSON.parse(itemsAttributeValue)
+            });
+        }
+    }, {
+        key: 'draw',
+        value: function draw() {
+            this.dropdownMenu.setAttribute('items', JSON.stringify(this.state.items));
+        }
+    }, {
+        key: 'setupListeners',
+        value: function setupListeners(menuElement) {
+            var _this2 = this;
+
+            menuElement.on(GO_BACK_EVENT, function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                _this2.back(e);
+            });
+            menuElement.on(GO_NEXT_EVENT, function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                _this2.next(e);
+            });
+        }
+    }, {
+        key: 'open',
+        value: function open() {
+            if (!this.dropdownContainer.classList.contains('mod-open')) {
+                this.dropdownContainer.style.height = 0;
+                this.dropdownContainer.classList.add('mod-open');
+            }
+            this.adjustSize(this.currentMenu || this.dropdownMenu);
+        }
+    }, {
+        key: 'close',
+        value: function close() {
+            if (this.dropdownContainer.classList.contains('mod-open')) {
+                this.animateElement(this.dropdownContainer, 'animate-close', function (container) {
+                    container.classList.remove('mod-open');
+                });
+            }
+        }
+    }, {
+        key: 'next',
+        value: function next(event, element, item) {
+            event.preventDefault();
+            event.stopPropagation();
+            // Show next menu if children are available
+            if (item.children && item.children.length) {
+                var oldMenu = this.currentMenu || this.dropdownMenu;
+                var newMenu = element.querySelector('.dropdown-menu');
+                this.adjustSize(newMenu);
+                this.animate(oldMenu, newMenu, false);
+                this.currentMenu = newMenu;
+            } else if (item.value !== undefined) {
+                this.value = item.value;
+                this.events.publish('click', item);
+                this.events.publish('change', { value: this.value });
+            } else {
+                this.events.publish('click', item);
+            }
+            return false;
+        }
+    }, {
+        key: 'back',
+        value: function back(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (!this.currentMenu) {
+                throw new Error('Can not go back in dropdown if already on root');
+            }
+            var oldMenu = this.currentMenu;
+            var newMenu = this.getParent(this.currentMenu, 'dropdown-menu') || this.dropdownMenu;
+            this.adjustSize(newMenu);
+            this.animate(oldMenu, newMenu, true);
+            this.currentMenu = newMenu;
+        }
+    }, {
+        key: 'adjustSize',
+        value: function adjustSize(newMenu) {
+            this.dropdownContainer.style.height = newMenu.clientHeight + 'px';
+        }
+    }, {
+        key: 'animate',
+        value: function animate(oldMenu, newMenu, goBack) {
+            var outAnimation = !goBack ? 'animate-out' : 'animate-sub-out';
+            var inAnimation = goBack ? 'animate-in' : 'animate-sub-in';
+            // Fade out old element and set mod-item-open if going back and mod-sub-open for going deeper
+            this.animateElement(oldMenu, outAnimation, function (menu) {
+                menu.classList.remove('mod-menu-open');
+                if (!goBack) {
+                    menu.classList.add('mod-sub-open');
+                }
+            });
+            // Create a clone of new sub menu for animations
+            this.animateElement(newMenu, inAnimation, function (menu) {
+                menu.classList.remove('mod-sub-open');
+                menu.classList.add('mod-menu-open');
+            });
+        }
+    }, {
+        key: 'animateElement',
+        value: function animateElement(item, animationClass, callback) {
+            // Define callback for animation end events
+            var getHandler = function getHandler(eventName) {
+                var handler = function handler(event) {
+                    item.classList.remove(animationClass);
+                    item.removeEventListener(eventName, handler);
+                    callback(item);
+                };
+                return handler;
+            };
+            // Listen for all possible animation end events
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = this.animationEndEvents[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var eventName = _step.value;
+
+                    item.addEventListener(eventName, getHandler(eventName));
+                }
+                // Add class to start animation
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            item.classList.add(animationClass);
+        }
+    }, {
+        key: 'getParent',
+        value: function getParent(item, className) {
+            var parentItem = null;
+            for (var e = item.parentNode; !parentItem; e = e.parentNode) {
+                if (e.classList.contains(className)) {
+                    parentItem = e;
+                    break;
+                }
+                if (e.classList.contains('dropdown')) {
+                    break;
+                }
+            }
+            return parentItem;
+        }
+    }, {
+        key: 'propagateError',
+        value: function propagateError(reason) {
+            var event = new CustomEvent("error", {
+                detail: {
+                    message: reason
+                }
+            });
+            this.dispatchEvent(event);
+        }
+
+        // You can also define the other lifecycle methods.
+
+    }, {
+        key: 'attachedCallback',
+        value: function attachedCallback() {
+            this.adjustSize(this.dropdownMenu);
+        }
+    }, {
+        key: 'detachedCallback',
+        value: function detachedCallback() {}
+    }, {
+        key: 'attributeChangedCallback',
+        value: function attributeChangedCallback(attrName, oldVal, newVal) {
+            switch (attrName) {
+                case 'items':
+                    this.getAttributes();
+                    this.draw();
+                    break;
+            }
+        }
+    }]);
+
+    return WSDropdown;
+}(HTMLElement);
+
+//Register the element with the document
+
+
+document.registerElement('ws-dropdown', WSDropdown);
+    /* endinject */
+})()
+</script>

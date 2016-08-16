@@ -1,0 +1,78 @@
+@import "node_modules/wholesale-styleguide-scss/variables";
+@import "node_modules/bourbon/app/assets/stylesheets/bourbon";
+@import "node_modules/bourbon-neat/app/assets/stylesheets/neat";
+
+$base-border-color: gainsboro !default;
+$base-border-radius: 3px !default;
+$base-line-height: 1.5em !default;
+$base-background-color: white !default;
+$dark-gray: #333 !default;
+$large-screen: em(860) !default;
+$base-font-color: $dark-gray !default;
+$dropdown-color: $base-font-color;
+$dropdown-description-color: lighten($dropdown-color, 40%);
+$dropdown-border: 1px solid silver;
+$dropdown-background: $base-background-color;
+$dropdown-background-hover: $color-background-dropdown-option-hover;
+$dropdown-inner-border: 1px solid silver;
+$dropdown-height: 2rem;
+$dropdown-padding: 1em;
+$dropdown-distance-from-menu: 50px;
+$dropdown-arrow-top-distance: 0;
+
+.dropdown-description {
+	background: $dropdown-background;
+	border-bottom-left-radius: $base-border-radius;
+	border-bottom: $dropdown-border;
+	border-left: $dropdown-border;
+	border-top-left-radius: $base-border-radius;
+	border-top: $dropdown-border;
+	color: $dropdown-description-color;
+	float: left;
+	font-size: 0.7em;
+	line-height: $dropdown-height;
+	margin: 0;
+	padding: 0 ($dropdown-padding / 2) 0 $dropdown-padding;
+
+	@include media($large-screen) {
+		font-size: 1em;
+	}
+}
+
+.dropdown-container {
+	display: inline-block;
+	position: relative;
+	text-align: center;
+}
+
+.dropdown-button {
+	background: $dropdown-background;
+	border-bottom-right-radius: $base-border-radius;
+	border-top-right-radius: $base-border-radius;
+	border-top: $dropdown-border;
+	border-right: $dropdown-border;
+	border-bottom: $dropdown-border;
+	cursor: pointer;
+	float: right;
+	line-height: $dropdown-height;
+	margin: 0;
+	padding: 0 ($dropdown-padding * 2) 0 $dropdown-padding;
+	position: relative;
+
+	@include media($large-screen) {
+		padding: 0 ($dropdown-padding * 2) 0 $dropdown-padding;
+	}
+}
+
+.dropdown-button:hover {
+	background-color: $dropdown-background-hover;
+}
+
+.dropdown-button:after {
+	color: $base-font-color;
+	content: "\25BE";
+	display: block;
+	position: absolute;
+	right: $dropdown-padding;
+	top: $dropdown-arrow-top-distance;
+}

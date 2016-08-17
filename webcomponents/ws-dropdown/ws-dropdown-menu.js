@@ -139,7 +139,7 @@ class WSDropdownMenu extends HTMLElement {
                 }
             }));
             this.dispatchEvent(new Event('change', {
-                details: {
+                detail: {
                     value: this.value
                 }
             }));

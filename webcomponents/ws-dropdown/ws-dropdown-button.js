@@ -30,12 +30,14 @@ class WSDropdownButton extends HTMLButtonElement {
     getAttributes() {
         let itemsAttributeValue = this.getAttribute('items');
         this.state = Object.assign({}, this.state, {
-            items: itemsAttributeValue && JSON.parse(itemsAttributeValue)
+            items: itemsAttributeValue && JSON.parse(itemsAttributeValue),
+            btnClasses: this.getAttribute('button-classes'),
         });
     }
 
     draw() {
         this.dropdownElement.setAttribute('items', JSON.stringify(this.state.items));
+        this.button.className = this.state.btnClasses;
     }
 
     setupListeners() {
@@ -83,6 +85,7 @@ class WSDropdownButton extends HTMLButtonElement {
     attributeChangedCallback(attrName, oldVal, newVal) {
         switch (attrName) {
             case "items":
+            case "button-classes":
                 this.getAttributes();
                 this.draw();
                 break;

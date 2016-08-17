@@ -509,13 +509,15 @@ var WSDropdownButton = function (_HTMLButtonElement) {
         value: function getAttributes() {
             var itemsAttributeValue = this.getAttribute('items');
             this.state = Object.assign({}, this.state, {
-                items: itemsAttributeValue && JSON.parse(itemsAttributeValue)
+                items: itemsAttributeValue && JSON.parse(itemsAttributeValue),
+                btnClasses: this.getAttribute('button-classes')
             });
         }
     }, {
         key: 'draw',
         value: function draw() {
             this.dropdownElement.setAttribute('items', JSON.stringify(this.state.items));
+            this.button.className = this.state.btnClasses;
         }
     }, {
         key: 'setupListeners',
@@ -577,6 +579,7 @@ var WSDropdownButton = function (_HTMLButtonElement) {
         value: function attributeChangedCallback(attrName, oldVal, newVal) {
             switch (attrName) {
                 case "items":
+                case "button-classes":
                     this.getAttributes();
                     this.draw();
                     break;

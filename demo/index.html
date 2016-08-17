@@ -71,6 +71,7 @@
                 }]
             }];
             document.querySelector('#ws-dropdown-button').setAttribute('items', JSON.stringify(demoList));
+            document.querySelector('#ws-dropdown-button').setAttribute('button-classes', 'mod-large');
             document.querySelector('#ws-dropdown-button').addEventListener('change',
                     function({ detail: { value }}) {
                         console.log('dropdown item selected: ' + value);

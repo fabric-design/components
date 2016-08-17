@@ -1,7 +1,8 @@
 var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
 
 var state = {
-    items: []
+    items: [],
+    open: false
 }
 
 class WSDropdownButton extends HTMLButtonElement {
@@ -23,7 +24,7 @@ class WSDropdownButton extends HTMLButtonElement {
 
     grabElements() {
         this.dropdownElement = this.shadowRoot.querySelector('ws-dropdown');
-        this.button = this.shadowRoot.querySelector('.dropdown-button');
+        this.button = this.shadowRoot.querySelector('button');
     }
 
     getAttributes() {
@@ -39,17 +40,21 @@ class WSDropdownButton extends HTMLButtonElement {
 
     setupListeners() {
         this.dropdownElement.addEventListener('change', (e) => this.onChange(e));
-        this.button.addEventListener('click', (e) => this.open(e));
+        this.button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            this.state.open ? this.hide() : this.open();
+        });
     }
 
     onChange(event) {
         event.stopPropagation();
-        this.element.dispatchEvent(event);
+        this.dispatchEvent(event);
     }
 
     open(event) {
-        event.stopPropagation();
-        event.preventDefault();
+        this.state.open = true;
+
         this.dropdownElement.open();
         document.body.addEventListener('click', this.hide.bind(this));
     }
@@ -58,6 +63,8 @@ class WSDropdownButton extends HTMLButtonElement {
      * Hide the drop down on clicking outside of dropdown
      */
     hide() {
+        this.state.open = false;
+
         document.body.removeEventListener('click', this.hide.bind(this));
         this.dropdownElement.close();
     }

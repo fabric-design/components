@@ -1,0 +1,205 @@
+@import "node_modules/bourbon/app/assets/stylesheets/bourbon";
+@import "node_modules/wholesale-styleguide-scss/variables";
+@import "node_modules/wholesale-styleguide-scss/components/base/buttons";
+
+$export-dropdown-css: true !default;
+$dropdown-background-color: $white !default;
+$dropdown-shadow-color: $shuttle-gray !default;
+$dropdown-font-color: $base-font-color !default;
+$dropdown-font-family: $base-font-family !default;
+$dropdown-hover-background-color: $pattens-blue !default;
+
+@mixin dropdown-container($background-color, $shadow-color) {
+	position: absolute;
+	top: 100%;
+	right: 0;
+	width: rem(200px);
+	margin-top: rem(20px);
+	height: 0;
+	display: none;
+	background-color: $background-color;
+	border-radius: 3px;
+	box-shadow: 0 2px 6px $shadow-color;
+	transition: height .125s ease;
+	will-change: height;
+	overflow: hidden;
+	z-index: 3;
+}
+
+@mixin dropdown() {
+	position: absolute;
+	top: 0;
+	left: 100%;
+	padding: 5px 0;
+	width: 100%;
+	margin: 0;
+}
+
+@mixin dropdown-item($font-color, $font-family, $hover-bg-color) {
+	position: relative;
+	font-size: rem(14px);
+	color: $font-color;
+	font-family: $font-family;
+	line-height: 2;
+	cursor: pointer;
+	padding: 8px 30px 8px 13px;
+	white-space: nowrap;
+	width: 100%;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: normal;
+	&:hover,
+	&.is-active {
+		background-color: $hover-bg-color;
+	}
+}
+
+@mixin dropdown-arrow() {
+	display: none;
+	position: absolute;
+	width: rem(10px);
+	height: rem(10px);
+	bottom: rem(-25px);
+	right: rem(20px);
+	background: linear-gradient(-45deg, rgba($white, 0) 50%, $white 50%);
+	transform: rotate(45deg);
+	z-index: 2;
+	box-shadow: -1px -1px 1px $gallery;
+}
+
+@if $export-dropdown-css {
+	.dropdown-menu {
+		display: block;
+	}
+	.dropdown {
+		position: relative;
+		display: inline-block;
+	}
+	.dropdown-container {
+		@include dropdown-container($dropdown-background-color, $dropdown-shadow-color);
+		.dropdown-root-menu {
+			right: 0;
+			left: auto;
+		}
+		&.mod-open {
+			display: block;
+			+ .dropdown-arrow {
+				display: block;
+			}
+		}
+	}
+	.dropdown-trigger {
+		cursor: pointer;
+	}
+	.dropdown-menu {
+		@include dropdown();
+		&.mod-menu-open,
+		&.mod-sub-open {
+			left: 0;
+		}
+		&.mod-sub-open > .dropdown-item > .text {
+			opacity: 0;
+			z-index: -1;
+		}
+	}
+	.dropdown-item {
+		.text {
+			@include dropdown-item($dropdown-font-color, $dropdown-font-family, $dropdown-hover-background-color);
+		}
+	}
+	.dropdown-arrow {
+		@include dropdown-arrow();
+	}
+	.dropdown-container.animate-close {
+		animation: closeContainer .2s ease-in-out forwards;
+	}
+	.dropdown-menu.animate-in > .dropdown-item > .text {
+		animation: dropDownIn .3s cubic-bezier(.32, .97, .71, .95) .0s forwards;
+	}
+	.dropdown-menu.animate-out > .dropdown-item > .text {
+		animation: dropDownOut .3s cubic-bezier(.53, 1.49, 1, .87) forwards;
+	}
+	.dropdown-menu.animate-sub-in > .dropdown-item > .text {
+		animation: dropDownSubIn .3s cubic-bezier(.32, .97, .71, .95) .0s forwards;
+	}
+	.dropdown-menu.animate-sub-out > .dropdown-item > .text {
+		animation: dropDownSubOut .3s cubic-bezier(.53, 1.49, 1, .87) forwards;
+	}
+	.dropdown-menu.animate-in,
+	.dropdown-menu.animate-out,
+	.dropdown-menu.animate-sub-in,
+	.dropdown-menu.animate-sub-out {
+		@for $i from 1 through 20 {
+			> .dropdown-item:nth-child(#{$i}) > .text {
+				animation-delay: #{$i * .025s};
+			}
+		}
+	}
+
+	@keyframes closeContainer {
+		100% {
+			height: 0;
+		}
+	}
+
+	// 0.4s linear
+	@keyframes dropDownOut {
+		0% {
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+			opacity: 1;
+		}
+		70% {
+			opacity: 0;
+		}
+		100% {
+			-webkit-transform: translate3d(-100%, 0, 0);
+			transform: translate3d(-100%, 0, 0);
+		}
+	}
+
+	// 0.4s linear
+	@keyframes dropDownIn {
+		0% {
+			-webkit-transform: translate3d(-100%, 0, 0);
+			transform: translate3d(-100%, 0, 0);
+			opacity: 0;
+		}
+		100% {
+			-webkit-transform: translate3d(0%, 0, 0);
+			transform: translate3d(0%, 0, 0);
+			opacity: 1;
+		}
+	}
+
+	// 0.4s linear
+	@keyframes dropDownSubOut {
+		0% {
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+			opacity: 1;
+		}
+		70% {
+			opacity: 0;
+		}
+		100% {
+			-webkit-transform: translate3d(100%, 0, 0);
+			transform: translate3d(100%, 0, 0);
+		}
+	}
+
+	// 0.3s ease-in-out
+	@keyframes dropDownSubIn {
+		0% {
+			-webkit-transform: translate3d(0, 0, 0);
+			transform: translate3d(0, 0, 0);
+			opacity: 0;
+		}
+		100% {
+			-webkit-transform: translate3d(-100%, 0, 0);
+			transform: translate3d(-100%, 0, 0);
+			opacity: 1;
+		}
+	}
+}

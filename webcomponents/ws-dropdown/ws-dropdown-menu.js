@@ -1,10 +1,12 @@
 var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
 
 const GO_BACK_EVENT = 'go-back';
-const GO_NEXT_EVENT = 'go-next';
+const SIZE_CHANGE_EVENT = 'size-change';
 var state = {
     hasParent: false,
-    items: []
+    items: [],
+    openSubMenu: null,
+    open: false
 }
 
 class WSDropdownMenu extends HTMLElement {
@@ -52,13 +54,17 @@ class WSDropdownMenu extends HTMLElement {
         }
     }
 
+    get height() {
+        return this.menuContainer.clientHeight;
+    }
+
     checkIfRoot(hasParent, items) {
         let classes = 'dropdown-menu';
         if (!hasParent) {
             classes += ' dropdown-root-menu';
         } else {
-            let goBackItem = document.importNode(this.rootTemplate.getElementById('ws-dropdown-menu-back-item').content);
-            goBackItem.onclick = () => this.emitGoBackEvent();
+            let goBackItem = document.importNode(this.rootTemplate.getElementById('ws-dropdown-menu-back-item').content, true).querySelector('li');
+            goBackItem.addEventListener('click', () => this.propagateGoBack());
             this.menuContainer.appendChild(goBackItem);
         }
         this.menuContainer.className = classes;
@@ -71,7 +77,7 @@ class WSDropdownMenu extends HTMLElement {
         items.forEach(item => {
             let listItem = this.prepareListItem(item);
             this.menuContainer.appendChild(listItem);
-        })
+        });
     }
 
     cleanListItems() {
@@ -88,14 +94,7 @@ class WSDropdownMenu extends HTMLElement {
         if (selected) {
             classes += ' is-active';
         }
-        linkItem.className = classes;
-
-        // having a link and an item is not desired
-        if (href) {
-            linkItem.setAttribute('href', href);
-        } else {
-            linkItem.onclick = () => this.propagateGoNext(item);
-        }
+        listItem.className = classes;
 
         if (icon) {
             let iconItem = document.createElement("i");
@@ -109,21 +108,113 @@ class WSDropdownMenu extends HTMLElement {
         if (children && children.length > 0) {
             subMenuItem.setAttribute('items', JSON.stringify(children));
             subMenuItem.setAttribute('has-parent', true);
+            this.setupListeners(subMenuItem);
         } else {
             subMenuItem.remove();
+        }
+
+        // having a link and an item is not desired
+        if (href) {
+            linkItem.setAttribute('href', href);
+        } else {
+            linkItem.addEventListener('click', () => this.next(item, subMenuItem));
         }
 
         return listItem;
     }
 
-    setupListeners(listItemElement) {
-        listItemElement.on(GO_BACK_EVENT, (e) => {
-            e.preventDefault();
-            this.propagateGoBack();
+    next(item, subMenu) {
+        // Show next menu if children are available
+        if (item.children && item.children.length) {
+            this.state.openSubMenu = subMenu;
+            this.propagateNewMenuSize(subMenu.height);
+            this.animateOut();
+            subMenu.animateIn();
+        }
+        else if (item.value !== undefined) {
+            this.value = item.value;
+            this.dispatchEvent(new Event('click', {
+                detail: {
+                    item
+                }
+            }));
+            this.dispatchEvent(new Event('change', {
+                details: {
+                    value: this.value
+                }
+            }));
+        }
+        else {
+            this.dispatchEvent(new Event('click', {
+                detail: {
+                    item
+                }
+            }));
+        }
+        return false;
+    }
+
+    back() {
+        if (this.state.openSubMenu) {
+            this.state.openSubMenu.animateOut(this.state.openSubMenu.state.hasParent);
+            this.propagateNewMenuSize(this.height);
+            this.animateIn(this.state.hasParent);
+            this.state.openSubMenu = null;
+        }
+    }
+
+    animateIn(goBack) {
+        this.state.open = true;
+        let inAnimation = goBack ? 'animate-in' : 'animate-sub-in';
+        // Create a clone of new sub menu for animations
+        this.animateElement(this.menuContainer, inAnimation, menu => {
+            menu.classList.remove('mod-sub-open');
+            menu.classList.add('mod-menu-open');
         });
-        listItemElement.on(GO_NEXT_EVENT, (e) => {
+    }
+
+    animateOut(goBack) {
+        this.state.open = false;
+        let outAnimation = !goBack ? 'animate-out' : 'animate-sub-out';
+        // Fade out old element and set mod-item-open if going back and mod-sub-open for going deeper
+        this.animateElement(this.menuContainer, outAnimation, menu => {
+            menu.classList.remove('mod-menu-open');
+            if (!goBack) {
+                menu.classList.add('mod-sub-open');
+            }
+        });
+    }
+
+    animateElement(item, animationClass, callback) {
+        // Define callback for animation end events
+        let getHandler = eventName => {
+            let handler = event => {
+                item.classList.remove(animationClass);
+                item.removeEventListener(eventName, handler);
+                callback(item);
+            };
+            return handler;
+        };
+        // Listen for all possible animation end events
+        for (let eventName of animationEndEvents) {
+            item.addEventListener(eventName, getHandler(eventName));
+        }
+        // Add class to start animation
+        item.classList.add(animationClass);
+    }
+
+    close() {
+        this.menuContainer.classList.remove('mod-sub-open');
+        this.menuContainer.classList.remove('mod-menu-open');
+        if (!!this.state.openSubMenu) {
+            this.state.openSubMenu.close();
+        }
+    }
+
+    setupListeners(subMenuElement) {
+        subMenuElement.addEventListener(GO_BACK_EVENT, (e) => {
             e.preventDefault();
-            this.propagateGoNext(e.detail.item);
+            this.back();
         });
     }
 
@@ -132,10 +223,10 @@ class WSDropdownMenu extends HTMLElement {
         this.dispatchEvent(event);
     }
 
-    propagateGoNext(item) {
-        let event = new CustomEvent(GO_NEXT_EVENT, {
+    propagateNewMenuSize(newSize) {
+        let event = new CustomEvent(SIZE_CHANGE_EVENT, {
             detail: {
-                item: item
+                menuSize: newSize
             }
         });
         this.dispatchEvent(event);

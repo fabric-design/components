@@ -1,11 +1,10 @@
 <template>
     <!-- inject:html -->
     <template id="ws-dropdown-button">
-    <div class="dropdown-container">
-        <p class="dropdown-description">Test</p>
-        <a class="dropdown-button">
+    <div class="dropdown">
+        <button class="dropdown-trigger">
             <content></content>
-        </a>
+        </button>
         <ws-dropdown></ws-dropdown>
     </div>
 </template>
@@ -39,120 +38,417 @@
     </ws-dropdown>
 </template>
     <template id="ws-dropdown">
-    <ws-dropdown-menu></ws-dropdown-menu>
-    <div class="dropdown-arrow"></div>
+    <div class="dropdown-container" style="z-index: 1;">
+        <ws-dropdown-menu></ws-dropdown-menu>
+        <div class="dropdown-arrow"></div>
+    </div>
 </template>
     <!-- endinject -->
     <style>
         /* inject:styles */
-        html {
-  box-sizing: border-box; }
-
-*, *::after, *::before {
-  box-sizing: inherit; }
-
-.dropdown-description {
-  background: #ffffff;
-  border-bottom-left-radius: 3px;
-  border-bottom: 1px solid silver;
-  border-left: 1px solid silver;
-  border-top-left-radius: 3px;
-  border-top: 1px solid silver;
-  color: #ccd0d7;
-  float: left;
-  font-size: 0.7em;
-  line-height: 2rem;
-  margin: 0;
-  padding: 0 0.5em 0 1em; }
-  @media screen and (min-width: 53.75em) {
-    .dropdown-description {
-      font-size: 1em; } }
-
-.dropdown-container {
-  display: inline-block;
-  position: relative;
-  text-align: center; }
-
-.dropdown-button {
-  background: #ffffff;
-  border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
-  border-top: 1px solid silver;
-  border-right: 1px solid silver;
-  border-bottom: 1px solid silver;
+        button, input[type="button"], input[type="reset"], input[type="submit"] {
+  font-family: acuminpro, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1;
+  text-decoration: none;
+  text-align: center;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  padding: 0.5em 1em;
   cursor: pointer;
-  float: right;
-  line-height: 2rem;
-  margin: 0;
-  padding: 0 2em 0 1em;
-  position: relative; }
-  @media screen and (min-width: 53.75em) {
-    .dropdown-button {
-      padding: 0 2em 0 1em; } }
-
-.dropdown-button:hover {
-  background-color: #def5fe; }
-
-.dropdown-button:after {
-  color: #5e6979;
-  content: "\25BE";
-  display: block;
-  position: absolute;
-  right: 1em;
-  top: 0; }
-
-        html {
-  box-sizing: border-box; }
-
-*, *::after, *::before {
-  box-sizing: inherit; }
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  transition: all 0.4s;
+  background-color: #00abf2;
+  color: #ffffff;
+  box-shadow: 0 2px 1px 0px #d2d7e1;
+  font-size: 1rem; }
+  button:hover, button:focus, button:active, button.is-hovered, button.is-focused, input[type="button"]:hover, input[type="button"]:focus, input[type="button"]:active, input[type="button"].is-hovered, input[type="button"].is-focused, input[type="reset"]:hover, input[type="reset"]:focus, input[type="reset"]:active, input[type="reset"].is-hovered, input[type="reset"].is-focused, input[type="submit"]:hover, input[type="submit"]:focus, input[type="submit"]:active, input[type="submit"].is-hovered, input[type="submit"].is-focused {
+    box-shadow: 0 2px 1px 0px #a4aec2; }
+  button:active, button:focus, button.is-focused, input[type="button"]:active, input[type="button"]:focus, input[type="button"].is-focused, input[type="reset"]:active, input[type="reset"]:focus, input[type="reset"].is-focused, input[type="submit"]:active, input[type="submit"]:focus, input[type="submit"].is-focused {
+    background-color: #00a4e8;
+    box-shadow: inset 0 1px 3px 0 #8693ae; }
+  button.mod-large, input[type="button"].mod-large, input[type="reset"].mod-large, input[type="submit"].mod-large {
+    font-size: 1.5rem; }
+  button.mod-small, input[type="button"].mod-small, input[type="reset"].mod-small, input[type="submit"].mod-small {
+    font-size: 0.8125rem; }
+  button:disabled, button.is-disabled, input[type="button"]:disabled, input[type="button"].is-disabled, input[type="reset"]:disabled, input[type="reset"].is-disabled, input[type="submit"]:disabled, input[type="submit"].is-disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+    box-shadow: 0 0 0 0; }
+  button.mod-secondary, input[type="button"].mod-secondary, input[type="reset"].mod-secondary, input[type="submit"].mod-secondary {
+    background-color: #e7ecf3;
+    color: #5e6979;
+    box-shadow: 0 2px 1px 0px #d2d7e1; }
+    button.mod-secondary:hover, button.mod-secondary:focus, button.mod-secondary:active, button.mod-secondary.is-hovered, button.mod-secondary.is-focused, input[type="button"].mod-secondary:hover, input[type="button"].mod-secondary:focus, input[type="button"].mod-secondary:active, input[type="button"].mod-secondary.is-hovered, input[type="button"].mod-secondary.is-focused, input[type="reset"].mod-secondary:hover, input[type="reset"].mod-secondary:focus, input[type="reset"].mod-secondary:active, input[type="reset"].mod-secondary.is-hovered, input[type="reset"].mod-secondary.is-focused, input[type="submit"].mod-secondary:hover, input[type="submit"].mod-secondary:focus, input[type="submit"].mod-secondary:active, input[type="submit"].mod-secondary.is-hovered, input[type="submit"].mod-secondary.is-focused {
+      box-shadow: 0 2px 1px 0px #a4aec2; }
+    button.mod-secondary:active, button.mod-secondary:focus, button.mod-secondary.is-focused, input[type="button"].mod-secondary:active, input[type="button"].mod-secondary:focus, input[type="button"].mod-secondary.is-focused, input[type="reset"].mod-secondary:active, input[type="reset"].mod-secondary:focus, input[type="reset"].mod-secondary.is-focused, input[type="submit"].mod-secondary:active, input[type="submit"].mod-secondary:focus, input[type="submit"].mod-secondary.is-focused {
+      background-color: #e0e7f0;
+      box-shadow: inset 0 1px 3px 0 #8693ae; }
+  button.is-toggled, input[type="button"].is-toggled, input[type="reset"].is-toggled, input[type="submit"].is-toggled {
+    background-color: #e7ecf3;
+    color: #5e6979;
+    box-shadow: 0 2px 1px 0px #d2d7e1; }
+    button.is-toggled:hover, button.is-toggled:focus, button.is-toggled:active, button.is-toggled.is-hovered, button.is-toggled.is-focused, input[type="button"].is-toggled:hover, input[type="button"].is-toggled:focus, input[type="button"].is-toggled:active, input[type="button"].is-toggled.is-hovered, input[type="button"].is-toggled.is-focused, input[type="reset"].is-toggled:hover, input[type="reset"].is-toggled:focus, input[type="reset"].is-toggled:active, input[type="reset"].is-toggled.is-hovered, input[type="reset"].is-toggled.is-focused, input[type="submit"].is-toggled:hover, input[type="submit"].is-toggled:focus, input[type="submit"].is-toggled:active, input[type="submit"].is-toggled.is-hovered, input[type="submit"].is-toggled.is-focused {
+      box-shadow: 0 2px 1px 0px #a4aec2; }
+    button.is-toggled:active, button.is-toggled:focus, button.is-toggled.is-focused, input[type="button"].is-toggled:active, input[type="button"].is-toggled:focus, input[type="button"].is-toggled.is-focused, input[type="reset"].is-toggled:active, input[type="reset"].is-toggled:focus, input[type="reset"].is-toggled.is-focused, input[type="submit"].is-toggled:active, input[type="submit"].is-toggled:focus, input[type="submit"].is-toggled.is-focused {
+      background-color: #e0e7f0;
+      box-shadow: inset 0 1px 3px 0 #8693ae; }
+    button.is-toggled:active, button.is-toggled:focus, button.is-toggled.is-focused, input[type="button"].is-toggled:active, input[type="button"].is-toggled:focus, input[type="button"].is-toggled.is-focused, input[type="reset"].is-toggled:active, input[type="reset"].is-toggled:focus, input[type="reset"].is-toggled.is-focused, input[type="submit"].is-toggled:active, input[type="submit"].is-toggled:focus, input[type="submit"].is-toggled.is-focused {
+      color: #ff8914;
+      background-color: #e6e8ed; }
+    button.is-toggled:disabled, button.is-toggled.is-disabled, input[type="button"].is-toggled:disabled, input[type="button"].is-toggled.is-disabled, input[type="reset"].is-toggled:disabled, input[type="reset"].is-toggled.is-disabled, input[type="submit"].is-toggled:disabled, input[type="submit"].is-toggled.is-disabled {
+      color: #5e6979; }
+  button.mod-flat, input[type="button"].mod-flat, input[type="reset"].mod-flat, input[type="submit"].mod-flat {
+    background-color: transparent;
+    color: #00abf2;
+    box-shadow: 0 2px 1px 0px #ffffff; }
+    button.mod-flat:hover, button.mod-flat:focus, button.mod-flat:active, button.mod-flat.is-hovered, button.mod-flat.is-focused, input[type="button"].mod-flat:hover, input[type="button"].mod-flat:focus, input[type="button"].mod-flat:active, input[type="button"].mod-flat.is-hovered, input[type="button"].mod-flat.is-focused, input[type="reset"].mod-flat:hover, input[type="reset"].mod-flat:focus, input[type="reset"].mod-flat:active, input[type="reset"].mod-flat.is-hovered, input[type="reset"].mod-flat.is-focused, input[type="submit"].mod-flat:hover, input[type="submit"].mod-flat:focus, input[type="submit"].mod-flat:active, input[type="submit"].mod-flat.is-hovered, input[type="submit"].mod-flat.is-focused {
+      box-shadow: 0 2px 1px 0px #d9d9d9; }
+    button.mod-flat:active, button.mod-flat:focus, button.mod-flat.is-focused, input[type="button"].mod-flat:active, input[type="button"].mod-flat:focus, input[type="button"].mod-flat.is-focused, input[type="reset"].mod-flat:active, input[type="reset"].mod-flat:focus, input[type="reset"].mod-flat.is-focused, input[type="submit"].mod-flat:active, input[type="submit"].mod-flat:focus, input[type="submit"].mod-flat.is-focused {
+      background-color: transparent;
+      box-shadow: inset 0 1px 3px 0 #bfbfbf; }
+    button.mod-flat:hover, button.mod-flat:focus, button.mod-flat:active, button.mod-flat.is-hovered, button.mod-flat.is-focused, input[type="button"].mod-flat:hover, input[type="button"].mod-flat:focus, input[type="button"].mod-flat:active, input[type="button"].mod-flat.is-hovered, input[type="button"].mod-flat.is-focused, input[type="reset"].mod-flat:hover, input[type="reset"].mod-flat:focus, input[type="reset"].mod-flat:active, input[type="reset"].mod-flat.is-hovered, input[type="reset"].mod-flat.is-focused, input[type="submit"].mod-flat:hover, input[type="submit"].mod-flat:focus, input[type="submit"].mod-flat:active, input[type="submit"].mod-flat.is-hovered, input[type="submit"].mod-flat.is-focused {
+      background-color: #fafafa; }
 
 .dropdown-menu {
-  transition: all 0.2s ease-in-out;
-  background: #ffffff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-  color: #5e6979;
-  cursor: pointer;
-  display: none;
-  margin: 0;
-  overflow: show;
-  padding: 0;
-  position: absolute;
-  right: 0;
-  top: 50px;
-  width: 228px;
-  z-index: 99999; }
-  .dropdown-menu:before {
-    position: absolute;
-    top: 0;
-    right: 1em;
-    bottom: 0;
-    left: 0;
-    color: #ffffff;
-    content: "\25b2";
-    pointer-events: none;
-    text-shadow: 0 -2px 2px rgba(0, 0, 0, 0.3);
-    top: -0.9em; }
-
-.dropdown-menu li {
-  color: #5e6979;
-  list-style: none;
-  padding: 0.5em; }
-
-.dropdown-menu li:hover {
-  background: #def5fe; }
-
-.dropdown-menu li:first-child {
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px; }
-
-.dropdown-menu li:last-child {
-  border: none;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px; }
-
-.show-menu {
   display: block; }
+
+.dropdown {
+  position: relative;
+  display: inline-block; }
+
+.dropdown-container {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 12.5rem;
+  margin-top: 1.25rem;
+  height: 0;
+  display: none;
+  background-color: #ffffff;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px #5e6979;
+  transition: height .125s ease;
+  will-change: height;
+  overflow: hidden;
+  z-index: 3; }
+  .dropdown-container .dropdown-root-menu {
+    right: 0;
+    left: auto; }
+  .dropdown-container.mod-open {
+    display: block; }
+    .dropdown-container.mod-open + .dropdown-arrow {
+      display: block; }
+
+.dropdown-trigger {
+  cursor: pointer; }
+
+.dropdown-menu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  padding: 5px 0;
+  width: 100%;
+  margin: 0; }
+  .dropdown-menu.mod-menu-open, .dropdown-menu.mod-sub-open {
+    left: 0; }
+  .dropdown-menu.mod-sub-open > .dropdown-item > .text {
+    opacity: 0;
+    z-index: -1; }
+
+.dropdown-item .text {
+  position: relative;
+  font-size: 0.875rem;
+  color: #5e6979;
+  font-family: acuminpro, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 2;
+  cursor: pointer;
+  padding: 8px 30px 8px 13px;
+  white-space: nowrap;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: normal; }
+  .dropdown-item .text:hover, .dropdown-item .text.is-active {
+    background-color: #def5fe; }
+
+.dropdown-arrow {
+  display: none;
+  position: absolute;
+  width: 0.625rem;
+  height: 0.625rem;
+  bottom: -1.5625rem;
+  right: 1.25rem;
+  background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 50%, #ffffff 50%);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  z-index: 2;
+  box-shadow: -1px -1px 1px #e7ecf3; }
+
+.dropdown-container.animate-close {
+  -webkit-animation: closeContainer .2s ease-in-out forwards;
+  animation: closeContainer .2s ease-in-out forwards; }
+
+.dropdown-menu.animate-in > .dropdown-item > .text {
+  -webkit-animation: dropDownIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
+  animation: dropDownIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards; }
+
+.dropdown-menu.animate-out > .dropdown-item > .text {
+  -webkit-animation: dropDownOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
+  animation: dropDownOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards; }
+
+.dropdown-menu.animate-sub-in > .dropdown-item > .text {
+  -webkit-animation: dropDownSubIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
+  animation: dropDownSubIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards; }
+
+.dropdown-menu.animate-sub-out > .dropdown-item > .text {
+  -webkit-animation: dropDownSubOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
+  animation: dropDownSubOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(1) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(1) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(1) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(1) > .text {
+  -webkit-animation-delay: 0.025s;
+  animation-delay: 0.025s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(2) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(2) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(2) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(2) > .text {
+  -webkit-animation-delay: 0.05s;
+  animation-delay: 0.05s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(3) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(3) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(3) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(3) > .text {
+  -webkit-animation-delay: 0.075s;
+  animation-delay: 0.075s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(4) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(4) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(4) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(4) > .text {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(5) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(5) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(5) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(5) > .text {
+  -webkit-animation-delay: 0.125s;
+  animation-delay: 0.125s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(6) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(6) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(6) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(6) > .text {
+  -webkit-animation-delay: 0.15s;
+  animation-delay: 0.15s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(7) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(7) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(7) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(7) > .text {
+  -webkit-animation-delay: 0.175s;
+  animation-delay: 0.175s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(8) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(8) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(8) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(8) > .text {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(9) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(9) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(9) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(9) > .text {
+  -webkit-animation-delay: 0.225s;
+  animation-delay: 0.225s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(10) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(10) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(10) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(10) > .text {
+  -webkit-animation-delay: 0.25s;
+  animation-delay: 0.25s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(11) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(11) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(11) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(11) > .text {
+  -webkit-animation-delay: 0.275s;
+  animation-delay: 0.275s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(12) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(12) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(12) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(12) > .text {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(13) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(13) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(13) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(13) > .text {
+  -webkit-animation-delay: 0.325s;
+  animation-delay: 0.325s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(14) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(14) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(14) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(14) > .text {
+  -webkit-animation-delay: 0.35s;
+  animation-delay: 0.35s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(15) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(15) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(15) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(15) > .text {
+  -webkit-animation-delay: 0.375s;
+  animation-delay: 0.375s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(16) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(16) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(16) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(16) > .text {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(17) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(17) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(17) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(17) > .text {
+  -webkit-animation-delay: 0.425s;
+  animation-delay: 0.425s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(18) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(18) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(18) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(18) > .text {
+  -webkit-animation-delay: 0.45s;
+  animation-delay: 0.45s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(19) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(19) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(19) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(19) > .text {
+  -webkit-animation-delay: 0.475s;
+  animation-delay: 0.475s; }
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(20) > .text,
+.dropdown-menu.animate-out > .dropdown-item:nth-child(20) > .text,
+.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(20) > .text,
+.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(20) > .text {
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s; }
+
+@-webkit-keyframes closeContainer {
+  100% {
+    height: 0; } }
+
+@keyframes closeContainer {
+  100% {
+    height: 0; } }
+
+@-webkit-keyframes dropDownOut {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1; }
+  70% {
+    opacity: 0; }
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0); } }
+
+@keyframes dropDownOut {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1; }
+  70% {
+    opacity: 0; }
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0); } }
+
+@-webkit-keyframes dropDownIn {
+  0% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    opacity: 0; }
+  100% {
+    -webkit-transform: translate3d(0%, 0, 0);
+    transform: translate3d(0%, 0, 0);
+    opacity: 1; } }
+
+@keyframes dropDownIn {
+  0% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    opacity: 0; }
+  100% {
+    -webkit-transform: translate3d(0%, 0, 0);
+    transform: translate3d(0%, 0, 0);
+    opacity: 1; } }
+
+@-webkit-keyframes dropDownSubOut {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1; }
+  70% {
+    opacity: 0; }
+  100% {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0); } }
+
+@keyframes dropDownSubOut {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1; }
+  70% {
+    opacity: 0; }
+  100% {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0); } }
+
+@-webkit-keyframes dropDownSubIn {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 0; }
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    opacity: 1; } }
+
+@keyframes dropDownSubIn {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 0; }
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    opacity: 1; } }
 
         /* endinject */
     </style>
@@ -174,7 +470,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
 
 var state = {
-    items: []
+    items: [],
+    open: false
 };
 
 var WSDropdownButton = function (_HTMLButtonElement) {
@@ -208,7 +505,7 @@ var WSDropdownButton = function (_HTMLButtonElement) {
         key: 'grabElements',
         value: function grabElements() {
             this.dropdownElement = this.shadowRoot.querySelector('ws-dropdown');
-            this.button = this.shadowRoot.querySelector('.dropdown-button');
+            this.button = this.shadowRoot.querySelector('button');
         }
     }, {
         key: 'getAttributes',
@@ -232,20 +529,22 @@ var WSDropdownButton = function (_HTMLButtonElement) {
                 return _this2.onChange(e);
             });
             this.button.addEventListener('click', function (e) {
-                return _this2.open(e);
+                e.stopPropagation();
+                e.preventDefault();
+                _this2.state.open ? _this2.hide() : _this2.open();
             });
         }
     }, {
         key: 'onChange',
         value: function onChange(event) {
             event.stopPropagation();
-            this.element.dispatchEvent(event);
+            this.dispatchEvent(event);
         }
     }, {
         key: 'open',
         value: function open(event) {
-            event.stopPropagation();
-            event.preventDefault();
+            this.state.open = true;
+
             this.dropdownElement.open();
             document.body.addEventListener('click', this.hide.bind(this));
         }
@@ -257,6 +556,8 @@ var WSDropdownButton = function (_HTMLButtonElement) {
     }, {
         key: 'hide',
         value: function hide() {
+            this.state.open = false;
+
             document.body.removeEventListener('click', this.hide.bind(this));
             this.dropdownElement.close();
         }
@@ -311,10 +612,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
 
 var GO_BACK_EVENT = 'go-back';
-var GO_NEXT_EVENT = 'go-next';
+var SIZE_CHANGE_EVENT = 'size-change';
 var state = {
     hasParent: false,
-    items: []
+    items: [],
+    openSubMenu: null,
+    open: false
 };
 
 var WSDropdownMenu = function (_HTMLElement) {
@@ -387,10 +690,10 @@ var WSDropdownMenu = function (_HTMLElement) {
             if (!hasParent) {
                 classes += ' dropdown-root-menu';
             } else {
-                var goBackItem = document.importNode(this.rootTemplate.getElementById('ws-dropdown-menu-back-item').content);
-                goBackItem.onclick = function () {
-                    return _this2.emitGoBackEvent();
-                };
+                var goBackItem = document.importNode(this.rootTemplate.getElementById('ws-dropdown-menu-back-item').content, true).querySelector('li');
+                goBackItem.addEventListener('click', function () {
+                    return _this2.propagateGoBack();
+                });
                 this.menuContainer.appendChild(goBackItem);
             }
             this.menuContainer.className = classes;
@@ -431,16 +734,7 @@ var WSDropdownMenu = function (_HTMLElement) {
             if (selected) {
                 classes += ' is-active';
             }
-            linkItem.className = classes;
-
-            // having a link and an item is not desired
-            if (href) {
-                linkItem.setAttribute('href', href);
-            } else {
-                linkItem.onclick = function () {
-                    return _this4.propagateGoNext(item);
-                };
-            }
+            listItem.className = classes;
 
             if (icon) {
                 var iconItem = document.createElement("i");
@@ -454,24 +748,144 @@ var WSDropdownMenu = function (_HTMLElement) {
             if (children && children.length > 0) {
                 subMenuItem.setAttribute('items', JSON.stringify(children));
                 subMenuItem.setAttribute('has-parent', true);
+                this.setupListeners(subMenuItem);
             } else {
                 subMenuItem.remove();
+            }
+
+            // having a link and an item is not desired
+            if (href) {
+                linkItem.setAttribute('href', href);
+            } else {
+                linkItem.addEventListener('click', function () {
+                    return _this4.next(item, subMenuItem);
+                });
             }
 
             return listItem;
         }
     }, {
+        key: 'next',
+        value: function next(item, subMenu) {
+            // Show next menu if children are available
+            if (item.children && item.children.length) {
+                this.state.openSubMenu = subMenu;
+                this.propagateNewMenuSize(subMenu.height);
+                this.animateOut();
+                subMenu.animateIn();
+            } else if (item.value !== undefined) {
+                this.value = item.value;
+                this.dispatchEvent(new Event('click', {
+                    detail: {
+                        item: item
+                    }
+                }));
+                this.dispatchEvent(new Event('change', {
+                    details: {
+                        value: this.value
+                    }
+                }));
+            } else {
+                this.dispatchEvent(new Event('click', {
+                    detail: {
+                        item: item
+                    }
+                }));
+            }
+            return false;
+        }
+    }, {
+        key: 'back',
+        value: function back() {
+            if (this.state.openSubMenu) {
+                this.state.openSubMenu.animateOut(this.state.openSubMenu.state.hasParent);
+                this.propagateNewMenuSize(this.height);
+                this.animateIn(this.state.hasParent);
+                this.state.openSubMenu = null;
+            }
+        }
+    }, {
+        key: 'animateIn',
+        value: function animateIn(goBack) {
+            this.state.open = true;
+            var inAnimation = goBack ? 'animate-in' : 'animate-sub-in';
+            // Create a clone of new sub menu for animations
+            this.animateElement(this.menuContainer, inAnimation, function (menu) {
+                menu.classList.remove('mod-sub-open');
+                menu.classList.add('mod-menu-open');
+            });
+        }
+    }, {
+        key: 'animateOut',
+        value: function animateOut(goBack) {
+            this.state.open = false;
+            var outAnimation = !goBack ? 'animate-out' : 'animate-sub-out';
+            // Fade out old element and set mod-item-open if going back and mod-sub-open for going deeper
+            this.animateElement(this.menuContainer, outAnimation, function (menu) {
+                menu.classList.remove('mod-menu-open');
+                if (!goBack) {
+                    menu.classList.add('mod-sub-open');
+                }
+            });
+        }
+    }, {
+        key: 'animateElement',
+        value: function animateElement(item, animationClass, callback) {
+            // Define callback for animation end events
+            var getHandler = function getHandler(eventName) {
+                var handler = function handler(event) {
+                    item.classList.remove(animationClass);
+                    item.removeEventListener(eventName, handler);
+                    callback(item);
+                };
+                return handler;
+            };
+            // Listen for all possible animation end events
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = animationEndEvents[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var eventName = _step.value;
+
+                    item.addEventListener(eventName, getHandler(eventName));
+                }
+                // Add class to start animation
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            item.classList.add(animationClass);
+        }
+    }, {
+        key: 'close',
+        value: function close() {
+            this.menuContainer.classList.remove('mod-sub-open');
+            this.menuContainer.classList.remove('mod-menu-open');
+            if (!!this.state.openSubMenu) {
+                this.state.openSubMenu.close();
+            }
+        }
+    }, {
         key: 'setupListeners',
-        value: function setupListeners(listItemElement) {
+        value: function setupListeners(subMenuElement) {
             var _this5 = this;
 
-            listItemElement.on(GO_BACK_EVENT, function (e) {
+            subMenuElement.addEventListener(GO_BACK_EVENT, function (e) {
                 e.preventDefault();
-                _this5.propagateGoBack();
-            });
-            listItemElement.on(GO_NEXT_EVENT, function (e) {
-                e.preventDefault();
-                _this5.propagateGoNext(e.detail.item);
+                _this5.back();
             });
         }
     }, {
@@ -481,11 +895,11 @@ var WSDropdownMenu = function (_HTMLElement) {
             this.dispatchEvent(event);
         }
     }, {
-        key: 'propagateGoNext',
-        value: function propagateGoNext(item) {
-            var event = new CustomEvent(GO_NEXT_EVENT, {
+        key: 'propagateNewMenuSize',
+        value: function propagateNewMenuSize(newSize) {
+            var event = new CustomEvent(SIZE_CHANGE_EVENT, {
                 detail: {
-                    item: item
+                    menuSize: newSize
                 }
             });
             this.dispatchEvent(event);
@@ -518,6 +932,11 @@ var WSDropdownMenu = function (_HTMLElement) {
                     this.getAttributes();
                     break;
             }
+        }
+    }, {
+        key: 'height',
+        get: function get() {
+            return this.menuContainer.clientHeight;
         }
     }]);
 
@@ -614,8 +1033,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
 
-var GO_BACK_EVENT = 'go-back';
-var GO_NEXT_EVENT = 'go-next';
+var SIZE_CHANGE_EVENT = 'size-change';
 var state = {
     items: [],
     value: null
@@ -638,14 +1056,18 @@ var WSDropdown = function (_HTMLElement) {
         // Use createdCallback instead of constructor to init an element.
         value: function createdCallback() {
             var clone = document.importNode(template.content.getElementById('ws-dropdown').content, true);
+            var styleElement = template.content.querySelector('style').cloneNode(true);
 
             // This element uses Shadow DOM.
             this.createShadowRoot().appendChild(clone);
+            this.shadowRoot.appendChild(styleElement);
 
             this.state = state;
             this.grabElements();
             this.getAttributes();
+            this.setupListeners(this.dropdownMenu);
             this.draw();
+            this.adjustSize(this.dropdownMenu);
         }
     }, {
         key: 'grabElements',
@@ -671,15 +1093,18 @@ var WSDropdown = function (_HTMLElement) {
         value: function setupListeners(menuElement) {
             var _this2 = this;
 
-            menuElement.on(GO_BACK_EVENT, function (e) {
+            menuElement.addEventListener(SIZE_CHANGE_EVENT, function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-                _this2.back(e);
+                _this2.adjustSize(e.detail.menuSize);
             });
-            menuElement.on(GO_NEXT_EVENT, function (e) {
+            menuElement.addEventListener('click', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-                _this2.next(e);
+            });
+            menuElement.addEventListener('change', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
             });
         }
     }, {
@@ -688,75 +1113,26 @@ var WSDropdown = function (_HTMLElement) {
             if (!this.dropdownContainer.classList.contains('mod-open')) {
                 this.dropdownContainer.style.height = 0;
                 this.dropdownContainer.classList.add('mod-open');
+                this.dropdownMenu.animateIn();
             }
-            this.adjustSize(this.currentMenu || this.dropdownMenu);
+            this.adjustSize(this.dropdownMenu.height);
         }
     }, {
         key: 'close',
         value: function close() {
+            var _this3 = this;
+
             if (this.dropdownContainer.classList.contains('mod-open')) {
                 this.animateElement(this.dropdownContainer, 'animate-close', function (container) {
                     container.classList.remove('mod-open');
+                    _this3.dropdownMenu.close();
                 });
             }
         }
     }, {
-        key: 'next',
-        value: function next(event, element, item) {
-            event.preventDefault();
-            event.stopPropagation();
-            // Show next menu if children are available
-            if (item.children && item.children.length) {
-                var oldMenu = this.currentMenu || this.dropdownMenu;
-                var newMenu = element.querySelector('.dropdown-menu');
-                this.adjustSize(newMenu);
-                this.animate(oldMenu, newMenu, false);
-                this.currentMenu = newMenu;
-            } else if (item.value !== undefined) {
-                this.value = item.value;
-                this.events.publish('click', item);
-                this.events.publish('change', { value: this.value });
-            } else {
-                this.events.publish('click', item);
-            }
-            return false;
-        }
-    }, {
-        key: 'back',
-        value: function back(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            if (!this.currentMenu) {
-                throw new Error('Can not go back in dropdown if already on root');
-            }
-            var oldMenu = this.currentMenu;
-            var newMenu = this.getParent(this.currentMenu, 'dropdown-menu') || this.dropdownMenu;
-            this.adjustSize(newMenu);
-            this.animate(oldMenu, newMenu, true);
-            this.currentMenu = newMenu;
-        }
-    }, {
         key: 'adjustSize',
-        value: function adjustSize(newMenu) {
-            this.dropdownContainer.style.height = newMenu.clientHeight + 'px';
-        }
-    }, {
-        key: 'animate',
-        value: function animate(oldMenu, newMenu, goBack) {
-            var outAnimation = !goBack ? 'animate-out' : 'animate-sub-out';
-            var inAnimation = goBack ? 'animate-in' : 'animate-sub-in';
-            // Fade out old element and set mod-item-open if going back and mod-sub-open for going deeper
-            this.animateElement(oldMenu, outAnimation, function (menu) {
-                menu.classList.remove('mod-menu-open');
-                if (!goBack) {
-                    menu.classList.add('mod-sub-open');
-                }
-            });
-            // Create a clone of new sub menu for animations
-            this.animateElement(newMenu, inAnimation, function (menu) {
-                menu.classList.remove('mod-sub-open');
-                menu.classList.add('mod-menu-open');
-            });
+        value: function adjustSize(newSize) {
+            this.dropdownContainer.style.height = newSize + 'px';
         }
     }, {
         key: 'animateElement',
@@ -776,7 +1152,7 @@ var WSDropdown = function (_HTMLElement) {
             var _iteratorError = undefined;
 
             try {
-                for (var _iterator = this.animationEndEvents[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                for (var _iterator = animationEndEvents[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var eventName = _step.value;
 
                     item.addEventListener(eventName, getHandler(eventName));
@@ -800,21 +1176,6 @@ var WSDropdown = function (_HTMLElement) {
             item.classList.add(animationClass);
         }
     }, {
-        key: 'getParent',
-        value: function getParent(item, className) {
-            var parentItem = null;
-            for (var e = item.parentNode; !parentItem; e = e.parentNode) {
-                if (e.classList.contains(className)) {
-                    parentItem = e;
-                    break;
-                }
-                if (e.classList.contains('dropdown')) {
-                    break;
-                }
-            }
-            return parentItem;
-        }
-    }, {
         key: 'propagateError',
         value: function propagateError(reason) {
             var event = new CustomEvent("error", {
@@ -829,9 +1190,7 @@ var WSDropdown = function (_HTMLElement) {
 
     }, {
         key: 'attachedCallback',
-        value: function attachedCallback() {
-            this.adjustSize(this.dropdownMenu);
-        }
+        value: function attachedCallback() {}
     }, {
         key: 'detachedCallback',
         value: function detachedCallback() {}

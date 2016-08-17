@@ -138,7 +138,7 @@ class WSDropdownMenu extends HTMLElement {
                     item
                 }
             }));
-            this.dispatchEvent(new Event('change', {
+            this.dispatchEvent(new CustomEvent('change', {
                 detail: {
                     value: this.value
                 }

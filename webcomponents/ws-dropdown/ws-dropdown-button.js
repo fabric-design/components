@@ -39,17 +39,16 @@ class WSDropdownButton extends HTMLButtonElement {
     }
 
     setupListeners() {
-        this.dropdownElement.addEventListener('change', (e) => this.onChange(e));
+        this.dropdownElement.addEventListener('change', (e) => {
+            this.state.open ? this.hide() : this.open();
+        });
+        this.dropdownElement.addEventListener('click', (e) => {
+        });
         this.button.addEventListener('click', (e) => {
             e.stopPropagation();
             e.preventDefault();
             this.state.open ? this.hide() : this.open();
         });
-    }
-
-    onChange(event) {
-        event.stopPropagation();
-        this.dispatchEvent(event);
     }
 
     open(event) {

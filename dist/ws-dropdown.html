@@ -29,13 +29,10 @@
 </template>
 
     <template id="ws-dropdown-select">
-    <div class="select-box ${classes}">
-        <slot show.bind="!value"></slot>
-        <span if.bind="value">${value}</span>
-    </div>
-    <ws-dropdown items.bind="items" value.bind="value">
-        <slot name="menu"></slot>
-    </ws-dropdown>
+    <button class="select-box">
+        <span>Test</span>
+    </button>
+    <ws-dropdown></ws-dropdown>
 </template>
     <template id="ws-dropdown">
     <div class="dropdown-container" style="z-index: 1;">
@@ -526,19 +523,14 @@ var WSDropdownButton = function (_HTMLButtonElement) {
             var _this2 = this;
 
             this.dropdownElement.addEventListener('change', function (e) {
-                return _this2.onChange(e);
+                _this2.state.open ? _this2.hide() : _this2.open();
             });
+            this.dropdownElement.addEventListener('click', function (e) {});
             this.button.addEventListener('click', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
                 _this2.state.open ? _this2.hide() : _this2.open();
             });
-        }
-    }, {
-        key: 'onChange',
-        value: function onChange(event) {
-            event.stopPropagation();
-            this.dispatchEvent(event);
         }
     }, {
         key: 'open',
@@ -780,7 +772,7 @@ var WSDropdownMenu = function (_HTMLElement) {
                         item: item
                     }
                 }));
-                this.dispatchEvent(new Event('change', {
+                this.dispatchEvent(new CustomEvent('change', {
                     detail: {
                         value: this.value
                     }
@@ -959,68 +951,77 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
 
-var state = {};
+var state = {
+    items: [],
+    open: false
+};
 
-var WSDropdown = function (_HTMLSelectElement) {
-    _inherits(WSDropdown, _HTMLSelectElement);
+var WSDropdownSelect = function (_WSDropdownButton) {
+    _inherits(WSDropdownSelect, _WSDropdownButton);
 
-    function WSDropdown() {
-        _classCallCheck(this, WSDropdown);
+    function WSDropdownSelect() {
+        _classCallCheck(this, WSDropdownSelect);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(WSDropdown).apply(this, arguments));
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(WSDropdownSelect).apply(this, arguments));
     }
 
-    _createClass(WSDropdown, [{
+    _createClass(WSDropdownSelect, [{
         key: 'createdCallback',
 
         // Use createdCallback instead of constructor to init an element.
         value: function createdCallback() {
             var clone = document.importNode(template.content.getElementById('ws-dropdown-select').content, true);
+            var styleElement = template.content.querySelector('style').cloneNode(true);
 
             // This element uses Shadow DOM.
             this.createShadowRoot().appendChild(clone);
+            this.shadowRoot.appendChild(styleElement);
 
             this.state = state;
+            this.grabElements();
             this.getAttributes();
+            this.draw();
+            this.setupListeners();
         }
     }, {
-        key: 'propagateError',
-        value: function propagateError(reason) {
-            var event = new CustomEvent("error", {
-                detail: {
-                    message: reason
-                }
+        key: 'setupListeners',
+        value: function setupListeners() {
+            var _this2 = this;
+
+            this.dropdownElement.addEventListener('change', function (e) {
+                _this2.value = e.detail.value;
+                _this2.state.open ? _this2.hide() : _this2.open();
             });
-            this.dispatchEvent(event);
+            this.button.addEventListener('click', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                _this2.state.open ? _this2.hide() : _this2.open();
+            });
+            this.dropdownElement.addEventListener('click', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                _this2.value = e.detail.item.label || e.detail.item;
+                _this2.state.open ? _this2.hide() : _this2.open();
+            });
         }
     }, {
-        key: 'getAttributes',
-        value: function getAttributes() {
-            this.state = Object.assign({}, this.state, {});
-        }
-
-        // You can also define the other lifecycle methods.
-
-    }, {
-        key: 'attachedCallback',
-        value: function attachedCallback() {}
-    }, {
-        key: 'detachedCallback',
-        value: function detachedCallback() {}
-    }, {
-        key: 'attributeChangedCallback',
-        value: function attributeChangedCallback(attrName, oldVal, newVal) {
-            switch (attrName) {}
+        key: 'value',
+        get: function get() {
+            return this.state.value;
+        },
+        set: function set(value) {
+            this.state.value = value;
+            this.button.querySelector('span').textContent = value;
         }
     }]);
 
-    return WSDropdown;
-}(HTMLSelectElement);
+    return WSDropdownSelect;
+}(WSDropdownButton);
 
 //Register the element with the document
 
 
-document.registerElement('ws-dropdown-select', WSDropdown);
+document.registerElement('ws-dropdown-select', WSDropdownSelect);
     'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1102,10 +1103,7 @@ var WSDropdown = function (_HTMLElement) {
                 e.stopPropagation();
                 e.preventDefault();
             });
-            menuElement.addEventListener('change', function (e) {
-                e.stopPropagation();
-                e.preventDefault();
-            });
+            menuElement.addEventListener('change', function (e) {});
         }
     }, {
         key: 'open',

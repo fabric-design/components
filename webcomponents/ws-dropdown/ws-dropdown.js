@@ -53,8 +53,6 @@ class WSDropdown extends HTMLElement {
             e.preventDefault();
         });
         menuElement.addEventListener('change', (e) => {
-            e.stopPropagation();
-            e.preventDefault();
         });
     }
 

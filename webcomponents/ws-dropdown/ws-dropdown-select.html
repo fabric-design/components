@@ -1,9 +1,6 @@
 <template id="ws-dropdown-select">
-    <div class="select-box ${classes}">
-        <slot show.bind="!value"></slot>
-        <span if.bind="value">${value}</span>
-    </div>
-    <ws-dropdown items.bind="items" value.bind="value">
-        <slot name="menu"></slot>
-    </ws-dropdown>
+    <button class="select-box">
+        <span>Test</span>
+    </button>
+    <ws-dropdown></ws-dropdown>
 </template>

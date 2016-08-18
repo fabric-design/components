@@ -39,7 +39,13 @@ class WSHeader extends HTMLElement {
         this.checkIsLoggedIn()
           .then(() => this.getUser())
     .then(() => this.showUser())
-    .catch(() => this.propagateError("Getting Token-/User-Info failed!"));
+    .catch((err) => {
+        let message = "Getting Token-/User-Info failed!";
+        if (err) {
+            message += " " + err.toString();
+        }
+        this.propagateError("Getting Token-/User-Info failed!")
+    });
     });
     }
     
@@ -129,13 +135,13 @@ class WSHeader extends HTMLElement {
 
         this.propagateLoginStatusChange(true, token);
         resolve();
-    }, () => {
+    }, (err) => {
             this.logout();
-            reject();
+            reject(err);
         });
-    }, () => {
+    }, (err) => {
             this.logout();
-            reject();
+            reject(err);
         });
     });
     }
@@ -227,9 +233,9 @@ class WSHeader extends HTMLElement {
             userUID: data.uid
         });
         resolve(data.uid);
-    }, () => {
+    }, (err) => {
             this.logout();
-            reject();
+            reject(err);
         });
     });
     }
@@ -248,9 +254,9 @@ class WSHeader extends HTMLElement {
         };
         this.state = Object.assign({}, this.state, userInfo);
         resolve(userInfo);
-    }, () => {
+    }, (err) => {
             this.logout();
-            reject();
+            reject(err);
         });
     });
     }
@@ -301,7 +307,7 @@ class WSHeader extends HTMLElement {
                 mode: 'cors',
                 cache: 'default'
             })
-              .then(checkStatus)
+              .then(this.checkStatus)
               .then(function(response) {
                   return response.json();
               });

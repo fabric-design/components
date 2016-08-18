@@ -36,7 +36,7 @@ gulp.task('sass', function () {
   .pipe(flatmap(function(stream, file){
     var componentName = utils.getComponentName(file);
     return stream
-    // .pipe(purify([config.webcomponentsFolder + '/' + componentName + '/*.js', config.webcomponentsFolder + '/' + componentName + '/*.html']));
+    .pipe(purify([config.webcomponentsFolder + '/' + componentName + '/*.js', config.webcomponentsFolder + '/' + componentName + '/*.html']));
   }))
   .pipe(autoprefixer({
     browsers: ['last 2 versions'],

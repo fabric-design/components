@@ -44,7 +44,7 @@ class WSHeader extends HTMLElement {
         if (err) {
             message += " " + err.toString();
         }
-        this.propagateError("Getting Token-/User-Info failed!")
+        this.propagateError(message)
     });
     });
     }

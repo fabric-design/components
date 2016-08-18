@@ -467,7 +467,7 @@ var WSHeader = function (_HTMLElement) {
                     if (err) {
                         message += " " + err.toString();
                     }
-                    _this2.propagateError("Getting Token-/User-Info failed!");
+                    _this2.propagateError(message);
                 });
             });
         }

@@ -84,8 +84,18 @@ gulp.task('inject', ['prepareFiles'], function() {
   }
 
   function injectHtml(folder) {
-    return inject(gulp.src(folder + '/*.html'), {
+    return inject(gulp.src([folder + '/*.html', '!' + folder + '/*.global.html']), {
       starttag: '<!-- inject:html -->',
+      transform: function (filePath, file) {
+        // return file contents as string
+        return file.contents.toString('utf8')
+      }
+    });
+  }
+
+  function injectGlobalHtml(folder) {
+    return inject(gulp.src(folder + '/*.global.html'), {
+      starttag: '<!-- inject:global -->',
       transform: function (filePath, file) {
         // return file contents as string
         return file.contents.toString('utf8')
@@ -97,6 +107,7 @@ gulp.task('inject', ['prepareFiles'], function() {
     .pipe(flatmap(function(stream, file){
       var componentName = utils.getComponentName(file);
       return stream
+        .pipe(injectGlobalHtml(config.webcomponentsFolder + '/' + componentName))
         .pipe(injectHtml(config.webcomponentsFolder + '/' + componentName))
         .pipe(injectStyles(config.temp + '/' + componentName))
         .pipe(injectScripts(config.temp + '/' + componentName))

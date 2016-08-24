@@ -1,5 +1,6 @@
 //Get the contents of the template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
-var template = document.currentScript.ownerDocument.querySelector('template');
+var currentScript = document._currentScript || document.currentScript;
+var template = currentScript.ownerDocument.querySelector('template');
 
 class WSWeekPicker extends HTMLElement {
   createdCallback() {

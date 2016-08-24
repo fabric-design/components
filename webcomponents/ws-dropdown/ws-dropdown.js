@@ -3,10 +3,9 @@ var template = (document._currentScript || document.currentScript).ownerDocument
 const SIZE_CHANGE_EVENT = 'size-change';
 var state = {
     items: [],
-    value: null
+    open: false,
+    isSelect: false
 }
-
-var animationEndEvents = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
 
 class WSDropdown extends HTMLElement {
     // Use createdCallback instead of constructor to init an element.
@@ -21,20 +20,23 @@ class WSDropdown extends HTMLElement {
         this.state = state;
         this.grabElements();
         this.getAttributes();
-        this.setupListeners(this.dropdownMenu);
         this.draw();
+        this.setupListeners();
         this.adjustSize(this.dropdownMenu);
     }
 
     grabElements() {
         this.dropdownContainer = this.shadowRoot.querySelector('.dropdown-container');
         this.dropdownMenu = this.shadowRoot.querySelector('ws-dropdown-menu');
+        this.button = this.querySelector('button');
     }
 
     getAttributes() {
         let itemsAttributeValue = this.getAttribute('items');
+        let isSelectAttributeValue = this.getAttribute('is-select');
         this.state = Object.assign({}, this.state, {
-            items: itemsAttributeValue && JSON.parse(itemsAttributeValue)
+            items: itemsAttributeValue ? JSON.parse(itemsAttributeValue) : [],
+            isSelect: isSelectAttributeValue ? isSelectAttributeValue.toLowerCase() === 'true' : false,
         });
     }
 
@@ -42,30 +44,66 @@ class WSDropdown extends HTMLElement {
         this.dropdownMenu.setAttribute('items', JSON.stringify(this.state.items));
     }
 
-    setupListeners(menuElement) {
-        menuElement.addEventListener(SIZE_CHANGE_EVENT, (e) => {
+    setupListeners() {
+        this.dropdownMenu.addEventListener(SIZE_CHANGE_EVENT, (e) => {
             e.stopPropagation();
             e.preventDefault();
             this.adjustSize(e.detail.menuSize);
         });
-        menuElement.addEventListener('click', (e) => {
+        this.dropdownMenu.addEventListener('change', (e) => {
+            this.value = e.detail.value;
+            this.state.open ? this.hide() : this.open();
+        });
+        this.dropdownMenu.addEventListener('click', (e) => {
             e.stopPropagation();
             e.preventDefault();
+            this.value = e.detail.item.label || e.detail.item;
+            this.state.open ? this.hide() : this.open();
         });
-        menuElement.addEventListener('change', (e) => {
+        this.button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            this.state.open ? this.hide() : this.open();
         });
     }
 
-    open() {
+    get value() {
+        return this.state.value;
+    }
+
+    set value(value) {
+        this.state.value = value;
+        if (this.state.isSelect) {
+            let span = this.button.querySelector('span');
+            if (span) {
+                this.button.querySelector('span').textContent = value;
+            } else {
+                this.button.textContent = value;
+            }
+        }
+    }
+
+    open(event) {
+        this.state.open = true;
+
         if (!this.dropdownContainer.classList.contains('mod-open')) {
             this.dropdownContainer.style.height = 0;
             this.dropdownContainer.classList.add('mod-open');
             this.dropdownMenu.animateIn();
         }
         this.adjustSize(this.dropdownMenu.height);
+
+        document.body.addEventListener('click', () => this.hide());
     }
 
-    close() {
+    /**
+     * Hide the drop down on clicking outside of dropdown
+     */
+    hide() {
+        this.state.open = false;
+
+        document.body.removeEventListener('click', () => this.hide());
+
         if (this.dropdownContainer.classList.contains('mod-open')) {
             this.animateElement(this.dropdownContainer, 'animate-close', container => {
                 container.classList.remove('mod-open');
@@ -89,6 +127,7 @@ class WSDropdown extends HTMLElement {
             return handler;
         };
         // Listen for all possible animation end events
+        let animationEndEvents = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
         for (let eventName of animationEndEvents) {
             item.addEventListener(eventName, getHandler(eventName));
         }
@@ -105,12 +144,10 @@ class WSDropdown extends HTMLElement {
         this.dispatchEvent(event);
     }
 
-    // You can also define the other lifecycle methods.
-    attachedCallback() { }
-    detachedCallback() { }
     attributeChangedCallback(attrName, oldVal, newVal) {
         switch (attrName) {
-            case 'items':
+            case "items":
+            case "is-select":
                 this.getAttributes();
                 this.draw();
                 break;

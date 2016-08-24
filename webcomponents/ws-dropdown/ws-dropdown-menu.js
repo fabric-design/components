@@ -49,7 +49,6 @@ class WSDropdownMenu extends HTMLElement {
             this.draw();
         } catch (e) {
             let message = `Getting Attributes failed: ${e.message}`;
-            console.log(message);
             this.propagateError(message);
         }
     }
@@ -241,9 +240,6 @@ class WSDropdownMenu extends HTMLElement {
         this.dispatchEvent(event);
     }
 
-    // You can also define the other lifecycle methods.
-    attachedCallback() { }
-    detachedCallback() { }
     attributeChangedCallback(attrName, oldVal, newVal) {
         switch (attrName) {
             case "items":

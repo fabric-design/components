@@ -1,10 +1,11 @@
 <html>
     <head>
-        <script src="webcomponents.min.js"></script>
+        <!--<script src="webcomponents.min.js"></script>-->
+        <link rel="stylesheet" href="styleguide.css" />
         <link rel="import" href="../dist/ws-header.html" />
         <link rel="import" href="../dist/ws-week-picker.html" />
+        <link rel="import" href="../dist/ws-notification.html" />
         <link rel="import" href="../dist/ws-dropdown.html" />
-        <link rel="stylesheet" href="styleguide.css" />
     </head>
     <body class="refills-patterns refills-components" style="margin: 0;">
         <ws-header
@@ -26,7 +27,7 @@
         <ws-date-picker id="ws-datepicker"></ws-date-picker>
         <p>
             Simple Dropdown (with class mod-large):
-            <ws-dropdown-button id="ws-dropdown-button" style="position: relative; left: 150px;">Click me!</ws-dropdown-button>
+            <a class="button mod-large" is="ws-dropdown-button" id="ws-dropdown-button" style="position: relative; left: 150px;">Click Me!</a>
         </p>
         <p>
             Select Dropdown:
@@ -53,6 +54,14 @@
             function({ detail: { date }}) {
                 console.log('date selected: ' + date);
             });
+            setTimeout(function() {
+                wsNotification.init(); // Can pass any wrapper element
+                wsNotification.create({title: 'This is a info', lifetime: 0});
+                wsNotification.create({title: 'This is a warning', description: 'Because we want to show a warning', type: 'warning'});
+                wsNotification.create({title: 'This is a error', type: 'error', lifetime: 6000});
+                wsNotification.create({title: 'This was successfull', type: 'success', lifetime: 3000});
+                wsNotification.create({title: 'This will disappear in 10 seconds', lifetime: 10000});
+            }, 1000);
 
             var demoList = [{
                 label: 'Item 1',

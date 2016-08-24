@@ -2,9 +2,6 @@
     <!-- inject:html -->
     <template id="ws-dropdown-button">
     <div class="dropdown">
-        <button class="dropdown-trigger">
-            <content></content>
-        </button>
         <ws-dropdown></ws-dropdown>
     </div>
 </template>
@@ -29,9 +26,9 @@
 </template>
 
     <template id="ws-dropdown-select">
-    <button class="select-box">
+    <a class="select-box">
         <span>Select An Item</span>
-    </button>
+    </a>
     <ws-dropdown></ws-dropdown>
 </template>
     <template id="ws-dropdown">
@@ -43,7 +40,23 @@
     <!-- endinject -->
     <style>
         /* inject:styles */
-        button {
+        /**
+ * Parse a numeric value from a string
+ */
+
+/**
+ * Convert a pixel value to rem
+ */
+
+/**
+ * Convert a list of pixel values to rem values
+ */
+
+/**
+* Z-index function for managing the values
+*/
+
+button {
   font-family: acuminpro, "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   line-height: 1;
@@ -135,7 +148,7 @@ button:disabled {
   position: absolute;
   top: 0;
   left: 100%;
-  padding: 0.3125rem 0;
+  padding: 0.3125rem 0rem;
   width: 100%;
   margin: 0;
 }
@@ -464,11 +477,12 @@ var template = (document._currentScript || document.currentScript).ownerDocument
 
 var state = {
     items: [],
-    open: false
+    open: false,
+    isSelect: false
 };
 
-var WSDropdownButton = function (_HTMLButtonElement) {
-    _inherits(WSDropdownButton, _HTMLButtonElement);
+var WSDropdownButton = function (_HTMLAnchorElement) {
+    _inherits(WSDropdownButton, _HTMLAnchorElement);
 
     function WSDropdownButton() {
         _classCallCheck(this, WSDropdownButton);
@@ -498,22 +512,24 @@ var WSDropdownButton = function (_HTMLButtonElement) {
         key: 'grabElements',
         value: function grabElements() {
             this.dropdownElement = this.shadowRoot.querySelector('ws-dropdown');
-            this.button = this.shadowRoot.querySelector('button');
+            this.button = this;
         }
     }, {
         key: 'getAttributes',
         value: function getAttributes() {
             var itemsAttributeValue = this.getAttribute('items');
+            var isSelectAttributeValue = this.getAttribute('is-select');
             this.state = Object.assign({}, this.state, {
-                items: itemsAttributeValue && JSON.parse(itemsAttributeValue),
-                btnClasses: this.getAttribute('button-classes')
+                items: itemsAttributeValue ? JSON.parse(itemsAttributeValue) : [],
+                btnClasses: this.getAttribute('button-classes'),
+                isSelect: isSelectAttributeValue ? isSelectAttributeValue.toLowerCase() === 'true' : false
             });
         }
     }, {
         key: 'draw',
         value: function draw() {
             this.dropdownElement.setAttribute('items', JSON.stringify(this.state.items));
-            this.button.className = this.state.btnClasses;
+            this.button.className = 'dropdown-trigger ' + (this.state.btnClasses || 'button');
         }
     }, {
         key: 'setupListeners',
@@ -521,22 +537,32 @@ var WSDropdownButton = function (_HTMLButtonElement) {
             var _this2 = this;
 
             this.dropdownElement.addEventListener('change', function (e) {
+                _this2.value = e.detail.value;
                 _this2.state.open ? _this2.hide() : _this2.open();
             });
-            this.dropdownElement.addEventListener('click', function (e) {});
             this.button.addEventListener('click', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
+                _this2.state.open ? _this2.hide() : _this2.open();
+            });
+            this.dropdownElement.addEventListener('click', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                _this2.value = e.detail.item.label || e.detail.item;
                 _this2.state.open ? _this2.hide() : _this2.open();
             });
         }
     }, {
         key: 'open',
         value: function open(event) {
+            var _this3 = this;
+
             this.state.open = true;
 
             this.dropdownElement.open();
-            document.body.addEventListener('click', this.hide.bind(this));
+            document.body.addEventListener('click', function () {
+                return _this3.hide();
+            });
         }
 
         /**
@@ -546,9 +572,13 @@ var WSDropdownButton = function (_HTMLButtonElement) {
     }, {
         key: 'hide',
         value: function hide() {
+            var _this4 = this;
+
             this.state.open = false;
 
-            document.body.removeEventListener('click', this.hide.bind(this));
+            document.body.removeEventListener('click', function () {
+                return _this4.hide();
+            });
             this.dropdownElement.close();
         }
     }, {
@@ -561,35 +591,41 @@ var WSDropdownButton = function (_HTMLButtonElement) {
             });
             this.dispatchEvent(event);
         }
-
-        // You can also define the other lifecycle methods.
-
-    }, {
-        key: 'attachedCallback',
-        value: function attachedCallback() {}
-    }, {
-        key: 'detachedCallback',
-        value: function detachedCallback() {}
     }, {
         key: 'attributeChangedCallback',
         value: function attributeChangedCallback(attrName, oldVal, newVal) {
             switch (attrName) {
                 case "items":
                 case "button-classes":
+                case "is-select":
                     this.getAttributes();
                     this.draw();
                     break;
             }
         }
+    }, {
+        key: 'value',
+        get: function get() {
+            return this.state.value;
+        },
+        set: function set(value) {
+            this.state.value = value;
+            if (this.state.isSelect) {
+                this.button.querySelector('span').textContent = value;
+            }
+        }
     }]);
 
     return WSDropdownButton;
-}(HTMLButtonElement);
+}(HTMLAnchorElement);
 
 //Register the element with the document
 
 
-document.registerElement('ws-dropdown-button', WSDropdownButton);
+document.registerElement('ws-dropdown-button', {
+    prototype: WSDropdownButton,
+    extends: 'a'
+});
     'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -668,7 +704,6 @@ var WSDropdownMenu = function (_HTMLElement) {
                 this.draw();
             } catch (e) {
                 var message = 'Getting Attributes failed: ' + e.message;
-                console.log(message);
                 this.propagateError(message);
             }
         }
@@ -905,15 +940,6 @@ var WSDropdownMenu = function (_HTMLElement) {
             });
             this.dispatchEvent(event);
         }
-
-        // You can also define the other lifecycle methods.
-
-    }, {
-        key: 'attachedCallback',
-        value: function attachedCallback() {}
-    }, {
-        key: 'detachedCallback',
-        value: function detachedCallback() {}
     }, {
         key: 'attributeChangedCallback',
         value: function attributeChangedCallback(attrName, oldVal, newVal) {
@@ -1093,6 +1119,7 @@ var WSDropdown = function (_HTMLElement) {
         value: function setupListeners(menuElement) {
             var _this2 = this;
 
+            // u can also listen for the 'change' event
             menuElement.addEventListener(SIZE_CHANGE_EVENT, function (e) {
                 e.stopPropagation();
                 e.preventDefault();
@@ -1102,7 +1129,6 @@ var WSDropdown = function (_HTMLElement) {
                 e.stopPropagation();
                 e.preventDefault();
             });
-            menuElement.addEventListener('change', function (e) {});
         }
     }, {
         key: 'open',
@@ -1182,15 +1208,6 @@ var WSDropdown = function (_HTMLElement) {
             });
             this.dispatchEvent(event);
         }
-
-        // You can also define the other lifecycle methods.
-
-    }, {
-        key: 'attachedCallback',
-        value: function attachedCallback() {}
-    }, {
-        key: 'detachedCallback',
-        value: function detachedCallback() {}
     }, {
         key: 'attributeChangedCallback',
         value: function attributeChangedCallback(attrName, oldVal, newVal) {

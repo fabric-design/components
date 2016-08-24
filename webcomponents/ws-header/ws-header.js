@@ -1,5 +1,5 @@
 //Get the contents of the template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
-var template = document._currentScript.ownerDocument.querySelector('template');
+var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
 var availableLanguages = ['de','en'];
 var state = {
     tokenName: "zalando-internal-access_token",

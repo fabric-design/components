@@ -1,3 +1,5 @@
+<!-- inject:global -->
+<!-- endinject -->
 <template>
     <!-- inject:html -->
     <div class="refills-components time-wrapper">
@@ -120,7 +122,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 //Get the contents of the template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
-var template = document.currentScript.ownerDocument.querySelector('template');
+var currentScript = document._currentScript || document.currentScript;
+var template = currentScript.ownerDocument.querySelector('template');
 
 var WSTimePicker = function (_HTMLElement) {
   _inherits(WSTimePicker, _HTMLElement);

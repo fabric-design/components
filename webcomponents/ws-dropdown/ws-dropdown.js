@@ -4,8 +4,10 @@ const SIZE_CHANGE_EVENT = 'size-change';
 var state = {
     items: [],
     open: false,
-    isSelect: false
-}
+    isSelect: false,
+    bodyClickHandler: null
+};
+var animationEndEvents = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
 
 class WSDropdown extends HTMLElement {
     // Use createdCallback instead of constructor to init an element.
@@ -50,21 +52,23 @@ class WSDropdown extends HTMLElement {
             e.preventDefault();
             this.adjustSize(e.detail.menuSize);
         });
+        // this event will bubble up to the listener outside
         this.dropdownMenu.addEventListener('change', (e) => {
             this.value = e.detail.value;
-            this.state.open ? this.hide() : this.open();
+            this.state.open ? this.close() : this.open();
         });
         this.dropdownMenu.addEventListener('click', (e) => {
             e.stopPropagation();
             e.preventDefault();
-            this.value = e.detail.item.label || e.detail.item;
-            this.state.open ? this.hide() : this.open();
+            this.state.open ? this.close() : this.open();
         });
         this.button.addEventListener('click', (e) => {
             e.stopPropagation();
             e.preventDefault();
-            this.state.open ? this.hide() : this.open();
+            this.state.open ? this.close() : this.open();
         });
+
+        this.state.bodyClickHandler = () => this.close();
     }
 
     get value() {
@@ -86,30 +90,26 @@ class WSDropdown extends HTMLElement {
     open(event) {
         this.state.open = true;
 
-        if (!this.dropdownContainer.classList.contains('mod-open')) {
-            this.dropdownContainer.style.height = 0;
-            this.dropdownContainer.classList.add('mod-open');
-            this.dropdownMenu.animateIn();
-        }
+        this.dropdownContainer.style.height = 0;
+        this.dropdownContainer.classList.add('mod-open');
+        this.dropdownMenu.animateIn();
         this.adjustSize(this.dropdownMenu.height);
 
-        document.body.addEventListener('click', () => this.hide());
+        document.body.addEventListener('click', this.state.bodyClickHandler);
     }
 
     /**
      * Hide the drop down on clicking outside of dropdown
      */
-    hide() {
+    close() {
         this.state.open = false;
 
-        document.body.removeEventListener('click', () => this.hide());
+        document.body.removeEventListener('click', this.state.bodyClickHandler);
 
-        if (this.dropdownContainer.classList.contains('mod-open')) {
-            this.animateElement(this.dropdownContainer, 'animate-close', container => {
-                container.classList.remove('mod-open');
-                this.dropdownMenu.close();
-            });
-        }
+        this.animateElement(this.dropdownContainer, 'animate-close', container => {
+            container.classList.remove('mod-open');
+            this.dropdownMenu.close();
+        });
     }
 
     adjustSize(newSize) {
@@ -127,10 +127,9 @@ class WSDropdown extends HTMLElement {
             return handler;
         };
         // Listen for all possible animation end events
-        let animationEndEvents = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
-        for (let eventName of animationEndEvents) {
+        animationEndEvents.forEach(eventName => {
             item.addEventListener(eventName, getHandler(eventName));
-        }
+        })
         // Add class to start animation
         item.classList.add(animationClass);
     }

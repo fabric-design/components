@@ -2,6 +2,7 @@ var template = (document._currentScript || document.currentScript).ownerDocument
 
 const GO_BACK_EVENT = 'go-back';
 const SIZE_CHANGE_EVENT = 'size-change';
+const CHANGE_EVENT = 'change';
 var state = {
     hasParent: false,
     items: [],
@@ -14,19 +15,18 @@ class WSDropdownMenu extends HTMLElement {
     createdCallback() {
         this.rootTemplate = template.content.getElementById('ws-dropdown-menu').content;
         let clone = document.importNode(this.rootTemplate, true);
-        let styleElement = template.content.querySelector('style').cloneNode(true);
 
         // This element uses Shadow DOM.
-        this.createShadowRoot().appendChild(clone);
-        this.shadowRoot.appendChild(styleElement);
+        this.appendChild(clone);
 
         this.state = state;
         this.grabElements();
         this.getAttributes();
+        this.setupListeners();
     }
 
     grabElements() {
-        this.menuContainer = this.shadowRoot.querySelector('.dropdown-menu');
+        this.menuContainer = this.querySelector('.dropdown-menu');
     }
 
     draw() {
@@ -51,6 +51,13 @@ class WSDropdownMenu extends HTMLElement {
             let message = `Getting Attributes failed: ${e.message}`;
             this.propagateError(message);
         }
+    }
+
+    setupListeners() {
+        this.menuContainer.addEventListener('click', (e) => {
+            e.stopPropagation();
+            e.preventDefault();
+        });
     }
 
     get height() {
@@ -107,7 +114,7 @@ class WSDropdownMenu extends HTMLElement {
         if (children && children.length > 0) {
             subMenuItem.setAttribute('items', JSON.stringify(children));
             subMenuItem.setAttribute('has-parent', true);
-            this.setupListeners(subMenuItem);
+            this.setupSubmenuListeners(subMenuItem);
         } else {
             subMenuItem.remove();
         }
@@ -132,23 +139,10 @@ class WSDropdownMenu extends HTMLElement {
         }
         else if (item.value !== undefined) {
             this.value = item.value;
-            this.dispatchEvent(new Event('click', {
-                detail: {
-                    item
-                }
-            }));
-            this.dispatchEvent(new CustomEvent('change', {
-                detail: {
-                    value: this.value
-                }
-            }));
+            this.propagateChange(this.value);
         }
         else {
-            this.dispatchEvent(new Event('click', {
-                detail: {
-                    item
-                }
-            }));
+            this.propagateClick(item);
         }
         return false;
     }
@@ -210,10 +204,15 @@ class WSDropdownMenu extends HTMLElement {
         }
     }
 
-    setupListeners(subMenuElement) {
+    setupSubmenuListeners(subMenuElement) {
         subMenuElement.addEventListener(GO_BACK_EVENT, (e) => {
             e.preventDefault();
             this.back();
+        });
+        subMenuElement.addEventListener(CHANGE_EVENT, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.propagateChange(e.detail.value);
         });
     }
 
@@ -235,6 +234,24 @@ class WSDropdownMenu extends HTMLElement {
         let event = new CustomEvent("error", {
             detail: {
                 message: reason
+            }
+        });
+        this.dispatchEvent(event);
+    }
+
+    propagateChange(value) {
+        let event = new CustomEvent(CHANGE_EVENT, {
+            detail: {
+                value
+            }
+        });
+        this.dispatchEvent(event);
+    }
+
+    propagateClick(item) {
+        let event = new CustomEvent('click', {
+            detail: {
+                item
             }
         });
         this.dispatchEvent(event);

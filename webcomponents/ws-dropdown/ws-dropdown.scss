@@ -1,7 +1,7 @@
 @import "node_modules/bourbon/app/assets/stylesheets/bourbon";
 @import "node_modules/wholesale-styleguide-scss/variables";
 @import "node_modules/wholesale-styleguide-scss/util";
-@import "node_modules/wholesale-styleguide-scss/components/base/buttons";
+@import "node_modules/wholesale-styleguide-scss/components/complex/dropdown";
 
 $export-dropdown-css: true !default;
 $dropdown-background-color: $white !default;

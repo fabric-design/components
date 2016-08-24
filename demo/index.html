@@ -26,12 +26,16 @@
         <ws-time-picker id="time-picker"></ws-time-picker>
         <ws-date-picker id="ws-datepicker"></ws-date-picker>
         <p>
-            Simple Dropdown (with class mod-large):
-            <a class="button mod-large" is="ws-dropdown-button" id="ws-dropdown-button" style="position: relative; left: 150px;">Click Me!</a>
+            Simple Dropdown:
+            <ws-dropdown id="ws-dropdown-button" style="position: relative; left: 150px;">
+                <button>Click Me!</button>
+            </ws-dropdown>
         </p>
         <p>
             Select Dropdown:
-            <ws-dropdown-select id="ws-dropdown-select" style="position: relative; left: 150px;"></ws-dropdown-select>
+            <ws-dropdown id="ws-dropdown-select" is-select="true" style="position: relative; left: 150px;">
+                <button>Click Me!</button>
+            </ws-dropdown>
         </p>
         <script>
             document.querySelector('#header').addEventListener('error',
@@ -54,14 +58,6 @@
             function({ detail: { date }}) {
                 console.log('date selected: ' + date);
             });
-            setTimeout(function() {
-                wsNotification.init(); // Can pass any wrapper element
-                wsNotification.create({title: 'This is a info', lifetime: 0});
-                wsNotification.create({title: 'This is a warning', description: 'Because we want to show a warning', type: 'warning'});
-                wsNotification.create({title: 'This is a error', type: 'error', lifetime: 6000});
-                wsNotification.create({title: 'This was successfull', type: 'success', lifetime: 3000});
-                wsNotification.create({title: 'This will disappear in 10 seconds', lifetime: 10000});
-            }, 1000);
 
             var demoList = [{
                 label: 'Item 1',
@@ -80,7 +76,6 @@
                 }]
             }];
             document.querySelector('#ws-dropdown-button').setAttribute('items', JSON.stringify(demoList));
-            document.querySelector('#ws-dropdown-button').setAttribute('button-classes', 'mod-large');
             document.querySelector('#ws-dropdown-button').addEventListener('change',
                     function({ detail: { value }}) {
                         console.log('dropdown item selected: ' + value);

@@ -1,5 +1,6 @@
 @import "node_modules/bourbon/app/assets/stylesheets/bourbon";
 @import "node_modules/wholesale-styleguide-scss/variables";
+@import "node_modules/wholesale-styleguide-scss/util";
 @import "node_modules/wholesale-styleguide-scss/components/base/buttons";
 
 $export-dropdown-css: true !default;
@@ -30,7 +31,7 @@ $dropdown-hover-background-color: $pattens-blue !default;
 	position: absolute;
 	top: 0;
 	left: 100%;
-	padding: rem(5px) 0;
+	padding: rem(5px 0);
 	width: 100%;
 	margin: 0;
 }
@@ -42,7 +43,7 @@ $dropdown-hover-background-color: $pattens-blue !default;
 	font-family: $font-family;
 	line-height: 2;
 	cursor: pointer;
-	padding: rem(8px) rem(30px) rem(8px) rem(13px);
+	padding: rem(8px 30px 8px 13px);
 	white-space: nowrap;
 	width: 100%;
 	display: block;

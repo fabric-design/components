@@ -28,7 +28,7 @@
         <p>
             Simple Dropdown:
             <ws-dropdown id="ws-dropdown-button" style="position: relative; left: 150px;">
-                <button>Click Me!</button>
+                <a>Click Me!</a>
             </ws-dropdown>
         </p>
         <p>
@@ -73,6 +73,9 @@
                 }, {
                     label: 'Sub-Item 3-2',
                     value: 'Sub-Item 3-2'
+                }, {
+                    label: 'Sub-Item 3-3',
+                    value: 'Sub-Item 3-3'
                 }]
             }];
             document.querySelector('#ws-dropdown-button').setAttribute('items', JSON.stringify(demoList));

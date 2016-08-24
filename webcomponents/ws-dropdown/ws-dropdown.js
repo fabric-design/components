@@ -30,7 +30,7 @@ class WSDropdown extends HTMLElement {
     grabElements() {
         this.dropdownContainer = this.shadowRoot.querySelector('.dropdown-container');
         this.dropdownMenu = this.shadowRoot.querySelector('ws-dropdown-menu');
-        this.button = this.querySelector('button');
+        this.button = this.querySelector('button,a');
     }
 
     getAttributes() {

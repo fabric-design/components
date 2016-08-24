@@ -56,7 +56,6 @@ class WSDropdownMenu extends HTMLElement {
     setupListeners() {
         this.menuContainer.addEventListener('click', (e) => {
             e.stopPropagation();
-            e.preventDefault();
         });
     }
 

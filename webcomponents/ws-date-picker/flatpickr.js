@@ -630,7 +630,6 @@ flatpickr.init = function (context, element, instanceConfig) {
     cur_year.addEventListener('wheel', yearScroll);
 
     calendar.addEventListener('click', calendarClick);
-    document.addEventListener('click', documentClick, true);
 
     if ( self.config.enableTime ){
 
@@ -685,6 +684,8 @@ flatpickr.init = function (context, element, instanceConfig) {
 
     self.element.parentNode.classList.add('open');
 
+    document.addEventListener('click', documentClick, true);
+
     if (self.config.onOpen)
       self.config.onOpen();
 
@@ -708,6 +709,8 @@ flatpickr.init = function (context, element, instanceConfig) {
     self.input.classList.remove('active');
     if (self.altInput)
       self.altInput.classList.remove('active');
+
+    document.removeEventListener('click', documentClick, false);
 
     if (self.config.onClose) {
       self.config.onClose();

@@ -20,11 +20,6 @@ class WSDropdown extends HTMLElement {
         this.shadowRoot.appendChild(styleElement);
 
         this.state = state;
-        this.grabElements();
-        this.getAttributes();
-        this.draw();
-        this.setupListeners();
-        this.adjustSize(this.dropdownMenu);
     }
 
     grabElements() {
@@ -141,6 +136,14 @@ class WSDropdown extends HTMLElement {
             }
         });
         this.dispatchEvent(event);
+    }
+
+    attachedCallback() {
+        this.grabElements();
+        this.getAttributes();
+        this.draw();
+        this.setupListeners();
+        this.adjustSize(this.dropdownMenu);
     }
 
     attributeChangedCallback(attrName, oldVal, newVal) {

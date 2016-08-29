@@ -1078,7 +1078,7 @@ if (!("classList" in document.documentElement) && Object.defineProperty && typeo
           ~index ? classes.splice(index, 1) : classes.push(value);
         }),
         contains: function contains(value) {
-          return !!~self.className.split(/\s+/).indexOf(value);
+          return !! ~self.className.split(/\s+/).indexOf(value);
         }
       };
 

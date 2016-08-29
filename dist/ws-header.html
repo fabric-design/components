@@ -464,8 +464,12 @@ var WSHeader = function (_HTMLElement) {
                     return _this2.getUser();
                 }).then(function () {
                     return _this2.showUser();
-                }).catch(function () {
-                    return _this2.propagateError("Getting Token-/User-Info failed!");
+                }).catch(function (err) {
+                    var message = "Getting Token-/User-Info failed!";
+                    if (err) {
+                        message += " " + err.toString();
+                    }
+                    _this2.propagateError(message);
                 });
             });
         }
@@ -565,12 +569,13 @@ var WSHeader = function (_HTMLElement) {
 
                         _this4.propagateLoginStatusChange(true, token);
                         resolve();
-                    }, function () {
-                        _this4.showLoggedOut();
-
-                        _this4.propagateLoginStatusChange(false);
-                        reject();
+                    }, function (err) {
+                        _this4.logout();
+                        reject(err);
                     });
+                }, function (err) {
+                    _this4.logout();
+                    reject(err);
                 });
             });
         }
@@ -641,7 +646,6 @@ var WSHeader = function (_HTMLElement) {
                 }
                 token = _this5.getCookieValue(_this5.state.tokenName);
                 if (token) {
-                    _this5.setCookie(token);
                     return resolve(token);
                 }
 
@@ -671,9 +675,9 @@ var WSHeader = function (_HTMLElement) {
                         userUID: data.uid
                     });
                     resolve(data.uid);
-                }, function () {
+                }, function (err) {
                     _this6.logout();
-                    reject();
+                    reject(err);
                 });
             });
         }
@@ -694,9 +698,9 @@ var WSHeader = function (_HTMLElement) {
                     };
                     _this7.state = Object.assign({}, _this7.state, userInfo);
                     resolve(userInfo);
-                }, function () {
+                }, function (err) {
                     _this7.logout();
-                    reject();
+                    reject(err);
                 });
             });
         }
@@ -742,6 +746,8 @@ var WSHeader = function (_HTMLElement) {
     }, {
         key: 'request',
         value: function request(method, url) {
+            var _this8 = this;
+
             var headers = new Headers();
             return this.getToken(urlAtStart).then(function (token) {
                 headers.append("Authorization", 'Bearer ' + token);
@@ -752,7 +758,7 @@ var WSHeader = function (_HTMLElement) {
                     headers: headers,
                     mode: 'cors',
                     cache: 'default'
-                }).then(checkStatus).then(function (response) {
+                }).then(_this8.checkStatus).then(function (response) {
                     return response.json();
                 });
             });

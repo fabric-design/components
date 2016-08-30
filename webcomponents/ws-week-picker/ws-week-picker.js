@@ -81,7 +81,7 @@ class WSWeekPicker extends HTMLElement {
       this.cancel();
     }
   }
-  // Just hide calendar on cross icon click
+  // Just close calendar on cross icon click
   cancel() {
     this.calendar.className = 'ws-week-picker';
     this.input.className = 'ws-week-input used';

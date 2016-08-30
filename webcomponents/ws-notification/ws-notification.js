@@ -130,7 +130,7 @@ class NotificationHandler {
         this.list.appendChild(notification);
         var marginBottom = parseInt(document.defaultView.getComputedStyle(notification).marginBottom, 10);
         var height = notification.clientHeight + marginBottom;
-        // Initial hide the notification
+        // Initial close the notification
         this.list.style.transition = `none`;
         this.list.style.transform = `translate3d(0, ${height}px, 0)`;
         setTimeout(() => {

@@ -109,7 +109,7 @@ class WSHeader extends HTMLElement {
     }
     
     login() {
-        let url = "https://auth.zalando.com/z/oauth2/authorize?realm=employees&response_type=token&scope=uid" +
+        let url = "https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid" +
           "&client_id=" + this.state.clientId +
           "&redirect_uri=" + this.state.redirectUrl +
           "&state=" + this.setSessionState();

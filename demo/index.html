@@ -80,10 +80,14 @@
             }];
             document.querySelector('#ws-dropdown-button').setAttribute('items', JSON.stringify(demoList));
             document.querySelector('#ws-dropdown-button').addEventListener('change',
-                    function({ detail: { value }}) {
-                        console.log('dropdown item selected: ' + value);
+                    function({ detail: { item }}) {
+                        console.log('dropdown item selected: ' + JSON.stringify(item));
                     });
             document.querySelector('#ws-dropdown-select').setAttribute('items', JSON.stringify(demoList));
+            document.querySelector('#ws-dropdown-button').addEventListener('change',
+                    function({ detail: { item }}) {
+                        console.log('Another way t get the value is: ' + document.querySelector('#ws-dropdown-button').value);
+                    });
         </script>
     </body>
 </html>

@@ -34,7 +34,656 @@
     <!-- endinject -->
     <style>
         /* inject:styles */
-        .dropdown .dropdown-container{position:absolute;top:100%;right:0;width:12.5rem;margin-top:1.25rem;height:0;display:none;background-color:#fff;border-radius:3px;box-shadow:0 2px 6px #5e6979;transition:height .125s ease;will-change:height;overflow:hidden;z-index:3}.dropdown .dropdown-container .dropdown-root-menu{right:0;left:auto}.dropdown .dropdown-container.mod-open,.dropdown .dropdown-container.mod-open+.dropdown-arrow{display:block}.dropdown .dropdown-menu{position:absolute;top:0;left:100%;padding:5px 0;width:100%}.dropdown .dropdown-menu.mod-menu-open,.dropdown .dropdown-menu.mod-sub-open{left:0}.dropdown .dropdown-menu.mod-sub-open>.dropdown-item>.text{opacity:0;z-index:-1}.dropdown .dropdown-item .text{position:relative;font-size:.875rem;color:#5e6979;font-family:acuminpro,Helvetica Neue,Helvetica,Arial,sans-serif;line-height:2;cursor:pointer;padding:8px 30px 8px 13px;white-space:nowrap;width:100%;display:block;overflow:hidden;text-overflow:ellipsis;font-weight:400}.dropdown .dropdown-item .text.is-active,.dropdown .dropdown-item .text:hover{background-color:#def5fe}.dropdown .dropdown-arrow{display:none;position:absolute;width:.625rem;height:.625rem;bottom:-1.5625rem;right:1.25rem;background:linear-gradient(-45deg,hsla(0,0%,100%,0) 50%,#fff 0);-webkit-transform:rotate(45deg);transform:rotate(45deg);z-index:2;box-shadow:-1px -1px 1px #e7ecf3}.dropdown .dropdown-container.animate-close{-webkit-animation:a .2s ease-in-out forwards;animation:a .2s ease-in-out forwards}.dropdown .dropdown-menu.animate-in>.dropdown-item>.text{-webkit-animation:c .3s cubic-bezier(.32,.97,.71,.95) 0s forwards;animation:c .3s cubic-bezier(.32,.97,.71,.95) 0s forwards}.dropdown .dropdown-menu.animate-out>.dropdown-item>.text{-webkit-animation:b .3s cubic-bezier(.53,1.49,1,.87) forwards;animation:b .3s cubic-bezier(.53,1.49,1,.87) forwards}.dropdown .dropdown-menu.animate-sub-in>.dropdown-item>.text{-webkit-animation:e .3s cubic-bezier(.32,.97,.71,.95) 0s forwards;animation:e .3s cubic-bezier(.32,.97,.71,.95) 0s forwards}.dropdown .dropdown-menu.animate-sub-out>.dropdown-item>.text{-webkit-animation:d .3s cubic-bezier(.53,1.49,1,.87) forwards;animation:d .3s cubic-bezier(.53,1.49,1,.87) forwards}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(1)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(1)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(1)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(1)>.text{-webkit-animation-delay:25ms;animation-delay:25ms}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(2)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(2)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(2)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(2)>.text{-webkit-animation-delay:.05s;animation-delay:.05s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(3)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(3)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(3)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(3)>.text{-webkit-animation-delay:75ms;animation-delay:75ms}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(4)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(4)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(4)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(4)>.text{-webkit-animation-delay:.1s;animation-delay:.1s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(5)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(5)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(5)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(5)>.text{-webkit-animation-delay:.125s;animation-delay:.125s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(6)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(6)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(6)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(6)>.text{-webkit-animation-delay:.15s;animation-delay:.15s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(7)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(7)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(7)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(7)>.text{-webkit-animation-delay:.175s;animation-delay:.175s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(8)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(8)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(8)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(8)>.text{-webkit-animation-delay:.2s;animation-delay:.2s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(9)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(9)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(9)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(9)>.text{-webkit-animation-delay:.225s;animation-delay:.225s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(10)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(10)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(10)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(10)>.text{-webkit-animation-delay:.25s;animation-delay:.25s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(11)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(11)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(11)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(11)>.text{-webkit-animation-delay:.275s;animation-delay:.275s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(12)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(12)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(12)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(12)>.text{-webkit-animation-delay:.3s;animation-delay:.3s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(13)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(13)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(13)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(13)>.text{-webkit-animation-delay:.325s;animation-delay:.325s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(14)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(14)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(14)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(14)>.text{-webkit-animation-delay:.35s;animation-delay:.35s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(15)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(15)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(15)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(15)>.text{-webkit-animation-delay:.375s;animation-delay:.375s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(16)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(16)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(16)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(16)>.text{-webkit-animation-delay:.4s;animation-delay:.4s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(17)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(17)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(17)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(17)>.text{-webkit-animation-delay:.425s;animation-delay:.425s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(18)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(18)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(18)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(18)>.text{-webkit-animation-delay:.45s;animation-delay:.45s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(19)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(19)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(19)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(19)>.text{-webkit-animation-delay:.475s;animation-delay:.475s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(20)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(20)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(20)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(20)>.text{-webkit-animation-delay:.5s;animation-delay:.5s}@-webkit-keyframes a{to{height:0}}@-webkit-keyframes b{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1}70%{opacity:0}to{-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0)}}@-webkit-keyframes c{0%{-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0);opacity:0}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1}}@-webkit-keyframes d{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1}70%{opacity:0}to{-webkit-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0)}}@-webkit-keyframes e{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:0}to{-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0);opacity:1}}.dropdown-menu{display:block}.dropdown{position:relative;display:inline-block}.dropdown-container{position:absolute;top:100%;right:0;width:12.5rem;margin-top:1.25rem;height:0;display:none;background-color:#fff;border-radius:3px;box-shadow:0 2px 6px #5e6979;transition:height .125s ease;will-change:height;overflow:hidden;z-index:3}.dropdown-container .dropdown-root-menu{right:0;left:auto}.dropdown-container.mod-open,.dropdown-container.mod-open+.dropdown-arrow{display:block}.dropdown-menu{position:absolute;top:0;left:100%;padding:.3125rem 0;width:100%;margin:0}.dropdown-menu.mod-menu-open,.dropdown-menu.mod-sub-open{left:0}.dropdown-menu.mod-sub-open>.dropdown-item>.text{opacity:0;z-index:-1}.dropdown-item .text{position:relative;font-size:.875rem;color:#5e6979;font-family:acuminpro,Helvetica Neue,Helvetica,Arial,sans-serif;line-height:2;cursor:pointer;padding:.5rem 1.875rem .5rem .8125rem;white-space:nowrap;width:100%;display:block;overflow:hidden;text-overflow:ellipsis;font-weight:400}.dropdown-item .text.is-active,.dropdown-item .text:hover{background-color:#def5fe}.dropdown-arrow{display:none;position:absolute;width:.625rem;height:.625rem;bottom:-1.5625rem;right:1.25rem;background:linear-gradient(-45deg,hsla(0,0%,100%,0) 50%,#fff 0);-webkit-transform:rotate(45deg);transform:rotate(45deg);z-index:2;box-shadow:-1px -1px 1px #e7ecf3}.dropdown-container.animate-close{-webkit-animation:a .2s ease-in-out forwards;animation:a .2s ease-in-out forwards}.dropdown-menu.animate-in>.dropdown-item>.text{-webkit-animation:c .3s cubic-bezier(.32,.97,.71,.95) 0s forwards;animation:c .3s cubic-bezier(.32,.97,.71,.95) 0s forwards}.dropdown-menu.animate-out>.dropdown-item>.text{-webkit-animation:b .3s cubic-bezier(.53,1.49,1,.87) forwards;animation:b .3s cubic-bezier(.53,1.49,1,.87) forwards}.dropdown-menu.animate-sub-in>.dropdown-item>.text{-webkit-animation:e .3s cubic-bezier(.32,.97,.71,.95) 0s forwards;animation:e .3s cubic-bezier(.32,.97,.71,.95) 0s forwards}.dropdown-menu.animate-sub-out>.dropdown-item>.text{-webkit-animation:d .3s cubic-bezier(.53,1.49,1,.87) forwards;animation:d .3s cubic-bezier(.53,1.49,1,.87) forwards}.dropdown-menu.animate-in>.dropdown-item:nth-child(1)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(1)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(1)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(1)>.text{-webkit-animation-delay:25ms;animation-delay:25ms}.dropdown-menu.animate-in>.dropdown-item:nth-child(2)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(2)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(2)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(2)>.text{-webkit-animation-delay:.05s;animation-delay:.05s}.dropdown-menu.animate-in>.dropdown-item:nth-child(3)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(3)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(3)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(3)>.text{-webkit-animation-delay:75ms;animation-delay:75ms}.dropdown-menu.animate-in>.dropdown-item:nth-child(4)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(4)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(4)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(4)>.text{-webkit-animation-delay:.1s;animation-delay:.1s}.dropdown-menu.animate-in>.dropdown-item:nth-child(5)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(5)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(5)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(5)>.text{-webkit-animation-delay:.125s;animation-delay:.125s}.dropdown-menu.animate-in>.dropdown-item:nth-child(6)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(6)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(6)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(6)>.text{-webkit-animation-delay:.15s;animation-delay:.15s}.dropdown-menu.animate-in>.dropdown-item:nth-child(7)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(7)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(7)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(7)>.text{-webkit-animation-delay:.175s;animation-delay:.175s}.dropdown-menu.animate-in>.dropdown-item:nth-child(8)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(8)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(8)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(8)>.text{-webkit-animation-delay:.2s;animation-delay:.2s}.dropdown-menu.animate-in>.dropdown-item:nth-child(9)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(9)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(9)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(9)>.text{-webkit-animation-delay:.225s;animation-delay:.225s}.dropdown-menu.animate-in>.dropdown-item:nth-child(10)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(10)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(10)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(10)>.text{-webkit-animation-delay:.25s;animation-delay:.25s}.dropdown-menu.animate-in>.dropdown-item:nth-child(11)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(11)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(11)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(11)>.text{-webkit-animation-delay:.275s;animation-delay:.275s}.dropdown-menu.animate-in>.dropdown-item:nth-child(12)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(12)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(12)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(12)>.text{-webkit-animation-delay:.3s;animation-delay:.3s}.dropdown-menu.animate-in>.dropdown-item:nth-child(13)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(13)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(13)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(13)>.text{-webkit-animation-delay:.325s;animation-delay:.325s}.dropdown-menu.animate-in>.dropdown-item:nth-child(14)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(14)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(14)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(14)>.text{-webkit-animation-delay:.35s;animation-delay:.35s}.dropdown-menu.animate-in>.dropdown-item:nth-child(15)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(15)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(15)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(15)>.text{-webkit-animation-delay:.375s;animation-delay:.375s}.dropdown-menu.animate-in>.dropdown-item:nth-child(16)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(16)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(16)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(16)>.text{-webkit-animation-delay:.4s;animation-delay:.4s}.dropdown-menu.animate-in>.dropdown-item:nth-child(17)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(17)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(17)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(17)>.text{-webkit-animation-delay:.425s;animation-delay:.425s}.dropdown-menu.animate-in>.dropdown-item:nth-child(18)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(18)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(18)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(18)>.text{-webkit-animation-delay:.45s;animation-delay:.45s}.dropdown-menu.animate-in>.dropdown-item:nth-child(19)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(19)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(19)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(19)>.text{-webkit-animation-delay:.475s;animation-delay:.475s}.dropdown-menu.animate-in>.dropdown-item:nth-child(20)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(20)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(20)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(20)>.text{-webkit-animation-delay:.5s;animation-delay:.5s}@keyframes a{to{height:0}}@keyframes b{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1}70%{opacity:0}to{-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0)}}@keyframes c{0%{-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0);opacity:0}to{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1}}@keyframes d{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:1}70%{opacity:0}to{-webkit-transform:translate3d(100%,0,0);transform:translate3d(100%,0,0)}}@keyframes e{0%{-webkit-transform:translateZ(0);transform:translateZ(0);opacity:0}to{-webkit-transform:translate3d(-100%,0,0);transform:translate3d(-100%,0,0);opacity:1}}
+        /**
+ * Parse a numeric value from a string
+ */
+
+/**
+ * Convert a pixel value to rem
+ */
+
+/**
+ * Convert a list of pixel values to rem values
+ */
+
+/**
+* Z-index function for managing the values
+*/
+
+.dropdown-menu {
+  display: block;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown .dropdown-container {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 12.5rem;
+  margin-top: 1.25rem;
+  height: 0;
+  display: none;
+  background-color: #ffffff;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px #5e6979;
+  transition: height .125s ease;
+  will-change: height;
+  overflow: hidden;
+  z-index: 3;
+}
+
+.dropdown .dropdown-container .dropdown-root-menu {
+  right: 0;
+  left: auto;
+}
+
+.dropdown .dropdown-container.mod-open {
+  display: block;
+}
+
+.dropdown .dropdown-container.mod-open + .dropdown-arrow {
+  display: block;
+}
+
+.dropdown .dropdown-menu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  padding: 5px 0;
+  width: 100%;
+}
+
+.dropdown .dropdown-menu.mod-menu-open,.dropdown .dropdown-menu.mod-sub-open {
+  left: 0;
+}
+
+.dropdown .dropdown-menu.mod-sub-open > .dropdown-item > .text {
+  opacity: 0;
+  z-index: -1;
+}
+
+.dropdown .dropdown-item .text {
+  position: relative;
+  font-size: 0.875rem;
+  color: #5e6979;
+  font-family: acuminpro, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 2;
+  cursor: pointer;
+  padding: 8px 30px 8px 13px;
+  white-space: nowrap;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: normal;
+}
+
+.dropdown .dropdown-item .text:hover,.dropdown .dropdown-item .text.is-active {
+  background-color: #def5fe;
+}
+
+.dropdown .dropdown-arrow {
+  display: none;
+  position: absolute;
+  width: 0.625rem;
+  height: 0.625rem;
+  bottom: -1.5625rem;
+  right: 1.25rem;
+  background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 50%, #ffffff 50%);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  z-index: 2;
+  box-shadow: -1px -1px 1px #e7ecf3;
+}
+
+.dropdown .dropdown-container.animate-close {
+  -webkit-animation: closeContainer .2s ease-in-out forwards;
+  animation: closeContainer .2s ease-in-out forwards;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item > .text {
+  -webkit-animation: dropDownIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
+  animation: dropDownIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
+}
+
+.dropdown .dropdown-menu.animate-out > .dropdown-item > .text {
+  -webkit-animation: dropDownOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
+  animation: dropDownOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
+}
+
+.dropdown .dropdown-menu.animate-sub-in > .dropdown-item > .text {
+  -webkit-animation: dropDownSubIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
+  animation: dropDownSubIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
+}
+
+.dropdown .dropdown-menu.animate-sub-out > .dropdown-item > .text {
+  -webkit-animation: dropDownSubOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
+  animation: dropDownSubOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(1) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(1) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(1) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(1) > .text {
+  -webkit-animation-delay: 0.025s;
+  animation-delay: 0.025s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(2) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(2) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(2) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(2) > .text {
+  -webkit-animation-delay: 0.05s;
+  animation-delay: 0.05s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(3) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(3) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(3) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(3) > .text {
+  -webkit-animation-delay: 0.075s;
+  animation-delay: 0.075s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(4) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(4) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(4) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(4) > .text {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(5) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(5) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(5) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(5) > .text {
+  -webkit-animation-delay: 0.125s;
+  animation-delay: 0.125s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(6) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(6) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(6) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(6) > .text {
+  -webkit-animation-delay: 0.15s;
+  animation-delay: 0.15s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(7) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(7) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(7) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(7) > .text {
+  -webkit-animation-delay: 0.175s;
+  animation-delay: 0.175s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(8) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(8) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(8) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(8) > .text {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(9) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(9) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(9) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(9) > .text {
+  -webkit-animation-delay: 0.225s;
+  animation-delay: 0.225s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(10) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(10) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(10) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(10) > .text {
+  -webkit-animation-delay: 0.25s;
+  animation-delay: 0.25s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(11) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(11) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(11) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(11) > .text {
+  -webkit-animation-delay: 0.275s;
+  animation-delay: 0.275s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(12) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(12) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(12) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(12) > .text {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(13) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(13) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(13) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(13) > .text {
+  -webkit-animation-delay: 0.325s;
+  animation-delay: 0.325s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(14) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(14) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(14) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(14) > .text {
+  -webkit-animation-delay: 0.35s;
+  animation-delay: 0.35s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(15) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(15) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(15) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(15) > .text {
+  -webkit-animation-delay: 0.375s;
+  animation-delay: 0.375s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(16) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(16) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(16) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(16) > .text {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(17) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(17) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(17) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(17) > .text {
+  -webkit-animation-delay: 0.425s;
+  animation-delay: 0.425s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(18) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(18) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(18) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(18) > .text {
+  -webkit-animation-delay: 0.45s;
+  animation-delay: 0.45s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(19) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(19) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(19) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(19) > .text {
+  -webkit-animation-delay: 0.475s;
+  animation-delay: 0.475s;
+}
+
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(20) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(20) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(20) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(20) > .text {
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+
+@-webkit-keyframes closeContainer {
+  100% {
+    height: 0;
+  }
+}
+
+@keyframes closeContainer {
+  100% {
+    height: 0;
+  }
+}
+
+@-webkit-keyframes dropDownOut {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes dropDownOut {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@-webkit-keyframes dropDownIn {
+  0% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translate3d(0%, 0, 0);
+    transform: translate3d(0%, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes dropDownIn {
+  0% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translate3d(0%, 0, 0);
+    transform: translate3d(0%, 0, 0);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes dropDownSubOut {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes dropDownSubOut {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@-webkit-keyframes dropDownSubIn {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes dropDownSubIn {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    opacity: 1;
+  }
+}
+
+.dropdown-menu {
+  display: block;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-container {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 12.5rem;
+  margin-top: 1.25rem;
+  height: 0;
+  display: none;
+  background-color: #ffffff;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px #5e6979;
+  transition: height .125s ease;
+  will-change: height;
+  overflow: hidden;
+  z-index: 3;
+}
+
+.dropdown-container .dropdown-root-menu {
+  right: 0;
+  left: auto;
+}
+
+.dropdown-container.mod-open {
+  display: block;
+}
+
+.dropdown-container.mod-open + .dropdown-arrow {
+  display: block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  padding: 0.3125rem 0rem;
+  width: 100%;
+  margin: 0;
+}
+
+.dropdown-menu.mod-menu-open,.dropdown-menu.mod-sub-open {
+  left: 0;
+}
+
+.dropdown-menu.mod-sub-open > .dropdown-item > .text {
+  opacity: 0;
+  z-index: -1;
+}
+
+.dropdown-item .text {
+  position: relative;
+  font-size: 0.875rem;
+  color: #5e6979;
+  font-family: acuminpro, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  line-height: 2;
+  cursor: pointer;
+  padding: 0.5rem 1.875rem 0.5rem 0.8125rem;
+  white-space: nowrap;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: normal;
+}
+
+.dropdown-item .text:hover,.dropdown-item .text.is-active {
+  background-color: #def5fe;
+}
+
+.dropdown-arrow {
+  display: none;
+  position: absolute;
+  width: 0.625rem;
+  height: 0.625rem;
+  bottom: -1.5625rem;
+  right: 1.25rem;
+  background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 50%, #ffffff 50%);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  z-index: 2;
+  box-shadow: -1px -1px 1px #e7ecf3;
+}
+
+.dropdown-container.animate-close {
+  -webkit-animation: closeContainer .2s ease-in-out forwards;
+  animation: closeContainer .2s ease-in-out forwards;
+}
+
+.dropdown-menu.animate-in > .dropdown-item > .text {
+  -webkit-animation: dropDownIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
+  animation: dropDownIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
+}
+
+.dropdown-menu.animate-out > .dropdown-item > .text {
+  -webkit-animation: dropDownOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
+  animation: dropDownOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
+}
+
+.dropdown-menu.animate-sub-in > .dropdown-item > .text {
+  -webkit-animation: dropDownSubIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
+  animation: dropDownSubIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
+}
+
+.dropdown-menu.animate-sub-out > .dropdown-item > .text {
+  -webkit-animation: dropDownSubOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
+  animation: dropDownSubOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(1) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(1) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(1) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(1) > .text {
+  -webkit-animation-delay: 0.025s;
+  animation-delay: 0.025s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(2) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(2) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(2) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(2) > .text {
+  -webkit-animation-delay: 0.05s;
+  animation-delay: 0.05s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(3) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(3) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(3) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(3) > .text {
+  -webkit-animation-delay: 0.075s;
+  animation-delay: 0.075s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(4) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(4) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(4) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(4) > .text {
+  -webkit-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(5) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(5) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(5) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(5) > .text {
+  -webkit-animation-delay: 0.125s;
+  animation-delay: 0.125s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(6) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(6) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(6) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(6) > .text {
+  -webkit-animation-delay: 0.15s;
+  animation-delay: 0.15s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(7) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(7) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(7) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(7) > .text {
+  -webkit-animation-delay: 0.175s;
+  animation-delay: 0.175s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(8) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(8) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(8) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(8) > .text {
+  -webkit-animation-delay: 0.2s;
+  animation-delay: 0.2s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(9) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(9) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(9) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(9) > .text {
+  -webkit-animation-delay: 0.225s;
+  animation-delay: 0.225s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(10) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(10) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(10) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(10) > .text {
+  -webkit-animation-delay: 0.25s;
+  animation-delay: 0.25s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(11) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(11) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(11) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(11) > .text {
+  -webkit-animation-delay: 0.275s;
+  animation-delay: 0.275s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(12) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(12) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(12) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(12) > .text {
+  -webkit-animation-delay: 0.3s;
+  animation-delay: 0.3s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(13) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(13) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(13) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(13) > .text {
+  -webkit-animation-delay: 0.325s;
+  animation-delay: 0.325s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(14) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(14) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(14) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(14) > .text {
+  -webkit-animation-delay: 0.35s;
+  animation-delay: 0.35s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(15) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(15) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(15) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(15) > .text {
+  -webkit-animation-delay: 0.375s;
+  animation-delay: 0.375s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(16) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(16) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(16) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(16) > .text {
+  -webkit-animation-delay: 0.4s;
+  animation-delay: 0.4s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(17) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(17) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(17) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(17) > .text {
+  -webkit-animation-delay: 0.425s;
+  animation-delay: 0.425s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(18) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(18) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(18) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(18) > .text {
+  -webkit-animation-delay: 0.45s;
+  animation-delay: 0.45s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(19) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(19) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(19) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(19) > .text {
+  -webkit-animation-delay: 0.475s;
+  animation-delay: 0.475s;
+}
+
+.dropdown-menu.animate-in > .dropdown-item:nth-child(20) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(20) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(20) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(20) > .text {
+  -webkit-animation-delay: 0.5s;
+  animation-delay: 0.5s;
+}
+
+@keyframes closeContainer {
+  100% {
+    height: 0;
+  }
+}
+
+@keyframes dropDownOut {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes dropDownIn {
+  0% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translate3d(0%, 0, 0);
+    transform: translate3d(0%, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes dropDownSubOut {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes dropDownSubIn {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+
+  100% {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    opacity: 1;
+  }
+}
         /* endinject */
     </style>
 </template>
@@ -42,8 +691,568 @@
 <script>
 (function(){
     /* inject:js */
-    "use strict";function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _possibleConstructorReturn(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}var _createClass=function(){function e(e,t){for(var n=0;n<t.length;n++){var a=t[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}return function(t,n,a){return n&&e(t.prototype,n),a&&e(t,a),t}}(),template=(document._currentScript||document.currentScript).ownerDocument.querySelector("template"),GO_BACK_EVENT="go-back",SIZE_CHANGE_EVENT="size-change",CHANGE_EVENT="change",state={hasParent:!1,items:[],openSubMenu:null,open:!1},WSDropdownMenu=function(e){function t(){return _classCallCheck(this,t),_possibleConstructorReturn(this,Object.getPrototypeOf(t).apply(this,arguments))}return _inherits(t,e),_createClass(t,[{key:"createdCallback",value:function(){this.rootTemplate=template.content.getElementById("ws-dropdown-menu").content;var e=document.importNode(this.rootTemplate,!0);this.appendChild(e),this.state=state,this.grabElements(),this.getAttributes(),this.setupListeners()}},{key:"grabElements",value:function(){this.menuContainer=this.querySelector(".dropdown-menu")}},{key:"draw",value:function(){var e=this.state,t=e.hasParent,n=e.items;this.cleanListItems(),this.checkIfRoot(t,n),this.addItems(n)}},{key:"getAttributes",value:function(){try{var e=this.getAttribute("items"),t=this.getAttribute("has-parent");this.state=Object.assign({},this.state,{items:e&&JSON.parse(e),hasParent:t?JSON.parse(t):!1}),this.draw()}catch(n){var a="Getting Attributes failed: "+n.message;this.propagateError(a)}}},{key:"setupListeners",value:function(){this.menuContainer.addEventListener("click",function(e){e.stopPropagation()})}},{key:"checkIfRoot",value:function(e,t){var n=this,a="dropdown-menu";if(e){var i=document.importNode(this.rootTemplate.getElementById("ws-dropdown-menu-back-item").content,!0).querySelector("li");i.addEventListener("click",function(){return n.propagateGoBack()}),this.menuContainer.appendChild(i)}else a+=" dropdown-root-menu";this.menuContainer.className=a}},{key:"addItems",value:function(e){var t=this;e&&e.forEach(function(e){var n=t.prepareListItem(e);t.menuContainer.appendChild(n)})}},{key:"cleanListItems",value:function(){this.menuContainer.innerHTML=""}},{key:"prepareListItem",value:function(e){var t=this,n="dropdown-menu",a=document.importNode(this.rootTemplate.getElementById("ws-dropdown-menu-item").content,!0),i=a.querySelector("a"),r=e.selected,s=e.href,o=e.icon,u=e.label,c=e.children;if(r&&(n+=" is-active"),a.className=n,o){var l=document.createElement("i");l.className="icon "+o,i.appendChild(l)}i.textContent=u||e;var h=a.querySelector("ws-dropdown-menu");return c&&c.length>0?(h.setAttribute("items",JSON.stringify(c)),h.setAttribute("has-parent",!0),this.setupSubmenuListeners(h)):h.remove(),s?i.setAttribute("href",s):i.addEventListener("click",function(){return t.next(e,h)}),a}},{key:"next",value:function(e,t){return e.children&&e.children.length?(this.state.openSubMenu=t,this.propagateNewMenuSize(t.height),this.animateOut(),t.animateIn()):void 0!==e.value?(this.value=e.value,this.propagateChange(this.value)):this.propagateClick(e),!1}},{key:"back",value:function(){this.state.openSubMenu&&(this.state.openSubMenu.animateOut(this.state.openSubMenu.state.hasParent),this.propagateNewMenuSize(this.height),this.animateIn(this.state.hasParent),this.state.openSubMenu=null)}},{key:"animateIn",value:function(e){this.state.open=!0;var t=e?"animate-in":"animate-sub-in";this.animateElement(this.menuContainer,t,function(e){e.classList.remove("mod-sub-open"),e.classList.add("mod-menu-open")})}},{key:"animateOut",value:function(e){this.state.open=!1;var t=e?"animate-sub-out":"animate-out";this.animateElement(this.menuContainer,t,function(t){t.classList.remove("mod-menu-open"),e||t.classList.add("mod-sub-open")})}},{key:"animateElement",value:function(e,t,n){var a=function(a){var i=function r(i){e.classList.remove(t),e.removeEventListener(a,r),n(e)};return i},i=!0,r=!1,s=void 0;try{for(var o,u=animationEndEvents[Symbol.iterator]();!(i=(o=u.next()).done);i=!0){var c=o.value;e.addEventListener(c,a(c))}}catch(l){r=!0,s=l}finally{try{!i&&u["return"]&&u["return"]()}finally{if(r)throw s}}e.classList.add(t)}},{key:"close",value:function(){this.menuContainer.classList.remove("mod-sub-open"),this.menuContainer.classList.remove("mod-menu-open"),this.state.openSubMenu&&this.state.openSubMenu.close()}},{key:"setupSubmenuListeners",value:function(e){var t=this;e.addEventListener(GO_BACK_EVENT,function(e){e.preventDefault(),t.back()}),e.addEventListener(CHANGE_EVENT,function(e){e.preventDefault(),e.stopPropagation(),t.propagateChange(e.detail.value)})}},{key:"propagateGoBack",value:function(){var e=new CustomEvent(GO_BACK_EVENT);this.dispatchEvent(e)}},{key:"propagateNewMenuSize",value:function(e){var t=new CustomEvent(SIZE_CHANGE_EVENT,{detail:{menuSize:e}});this.dispatchEvent(t)}},{key:"propagateError",value:function(e){var t=new CustomEvent("error",{detail:{message:e}});this.dispatchEvent(t)}},{key:"propagateChange",value:function(e){var t=new CustomEvent(CHANGE_EVENT,{detail:{value:e}});this.dispatchEvent(t)}},{key:"propagateClick",value:function(e){var t=new CustomEvent("click",{detail:{item:e}});this.dispatchEvent(t)}},{key:"attributeChangedCallback",value:function(e,t,n){switch(e){case"items":case"has-parent":this.getAttributes()}}},{key:"height",get:function(){return this.menuContainer.clientHeight}}]),t}(HTMLElement);document.registerElement("ws-dropdown-menu",WSDropdownMenu);
-    "use strict";function _classCallCheck(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function _possibleConstructorReturn(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}function _inherits(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}var _createClass=function(){function t(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}return function(e,n,o){return n&&t(e.prototype,n),o&&t(e,o),e}}(),template=(document._currentScript||document.currentScript).ownerDocument.querySelector("template"),SIZE_CHANGE_EVENT="size-change",state={items:[],open:!1,isSelect:!1,bodyClickHandler:null},animationEndEvents=["oAnimationEnd","MSAnimationEnd","animationend"],WSDropdown=function(t){function e(){return _classCallCheck(this,e),_possibleConstructorReturn(this,Object.getPrototypeOf(e).apply(this,arguments))}return _inherits(e,t),_createClass(e,[{key:"createdCallback",value:function(){var t=document.importNode(template.content.getElementById("ws-dropdown").content,!0),e=template.content.querySelector("style").cloneNode(!0);this.createShadowRoot().appendChild(t),this.shadowRoot.appendChild(e),this.state=state,this.grabElements(),this.getAttributes(),this.draw(),this.setupListeners(),this.adjustSize(this.dropdownMenu)}},{key:"grabElements",value:function(){this.dropdownContainer=this.shadowRoot.querySelector(".dropdown-container"),this.dropdownMenu=this.shadowRoot.querySelector("ws-dropdown-menu"),this.button=this.querySelector("button,a")}},{key:"getAttributes",value:function(){var t=this.getAttribute("items"),e=this.getAttribute("is-select");this.state=Object.assign({},this.state,{items:t?JSON.parse(t):[],isSelect:e?"true"===e.toLowerCase():!1})}},{key:"draw",value:function(){this.dropdownMenu.setAttribute("items",JSON.stringify(this.state.items))}},{key:"setupListeners",value:function(){var t=this;this.dropdownMenu.addEventListener(SIZE_CHANGE_EVENT,function(e){e.stopPropagation(),e.preventDefault(),t.adjustSize(e.detail.menuSize)}),this.dropdownMenu.addEventListener("change",function(e){t.value=e.detail.value,t.state.open?t.close():t.open()}),this.dropdownMenu.addEventListener("click",function(e){e.stopPropagation(),e.preventDefault(),t.state.open?t.close():t.open()}),this.button.addEventListener("click",function(e){e.stopPropagation(),e.preventDefault(),t.state.open?t.close():t.open()}),this.state.bodyClickHandler=function(){return t.close()}}},{key:"open",value:function(t){this.state.open=!0,this.dropdownContainer.style.height=0,this.dropdownContainer.classList.add("mod-open"),this.dropdownMenu.animateIn(),this.adjustSize(this.dropdownMenu.height),document.body.addEventListener("click",this.state.bodyClickHandler)}},{key:"close",value:function(){var t=this;this.state.open=!1,document.body.removeEventListener("click",this.state.bodyClickHandler),this.animateElement(this.dropdownContainer,"animate-close",function(e){e.classList.remove("mod-open"),t.dropdownMenu.close()})}},{key:"adjustSize",value:function(t){this.dropdownContainer.style.height=t+"px"}},{key:"animateElement",value:function(t,e,n){var o=function(o){var i=function s(i){t.classList.remove(e),t.removeEventListener(o,s),n(t)};return i};animationEndEvents.forEach(function(e){t.addEventListener(e,o(e))}),t.classList.add(e)}},{key:"propagateError",value:function(t){var e=new CustomEvent("error",{detail:{message:t}});this.dispatchEvent(e)}},{key:"attributeChangedCallback",value:function(t,e,n){switch(t){case"items":case"is-select":this.getAttributes(),this.draw()}}},{key:"value",get:function(){return this.state.value},set:function(t){if(this.state.value=t,this.state.isSelect){var e=this.button.querySelector("span");e?this.button.querySelector("span").textContent=t:this.button.textContent=t}}}]),e}(HTMLElement);document.registerElement("ws-dropdown",WSDropdown);
+    'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
+
+var GO_BACK_EVENT = 'go-back';
+var SIZE_CHANGE_EVENT = 'size-change';
+var CHANGE_EVENT = 'change';
+var state = {
+    hasParent: false,
+    items: [],
+    openSubMenu: null,
+    open: false
+};
+
+var WSDropdownMenu = function (_HTMLElement) {
+    _inherits(WSDropdownMenu, _HTMLElement);
+
+    function WSDropdownMenu() {
+        _classCallCheck(this, WSDropdownMenu);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(WSDropdownMenu).apply(this, arguments));
+    }
+
+    _createClass(WSDropdownMenu, [{
+        key: 'createdCallback',
+
+        // Use createdCallback instead of constructor to init an element.
+        value: function createdCallback() {
+            this.rootTemplate = template.content.getElementById('ws-dropdown-menu').content;
+            var clone = document.importNode(this.rootTemplate, true);
+
+            // This element uses Shadow DOM.
+            this.appendChild(clone);
+
+            this.state = state;
+            this.grabElements();
+            this.getAttributes();
+            this.setupListeners();
+        }
+    }, {
+        key: 'grabElements',
+        value: function grabElements() {
+            this.menuContainer = this.querySelector('.dropdown-menu');
+        }
+    }, {
+        key: 'draw',
+        value: function draw() {
+            var _state = this.state;
+            var hasParent = _state.hasParent;
+            var items = _state.items;
+
+            this.cleanListItems();
+            this.checkIfRoot(hasParent, items);
+            this.addItems(items);
+        }
+    }, {
+        key: 'getAttributes',
+        value: function getAttributes() {
+            try {
+                var itemsAttributeValue = this.getAttribute('items');
+                var hasParentAttribute = this.getAttribute('has-parent');
+                this.state = Object.assign({}, this.state, {
+                    items: itemsAttributeValue && JSON.parse(itemsAttributeValue),
+                    hasParent: hasParentAttribute ? JSON.parse(hasParentAttribute) : false
+                });
+
+                // if attributes change redraw
+                this.draw();
+            } catch (e) {
+                var message = 'Getting Attributes failed: ' + e.message;
+                this.propagateError(message);
+            }
+        }
+    }, {
+        key: 'setupListeners',
+        value: function setupListeners() {
+            this.menuContainer.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+        }
+    }, {
+        key: 'checkIfRoot',
+        value: function checkIfRoot(hasParent, items) {
+            var _this2 = this;
+
+            var classes = 'dropdown-menu';
+            if (!hasParent) {
+                classes += ' dropdown-root-menu';
+            } else {
+                var goBackItem = document.importNode(this.rootTemplate.getElementById('ws-dropdown-menu-back-item').content, true).querySelector('li');
+                goBackItem.addEventListener('click', function () {
+                    return _this2.propagateGoBack();
+                });
+                this.menuContainer.appendChild(goBackItem);
+            }
+            this.menuContainer.className = classes;
+        }
+    }, {
+        key: 'addItems',
+        value: function addItems(items) {
+            var _this3 = this;
+
+            if (!items) {
+                return;
+            }
+            items.forEach(function (item) {
+                var listItem = _this3.prepareListItem(item);
+                _this3.menuContainer.appendChild(listItem);
+            });
+        }
+    }, {
+        key: 'cleanListItems',
+        value: function cleanListItems() {
+            this.menuContainer.innerHTML = '';
+        }
+    }, {
+        key: 'prepareListItem',
+        value: function prepareListItem(item) {
+            var _this4 = this;
+
+            var classes = 'dropdown-menu';
+            var listItem = document.importNode(this.rootTemplate.getElementById('ws-dropdown-menu-item').content, true);
+            var linkItem = listItem.querySelector('a');
+            var selected = item.selected;
+            var href = item.href;
+            var icon = item.icon;
+            var label = item.label;
+            var children = item.children;
+
+
+            if (selected) {
+                classes += ' is-active';
+            }
+            listItem.className = classes;
+
+            if (icon) {
+                var iconItem = document.createElement("i");
+                iconItem.className = 'icon ' + icon;
+                linkItem.appendChild(iconItem);
+            }
+
+            linkItem.textContent = label || item;
+
+            var subMenuItem = listItem.querySelector('ws-dropdown-menu');
+            if (children && children.length > 0) {
+                subMenuItem.setAttribute('items', JSON.stringify(children));
+                subMenuItem.setAttribute('has-parent', true);
+                this.setupSubmenuListeners(subMenuItem);
+            } else {
+                subMenuItem.remove();
+            }
+
+            // having a link and an item is not desired
+            if (href) {
+                linkItem.setAttribute('href', href);
+            } else {
+                linkItem.addEventListener('click', function () {
+                    return _this4.next(item, subMenuItem);
+                });
+            }
+
+            return listItem;
+        }
+    }, {
+        key: 'next',
+        value: function next(item, subMenu) {
+            // Show next menu if children are available
+            if (item.children && item.children.length) {
+                this.state.openSubMenu = subMenu;
+                this.propagateNewMenuSize(subMenu.height);
+                this.animateOut();
+                subMenu.animateIn();
+            } else if (item) {
+                this.propagateChange(item);
+            } else {
+                this.propagateClick(item);
+            }
+            return false;
+        }
+    }, {
+        key: 'back',
+        value: function back() {
+            if (this.state.openSubMenu) {
+                this.state.openSubMenu.animateOut(this.state.openSubMenu.state.hasParent);
+                this.propagateNewMenuSize(this.height);
+                this.animateIn(this.state.hasParent);
+                this.state.openSubMenu = null;
+            }
+        }
+    }, {
+        key: 'animateIn',
+        value: function animateIn(goBack) {
+            this.state.open = true;
+            var inAnimation = goBack ? 'animate-in' : 'animate-sub-in';
+            // Create a clone of new sub menu for animations
+            this.animateElement(this.menuContainer, inAnimation, function (menu) {
+                menu.classList.remove('mod-sub-open');
+                menu.classList.add('mod-menu-open');
+            });
+        }
+    }, {
+        key: 'animateOut',
+        value: function animateOut(goBack) {
+            this.state.open = false;
+            var outAnimation = !goBack ? 'animate-out' : 'animate-sub-out';
+            // Fade out old element and set mod-item-open if going back and mod-sub-open for going deeper
+            this.animateElement(this.menuContainer, outAnimation, function (menu) {
+                menu.classList.remove('mod-menu-open');
+                if (!goBack) {
+                    menu.classList.add('mod-sub-open');
+                }
+            });
+        }
+    }, {
+        key: 'animateElement',
+        value: function animateElement(item, animationClass, callback) {
+            // Define callback for animation end events
+            var getHandler = function getHandler(eventName) {
+                var handler = function handler(event) {
+                    item.classList.remove(animationClass);
+                    item.removeEventListener(eventName, handler);
+                    callback(item);
+                };
+                return handler;
+            };
+            // Listen for all possible animation end events
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = animationEndEvents[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var eventName = _step.value;
+
+                    item.addEventListener(eventName, getHandler(eventName));
+                }
+                // Add class to start animation
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            item.classList.add(animationClass);
+        }
+    }, {
+        key: 'close',
+        value: function close() {
+            this.menuContainer.classList.remove('mod-sub-open');
+            this.menuContainer.classList.remove('mod-menu-open');
+            if (!!this.state.openSubMenu) {
+                this.state.openSubMenu.close();
+            }
+        }
+    }, {
+        key: 'setupSubmenuListeners',
+        value: function setupSubmenuListeners(subMenuElement) {
+            var _this5 = this;
+
+            subMenuElement.addEventListener(GO_BACK_EVENT, function (e) {
+                e.preventDefault();
+                _this5.back();
+            });
+            subMenuElement.addEventListener(CHANGE_EVENT, function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                _this5.propagateChange(e.detail.item);
+            });
+        }
+    }, {
+        key: 'propagateGoBack',
+        value: function propagateGoBack() {
+            var event = new CustomEvent(GO_BACK_EVENT);
+            this.dispatchEvent(event);
+        }
+    }, {
+        key: 'propagateNewMenuSize',
+        value: function propagateNewMenuSize(newSize) {
+            var event = new CustomEvent(SIZE_CHANGE_EVENT, {
+                detail: {
+                    menuSize: newSize
+                }
+            });
+            this.dispatchEvent(event);
+        }
+    }, {
+        key: 'propagateError',
+        value: function propagateError(reason) {
+            var event = new CustomEvent("error", {
+                detail: {
+                    message: reason
+                }
+            });
+            this.dispatchEvent(event);
+        }
+    }, {
+        key: 'propagateChange',
+        value: function propagateChange(item) {
+            var event = new CustomEvent(CHANGE_EVENT, {
+                detail: {
+                    item: item
+                }
+            });
+            this.dispatchEvent(event);
+        }
+    }, {
+        key: 'propagateClick',
+        value: function propagateClick(item) {
+            var event = new CustomEvent('click', {
+                detail: {
+                    item: item
+                }
+            });
+            this.dispatchEvent(event);
+        }
+    }, {
+        key: 'attributeChangedCallback',
+        value: function attributeChangedCallback(attrName, oldVal, newVal) {
+            switch (attrName) {
+                case "items":
+                case "has-parent":
+                    this.getAttributes();
+                    break;
+            }
+        }
+    }, {
+        key: 'height',
+        get: function get() {
+            return this.menuContainer.clientHeight;
+        }
+    }]);
+
+    return WSDropdownMenu;
+}(HTMLElement);
+
+//Register the element with the document
+
+
+document.registerElement('ws-dropdown-menu', WSDropdownMenu);
+    'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
+
+var SIZE_CHANGE_EVENT = 'size-change';
+var state = {
+    items: [],
+    open: false,
+    isSelect: false,
+    bodyClickHandler: null,
+    selectedItem: null
+};
+var animationEndEvents = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
+
+var WSDropdown = function (_HTMLElement) {
+    _inherits(WSDropdown, _HTMLElement);
+
+    function WSDropdown() {
+        _classCallCheck(this, WSDropdown);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(WSDropdown).apply(this, arguments));
+    }
+
+    _createClass(WSDropdown, [{
+        key: 'createdCallback',
+
+        // Use createdCallback instead of constructor to init an element.
+        value: function createdCallback() {
+            var clone = document.importNode(template.content.getElementById('ws-dropdown').content, true);
+            var styleElement = template.content.querySelector('style').cloneNode(true);
+
+            // This element uses Shadow DOM.
+            this.createShadowRoot().appendChild(clone);
+            this.shadowRoot.appendChild(styleElement);
+
+            this.state = state;
+        }
+    }, {
+        key: 'grabElements',
+        value: function grabElements() {
+            this.dropdownContainer = this.shadowRoot.querySelector('.dropdown-container');
+            this.dropdownMenu = this.shadowRoot.querySelector('ws-dropdown-menu');
+            this.button = this.querySelector('button,a');
+        }
+    }, {
+        key: 'getAttributes',
+        value: function getAttributes() {
+            var itemsAttributeValue = this.getAttribute('items');
+            var isSelectAttributeValue = this.getAttribute('is-select');
+            this.state = Object.assign({}, this.state, {
+                items: itemsAttributeValue ? JSON.parse(itemsAttributeValue) : [],
+                isSelect: isSelectAttributeValue ? isSelectAttributeValue.toLowerCase() === 'true' : false
+            });
+        }
+    }, {
+        key: 'draw',
+        value: function draw() {
+            this.dropdownMenu.setAttribute('items', JSON.stringify(this.state.items));
+            if (this.state.isSelect && this.state.selectedItem) {
+                var span = this.button.querySelector('span');
+                var label = this.state.selectedItem.label;
+                if (span) {
+                    this.button.querySelector('span').textContent = label;
+                } else {
+                    this.button.textContent = label;
+                }
+            }
+        }
+    }, {
+        key: 'setupListeners',
+        value: function setupListeners() {
+            var _this2 = this;
+
+            this.dropdownMenu.addEventListener(SIZE_CHANGE_EVENT, function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                _this2.adjustSize(e.detail.menuSize);
+            });
+            // this event will bubble up to the listener outside
+            this.dropdownMenu.addEventListener('change', function (e) {
+                _this2.state.selectedItem = e.detail.item;
+                _this2.draw();
+                _this2.state.open ? _this2.close() : _this2.open();
+            });
+            this.dropdownMenu.addEventListener('click', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                _this2.state.open ? _this2.close() : _this2.open();
+            });
+            this.button.addEventListener('click', function (e) {
+                e.stopPropagation();
+                e.preventDefault();
+                _this2.state.open ? _this2.close() : _this2.open();
+            });
+
+            this.state.bodyClickHandler = function () {
+                return _this2.close();
+            };
+        }
+    }, {
+        key: 'open',
+        value: function open(event) {
+            this.state.open = true;
+
+            this.dropdownContainer.style.height = 0;
+            this.dropdownContainer.classList.add('mod-open');
+            this.dropdownMenu.animateIn();
+            this.adjustSize(this.dropdownMenu.height);
+
+            document.body.addEventListener('click', this.state.bodyClickHandler);
+        }
+
+        /**
+         * Hide the drop down on clicking outside of dropdown
+         */
+
+    }, {
+        key: 'close',
+        value: function close() {
+            var _this3 = this;
+
+            this.state.open = false;
+
+            document.body.removeEventListener('click', this.state.bodyClickHandler);
+
+            this.animateElement(this.dropdownContainer, 'animate-close', function (container) {
+                container.classList.remove('mod-open');
+                _this3.dropdownMenu.close();
+            });
+        }
+    }, {
+        key: 'adjustSize',
+        value: function adjustSize(newSize) {
+            this.dropdownContainer.style.height = newSize + 'px';
+        }
+    }, {
+        key: 'animateElement',
+        value: function animateElement(item, animationClass, callback) {
+            // Define callback for animation end events
+            var getHandler = function getHandler(eventName) {
+                var handler = function handler(event) {
+                    item.classList.remove(animationClass);
+                    item.removeEventListener(eventName, handler);
+                    callback(item);
+                };
+                return handler;
+            };
+            // Listen for all possible animation end events
+            animationEndEvents.forEach(function (eventName) {
+                item.addEventListener(eventName, getHandler(eventName));
+            });
+            // Add class to start animation
+            item.classList.add(animationClass);
+        }
+    }, {
+        key: 'propagateError',
+        value: function propagateError(reason) {
+            var event = new CustomEvent("error", {
+                detail: {
+                    message: reason
+                }
+            });
+            this.dispatchEvent(event);
+        }
+    }, {
+        key: 'attachedCallback',
+        value: function attachedCallback() {
+            this.grabElements();
+            this.getAttributes();
+            this.draw();
+            this.setupListeners();
+            this.adjustSize(this.dropdownMenu);
+        }
+    }, {
+        key: 'attributeChangedCallback',
+        value: function attributeChangedCallback(attrName, oldVal, newVal) {
+            switch (attrName) {
+                case "items":
+                case "is-select":
+                    this.getAttributes();
+                    this.draw();
+                    break;
+            }
+        }
+    }, {
+        key: 'value',
+        get: function get() {
+            return this.state.selectedItem ? this.state.selectedItem.value : null;
+        }
+    }]);
+
+    return WSDropdown;
+}(HTMLElement);
+
+//Register the element with the document
+
+
+document.registerElement('ws-dropdown', WSDropdown);
     /* endinject */
 })()
 </script>

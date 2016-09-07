@@ -5,7 +5,8 @@ var state = {
     items: [],
     open: false,
     isSelect: false,
-    bodyClickHandler: null
+    bodyClickHandler: null,
+    selectedItem: null
 };
 var animationEndEvents = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
 
@@ -20,11 +21,6 @@ class WSDropdown extends HTMLElement {
         this.shadowRoot.appendChild(styleElement);
 
         this.state = state;
-        this.grabElements();
-        this.getAttributes();
-        this.draw();
-        this.setupListeners();
-        this.adjustSize(this.dropdownMenu);
     }
 
     grabElements() {
@@ -44,6 +40,15 @@ class WSDropdown extends HTMLElement {
 
     draw() {
         this.dropdownMenu.setAttribute('items', JSON.stringify(this.state.items));
+        if (this.state.isSelect && this.state.selectedItem) {
+            let span = this.button.querySelector('span');
+            let label = this.state.selectedItem.label;
+            if (span) {
+                this.button.querySelector('span').textContent = label;
+            } else {
+                this.button.textContent = label;
+            }
+        }
     }
 
     setupListeners() {
@@ -54,7 +59,8 @@ class WSDropdown extends HTMLElement {
         });
         // this event will bubble up to the listener outside
         this.dropdownMenu.addEventListener('change', (e) => {
-            this.value = e.detail.value;
+            this.state.selectedItem = e.detail.item;
+            this.draw();
             this.state.open ? this.close() : this.open();
         });
         this.dropdownMenu.addEventListener('click', (e) => {
@@ -72,19 +78,7 @@ class WSDropdown extends HTMLElement {
     }
 
     get value() {
-        return this.state.value;
-    }
-
-    set value(value) {
-        this.state.value = value;
-        if (this.state.isSelect) {
-            let span = this.button.querySelector('span');
-            if (span) {
-                this.button.querySelector('span').textContent = value;
-            } else {
-                this.button.textContent = value;
-            }
-        }
+        return this.state.selectedItem ? this.state.selectedItem.value : null;
     }
 
     open(event) {
@@ -141,6 +135,14 @@ class WSDropdown extends HTMLElement {
             }
         });
         this.dispatchEvent(event);
+    }
+
+    attachedCallback() {
+        this.grabElements();
+        this.getAttributes();
+        this.draw();
+        this.setupListeners();
+        this.adjustSize(this.dropdownMenu);
     }
 
     attributeChangedCallback(attrName, oldVal, newVal) {

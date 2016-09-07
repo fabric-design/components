@@ -136,9 +136,8 @@ class WSDropdownMenu extends HTMLElement {
             this.animateOut();
             subMenu.animateIn();
         }
-        else if (item.value !== undefined) {
-            this.value = item.value;
-            this.propagateChange(this.value);
+        else if (item) {
+            this.propagateChange(item);
         }
         else {
             this.propagateClick(item);
@@ -211,7 +210,7 @@ class WSDropdownMenu extends HTMLElement {
         subMenuElement.addEventListener(CHANGE_EVENT, (e) => {
             e.preventDefault();
             e.stopPropagation();
-            this.propagateChange(e.detail.value);
+            this.propagateChange(e.detail.item);
         });
     }
 
@@ -238,10 +237,10 @@ class WSDropdownMenu extends HTMLElement {
         this.dispatchEvent(event);
     }
 
-    propagateChange(value) {
+    propagateChange(item) {
         let event = new CustomEvent(CHANGE_EVENT, {
             detail: {
-                value
+                item
             }
         });
         this.dispatchEvent(event);

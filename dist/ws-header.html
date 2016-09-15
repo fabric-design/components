@@ -544,7 +544,7 @@ var WSHeader = function (_HTMLElement) {
 	}, {
 		key: 'login',
 		value: function login() {
-			var url = "https://auth.zalando.com/z/oauth2/authorize?realm=employees&response_type=token&scope=uid" + "&client_id=" + this.state.clientId + "&redirect_uri=" + this.state.redirectUrl + "&state=" + this.setSessionState();
+			var url = "https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid" + "&client_id=" + this.state.clientId + "&redirect_uri=" + this.state.redirectUrl + "&state=" + this.setSessionState();
 
 			window.location.href = url;
 		}

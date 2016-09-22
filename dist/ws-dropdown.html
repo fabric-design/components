@@ -325,6 +325,10 @@
   z-index: 3;
 }
 
+.dropdown-container.left {
+  left: 0;
+}
+
 .dropdown-container .dropdown-root-menu {
   right: 0;
   left: auto;
@@ -372,8 +376,12 @@
   font-weight: normal;
 }
 
-.dropdown-item .text:hover,.dropdown-item .text.is-active {
+.dropdown-item .text:hover {
   background-color: #def5fe;
+}
+
+.dropdown-item .text.is-active {
+  background-color: #00abf2 !important;
 }
 
 .dropdown-arrow {
@@ -683,9 +691,11 @@ var WSDropdownMenu = function (_HTMLElement) {
         value: function prepareListItem(item) {
             var _this4 = this;
 
-            var classes = 'dropdown-menu';
-            var listItem = document.importNode(this.rootTemplate.getElementById('ws-dropdown-menu-item').content, true);
+            var classes = 'text';
+            var listItem = document.importNode(this.rootTemplate.getElementById('ws-dropdown-menu-item').content.querySelector('li'), true);
             var linkItem = listItem.querySelector('a');
+            // styling is based on the .text elem and not the li elem
+            var textItem = listItem.querySelector('.text');
             var selected = item.selected;
             var href = item.href;
             var icon = item.icon;
@@ -696,7 +706,7 @@ var WSDropdownMenu = function (_HTMLElement) {
             if (selected) {
                 classes += ' is-active';
             }
-            listItem.className = classes;
+            textItem.className = classes;
 
             if (icon) {
                 var iconItem = document.createElement("i");
@@ -925,11 +935,12 @@ var template = (document._currentScript || document.currentScript).ownerDocument
 
 var SIZE_CHANGE_EVENT = 'size-change';
 var state = {
-    items: [],
+    items: [], // {selected, href, icon, label, children}
     open: false,
     isSelect: false,
     bodyClickHandler: null,
-    selectedItem: null
+    selectedItem: null,
+    orientation: 'right' // right,left
 };
 var animationEndEvents = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
 
@@ -967,16 +978,44 @@ var WSDropdown = function (_HTMLElement) {
         key: 'getAttributes',
         value: function getAttributes() {
             var itemsAttributeValue = this.getAttribute('items');
+            var items = itemsAttributeValue ? JSON.parse(itemsAttributeValue) : [];
             var isSelectAttributeValue = this.getAttribute('is-select');
+            var isSelect = isSelectAttributeValue ? isSelectAttributeValue.toLowerCase() === 'true' : false;
             this.state = Object.assign({}, this.state, {
-                items: itemsAttributeValue ? JSON.parse(itemsAttributeValue) : [],
-                isSelect: isSelectAttributeValue ? isSelectAttributeValue.toLowerCase() === 'true' : false
+                items: items,
+                isSelect: isSelect,
+                selectedItem: this.state.selectedItem ? this.state.selectedItem : this.getSelectedItem(items),
+                orientation: this.getAttribute('orientation')
             });
+        }
+
+        // will grad first selected to display initially
+
+    }, {
+        key: 'getSelectedItem',
+        value: function getSelectedItem(items) {
+            var _this2 = this;
+
+            var selectedItem = items.find(function (item) {
+                return item.selected;
+            });
+            if (!selectedItem) {
+                selectedItem = items.reduce(function (selectedItem, item) {
+                    if (selectedItem) return;
+                    if (item.children) return _this2.getSelectedItem(item.children);
+                    return;
+                }, selectedItem);
+            }
+            return selectedItem;
         }
     }, {
         key: 'draw',
         value: function draw() {
+            this.dropdownContainer.classList.remove("left", "right");
+            this.dropdownContainer.classList.add(this.state.orientation);
+
             this.dropdownMenu.setAttribute('items', JSON.stringify(this.state.items));
+
             if (this.state.isSelect && this.state.selectedItem) {
                 var span = this.button.querySelector('span');
                 var label = this.state.selectedItem.label;
@@ -988,34 +1027,45 @@ var WSDropdown = function (_HTMLElement) {
             }
         }
     }, {
+        key: 'drawSelected',
+        value: function drawSelected() {
+            var span = this.button.querySelector('span');
+            var label = this.state.selectedItem.label;
+            if (span) {
+                this.button.querySelector('span').textContent = label;
+            } else {
+                this.button.textContent = label;
+            }
+        }
+    }, {
         key: 'setupListeners',
         value: function setupListeners() {
-            var _this2 = this;
+            var _this3 = this;
 
             this.dropdownMenu.addEventListener(SIZE_CHANGE_EVENT, function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-                _this2.adjustSize(e.detail.menuSize);
+                _this3.adjustSize(e.detail.menuSize);
             });
             // this event will bubble up to the listener outside
             this.dropdownMenu.addEventListener('change', function (e) {
-                _this2.state.selectedItem = e.detail.item;
-                _this2.draw();
-                _this2.state.open ? _this2.close() : _this2.open();
+                _this3.state.selectedItem = e.detail.item;
+                _this3.draw();
+                _this3.state.open ? _this3.close() : _this3.open();
             });
             this.dropdownMenu.addEventListener('click', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-                _this2.state.open ? _this2.close() : _this2.open();
+                _this3.state.open ? _this3.close() : _this3.open();
             });
             this.button.addEventListener('click', function (e) {
                 e.stopPropagation();
                 e.preventDefault();
-                _this2.state.open ? _this2.close() : _this2.open();
+                _this3.state.open ? _this3.close() : _this3.open();
             });
 
             this.state.bodyClickHandler = function () {
-                return _this2.close();
+                return _this3.close();
             };
         }
     }, {
@@ -1038,7 +1088,7 @@ var WSDropdown = function (_HTMLElement) {
     }, {
         key: 'close',
         value: function close() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.state.open = false;
 
@@ -1046,7 +1096,7 @@ var WSDropdown = function (_HTMLElement) {
 
             this.animateElement(this.dropdownContainer, 'animate-close', function (container) {
                 container.classList.remove('mod-open');
-                _this3.dropdownMenu.close();
+                _this4.dropdownMenu.close();
             });
         }
     }, {
@@ -1098,6 +1148,7 @@ var WSDropdown = function (_HTMLElement) {
             switch (attrName) {
                 case "items":
                 case "is-select":
+                case "orientation":
                     this.getAttributes();
                     this.draw();
                     break;

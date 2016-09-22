@@ -90,16 +90,18 @@ class WSDropdownMenu extends HTMLElement {
     }
 
     prepareListItem(item) {
-        let classes = 'dropdown-menu';
-        let listItem = document.importNode(this.rootTemplate.getElementById('ws-dropdown-menu-item').content, true);
+        let classes = 'text';
+        let listItem = document.importNode(this.rootTemplate.getElementById('ws-dropdown-menu-item').content.querySelector('li'), true);
         let linkItem = listItem.querySelector('a');
+        // styling is based on the .text elem and not the li elem
+        let textItem = listItem.querySelector('.text');
         let {selected, href, icon, label, children} = item;
 
 
         if (selected) {
             classes += ' is-active';
         }
-        listItem.className = classes;
+        textItem.className = classes;
 
         if (icon) {
             let iconItem = document.createElement("i");

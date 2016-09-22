@@ -4,6 +4,7 @@
 @import "node_modules/wholesale-styleguide-scss/components/complex/dropdown";
 
 $export-dropdown-css: true !default;
+$dropdown-item-active-color: $cerulean !default;
 $dropdown-background-color: $white !default;
 $dropdown-shadow-color: $shuttle-gray !default;
 $dropdown-font-color: $base-font-color !default;
@@ -25,6 +26,10 @@ $dropdown-hover-background-color: $pattens-blue !default;
 	will-change: height;
 	overflow: hidden;
 	z-index: 3;
+
+	&.left {
+		left: 0;
+	}
 }
 
 @mixin dropdown() {
@@ -36,7 +41,7 @@ $dropdown-hover-background-color: $pattens-blue !default;
 	margin: 0;
 }
 
-@mixin dropdown-item($font-color, $font-family, $hover-bg-color) {
+@mixin dropdown-item($font-color, $font-family, $hover-bg-color, $active-bg-color) {
 	position: relative;
 	font-size: rem(14px);
 	color: $font-color;
@@ -50,9 +55,11 @@ $dropdown-hover-background-color: $pattens-blue !default;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	font-weight: normal;
-	&:hover,
-	&.is-active {
+	&:hover {
 		background-color: $hover-bg-color;
+	}
+	&.is-active {
+		background-color: $active-bg-color !important;
 	}
 }
 
@@ -106,7 +113,7 @@ $dropdown-hover-background-color: $pattens-blue !default;
 	}
 	.dropdown-item {
 		.text {
-			@include dropdown-item($dropdown-font-color, $dropdown-font-family, $dropdown-hover-background-color);
+			@include dropdown-item($dropdown-font-color, $dropdown-font-family, $dropdown-hover-background-color, $dropdown-item-active-color);
 		}
 	}
 	.dropdown-arrow {

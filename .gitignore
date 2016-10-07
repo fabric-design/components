@@ -37,3 +37,4 @@ node_modules
 # intellij idea
 .idea
 **/*.iml
+styleguide.css

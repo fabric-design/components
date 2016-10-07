@@ -1,9 +1,11 @@
 <html>
     <head>
-        <script src="webcomponents.min.js"></script>
+        <!--<script src="webcomponents.min.js"></script>-->
+        <link rel="stylesheet" href="styleguide.css" />
         <link rel="import" href="../dist/ws-header.html" />
         <link rel="import" href="../dist/ws-week-picker.html" />
         <link rel="import" href="../dist/ws-notification.html" />
+        <link rel="import" href="../dist/ws-dropdown.html" />
     </head>
     <body class="refills-patterns refills-components" style="margin: 0;">
         <ws-header
@@ -23,6 +25,18 @@
         </ws-header>
         <ws-time-picker id="time-picker"></ws-time-picker>
         <ws-date-picker id="ws-datepicker"></ws-date-picker>
+        <p>
+            Simple Dropdown with orientation left:
+            <ws-dropdown id="ws-dropdown-button" orientation="left" style="position: relative; left: 150px;">
+                <a>Click Me!</a>
+            </ws-dropdown>
+        </p>
+        <p>
+            Select Dropdown:
+            <ws-dropdown id="ws-dropdown-select" is-select="true" orientation="right" style="position: relative; left: 150px;">
+                <button>Click Me!</button>
+            </ws-dropdown>
+        </p>
         <script>
             document.querySelector('#header').addEventListener('error',
             function({ detail: {message} }) {
@@ -44,14 +58,37 @@
             function({ detail: { date }}) {
                 console.log('date selected: ' + date);
             });
-            setTimeout(function() {
-                wsNotification.init(); // Can pass any wrapper element
-                wsNotification.create({title: 'This is a info', lifetime: 0});
-                wsNotification.create({title: 'This is a warning', description: 'Because we want to show a warning', type: 'warning'});
-                wsNotification.create({title: 'This is a error', type: 'error', lifetime: 6000});
-                wsNotification.create({title: 'This was successfull', type: 'success', lifetime: 3000});
-                wsNotification.create({title: 'This will disappear in 10 seconds', lifetime: 10000});
-            }, 1000);
+
+            var demoList = [{
+                label: 'Item 1',
+                value: 'Item 1'
+            }, {
+                label: 'Item 2',
+                href: 'www.google.de'
+            }, {
+                label: 'Item 3',
+                children: [{
+                    label: 'Sub-Item 3-1',
+                    value: 'Sub-Item 3-1'
+                }, {
+                    label: 'Sub-Item 3-2',
+                    value: 'Sub-Item 3-2',
+                    selected: true
+                }, {
+                    label: 'Sub-Item 3-3',
+                    value: 'Sub-Item 3-3'
+                }]
+            }];
+            document.querySelector('#ws-dropdown-button').setAttribute('items', JSON.stringify(demoList));
+            document.querySelector('#ws-dropdown-button').addEventListener('change',
+                    function({ detail: { item }}) {
+                        console.log('dropdown item selected: ' + JSON.stringify(item));
+                    });
+            document.querySelector('#ws-dropdown-select').setAttribute('items', JSON.stringify(demoList));
+            document.querySelector('#ws-dropdown-button').addEventListener('change',
+                    function({ detail: { item }}) {
+                        console.log('Another way t get the value is: ' + document.querySelector('#ws-dropdown-button').value);
+                    });
         </script>
     </body>
 </html>

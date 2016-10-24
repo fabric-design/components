@@ -1,9 +1,9 @@
-<template id="ws-dropdown">
-    <div class="dropdown">
-        <content select="button,a" id='content'></content>
-        <div class="dropdown-container" style="z-index: 1;">
-            <ws-dropdown-menu></ws-dropdown-menu>
-            <div class="dropdown-arrow"></div>
-        </div>
+<div class="dropdown">
+    <content select="button,a,.select-box" id="button"></content>
+    <div class$="[[containerClass]]">
+        <ws-dropdown-menu items="[[items]]">
+            <content select=".dropdown-menu" id="menu"></content>
+        </ws-dropdown-menu>
     </div>
-</template>
+    <div class="dropdown-arrow"></div>
+</div>

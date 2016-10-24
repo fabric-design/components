@@ -1,12 +1,6 @@
-//Get the contents of the template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
-var currentScript = document._currentScript || document.currentScript;
-var template = currentScript.ownerDocument.querySelector('template');
+window.WSWeekPicker = Polymer({
 
-class WSWeekPicker extends HTMLElement {
-  createdCallback() {
-    // Take all main DOM elements
-    let clone = document.importNode(template.content, true);
-    this.createShadowRoot().appendChild(clone);
+  ready() {
     this.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     this.date = new Date();
     this.curYear = this.date.getFullYear();
@@ -14,27 +8,29 @@ class WSWeekPicker extends HTMLElement {
     this.curWeek = this.getWeek(this.curYear, this.date.getMonth(), this.date.getDate());
     this.getElements();
     this.addListeners();
-  }
+  },
+
   // Take all elements from week picker
   getElements() {
-    this.wrapper = this.shadowRoot.querySelector('.ws-week-wrapper');
-    this.input = this.shadowRoot.querySelector('.ws-week-input');
-    this.calendar = this.shadowRoot.querySelector('.ws-week-picker');
-    this.crossIcon = this.shadowRoot.querySelector('#ws-week-icon');
-    this.prevYearButton = this.shadowRoot.querySelector('.checkPrevYear');
-    this.nextYearButton = this.shadowRoot.querySelector('.checkNextYear');
+    this.wrapper = this.$$('.week-wrapper');
+    this.input = this.$$('.week-input');
+    this.calendar = this.$$('.week-picker');
+    this.crossIcon = this.$$('#week-icon');
+    this.prevYearButton = this.$$('.checkPrevYear');
+    this.nextYearButton = this.$$('.checkNextYear');
     // Calculate previous year and take previous year and weeks elements
     this.prevYear = this.curYear-1;
-    this.prevYearNumber = this.shadowRoot.querySelector('.prev-year > .year');
-    this.prevYearWeeks = this.shadowRoot.querySelector('.prev-year > .weeks');
+    this.prevYearNumber = this.$$('.prev-year > .year');
+    this.prevYearWeeks = this.$$('.prev-year > .weeks');
     // Take current year and weeks elements
-    this.curYearNumber = this.shadowRoot.querySelector('.cur-year > .year');
-    this.curYearWeeks = this.shadowRoot.querySelector('.cur-year > .weeks');
+    this.curYearNumber = this.$$('.cur-year > .year');
+    this.curYearWeeks = this.$$('.cur-year > .weeks');
     // Calculate next year and take next year and weeks elements
     this.nextYear = this.curYear+1;
-    this.nextYearNumber = this.shadowRoot.querySelector('.next-year > .year');
-    this.nextYearWeeks = this.shadowRoot.querySelector('.next-year > .weeks');
-  }
+    this.nextYearNumber = this.$$('.next-year > .year');
+    this.nextYearWeeks = this.$$('.next-year > .weeks');
+  },
+
   // Attach all event liteners
   addListeners() {
     document.addEventListener('click', (e) => this.closeWeekPicker(e));
@@ -43,18 +39,19 @@ class WSWeekPicker extends HTMLElement {
     this.calendar.addEventListener('click', (e) => this.calendarClick(e));
     this.prevYearButton.addEventListener('click', () => this.moveYearBefore());
     this.nextYearButton.addEventListener('click', () => this.moveYearAfter());
-  }
+  },
+
   // build calendar year, months and week numbers
   buildCalendar(){
     this.buildYears();
     this.buildWeeksAndMonth();
-  }
+  },
 
   openWeekPicker() {
     // Prevent on every click full redraw calendar
-    this.calendar.className = 'ws-week-picker opened';
-    this.input.className = 'ws-week-input active';
-    this.crossIcon.className = 'ws-week-icon active';
+    this.calendar.className = 'week-picker opened';
+    this.input.className = 'week-input active';
+    this.crossIcon.className = 'week-icon active';
     // If input clear draw calendar and define current week and select it
     if (this.input.value == '') {
       this.buildCalendar();
@@ -63,7 +60,7 @@ class WSWeekPicker extends HTMLElement {
       // if input have value - define current week as selected at previous time
       this.pickedWeekWrapper.className = 'week now';
     }
-  }
+  },
 
   calendarClick(e) {
     // If user pick on week number take all elements to return result to input field and close calendar
@@ -80,13 +77,15 @@ class WSWeekPicker extends HTMLElement {
       this.input.value = this.pickedResult;
       this.cancel();
     }
-  }
+  },
+
   // Just close calendar on cross icon click
   cancel() {
-    this.calendar.className = 'ws-week-picker';
-    this.input.className = 'ws-week-input used';
-    this.crossIcon.className = 'ws-week-icon';
-  }
+    this.calendar.className = 'week-picker';
+    this.input.className = 'week-input used';
+    this.crossIcon.className = 'week-icon';
+  },
+
   // Changed year if user click left arrow button
   moveYearBefore() {
     this.destroyCalendar();
@@ -94,7 +93,8 @@ class WSWeekPicker extends HTMLElement {
     this.prevYear -= 1;
     this.nextYear -= 1;
     this.buildCalendar();
-  }
+  },
+
   // Changed year if user click right arrow button
   moveYearAfter() {
     this.destroyCalendar();
@@ -102,7 +102,8 @@ class WSWeekPicker extends HTMLElement {
     this.prevYear += 1;
     this.nextYear += 1;
     this.buildCalendar();
-  }
+  },
+
   // Clean all generated elements if user change year
   destroyCalendar() {
     this.prevYearNumber.innerHTML = '';
@@ -111,16 +112,17 @@ class WSWeekPicker extends HTMLElement {
     this.curYearWeeks.innerHTML = '';
     this.nextYearNumber.innerHTML = '';
     this.nextYearWeeks.innerHTML = '';
-  }
+  },
+
   // Close calendar if user don't click on calendar
   closeWeekPicker(e) {
-    if (e.target.tagName != 'WS-WEEK-PICKER'){
+    if (!this.contains(e.target)) {
       this.destroyCalendar();
-      this.calendar.className = 'ws-week-picker';
-      this.input.className = 'ws-week-input used';
-      this.crossIcon.className = 'ws-week-icon';
+      this.calendar.className = 'week-picker';
+      this.input.className = 'week-input used';
+      this.crossIcon.className = 'week-icon';
     }
-  }
+  },
 
   createElement(tag, className, content) {
     let element = document.createElement(tag);
@@ -132,7 +134,8 @@ class WSWeekPicker extends HTMLElement {
       element.className = className;
 
     return element;
-  }
+  },
+
   // Calculate week number of year depending on current day
   getWeek(year,month,day) {
     let y2k = number => number < 1000 ? number + 1900 : number;
@@ -157,7 +160,8 @@ class WSWeekPicker extends HTMLElement {
     }
 
     return weeknum;
-  }
+  },
+
   // Calculate all week numbers of year in January and save them in array
   // January is explicitly to other months, because need to calculate first week of year
   // It can be week number from previous year
@@ -176,7 +180,8 @@ class WSWeekPicker extends HTMLElement {
       }
     }
     return firstMonthWeeks;
-  }
+  },
+
   // Return array of all week numbers of year in month
   weekNumbersByMonth(year, month) {
     let monthWeeks = [];
@@ -186,7 +191,8 @@ class WSWeekPicker extends HTMLElement {
       monthWeeks.push(j);
     }
     return monthWeeks;
-  }
+  },
+
   // Array of all weeks in year, splited by month
   weeksNumbersForYear(year){
     let weeks = [];
@@ -195,13 +201,15 @@ class WSWeekPicker extends HTMLElement {
       weeks[i] = this.weekNumbersByMonth(year, i);
     }
     return weeks;
-  }
+  },
+
   // Draw span with year number
   buildYears() {
     this.prevYearNumber.innerHTML = `<span>${this.prevYear}</span>`;
     this.nextYearNumber.innerHTML = `<span>${this.nextYear}</span>`;
     this.curYearNumber.innerHTML = `<span>${this.curYear}</span>`;
-  }
+  },
+
   // Draw months and week numbers
   buildWeeksAndMonth() {
     const self = this;
@@ -227,11 +235,12 @@ class WSWeekPicker extends HTMLElement {
                                           <span class="week">${month.join('</span><span class="week">')}</span>
                                        </span>`;
     });
-  }
+  },
+
   // Define what is current week number
   defineCurrent() {
     const self = this;
-    let wholeWeeks = this.shadowRoot.querySelectorAll('.cur-year .week');
+    let wholeWeeks = Polymer.dom(this.root).querySelectorAll('.cur-year .week');
     for (let i=0; i<wholeWeeks.length; i++) {
       if (wholeWeeks[i].innerHTML == self.curWeek &&
         wholeWeeks[i].parentElement.firstElementChild.innerHTML == self.curMonth) {
@@ -240,8 +249,4 @@ class WSWeekPicker extends HTMLElement {
       }
     }
   }
-
-}
-
-//Register the element with the document
-document.registerElement('ws-week-picker', WSWeekPicker);
+});

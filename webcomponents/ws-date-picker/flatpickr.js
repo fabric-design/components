@@ -373,9 +373,8 @@ flatpickr.init = function (context, element, instanceConfig) {
 
   documentClick = function (event) {
     // TO DO: Find better way to deal with event propagation
-    if (wrapperElement.classList.contains("open") && (event.target.tagName != 'WS-DATE-PICKER'))
+    if (wrapperElement.classList.contains("open") && !wrapperElement.contains(event.target))
       self.close();
-
   };
 
   changeMonth = function(offset) {

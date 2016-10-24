@@ -1,22 +1,3 @@
-var script = document._currentScript || document.currentScript;
-var templateElement = script.ownerDocument.querySelector('template');
-// Get template string from fragment's inner html
-let wrapper = document.createElement('div');
-wrapper.appendChild(templateElement.content);
-var template = wrapper.innerHTML;
-
-/**
- * Helper function to interpolate a template string during runtime
- *
- * @param string {string}
- * @param parameters {object}
- * @returns {string}
- */
-function interpolate(string, parameters) {
-    let values = Object.keys(parameters).map(key => parameters[key]);
-    return (new Function(Object.keys(parameters), 'return `' + string + '`'))(...values);
-}
-
 /**
  * This class represents the ws-notification custom element
  * The element accepts the attributes title, description, type = 'info' and lifetime = 5000
@@ -26,50 +7,58 @@ function interpolate(string, parameters) {
  *
  * Example: <ws-notification title="some title" description="This could be skipped" type="error" lifetime="0"/>
  */
-class Notification extends HTMLDivElement {
+window.Notification = Polymer({
 
-    createdCallback() {
-        this.context = {title: '', type: 'info', description: '', lifetime: 10000};
-        // Create shadow root if not done yet
-        if (!this.shadowRoot) {
-            this.createShadowRoot();
+    is: 'ws-notification',
+
+    properties: {
+        title: {
+            type: String
+        },
+        type: {
+            type: String,
+            value: 'info'
+        },
+        description: {
+            type: String
+        },
+        lifetime: {
+            type: Number,
+            value: 10000
+        },
+        notificationClass: {
+            type: String,
+            computed: 'getNotificationClass(type)'
         }
+    },
 
-        this.bindListeners();
-    }
+    getNotificationClass(type) {
+        return `notification ${type}`;
+    },
 
-    bindListeners() {
+    ready() {
         this.addEventListener('click', event => this.close(), true);
-    }
+    },
 
     close() {
         this.style.transition = 'opacity .2s ease-out, max-height .8s ease, margin-bottom .8s ease';
         this.style.willChange = 'opacity, max-height, margin-bottom';
         this.style.opacity = 0;
         this.style.maxHeight = 0;
-        this.style.marginBottom = '-1rem';
+        this.style.marginBottom = 0;
         setTimeout(() => {
             this.parentElement.removeChild(this);
             this.dispatchEvent(new CustomEvent('closed'));
             clearTimeout(this.timeoutId);
         }, 1000);
-    }
+    },
 
-    attributeChangedCallback(attribute, oldValue, newValue) {
-        this.context[attribute] = isFinite(newValue) ? parseInt(newValue) : (newValue || '');
-    }
-
-    attachedCallback() {
-        this.render();
-    }
-
-    render() {
-        this.shadowRoot.innerHTML = interpolate(template, this.context);
-        if (this.context.lifetime && !this.timeoutId) {
-            this.timeoutId = setTimeout(() => this.close(), this.context.lifetime);
+    attached() {
+        if (this.lifetime && !this.timeoutId) {
+            this.timeoutId = setTimeout(() => this.close(), this.lifetime);
         }
     }
-}
+});
 
 /**
  * This class intends to create an easy to use approach for creating notifications.
@@ -140,5 +129,4 @@ class NotificationHandler {
     }
 }
 
-document.registerElement('ws-notification', Notification);
 window.wsNotification = new NotificationHandler();

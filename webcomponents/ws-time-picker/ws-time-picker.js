@@ -1,24 +1,21 @@
-//Get the contents of the template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
-var currentScript = document._currentScript || document.currentScript;
-var template = currentScript.ownerDocument.querySelector('template');
+window.WSTimePicker = Polymer({
 
-class WSTimePicker extends HTMLElement {
-  createdCallback() {
-    let clone = document.importNode(template.content, true);
-    this.createShadowRoot().appendChild(clone);
+  is: 'ws-time-picker',
+
+  ready() {
     // Take all elements
     this.hour = new Date().getHours();
     this.minutes = new Date().getMinutes();
-    this.input = this.shadowRoot.querySelector('.ws-time-picker');
-    this.div = this.shadowRoot.querySelector('.time-picker');
-    this.hoursInput = this.shadowRoot.querySelector('.hours');
-    this.minutesInput = this.shadowRoot.querySelector('.minutes');
-    this.hourUpButton = this.shadowRoot.querySelector('.hourUp');
-    this.hourDownButton = this.shadowRoot.querySelector('.hourDown');
-    this.minuteUpButton = this.shadowRoot.querySelector('.minuteUp');
-    this.minuteDownButton = this.shadowRoot.querySelector('.minuteDown');
-    this.cancelButton = this.shadowRoot.querySelector('.cancel');
-    this.okButton = this.shadowRoot.querySelector('.ok');
+    this.input = this.$$('.time-picker-input');
+    this.div = this.$$('.time-picker');
+    this.hoursInput = this.$$('.hours');
+    this.minutesInput = this.$$('.minutes');
+    this.hourUpButton = this.$$('.hourUp');
+    this.hourDownButton = this.$$('.hourDown');
+    this.minuteUpButton = this.$$('.minuteUp');
+    this.minuteDownButton = this.$$('.minuteDown');
+    this.cancelButton = this.$$('.cancel');
+    this.okButton = this.$$('.ok');
     // Add all event listeners
     this.div.addEventListener('click', () => this.calendarClick());
     this.hoursInput.addEventListener('change', () => this.hourChange());
@@ -30,11 +27,11 @@ class WSTimePicker extends HTMLElement {
     this.minuteDownButton.addEventListener('click', () => this.minuteDown());
     this.cancelButton.addEventListener('click', () => this.cancel());
     this.okButton.addEventListener('click', () => this.ok());
-  }
+  },
 
   openTimePicker() {
     this.div.className = 'time-picker opened';
-    this.input.className = 'ws-time-picker active';
+    this.input.className = 'time-picker-input active';
     // If input empty - set to hour and minutes current time
     if (!this.hoursInput.value && !this.minutesInput.value ||
          this.minutesInput.className != 'minutes fail' || this.hoursInput.className != 'hours fail') {
@@ -43,7 +40,8 @@ class WSTimePicker extends HTMLElement {
       this.hoursInput.value = this.hour < 10 ? '0' + this.hour : this.hour;
       this.minutesInput.value = this.minutes < 10 ? '0' + this.minutes : this.minutes;
     }
-  }
+  },
+
   // Invoke when user typed something in hours input field
   hourChange() {
     if (this.checkHourValidity(this.hoursInput.value)) {
@@ -51,7 +49,8 @@ class WSTimePicker extends HTMLElement {
       this.hoursInput.value = this.hoursInput.value < 10
                               ? '0'+ this.hoursInput.value : this.hoursInput.value;
     }
-  }
+  },
+
   // Check if changed value is integer number and between 0 and 23
   checkHourValidity(hour) {
     if (hour <= 23 && Number.isInteger(Number(hour)) == true && hour >= 0) {
@@ -59,7 +58,8 @@ class WSTimePicker extends HTMLElement {
     } else {
       this.hoursInput.className = 'hours fail';
     }
-  }
+  },
+
   // Invoke when user typed something in minutes input field
   minutesChange() {
     if (this.checkMinutesValidity(this.minutesInput.value)) {
@@ -67,7 +67,8 @@ class WSTimePicker extends HTMLElement {
       this.minutesInput.value = this.minutesInput.value < 10
                                 ? '0'+ this.minutesInput.value : this.minutesInput.value;
     }
-  }
+  },
+
   // Check if changed value is integer number and between 0 and 59
   checkMinutesValidity(minutes) {
     if (minutes <= 59 && Number.isInteger(Number(minutes)) == true && minutes >= 0) {
@@ -75,7 +76,8 @@ class WSTimePicker extends HTMLElement {
     } else {
       this.minutesInput.className = 'minutes fail';
     }
-  }
+  },
+
   // Invoke when user click on UP arrow at hours input field
   hourUp() {
     var newHour = Number(this.hoursInput.value) + 1;
@@ -87,7 +89,8 @@ class WSTimePicker extends HTMLElement {
     } else {
       this.hoursInput.value = newHour;
     }
-  }
+  },
+
   // Invoke when user click on DOWN arrow at hours input field
   hourDown() {
     var newHour = Number(this.hoursInput.value) - 1;
@@ -98,7 +101,8 @@ class WSTimePicker extends HTMLElement {
     } else {
       this.hoursInput.value = newHour;
     }
-  }
+  },
+
   // Invoke when user click on UP arrow at minutes input field
   minuteUp() {
     var newMinutes = Number(this.minutesInput.value) + 5;
@@ -107,7 +111,8 @@ class WSTimePicker extends HTMLElement {
     } else {
       this.minutesInput.value = newMinutes < 10 ? '0' + newMinutes : newMinutes;
     }
-  }
+  },
+
   // Invoke when user click on DOWN arrow at minutes input field
   minuteDown() {
     var newMinutes = Number(this.minutesInput.value) - 5;
@@ -116,7 +121,8 @@ class WSTimePicker extends HTMLElement {
     } else {
       this.minutesInput.value = newMinutes < 10 ? '0' + newMinutes : newMinutes;
     }
-  }
+  },
+
   // Invoke when user click OK label and if there are no fails add picked time to input field
   ok() {
     if (this.hoursInput.className != 'hours fail' && this.minutesInput.className != 'minutes fail') {
@@ -129,16 +135,13 @@ class WSTimePicker extends HTMLElement {
         }
       });
       this.dispatchEvent(event);
-      this.input.className = 'ws-time-picker';
+      this.input.className = 'time-picker-input';
       this.div.className = 'time-picker';
     }
-  }
+  },
 
   cancel() {
-    this.input.className = 'ws-time-picker';
+    this.input.className = 'time-picker-input';
     this.div.className = 'time-picker';
   }
-}
-
-//Register the element with the document
-document.registerElement('ws-time-picker', WSTimePicker);
+});

@@ -16,10 +16,10 @@
     line-height: 1em;
     margin-left: .2em;
 }
-.icon-warning:before { content: '\\e800'; }
-.icon-success:before { content: '\\e801'; }
-.icon-error:before { content: '\\e802'; }
-.icon-info:before { content: '\\f086'; }
+.icon-warning:before { content: '\e800'; }
+.icon-success:before { content: '\e801'; }
+.icon-error:before { content: '\e802'; }
+.icon-info:before { content: '\f086'; }
 
 .notification {
     padding: 19px;
@@ -41,7 +41,7 @@
 .content {
     flex: auto 1 1;
     padding-left: 10px;
-    padding-bottom: 1px; // Work around for scroll bar in firefox
+    padding-bottom: 2px; // Work around for scroll bar in firefox
     margin: auto;
     max-height: 260px;
     overflow: auto;

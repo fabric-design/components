@@ -1,0 +1,62 @@
+<html>
+<head>
+    <link rel="import" href="../dist/ws-dropdown-new.html" />
+    <script src="../node_modules/webcomponents.js/webcomponents.min.js"></script>
+    <script src="https://use.typekit.net/dpb6nzw.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+</head>
+<body class="refills-patterns refills-components" >
+    <!--<ws-dropdown-new id="dropdown1">-->
+        <!--<span class="select-box">None</span>-->
+    <!--</ws-dropdown-new>-->
+    <ws-dropdown-new id="dropdown2">
+        <span class="select-box">None</span>
+        <ul class="asdasd dropdown-menu dropdown-root-menu">
+            <li class="dropdown-item">
+                <a class="text">
+                    Temporary 1
+                </a>
+            </li>
+            <li class="dropdown-item">
+                <a class="text text2">
+                    Temporary 2
+                </a>
+            </li>
+            <li class="dropdown-item">
+                <a class="text">
+                    Temporary 3
+                </a>
+            </li>
+            <li class="dropdown-item">
+                <a class="text text4">
+                    Temporary 4
+                </a>
+            </li>
+        </ul>
+    </ws-dropdown-new>
+    <script>
+        var demoList = [{
+            label: 'Item 1',
+            value: 'Item 1'
+        }, {
+            label: 'Item 2',
+            href: 'www.google.de'
+        }, {
+            label: 'Item 3',
+            children: [{
+                label: 'Sub-Item 3-1',
+                value: 'Sub-Item 3-1'
+            }, {
+                label: 'Sub-Item 3-2',
+                value: 'Sub-Item 3-2',
+                selected: true
+            }, {
+                label: 'Sub-Item 3-3',
+                value: 'Sub-Item 3-3'
+            }]
+        }];
+        document.querySelector('.text2').addEventListener('click', () => alert('clicked2'));
+        //document.querySelector('#dropdown1').setAttribute('items', JSON.stringify(demoList));
+    </script>
+</body>
+</html>

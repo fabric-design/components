@@ -1,8 +1,7 @@
+@import "node_modules/wholesale-styleguide-scss/util";
 @import "node_modules/wholesale-styleguide-scss/variables";
-@import "node_modules/bourbon/app/assets/stylesheets/bourbon";
-@import "node_modules/bourbon-neat/app/assets/stylesheets/neat";
 
-.flag {
+:host ::content .flag {
   display: inline-block;
   width: 16px;
   height: 11px;

@@ -7,13 +7,15 @@ var folders = require('gulp-folders');
 var inject = require('gulp-inject');
 var flatmap = require('gulp-flatmap');
 var sass = require('gulp-sass');
-var purify = require('gulp-purifycss');
 var cssnano = require('gulp-cssnano');
 var autoprefixer = require('gulp-autoprefixer');
 var uglifyjs = require('gulp-uglify');
 var uglifycss = require('gulp-uglifycss');
 var rev = require('gulp-rev');
 var runSequence = require('run-sequence');
+var replace = require('gulp-replace');
+var vulcanize = require('gulp-vulcanize');
+var htmlMinifier = require('gulp-html-minifier');
 const babel = require('gulp-babel');
 
 var utils = require('./utils.js');
@@ -24,20 +26,23 @@ gulp.task('clean', function () {
 		.pipe(clean());
 });
 
+gulp.task('build-polymer', function() {
+  return gulp.src(config.polymer)
+      .pipe(vulcanize())
+      .pipe(htmlMinifier({minifyJS: true, collapseWhitespace: true, removeComments: true}))
+      .pipe(gulp.dest(config.dest))
+});
+
 gulp.task('createDistFiles', folders(config.webcomponentsFolder, function(folder){
   return gulp.src(config.templateFile)
     .pipe(rename(folder + '.html'))
+    .pipe(replace('id="component-name"', `id="${folder}"`))
     .pipe(gulp.dest(config.tempTemplates));
 }));
 
 gulp.task('sass', function () {
   return gulp.src(config.webcomponentsFolder + '/**/*.scss')
   .pipe(sass().on('error', sass.logError))
-  .pipe(flatmap(function(stream, file){
-    var componentName = utils.getComponentName(file);
-    return stream
-    .pipe(purify([config.webcomponentsFolder + '/' + componentName + '/*.js', config.webcomponentsFolder + '/' + componentName + '/*.html']));
-  }))
   .pipe(autoprefixer({
     browsers: ['last 2 versions'],
     cascade: false
@@ -69,7 +74,7 @@ gulp.task('scripts', function () {
 
 gulp.task('prepareFiles', function(done) {
   runSequence('createDistFiles', ['scripts', 'sass'], done);
-})
+});
 
 gulp.task('inject', ['prepareFiles'], function() {
   function injectScripts(folder) {
@@ -127,5 +132,5 @@ gulp.task('inject', ['prepareFiles'], function() {
 });
 
 gulp.task('build', function(callback) {
-  runSequence('clean', 'inject', callback);
+  runSequence('clean', ['inject', 'build-polymer'], callback);
 });

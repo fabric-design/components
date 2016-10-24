@@ -1,0 +1,21 @@
+<content id="menu"></content>
+<template is="dom-if" if="{{hasItems}}">
+    <ul class$="[[menuClass]]">
+        <template is="dom-if" if="{{hasParent}}">
+            <li class="dropdown-item" on-click="back" item="[[item]]">
+                <a class="text back" href$="[[item.href]]">&lsaquo; Back</a>
+            </li>
+        </template>
+        <template is="dom-repeat" items="[[items]]">
+            <li class="dropdown-item" on-click="next" item="[[item]]">
+                <template is="dom-if" if="[[item.icon]]">
+                    <i class$="[[getItemIconClass(item)]]"></i>
+                </template>
+                <a class$="[[getItemAnchorClass(item)]]" href$="[[item.href]]">[[getItemLabel(item)]]</a>
+                <template is="dom-if" if="[[item.children]]">
+                    <ws-dropdown-menu items="[[item.children]]" has-parent></ws-dropdown-menu>
+                </template>
+            </li>
+        </template>
+    </ul>
+</template>

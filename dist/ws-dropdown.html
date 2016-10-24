@@ -1,49 +1,402 @@
 <!-- inject:global -->
+<link rel="import" href="ws-dropdown-menu.html"/>
+
 <!-- endinject -->
-<template>
-    <!-- inject:html -->
-    <template id="ws-dropdown-menu">
-    <ul class="dropdown-menu">
-    </ul>
-
-    <template id="ws-dropdown-menu-item">
-        <li class="dropdown-item">
-            <a class="text"></a>
-            <ws-dropdown-menu></ws-dropdown-menu>
-        </li>
-    </template>
-
-    <template id="ws-dropdown-menu-back-item">
-        <li class="dropdown-item">
-            <a class="text">
-                &lsaquo; Back
-            </a>
-        </li>
-    </template>
-</template>
-
-    <template id="ws-dropdown">
-    <div class="dropdown">
-        <content select="button,a" id='content'></content>
-        <div class="dropdown-container" style="z-index: 1;">
-            <ws-dropdown-menu></ws-dropdown-menu>
-            <div class="dropdown-arrow"></div>
-        </div>
+<dom-module id="ws-dropdown">
+    <template>
+        <!-- inject:html -->
+        <div class="dropdown">
+    <content select="button,a,.select-box" id="button"></content>
+    <div class$="[[containerClass]]">
+        <ws-dropdown-menu items="[[items]]">
+            <content select=".dropdown-menu" id="menu"></content>
+        </ws-dropdown-menu>
     </div>
-</template>
-    <!-- endinject -->
-    <style>
-        /* inject:styles */
-        .dropdown .dropdown-container{position:absolute;top:100%;right:0;width:12.5rem;margin-top:1.25rem;height:0;display:none;background-color:#fff;border-radius:3px;box-shadow:0 2px 6px #5e6979;transition:height .125s ease;will-change:height;overflow:hidden;z-index:3}.dropdown .dropdown-container .dropdown-root-menu{right:0;left:auto}.dropdown .dropdown-container.mod-open,.dropdown .dropdown-container.mod-open+.dropdown-arrow{display:block}.dropdown .dropdown-menu{position:absolute;top:0;left:100%;padding:.3125rem 0;width:100%}.dropdown .dropdown-menu.mod-menu-open,.dropdown .dropdown-menu.mod-sub-open{left:0}.dropdown .dropdown-menu.mod-sub-open>.dropdown-item>.text{opacity:0;z-index:-1}.dropdown .dropdown-item .text{position:relative;font-size:.875rem;color:#5e6979;font-family:acuminpro,Helvetica Neue,Helvetica,Arial,sans-serif;line-height:2;cursor:pointer;padding:.5rem 1.875rem .5rem .8125rem;white-space:nowrap;width:100%;display:block;overflow:hidden;text-overflow:ellipsis;font-weight:400}.dropdown .dropdown-item .text.is-active,.dropdown .dropdown-item .text:hover{background-color:#def5fe}.dropdown .dropdown-arrow{display:none;position:absolute;width:.625rem;height:.625rem;bottom:-1.5625rem;right:1.25rem;background:linear-gradient(-45deg,hsla(0,0%,100%,0) 50%,#fff 0);transform:rotate(45deg);z-index:2;box-shadow:-1px -1px 1px #e7ecf3}.dropdown .dropdown-container.animate-close{animation:a .2s ease-in-out forwards}.dropdown .dropdown-menu.animate-in>.dropdown-item>.text{animation:c .3s cubic-bezier(.32,.97,.71,.95) 0s forwards}.dropdown .dropdown-menu.animate-out>.dropdown-item>.text{animation:b .3s cubic-bezier(.53,1.49,1,.87) forwards}.dropdown .dropdown-menu.animate-sub-in>.dropdown-item>.text{animation:e .3s cubic-bezier(.32,.97,.71,.95) 0s forwards}.dropdown .dropdown-menu.animate-sub-out>.dropdown-item>.text{animation:d .3s cubic-bezier(.53,1.49,1,.87) forwards}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(1)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(1)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(1)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(1)>.text{animation-delay:25ms}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(2)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(2)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(2)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(2)>.text{animation-delay:.05s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(3)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(3)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(3)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(3)>.text{animation-delay:75ms}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(4)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(4)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(4)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(4)>.text{animation-delay:.1s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(5)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(5)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(5)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(5)>.text{animation-delay:.125s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(6)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(6)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(6)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(6)>.text{animation-delay:.15s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(7)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(7)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(7)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(7)>.text{animation-delay:.175s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(8)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(8)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(8)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(8)>.text{animation-delay:.2s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(9)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(9)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(9)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(9)>.text{animation-delay:.225s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(10)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(10)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(10)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(10)>.text{animation-delay:.25s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(11)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(11)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(11)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(11)>.text{animation-delay:.275s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(12)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(12)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(12)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(12)>.text{animation-delay:.3s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(13)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(13)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(13)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(13)>.text{animation-delay:.325s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(14)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(14)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(14)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(14)>.text{animation-delay:.35s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(15)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(15)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(15)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(15)>.text{animation-delay:.375s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(16)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(16)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(16)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(16)>.text{animation-delay:.4s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(17)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(17)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(17)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(17)>.text{animation-delay:.425s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(18)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(18)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(18)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(18)>.text{animation-delay:.45s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(19)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(19)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(19)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(19)>.text{animation-delay:.475s}.dropdown .dropdown-menu.animate-in>.dropdown-item:nth-child(20)>.text,.dropdown .dropdown-menu.animate-out>.dropdown-item:nth-child(20)>.text,.dropdown .dropdown-menu.animate-sub-in>.dropdown-item:nth-child(20)>.text,.dropdown .dropdown-menu.animate-sub-out>.dropdown-item:nth-child(20)>.text{animation-delay:.5s}.dropdown-menu{display:block}.dropdown{position:relative;display:inline-block}.dropdown-container{position:absolute;top:100%;right:0;width:12.5rem;margin-top:1.25rem;height:0;display:none;background-color:#fff;border-radius:3px;box-shadow:0 2px 6px #5e6979;transition:height .125s ease;will-change:height;overflow:hidden;z-index:3}.dropdown-container.left{left:0}.dropdown-container .dropdown-root-menu{right:0;left:auto}.dropdown-container.mod-open,.dropdown-container.mod-open+.dropdown-arrow{display:block}.dropdown-menu{position:absolute;top:0;left:100%;padding:.3125rem 0;width:100%;margin:0}.dropdown-menu.mod-menu-open,.dropdown-menu.mod-sub-open{left:0}.dropdown-menu.mod-sub-open>.dropdown-item>.text{opacity:0;z-index:-1}.dropdown-item .text{position:relative;font-size:.875rem;color:#5e6979;font-family:acuminpro,Helvetica Neue,Helvetica,Arial,sans-serif;line-height:2;cursor:pointer;padding:.5rem 1.875rem .5rem .8125rem;white-space:nowrap;width:100%;display:block;overflow:hidden;text-overflow:ellipsis;font-weight:400}.dropdown-item .text:hover{background-color:#def5fe}.dropdown-item .text.is-active{background-color:#00abf2 !important}.dropdown-arrow{display:none;position:absolute;width:.625rem;height:.625rem;bottom:-1.5625rem;right:1.25rem;background:linear-gradient(-45deg,hsla(0,0%,100%,0) 50%,#fff 0);transform:rotate(45deg);z-index:2;box-shadow:-1px -1px 1px #e7ecf3}.dropdown-container.animate-close{animation:a .2s ease-in-out forwards}.dropdown-menu.animate-in>.dropdown-item>.text{animation:c .3s cubic-bezier(.32,.97,.71,.95) 0s forwards}.dropdown-menu.animate-out>.dropdown-item>.text{animation:b .3s cubic-bezier(.53,1.49,1,.87) forwards}.dropdown-menu.animate-sub-in>.dropdown-item>.text{animation:e .3s cubic-bezier(.32,.97,.71,.95) 0s forwards}.dropdown-menu.animate-sub-out>.dropdown-item>.text{animation:d .3s cubic-bezier(.53,1.49,1,.87) forwards}.dropdown-menu.animate-in>.dropdown-item:nth-child(1)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(1)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(1)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(1)>.text{animation-delay:25ms}.dropdown-menu.animate-in>.dropdown-item:nth-child(2)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(2)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(2)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(2)>.text{animation-delay:.05s}.dropdown-menu.animate-in>.dropdown-item:nth-child(3)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(3)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(3)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(3)>.text{animation-delay:75ms}.dropdown-menu.animate-in>.dropdown-item:nth-child(4)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(4)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(4)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(4)>.text{animation-delay:.1s}.dropdown-menu.animate-in>.dropdown-item:nth-child(5)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(5)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(5)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(5)>.text{animation-delay:.125s}.dropdown-menu.animate-in>.dropdown-item:nth-child(6)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(6)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(6)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(6)>.text{animation-delay:.15s}.dropdown-menu.animate-in>.dropdown-item:nth-child(7)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(7)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(7)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(7)>.text{animation-delay:.175s}.dropdown-menu.animate-in>.dropdown-item:nth-child(8)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(8)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(8)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(8)>.text{animation-delay:.2s}.dropdown-menu.animate-in>.dropdown-item:nth-child(9)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(9)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(9)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(9)>.text{animation-delay:.225s}.dropdown-menu.animate-in>.dropdown-item:nth-child(10)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(10)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(10)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(10)>.text{animation-delay:.25s}.dropdown-menu.animate-in>.dropdown-item:nth-child(11)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(11)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(11)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(11)>.text{animation-delay:.275s}.dropdown-menu.animate-in>.dropdown-item:nth-child(12)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(12)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(12)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(12)>.text{animation-delay:.3s}.dropdown-menu.animate-in>.dropdown-item:nth-child(13)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(13)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(13)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(13)>.text{animation-delay:.325s}.dropdown-menu.animate-in>.dropdown-item:nth-child(14)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(14)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(14)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(14)>.text{animation-delay:.35s}.dropdown-menu.animate-in>.dropdown-item:nth-child(15)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(15)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(15)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(15)>.text{animation-delay:.375s}.dropdown-menu.animate-in>.dropdown-item:nth-child(16)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(16)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(16)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(16)>.text{animation-delay:.4s}.dropdown-menu.animate-in>.dropdown-item:nth-child(17)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(17)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(17)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(17)>.text{animation-delay:.425s}.dropdown-menu.animate-in>.dropdown-item:nth-child(18)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(18)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(18)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(18)>.text{animation-delay:.45s}.dropdown-menu.animate-in>.dropdown-item:nth-child(19)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(19)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(19)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(19)>.text{animation-delay:.475s}.dropdown-menu.animate-in>.dropdown-item:nth-child(20)>.text,.dropdown-menu.animate-out>.dropdown-item:nth-child(20)>.text,.dropdown-menu.animate-sub-in>.dropdown-item:nth-child(20)>.text,.dropdown-menu.animate-sub-out>.dropdown-item:nth-child(20)>.text{animation-delay:.5s}@keyframes a{to{height:0}}@keyframes b{0%{transform:translateZ(0);opacity:1}70%{opacity:0}to{transform:translate3d(-100%,0,0)}}@keyframes c{0%{transform:translate3d(-100%,0,0);opacity:0}to{transform:translateZ(0);opacity:1}}@keyframes d{0%{transform:translateZ(0);opacity:1}70%{opacity:0}to{transform:translate3d(100%,0,0)}}@keyframes e{0%{transform:translateZ(0);opacity:0}to{transform:translate3d(-100%,0,0);opacity:1}}
-        /* endinject */
-    </style>
-</template>
+    <div class="dropdown-arrow"></div>
+</div>
+        <!-- endinject -->
+        <style>
+            /* inject:styles */
+            :host ::content {
+  /**
+ * Parse a numeric value from a string
+ */
+  /**
+ * Convert a pixel value to rem
+ */
+  /**
+ * Convert a list of pixel values to rem values
+ */
+  /**
+* Z-index function for managing the values
+*/ }
+  :host ::content .dropdown {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle; }
+    :host ::content .dropdown .dropdown-container {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 12.5rem;
+      margin-top: 1.25rem;
+      height: 0;
+      display: none;
+      background-color: #ffffff;
+      border-radius: 3px;
+      box-shadow: 0 2px 6px #5e6979;
+      transition: height .25s ease;
+      will-change: height;
+      overflow: hidden;
+      z-index: 3; }
+      :host ::content .dropdown .dropdown-container.left {
+        right: auto;
+        left: 0; }
+      :host ::content .dropdown .dropdown-container .dropdown-root-menu {
+        right: 0;
+        left: auto; }
+      :host ::content .dropdown .dropdown-container.mod-open {
+        display: block; }
+        :host ::content .dropdown .dropdown-container.mod-open + .dropdown-arrow {
+          display: block; }
+    :host ::content .dropdown .dropdown-trigger {
+      cursor: pointer; }
+    :host ::content .dropdown .dropdown-menu {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 100%;
+      margin: 0;
+      padding: 0.3125rem 0rem;
+      width: 100%; }
+      :host ::content .dropdown .dropdown-menu.mod-menu-open, :host ::content .dropdown .dropdown-menu.mod-sub-open {
+        left: 0; }
+      :host ::content .dropdown .dropdown-menu.mod-sub-open > .dropdown-item > .text {
+        opacity: 0;
+        z-index: -1; }
+    :host ::content .dropdown .dropdown-item {
+      list-style: none; }
+      :host ::content .dropdown .dropdown-item .text {
+        position: relative;
+        font-size: 0.875rem;
+        color: #5e6979;
+        font-family: "acumin-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        line-height: 2;
+        cursor: pointer;
+        padding: 0.5rem 1.875rem 0.5rem 0.8125rem;
+        box-sizing: border-box;
+        white-space: nowrap;
+        width: 100%;
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: normal; }
+        :host ::content .dropdown .dropdown-item .text:hover, :host ::content .dropdown .dropdown-item .text.is-active {
+          background-color: #def5fe; }
+    :host ::content .dropdown .dropdown-arrow {
+      display: none;
+      position: absolute;
+      width: 0.625rem;
+      height: 0.625rem;
+      bottom: -1.5625rem;
+      right: 1.25rem;
+      background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 50%, #ffffff 50%);
+      transform: rotate(45deg);
+      z-index: 3;
+      box-shadow: -1px -1px 1px #e7ecf3; }
+    :host ::content .dropdown .dropdown-container.animate-close {
+      animation: closeContainer .2s ease-in-out forwards; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item > .text {
+      animation: dropDownIn 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) 0s forwards; }
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item > .text {
+      animation: dropDownOut 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0.05s forwards; }
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item > .text {
+      animation: dropDownSubIn 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) 0s forwards; }
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item > .text {
+      animation: dropDownSubOut 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0.05s forwards; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(1) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(1) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(1) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(1) > .text {
+      animation-delay: 0.035s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(2) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(2) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(2) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(2) > .text {
+      animation-delay: 0.07s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(3) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(3) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(3) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(3) > .text {
+      animation-delay: 0.105s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(4) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(4) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(4) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(4) > .text {
+      animation-delay: 0.14s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(5) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(5) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(5) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(5) > .text {
+      animation-delay: 0.175s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(6) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(6) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(6) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(6) > .text {
+      animation-delay: 0.21s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(7) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(7) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(7) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(7) > .text {
+      animation-delay: 0.245s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(8) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(8) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(8) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(8) > .text {
+      animation-delay: 0.28s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(9) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(9) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(9) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(9) > .text {
+      animation-delay: 0.315s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(10) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(10) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(10) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(10) > .text {
+      animation-delay: 0.35s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(11) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(11) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(11) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(11) > .text {
+      animation-delay: 0.385s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(12) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(12) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(12) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(12) > .text {
+      animation-delay: 0.42s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(13) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(13) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(13) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(13) > .text {
+      animation-delay: 0.455s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(14) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(14) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(14) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(14) > .text {
+      animation-delay: 0.49s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(15) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(15) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(15) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(15) > .text {
+      animation-delay: 0.525s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(16) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(16) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(16) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(16) > .text {
+      animation-delay: 0.56s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(17) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(17) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(17) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(17) > .text {
+      animation-delay: 0.595s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(18) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(18) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(18) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(18) > .text {
+      animation-delay: 0.63s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(19) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(19) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(19) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(19) > .text {
+      animation-delay: 0.665s; }
+    :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(20) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(20) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(20) > .text,
+    :host ::content .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(20) > .text {
+      animation-delay: 0.7s; }
 
-<script>
-(function(){
-    /* inject:js */
-    "use strict";function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _possibleConstructorReturn(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}var _createClass=function(){function e(e,t){for(var n=0;n<t.length;n++){var a=t[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}return function(t,n,a){return n&&e(t.prototype,n),a&&e(t,a),t}}(),template=(document._currentScript||document.currentScript).ownerDocument.querySelector("template"),GO_BACK_EVENT="go-back",SIZE_CHANGE_EVENT="size-change",CHANGE_EVENT="change",state={hasParent:!1,items:[],openSubMenu:null,open:!1},WSDropdownMenu=function(e){function t(){return _classCallCheck(this,t),_possibleConstructorReturn(this,Object.getPrototypeOf(t).apply(this,arguments))}return _inherits(t,e),_createClass(t,[{key:"createdCallback",value:function(){this.rootTemplate=template.content.getElementById("ws-dropdown-menu").content;var e=document.importNode(this.rootTemplate,!0);this.appendChild(e),this.state=state,this.grabElements(),this.getAttributes(),this.setupListeners()}},{key:"grabElements",value:function(){this.menuContainer=this.querySelector(".dropdown-menu")}},{key:"draw",value:function(){var e=this.state,t=e.hasParent,n=e.items;this.cleanListItems(),this.checkIfRoot(t,n),this.addItems(n)}},{key:"getAttributes",value:function(){try{var e=this.getAttribute("items"),t=this.getAttribute("has-parent");this.state=Object.assign({},this.state,{items:e&&JSON.parse(e),hasParent:!!t&&JSON.parse(t)}),this.draw()}catch(n){var a="Getting Attributes failed: "+n.message;this.propagateError(a)}}},{key:"setupListeners",value:function(){this.menuContainer.addEventListener("click",function(e){e.stopPropagation()})}},{key:"checkIfRoot",value:function(e,t){var n=this,a="dropdown-menu";if(e){var i=document.importNode(this.rootTemplate.getElementById("ws-dropdown-menu-back-item").content,!0).querySelector("li");i.addEventListener("click",function(){return n.propagateGoBack()}),this.menuContainer.appendChild(i)}else a+=" dropdown-root-menu";this.menuContainer.className=a}},{key:"addItems",value:function(e){var t=this;e&&e.forEach(function(e){var n=t.prepareListItem(e);t.menuContainer.appendChild(n)})}},{key:"cleanListItems",value:function(){this.menuContainer.innerHTML=""}},{key:"prepareListItem",value:function(e){var t=this,n="text",a=document.importNode(this.rootTemplate.getElementById("ws-dropdown-menu-item").content.querySelector("li"),!0),i=a.querySelector("a"),r=a.querySelector(".text"),s=e.selected,o=e.href,u=e.icon,c=e.label,l=e.children;if(s&&(n+=" is-active"),r.className=n,u){var h=document.createElement("i");h.className="icon "+u,i.appendChild(h)}i.textContent=c||e;var p=a.querySelector("ws-dropdown-menu");return l&&l.length>0?(p.setAttribute("items",JSON.stringify(l)),p.setAttribute("has-parent",!0),this.setupSubmenuListeners(p)):p.remove(),o?i.setAttribute("href",o):i.addEventListener("click",function(){return t.next(e,p)}),a}},{key:"next",value:function(e,t){return e.children&&e.children.length?(this.state.openSubMenu=t,this.propagateNewMenuSize(t.height),this.animateOut(),t.animateIn()):e?this.propagateChange(e):this.propagateClick(e),!1}},{key:"back",value:function(){this.state.openSubMenu&&(this.state.openSubMenu.animateOut(this.state.openSubMenu.state.hasParent),this.propagateNewMenuSize(this.height),this.animateIn(this.state.hasParent),this.state.openSubMenu=null)}},{key:"animateIn",value:function(e){this.state.open=!0;var t=e?"animate-in":"animate-sub-in";this.animateElement(this.menuContainer,t,function(e){e.classList.remove("mod-sub-open"),e.classList.add("mod-menu-open")})}},{key:"animateOut",value:function(e){this.state.open=!1;var t=e?"animate-sub-out":"animate-out";this.animateElement(this.menuContainer,t,function(t){t.classList.remove("mod-menu-open"),e||t.classList.add("mod-sub-open")})}},{key:"animateElement",value:function(e,t,n){var a=function(a){var i=function r(i){e.classList.remove(t),e.removeEventListener(a,r),n(e)};return i},i=!0,r=!1,s=void 0;try{for(var o,u=animationEndEvents[Symbol.iterator]();!(i=(o=u.next()).done);i=!0){var c=o.value;e.addEventListener(c,a(c))}}catch(l){r=!0,s=l}finally{try{!i&&u["return"]&&u["return"]()}finally{if(r)throw s}}e.classList.add(t)}},{key:"close",value:function(){this.menuContainer.classList.remove("mod-sub-open"),this.menuContainer.classList.remove("mod-menu-open"),this.state.openSubMenu&&this.state.openSubMenu.close()}},{key:"setupSubmenuListeners",value:function(e){var t=this;e.addEventListener(GO_BACK_EVENT,function(e){e.preventDefault(),t.back()}),e.addEventListener(CHANGE_EVENT,function(e){e.preventDefault(),e.stopPropagation(),t.propagateChange(e.detail.item)})}},{key:"propagateGoBack",value:function(){var e=new CustomEvent(GO_BACK_EVENT);this.dispatchEvent(e)}},{key:"propagateNewMenuSize",value:function(e){var t=new CustomEvent(SIZE_CHANGE_EVENT,{detail:{menuSize:e}});this.dispatchEvent(t)}},{key:"propagateError",value:function(e){var t=new CustomEvent("error",{detail:{message:e}});this.dispatchEvent(t)}},{key:"propagateChange",value:function(e){var t=new CustomEvent(CHANGE_EVENT,{detail:{item:e}});this.dispatchEvent(t)}},{key:"propagateClick",value:function(e){var t=new CustomEvent("click",{detail:{item:e}});this.dispatchEvent(t)}},{key:"attributeChangedCallback",value:function(e,t,n){switch(e){case"items":case"has-parent":this.getAttributes()}}},{key:"height",get:function(){return this.menuContainer.clientHeight}}]),t}(HTMLElement);document.registerElement("ws-dropdown-menu",WSDropdownMenu);
-    "use strict";function _classCallCheck(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function _possibleConstructorReturn(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}function _inherits(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}var _createClass=function(){function t(t,e){for(var n=0;n<e.length;n++){var o=e[n];o.enumerable=o.enumerable||!1,o.configurable=!0,"value"in o&&(o.writable=!0),Object.defineProperty(t,o.key,o)}}return function(e,n,o){return n&&t(e.prototype,n),o&&t(e,o),e}}(),template=(document._currentScript||document.currentScript).ownerDocument.querySelector("template"),SIZE_CHANGE_EVENT="size-change",state={items:[],open:!1,isSelect:!1,bodyClickHandler:null,selectedItem:null,orientation:"right"},animationEndEvents=["oAnimationEnd","MSAnimationEnd","animationend"],WSDropdown=function(t){function e(){return _classCallCheck(this,e),_possibleConstructorReturn(this,Object.getPrototypeOf(e).apply(this,arguments))}return _inherits(e,t),_createClass(e,[{key:"createdCallback",value:function(){var t=document.importNode(template.content.getElementById("ws-dropdown").content,!0),e=template.content.querySelector("style").cloneNode(!0);this.createShadowRoot().appendChild(t),this.shadowRoot.appendChild(e),this.state=state}},{key:"grabElements",value:function(){this.dropdownContainer=this.shadowRoot.querySelector(".dropdown-container"),this.dropdownMenu=this.shadowRoot.querySelector("ws-dropdown-menu"),this.button=this.querySelector("button,a")}},{key:"getAttributes",value:function(){var t=this.getAttribute("items"),e=t?JSON.parse(t):[],n=this.getAttribute("is-select"),o=!!n&&"true"===n.toLowerCase();this.state=Object.assign({},this.state,{items:e,isSelect:o,selectedItem:this.state.selectedItem?this.state.selectedItem:this.getSelectedItem(e),orientation:this.getAttribute("orientation")})}},{key:"getSelectedItem",value:function(t){var e=this,n=t.find(function(t){return t.selected});return n||(n=t.reduce(function(t,n){if(!t)return n.children?e.getSelectedItem(n.children):void 0},n)),n}},{key:"draw",value:function(){if(this.dropdownContainer.classList.remove("left","right"),this.dropdownContainer.classList.add(this.state.orientation),this.dropdownMenu.setAttribute("items",JSON.stringify(this.state.items)),this.state.isSelect&&this.state.selectedItem){var t=this.button.querySelector("span"),e=this.state.selectedItem.label;t?this.button.querySelector("span").textContent=e:this.button.textContent=e}}},{key:"drawSelected",value:function(){var t=this.button.querySelector("span"),e=this.state.selectedItem.label;t?this.button.querySelector("span").textContent=e:this.button.textContent=e}},{key:"setupListeners",value:function(){var t=this;this.dropdownMenu.addEventListener(SIZE_CHANGE_EVENT,function(e){e.stopPropagation(),e.preventDefault(),t.adjustSize(e.detail.menuSize)}),this.dropdownMenu.addEventListener("change",function(e){t.state.selectedItem=e.detail.item,t.draw(),t.state.open?t.close():t.open()}),this.dropdownMenu.addEventListener("click",function(e){e.stopPropagation(),e.preventDefault(),t.state.open?t.close():t.open()}),this.button.addEventListener("click",function(e){e.stopPropagation(),e.preventDefault(),t.state.open?t.close():t.open()}),this.state.bodyClickHandler=function(){return t.close()}}},{key:"open",value:function(t){this.state.open=!0,this.dropdownContainer.style.height=0,this.dropdownContainer.classList.add("mod-open"),this.dropdownMenu.animateIn(),this.adjustSize(this.dropdownMenu.height),document.body.addEventListener("click",this.state.bodyClickHandler)}},{key:"close",value:function(){var t=this;this.state.open=!1,document.body.removeEventListener("click",this.state.bodyClickHandler),this.animateElement(this.dropdownContainer,"animate-close",function(e){e.classList.remove("mod-open"),t.dropdownMenu.close()})}},{key:"adjustSize",value:function(t){this.dropdownContainer.style.height=t+"px"}},{key:"animateElement",value:function(t,e,n){var o=function(o){var i=function s(i){t.classList.remove(e),t.removeEventListener(o,s),n(t)};return i};animationEndEvents.forEach(function(e){t.addEventListener(e,o(e))}),t.classList.add(e)}},{key:"propagateError",value:function(t){var e=new CustomEvent("error",{detail:{message:t}});this.dispatchEvent(e)}},{key:"attachedCallback",value:function(){this.grabElements(),this.getAttributes(),this.draw(),this.setupListeners(),this.adjustSize(this.dropdownMenu)}},{key:"attributeChangedCallback",value:function(t,e,n){switch(t){case"items":case"is-select":case"orientation":this.getAttributes(),this.draw()}}},{key:"value",get:function(){return this.state.selectedItem?this.state.selectedItem.value:null}}]),e}(HTMLElement);document.registerElement("ws-dropdown",WSDropdown);
-    /* endinject */
-})()
-</script>
+@keyframes closeContainer {
+  100% {
+    height: 0; } }
+
+@keyframes dropDownOut {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1; }
+  70% {
+    opacity: 0; }
+  100% {
+    transform: translate3d(-100%, 0, 0); } }
+
+@keyframes dropDownIn {
+  0% {
+    transform: translate3d(-100%, 0, 0);
+    opacity: 0; }
+  100% {
+    transform: translate3d(0%, 0, 0);
+    opacity: 1; } }
+
+@keyframes dropDownSubOut {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1; }
+  70% {
+    opacity: 0; }
+  100% {
+    transform: translate3d(100%, 0, 0); } }
+
+@keyframes dropDownSubIn {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0; }
+  100% {
+    transform: translate3d(-100%, 0, 0);
+    opacity: 1; } }
+
+            /* endinject */
+        </style>
+    </template>
+
+    <script>
+    (function(){
+        /* inject:js */
+        'use strict';
+
+var ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
+
+window.WSDropdown = Polymer({
+    is: 'ws-dropdown',
+
+    properties: {
+        items: {
+            type: Array,
+            readOnly: false,
+            notify: false
+        },
+        isSelect: {
+            type: Boolean,
+            value: true
+        },
+        orientation: {
+            type: String,
+            readOnly: false,
+            notify: true
+        },
+        containerClass: {
+            type: String,
+            computed: 'getContainerClass(orientation)'
+        }
+    },
+
+    getContainerClass: function getContainerClass(orientation) {
+        return 'dropdown-container ' + orientation;
+    },
+    attached: function attached() {
+        this.grabElements();
+        this.setupListeners();
+        this.adjustSize(this.dropdownMenu);
+    },
+    grabElements: function grabElements() {
+        this.dropdownContainer = this.$$('.dropdown-container');
+        this.dropdownMenu = this.$$('ws-dropdown-menu');
+        this.button = Polymer.dom(this.$.button).getDistributedNodes()[0];
+    },
+    setupListeners: function setupListeners() {
+        var _this = this;
+
+        var stop = function stop(event) {
+            event.stopPropagation();
+            event.preventDefault();
+        };
+        this.dropdownMenu.addEventListener('change-size', function (event) {
+            stop(event);
+            _this.adjustSize(event.detail.height);
+        });
+        // this event will bubble up to the listener outside
+        this.dropdownMenu.addEventListener('change', function (event) {
+            stop(event);
+            _this.selectedItem = event.detail.item;
+            _this.isOpen ? _this.close() : _this.open();
+        });
+        this.dropdownMenu.addEventListener('click', function (event) {
+            stop(event);
+            _this.isOpen ? _this.close() : _this.open();
+        });
+        this.button.addEventListener('click', function (event) {
+            stop(event);
+            _this.isOpen ? _this.close() : _this.open();
+        });
+    },
+    onDocumentClick: function onDocumentClick(event) {
+        // Close the dropdown if the click was not inside
+        if (!this.contains(event.target)) {
+            this.close();
+            document.removeEventListener('click', this.onDocumentClick, true);
+        }
+    },
+    open: function open(event) {
+        this.isOpen = true;
+        this.dropdownContainer.style.height = 0;
+        this.dropdownContainer.classList.add('mod-open');
+        this.adjustSize(this.dropdownMenu.getHeight());
+        document.addEventListener('click', this.onDocumentClick, true);
+    },
+
+
+    /**
+     * Hide the drop down on clicking outside of dropdown
+     */
+    close: function close() {
+        this.isOpen = false;
+        this.animateElement(this.dropdownContainer, 'animate-close', function (container) {
+            container.classList.remove('mod-open');
+        });
+        document.removeEventListener('click', this.onDocumentClick, true);
+    },
+    adjustSize: function adjustSize(newSize) {
+        this.dropdownContainer.style.height = newSize + 'px';
+    },
+    animateElement: function animateElement(item, animationClass, callback) {
+        // Define callback for animation end events
+        var getEventHandler = function getEventHandler(eventName) {
+            var eventHandler = function eventHandler() {
+                item.classList.remove(animationClass);
+                item.removeEventListener(eventName, eventHandler);
+                callback(item);
+            };
+            return eventHandler;
+        };
+        // Listen for all possible animation end events
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+            for (var _iterator = ANIMATION_END_EVENTS[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var eventName = _step.value;
+
+                item.addEventListener(eventName, getEventHandler(eventName));
+            }
+            // Add class to start animation
+        } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                    _iterator.return();
+                }
+            } finally {
+                if (_didIteratorError) {
+                    throw _iteratorError;
+                }
+            }
+        }
+
+        item.classList.add(animationClass);
+    }
+});
+        /* endinject */
+    })()
+    </script>
+</dom-module>

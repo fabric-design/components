@@ -16,7 +16,8 @@ window.WSDropdown = Polymer({
         orientation: {
             type: String,
             readOnly: false,
-            notify: true
+            notify: false,
+            value: 'left'
         },
         containerClass: {
             type: String,

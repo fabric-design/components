@@ -3,7 +3,7 @@ window.WSDatePicker = Polymer({
     is: 'ws-date-picker',
 
     ready() {
-        let wsDatePicker = this.$$('.ws-date-picker');
+        let wsDatePicker = this.$$('.date-picker');
         // All logic in flatpickr.js file
         // API and guide how to use: https://chmln.github.io/flatpickr/
         this.pickr = flatpickr(this.root, wsDatePicker, {

@@ -26,14 +26,14 @@
         <ws-time-picker id="time-picker"></ws-time-picker>
         <ws-date-picker id="ws-datepicker"></ws-date-picker>
         <p>
-            Simple Dropdown:
-            <ws-dropdown id="ws-dropdown-button" style="position: relative; left: 150px;">
+            Simple Dropdown with orientation left:
+            <ws-dropdown id="ws-dropdown-button" orientation="left" style="position: relative; left: 150px;">
                 <a>Click Me!</a>
             </ws-dropdown>
         </p>
         <p>
             Select Dropdown:
-            <ws-dropdown id="ws-dropdown-select" is-select="true" style="position: relative; left: 150px;">
+            <ws-dropdown id="ws-dropdown-select" is-select="true" orientation="right" style="position: relative; left: 150px;">
                 <button>Click Me!</button>
             </ws-dropdown>
         </p>
@@ -72,7 +72,8 @@
                     value: 'Sub-Item 3-1'
                 }, {
                     label: 'Sub-Item 3-2',
-                    value: 'Sub-Item 3-2'
+                    value: 'Sub-Item 3-2',
+                    selected: true
                 }, {
                     label: 'Sub-Item 3-3',
                     value: 'Sub-Item 3-3'

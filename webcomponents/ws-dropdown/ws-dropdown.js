@@ -2,11 +2,12 @@ var template = (document._currentScript || document.currentScript).ownerDocument
 
 const SIZE_CHANGE_EVENT = 'size-change';
 var state = {
-    items: [],
+    items: [], // {selected, href, icon, label, children}
     open: false,
     isSelect: false,
     bodyClickHandler: null,
-    selectedItem: null
+    selectedItem: null,
+    orientation: 'right' // right,left
 };
 var animationEndEvents = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
 
@@ -31,15 +32,36 @@ class WSDropdown extends HTMLElement {
 
     getAttributes() {
         let itemsAttributeValue = this.getAttribute('items');
+        let items = itemsAttributeValue ? JSON.parse(itemsAttributeValue) : [];
         let isSelectAttributeValue = this.getAttribute('is-select');
+        let isSelect = isSelectAttributeValue ? isSelectAttributeValue.toLowerCase() === 'true' : false
         this.state = Object.assign({}, this.state, {
-            items: itemsAttributeValue ? JSON.parse(itemsAttributeValue) : [],
-            isSelect: isSelectAttributeValue ? isSelectAttributeValue.toLowerCase() === 'true' : false,
+            items,
+            isSelect,
+            selectedItem: this.state.selectedItem ? this.state.selectedItem : this.getSelectedItem(items),
+            orientation: this.getAttribute('orientation')
         });
     }
 
+    // will grad first selected to display initially
+    getSelectedItem(items) {
+        let selectedItem = items.find(item => item.selected);
+        if (!selectedItem) {
+            selectedItem = items.reduce((selectedItem, item) => {
+                if (selectedItem) return;
+                if (item.children) return this.getSelectedItem(item.children);
+                return;
+            }, selectedItem)
+        }
+        return selectedItem;
+    }
+
     draw() {
+        this.dropdownContainer.classList.remove("left", "right");
+        this.dropdownContainer.classList.add(this.state.orientation);
+
         this.dropdownMenu.setAttribute('items', JSON.stringify(this.state.items));
+
         if (this.state.isSelect && this.state.selectedItem) {
             let span = this.button.querySelector('span');
             let label = this.state.selectedItem.label;
@@ -48,6 +70,16 @@ class WSDropdown extends HTMLElement {
             } else {
                 this.button.textContent = label;
             }
+        }
+    }
+
+    drawSelected() {
+        let span = this.button.querySelector('span');
+        let label = this.state.selectedItem.label;
+        if (span) {
+            this.button.querySelector('span').textContent = label;
+        } else {
+            this.button.textContent = label;
         }
     }
 
@@ -149,6 +181,7 @@ class WSDropdown extends HTMLElement {
         switch (attrName) {
             case "items":
             case "is-select":
+            case "orientation":
                 this.getAttributes();
                 this.draw();
                 break;

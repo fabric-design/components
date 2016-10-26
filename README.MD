@@ -24,8 +24,13 @@ Create a folder under `webcomponents` with the name of your web-component. In th
 
 ### How do Web-Components work
 
+Checkout the specification: [W3C](https://www.w3.org/standards/techs/components#w3c_all).
+
+Checkout a tutorial: [webcomponents.org](http://webcomponents.org/articles/introduction-to-custom-elements/).
+
+**Summing up:**
 Web-Components are written as js classes. On these components certain life-cycle-functions are called: createdCallback, attachedCallback, detachedCallback, attributeChangedCallback. 
-More on those later. Apart from that, you have to implement most of the logic and DOM-manipulation yourself.
+More on those following. Apart from that, you have to implement most of the logic and DOM-manipulation yourself.
 
 #### View-Part
 

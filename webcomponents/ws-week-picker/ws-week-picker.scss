@@ -27,12 +27,12 @@
       height: 32px;
       line-height: 32px;
       padding-left: 11px;
-      border-color: $dark-mischka;
+      border-color: $miroschka;
       font-size: 14px;
 
       &.active {
         outline: 0;
-        border-color: $cerulean;
+        border-color: $liverleaf;
       }
 
       &:focus + #week-icon {
@@ -73,7 +73,7 @@
 
         > .year {
           margin-left: 38px;
-          color: $ghost;
+          color: $santas-gray;
           font-weight: 600;
           padding-bottom: 13px;
         }
@@ -86,7 +86,7 @@
 
         > .year {
           text-align: center;
-          color: $ghost;
+          color: $santas-gray;
           font-weight: 600;
           padding-bottom: 13px;
         }
@@ -111,7 +111,7 @@
           margin-left: 13px;
           padding-right: 6px;
           font-weight: 600;
-          color: $ghost;
+          color: $santas-gray;
           padding-bottom: 13px;
         }
       }
@@ -125,7 +125,7 @@
 
   .week-wrapper > .week-picker .month {
     box-sizing: border-box;
-    color: $ghost;
+    color: $santas-gray;
     display: inline-block;
     width: 40px;
     height: 40px;
@@ -134,7 +134,7 @@
     text-align: center;
     margin-left: 1px;
     margin-bottom: 4px;
-    background-color: $pattens-blue;
+    background-color: $sail;
   }
 
   .week-wrapper > .week-picker .weeks > .weekNumbers:last-child > .month {
@@ -165,11 +165,11 @@
   }
   .week-wrapper > .week-picker .week.now,
   .week-wrapper > .week-picker .week.now:hover {
-    background-color: $cerulean;
+    background-color: $liverleaf;
     color: $white;
   }
 
   .week-wrapper > .week-picker .week:hover {
-    background-color: $pattens-blue;
+    background-color: $sail;
   }
 }

@@ -55,10 +55,10 @@ $icon-calendar: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlb
             > .flatpickr-prev-month {
                 text-decoration: none;
                 cursor: pointer;
-                color: $ghost;
+                color: $santas-gray;
                 padding: 0 23px;
                 &:hover {
-                    color: $ghost-gray;
+                    color: $santas-gray;
                 }
                 > i {
                     position: relative;
@@ -76,23 +76,23 @@ $icon-calendar: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlb
                 font-weight: 300;
                 color: rgba(0, 0, 0, .7);
                 > .cur_month {
-                    color: $ghost;
+                    color: $santas-gray;
                     font-size: 16px;
                 }
                 > .cur_year {
                     cursor: default;
                     padding: 0 2px;
-                    color: $ghost;
+                    color: $santas-gray;
                     font-size: 16px;
                 }
             }
         }
         > .flatpickr-weekdays {
             font-size: 90%;
-            background-color: $pattens-blue;
+            background-color: $sail;
             padding: 8px 7px;
             > span {
-                color: $ghost;
+                color: $santas-gray;
                 text-align: center;
                 display: inline-block;
                 font-size: 14px;
@@ -129,19 +129,19 @@ $icon-calendar: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlb
             margin: 0 1px 1px;
             text-align: center;
             &:hover {
-                background-color: $pattens-blue;
+                background-color: $sail;
             }
             &.today {
-                background-color: $cerulean;
+                background-color: $liverleaf;
                 color: $white;
             }
             &.selected,
             &.selected:hover {
-                background-color: $cerulean;
+                background-color: $liverleaf;
                 color: $white;
             }
             &.disabled, &.disabled:hover {
-                color: $ghost;
+                color: $santas-gray;
                 background: 0 0;
                 border-color: transparent;
                 cursor: default

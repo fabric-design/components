@@ -20,12 +20,12 @@
     height: 32px;
     line-height: 32px;
     padding-left: 11px;
-    border-color: $dark-mischka;
+    border-color: $miroschka;
     font-size: 14px;
 
     &.active {
       outline: 0;
-      border-color: $cerulean;
+      border-color: $liverleaf;
     }
   }
 
@@ -93,7 +93,7 @@
     > .cancel,
     > .ok {
       margin: 0 17px;
-      color: $cerulean;
+      color: $liverleaf;
     }
   }
 }

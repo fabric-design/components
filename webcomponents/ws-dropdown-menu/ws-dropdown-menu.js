@@ -22,6 +22,12 @@ Polymer({
         }
     },
 
+    itemsChanged() {
+        if (this.menuContainer) {
+            this.fire('change-size', {height: this.getHeight()});
+        }
+    },
+
     attached() {
         this.grabElements();
         this.setupListeners();
@@ -51,8 +57,12 @@ Polymer({
         }, true)
     },
 
+    getHeight() {
+        return this.menuContainer.clientHeight;
+    },
+
     itemsAreBound() {
-        return this.items && this.items.length;
+        return !!this.items;
     },
 
     getMenuClass(hasParent) {
@@ -63,16 +73,12 @@ Polymer({
         return item.label || item;
     },
 
-    getItemIconClass(item) {
-        return `icon ${item.icon}`;
+    getItemIconClass(icon) {
+        return `icon ${icon}`;
     },
 
-    getItemAnchorClass(item) {
-        return `text ${item.selected ? 'is-active' : ''}`;
-    },
-
-    getHeight() {
-        return this.menuContainer.clientHeight;
+    getItemAnchorClass(change) {
+        return `text ${change.base.selected ? 'is-active' : change.base.focused ? 'is-focused' : ''}`;
     },
 
     next(event) {
@@ -82,10 +88,10 @@ Polymer({
             this.showChild(event.currentTarget.querySelector('ws-dropdown-menu'));
         }
         else if (item) {
-            this.propagate('change', {item});
+            this.propagate('change', item);
         }
         else {
-            this.propagate('click', {item});
+            this.propagate('click', item);
         }
         return false;
     },

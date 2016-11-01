@@ -11,12 +11,12 @@
                 <a class="text back" href$="[[item.href]]">&lsaquo; Back</a>
             </li>
         </template>
-        <template is="dom-repeat" items="[[items]]">
+        <template is="dom-repeat" items="[[items]]" on-dom-change="itemsChanged">
             <li class="dropdown-item" on-click="next" item="[[item]]">
                 <template is="dom-if" if="[[item.icon]]">
-                    <i class$="[[getItemIconClass(item)]]"></i>
+                    <i class$="[[getItemIconClass(item.icon)]]"></i>
                 </template>
-                <a class$="[[getItemAnchorClass(item)]]" href$="[[item.href]]">[[getItemLabel(item)]]</a>
+                <a class$="[[getItemAnchorClass(item.*)]]" href$="[[item.href]]">[[getItemLabel(item)]]</a>
                 <template is="dom-if" if="[[item.children]]">
                     <ws-dropdown-menu items="[[item.children]]" has-parent></ws-dropdown-menu>
                 </template>
@@ -60,6 +60,11 @@ Polymer({
         }
     },
 
+    itemsChanged: function itemsChanged() {
+        if (this.menuContainer) {
+            this.fire('change-size', { height: this.getHeight() });
+        }
+    },
     attached: function attached() {
         this.grabElements();
         this.setupListeners();
@@ -90,8 +95,11 @@ Polymer({
             _this.showParent();
         }, true);
     },
+    getHeight: function getHeight() {
+        return this.menuContainer.clientHeight;
+    },
     itemsAreBound: function itemsAreBound() {
-        return this.items && this.items.length;
+        return !!this.items;
     },
     getMenuClass: function getMenuClass(hasParent) {
         return 'dropdown-menu ' + (hasParent ? '' : 'dropdown-root-menu');
@@ -99,14 +107,11 @@ Polymer({
     getItemLabel: function getItemLabel(item) {
         return item.label || item;
     },
-    getItemIconClass: function getItemIconClass(item) {
-        return 'icon ' + item.icon;
+    getItemIconClass: function getItemIconClass(icon) {
+        return 'icon ' + icon;
     },
-    getItemAnchorClass: function getItemAnchorClass(item) {
-        return 'text ' + (item.selected ? 'is-active' : '');
-    },
-    getHeight: function getHeight() {
-        return this.menuContainer.clientHeight;
+    getItemAnchorClass: function getItemAnchorClass(change) {
+        return 'text ' + (change.base.selected ? 'is-active' : change.base.focused ? 'is-focused' : '');
     },
     next: function next(event) {
         var item = event.currentTarget.item;
@@ -114,9 +119,9 @@ Polymer({
         if (item.children && item.children.length) {
             this.showChild(event.currentTarget.querySelector('ws-dropdown-menu'));
         } else if (item) {
-            this.propagate('change', { item: item });
+            this.propagate('change', item);
         } else {
-            this.propagate('click', { item: item });
+            this.propagate('click', item);
         }
         return false;
     },

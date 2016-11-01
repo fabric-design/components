@@ -6,12 +6,12 @@
                 <a class="text back" href$="[[item.href]]">&lsaquo; Back</a>
             </li>
         </template>
-        <template is="dom-repeat" items="[[items]]">
+        <template is="dom-repeat" items="[[items]]" on-dom-change="itemsChanged">
             <li class="dropdown-item" on-click="next" item="[[item]]">
                 <template is="dom-if" if="[[item.icon]]">
-                    <i class$="[[getItemIconClass(item)]]"></i>
+                    <i class$="[[getItemIconClass(item.icon)]]"></i>
                 </template>
-                <a class$="[[getItemAnchorClass(item)]]" href$="[[item.href]]">[[getItemLabel(item)]]</a>
+                <a class$="[[getItemAnchorClass(item.*)]]" href$="[[item.href]]">[[getItemLabel(item)]]</a>
                 <template is="dom-if" if="[[item.children]]">
                     <ws-dropdown-menu items="[[item.children]]" has-parent></ws-dropdown-menu>
                 </template>

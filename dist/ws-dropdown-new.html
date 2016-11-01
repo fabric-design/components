@@ -43,7 +43,8 @@
 */
 .dropdown {
   position: relative;
-  display: block; }
+  display: inline-block;
+  vertical-align: middle; }
   .dropdown .dropdown-container {
     position: absolute;
     top: 100%;
@@ -52,9 +53,9 @@
     margin-top: 1.25rem;
     height: 0;
     display: none;
-    background-color: #ffffff;
+    background-color: #FFFFFF;
     border-radius: 3px;
-    box-shadow: 0 2px 6px #5e6979;
+    box-shadow: 0 2px 6px #626166;
     transition: height .25s ease;
     will-change: height;
     overflow: hidden;
@@ -62,6 +63,9 @@
     .dropdown .dropdown-container.left {
       right: auto;
       left: 0; }
+    .dropdown .dropdown-container.left .dropdown-arrow {
+      left: 1.25rem;
+      right: auto; }
     .dropdown .dropdown-container .dropdown-root-menu {
       right: 0;
       left: auto; }
@@ -89,7 +93,7 @@
     .dropdown .dropdown-item .text {
       position: relative;
       font-size: 0.875rem;
-      color: #5e6979;
+      color: #626166;
       font-family: "acumin-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
       line-height: 2;
       cursor: pointer;
@@ -101,8 +105,10 @@
       overflow: hidden;
       text-overflow: ellipsis;
       font-weight: normal; }
-      .dropdown .dropdown-item .text:hover, .dropdown .dropdown-item .text.is-active {
-        background-color: #def5fe; }
+      .dropdown .dropdown-item .text:hover, .dropdown .dropdown-item .text.is-selected {
+        background-color: #E9EAEF; }
+      .dropdown .dropdown-item .text.is-active {
+        background-color: #DEF5FE; }
   .dropdown .dropdown-arrow {
     display: none;
     position: absolute;
@@ -110,10 +116,10 @@
     height: 0.625rem;
     bottom: -1.5625rem;
     right: 1.25rem;
-    background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 50%, #ffffff 50%);
+    background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 50%, #FFFFFF 50%);
     transform: rotate(45deg);
     z-index: 3;
-    box-shadow: -1px -1px 1px #e7ecf3; }
+    box-shadow: -1px -1px 1px #88878d; }
   .dropdown .dropdown-container.animate-close {
     animation: closeContainer .2s ease-in-out forwards; }
   .dropdown .dropdown-menu.animate-in > .dropdown-item > .text {

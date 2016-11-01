@@ -9,6 +9,10 @@ window.WSDropdown = Polymer({
             readOnly: false,
             notify: false
         },
+        noTrigger: {
+            type: Boolean,
+            value: false
+        },
         isSelect: {
             type: Boolean,
             value: true
@@ -30,6 +34,7 @@ window.WSDropdown = Polymer({
     },
 
     attached() {
+        this.onDocumentClick = this.onDocumentClick.bind(this);
         this.grabElements();
         this.setupListeners();
         this.adjustSize(this.dropdownMenu);
@@ -52,29 +57,34 @@ window.WSDropdown = Polymer({
         });
         // this event will bubble up to the listener outside
         this.dropdownMenu.addEventListener('change', event => {
-            stop(event);
             this.selectedItem = event.detail.item;
             this.isOpen ? this.close() : this.open();
         });
         this.dropdownMenu.addEventListener('click', event => {
             stop(event);
-            this.isOpen ? this.close() : this.open();
+            this.isOpen && this.close();
         });
-        this.button.addEventListener('click', event => {
-            stop(event);
-            this.isOpen ? this.close() : this.open();
-        });
+        if (!this.noTrigger) {
+            this.button.addEventListener('click', event => {
+                stop(event);
+                this.isOpen ? this.close() : this.open();
+            });
+        }
+        this.addEventListener('open', () => this.open());
+        this.addEventListener('close', () => this.close());
     },
 
     onDocumentClick(event) {
         // Close the dropdown if the click was not inside
         if (!this.contains(event.target)) {
             this.close();
-            document.removeEventListener('click', this.onDocumentClick, true);
         }
     },
 
-    open(event) {
+    open() {
+        if (this.isOpen) {
+            return;
+        }
         this.isOpen = true;
         this.dropdownContainer.style.height = 0;
         this.dropdownContainer.classList.add('mod-open');
@@ -86,6 +96,9 @@ window.WSDropdown = Polymer({
      * Hide the drop down on clicking outside of dropdown
      */
     close() {
+        if (!this.isOpen) {
+            return;
+        }
         this.isOpen = false;
         this.animateElement(this.dropdownContainer, 'animate-close', container => {
             container.classList.remove('mod-open');

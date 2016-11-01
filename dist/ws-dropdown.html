@@ -6,7 +6,7 @@
     <template>
         <!-- inject:html -->
         <div class="dropdown">
-    <content select="button,a,.select-box" id="button"></content>
+    <content select="button,a,.select-box,.target-element" id="button"></content>
     <div class$="[[containerClass]]">
         <ws-dropdown-menu items="[[items]]">
             <content select=".dropdown-menu" id="menu"></content>
@@ -32,7 +32,8 @@
 */ }
   :host ::content .dropdown {
     position: relative;
-    display: block; }
+    display: inline-block;
+    vertical-align: middle; }
     :host ::content .dropdown .dropdown-container {
       position: absolute;
       top: 100%;
@@ -41,9 +42,9 @@
       margin-top: 1.25rem;
       height: 0;
       display: none;
-      background-color: #ffffff;
+      background-color: #FFFFFF;
       border-radius: 3px;
-      box-shadow: 0 2px 6px #5e6979;
+      box-shadow: 0 2px 6px #626166;
       transition: height .25s ease;
       will-change: height;
       overflow: hidden;
@@ -51,6 +52,9 @@
       :host ::content .dropdown .dropdown-container.left {
         right: auto;
         left: 0; }
+      :host ::content .dropdown .dropdown-container.left .dropdown-arrow {
+        left: 1.25rem;
+        right: auto; }
       :host ::content .dropdown .dropdown-container .dropdown-root-menu {
         right: 0;
         left: auto; }
@@ -78,7 +82,7 @@
       :host ::content .dropdown .dropdown-item .text {
         position: relative;
         font-size: 0.875rem;
-        color: #5e6979;
+        color: #626166;
         font-family: "acumin-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
         line-height: 2;
         cursor: pointer;
@@ -90,8 +94,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
         font-weight: normal; }
-        :host ::content .dropdown .dropdown-item .text:hover, :host ::content .dropdown .dropdown-item .text.is-active {
-          background-color: #def5fe; }
+        :host ::content .dropdown .dropdown-item .text:hover, :host ::content .dropdown .dropdown-item .text.is-selected {
+          background-color: #E9EAEF; }
+        :host ::content .dropdown .dropdown-item .text.is-active {
+          background-color: #DEF5FE; }
     :host ::content .dropdown .dropdown-arrow {
       display: none;
       position: absolute;
@@ -99,10 +105,10 @@
       height: 0.625rem;
       bottom: -1.5625rem;
       right: 1.25rem;
-      background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 50%, #ffffff 50%);
+      background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 50%, #FFFFFF 50%);
       transform: rotate(45deg);
       z-index: 3;
-      box-shadow: -1px -1px 1px #e7ecf3; }
+      box-shadow: -1px -1px 1px #88878d; }
     :host ::content .dropdown .dropdown-container.animate-close {
       animation: closeContainer .2s ease-in-out forwards; }
     :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item > .text {
@@ -272,6 +278,10 @@ window.WSDropdown = Polymer({
             readOnly: false,
             notify: false
         },
+        noTrigger: {
+            type: Boolean,
+            value: false
+        },
         isSelect: {
             type: Boolean,
             value: true
@@ -292,6 +302,7 @@ window.WSDropdown = Polymer({
         return 'dropdown-container ' + orientation;
     },
     attached: function attached() {
+        this.onDocumentClick = this.onDocumentClick.bind(this);
         this.grabElements();
         this.setupListeners();
         this.adjustSize(this.dropdownMenu);
@@ -314,27 +325,36 @@ window.WSDropdown = Polymer({
         });
         // this event will bubble up to the listener outside
         this.dropdownMenu.addEventListener('change', function (event) {
-            stop(event);
             _this.selectedItem = event.detail.item;
             _this.isOpen ? _this.close() : _this.open();
         });
         this.dropdownMenu.addEventListener('click', function (event) {
             stop(event);
-            _this.isOpen ? _this.close() : _this.open();
+            _this.isOpen && _this.close();
         });
-        this.button.addEventListener('click', function (event) {
-            stop(event);
-            _this.isOpen ? _this.close() : _this.open();
+        if (!this.noTrigger) {
+            this.button.addEventListener('click', function (event) {
+                stop(event);
+                _this.isOpen ? _this.close() : _this.open();
+            });
+        }
+        this.addEventListener('open', function () {
+            return _this.open();
+        });
+        this.addEventListener('close', function () {
+            return _this.close();
         });
     },
     onDocumentClick: function onDocumentClick(event) {
         // Close the dropdown if the click was not inside
         if (!this.contains(event.target)) {
             this.close();
-            document.removeEventListener('click', this.onDocumentClick, true);
         }
     },
-    open: function open(event) {
+    open: function open() {
+        if (this.isOpen) {
+            return;
+        }
         this.isOpen = true;
         this.dropdownContainer.style.height = 0;
         this.dropdownContainer.classList.add('mod-open');
@@ -347,6 +367,9 @@ window.WSDropdown = Polymer({
      * Hide the drop down on clicking outside of dropdown
      */
     close: function close() {
+        if (!this.isOpen) {
+            return;
+        }
         this.isOpen = false;
         this.animateElement(this.dropdownContainer, 'animate-close', function (container) {
             container.classList.remove('mod-open');

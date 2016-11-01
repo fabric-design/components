@@ -17,7 +17,7 @@ var state = {
 // Remember url at loadtime to not have sideeffects by ie Angular2
 var urlAtStart = window.location.href;
 
-window.WSHeader = Polymer({
+Polymer({
     // Use createdCallback instead of constructor to init an element.
     ready() {
         this.state = state;

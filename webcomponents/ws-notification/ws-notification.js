@@ -7,7 +7,7 @@
  *
  * Example: <ws-notification title="some title" description="This could be skipped" type="error" lifetime="0"/>
  */
-window.Notification = Polymer({
+Polymer({
 
     is: 'ws-notification',
 

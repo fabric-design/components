@@ -1,4 +1,4 @@
-window.WSTimePicker = Polymer({
+Polymer({
 
   is: 'ws-time-picker',
 

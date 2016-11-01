@@ -1,4 +1,4 @@
-window.WSDatePicker = Polymer({
+Polymer({
 
     is: 'ws-date-picker',
 

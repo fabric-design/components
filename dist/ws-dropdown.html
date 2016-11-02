@@ -6,7 +6,7 @@
     <template>
         <!-- inject:html -->
         <div class="dropdown">
-    <content select="button,a,.select-box,.target-element" id="button"></content>
+    <content select="button,a,.button,.select-box,.target-element" id="button"></content>
     <div class$="[[containerClass]]">
         <ws-dropdown-menu items="[[items]]">
             <content select=".dropdown-menu" id="menu"></content>
@@ -32,8 +32,7 @@
 */ }
   :host ::content .dropdown {
     position: relative;
-    display: inline-block;
-    vertical-align: middle; }
+    display: block; }
     :host ::content .dropdown .dropdown-container {
       position: absolute;
       top: 100%;
@@ -43,8 +42,8 @@
       height: 0;
       display: none;
       background-color: #FFFFFF;
-      border-radius: 3px;
-      box-shadow: 0 2px 6px #626166;
+      border-radius: 2px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
       transition: height .25s ease;
       will-change: height;
       overflow: hidden;
@@ -52,9 +51,9 @@
       :host ::content .dropdown .dropdown-container.left {
         right: auto;
         left: 0; }
-      :host ::content .dropdown .dropdown-container.left .dropdown-arrow {
-        left: 1.25rem;
-        right: auto; }
+      :host ::content .dropdown .dropdown-container.right + .dropdown-arrow {
+        right: 1.25rem;
+        left: auto; }
       :host ::content .dropdown .dropdown-container .dropdown-root-menu {
         right: 0;
         left: auto; }
@@ -94,7 +93,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         font-weight: normal; }
-        :host ::content .dropdown .dropdown-item .text:hover, :host ::content .dropdown .dropdown-item .text.is-selected {
+        :host ::content .dropdown .dropdown-item .text:hover, :host ::content .dropdown .dropdown-item .text.is-focused {
           background-color: #E9EAEF; }
         :host ::content .dropdown .dropdown-item .text.is-active {
           background-color: #DEF5FE; }
@@ -104,11 +103,11 @@
       width: 0.625rem;
       height: 0.625rem;
       bottom: -1.5625rem;
-      right: 1.25rem;
+      left: 1.25rem;
       background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 50%, #FFFFFF 50%);
       transform: rotate(45deg);
       z-index: 3;
-      box-shadow: -1px -1px 1px #88878d; }
+      box-shadow: -1px -1px 1px rgba(115, 115, 115, 0.16); }
     :host ::content .dropdown .dropdown-container.animate-close {
       animation: closeContainer .2s ease-in-out forwards; }
     :host ::content .dropdown .dropdown-menu.animate-in > .dropdown-item > .text {
@@ -311,6 +310,10 @@ window.WSDropdown = Polymer({
         this.dropdownContainer = this.$$('.dropdown-container');
         this.dropdownMenu = this.$$('ws-dropdown-menu');
         this.button = Polymer.dom(this.$.button).getDistributedNodes()[0];
+        // Check if either a button is projected or the no-trigger flag is set
+        if (!this.button && !this.noTrigger) {
+            throw new Error('No button found and no-trigger attribute is missing. ' + 'Either you add a element to the dropdown children matching this query `button,a,.button,.select-box,.target-element`, ' + 'or you add the `no-trigger` attribute to the dropdown.');
+        }
     },
     setupListeners: function setupListeners() {
         var _this = this;

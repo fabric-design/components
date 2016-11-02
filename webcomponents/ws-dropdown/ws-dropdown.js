@@ -44,6 +44,12 @@ window.WSDropdown = Polymer({
         this.dropdownContainer = this.$$('.dropdown-container');
         this.dropdownMenu = this.$$('ws-dropdown-menu');
         this.button = Polymer.dom(this.$.button).getDistributedNodes()[0];
+        // Check if either a button is projected or the no-trigger flag is set
+        if (!this.button && !this.noTrigger) {
+            throw new Error('No button found and no-trigger attribute is missing. '
+                + 'Either you add a element to the dropdown children matching this query `button,a,.button,.select-box,.target-element`, '
+                + 'or you add the `no-trigger` attribute to the dropdown.')
+        }
     },
 
     setupListeners() {

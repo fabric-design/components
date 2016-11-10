@@ -13,6 +13,7 @@
     position: absolute;
     width: 16px;
     height: 16px;
+    color: $color-icon-input;
 
     &.active {
       width: 12px;
@@ -27,12 +28,13 @@
     height: 32px;
     line-height: 32px;
     padding-left: 11px;
-    border-color: $dark-mischka;
+    border: 1px solid $color-border-input-default;
     font-size: 14px;
+    box-shadow: $input-shadow-inset;
 
     &.active {
       outline: 0;
-      border-color: $cerulean;
+      border-color: $color-border-input-highlight;
     }
 
     &:focus + #ws-week-icon {

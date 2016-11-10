@@ -7,14 +7,14 @@ class WSWeekPicker extends HTMLElement {
     // Take all main DOM elements
     let clone = document.importNode(template.content, true);
     this.createShadowRoot().appendChild(clone);
+    this.open = false;
     this.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    this.date = new Date();
-    this.curYear = this.date.getFullYear();
-    this.curMonth = this.months[this.date.getMonth()];
-    this.curWeek = this.getWeek(this.curYear, this.date.getMonth(), this.date.getDate());
+    this.getAttributes();
     this.getElements();
     this.addListeners();
+    this.setInputValue();
   }
+
   // Take all elements from week picker
   getElements() {
     this.wrapper = this.shadowRoot.querySelector('.ws-week-wrapper');
@@ -35,34 +35,14 @@ class WSWeekPicker extends HTMLElement {
     this.nextYearNumber = this.shadowRoot.querySelector('.next-year > .year');
     this.nextYearWeeks = this.shadowRoot.querySelector('.next-year > .weeks');
   }
+
   // Attach all event liteners
   addListeners() {
-    document.addEventListener('click', (e) => this.closeWeekPicker(e));
-    this.input.addEventListener('click', () => this.openWeekPicker());
-    this.crossIcon.addEventListener('click', () => this.cancel());
+    document.addEventListener('click', (e) => this.open && e.target != this ? this.closeWeekPicker() : null);
+    this.input.addEventListener('click', (e) => this.open ? this.closeWeekPicker() : this.openWeekPicker());
     this.calendar.addEventListener('click', (e) => this.calendarClick(e));
     this.prevYearButton.addEventListener('click', () => this.moveYearBefore());
     this.nextYearButton.addEventListener('click', () => this.moveYearAfter());
-  }
-  // build calendar year, months and week numbers
-  buildCalendar(){
-    this.buildYears();
-    this.buildWeeksAndMonth();
-  }
-
-  openWeekPicker() {
-    // Prevent on every click full redraw calendar
-    this.calendar.className = 'ws-week-picker opened';
-    this.input.className = 'ws-week-input active';
-    this.crossIcon.className = 'ws-week-icon active';
-    // If input clear draw calendar and define current week and select it
-    if (this.input.value == '') {
-      this.buildCalendar();
-      this.defineCurrent();
-    } else {
-      // if input have value - define current week as selected at previous time
-      this.pickedWeekWrapper.className = 'week now';
-    }
   }
 
   calendarClick(e) {
@@ -76,33 +56,21 @@ class WSWeekPicker extends HTMLElement {
       this.pickedWeekWrapper.className = 'week';
       this.pickedWeekWrapper = e.target;
       this.pickedWeekWrapper.className = 'week now';
-      this.pickedResult = `${this.pickedWeekWrapper.innerHTML}-${this.pickedWeekYear}`;
-      this.input.value = this.pickedResult;
-      this.cancel();
+
+      let pickedDate = parseDate(this.pickedWeekYear, this.pickedWeekWrapper.innerHTML);
+      this.parseDates(pickedDate);
+      this.setInputValue();
+      this.closeWeekPicker();
     }
   }
-  // Just close calendar on cross icon click
-  cancel() {
-    this.calendar.className = 'ws-week-picker';
-    this.input.className = 'ws-week-input used';
-    this.crossIcon.className = 'ws-week-icon';
-  }
-  // Changed year if user click left arrow button
-  moveYearBefore() {
+
+  // build calendar year, months and week numbers
+  buildCalendar() {
     this.destroyCalendar();
-    this.curYear -= 1;
-    this.prevYear -= 1;
-    this.nextYear -= 1;
-    this.buildCalendar();
+    this.buildYears();
+    this.buildWeeksAndMonth();
   }
-  // Changed year if user click right arrow button
-  moveYearAfter() {
-    this.destroyCalendar();
-    this.curYear += 1;
-    this.prevYear += 1;
-    this.nextYear += 1;
-    this.buildCalendar();
-  }
+
   // Clean all generated elements if user change year
   destroyCalendar() {
     this.prevYearNumber.innerHTML = '';
@@ -112,100 +80,62 @@ class WSWeekPicker extends HTMLElement {
     this.nextYearNumber.innerHTML = '';
     this.nextYearWeeks.innerHTML = '';
   }
+
+  openWeekPicker() {
+    this.open = true;
+    // Prevent on every click full redraw calendar
+    this.calendar.className = 'ws-week-picker opened';
+    this.input.className = 'ws-week-input active';
+    this.crossIcon.className = 'ws-week-icon active';
+    // If input clear draw calendar and define current week and select it
+    if (!this.pickedWeekWrapper) {
+      this.buildCalendar();
+      this.highlightCurrentWeek();
+    } else {
+      // if input have value - define current week as selected at previous time
+      this.pickedWeekWrapper.className = 'week now';
+    }
+  }
+
   // Close calendar if user don't click on calendar
-  closeWeekPicker(e) {
-    if (e.target.tagName != 'WS-WEEK-PICKER'){
-      this.destroyCalendar();
-      this.calendar.className = 'ws-week-picker';
-      this.input.className = 'ws-week-input used';
-      this.crossIcon.className = 'ws-week-icon';
-    }
+  closeWeekPicker() {
+    this.open = false;
+    this.calendar.className = 'ws-week-picker';
+    this.input.className = 'ws-week-input used';
+    this.crossIcon.className = 'ws-week-icon';
   }
 
-  createElement(tag, className, content) {
-    let element = document.createElement(tag);
-
-    if(content)
-      element.innerHTML = content;
-
-    if(className)
-      element.className = className;
-
-    return element;
+  setInputValue() {
+    this.input.value = `${this.curWeek}-${this.curYear}`;
   }
-  // Calculate week number of year depending on current day
-  getWeek(year,month,day) {
-    let y2k = number => number < 1000 ? number + 1900 : number;
-    let when = new Date(year, month, day);
-    let newYear = new Date(year, 0, 1);
-    let modDay = newYear.getDay();
-    if (modDay == 0) modDay = 6; else modDay--;
-    // Days between current day and 1st of January
-    let daynum = ((Date.UTC(y2k(year), when.getMonth(), when.getDate(), 0, 0, 0) - Date.UTC(y2k(year), 0, 1, 0, 0, 0)) / 1000 / 60 / 60 / 24) + 1;
 
-    if (modDay < 4 ) {
-      var weeknum = Math.floor((daynum+modDay - 1) / 7) + 1;
-    } else {
-      var weeknum = Math.floor((daynum+modDay - 1) / 7);
-      if (weeknum == 0) {
-        year--;
-        let prevNewYear = new Date(year, 0, 1);
-        let prevmodDay = prevNewYear.getDay();
-        if (prevmodDay == 0) prevmodDay = 6; else prevmodDay--;
-        if (prevmodDay < 4) weeknum = 53; else weeknum = 52;
-      }
-    }
+  // Changed year if user click left arrow button
+  moveYearBefore() {
+    this.curYear -= 1;
+    this.prevYear -= 1;
+    this.nextYear -= 1;
+    this.buildCalendar();
+  }
 
-    return weeknum;
+  // Changed year if user click right arrow button
+  moveYearAfter() {
+    this.curYear += 1;
+    this.prevYear += 1;
+    this.nextYear += 1;
+    this.buildCalendar();
   }
-  // Calculate all week numbers of year in January and save them in array
-  // January is explicitly to other months, because need to calculate first week of year
-  // It can be week number from previous year
-  janWeekNumbers(year) {
-    let firstMonthWeeks = [];
-    let firstWeek = this.getWeek(year, 0, 1);
-    let lastWeek = this.getWeek(year, 0, 31);
-    if (firstWeek != 1) {
-      firstMonthWeeks[0] = firstWeek;
-      for (let j=1; j<=lastWeek; j++) {
-        firstMonthWeeks.push(j);
-      }
-    } else {
-      for (let j=0; j<lastWeek; j++) {
-        firstMonthWeeks.push(j+1);
-      }
-    }
-    return firstMonthWeeks;
-  }
-  // Return array of all week numbers of year in month
-  weekNumbersByMonth(year, month) {
-    let monthWeeks = [];
-    let firstWeek = this.getWeek(year, month, 1);
-    let lastWeek = this.getWeek(year, month, 31);
-    for (let j=firstWeek; j<=lastWeek; j++) {
-      monthWeeks.push(j);
-    }
-    return monthWeeks;
-  }
-  // Array of all weeks in year, splited by month
-  weeksNumbersForYear(year){
-    let weeks = [];
-    weeks[0] = this.janWeekNumbers(year);
-    for (let i=1; i<=11; i++){
-      weeks[i] = this.weekNumbersByMonth(year, i);
-    }
-    return weeks;
-  }
+
   // Draw span with year number
   buildYears() {
     this.prevYearNumber.innerHTML = `<span>${this.prevYear}</span>`;
     this.nextYearNumber.innerHTML = `<span>${this.nextYear}</span>`;
     this.curYearNumber.innerHTML = `<span>${this.curYear}</span>`;
   }
+
   // Draw months and week numbers
   buildWeeksAndMonth() {
     const self = this;
-    this.prevYearWeeksNumbers = this.weeksNumbersForYear(this.prevYear).slice(10);
+    this.prevYearWeeksNumbers = weeksNumbersForYear(this.prevYear).slice(10);
     // Draw month and it weeks in different spans
     this.prevYearWeeksNumbers.forEach((month, i) => {
       this.prevYearWeeks.innerHTML += `<span class="weekNumbers">
@@ -213,14 +143,14 @@ class WSWeekPicker extends HTMLElement {
                                           <span class="week">${month.join('</span><span class="week">')}</span>
                                        </span>`;
     });
-    this.curYearWeeksNumbers = this.weeksNumbersForYear(this.curYear);
+    this.curYearWeeksNumbers = weeksNumbersForYear(this.curYear);
     this.curYearWeeksNumbers.forEach((month, i) => {
       this.curYearWeeks.innerHTML += `<span class="weekNumbers">
                                           <span class="month">${self.months[i]}</span>
                                           <span class="week">${month.join('</span><span class="week">')}</span>
                                        </span>`;
     });
-    this.nextYearWeeksNumbers = this.weeksNumbersForYear(this.nextYear).slice(0,2);
+    this.nextYearWeeksNumbers = weeksNumbersForYear(this.nextYear).slice(0,2);
     this.nextYearWeeksNumbers.forEach((month, i) => {
       this.nextYearWeeks.innerHTML += `<span class="weekNumbers">
                                           <span class="month">${self.months[i]}</span>
@@ -228,8 +158,9 @@ class WSWeekPicker extends HTMLElement {
                                        </span>`;
     });
   }
-  // Define what is current week number
-  defineCurrent() {
+
+  // Highlight the current week number
+  highlightCurrentWeek() {
     const self = this;
     let wholeWeeks = this.shadowRoot.querySelectorAll('.cur-year .week');
     for (let i=0; i<wholeWeeks.length; i++) {
@@ -241,7 +172,110 @@ class WSWeekPicker extends HTMLElement {
     }
   }
 
+  getAttributes() {
+    let curYear = parseInt(this.getAttribute('year'));
+    let curWeek = parseInt(this.getAttribute('week'));
+    this.date = curYear && curWeek ? parseDate(curYear,curWeek) : new Date();
+    this.parseDates(this.date);
+  }
+
+  parseDates(date) {
+    this.curYear = date.getFullYear();
+    this.curMonth = this.months[date.getMonth()];
+    this.curWeek = getWeek(this.curYear, date.getMonth(), date.getDate());
+  }
+
+  attributeChangedCallback(attrName, oldVal, newVal) {
+    switch (attrName) {
+      case "year":
+      case "week":
+        this.getAttributes();
+        this.buildCalendar();
+        this.setInputValue();
+        break;
+    }
+  };
 }
 
 //Register the element with the document
 document.registerElement('ws-week-picker', WSWeekPicker);
+
+//
+// HELPERS
+//
+function getWeek(year,month,day) {
+  let y2k = number => number < 1000 ? number + 1900 : number;
+  let when = new Date(year, month, day);
+  let newYear = new Date(year, 0, 1);
+  let modDay = newYear.getDay();
+  if (modDay == 0) modDay = 6; else modDay--;
+  // Days between current day and 1st of January
+  let daynum = ((Date.UTC(y2k(year), when.getMonth(), when.getDate(), 0, 0, 0) - Date.UTC(y2k(year), 0, 1, 0, 0, 0)) / 1000 / 60 / 60 / 24) + 1;
+
+  if (modDay < 4 ) {
+    var weeknum = Math.floor((daynum+modDay - 1) / 7) + 1;
+  } else {
+    var weeknum = Math.floor((daynum+modDay - 1) / 7);
+    if (weeknum == 0) {
+      year--;
+      let prevNewYear = new Date(year, 0, 1);
+      let prevmodDay = prevNewYear.getDay();
+      if (prevmodDay == 0) prevmodDay = 6; else prevmodDay--;
+      if (prevmodDay < 4) weeknum = 53; else weeknum = 52;
+    }
+  }
+
+  return weeknum;
+}
+
+function parseDate(year,week) {
+  var simple = new Date(year, 0, 1 + (week - 1) * 7);
+  var dow = simple.getDay();
+  var ISOweekStart = simple;
+  if (dow <= 4)
+    ISOweekStart.setDate(simple.getDate() - simple.getDay() + 1);
+  else
+    ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
+  return ISOweekStart;
+}
+
+// Calculate all week numbers of year in January and save them in array
+// January is explicitly to other months, because need to calculate first week of year
+// It can be week number from previous year
+function janWeekNumbers(year) {
+  let firstMonthWeeks = [];
+  let firstWeek = getWeek(year, 0, 1);
+  let lastWeek = getWeek(year, 0, 31);
+  if (firstWeek != 1) {
+    firstMonthWeeks[0] = firstWeek;
+    for (let j=1; j<=lastWeek; j++) {
+      firstMonthWeeks.push(j);
+    }
+  } else {
+    for (let j=0; j<lastWeek; j++) {
+      firstMonthWeeks.push(j+1);
+    }
+  }
+  return firstMonthWeeks;
+}
+
+// Return array of all week numbers of year in month
+function weekNumbersByMonth(year, month) {
+  let monthWeeks = [];
+  let firstWeek = getWeek(year, month, 1);
+  let lastWeek = getWeek(year, month, 31);
+  for (let j=firstWeek; j<=lastWeek; j++) {
+    monthWeeks.push(j);
+  }
+  return monthWeeks;
+}
+
+// Array of all weeks in year, splited by month
+function weeksNumbersForYear(year) {
+  let weeks = [];
+  weeks[0] = janWeekNumbers(year);
+  for (let i=1; i<=11; i++){
+    weeks[i] = weekNumbersByMonth(year, i);
+  }
+  return weeks;
+}

@@ -1,4 +1,5 @@
 @import "node_modules/wholesale-styleguide-scss/variables";
+@import "node_modules/wholesale-styleguide-scss/util";
 
 .ws-week-wrapper {
   display: inline-block;
@@ -52,6 +53,7 @@
     position: absolute;
     display: none;
     box-shadow: 2px 3px 28px 3px rgba(184, 184, 184, 1);
+    z-index: z('shoryuken');
 
     &.opened {
       display: block;

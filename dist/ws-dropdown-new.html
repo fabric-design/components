@@ -108,6 +108,14 @@
         background-color: #E9EAEF; }
       .dropdown .dropdown-item .text.is-active {
         background-color: #DEF5FE; }
+  .dropdown .dropdown-item-separator {
+    height: 0;
+    border-bottom: 1px solid #E9EAEF;
+    list-style: none; }
+  .dropdown .dropdown-submit {
+    padding: 0.8125rem;
+    border-top: 1px solid #E9EAEF;
+    text-align: right; }
   .dropdown .dropdown-arrow {
     display: none;
     position: absolute;
@@ -125,9 +133,11 @@
     animation: dropDownIn 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) 0s forwards; }
   .dropdown .dropdown-menu.animate-out > .dropdown-item > .text {
     animation: dropDownOut 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0.05s forwards; }
-  .dropdown .dropdown-menu.animate-sub-in > .dropdown-item > .text {
+  .dropdown .dropdown-menu.animate-sub-in > .dropdown-item > .text,
+  .dropdown .dropdown-menu.animate-sub-in > .dropdown-item-separator {
     animation: dropDownSubIn 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) 0s forwards; }
-  .dropdown .dropdown-menu.animate-sub-out > .dropdown-item > .text {
+  .dropdown .dropdown-menu.animate-sub-out > .dropdown-item > .text,
+  .dropdown .dropdown-menu.animate-sub-out > .dropdown-item-separator {
     animation: dropDownSubOut 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0.05s forwards; }
   .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(1) > .text,
   .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(1) > .text,

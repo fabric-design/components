@@ -1,20 +1,49 @@
 <content id="menu"></content>
 <template is="dom-if" if="{{hasItems}}">
     <ul class$="[[menuClass]]">
+        <template is="dom-if" if="{{isNotRendered()}}">{{attached()}}</template>
+        <!-- Back button with separator -->
         <template is="dom-if" if="{{hasParent}}">
-            <li class="dropdown-item" on-click="back" item="[[item]]">
-                <a class="text back" href$="[[item.href]]">&lsaquo; Back</a>
+            <li class="dropdown-item" on-click="back">
+                <a class="text back" href$="[[parent.href]]">
+                    <i class="icon">&lsaquo;</i>
+                    [[getItemLabel(parent)]]
+                </a>
+            </li>
+            <li class="dropdown-item-separator"></li>
+        </template>
+        <!-- Selected item list -->
+        <template is="dom-if" if="{{hasValue}}">
+            <template is="dom-repeat" items="[[value]]" on-dom-change="itemsChanged">
+                <li class="dropdown-item" on-click="next" item="[[item]]" stored>
+                    <a class$="[[getItemAnchorClass(item.*)]]" href$="[[item.href]]">
+                        <template is="dom-if" if="[[item.icon]]">
+                            <i class$="[[getItemIconClass(item.icon)]]"></i>
+                        </template>
+                        [[getItemLabel(item)]]
+                    </a>
+                </li>
+            </template>
+            <li class="dropdown-item-separator"></li>
+        </template>
+        <!-- Item list -->
+        <template is="dom-repeat" items="[[items]]" on-dom-change="itemsChanged" filter="itemNotSelected" observe="stored">
+            <li class="dropdown-item" on-click="next" item="[[item]]">
+                <a class$="[[getItemAnchorClass(item.*)]]" href$="[[item.href]]">
+                    <template is="dom-if" if="[[item.icon]]">
+                        <i class$="[[getItemIconClass(item.icon)]]"></i>
+                    </template>
+                    [[getItemLabel(item)]]
+                </a>
+                <template is="dom-if" if="[[item.children]]">
+                    <ws-dropdown-menu items="[[item.children]]" parent="[[item]]"></ws-dropdown-menu>
+                </template>
             </li>
         </template>
-        <template is="dom-repeat" items="[[items]]" on-dom-change="itemsChanged">
-            <li class="dropdown-item" on-click="next" item="[[item]]">
-                <template is="dom-if" if="[[item.icon]]">
-                    <i class$="[[getItemIconClass(item.icon)]]"></i>
-                </template>
-                <a class$="[[getItemAnchorClass(item.*)]]" href$="[[item.href]]">[[getItemLabel(item)]]</a>
-                <template is="dom-if" if="[[item.children]]">
-                    <ws-dropdown-menu items="[[item.children]]" has-parent></ws-dropdown-menu>
-                </template>
+        <!-- Submit button -->
+        <template is="dom-if" if="{{multiple}}">
+            <li class="dropdown-submit">
+                <button on-click="submit">OK</button>
             </li>
         </template>
     </ul>

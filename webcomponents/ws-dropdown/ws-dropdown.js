@@ -9,13 +9,22 @@ window.WSDropdown = Polymer({
             readOnly: false,
             notify: false
         },
+        enrichedItems: {
+            type: Array,
+            computed: 'enrichItems(items)'
+        },
         noTrigger: {
             type: Boolean,
             value: false
         },
-        isSelect: {
+        multiple: {
             type: Boolean,
             value: true
+        },
+        value: {
+            type: Object,
+            readOnly: false,
+            notify: true
         },
         orientation: {
             type: String,
@@ -27,6 +36,17 @@ window.WSDropdown = Polymer({
             type: String,
             computed: 'getContainerClass(orientation)'
         }
+    },
+
+    enrichItems(items) {
+        // If items is just a list of strings convert the strings to objects with label property
+        return items.map(item => {
+            let enriched = typeof item === 'object' ? item : {label: item};
+            if (enriched.children) {
+                enriched.children = this.enrichItems(enriched.children);
+            }
+            return enriched;
+        });
     },
 
     getContainerClass(orientation) {
@@ -63,7 +83,7 @@ window.WSDropdown = Polymer({
         });
         // this event will bubble up to the listener outside
         this.dropdownMenu.addEventListener('change', event => {
-            this.selectedItem = event.detail.item;
+            this.value = event.detail;
             this.isOpen ? this.close() : this.open();
         });
         this.dropdownMenu.addEventListener('click', event => {
@@ -108,6 +128,10 @@ window.WSDropdown = Polymer({
         this.isOpen = false;
         this.animateElement(this.dropdownContainer, 'animate-close', container => {
             container.classList.remove('mod-open');
+            // If this a multi select dropdown abort
+            if (this.multiple) {
+                this.dropdownMenu.clearSelections();
+            }
         });
         document.removeEventListener('click', this.onDocumentClick, true);
     },

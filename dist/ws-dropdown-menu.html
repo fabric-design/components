@@ -6,20 +6,49 @@
         <content id="menu"></content>
 <template is="dom-if" if="{{hasItems}}">
     <ul class$="[[menuClass]]">
+        <template is="dom-if" if="{{isNotRendered()}}">{{attached()}}</template>
+        <!-- Back button with separator -->
         <template is="dom-if" if="{{hasParent}}">
-            <li class="dropdown-item" on-click="back" item="[[item]]">
-                <a class="text back" href$="[[item.href]]">&lsaquo; Back</a>
+            <li class="dropdown-item" on-click="back">
+                <a class="text back" href$="[[parent.href]]">
+                    <i class="icon">&lsaquo;</i>
+                    [[getItemLabel(parent)]]
+                </a>
+            </li>
+            <li class="dropdown-item-separator"></li>
+        </template>
+        <!-- Selected item list -->
+        <template is="dom-if" if="{{hasValue}}">
+            <template is="dom-repeat" items="[[value]]" on-dom-change="itemsChanged">
+                <li class="dropdown-item" on-click="next" item="[[item]]" stored>
+                    <a class$="[[getItemAnchorClass(item.*)]]" href$="[[item.href]]">
+                        <template is="dom-if" if="[[item.icon]]">
+                            <i class$="[[getItemIconClass(item.icon)]]"></i>
+                        </template>
+                        [[getItemLabel(item)]]
+                    </a>
+                </li>
+            </template>
+            <li class="dropdown-item-separator"></li>
+        </template>
+        <!-- Item list -->
+        <template is="dom-repeat" items="[[items]]" on-dom-change="itemsChanged" filter="itemNotSelected" observe="stored">
+            <li class="dropdown-item" on-click="next" item="[[item]]">
+                <a class$="[[getItemAnchorClass(item.*)]]" href$="[[item.href]]">
+                    <template is="dom-if" if="[[item.icon]]">
+                        <i class$="[[getItemIconClass(item.icon)]]"></i>
+                    </template>
+                    [[getItemLabel(item)]]
+                </a>
+                <template is="dom-if" if="[[item.children]]">
+                    <ws-dropdown-menu items="[[item.children]]" parent="[[item]]"></ws-dropdown-menu>
+                </template>
             </li>
         </template>
-        <template is="dom-repeat" items="[[items]]" on-dom-change="itemsChanged">
-            <li class="dropdown-item" on-click="next" item="[[item]]">
-                <template is="dom-if" if="[[item.icon]]">
-                    <i class$="[[getItemIconClass(item.icon)]]"></i>
-                </template>
-                <a class$="[[getItemAnchorClass(item.*)]]" href$="[[item.href]]">[[getItemLabel(item)]]</a>
-                <template is="dom-if" if="[[item.children]]">
-                    <ws-dropdown-menu items="[[item.children]]" has-parent></ws-dropdown-menu>
-                </template>
+        <!-- Submit button -->
+        <template is="dom-if" if="{{multiple}}">
+            <li class="dropdown-submit">
+                <button on-click="submit">OK</button>
             </li>
         </template>
     </ul>
@@ -43,12 +72,29 @@ Polymer({
     is: 'ws-dropdown-menu',
 
     properties: {
-        hasParent: {
+        parent: {
+            type: Object,
+            value: null
+        },
+        items: {
+            type: Array,
+            observer: 'io'
+        },
+        value: {
+            type: Array,
+            value: []
+        },
+        multiple: {
             type: Boolean,
             value: false
         },
-        items: {
-            type: Array
+        hasValue: {
+            type: Boolean,
+            computed: 'valueNotEmpty(value)'
+        },
+        hasParent: {
+            type: Boolean,
+            computed: 'isChildMenu(parent)'
         },
         hasItems: {
             type: Boolean,
@@ -56,7 +102,7 @@ Polymer({
         },
         menuClass: {
             type: String,
-            computed: 'getMenuClass(hasParent)'
+            computed: 'getMenuClass(parent)'
         }
     },
 
@@ -71,6 +117,10 @@ Polymer({
     },
     grabElements: function grabElements() {
         this.menuContainer = this.$$('.dropdown-menu');
+        // Projected content doesn't matter
+        if (this.menuContainer) {
+            return;
+        }
         // Get the elements which were via <content> projected as menu
         // nodeType 1 === ELEMENT_NODE, see http://www.w3schools.com/xml/dom_nodetype.asp
         this.distributedNodes = Array.from(Polymer.dom(this.$.menu).getDistributedNodes());
@@ -81,13 +131,16 @@ Polymer({
             this.menuContainer = this.projection;
         }
         // Check if menu projection or items are present
-        if (!this.menuContainer) {
+        if (!this.menuContainer && !this.items) {
             throw new Error('No menu for dropdown available. Either you specify `items` attribute/property as array or ' + 'you add a `.dropdown-menu.dropdown-root-menu` element to the dropdown children');
         }
     },
     setupListeners: function setupListeners() {
         var _this = this;
 
+        if (!this.menuContainer) {
+            return;
+        }
         this.menuContainer.addEventListener('click', function (event) {
             // If the menu is projected we just want to close the menu since the original click will be handled elsewhere
             if (!_this.projection) {
@@ -102,11 +155,23 @@ Polymer({
     getHeight: function getHeight() {
         return this.menuContainer.clientHeight;
     },
-    itemsAreBound: function itemsAreBound() {
-        return !!this.items;
+    isNotRendered: function isNotRendered() {
+        return !this.menuContainer;
     },
-    getMenuClass: function getMenuClass(hasParent) {
-        return 'dropdown-menu ' + (hasParent ? '' : 'dropdown-root-menu');
+    isChildMenu: function isChildMenu(parent) {
+        return !!parent;
+    },
+    valueNotEmpty: function valueNotEmpty(value) {
+        return value && value.length;
+    },
+    itemsAreBound: function itemsAreBound(items) {
+        return !!items;
+    },
+    itemNotSelected: function itemNotSelected(item) {
+        return !item.stored;
+    },
+    getMenuClass: function getMenuClass(parent) {
+        return 'dropdown-menu ' + (!!parent ? '' : 'dropdown-root-menu');
     },
     getItemLabel: function getItemLabel(item) {
         return item.label || item;
@@ -115,15 +180,47 @@ Polymer({
         return 'icon ' + icon;
     },
     getItemAnchorClass: function getItemAnchorClass(change) {
-        return 'text ' + (change.base.selected ? 'is-active' : change.base.focused ? 'is-focused' : '');
+        var item = change.base;
+        return 'text ' + (item.selected ? 'is-active' : item.focused ? 'is-focused' : '');
+    },
+    clearSelections: function clearSelections() {
+        for (var i = 0; i < this.items.length; i++) {
+            if (this.items[i].selected && !this.items[i].stored) {
+                this.set('items.' + i + '.selected', false);
+            }
+        }
+    },
+    submit: function submit() {
+        var _this2 = this;
+
+        var value = [];
+        // Save selected items to values and set flag to indicate they are stored in value
+        for (var i = 0; i < this.items.length; i++) {
+            if (this.items[i].selected) {
+                this.set('items.' + i + '.stored', true);
+                value.push(this.items[i]);
+            } else if (this.items[i].stored) {
+                this.set('items.' + i + '.stored', false);
+            }
+        }
+        this.propagate('change', value);
+        // Delay this so that the dropdown is closed already
+        setTimeout(function () {
+            return _this2.set('value', value);
+        }, 10);
     },
     next: function next(event) {
+        var type = event.currentTarget.hasAttribute('stored') ? 'value' : 'items';
         var item = event.currentTarget.item;
+        var index = this[type].indexOf(item);
         // Show next menu if children are available
         if (item.children && item.children.length) {
             this.showChild(event.currentTarget.querySelector('ws-dropdown-menu'));
         } else if (item) {
-            this.propagate('change', item);
+            this.set(type + '.' + index + '.selected', !item.selected);
+            if (!this.multiple) {
+                this.propagate('change', item);
+            }
         } else {
             this.propagate('click', item);
         }

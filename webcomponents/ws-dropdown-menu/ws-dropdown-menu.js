@@ -5,12 +5,29 @@ Polymer({
     is: 'ws-dropdown-menu',
 
     properties: {
-        hasParent: {
+        parent: {
+            type: Object,
+            value: null
+        },
+        items: {
+            type: Array,
+            observer: 'io'
+        },
+        value: {
+            type: Array,
+            value: []
+        },
+        multiple: {
             type: Boolean,
             value: false
         },
-        items: {
-            type: Array
+        hasValue: {
+            type: Boolean,
+            computed: 'valueNotEmpty(value)'
+        },
+        hasParent: {
+            type: Boolean,
+            computed: 'isChildMenu(parent)'
         },
         hasItems: {
             type: Boolean,
@@ -18,7 +35,7 @@ Polymer({
         },
         menuClass: {
             type: String,
-            computed: 'getMenuClass(hasParent)'
+            computed: 'getMenuClass(parent)'
         }
     },
 
@@ -35,6 +52,10 @@ Polymer({
 
     grabElements() {
         this.menuContainer = this.$$('.dropdown-menu');
+        // Projected content doesn't matter
+        if (this.menuContainer) {
+            return
+        }
         // Get the elements which were via <content> projected as menu
         // nodeType 1 === ELEMENT_NODE, see http://www.w3schools.com/xml/dom_nodetype.asp
         this.distributedNodes = Array.from(Polymer.dom(this.$.menu).getDistributedNodes());
@@ -43,13 +64,16 @@ Polymer({
             this.menuContainer = this.projection;
         }
         // Check if menu projection or items are present
-        if (!this.menuContainer) {
+        if (!this.menuContainer && !this.items) {
             throw new Error('No menu for dropdown available. Either you specify `items` attribute/property as array or '
                 + 'you add a `.dropdown-menu.dropdown-root-menu` element to the dropdown children');
         }
     },
 
     setupListeners() {
+        if (!this.menuContainer) {
+            return;
+        }
         this.menuContainer.addEventListener('click', event => {
             // If the menu is projected we just want to close the menu since the original click will be handled elsewhere
             if (!this.projection) {
@@ -66,12 +90,28 @@ Polymer({
         return this.menuContainer.clientHeight;
     },
 
-    itemsAreBound() {
-        return !!this.items;
+    isNotRendered() {
+        return !this.menuContainer;
     },
 
-    getMenuClass(hasParent) {
-        return `dropdown-menu ${hasParent ? '' : 'dropdown-root-menu'}`;
+    isChildMenu(parent) {
+        return !!parent;
+    },
+
+    valueNotEmpty(value) {
+        return value && value.length;
+    },
+
+    itemsAreBound(items) {
+        return !!items;
+    },
+
+    itemNotSelected(item) {
+        return !item.stored;
+    },
+
+    getMenuClass(parent) {
+        return `dropdown-menu ${!!parent ? '' : 'dropdown-root-menu'}`;
     },
 
     getItemLabel(item) {
@@ -83,17 +123,48 @@ Polymer({
     },
 
     getItemAnchorClass(change) {
-        return `text ${change.base.selected ? 'is-active' : change.base.focused ? 'is-focused' : ''}`;
+        let item = change.base;
+        return `text ${item.selected ? 'is-active' : item.focused ? 'is-focused' : ''}`;
+    },
+
+    clearSelections() {
+        for (var i = 0; i < this.items.length; i++) {
+            if (this.items[i].selected && !this.items[i].stored) {
+                this.set(`items.${i}.selected`, false);
+            }
+        }
+    },
+
+    submit() {
+        let value = [];
+        // Save selected items to values and set flag to indicate they are stored in value
+        for (var i = 0; i < this.items.length; i++) {
+            if (this.items[i].selected) {
+                this.set(`items.${i}.stored`, true);
+                value.push(this.items[i]);
+            }
+            else if (this.items[i].stored) {
+                this.set(`items.${i}.stored`, false);
+            }
+        }
+        this.propagate('change', value);
+        // Delay this so that the dropdown is closed already
+        setTimeout(() => this.set('value', value), 10);
     },
 
     next(event) {
+        let type = event.currentTarget.hasAttribute('stored') ? 'value' : 'items';
         let item = event.currentTarget.item;
+        let index = this[type].indexOf(item);
         // Show next menu if children are available
         if (item.children && item.children.length) {
             this.showChild(event.currentTarget.querySelector('ws-dropdown-menu'));
         }
         else if (item) {
-            this.propagate('change', item);
+            this.set(`${type}.${index}.selected`, !item.selected);
+            if (!this.multiple) {
+                this.propagate('change', item);
+            }
         }
         else {
             this.propagate('click', item);

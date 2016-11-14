@@ -23,6 +23,13 @@
     <link rel="import" href="../dist/polymer.html">
     <link rel="import" href="../dist/ws-dropdown.html">
     <div style="padding: 10px">
+        <h3>Multi select</h3>
+        <p>This dropdown has a pre-defined orientation. Possible orientations are 'left' (default) and 'right'.</p>
+        <ws-dropdown id="drop-multi" multiple items='["Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7"]' style="display: inline-block;">
+            <button>Right aligned</button>
+        </ws-dropdown>
+    </div>
+    <div style="padding: 10px">
         <h3>Menu projection</h3>
         <p>This dropdown has a projected menu in it's light dom (ws-dropdown children). The menu is single level.</p>
         <ws-dropdown id="drop" orientation="left" style="display: inline-block">

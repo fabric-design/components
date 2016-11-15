@@ -54,10 +54,14 @@ window.WSDropdown = Polymer({
     },
 
     attached() {
-        this.onDocumentClick = this.onDocumentClick.bind(this);
-        this.grabElements();
-        this.setupListeners();
-        this.adjustSize(this.dropdownMenu);
+        // Prevent binding events multiple times on de- and attach
+        if (!this.isReady) {
+            this.onDocumentClick = this.onDocumentClick.bind(this);
+            this.grabElements();
+            this.setupListeners();
+            this.adjustSize(this.dropdownMenu);
+            this.isReady = true;
+        }
     },
 
     grabElements() {

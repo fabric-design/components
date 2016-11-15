@@ -19,7 +19,7 @@ window.WSDropdown = Polymer({
         },
         multiple: {
             type: Boolean,
-            value: true
+            value: false
         },
         value: {
             type: Object,

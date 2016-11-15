@@ -10,8 +10,7 @@ Polymer({
             value: null
         },
         items: {
-            type: Array,
-            observer: 'io'
+            type: Array
         },
         value: {
             type: Array,
@@ -128,9 +127,11 @@ Polymer({
     },
 
     clearSelections() {
-        for (var i = 0; i < this.items.length; i++) {
-            if (this.items[i].selected && !this.items[i].stored) {
-                this.set(`items.${i}.selected`, false);
+        if (this.items) {
+            for (var i = 0; i < this.items.length; i++) {
+                if (this.items[i].selected && !this.items[i].stored) {
+                    this.set(`items.${i}.selected`, false);
+                }
             }
         }
     },

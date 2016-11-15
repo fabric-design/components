@@ -7,6 +7,6 @@ exports.default = {
     demo: './demo',
     temp: './.tmp',
     tempTemplates: './.tmp/templates',
-    styleguide: 'node_modules/wholesale-styleguide-scss/index.scss',
+    styleguide: 'demo/styleguide.scss',
     polymer: './node_modules/Polymer/polymer.html'
 };

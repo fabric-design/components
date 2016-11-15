@@ -90,7 +90,7 @@ flatpickr.init = function (context, element, instanceConfig) {
 
   // elements & variables
   var calendarContainer = document.createElement('div'),
-    icon = document.createElement('div'),
+    icon = document.createElement('span'),
     navigationCurrentMonth = document.createElement('span'),
     monthsNav = document.createElement('div'),
     prevMonthNav = document.createElement('span'),
@@ -106,7 +106,7 @@ flatpickr.init = function (context, element, instanceConfig) {
     am_pm,
     clickEvt;
 
-    icon.setAttribute('id', 'date-picker-icon');
+    icon.setAttribute('class', 'icon-calendar');
 
   init = function () {
 

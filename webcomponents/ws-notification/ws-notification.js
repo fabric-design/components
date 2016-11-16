@@ -20,7 +20,8 @@ Polymer({
             value: 'info'
         },
         description: {
-            type: String
+            type: String,
+            value: ''
         },
         lifetime: {
             type: Number,
@@ -29,11 +30,19 @@ Polymer({
         notificationClass: {
             type: String,
             computed: 'getNotificationClass(type)'
+        },
+        contentClass: {
+            type: String,
+            computed: 'getContentClass(description)'
         }
     },
 
     getNotificationClass(type) {
         return `notification ${type}`;
+    },
+
+    getContentClass(description) {
+        return `content ${description ? 'has-description' : ''}`
     },
 
     ready() {

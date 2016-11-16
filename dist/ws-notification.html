@@ -1,12 +1,5 @@
 <!-- inject:global -->
 <style>
-    @font-face {
-        font-family: 'ws-notification';
-        font-weight: normal;
-        font-style: normal;
-        src: url('data:application/font-woff;base64,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') format('woff'),
-        url('data:application/octet-stream;base64,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VFguIDwjIRuwAiWwAiVHI0cjYSCwBSWwBCVHI0cjYbAGJbAFJUmwAiVhuQgACABjYyMgWGIbIVljuAQAYiCwAFBYsEBgWWawAWNgIy4jICA8ijgjIVktsDossAAWILAIQyAuRyNHI2EgYLAgYGawAmIgsABQWLBAYFlmsAFjIyAgPIo4LbA7LCMgLkawAiVGUlggPFkusSsBFCstsDwsIyAuRrACJUZQWCA8WS6xKwEUKy2wPSwjIC5GsAIlRlJYIDxZIyAuRrACJUZQWCA8WS6xKwEUKy2wPiywNSsjIC5GsAIlRlJYIDxZLrErARQrLbA/LLA2K4ogIDywBCNCijgjIC5GsAIlRlJYIDxZLrErARQrsARDLrArKy2wQCywABawBCWwBCYgLkcjRyNhsAlDKyMgPCAuIzixKwEUKy2wQSyxCAQlQrAAFrAEJbAEJSAuRyNHI2EgsAQjQrAJQysgsGBQWCCwQFFYswIgAyAbswImAxpZQkIjIEewBEOwAmIgsABQWLBAYFlmsAFjYCCwASsgiophILACQ2BkI7ADQ2FkUFiwAkNhG7ADQ2BZsAMlsAJiILAAUFiwQGBZZrABY2GwAiVGYTgjIDwjOBshICBGI0ewASsjYTghWbErARQrLbBCLLA1Ky6xKwEUKy2wQyywNishIyAgPLAEI0IjOLErARQrsARDLrArKy2wRCywABUgR7AAI0KyAAEBFRQTLrAxKi2wRSywABUgR7AAI0KyAAEBFRQTLrAxKi2wRiyxAAEUE7AyKi2wRyywNCotsEgssAAWRSMgLiBGiiNhOLErARQrLbBJLLAII0KwSCstsEossgAAQSstsEsssgABQSstsEwssgEAQSstsE0ssgEBQSstsE4ssgAAQistsE8ssgABQistsFAssgEAQistsFEssgEBQistsFIssgAAPistsFMssgABPistsFQssgEAPistsFUssgEBPistsFYssgAAQCstsFcssgABQCstsFgssgEAQCstsFkssgEBQCstsFossgAAQystsFsssgABQystsFwssgEAQystsF0ssgEBQystsF4ssgAAPystsF8ssgABPystsGAssgEAPystsGEssgEBPystsGIssDcrLrErARQrLbBjLLA3K7A7Ky2wZCywNyuwPCstsGUssAAWsDcrsD0rLbBmLLA4Ky6xKwEUKy2wZyywOCuwOystsGgssDgrsDwrLbBpLLA4K7A9Ky2waiywOSsusSsBFCstsGsssDkrsDsrLbBsLLA5K7A8Ky2wbSywOSuwPSstsG4ssDorLrErARQrLbBvLLA6K7A7Ky2wcCywOiuwPCstsHEssDorsD0rLbByLLMJBAIDRVghGyMhWUIrsAhlsAMkUHiwARUwLQBLuADIUlixAQGOWbABuQgACABjcLEABUKyAAEAKrEABUKzCgIBCCqxAAVCsw4AAQgqsQAGQroCwAABAAkqsQAHQroAQAABAAkqsQMARLEkAYhRWLBAiFixA2REsSYBiFFYugiAAAEEQIhjVFixAwBEWVlZWbMMAgEMKrgB/4WwBI2xAgBEAAA=') format('truetype');
-    }
     .ws-notification-wrapper {
         position: fixed;
         right: 0;
@@ -28,12 +21,12 @@
         <!-- inject:html -->
         <div class$="[[notificationClass]]">
     <div class="icons">
-        <i class="icon icon-info"></i>
-        <i class="icon icon-warning"></i>
-        <i class="icon icon-success"></i>
-        <i class="icon icon-error"></i>
+        <i class="icon icon32 icon-info"></i>
+        <i class="icon icon32 icon-warning"></i>
+        <i class="icon icon32 icon-success"></i>
+        <i class="icon icon32 icon-error"></i>
     </div>
-    <div class="content">
+    <div class$="[[contentClass]]">
         <div class="title">[[title]]</div>
         <p class="description">[[description]]</p>
     </div>
@@ -41,7 +34,227 @@
         <!-- endinject -->
         <style>
             /* inject:styles */
-            .icon:before{font-family:ws-notification;font-style:normal;font-weight:400;speak:none;display:inline-block;text-decoration:inherit;width:1em;margin-right:.2em;text-align:center;font-variant:normal;text-transform:none;line-height:1em;margin-left:.2em}.icon-warning:before{content:'\e800'}.icon-success:before{content:'\e801'}.icon-error:before{content:'\e802'}.icon-info:before{content:'\f086'}.notification{padding:19px;width:400px;min-height:70px;box-sizing:border-box;box-shadow:0 2px 10px 0 #d5d5d5;display:-ms-flexbox;display:flex;-ms-flex-direction:row;flex-direction:row;-ms-flex-align:center;align-items:center;cursor:pointer;font-family:acumin-pro,Helvetica Neue,Helvetica,Arial,sans-serif;font-size:1rem;color:#626166}.icons{-ms-flex:45px 0 0;flex:45px 0 0}.content{-ms-flex:auto 1 1;flex:auto 1 1;padding-left:10px;padding-bottom:2px;margin:auto;max-height:260px;overflow:auto;color:#5e6979}.icon{font-size:32px;display:none}.title{font-size:16px}.description{font-size:13px;line-height:14px;margin:0}.info{background-color:#ecf0f8}.info .icon-info{display:block;color:#00abf2}.warning{background-color:#fcf2d4}.warning .icon-warning{display:block;color:#ff9c18}.success{background-color:#e7fff9}.success .icon-success{display:block;color:#1eb234}.error{background-color:#fce8e5}.error .icon-error{display:block;color:#f44f41}
+            @charset "UTF-8";
+:host ::content {
+  /**
+ * Parse a numeric value from a string
+ */
+  /**
+ * Convert a pixel value to rem
+ */
+  /**
+ * Convert a list of pixel values to rem values
+ */
+  /**
+* Z-index function for managing the values
+*/
+  /**
+     * Spinner with zalando icon
+     * Example: <span class="icon-zalando spinner"><span></span></span>
+     */ }
+
+@font-face {
+  :host ::content {
+    font-family: "fontello";
+    src: url("icons/font/fontello.eot?4287725");
+    src: url("icons/font/fontello.eot?4287725#iefix") format("embedded-opentype"), url("icons/font/fontello.woff2?4287725") format("woff2"), url("icons/font/fontello.woff?4287725") format("woff"), url("icons/font/fontello.ttf?4287725") format("truetype"), url("icons/font/fontello.svg?4287725#fontello") format("svg");
+    font-weight: normal;
+    font-style: normal; } }
+  :host ::content .icon, :host ::content [class^="icon-"], :host ::content [class*=" icon-"] {
+    line-height: 1rem; }
+  :host ::content .icon:before, :host ::content [class^="icon-"]:before, :host ::content [class*=" icon-"]:before {
+    font-family: "fontello";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+    font-size: 150%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale; }
+  :host ::content .icon16 {
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem;
+    font-size: 1rem;
+    text-indent: -2px; }
+  :host ::content .icon24 {
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    font-size: 1.5rem;
+    text-indent: -3px; }
+  :host ::content .icon32 {
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    font-size: 2rem;
+    text-indent: -4px; }
+  :host ::content .icon48 {
+    width: 3rem;
+    height: 3rem;
+    line-height: 3rem;
+    font-size: 3rem;
+    text-indent: -5px; }
+  :host ::content .icon-filter:before {
+    content: ""; }
+  :host ::content .icon-sort-down:before {
+    content: ""; }
+  :host ::content .icon-zalando:before {
+    content: ""; }
+  :host ::content .icon-dot:before {
+    content: ""; }
+  :host ::content .icon-ok:before {
+    content: ""; }
+  :host ::content .icon-power:before {
+    content: ""; }
+  :host ::content .icon-warning-circle:before {
+    content: ""; }
+  :host ::content .icon-check:before {
+    content: ""; }
+  :host ::content .icon-info-circled-alt:before {
+    content: ""; }
+  :host ::content .icon-attention-alt:before {
+    content: ""; }
+  :host ::content .icon-cancel-circled:before {
+    content: ""; }
+  :host ::content .icon-magnifiying-glass:before {
+    content: ""; }
+  :host ::content .icon-pencil-stroke:before {
+    content: ""; }
+  :host ::content .icon-sort-up:before {
+    content: ""; }
+  :host ::content .icon-warning-triangle:before {
+    content: ""; }
+  :host ::content .icon-cross:before {
+    content: ""; }
+  :host ::content .icon-bell:before {
+    content: ""; }
+  :host ::content .icon-calendar:before {
+    content: ""; }
+  :host ::content .icon-gear:before {
+    content: ""; }
+  :host ::content .icon-heart:before {
+    content: ""; }
+  :host ::content .icon-home:before {
+    content: ""; }
+  :host ::content .icon-locked:before {
+    content: ""; }
+  :host ::content .icon-paperclip:before {
+    content: ""; }
+  :host ::content .icon-lightbulb:before {
+    content: ""; }
+  :host ::content .icon-checkmark-circle:before {
+    content: ""; }
+  :host ::content .icon-circle:before {
+    content: ""; }
+  :host ::content .icon-zalando.mod-spinner {
+    padding: 0 1em;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    line-height: 1em; }
+    :host ::content .icon-zalando.mod-spinner:before {
+      font-size: 100%; }
+    :host ::content .icon-zalando.mod-spinner span:before,
+    :host ::content .icon-zalando.mod-spinner span:after {
+      content: "";
+      font-family: "fontello";
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 1.9em;
+      font-size: .7em;
+      line-height: 1.5em;
+      transform: translate3d(0, 0, 0); }
+    :host ::content .icon-zalando.mod-spinner span:before {
+      animation: animateLeftBall 1s cubic-bezier(0.15, 0.07, 0.18, 1.07) infinite; }
+    :host ::content .icon-zalando.mod-spinner span:after {
+      animation: animateRightBall 0.9s cubic-bezier(1, -0.12, 0, 0.46) 0.1s infinite; }
+
+@keyframes animateRightBall {
+  0% {
+    transform: translate3d(0, 0, 0); }
+  50% {
+    transform: translate3d(1.5em, 0, 0); }
+  0% {
+    transform: translate3d(0, 0, 0); } }
+
+@keyframes animateLeftBall {
+  0% {
+    transform: translate3d(0, 0, 0); }
+  50% {
+    transform: translate3d(-1.5em, 0, 0); }
+  0% {
+    transform: translate3d(0, 0, 0); } }
+  :host ::content .notification {
+    padding: 1rem;
+    width: 25rem;
+    min-height: 4.375rem;
+    box-sizing: border-box;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -ms-flex-align: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "acumin-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    color: #626166;
+    background-color: #F0F1F6;
+    border-left: 3px solid #ACADB5; }
+    :host ::content .notification .icons {
+      -ms-flex: 3rem 0 0;
+      flex: 3rem 0 0; }
+      :host ::content .notification .icons .icon {
+        font-size: 2rem;
+        display: none; }
+    :host ::content .notification .content {
+      -ms-flex: auto 1 1;
+      flex: auto 1 1;
+      padding: 0.0625rem 0rem;
+      margin: auto;
+      max-height: 16.25rem;
+      overflow: auto; }
+      :host ::content .notification .content .title {
+        font-size: 1rem;
+        line-height: 1rem;
+        font-weight: bold; }
+      :host ::content .notification .content .description {
+        font-size: 0.8125rem;
+        line-height: 0.875rem;
+        margin: 0; }
+      :host ::content .notification .content.has-description .title {
+        margin-bottom: 0.5rem; }
+    :host ::content .notification.info .icons {
+      display: none; }
+    :host ::content .notification.warning {
+      border-left-color: #FF9C0F; }
+      :host ::content .notification.warning .icons .icon-warning {
+        color: #FF9C0F;
+        display: block; }
+        :host ::content .notification.warning .icons .icon-warning:before {
+          content: ""; }
+    :host ::content .notification.success {
+      border-left-color: #1EB234; }
+      :host ::content .notification.success .icons .icon-success {
+        color: #1EB234;
+        display: block; }
+        :host ::content .notification.success .icons .icon-success:before {
+          content: ""; }
+    :host ::content .notification.error {
+      border-left-color: #F44F41; }
+      :host ::content .notification.error .icons .icon-error {
+        color: #F44F41;
+        display: block; }
+        :host ::content .notification.error .icons .icon-error:before {
+          content: ""; }
+
             /* endinject */
         </style>
     </template>
@@ -49,7 +262,176 @@
     <script>
     (function(){
         /* inject:js */
-        "use strict";function _classCallCheck(t,i){if(!(t instanceof i))throw new TypeError("Cannot call a class as a function")}var _createClass=function(){function t(t,i){for(var e=0;e<i.length;e++){var n=i[e];n.enumerable=n.enumerable||!1,n.configurable=!0,"value"in n&&(n.writable=!0),Object.defineProperty(t,n.key,n)}}return function(i,e,n){return e&&t(i.prototype,e),n&&t(i,n),i}}();Polymer({is:"ws-notification",properties:{title:{type:String},type:{type:String,value:"info"},description:{type:String},lifetime:{type:Number,value:1e4},notificationClass:{type:String,computed:"getNotificationClass(type)"}},getNotificationClass:function(t){return"notification "+t},ready:function(){var t=this;this.addEventListener("click",function(i){return t.close()},!0)},close:function(){var t=this;this.style.transition="opacity .2s ease-out, max-height .8s ease, margin-bottom .8s ease",this.style.willChange="opacity, max-height, margin-bottom",this.style.opacity=0,this.style.maxHeight=0,this.style.marginBottom=0,setTimeout(function(){t.parentElement.removeChild(t),t.dispatchEvent(new CustomEvent("closed")),clearTimeout(t.timeoutId)},1e3)},attached:function(){var t=this;this.lifetime&&!this.timeoutId&&(this.timeoutId=setTimeout(function(){return t.close()},this.lifetime))}});var NotificationHandler=function(){function t(){_classCallCheck(this,t),this.notifications=[],this.list=null,this.isInitialized=this.isInitialized.bind(this),this.init=this.init.bind(this),this.create=this.create.bind(this)}return _createClass(t,[{key:"isInitialized",value:function(){return!!this.list}},{key:"init",value:function(t){if(t=t||document.body,!t.querySelector(".ws-notification-list")){var i=document.createElement("div");i.setAttribute("class","ws-notification-wrapper"),this.list=document.createElement("div"),this.list.setAttribute("class","ws-notification-list"),i.appendChild(this.list),t.appendChild(i)}}},{key:"create",value:function(t){var i=t.title,e=t.description,n=t.type,s=t.lifetime;if(!this.isInitialized())throw new Error("You have to initialize the notification handler with init() before creating notification.");var o=document.createElement("ws-notification");return void 0!==i&&o.setAttribute("title",i),void 0!==e&&o.setAttribute("description",e),void 0!==n&&o.setAttribute("type",n),void 0!==s&&o.setAttribute("lifetime",s),this.animateIn(o),this.notifications.push(o)}},{key:"animateIn",value:function(t){var i=this;this.list.appendChild(t);var e=parseInt(document.defaultView.getComputedStyle(t).marginBottom,10),n=t.clientHeight+e;this.list.style.transition="none",this.list.style.transform="translate3d(0, "+n+"px, 0)",setTimeout(function(){i.list.style.transition="transform .35s cubic-bezier(.35, 1, .69, .98) .1s",i.list.style.transform="translate3d(0, 0, 0)"},0)}}]),t}();window.wsNotification=new NotificationHandler;
+        'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * This class represents the ws-notification custom element
+ * The element accepts the attributes title, description, type = 'info' and lifetime = 5000
+ * It hides and removes itself on click or on lifetime end.
+ * Valid types are: error, success, warning and info
+ * A lifetime of 0 means endless
+ *
+ * Example: <ws-notification title="some title" description="This could be skipped" type="error" lifetime="0"/>
+ */
+Polymer({
+
+    is: 'ws-notification',
+
+    properties: {
+        title: {
+            type: String
+        },
+        type: {
+            type: String,
+            value: 'info'
+        },
+        description: {
+            type: String,
+            value: ''
+        },
+        lifetime: {
+            type: Number,
+            value: 10000
+        },
+        notificationClass: {
+            type: String,
+            computed: 'getNotificationClass(type)'
+        },
+        contentClass: {
+            type: String,
+            computed: 'getContentClass(description)'
+        }
+    },
+
+    getNotificationClass: function getNotificationClass(type) {
+        return 'notification ' + type;
+    },
+    getContentClass: function getContentClass(description) {
+        return 'content ' + (description ? 'has-description' : '');
+    },
+    ready: function ready() {
+        var _this = this;
+
+        this.addEventListener('click', function (event) {
+            return _this.close();
+        }, true);
+    },
+    close: function close() {
+        var _this2 = this;
+
+        this.style.transition = 'opacity .2s ease-out, max-height .8s ease, margin-bottom .8s ease';
+        this.style.willChange = 'opacity, max-height, margin-bottom';
+        this.style.opacity = 0;
+        this.style.maxHeight = 0;
+        this.style.marginBottom = 0;
+        setTimeout(function () {
+            _this2.parentElement.removeChild(_this2);
+            _this2.dispatchEvent(new CustomEvent('closed'));
+            clearTimeout(_this2.timeoutId);
+        }, 1000);
+    },
+    attached: function attached() {
+        var _this3 = this;
+
+        if (this.lifetime && !this.timeoutId) {
+            this.timeoutId = setTimeout(function () {
+                return _this3.close();
+            }, this.lifetime);
+        }
+    }
+});
+
+/**
+ * This class intends to create an easy to use approach for creating notifications.
+ *
+ * simply call wsNotification.create(options)
+ * possible options are:
+ *  title: string
+ *  description: string (optional)
+ *  type: info|warning|error|success (default: info
+ *  lifetime: number (default: 5000ms, 0 for endless)
+ */
+
+var NotificationHandler = function () {
+    function NotificationHandler() {
+        _classCallCheck(this, NotificationHandler);
+
+        this.notifications = [];
+        this.list = null;
+        // Bind functions to this scope
+        this.isInitialized = this.isInitialized.bind(this);
+        this.init = this.init.bind(this);
+        this.create = this.create.bind(this);
+    }
+
+    _createClass(NotificationHandler, [{
+        key: 'isInitialized',
+        value: function isInitialized() {
+            return !!this.list;
+        }
+    }, {
+        key: 'init',
+        value: function init(root) {
+            root = root || document.body;
+            // Prevent duplicate initialization
+            if (root.querySelector('.ws-notification-list')) {
+                return;
+            }
+            var wrapper = document.createElement('div');
+            wrapper.setAttribute('class', 'ws-notification-wrapper');
+            this.list = document.createElement('div');
+            this.list.setAttribute('class', 'ws-notification-list');
+            wrapper.appendChild(this.list);
+
+            root.appendChild(wrapper);
+        }
+    }, {
+        key: 'create',
+        value: function create(_ref) {
+            var title = _ref.title;
+            var description = _ref.description;
+            var type = _ref.type;
+            var lifetime = _ref.lifetime;
+
+            if (!this.isInitialized()) {
+                throw new Error('You have to initialize the notification handler with init() before creating notification.');
+            }
+            var notification = document.createElement('ws-notification');
+            title !== undefined && notification.setAttribute('title', title);
+            description !== undefined && notification.setAttribute('description', description);
+            type !== undefined && notification.setAttribute('type', type);
+            lifetime !== undefined && notification.setAttribute('lifetime', lifetime);
+
+            this.animateIn(notification);
+
+            return this.notifications.push(notification);
+        }
+    }, {
+        key: 'animateIn',
+        value: function animateIn(notification) {
+            var _this4 = this;
+
+            this.list.appendChild(notification);
+            var marginBottom = parseInt(document.defaultView.getComputedStyle(notification).marginBottom, 10);
+            var height = notification.clientHeight + marginBottom;
+            // Initial close the notification
+            this.list.style.transition = 'none';
+            this.list.style.transform = 'translate3d(0, ' + height + 'px, 0)';
+            setTimeout(function () {
+                _this4.list.style.transition = 'transform .35s cubic-bezier(.35, 1, .69, .98) .1s';
+                _this4.list.style.transform = 'translate3d(0, 0, 0)';
+            }, 0);
+        }
+    }]);
+
+    return NotificationHandler;
+}();
+
+window.wsNotification = new NotificationHandler();
         /* endinject */
     })()
     </script>

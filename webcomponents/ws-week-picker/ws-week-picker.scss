@@ -1,5 +1,4 @@
 @import "node_modules/wholesale-styleguide-scss/variables";
-@import "node_modules/wholesale-styleguide-scss/util";
 @import "node_modules/wholesale-styleguide-scss/components/base/icons";
 @import "node_modules/wholesale-styleguide-scss/components/base/forms";
 
@@ -26,11 +25,16 @@ $icon-chevron-right: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4w
     color: inherit;
     width: 100%;
 
-    &.active + #ws-week-icon, &:focus + #ws-week-icon {
-      width: 12px;
-      height: 12px;
-      top: 10px;
-      background: center $icon-cross;
+    + .icon {
+      width: 16px;
+      height: 16px;
+      right: 11px;
+      top: 8px;
+      position: absolute;
+
+      &.icon-calendar {
+        background: $icon-calendar;
+      }
     }
   }
 
@@ -125,7 +129,7 @@ $icon-chevron-right: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4w
   text-align: center;
   margin-left: 1px;
   margin-bottom: 4px;
-  background-color: $sail;
+  background-color: $arctica;
 }
 
 .ws-week-wrapper > .ws-week-picker .weeks > .weekNumbers:last-child > .month {
@@ -161,5 +165,5 @@ $icon-chevron-right: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4w
 }
 
 .ws-week-wrapper > .ws-week-picker .week:hover {
-  background-color: $sail;
+  background-color: $arctica;
 }

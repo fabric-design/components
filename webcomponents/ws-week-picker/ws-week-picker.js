@@ -20,7 +20,7 @@ class WSWeekPicker extends HTMLElement {
     this.wrapper = this.shadowRoot.querySelector('.ws-week-wrapper');
     this.input = this.shadowRoot.querySelector('.ws-week-input');
     this.calendar = this.shadowRoot.querySelector('.ws-week-picker');
-    this.crossIcon = this.shadowRoot.querySelector('#ws-week-icon');
+    this.crossIcon = this.shadowRoot.querySelector('input + i');
     this.prevYearButton = this.shadowRoot.querySelector('.checkPrevYear');
     this.nextYearButton = this.shadowRoot.querySelector('.checkNextYear');
     // Calculate previous year and take previous year and weeks elements
@@ -40,6 +40,7 @@ class WSWeekPicker extends HTMLElement {
   addListeners() {
     document.addEventListener('click', (e) => this.open && e.target != this ? this.closeWeekPicker() : null);
     this.input.addEventListener('click', (e) => this.open ? this.closeWeekPicker() : this.openWeekPicker());
+    this.crossIcon.addEventListener('click', (e) => this.open ? this.closeWeekPicker() : this.openWeekPicker());
     this.calendar.addEventListener('click', (e) => this.calendarClick(e));
     this.prevYearButton.addEventListener('click', () => this.moveYearBefore());
     this.nextYearButton.addEventListener('click', () => this.moveYearAfter());
@@ -86,7 +87,7 @@ class WSWeekPicker extends HTMLElement {
     // Prevent on every click full redraw calendar
     this.calendar.className = 'ws-week-picker opened';
     this.input.className = 'ws-week-input active';
-    this.crossIcon.className = 'ws-week-icon active';
+    this.crossIcon.className = 'icon icon-cross';
     // If input clear draw calendar and define current week and select it
     if (!this.pickedWeekWrapper) {
       this.buildCalendar();
@@ -102,7 +103,7 @@ class WSWeekPicker extends HTMLElement {
     this.open = false;
     this.calendar.className = 'ws-week-picker';
     this.input.className = 'ws-week-input used';
-    this.crossIcon.className = 'ws-week-icon';
+    this.crossIcon.className = 'icon icon-calendar';
   }
 
   setInputValue() {

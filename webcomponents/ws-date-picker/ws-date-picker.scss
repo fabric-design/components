@@ -58,7 +58,7 @@ $icon-calendar: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlb
                 color: $ghost;
                 padding: 0 23px;
                 &:hover {
-                    color: $ghost-gray;
+                    color: $french-gray;
                 }
                 > i {
                     position: relative;
@@ -89,7 +89,7 @@ $icon-calendar: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlb
         }
         > .flatpickr-weekdays {
             font-size: 90%;
-            background-color: $pattens-blue;
+            background-color: $arctica;
             padding: 8px 7px;
             > span {
                 color: $ghost;
@@ -129,15 +129,15 @@ $icon-calendar: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlb
             margin: 0 1px 1px;
             text-align: center;
             &:hover {
-                background-color: $pattens-blue;
+                background-color: $arctica;
             }
             &.today {
-                background-color: $cerulean;
+                background-color: $heaven;
                 color: $white;
             }
             &.selected,
             &.selected:hover {
-                background-color: $cerulean;
+                background-color: $heaven;
                 color: $white;
             }
             &.disabled, &.disabled:hover {

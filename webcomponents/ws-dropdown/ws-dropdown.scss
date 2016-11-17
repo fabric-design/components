@@ -4,12 +4,12 @@
 @import "node_modules/wholesale-styleguide-scss/components/complex/dropdown";
 
 $export-dropdown-css: true !default;
-$dropdown-item-active-color: $cerulean !default;
+$dropdown-item-active-color: $heaven !default;
 $dropdown-background-color: $white !default;
 $dropdown-shadow-color: $shuttle-gray !default;
 $dropdown-font-color: $base-font-color !default;
 $dropdown-font-family: $base-font-family !default;
-$dropdown-hover-background-color: $pattens-blue !default;
+$dropdown-hover-background-color: $arctica !default;
 
 @mixin dropdown-container($background-color, $shadow-color) {
 	position: absolute;
@@ -73,7 +73,7 @@ $dropdown-hover-background-color: $pattens-blue !default;
 	background: linear-gradient(-45deg, rgba($white, 0) 50%, $white 50%);
 	transform: rotate(45deg);
 	z-index: 2;
-	box-shadow: -1px -1px 1px $gallery;
+	box-shadow: -1px -1px 1px $secondary-color;
 }
 
 @if $export-dropdown-css {

@@ -106,7 +106,7 @@ class WSWeekPicker extends HTMLElement {
   }
 
   setInputValue() {
-    this.input.value = `${this.curWeek}-${this.curYear}`;
+    this.input.value = `${this.selectedWeek}-${this.curYear}`;
   }
 
   // Changed year if user click left arrow button
@@ -115,6 +115,7 @@ class WSWeekPicker extends HTMLElement {
     this.prevYear -= 1;
     this.nextYear -= 1;
     this.buildCalendar();
+    this.highlightCurrentWeek();
   }
 
   // Changed year if user click right arrow button
@@ -123,6 +124,7 @@ class WSWeekPicker extends HTMLElement {
     this.prevYear += 1;
     this.nextYear += 1;
     this.buildCalendar();
+    this.highlightCurrentWeek();
   }
 
   // Draw span with year number
@@ -161,28 +163,30 @@ class WSWeekPicker extends HTMLElement {
 
   // Highlight the current week number
   highlightCurrentWeek() {
-    const self = this;
+    if (this.selectedYear !== this.curYear) {
+      return;
+    }
     let wholeWeeks = this.shadowRoot.querySelectorAll('.cur-year .week');
     for (let i=0; i<wholeWeeks.length; i++) {
-      if (wholeWeeks[i].innerHTML == self.curWeek &&
-        wholeWeeks[i].parentElement.firstElementChild.innerHTML == self.curMonth) {
-        self.pickedWeekWrapper = wholeWeeks[i];
-        self.pickedWeekWrapper.className = 'week now';
+      if (wholeWeeks[i].innerHTML == this.selectedWeek &&
+        wholeWeeks[i].parentElement.firstElementChild.innerHTML == this.selectedMonth) {
+        this.pickedWeekWrapper = wholeWeeks[i];
+        this.pickedWeekWrapper.className = 'week now';
       }
     }
   }
 
   getAttributes() {
-    let curYear = parseInt(this.getAttribute('year'));
-    let curWeek = parseInt(this.getAttribute('week'));
-    this.date = curYear && curWeek ? parseDate(curYear,curWeek) : new Date();
+    let selectedYear = parseInt(this.getAttribute('year'));
+    let selectedWeek = parseInt(this.getAttribute('week'));
+    this.date = selectedYear && selectedWeek ? parseDate(selectedYear,selectedWeek) : new Date();
     this.parseDates(this.date);
   }
 
   parseDates(date) {
-    this.curYear = date.getFullYear();
-    this.curMonth = this.months[date.getMonth()];
-    this.curWeek = getWeek(this.curYear, date.getMonth(), date.getDate());
+    this.curYear = this.selectedYear = date.getFullYear();
+    this.selectedMonth = this.months[date.getMonth()];
+    this.selectedWeek = getWeek(this.selectedYear, date.getMonth(), date.getDate());
   }
 
   attributeChangedCallback(attrName, oldVal, newVal) {

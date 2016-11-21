@@ -57,7 +57,7 @@
     "karma-jasmine": "^1.0.2",
     "lite-server": "^2.2.0",
     "run-sequence": "^1.2.1",
-    "wholesale-styleguide-scss": "git+ssh://github.bus.zalan.do/WholesaleDesignSystem/Styleguide-SCSS.git",
+    "wholesale-styleguide-scss": "git+ssh://git@github.bus.zalan.do/WholesaleDesignSystem/Styleguide-SCSS.git",
     "wrench": "^1.5.9"
   }
 }

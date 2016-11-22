@@ -261,7 +261,7 @@ select {
   padding: 13px 0;
   top: 40px;
   width: 596px;
-  height: 290px;
+  height: 258px;
   padding-bottom: 19px;
   background-color: #FFFFFF;
   position: absolute;
@@ -282,6 +282,10 @@ select {
   margin-top: 0.375rem;
   height: 0.75rem;
   width: 0.75rem;
+}
+
+.ws-week-wrapper > .ws-week-picker > .year-selector > .icon[disabled] {
+  visibility: hidden;
 }
 
 .ws-week-wrapper > .ws-week-picker > .year-selector > .year {
@@ -384,6 +388,12 @@ select {
 .ws-week-wrapper > .ws-week-picker .week:hover {
   background-color: #DEF5FE;
 }
+
+.ws-week-wrapper > .ws-week-picker .week[disabled] {
+  color: #BDBFC7;
+  background-color: #E9EAEF;
+  cursor: not-allowed;
+}
         /* endinject */
     </style>
 </template>
@@ -472,27 +482,43 @@ var WSWeekPicker = function (_HTMLElement) {
         return _this2.calendarClick(e);
       });
       this.prevYearButton.addEventListener('click', function () {
-        return _this2.moveYearBefore();
+        if (parseDate(_this2.prevYear, _this2.prevYearWeeksNumbers[0][0]) < parseDate(_this2.minYear, _this2.minWeek)) {
+          return;
+        }
+        _this2.moveYearBefore();
       });
       this.nextYearButton.addEventListener('click', function () {
-        return _this2.moveYearAfter();
+        if (parseDate(_this2.nextYear, _this2.nextYearWeeksNumbers[1][_this2.nextYearWeeksNumbers[1].length - 1]) > parseDate(_this2.maxYear, _this2.maxWeek)) {
+          return;
+        }
+        _this2.moveYearAfter();
       });
     }
   }, {
     key: 'calendarClick',
     value: function calendarClick(e) {
       // If user pick on week number take all elements to return result to input field and close calendar
-      if (e.target.className == 'week' || e.target.className == 'week now') {
-        if (e.target.parentElement.parentElement.parentElement.className == 'prev-year') {
-          this.pickedWeekYear = e.target.parentElement.parentElement.parentElement.children[1].firstElementChild.innerHTML;
+      if (e.target.classList.contains('week')) {
+        var pickedWeekYear = void 0,
+            pickedWeek = parseInt(e.target.innerHTML);
+        if (e.target.classList.contains('prevYear')) {
+          pickedWeekYear = this.prevYear;
+        } else if (e.target.classList.contains('nextYear')) {
+          pickedWeekYear = this.nextYear;
         } else {
-          this.pickedWeekYear = e.target.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.innerHTML;
+          pickedWeekYear = this.curYear;
         }
+
+        var pickedDate = parseDate(pickedWeekYear, pickedWeek);
+        if (pickedDate < parseDate(this.minYear, this.minWeek) || pickedDate > parseDate(this.maxYear, this.maxWeek)) {
+          return;
+        }
+
+        this.pickedWeekYear = pickedWeekYear;
         this.pickedWeekWrapper.className = 'week';
         this.pickedWeekWrapper = e.target;
         this.pickedWeekWrapper.className = 'week now';
 
-        var pickedDate = parseDate(this.pickedWeekYear, this.pickedWeekWrapper.innerHTML);
         this.parseDates(pickedDate);
         this.setInputValue();
         this.closeWeekPicker();
@@ -586,7 +612,24 @@ var WSWeekPicker = function (_HTMLElement) {
     key: 'buildYears',
     value: function buildYears() {
       this.prevYearNumber.innerHTML = '<span>' + this.prevYear + '</span>';
+      var prevYearWeeksNumbers = weeksNumbersForYear(this.prevYear).slice(10);
+      if (parseDate(this.prevYear, prevYearWeeksNumbers[0][0]) < parseDate(this.minYear, this.minWeek)) {
+        this.prevYearButton.setAttribute('disabled', 'disabled');
+        this.shadowRoot.querySelector('.prev-year .year').setAttribute('disabled', 'disabled');
+      } else {
+        this.prevYearButton.removeAttribute('disabled');
+        this.shadowRoot.querySelector('.prev-year .year').removeAttribute('disabled');
+      }
+
       this.nextYearNumber.innerHTML = '<span>' + this.nextYear + '</span>';
+      var nextYearWeeksNumbers = weeksNumbersForYear(this.nextYear).slice(0, 2);
+      if (parseDate(this.nextYear, nextYearWeeksNumbers[1][nextYearWeeksNumbers[1].length - 1]) > parseDate(this.maxYear, this.maxWeek)) {
+        this.nextYearButton.setAttribute('disabled', 'disabled');
+        this.shadowRoot.querySelector('.next-year .year').setAttribute('disabled', 'disabled');
+      } else {
+        this.nextYearButton.removeAttribute('disabled');
+        this.shadowRoot.querySelector('.next-year .year').removeAttribute('disabled');
+      }
       this.curYearNumber.innerHTML = '<span>' + this.curYear + '</span>';
     }
 
@@ -601,15 +644,21 @@ var WSWeekPicker = function (_HTMLElement) {
       this.prevYearWeeksNumbers = weeksNumbersForYear(this.prevYear).slice(10);
       // Draw month and it weeks in different spans
       this.prevYearWeeksNumbers.forEach(function (month, i) {
-        _this3.prevYearWeeks.innerHTML += '<span class="weekNumbers">\n                                          <span class="month">' + self.months[i + 10] + '</span>\n                                          <span class="week">' + month.join('</span><span class="week">') + '</span>\n                                       </span>';
+        _this3.prevYearWeeks.innerHTML += '<span class="weekNumbers">\n                                          <span class="month">' + self.months[i + 10] + '</span>\n                                          ' + month.map(function (week) {
+          return '<span class="prevYear week" \n                                                ' + (parseDate(_this3.prevYear, week) < parseDate(_this3.minYear, _this3.minWeek) ? 'disabled="disabled"' : '') + '>\n                                                ' + week + '</span>';
+        }).join('') + '\n                                          </span>\n                                       </span>';
       });
       this.curYearWeeksNumbers = weeksNumbersForYear(this.curYear);
       this.curYearWeeksNumbers.forEach(function (month, i) {
-        _this3.curYearWeeks.innerHTML += '<span class="weekNumbers">\n                                          <span class="month">' + self.months[i] + '</span>\n                                          <span class="week">' + month.join('</span><span class="week">') + '</span>\n                                       </span>';
+        _this3.curYearWeeks.innerHTML += '<span class="weekNumbers">\n                                          <span class="month">' + self.months[i] + '</span>\n                                          ' + month.map(function (week) {
+          return '<span class="curYear week" \n                                              ' + (parseDate(_this3.curYear, week) < parseDate(_this3.minYear, _this3.minWeek) || parseDate(_this3.curYear, week) > parseDate(_this3.maxYear, _this3.maxWeek) ? 'disabled="disabled"' : '') + '>' + week + '</span>';
+        }).join('') + '\n                                       </span>';
       });
       this.nextYearWeeksNumbers = weeksNumbersForYear(this.nextYear).slice(0, 2);
       this.nextYearWeeksNumbers.forEach(function (month, i) {
-        _this3.nextYearWeeks.innerHTML += '<span class="weekNumbers">\n                                          <span class="month">' + self.months[i] + '</span>\n                                          <span class="week">' + month.join('</span><span class="week">') + '</span>\n                                       </span>';
+        _this3.nextYearWeeks.innerHTML += '<span class="weekNumbers">\n                                          <span class="month">' + self.months[i] + '</span>\n                                          ' + month.map(function (week) {
+          return '<span class="nextYear week" \n                                              ' + (parseDate(_this3.nextYear, week) > parseDate(_this3.maxYear, _this3.maxWeek) ? 'disabled="disabled"' : '') + '>' + week + '</span>';
+        }).join('') + '\n                                       </span>';
       });
     }
 
@@ -636,6 +685,10 @@ var WSWeekPicker = function (_HTMLElement) {
       var selectedWeek = parseInt(this.getAttribute('week'));
       this.date = selectedYear && selectedWeek ? parseDate(selectedYear, selectedWeek) : new Date();
       this.parseDates(this.date);
+      this.minWeek = this.getAttribute('min-week');
+      this.minYear = this.getAttribute('min-year');
+      this.maxWeek = this.getAttribute('max-week');
+      this.maxYear = this.getAttribute('max-year');
     }
   }, {
     key: 'parseDates',
@@ -661,6 +714,10 @@ var WSWeekPicker = function (_HTMLElement) {
       switch (attrName) {
         case "year":
         case "week":
+        case "min-week":
+        case "max-week":
+        case "min-year":
+        case "max-year":
           this.getAttributes();
           this.buildCalendar();
           this.setInputValue();
@@ -720,7 +777,7 @@ function parseDate(year, week) {
 // It can be week number from previous year
 function janWeekNumbers(year) {
   var firstMonthWeeks = [];
-  var firstWeek = getWeek(year, 0, 1);
+  var firstWeek = 1;
   var lastWeek = getWeek(year, 0, 31);
   if (firstWeek != 1) {
     firstMonthWeeks[0] = firstWeek;
@@ -752,6 +809,9 @@ function weeksNumbersForYear(year) {
   weeks[0] = janWeekNumbers(year);
   for (var i = 1; i <= 11; i++) {
     weeks[i] = weekNumbersByMonth(year, i);
+    if (weeks[i - 1][weeks[i - 1].length - 1] === weeks[i][0]) {
+      weeks[i] = weeks[i].slice(1);
+    }
   }
   return weeks;
 }

@@ -43,7 +43,7 @@ $icon-chevron-right: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4w
     padding: 13px 0;
     top: 40px;
     width: 596px;
-    height: 290px;
+    height: 258px;
     padding-bottom: 19px;
     background-color: $white;
     position: absolute;
@@ -62,6 +62,10 @@ $icon-chevron-right: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4w
         margin-top: rem(6px);
         height: rem(12px);
         width: rem(12px);
+
+        &[disabled] {
+          visibility: hidden;
+        }
       }
 
       > .year {
@@ -111,60 +115,66 @@ $icon-chevron-right: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4w
         }
       }
     }
+
+    > .cur-year > .weeks,
+    > .next-year > .weeks {
+      margin-left: -5px;
+    }
+
+    .month {
+      box-sizing: border-box;
+      color: $ghost;
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      padding-left: 5px;
+      line-height: 39px;
+      text-align: center;
+      margin-left: 1px;
+      margin-bottom: 4px;
+      background-color: $arctica;
+    }
+
+    .weeks > .weekNumbers:last-child > .month {
+      padding-left: 0;
+      width: 45px;
+    }
+
+    .weekNumbers {
+      width: 35.3px;
+      height: 35.3px;
+      float: left;
+      font-size: 14px;
+    }
+
+    .week {
+      background: 0 0;
+      border: 1px solid transparent;
+      border-radius: 150px;
+      box-sizing: border-box;
+      color: #393939;
+      cursor: pointer;
+      display: inline-block;
+      width: 32px;
+      height: 32px;
+      line-height: 31px;
+      text-align: center;
+      margin: 3px 6px;
+
+      &.now,
+      &.now:hover {
+        background-color: $liverleaf;
+        color: $white;
+      }
+      &:hover {
+        background-color: $arctica;
+      }
+
+      &[disabled] {
+        color: $french-gray;
+        background-color: $earl-gray;
+        cursor: not-allowed;
+      }
+    }
   }
-}
-
-.ws-week-wrapper > .ws-week-picker > .cur-year > .weeks,
-.ws-week-wrapper > .ws-week-picker > .next-year > .weeks {
-  margin-left: -5px;
-}
-
-.ws-week-wrapper > .ws-week-picker .month {
-  box-sizing: border-box;
-  color: $ghost;
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  padding-left: 5px;
-  line-height: 39px;
-  text-align: center;
-  margin-left: 1px;
-  margin-bottom: 4px;
-  background-color: $arctica;
-}
-
-.ws-week-wrapper > .ws-week-picker .weeks > .weekNumbers:last-child > .month {
-  padding-left: 0;
-  width: 45px;
-}
-
-.ws-week-wrapper > .ws-week-picker .weekNumbers {
-  width: 35.3px;
-  height: 35.3px;
-  float: left;
-  font-size: 14px;
-}
-
-.ws-week-wrapper > .ws-week-picker .week {
-  background: 0 0;
-  border: 1px solid transparent;
-  border-radius: 150px;
-  box-sizing: border-box;
-  color: #393939;
-  cursor: pointer;
-  display: inline-block;
-  width: 32px;
-  height: 32px;
-  line-height: 31px;
-  text-align: center;
-  margin: 3px 6px;
-}
-.ws-week-wrapper > .ws-week-picker .week.now,
-.ws-week-wrapper > .ws-week-picker .week.now:hover {
-  background-color: $liverleaf;
-  color: $white;
-}
-
-.ws-week-wrapper > .ws-week-picker .week:hover {
-  background-color: $arctica;
 }

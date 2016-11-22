@@ -241,6 +241,8 @@ class WSWeekPicker extends HTMLElement {
 
   parseDates(date) {
     this.curYear = this.selectedYear = date.getFullYear();
+    this.prevYear = this.curYear - 1;
+    this.nextYear = this.curYear + 1;
     this.selectedMonth = this.months[date.getMonth()];
     this.selectedWeek = getWeek(this.selectedYear, date.getMonth(), date.getDate());
   }

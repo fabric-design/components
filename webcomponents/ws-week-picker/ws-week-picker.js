@@ -62,6 +62,7 @@ class WSWeekPicker extends HTMLElement {
       this.parseDates(pickedDate);
       this.setInputValue();
       this.closeWeekPicker();
+      this.propagateWeekChanges(this.selectedWeek, this.selectedYear);
     }
   }
 
@@ -188,6 +189,16 @@ class WSWeekPicker extends HTMLElement {
     this.curYear = this.selectedYear = date.getFullYear();
     this.selectedMonth = this.months[date.getMonth()];
     this.selectedWeek = getWeek(this.selectedYear, date.getMonth(), date.getDate());
+  }
+
+  propagateWeekChanges(week, year) {
+    let event = new CustomEvent("change", {
+      detail: {
+        week,
+        year
+      }
+    });
+    this.dispatchEvent(event);
   }
 
   attributeChangedCallback(attrName, oldVal, newVal) {

@@ -191,6 +191,22 @@ select {
   width: auto;
 }
 
+/**
+ * Parse a numeric value from a string
+ */
+
+/**
+ * Convert a pixel value to rem
+ */
+
+/**
+ * Convert a list of pixel values to rem values
+ */
+
+/**
+* Z-index function for managing the values
+*/
+
 .ws-week-wrapper {
   display: inline-block;
   position: relative;
@@ -206,13 +222,13 @@ select {
 }
 
 .ws-week-wrapper > input {
-  padding: rem(8px);
+  padding: 0.5rem;
   border: 1px solid #BDBFC7;
   box-shadow: inset 0px 1px 3px 0px #e6e7ea;
   box-sizing: border-box;
   outline: none;
   background-color: white;
-  height: rem(34px);
+  height: 2.125rem;
   font-weight: normal;
   transition: border-color .2s linear, box-shadow .2s linear;
   font-family: inherit;
@@ -251,7 +267,7 @@ select {
   position: absolute;
   display: none;
   box-shadow: 2px 3px 28px 3px #b8b8b8;
-  z-index: z("shoryuken");
+  z-index: 8000;
 }
 
 .ws-week-wrapper > .ws-week-picker.opened {
@@ -263,9 +279,9 @@ select {
 }
 
 .ws-week-wrapper > .ws-week-picker > .year-selector > .icon {
-  margin-top: rem(6px);
-  height: rem(12px);
-  width: rem(12px);
+  margin-top: 0.375rem;
+  height: 0.75rem;
+  width: 0.75rem;
 }
 
 .ws-week-wrapper > .ws-week-picker > .year-selector > .year {
@@ -480,6 +496,7 @@ var WSWeekPicker = function (_HTMLElement) {
         this.parseDates(pickedDate);
         this.setInputValue();
         this.closeWeekPicker();
+        this.propagateWeekChanges(this.selectedWeek, this.selectedYear);
       }
     }
 
@@ -626,6 +643,17 @@ var WSWeekPicker = function (_HTMLElement) {
       this.curYear = this.selectedYear = date.getFullYear();
       this.selectedMonth = this.months[date.getMonth()];
       this.selectedWeek = getWeek(this.selectedYear, date.getMonth(), date.getDate());
+    }
+  }, {
+    key: 'propagateWeekChanges',
+    value: function propagateWeekChanges(week, year) {
+      var event = new CustomEvent("change", {
+        detail: {
+          week: week,
+          year: year
+        }
+      });
+      this.dispatchEvent(event);
     }
   }, {
     key: 'attributeChangedCallback',

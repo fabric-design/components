@@ -73,10 +73,9 @@ class WSWeekPicker extends HTMLElement {
         return;
       }
 
-      this.pickedWeekYear = pickedWeekYear;
-      this.pickedWeekWrapper.className = 'week';
+      this.pickedWeekWrapper.classList.remove('now');
       this.pickedWeekWrapper = e.target;
-      this.pickedWeekWrapper.className = 'week now';
+      this.pickedWeekWrapper.classList.add('now');
 
       this.parseDates(pickedDate);
       this.setInputValue();
@@ -108,14 +107,8 @@ class WSWeekPicker extends HTMLElement {
     this.calendar.className = 'ws-week-picker opened';
     this.input.className = 'ws-week-input active';
     this.crossIcon.className = 'icon icon-cross';
-    // If input clear draw calendar and define current week and select it
-    if (!this.pickedWeekWrapper) {
-      this.buildCalendar();
-      this.highlightCurrentWeek();
-    } else {
-      // if input have value - define current week as selected at previous time
-      this.pickedWeekWrapper.className = 'week now';
-    }
+    this.buildCalendar();
+    this.highlightCurrentWeek();
   }
 
   // Close calendar if user don't click on calendar
@@ -215,16 +208,20 @@ class WSWeekPicker extends HTMLElement {
 
   // Highlight the current week number
   highlightCurrentWeek() {
-    if (this.selectedYear !== this.curYear) {
+	let wholeWeeks;
+    if (this.selectedYear === this.curYear) {
+      wholeWeeks = this.shadowRoot.querySelectorAll('.curYear.week');
+    } else if (this.selectedYear === this.prevYear) {
+      wholeWeeks = this.shadowRoot.querySelectorAll('.prevYear.week');
+    } else if (this.selectedYear === this.nextYear) {
+      wholeWeeks = this.shadowRoot.querySelectorAll('.nextYear.week');
+    } else {
       return;
     }
-    let wholeWeeks = this.shadowRoot.querySelectorAll('.cur-year .week');
-    for (let i=0; i<wholeWeeks.length; i++) {
-      if (wholeWeeks[i].innerHTML == this.selectedWeek &&
-        wholeWeeks[i].parentElement.firstElementChild.innerHTML == this.selectedMonth) {
-        this.pickedWeekWrapper = wholeWeeks[i];
-        this.pickedWeekWrapper.className = 'week now';
-      }
+
+    this.pickedWeekWrapper = Array.from(wholeWeeks).find(week => parseInt(week.innerHTML) === this.selectedWeek);
+    if (this.pickedWeekWrapper) {
+      this.pickedWeekWrapper.classList.add('now');
     }
   }
 

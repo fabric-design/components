@@ -23,7 +23,7 @@ class WSHeader extends HTMLElement {
 		let clone = document.importNode(template.content, true);
 
 		// This element uses Shadow DOM.
-		this.createShadowRoot().appendChild(clone);
+		this.appendChild(clone);
 
 		this.state = state;
 		this.getAttributes();
@@ -35,7 +35,7 @@ class WSHeader extends HTMLElement {
         document.addEventListener("WebComponentsReady", () => {
             let lang = this.getLanguage();
         this.setLanguage(lang);
-        
+
         this.checkIsLoggedIn()
           .then(() => this.getUser())
     .then(() => this.showUser())
@@ -48,7 +48,7 @@ class WSHeader extends HTMLElement {
     });
     });
     }
-    
+
     propagateError(reason) {
         let event = new CustomEvent("error", {
             detail: {
@@ -57,7 +57,7 @@ class WSHeader extends HTMLElement {
         });
         this.dispatchEvent(event);
     }
-    
+
     getAttributes() {
         this.state = Object.assign({}, this.state, {
             clientId: this.getAttribute('client-id'),
@@ -66,10 +66,10 @@ class WSHeader extends HTMLElement {
             tokenInfoUrl: this.getAttribute('tokeninfo-url'),
         });
     }
-    
+
     setupLanguages() {
-        let languagesElem = this.shadowRoot.querySelector('#languages');
-        
+        let languagesElem = this.querySelector('#languages');
+
         availableLanguages.map((lang) => {
             let dummy = document.createElement( 'div' );
         dummy.innerHTML = `<li>
@@ -80,11 +80,11 @@ class WSHeader extends HTMLElement {
         languagesElem.appendChild(node);
     });
     }
-    
+
     getLanguage() {
         return this.state.lang || window.localStorage.getItem(this.state.languageName) || availableLanguages[0];
     }
-    
+
     setLanguage(lang) {
         if (this.state.lang != lang) {
             this.state.lang = lang;
@@ -93,12 +93,12 @@ class WSHeader extends HTMLElement {
             this.propagateLanguageChange(lang);
         }
     }
-    
+
     showLanguage(lang) {
-        this.shadowRoot.querySelector('#selectedLanguageFlag').className = "flag flag-" + lang;
-        this.shadowRoot.querySelector('#selectedLanguage').innerText = lang;
+        this.querySelector('#selectedLanguageFlag').className = "flag flag-" + lang;
+        this.querySelector('#selectedLanguage').innerText = lang;
     }
-    
+
     propagateLanguageChange(lang) {
         let event = new CustomEvent("language-changed", {
             detail: {
@@ -107,7 +107,7 @@ class WSHeader extends HTMLElement {
         });
         this.dispatchEvent(event);
     }
-    
+
     login() {
         let url = "https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid" +
           "&client_id=" + this.state.clientId +
@@ -161,7 +161,7 @@ class WSHeader extends HTMLElement {
 	}
 
 	showLoggedOut() {
-		let loggedInInfo = this.shadowRoot.querySelector('#loggedInInfo');
+		let loggedInInfo = this.querySelector('#loggedInInfo');
 		loggedInInfo.innerHTML =
 			`<a class="auto-size"><span translate="global.menu.signein">Login</span></i></a>`;
 		loggedInInfo.removeEventListener("click", this.logout);
@@ -169,7 +169,7 @@ class WSHeader extends HTMLElement {
 	}
 
 	showLoggedIn() {
-		let loggedInInfo = this.shadowRoot.querySelector('#loggedInInfo');
+		let loggedInInfo = this.querySelector('#loggedInInfo');
 		loggedInInfo.innerHTML =
 			`<span translate="global.menu.signedinas"></span>
 			<span id="userName">Loading...</span>
@@ -262,7 +262,7 @@ class WSHeader extends HTMLElement {
 	}
 
 	showUser() {
-		this.shadowRoot.querySelector('#userName').innerText = this.state.userName;
+		this.querySelector('#userName').innerText = this.state.userName;
 	}
 
 	setCookie(token) {

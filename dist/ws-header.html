@@ -447,7 +447,7 @@ var WSHeader = function (_HTMLElement) {
 			var clone = document.importNode(template.content, true);
 
 			// This element uses Shadow DOM.
-			this.createShadowRoot().appendChild(clone);
+			this.appendChild(clone);
 
 			this.state = state;
 			this.getAttributes();
@@ -498,7 +498,7 @@ var WSHeader = function (_HTMLElement) {
 		value: function setupLanguages() {
 			var _this3 = this;
 
-			var languagesElem = this.shadowRoot.querySelector('#languages');
+			var languagesElem = this.querySelector('#languages');
 
 			availableLanguages.map(function (lang) {
 				var dummy = document.createElement('div');
@@ -528,8 +528,8 @@ var WSHeader = function (_HTMLElement) {
 	}, {
 		key: 'showLanguage',
 		value: function showLanguage(lang) {
-			this.shadowRoot.querySelector('#selectedLanguageFlag').className = "flag flag-" + lang;
-			this.shadowRoot.querySelector('#selectedLanguage').innerText = lang;
+			this.querySelector('#selectedLanguageFlag').className = "flag flag-" + lang;
+			this.querySelector('#selectedLanguage').innerText = lang;
 		}
 	}, {
 		key: 'propagateLanguageChange',
@@ -597,7 +597,7 @@ var WSHeader = function (_HTMLElement) {
 	}, {
 		key: 'showLoggedOut',
 		value: function showLoggedOut() {
-			var loggedInInfo = this.shadowRoot.querySelector('#loggedInInfo');
+			var loggedInInfo = this.querySelector('#loggedInInfo');
 			loggedInInfo.innerHTML = '<a class="auto-size"><span translate="global.menu.signein">Login</span></i></a>';
 			loggedInInfo.removeEventListener("click", this.logout);
 			loggedInInfo.addEventListener("click", this.login.bind(this));
@@ -605,7 +605,7 @@ var WSHeader = function (_HTMLElement) {
 	}, {
 		key: 'showLoggedIn',
 		value: function showLoggedIn() {
-			var loggedInInfo = this.shadowRoot.querySelector('#loggedInInfo');
+			var loggedInInfo = this.querySelector('#loggedInInfo');
 			loggedInInfo.innerHTML = '<span translate="global.menu.signedinas"></span>\n\t\t\t<span id="userName">Loading...</span>\n\t\t\t<a class="auto-size" id="logOutButton" type="button"><div id="logOutIcon"></div></a>';
 			loggedInInfo.removeEventListener("click", this.login);
 			loggedInInfo.addEventListener("click", this.logout.bind(this));
@@ -707,7 +707,7 @@ var WSHeader = function (_HTMLElement) {
 	}, {
 		key: 'showUser',
 		value: function showUser() {
-			this.shadowRoot.querySelector('#userName').innerText = this.state.userName;
+			this.querySelector('#userName').innerText = this.state.userName;
 		}
 	}, {
 		key: 'setCookie',

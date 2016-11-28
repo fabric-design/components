@@ -44,8 +44,10 @@
     "gulp-karma": "0.0.5",
     "gulp-purifycss": "^0.2.0",
     "gulp-rename": "^1.2.2",
+    "gulp-replace": "0.5.4",
     "gulp-rev": "^7.0.0",
     "gulp-sass": "^2.3.1",
+    "gulp-scope-css": "0.0.2",
     "gulp-uglify": "^1.5.3",
     "gulp-uglifycss": "^1.0.6",
     "gulp-util": "^3.0.7",
@@ -57,6 +59,7 @@
     "karma-jasmine": "^1.0.2",
     "lite-server": "^2.2.0",
     "run-sequence": "^1.2.1",
+    "webcomponentsjs": "1.0.2",
     "wholesale-styleguide-scss": "git+ssh://git@github.bus.zalan.do/WholesaleDesignSystem/Styleguide-SCSS.git",
     "wrench": "^1.5.9"
   }

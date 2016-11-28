@@ -1,8 +1,9 @@
 <!-- inject:global -->
 <!-- endinject -->
 <template>
-    <!-- inject:html -->
-    <div class="refills-components time-wrapper">
+    <div class="ws-time-picker">
+        <!-- inject:html -->
+        <div class="refills-components time-wrapper">
   <input class="ws-time-picker" readonly/><span id="time-picker-icon"></span>
   <div class="time-picker">
     <div class="hourUp"></div> <div class="minuteUp"></div>
@@ -12,17 +13,18 @@
     <span class="cancel">Cancel</span> <span class="ok">Ok</span>
   </div>
 </div>
-    <!-- endinject -->
+        <!-- endinject -->
+    </div>
     <style>
         /* inject:styles */
-        .time-wrapper {
+        .ws-time-picker .time-wrapper {
   width: 150px;
   display: inline-block;
   position: relative;
   font-family: acuminpro, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-.time-wrapper > #time-picker-icon {
+.ws-time-picker .time-wrapper > #time-picker-icon {
   right: 11px;
   background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0ndXRmLTgnPz4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDEyOSAxMjkiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMjkgMTI5Ij4KICA8Zz4KICAgIDxnPgogICAgICA8cGF0aCBkPSJNNjQuNSwxMjIuM2MzMiwwLDU3LjktMjYsNTcuOS01Ny45YzAtMzItMjYtNTcuOS01Ny45LTU3LjlTNi42LDMyLjQsNi42LDY0LjRDNi42LDk2LjMsMzIuNSwxMjIuMyw2NC41LDEyMi4zeiAgICAgTTY0LjUsMTQuNmMyNy41LDAsNDkuOCwyMi4zLDQ5LjgsNDkuOGMwLDI3LjUtMjIuMyw0OS44LTQ5LjgsNDkuOFMxNC43LDkxLjgsMTQuNyw2NC40QzE0LjcsMzYuOSwzNywxNC42LDY0LjUsMTQuNnoiLz4KICAgICAgPHBhdGggZD0ibTYxLjgsNzEuMmgxOS4zYzIuMywwIDQuMS0xLjggNC4xLTQuMSAwLTIuMy0xLjgtNC4xLTQuMS00LjFoLTE1LjJ2LTIzLjhjMC0yLjMtMS44LTQuMS00LjEtNC4xcy00LjEsMS44LTQuMSw0LjF2MjcuOWMwLDIuMyAxLjgsNC4xIDQuMSw0LjF6Ii8+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K);
   top: 8px;
@@ -31,7 +33,7 @@
   height: 16px;
 }
 
-.time-wrapper > input.ws-time-picker {
+.ws-time-picker .time-wrapper > input.ws-time-picker {
   width: 100%;
   height: 32px;
   line-height: 32px;
@@ -40,12 +42,12 @@
   font-size: 14px;
 }
 
-.time-wrapper > input.ws-time-picker.active {
+.ws-time-picker .time-wrapper > input.ws-time-picker.active {
   outline: 0;
   border-color: #008DC9;
 }
 
-.time-wrapper > .time-picker {
+.ws-time-picker .time-wrapper > .time-picker {
   top: 40px;
   width: 100%;
   padding-bottom: 19px;
@@ -55,11 +57,11 @@
   box-shadow: 2px 3px 28px 3px #b8b8b8;
 }
 
-.time-wrapper > .time-picker.opened {
+.ws-time-picker .time-wrapper > .time-picker.opened {
   display: block;
 }
 
-.time-wrapper > .time-picker > .minutes,.time-wrapper > .time-picker > .hours {
+.ws-time-picker .time-wrapper > .time-picker > .minutes, .ws-time-picker .time-wrapper > .time-picker > .hours {
   width: 35px;
   height: 35px;
   display: inline;
@@ -68,15 +70,15 @@
   font-size: 14px;
 }
 
-.time-wrapper > .time-picker > .minutes.fail,.time-wrapper > .time-picker > .hours.fail {
+.ws-time-picker .time-wrapper > .time-picker > .minutes.fail, .ws-time-picker .time-wrapper > .time-picker > .hours.fail {
   border-color: #F44F41;
 }
 
-.time-wrapper > .time-picker > .hours {
+.ws-time-picker .time-wrapper > .time-picker > .hours {
   margin: 0 9px 8px 19px;
 }
 
-.time-wrapper > .time-picker > .minuteUp,.time-wrapper > .time-picker > .hourUp {
+.ws-time-picker .time-wrapper > .time-picker > .minuteUp, .ws-time-picker .time-wrapper > .time-picker > .hourUp {
   float: left;
   width: 16px;
   height: 16px;
@@ -84,7 +86,7 @@
   background: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDQ0NC44MTkgNDQ0LjgxOSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNDQ0LjgxOSA0NDQuODE5OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHBhdGggZD0iTTQzMy45NjgsMjc4LjY1N0wyNDguMzg3LDkyLjc5Yy03LjQxOS03LjA0NC0xNi4wOC0xMC41NjYtMjUuOTc3LTEwLjU2NmMtMTAuMDg4LDAtMTguNjUyLDMuNTIxLTI1LjY5NywxMC41NjYgICBMMTAuODQ4LDI3OC42NTdDMy42MTUsMjg1Ljg4NywwLDI5NC41NDksMCwzMDQuNjM3YzAsMTAuMjgsMy42MTksMTguODQzLDEwLjg0OCwyNS42OTNsMjEuNDExLDIxLjQxMyAgIGM2Ljg1NCw3LjIzLDE1LjQyLDEwLjg1MiwyNS42OTcsMTAuODUyYzEwLjI3OCwwLDE4Ljg0Mi0zLjYyMSwyNS42OTctMTAuODUyTDIyMi40MSwyMTMuMjcxTDM2MS4xNjgsMzUxLjc0ICAgYzYuODQ4LDcuMjI4LDE1LjQxMywxMC44NTIsMjUuNywxMC44NTJjMTAuMDgyLDAsMTguNzQ3LTMuNjI0LDI1Ljk3NS0xMC44NTJsMjEuNDA5LTIxLjQxMiAgIGM3LjA0My03LjA0MywxMC41NjctMTUuNjA4LDEwLjU2Ny0yNS42OTNDNDQ0LjgxOSwyOTQuNTQ1LDQ0MS4yMDUsMjg1Ljg4NCw0MzMuOTY4LDI3OC42NTd6IiBmaWxsPSIjMDAwMDAwIi8+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==);
 }
 
-.time-wrapper > .time-picker > .minuteDown,.time-wrapper > .time-picker > .hourDown {
+.ws-time-picker .time-wrapper > .time-picker > .minuteDown, .ws-time-picker .time-wrapper > .time-picker > .hourDown {
   margin: 0 19px 19px 29px;
   width: 16px;
   height: 16px;
@@ -92,7 +94,7 @@
   float: left;
 }
 
-.time-wrapper > .time-picker > .line {
+.ws-time-picker .time-wrapper > .time-picker > .line {
   height: 1px;
   width: 128px;
   background-color: gray;
@@ -100,7 +102,7 @@
   clear: left;
 }
 
-.time-wrapper > .time-picker > .cancel,.time-wrapper > .time-picker > .ok {
+.ws-time-picker .time-wrapper > .time-picker > .cancel, .ws-time-picker .time-wrapper > .time-picker > .ok {
   margin: 0 17px;
   color: #008DC9;
 }

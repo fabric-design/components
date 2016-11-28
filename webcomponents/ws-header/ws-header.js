@@ -23,7 +23,7 @@ class WSHeader extends HTMLElement {
 		let clone = document.importNode(template.content, true);
 
 		// This element uses Shadow DOM.
-		this.appendChild(clone);
+		this.createShadowRoot().appendChild(clone);
 
 		this.state = state;
 		this.getAttributes();
@@ -68,7 +68,7 @@ class WSHeader extends HTMLElement {
     }
 
     setupLanguages() {
-        let languagesElem = this.querySelector('#languages');
+        let languagesElem = this.shadowRoot.querySelector('#languages');
 
         availableLanguages.map((lang) => {
             let dummy = document.createElement( 'div' );
@@ -95,8 +95,8 @@ class WSHeader extends HTMLElement {
     }
 
     showLanguage(lang) {
-        this.querySelector('#selectedLanguageFlag').className = "flag flag-" + lang;
-        this.querySelector('#selectedLanguage').innerText = lang;
+        this.shadowRoot.querySelector('#selectedLanguageFlag').className = "flag flag-" + lang;
+        this.shadowRoot.querySelector('#selectedLanguage').innerText = lang;
     }
 
     propagateLanguageChange(lang) {
@@ -161,7 +161,7 @@ class WSHeader extends HTMLElement {
 	}
 
 	showLoggedOut() {
-		let loggedInInfo = this.querySelector('#loggedInInfo');
+		let loggedInInfo = this.shadowRoot.querySelector('#loggedInInfo');
 		loggedInInfo.innerHTML =
 			`<a class="auto-size"><span translate="global.menu.signein">Login</span></i></a>`;
 		loggedInInfo.removeEventListener("click", this.logout);
@@ -169,7 +169,7 @@ class WSHeader extends HTMLElement {
 	}
 
 	showLoggedIn() {
-		let loggedInInfo = this.querySelector('#loggedInInfo');
+		let loggedInInfo = this.shadowRoot.querySelector('#loggedInInfo');
 		loggedInInfo.innerHTML =
 			`<span translate="global.menu.signedinas"></span>
 			<span id="userName">Loading...</span>
@@ -262,7 +262,7 @@ class WSHeader extends HTMLElement {
 	}
 
 	showUser() {
-		this.querySelector('#userName').innerText = this.state.userName;
+		this.shadowRoot.querySelector('#userName').innerText = this.state.userName;
 	}
 
 	setCookie(token) {

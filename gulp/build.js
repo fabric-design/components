@@ -15,6 +15,8 @@ var uglifycss = require('gulp-uglifycss');
 var rev = require('gulp-rev');
 var runSequence = require('run-sequence');
 const babel = require('gulp-babel');
+var replace = require('gulp-replace');
+var scopeCss = require("gulp-scope-css");
 
 var utils = require('./utils.js');
 var config = require('./config.js').default;
@@ -38,6 +40,11 @@ gulp.task('sass', function () {
     return stream
     .pipe(purify([config.webcomponentsFolder + '/' + componentName + '/*.js', config.webcomponentsFolder + '/' + componentName + '/*.html']));
   }))
+      .pipe(flatmap(function(stream, file){
+        var componentName = utils.getComponentName(file);
+        return stream
+            .pipe(scopeCss('.' + componentName));
+      }))
   .pipe(autoprefixer({
     browsers: ['last 2 versions'],
     cascade: false
@@ -118,6 +125,7 @@ gulp.task('inject', ['prepareFiles'], function() {
     .pipe(flatmap(function(stream, file){
       var componentName = utils.getComponentName(file);
       return stream
+        .pipe(replace('{{component-class}}', componentName))
         .pipe(injectGlobalHtml(config.webcomponentsFolder + '/' + componentName))
         .pipe(injectHtml(config.webcomponentsFolder + '/' + componentName))
         .pipe(injectStyles(config.temp + '/' + componentName))

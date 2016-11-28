@@ -10,6 +10,7 @@
         <link rel="import" href="../dist/ws-dropdown.html" />
     </head>
     <body class="refills-patterns refills-components" style="margin: 0;">
+        <button id="changeHeaderLightDOM">change Light DOM</button>
         <ws-header
             id="header"
             userservice-url="https://cors-proxy-service.alpha.zalan.do/https://users.auth.zalando.com/api/employees"
@@ -92,6 +93,12 @@
             document.querySelector('#ws-dropdown-button').addEventListener('change',
                     function({ detail: { item }}) {
                         console.log('Another way t get the value is: ' + document.querySelector('#ws-dropdown-button').value);
+                    });
+
+
+            document.querySelector('#changeHeaderLightDOM').addEventListener('click',
+                    function() {
+                        document.querySelector('#header span').innerText = "LightDOM changed";
                     });
         </script>
     </body>

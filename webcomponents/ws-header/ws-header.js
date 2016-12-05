@@ -351,6 +351,9 @@ function applyTemplate(containerElem, template) {
 		var changed = false;
 		mutations.forEach(function(mutation) {
 			var target = mutation.target;
+			if (target === containerElem) {
+				return;
+			}
 			if (target instanceof Text) {
 				// text elements have no closest function
 				target = target.parentNode;

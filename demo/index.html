@@ -28,8 +28,8 @@
         </ws-header>
         <ws-time-picker id="time-picker"></ws-time-picker>
         <ws-date-picker id="ws-datepicker"></ws-date-picker>
-        <ws-week-picker id="ws-weekpicker"></ws-week-picker>
-        <ws-week-picker id="ws-weekpicker" week="12" year="2017"></ws-week-picker>
+        <ws-week-picker></ws-week-picker>
+        <ws-week-picker week="12" year="2017"></ws-week-picker>
         <p>
             Simple Dropdown with orientation left:
             <ws-dropdown id="ws-dropdown-button" orientation="left" style="position: relative; left: 150px;">
@@ -63,6 +63,10 @@
             function({ detail: { date }}) {
                 console.log('date selected: ' + date);
             });
+            document.querySelectorAll('ws-week-picker').forEach(elem => elem.addEventListener('change',
+            function({ detail: { week, year }}) {
+                console.log('week selected: W' + week + ' ' + year);
+            }));
 
             var demoList = [{
                 label: 'Item 1',

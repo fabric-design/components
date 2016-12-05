@@ -821,6 +821,9 @@ function applyTemplate(containerElem, template) {
 		var changed = false;
 		mutations.forEach(function (mutation) {
 			var target = mutation.target;
+			if (target === containerElem) {
+				return;
+			}
 			if (target instanceof Text) {
 				// text elements have no closest function
 				target = target.parentNode;
@@ -856,7 +859,7 @@ function addLightDom(containerElem, template) {
 	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
 
 	var contentTags = template.querySelectorAll('content');
-	contentTags.forEach(function (contentTag) {
+	Array.from(contentTags).forEach(function (contentTag) {
 		contentTag.innerHTML = '';
 		var selection = contentTag.getAttribute('select');
 		if (selection) {

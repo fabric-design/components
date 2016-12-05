@@ -386,7 +386,7 @@ function addLightDom(containerElem, template) {
 	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
 
 	let contentTags = template.querySelectorAll('content');
-	contentTags.forEach(contentTag => {
+	Array.from(contentTags).forEach(contentTag => {
 		contentTag.innerHTML = '';
 		let selection = contentTag.getAttribute('select');
 		if (selection) {

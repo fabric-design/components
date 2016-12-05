@@ -39,669 +39,6 @@
             display: none;
         }
         /* inject:styles */
-        /**
- * Parse a numeric value from a string
- */
-
-/**
- * Convert a pixel value to rem
- */
-
-/**
- * Convert a list of pixel values to rem values
- */
-
-/**
-* Z-index function for managing the values
-*/
-
-.ws-dropdown .dropdown-menu {
-  display: block;
-}
-
-.ws-dropdown .dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.ws-dropdown .dropdown .dropdown-container {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  width: 12.5rem;
-  margin-top: 1.25rem;
-  height: 0;
-  display: none;
-  background-color: #FFFFFF;
-  border-radius: 3px;
-  box-shadow: 0 2px 6px #626166;
-  transition: height .125s ease;
-  will-change: height;
-  overflow: hidden;
-  z-index: 3;
-}
-
-.ws-dropdown .dropdown .dropdown-container.left .dropdown-arrow {
-  left: 1.25rem;
-  right: auto;
-}
-
-.ws-dropdown .dropdown .dropdown-container .dropdown-root-menu {
-  right: 0;
-  left: auto;
-}
-
-.ws-dropdown .dropdown .dropdown-container.mod-open {
-  display: block;
-}
-
-.ws-dropdown .dropdown .dropdown-container.mod-open + .dropdown-arrow {
-  display: block;
-}
-
-.ws-dropdown .dropdown .dropdown-menu {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  padding: 0.3125rem 0rem;
-  width: 100%;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.mod-menu-open, .ws-dropdown .dropdown .dropdown-menu.mod-sub-open {
-  left: 0;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.mod-sub-open > .dropdown-item > .text {
-  opacity: 0;
-  z-index: -1;
-}
-
-.ws-dropdown .dropdown .dropdown-item .text {
-  position: relative;
-  font-size: 0.875rem;
-  color: #626166;
-  font-family: acuminpro, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  line-height: 2;
-  cursor: pointer;
-  padding: 0.5rem 1.875rem 0.5rem 0.8125rem;
-  white-space: nowrap;
-  width: 100%;
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: normal;
-}
-
-.ws-dropdown .dropdown .dropdown-item .text:hover, .ws-dropdown .dropdown .dropdown-item .text.is-active {
-  background-color: #B0D6FB;
-}
-
-.ws-dropdown .dropdown .dropdown-arrow {
-  display: none;
-  position: absolute;
-  width: 0.625rem;
-  height: 0.625rem;
-  bottom: -1.5625rem;
-  right: 1.25rem;
-  background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 50%, #FFFFFF 50%);
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-  z-index: 2;
-  box-shadow: -1px -1px 1px #E9EAEF;
-}
-
-.ws-dropdown .dropdown .dropdown-container.animate-close {
-  -webkit-animation: closeContainer .2s ease-in-out forwards;
-  animation: closeContainer .2s ease-in-out forwards;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item > .text {
-  -webkit-animation: dropDownIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
-  animation: dropDownIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item > .text {
-  -webkit-animation: dropDownOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
-  animation: dropDownOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item > .text {
-  -webkit-animation: dropDownSubIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
-  animation: dropDownSubIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item > .text {
-  -webkit-animation: dropDownSubOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
-  animation: dropDownSubOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(1) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(1) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(1) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(1) > .text {
-  -webkit-animation-delay: 0.025s;
-  animation-delay: 0.025s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(2) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(2) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(2) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(2) > .text {
-  -webkit-animation-delay: 0.05s;
-  animation-delay: 0.05s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(3) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(3) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(3) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(3) > .text {
-  -webkit-animation-delay: 0.075s;
-  animation-delay: 0.075s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(4) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(4) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(4) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(4) > .text {
-  -webkit-animation-delay: 0.1s;
-  animation-delay: 0.1s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(5) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(5) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(5) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(5) > .text {
-  -webkit-animation-delay: 0.125s;
-  animation-delay: 0.125s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(6) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(6) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(6) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(6) > .text {
-  -webkit-animation-delay: 0.15s;
-  animation-delay: 0.15s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(7) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(7) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(7) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(7) > .text {
-  -webkit-animation-delay: 0.175s;
-  animation-delay: 0.175s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(8) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(8) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(8) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(8) > .text {
-  -webkit-animation-delay: 0.2s;
-  animation-delay: 0.2s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(9) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(9) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(9) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(9) > .text {
-  -webkit-animation-delay: 0.225s;
-  animation-delay: 0.225s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(10) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(10) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(10) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(10) > .text {
-  -webkit-animation-delay: 0.25s;
-  animation-delay: 0.25s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(11) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(11) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(11) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(11) > .text {
-  -webkit-animation-delay: 0.275s;
-  animation-delay: 0.275s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(12) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(12) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(12) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(12) > .text {
-  -webkit-animation-delay: 0.3s;
-  animation-delay: 0.3s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(13) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(13) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(13) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(13) > .text {
-  -webkit-animation-delay: 0.325s;
-  animation-delay: 0.325s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(14) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(14) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(14) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(14) > .text {
-  -webkit-animation-delay: 0.35s;
-  animation-delay: 0.35s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(15) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(15) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(15) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(15) > .text {
-  -webkit-animation-delay: 0.375s;
-  animation-delay: 0.375s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(16) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(16) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(16) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(16) > .text {
-  -webkit-animation-delay: 0.4s;
-  animation-delay: 0.4s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(17) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(17) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(17) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(17) > .text {
-  -webkit-animation-delay: 0.425s;
-  animation-delay: 0.425s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(18) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(18) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(18) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(18) > .text {
-  -webkit-animation-delay: 0.45s;
-  animation-delay: 0.45s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(19) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(19) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(19) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(19) > .text {
-  -webkit-animation-delay: 0.475s;
-  animation-delay: 0.475s;
-}
-
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(20) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(20) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(20) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(20) > .text {
-  -webkit-animation-delay: 0.5s;
-  animation-delay: 0.5s;
-}
-
-@-webkit-keyframes closeContainer {
-  .ws-dropdown 100% {
-    height: 0;
-  }
-}
-
-@keyframes closeContainer {
-  .ws-dropdown 100% {
-    height: 0;
-  }
-}
-
-@-webkit-keyframes dropDownOut {
-  .ws-dropdown 0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
-
-  .ws-dropdown 70% {
-    opacity: 0;
-  }
-
-  .ws-dropdown 100% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-@keyframes dropDownOut {
-  .ws-dropdown 0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
-
-  .ws-dropdown 70% {
-    opacity: 0;
-  }
-
-  .ws-dropdown 100% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-@-webkit-keyframes dropDownIn {
-  .ws-dropdown 0% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-    opacity: 0;
-  }
-
-  .ws-dropdown 100% {
-    -webkit-transform: translate3d(0%, 0, 0);
-    transform: translate3d(0%, 0, 0);
-    opacity: 1;
-  }
-}
-
-@keyframes dropDownIn {
-  .ws-dropdown 0% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-    opacity: 0;
-  }
-
-  .ws-dropdown 100% {
-    -webkit-transform: translate3d(0%, 0, 0);
-    transform: translate3d(0%, 0, 0);
-    opacity: 1;
-  }
-}
-
-@-webkit-keyframes dropDownSubOut {
-  .ws-dropdown 0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
-
-  .ws-dropdown 70% {
-    opacity: 0;
-  }
-
-  .ws-dropdown 100% {
-    -webkit-transform: translate3d(100%, 0, 0);
-    transform: translate3d(100%, 0, 0);
-  }
-}
-
-@keyframes dropDownSubOut {
-  .ws-dropdown 0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
-
-  .ws-dropdown 70% {
-    opacity: 0;
-  }
-
-  .ws-dropdown 100% {
-    -webkit-transform: translate3d(100%, 0, 0);
-    transform: translate3d(100%, 0, 0);
-  }
-}
-
-@-webkit-keyframes dropDownSubIn {
-  .ws-dropdown 0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    opacity: 0;
-  }
-
-  .ws-dropdown 100% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-    opacity: 1;
-  }
-}
-
-@keyframes dropDownSubIn {
-  .ws-dropdown 0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    opacity: 0;
-  }
-
-  .ws-dropdown 100% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-    opacity: 1;
-  }
-}
-
-.ws-dropdown .dropdown-menu {
-  display: block;
-}
-
-.ws-dropdown .dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.ws-dropdown .dropdown-container {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  width: 12.5rem;
-  margin-top: 1.25rem;
-  height: 0;
-  display: none;
-  background-color: #FFFFFF;
-  border-radius: 3px;
-  box-shadow: 0 2px 6px #626166;
-  transition: height .125s ease;
-  will-change: height;
-  overflow: hidden;
-  z-index: 3;
-}
-
-.ws-dropdown .dropdown-container.left {
-  left: 0;
-}
-
-.ws-dropdown .dropdown-container .dropdown-root-menu {
-  right: 0;
-  left: auto;
-}
-
-.ws-dropdown .dropdown-container.mod-open {
-  display: block;
-}
-
-.ws-dropdown .dropdown-container.mod-open + .dropdown-arrow {
-  display: block;
-}
-
-.ws-dropdown .dropdown-menu {
-  position: absolute;
-  top: 0;
-  left: 100%;
-  padding: 0.3125rem 0rem;
-  width: 100%;
-  margin: 0;
-}
-
-.ws-dropdown .dropdown-menu.mod-menu-open, .ws-dropdown .dropdown-menu.mod-sub-open {
-  left: 0;
-}
-
-.ws-dropdown .dropdown-menu.mod-sub-open > .dropdown-item > .text {
-  opacity: 0;
-  z-index: -1;
-}
-
-.ws-dropdown .dropdown-item .text {
-  position: relative;
-  font-size: 0.875rem;
-  color: #626166;
-  font-family: acuminpro, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  line-height: 2;
-  cursor: pointer;
-  padding: 0.5rem 1.875rem 0.5rem 0.8125rem;
-  white-space: nowrap;
-  width: 100%;
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: normal;
-}
-
-.ws-dropdown .dropdown-item .text:hover {
-  background-color: #B0D6FB;
-}
-
-.ws-dropdown .dropdown-item .text.is-active {
-  background-color: #00ABF2 !important;
-}
-
-.ws-dropdown .dropdown-arrow {
-  display: none;
-  position: absolute;
-  width: 0.625rem;
-  height: 0.625rem;
-  bottom: -1.5625rem;
-  right: 1.25rem;
-  background: linear-gradient(-45deg, rgba(255, 255, 255, 0) 50%, #FFFFFF 50%);
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-  z-index: 2;
-  box-shadow: -1px -1px 1px #E9EAEF;
-}
-
-.ws-dropdown .dropdown-container.animate-close {
-  -webkit-animation: closeContainer .2s ease-in-out forwards;
-  animation: closeContainer .2s ease-in-out forwards;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item > .text {
-  -webkit-animation: dropDownIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
-  animation: dropDownIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
-}
-
-.ws-dropdown .dropdown-menu.animate-out > .dropdown-item > .text {
-  -webkit-animation: dropDownOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
-  animation: dropDownOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
-}
-
-.ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item > .text {
-  -webkit-animation: dropDownSubIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
-  animation: dropDownSubIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
-}
-
-.ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item > .text {
-  -webkit-animation: dropDownSubOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
-  animation: dropDownSubOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(1) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(1) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(1) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(1) > .text {
-  -webkit-animation-delay: 0.025s;
-  animation-delay: 0.025s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(2) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(2) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(2) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(2) > .text {
-  -webkit-animation-delay: 0.05s;
-  animation-delay: 0.05s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(3) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(3) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(3) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(3) > .text {
-  -webkit-animation-delay: 0.075s;
-  animation-delay: 0.075s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(4) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(4) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(4) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(4) > .text {
-  -webkit-animation-delay: 0.1s;
-  animation-delay: 0.1s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(5) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(5) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(5) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(5) > .text {
-  -webkit-animation-delay: 0.125s;
-  animation-delay: 0.125s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(6) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(6) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(6) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(6) > .text {
-  -webkit-animation-delay: 0.15s;
-  animation-delay: 0.15s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(7) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(7) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(7) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(7) > .text {
-  -webkit-animation-delay: 0.175s;
-  animation-delay: 0.175s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(8) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(8) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(8) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(8) > .text {
-  -webkit-animation-delay: 0.2s;
-  animation-delay: 0.2s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(9) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(9) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(9) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(9) > .text {
-  -webkit-animation-delay: 0.225s;
-  animation-delay: 0.225s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(10) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(10) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(10) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(10) > .text {
-  -webkit-animation-delay: 0.25s;
-  animation-delay: 0.25s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(11) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(11) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(11) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(11) > .text {
-  -webkit-animation-delay: 0.275s;
-  animation-delay: 0.275s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(12) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(12) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(12) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(12) > .text {
-  -webkit-animation-delay: 0.3s;
-  animation-delay: 0.3s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(13) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(13) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(13) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(13) > .text {
-  -webkit-animation-delay: 0.325s;
-  animation-delay: 0.325s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(14) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(14) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(14) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(14) > .text {
-  -webkit-animation-delay: 0.35s;
-  animation-delay: 0.35s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(15) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(15) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(15) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(15) > .text {
-  -webkit-animation-delay: 0.375s;
-  animation-delay: 0.375s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(16) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(16) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(16) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(16) > .text {
-  -webkit-animation-delay: 0.4s;
-  animation-delay: 0.4s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(17) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(17) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(17) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(17) > .text {
-  -webkit-animation-delay: 0.425s;
-  animation-delay: 0.425s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(18) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(18) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(18) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(18) > .text {
-  -webkit-animation-delay: 0.45s;
-  animation-delay: 0.45s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(19) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(19) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(19) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(19) > .text {
-  -webkit-animation-delay: 0.475s;
-  animation-delay: 0.475s;
-}
-
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(20) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(20) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(20) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(20) > .text {
-  -webkit-animation-delay: 0.5s;
-  animation-delay: 0.5s;
-}
-
-@keyframes closeContainer {
-  .ws-dropdown 100% {
-    height: 0;
-  }
-}
-
-@keyframes dropDownOut {
-  .ws-dropdown 0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
-
-  .ws-dropdown 70% {
-    opacity: 0;
-  }
-
-  .ws-dropdown 100% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-  }
-}
-
-@keyframes dropDownIn {
-  .ws-dropdown 0% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-    opacity: 0;
-  }
-
-  .ws-dropdown 100% {
-    -webkit-transform: translate3d(0%, 0, 0);
-    transform: translate3d(0%, 0, 0);
-    opacity: 1;
-  }
-}
-
-@keyframes dropDownSubOut {
-  .ws-dropdown 0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    opacity: 1;
-  }
-
-  .ws-dropdown 70% {
-    opacity: 0;
-  }
-
-  .ws-dropdown 100% {
-    -webkit-transform: translate3d(100%, 0, 0);
-    transform: translate3d(100%, 0, 0);
-  }
-}
-
-@keyframes dropDownSubIn {
-  .ws-dropdown 0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    opacity: 0;
-  }
-
-  .ws-dropdown 100% {
-    -webkit-transform: translate3d(-100%, 0, 0);
-    transform: translate3d(-100%, 0, 0);
-    opacity: 1;
-  }
-}
         /* endinject */
     </style>
 </template>
@@ -737,7 +74,7 @@ var WSDropdownMenu = function (_HTMLElement) {
     function WSDropdownMenu() {
         _classCallCheck(this, WSDropdownMenu);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(WSDropdownMenu).apply(this, arguments));
+        return _possibleConstructorReturn(this, (WSDropdownMenu.__proto__ || Object.getPrototypeOf(WSDropdownMenu)).apply(this, arguments));
     }
 
     _createClass(WSDropdownMenu, [{
@@ -764,9 +101,9 @@ var WSDropdownMenu = function (_HTMLElement) {
     }, {
         key: 'draw',
         value: function draw() {
-            var _state = this.state;
-            var hasParent = _state.hasParent;
-            var items = _state.items;
+            var _state = this.state,
+                hasParent = _state.hasParent,
+                items = _state.items;
 
             this.cleanListItems();
             this.checkIfRoot(hasParent, items);
@@ -842,11 +179,11 @@ var WSDropdownMenu = function (_HTMLElement) {
             var linkItem = listItem.querySelector('a');
             // styling is based on the .text elem and not the li elem
             var textItem = listItem.querySelector('.text');
-            var selected = item.selected;
-            var href = item.href;
-            var icon = item.icon;
-            var label = item.label;
-            var children = item.children;
+            var selected = item.selected,
+                href = item.href,
+                icon = item.icon,
+                label = item.label,
+                children = item.children;
 
 
             if (selected) {
@@ -1096,7 +433,7 @@ var WSDropdown = function (_HTMLElement) {
     function WSDropdown() {
         _classCallCheck(this, WSDropdown);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(WSDropdown).apply(this, arguments));
+        return _possibleConstructorReturn(this, (WSDropdown.__proto__ || Object.getPrototypeOf(WSDropdown)).apply(this, arguments));
     }
 
     _createClass(WSDropdown, [{
@@ -1314,6 +651,82 @@ var WSDropdown = function (_HTMLElement) {
 
 
 document.registerElement('ws-dropdown', WSDropdown);
+    function applyTemplate(containerElem, template) {
+	'use strict';
+
+	addLightDom(containerElem, template);
+
+	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
+
+	var observer = new MutationObserver(function(mutations) {
+		var changed = false;
+		mutations.forEach(function(mutation) {
+			var target = mutation.target;
+			if (target === containerElem) {
+				return;
+			}
+			if (target instanceof Text) {
+				// text elements have no closest function
+				target = target.parentNode;
+			}
+			// ignore changes inside of pseudo shadow dom
+			if(target.closest(innerContainerSelector)) {
+				return;
+			}
+
+			// console.log('Mutation:', mutation);
+			changed = true;
+		});
+
+		if (changed) {
+			addLightDom(containerElem, containerElem.querySelector(innerContainerSelector));
+		}
+	});
+
+	// Konfiguration des Observers: alles melden - Änderungen an Daten, Kindelementen und Attributen
+	var config = {
+		attributes: true,
+		childList: true,
+		characterData: true,
+		subtree:true
+	};
+
+	observer.observe(containerElem, config);
+}
+
+function addLightDom(containerElem, template) {
+	'use strict';
+
+	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
+
+	let contentTags = template.querySelectorAll('content');
+	Array.from(contentTags).forEach(contentTag => {
+		contentTag.innerHTML = '';
+		let selection = contentTag.getAttribute('select');
+		if (selection) {
+			let selectedLightDomElems = Array.from(containerElem.querySelectorAll(selection))
+				.filter(elem => !elem.closest(innerContainerSelector));
+
+			selectedLightDomElems.forEach(selectedLightDomElem => {
+				var clone = selectedLightDomElem.cloneNode(true);
+				contentTag.appendChild(clone);
+			});
+		}
+	});
+
+	var lightDom = Array.from(containerElem.children).filter(elem => {
+		return elem.classList
+			&& !elem.classList.contains(innerContainerSelector.substr(1));
+	});
+	for(var child of lightDom) {
+		if (!child.classList.contains('light-dom')) {
+			child.classList.add('light-dom');
+		}
+	}
+
+	containerElem.appendChild(template);
+}
+
     /* endinject */
 })()
 </script>

@@ -66,7 +66,10 @@ gulp.task('sass:styleguide', function () {
 });
 
 gulp.task('scripts', function () {
-  return gulp.src(config.webcomponentsFolder + '/**/*.js')
+  return gulp.src([
+    config.shadowDomHack,
+    config.webcomponentsFolder + '/**/*.js'
+  ])
   .pipe(babel({
     presets: ['es2015', 'stage-1']
   }))
@@ -80,7 +83,10 @@ gulp.task('prepareFiles', function(done) {
 
 gulp.task('inject', ['prepareFiles'], function() {
   function injectScripts(folder) {
-    return inject(gulp.src(folder + '/*.js'), {
+    return inject(gulp.src([
+        folder + '/*.js',
+        config.shadowDomHack
+      ]), {
       starttag: '/* inject:js */',
       endtag: '/* endinject */',
       transform: function (filePath, file) {

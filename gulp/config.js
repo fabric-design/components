@@ -7,5 +7,6 @@ exports.default = {
     demo: './demo',
     temp: './.tmp',
     tempTemplates: './.tmp/templates',
-    styleguide: './demo/styleguide.scss'
+    styleguide: './demo/styleguide.scss',
+    shadowDomHack: 'shadow-dom-hack.js'
 }

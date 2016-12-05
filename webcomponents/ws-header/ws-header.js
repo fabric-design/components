@@ -164,7 +164,7 @@ class WSHeader extends HTMLElement {
 	showLoggedOut() {
 		let loggedInInfo = this.querySelector('#loggedInInfo');
 		loggedInInfo.innerHTML =
-			`<a class="auto-size"><span translate="global.menu.signein">Login</span></i></a>`;
+			`<a class="auto-size"><span translate="global.menu.signein">Login</span><i class="icon icon-power"></i></a>`;
 		loggedInInfo.removeEventListener("click", this.logout);
 		loggedInInfo.addEventListener("click", this.login.bind(this));
 	}
@@ -174,7 +174,7 @@ class WSHeader extends HTMLElement {
 		loggedInInfo.innerHTML =
 			`<span translate="global.menu.signedinas"></span>
 			<span id="userName">Loading...</span>
-			<a class="auto-size" id="logOutButton" type="button"><div id="logOutIcon"></div></a>`;
+			<a class="auto-size" id="logOutButton" type="button"><i class="icon icon-power"></i></a>`;
 		loggedInInfo.removeEventListener("click", this.login);
 		loggedInInfo.addEventListener("click", this.logout.bind(this));
 	}

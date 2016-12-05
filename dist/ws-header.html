@@ -109,7 +109,7 @@
 }
 
 .ws-header header.navigation .logo > span {
-  float: left;
+  float: right;
 }
 
 .ws-header header.navigation .logo > span:not(:first-child) {
@@ -364,11 +364,10 @@
   zoom: 1.5;
 }
 
-.ws-header header.navigation #loggedInInfo #logOutButton #logOutIcon {
-  height: 100%;
-  background-color: white;
-  -webkit-mask-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve"><path d="M48.501,27.015c0,0.827,0.671,1.5,1.5,1.5h21.486v42.974H50.001c-0.829,0-1.5,0.672-1.5,1.5c0,0.829,0.671,1.5,1.5,1.5  h22.986c0.828,0,1.5-0.671,1.5-1.5V27.013c0-0.828-0.672-1.5-1.5-1.5H50.001C49.172,25.515,48.501,26.187,48.501,27.015z   M48.473,38.447c0,0.384,0.146,0.768,0.438,1.061l8.964,8.963h-30.86c-0.828,0-1.5,0.671-1.5,1.5c0,0.829,0.672,1.5,1.5,1.5h30.86  l-8.993,8.992c-0.293,0.293-0.439,0.677-0.439,1.062c0,0.383,0.146,0.768,0.439,1.061c0.585,0.586,1.536,0.586,2.121,0  l11.553-11.553c0.141-0.141,0.25-0.308,0.327-0.492c0.003-0.008,0.004-0.016,0.007-0.022c0.067-0.169,0.105-0.354,0.105-0.547  s-0.039-0.378-0.105-0.548c-0.003-0.007-0.004-0.015-0.007-0.021c-0.077-0.187-0.188-0.354-0.328-0.493L51.032,37.386  c-0.585-0.586-1.535-0.586-2.121,0C48.618,37.679,48.473,38.063,48.473,38.447z"></path></svg>');
-  mask-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve"><path d="M48.501,27.015c0,0.827,0.671,1.5,1.5,1.5h21.486v42.974H50.001c-0.829,0-1.5,0.672-1.5,1.5c0,0.829,0.671,1.5,1.5,1.5  h22.986c0.828,0,1.5-0.671,1.5-1.5V27.013c0-0.828-0.672-1.5-1.5-1.5H50.001C49.172,25.515,48.501,26.187,48.501,27.015z   M48.473,38.447c0,0.384,0.146,0.768,0.438,1.061l8.964,8.963h-30.86c-0.828,0-1.5,0.671-1.5,1.5c0,0.829,0.672,1.5,1.5,1.5h30.86  l-8.993,8.992c-0.293,0.293-0.439,0.677-0.439,1.062c0,0.383,0.146,0.768,0.439,1.061c0.585,0.586,1.536,0.586,2.121,0  l11.553-11.553c0.141-0.141,0.25-0.308,0.327-0.492c0.003-0.008,0.004-0.016,0.007-0.022c0.067-0.169,0.105-0.354,0.105-0.547  s-0.039-0.378-0.105-0.548c-0.003-0.007-0.004-0.015-0.007-0.021c-0.077-0.187-0.188-0.354-0.328-0.493L51.032,37.386  c-0.585-0.586-1.535-0.586-2.121,0C48.618,37.679,48.473,38.063,48.473,38.447z"></path></svg>');
+.ws-header header.navigation #loggedInInfo i {
+  margin-left: 0.5rem;
+  position: relative;
+  top: 3px;
 }
 
 .ws-header ::content.logo {
@@ -622,7 +621,7 @@ var WSHeader = function (_HTMLElement) {
 		key: 'showLoggedOut',
 		value: function showLoggedOut() {
 			var loggedInInfo = this.querySelector('#loggedInInfo');
-			loggedInInfo.innerHTML = '<a class="auto-size"><span translate="global.menu.signein">Login</span></i></a>';
+			loggedInInfo.innerHTML = '<a class="auto-size"><span translate="global.menu.signein">Login</span><i class="icon icon-power"></i></a>';
 			loggedInInfo.removeEventListener("click", this.logout);
 			loggedInInfo.addEventListener("click", this.login.bind(this));
 		}
@@ -630,7 +629,7 @@ var WSHeader = function (_HTMLElement) {
 		key: 'showLoggedIn',
 		value: function showLoggedIn() {
 			var loggedInInfo = this.querySelector('#loggedInInfo');
-			loggedInInfo.innerHTML = '<span translate="global.menu.signedinas"></span>\n\t\t\t<span id="userName">Loading...</span>\n\t\t\t<a class="auto-size" id="logOutButton" type="button"><div id="logOutIcon"></div></a>';
+			loggedInInfo.innerHTML = '<span translate="global.menu.signedinas"></span>\n\t\t\t<span id="userName">Loading...</span>\n\t\t\t<a class="auto-size" id="logOutButton" type="button"><i class="icon icon-power"></i></a>';
 			loggedInInfo.removeEventListener("click", this.login);
 			loggedInInfo.addEventListener("click", this.logout.bind(this));
 		}

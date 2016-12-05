@@ -1,8 +1,9 @@
 <!-- inject:global -->
 <!-- endinject -->
 <template>
-    <!-- inject:html -->
-    <div class="refills-patterns refills-components">
+    <div class="ws-header">
+        <!-- inject:html -->
+        <div class="refills-patterns refills-components">
   <header class="navigation" role="banner">
     <div class="navigation-wrapper">
       <content select=".logo">
@@ -29,20 +30,32 @@
     </div>
   </header>
 </div>
-    <!-- endinject -->
+        <!-- endinject -->
+    </div>
     <style>
+        ws-header > .light-dom {
+            display: none;
+        }
         /* inject:styles */
         @charset "UTF-8";
 
-html {
-  box-sizing: border-box;
-}
+/**
+ * Parse a numeric value from a string
+ */
 
-*,*::after,*::before {
-  box-sizing: inherit;
-}
+/**
+ * Convert a pixel value to rem
+ */
 
-.flag {
+/**
+ * Convert a list of pixel values to rem values
+ */
+
+/**
+* Z-index function for managing the values
+*/
+
+.ws-header .flag {
   display: inline-block;
   width: 16px;
   height: 11px;
@@ -51,15 +64,15 @@ html {
   background-repeat: no-repeat;
 }
 
-.flag.flag-de {
+.ws-header .flag.flag-de {
   background-position: -16px 0;
 }
 
-.flag.flag-en {
+.ws-header .flag.flag-en {
   background-position: 0 -11px;
 }
 
-header.navigation {
+.ws-header header.navigation {
   background-color: #333;
   border-bottom: 1px solid #1a1a1a;
   min-height: 60px;
@@ -67,7 +80,7 @@ header.navigation {
   z-index: 999;
 }
 
-header.navigation .navigation-wrapper {
+.ws-header header.navigation .navigation-wrapper {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
@@ -75,26 +88,35 @@ header.navigation .navigation-wrapper {
   z-index: 9999;
 }
 
-header.navigation .navigation-wrapper::after {
+.ws-header header.navigation .navigation-wrapper::after {
   clear: both;
   content: "";
-  display: table;
+  display: block;
 }
 
-header.navigation .navigation-wrapper::after {
+.ws-header header.navigation .navigation-wrapper::after {
   clear: both;
   content: "";
-  display: table;
+  display: block;
 }
 
-header.navigation .logo {
+.ws-header header.navigation .logo {
   float: left;
   max-height: 60px;
   padding-left: 1em;
   padding-right: 2em;
+  line-height: 60px;
 }
 
-header.navigation .navigation-menu-button {
+.ws-header header.navigation .logo > span {
+  float: left;
+}
+
+.ws-header header.navigation .logo > span:not(:first-child) {
+  margin-left: 1rem;
+}
+
+.ws-header header.navigation .navigation-menu-button {
   color: rgba(255, 255, 255, 0.7);
   display: block;
   float: right;
@@ -106,28 +128,28 @@ header.navigation .navigation-menu-button {
 }
 
 @media screen and (min-width: 53.75em) {
-  header.navigation .navigation-menu-button {
+  .ws-header header.navigation .navigation-menu-button {
     display: none;
   }
 }
 
-header.navigation .navigation-menu-button:focus,header.navigation .navigation-menu-button:hover {
+.ws-header header.navigation .navigation-menu-button:focus, .ws-header header.navigation .navigation-menu-button:hover {
   color: white;
 }
 
-header.navigation nav {
+.ws-header header.navigation nav {
   float: none;
   min-height: 60px;
   z-index: 9999999;
 }
 
 @media screen and (min-width: 53.75em) {
-  header.navigation nav {
+  .ws-header header.navigation nav {
     float: left;
   }
 }
 
-header.navigation ul.navigation-menu {
+.ws-header header.navigation ul.navigation-menu {
   clear: both;
   display: none;
   margin: 0 auto;
@@ -137,19 +159,19 @@ header.navigation ul.navigation-menu {
   z-index: 9999;
 }
 
-header.navigation ul.navigation-menu.show {
+.ws-header header.navigation ul.navigation-menu.show {
   display: block;
 }
 
 @media screen and (min-width: 53.75em) {
-  header.navigation ul.navigation-menu {
+  .ws-header header.navigation ul.navigation-menu {
     display: inline;
     margin: 0;
     padding: 0;
   }
 }
 
-header.navigation ul li.nav-link {
+.ws-header header.navigation ul li.nav-link {
   background: #333;
   display: block;
   line-height: 60px;
@@ -162,12 +184,12 @@ header.navigation ul li.nav-link {
   color: rgba(255, 255, 255, 0.7);
 }
 
-header.navigation ul li.nav-link:hover {
+.ws-header header.navigation ul li.nav-link:hover {
   color: white;
 }
 
 @media screen and (min-width: 53.75em) {
-  header.navigation ul li.nav-link {
+  .ws-header header.navigation ul li.nav-link {
     background: transparent;
     display: inline;
     line-height: 60px;
@@ -176,7 +198,7 @@ header.navigation ul li.nav-link:hover {
   }
 }
 
-header.navigation ul li.nav-link a {
+.ws-header header.navigation ul li.nav-link a {
   color: rgba(255, 255, 255, 0.7);
   display: inline-block;
   text-decoration: none;
@@ -184,42 +206,42 @@ header.navigation ul li.nav-link a {
 }
 
 @media screen and (min-width: 53.75em) {
-  header.navigation ul li.nav-link a {
+  .ws-header header.navigation ul li.nav-link a {
     padding-right: 1em;
   }
 }
 
-header.navigation ul li.nav-link a:focus,header.navigation ul li.nav-link a:hover {
+.ws-header header.navigation ul li.nav-link a:focus, .ws-header header.navigation ul li.nav-link a:hover {
   color: white;
 }
 
-header.navigation ul li.nav-link a:after {
+.ws-header header.navigation ul li.nav-link a:after {
   position: relative !important;
 }
 
-header.navigation li.more.nav-link {
+.ws-header header.navigation li.more.nav-link {
   padding-right: 0;
 }
 
 @media screen and (min-width: 53.75em) {
-  header.navigation li.more.nav-link {
+  .ws-header header.navigation li.more.nav-link {
     padding-right: 1em;
   }
 }
 
-header.navigation li.more.nav-link > ul > li:first-child a {
+.ws-header header.navigation li.more.nav-link > ul > li:first-child a {
   padding-top: 1em;
 }
 
-header.navigation li.more.nav-link a {
+.ws-header header.navigation li.more.nav-link a {
   margin-right: 1em;
 }
 
-header.navigation li.more.nav-link > a {
+.ws-header header.navigation li.more.nav-link > a {
   padding-right: 0.6em;
 }
 
-header.navigation li.more.nav-link > a:after {
+.ws-header header.navigation li.more.nav-link > a:after {
   position: absolute;
   top: auto;
   right: -0.4em;
@@ -229,55 +251,55 @@ header.navigation li.more.nav-link > a:after {
   color: rgba(255, 255, 255, 0.7);
 }
 
-header.navigation li.more {
+.ws-header header.navigation li.more {
   overflow: visible;
   padding-right: 0;
 }
 
-header.navigation li.more a {
+.ws-header header.navigation li.more a {
   padding-right: 0.8em;
 }
 
-header.navigation li.more > a {
+.ws-header header.navigation li.more > a {
   padding-right: 1.6em;
   position: relative;
 }
 
 @media screen and (min-width: 53.75em) {
-  header.navigation li.more > a {
+  .ws-header header.navigation li.more > a {
     margin-right: 1em;
   }
 }
 
-header.navigation li.more > a:after {
+.ws-header header.navigation li.more > a:after {
   content: '›';
   font-size: 1.2em;
   position: absolute;
   right: 0.5em;
 }
 
-header.navigation li.more:focus > .submenu,header.navigation li.more:hover > .submenu {
+.ws-header header.navigation li.more:focus > .submenu, .ws-header header.navigation li.more:hover > .submenu {
   display: block;
 }
 
 @media screen and (min-width: 53.75em) {
-  header.navigation li.more {
+  .ws-header header.navigation li.more {
     padding-right: 0.8em;
     position: relative;
   }
 }
 
-header.navigation .dropdown-menu .flag {
+.ws-header header.navigation .dropdown-menu .flag {
   margin-top: 25px;
 }
 
-header.navigation ul.submenu {
+.ws-header header.navigation ul.submenu {
   display: none;
   padding-left: 0;
 }
 
 @media screen and (min-width: 53.75em) {
-  header.navigation ul.submenu {
+  .ws-header header.navigation ul.submenu {
     left: -1em;
     position: absolute;
     top: 1.5em;
@@ -285,35 +307,35 @@ header.navigation ul.submenu {
 }
 
 @media screen and (min-width: 53.75em) {
-  header.navigation ul.submenu .submenu {
+  .ws-header header.navigation ul.submenu .submenu {
     left: 11.8em;
     top: 0;
   }
 }
 
-header.navigation ul.submenu li {
+.ws-header header.navigation ul.submenu li {
   display: block;
   padding-right: 0;
 }
 
 @media screen and (min-width: 53.75em) {
-  header.navigation ul.submenu li {
+  .ws-header header.navigation ul.submenu li {
     line-height: 46.15385px;
   }
 
-  header.navigation ul.submenu li:first-child > a {
+  .ws-header header.navigation ul.submenu li:first-child > a {
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
   }
 
-  header.navigation ul.submenu li:last-child > a {
+  .ws-header header.navigation ul.submenu li:last-child > a {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     padding-bottom: 0.7em;
   }
 }
 
-header.navigation ul.submenu li a {
+.ws-header header.navigation ul.submenu li a {
   background-color: #2b2b2b;
   display: inline-block;
   text-align: right;
@@ -322,7 +344,7 @@ header.navigation ul.submenu li a {
 }
 
 @media screen and (min-width: 53.75em) {
-  header.navigation ul.submenu li a {
+  .ws-header header.navigation ul.submenu li a {
     background-color: #333;
     padding-left: 1em;
     text-align: left;
@@ -330,11 +352,11 @@ header.navigation ul.submenu li a {
   }
 }
 
-header.navigation #loggedInInfo a {
+.ws-header header.navigation #loggedInInfo a {
   margin-right: 1em;
 }
 
-header.navigation #loggedInInfo #logOutButton {
+.ws-header header.navigation #loggedInInfo #logOutButton {
   margin-left: 0.5em;
   width: 1em;
   height: 1em;
@@ -342,14 +364,14 @@ header.navigation #loggedInInfo #logOutButton {
   zoom: 1.5;
 }
 
-header.navigation #loggedInInfo #logOutButton #logOutIcon {
+.ws-header header.navigation #loggedInInfo #logOutButton #logOutIcon {
   height: 100%;
   background-color: white;
   -webkit-mask-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve"><path d="M48.501,27.015c0,0.827,0.671,1.5,1.5,1.5h21.486v42.974H50.001c-0.829,0-1.5,0.672-1.5,1.5c0,0.829,0.671,1.5,1.5,1.5  h22.986c0.828,0,1.5-0.671,1.5-1.5V27.013c0-0.828-0.672-1.5-1.5-1.5H50.001C49.172,25.515,48.501,26.187,48.501,27.015z   M48.473,38.447c0,0.384,0.146,0.768,0.438,1.061l8.964,8.963h-30.86c-0.828,0-1.5,0.671-1.5,1.5c0,0.829,0.672,1.5,1.5,1.5h30.86  l-8.993,8.992c-0.293,0.293-0.439,0.677-0.439,1.062c0,0.383,0.146,0.768,0.439,1.061c0.585,0.586,1.536,0.586,2.121,0  l11.553-11.553c0.141-0.141,0.25-0.308,0.327-0.492c0.003-0.008,0.004-0.016,0.007-0.022c0.067-0.169,0.105-0.354,0.105-0.547  s-0.039-0.378-0.105-0.548c-0.003-0.007-0.004-0.015-0.007-0.021c-0.077-0.187-0.188-0.354-0.328-0.493L51.032,37.386  c-0.585-0.586-1.535-0.586-2.121,0C48.618,37.679,48.473,38.063,48.473,38.447z"></path></svg>');
   mask-image: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve"><path d="M48.501,27.015c0,0.827,0.671,1.5,1.5,1.5h21.486v42.974H50.001c-0.829,0-1.5,0.672-1.5,1.5c0,0.829,0.671,1.5,1.5,1.5  h22.986c0.828,0,1.5-0.671,1.5-1.5V27.013c0-0.828-0.672-1.5-1.5-1.5H50.001C49.172,25.515,48.501,26.187,48.501,27.015z   M48.473,38.447c0,0.384,0.146,0.768,0.438,1.061l8.964,8.963h-30.86c-0.828,0-1.5,0.671-1.5,1.5c0,0.829,0.672,1.5,1.5,1.5h30.86  l-8.993,8.992c-0.293,0.293-0.439,0.677-0.439,1.062c0,0.383,0.146,0.768,0.439,1.061c0.585,0.586,1.536,0.586,2.121,0  l11.553-11.553c0.141-0.141,0.25-0.308,0.327-0.492c0.003-0.008,0.004-0.016,0.007-0.022c0.067-0.169,0.105-0.354,0.105-0.547  s-0.039-0.378-0.105-0.548c-0.003-0.007-0.004-0.015-0.007-0.021c-0.077-0.187-0.188-0.354-0.328-0.493L51.032,37.386  c-0.585-0.586-1.535-0.586-2.121,0C48.618,37.679,48.473,38.063,48.473,38.447z"></path></svg>');
 }
 
-::content .logo {
+.ws-header ::content.logo {
   float: left;
   max-height: 60px;
   margin-left: 1em;
@@ -362,23 +384,24 @@ header.navigation #loggedInInfo #logOutButton #logOutIcon {
   transition: color .1s linear;
 }
 
-::content .logo img {
+.ws-header ::content.logo .logo--img {
+  float: left;
   box-sizing: content-box;
   padding: 1.2em 0;
   height: 20px;
 }
 
-::content .logo > span {
+.ws-header ::content.logo > span {
   display: block;
   float: right;
   margin-left: 10px;
 }
 
-::content .logo img {
+.ws-header ::content.logo img {
   padding: 1.2em 0;
 }
 
-::content li.nav-link {
+.ws-header ::contentli.nav-link {
   background: transparent;
   display: inline;
   line-height: 60px;
@@ -386,7 +409,7 @@ header.navigation #loggedInInfo #logOutButton #logOutIcon {
   width: auto;
 }
 
-::content li.nav-link a {
+.ws-header ::contentli.nav-link a {
   padding-right: 1em;
   color: rgba(255, 255, 255, 0.7);
   display: inline-block;
@@ -434,7 +457,7 @@ var WSHeader = function (_HTMLElement) {
 	function WSHeader() {
 		_classCallCheck(this, WSHeader);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(WSHeader).apply(this, arguments));
+		return _possibleConstructorReturn(this, (WSHeader.__proto__ || Object.getPrototypeOf(WSHeader)).apply(this, arguments));
 	}
 
 	_createClass(WSHeader, [{
@@ -447,7 +470,8 @@ var WSHeader = function (_HTMLElement) {
 			var clone = document.importNode(template.content, true);
 
 			// This element uses Shadow DOM.
-			this.createShadowRoot().appendChild(clone);
+			applyTemplate(this, clone);
+			// this.appendChild(clone);
 
 			this.state = state;
 			this.getAttributes();
@@ -498,7 +522,7 @@ var WSHeader = function (_HTMLElement) {
 		value: function setupLanguages() {
 			var _this3 = this;
 
-			var languagesElem = this.shadowRoot.querySelector('#languages');
+			var languagesElem = this.querySelector('#languages');
 
 			availableLanguages.map(function (lang) {
 				var dummy = document.createElement('div');
@@ -528,8 +552,8 @@ var WSHeader = function (_HTMLElement) {
 	}, {
 		key: 'showLanguage',
 		value: function showLanguage(lang) {
-			this.shadowRoot.querySelector('#selectedLanguageFlag').className = "flag flag-" + lang;
-			this.shadowRoot.querySelector('#selectedLanguage').innerText = lang;
+			this.querySelector('#selectedLanguageFlag').className = "flag flag-" + lang;
+			this.querySelector('#selectedLanguage').innerText = lang;
 		}
 	}, {
 		key: 'propagateLanguageChange',
@@ -597,7 +621,7 @@ var WSHeader = function (_HTMLElement) {
 	}, {
 		key: 'showLoggedOut',
 		value: function showLoggedOut() {
-			var loggedInInfo = this.shadowRoot.querySelector('#loggedInInfo');
+			var loggedInInfo = this.querySelector('#loggedInInfo');
 			loggedInInfo.innerHTML = '<a class="auto-size"><span translate="global.menu.signein">Login</span></i></a>';
 			loggedInInfo.removeEventListener("click", this.logout);
 			loggedInInfo.addEventListener("click", this.login.bind(this));
@@ -605,7 +629,7 @@ var WSHeader = function (_HTMLElement) {
 	}, {
 		key: 'showLoggedIn',
 		value: function showLoggedIn() {
-			var loggedInInfo = this.shadowRoot.querySelector('#loggedInInfo');
+			var loggedInInfo = this.querySelector('#loggedInInfo');
 			loggedInInfo.innerHTML = '<span translate="global.menu.signedinas"></span>\n\t\t\t<span id="userName">Loading...</span>\n\t\t\t<a class="auto-size" id="logOutButton" type="button"><div id="logOutIcon"></div></a>';
 			loggedInInfo.removeEventListener("click", this.login);
 			loggedInInfo.addEventListener("click", this.logout.bind(this));
@@ -707,7 +731,7 @@ var WSHeader = function (_HTMLElement) {
 	}, {
 		key: 'showUser',
 		value: function showUser() {
-			this.shadowRoot.querySelector('#userName').innerText = this.state.userName;
+			this.querySelector('#userName').innerText = this.state.userName;
 		}
 	}, {
 		key: 'setCookie',
@@ -803,6 +827,82 @@ var WSHeader = function (_HTMLElement) {
 
 
 document.registerElement('ws-header', WSHeader);
+    function applyTemplate(containerElem, template) {
+	'use strict';
+
+	addLightDom(containerElem, template);
+
+	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
+
+	var observer = new MutationObserver(function(mutations) {
+		var changed = false;
+		mutations.forEach(function(mutation) {
+			var target = mutation.target;
+			if (target === containerElem) {
+				return;
+			}
+			if (target instanceof Text) {
+				// text elements have no closest function
+				target = target.parentNode;
+			}
+			// ignore changes inside of pseudo shadow dom
+			if(target.closest(innerContainerSelector)) {
+				return;
+			}
+
+			// console.log('Mutation:', mutation);
+			changed = true;
+		});
+
+		if (changed) {
+			addLightDom(containerElem, containerElem.querySelector(innerContainerSelector));
+		}
+	});
+
+	// Konfiguration des Observers: alles melden - Änderungen an Daten, Kindelementen und Attributen
+	var config = {
+		attributes: true,
+		childList: true,
+		characterData: true,
+		subtree:true
+	};
+
+	observer.observe(containerElem, config);
+}
+
+function addLightDom(containerElem, template) {
+	'use strict';
+
+	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
+
+	let contentTags = template.querySelectorAll('content');
+	Array.from(contentTags).forEach(contentTag => {
+		contentTag.innerHTML = '';
+		let selection = contentTag.getAttribute('select');
+		if (selection) {
+			let selectedLightDomElems = Array.from(containerElem.querySelectorAll(selection))
+				.filter(elem => !elem.closest(innerContainerSelector));
+
+			selectedLightDomElems.forEach(selectedLightDomElem => {
+				var clone = selectedLightDomElem.cloneNode(true);
+				contentTag.appendChild(clone);
+			});
+		}
+	});
+
+	var lightDom = Array.from(containerElem.children).filter(elem => {
+		return elem.classList
+			&& !elem.classList.contains(innerContainerSelector.substr(1));
+	});
+	for(var child of lightDom) {
+		if (!child.classList.contains('light-dom')) {
+			child.classList.add('light-dom');
+		}
+	}
+
+	containerElem.appendChild(template);
+}
+
     /* endinject */
 })()
 </script>

@@ -19,7 +19,7 @@ class WSWeekPicker extends HTMLElement {
   getElements() {
     this.wrapper = this.shadowRoot.querySelector('.ws-week-wrapper');
     this.input = this.shadowRoot.querySelector('.ws-week-input');
-    this.calendar = this.shadowRoot.querySelector('.ws-week-picker');
+    this.calendar = this.shadowRoot.querySelector('.ws-week-picker-calendar');
     this.crossIcon = this.shadowRoot.querySelector('input + i');
     this.prevYearButton = this.shadowRoot.querySelector('.checkPrevYear');
     this.nextYearButton = this.shadowRoot.querySelector('.checkNextYear');
@@ -104,8 +104,8 @@ class WSWeekPicker extends HTMLElement {
   openWeekPicker() {
     this.open = true;
     // Prevent on every click full redraw calendar
-    this.calendar.className = 'ws-week-picker opened';
-    this.input.className = 'ws-week-input active';
+    this.calendar.classList.add('opened');
+    this.input.classList.add('active');
     this.crossIcon.className = 'icon icon-cross';
     this.buildCalendar();
     this.highlightCurrentWeek();
@@ -114,8 +114,8 @@ class WSWeekPicker extends HTMLElement {
   // Close calendar if user don't click on calendar
   closeWeekPicker() {
     this.open = false;
-    this.calendar.className = 'ws-week-picker';
-    this.input.className = 'ws-week-input used';
+    this.calendar.classList.remove('opened');
+    this.input.classList.remove('active');
     this.crossIcon.className = 'icon icon-calendar';
   }
 
@@ -230,10 +230,10 @@ class WSWeekPicker extends HTMLElement {
     let selectedWeek = parseInt(this.getAttribute('week'));
     this.date = selectedYear && selectedWeek ? parseDate(selectedYear,selectedWeek) : new Date();
     this.parseDates(this.date);
-    this.minWeek = this.getAttribute('min-week');
-    this.minYear = this.getAttribute('min-year');
-    this.maxWeek = this.getAttribute('max-week');
-    this.maxYear = this.getAttribute('max-year');
+    this.minWeek = this.getAttribute('min-week') || 1;
+    this.minYear = this.getAttribute('min-year') || 0;
+    this.maxWeek = this.getAttribute('max-week') || 60;
+    this.maxYear = this.getAttribute('max-year') || 5000;
   }
 
   parseDates(date) {

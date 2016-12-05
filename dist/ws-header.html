@@ -833,7 +833,7 @@ function applyTemplate(containerElem, template) {
 				return;
 			}
 
-			console.log('Mutation:', mutation);
+			// console.log('Mutation:', mutation);
 			changed = true;
 		});
 
@@ -885,7 +885,9 @@ function addLightDom(containerElem, template) {
 		for (var _iterator = lightDom[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 			var child = _step.value;
 
-			child.classList.add('light-dom');
+			if (!child.classList.contains('light-dom')) {
+				child.classList.add('light-dom');
+			}
 		}
 	} catch (err) {
 		_didIteratorError = true;

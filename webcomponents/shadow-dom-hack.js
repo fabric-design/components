@@ -15,6 +15,9 @@ export function applyTemplate(containerElem, template) {
 
 	// eigentliche Observierung starten und Zielnode und Konfiguration übergeben
 	observer.observe(lightDom, config);
+
+	containerElem.appendChild(template);
+	addLightDom(containerElem, template);
 }
 
 function addLightDom(containerElem, template) {
@@ -35,6 +38,4 @@ function addLightDom(containerElem, template) {
 	for(var child of containerElem.children) {
 		child.style.display = 'none';
 	}
-
-	containerElem.appendChild(template);
 }

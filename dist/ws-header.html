@@ -33,6 +33,9 @@
         <!-- endinject -->
     </div>
     <style>
+        ws-header > .light-dom {
+            display: none;
+        }
         /* inject:styles */
         @charset "UTF-8";
 
@@ -810,22 +813,67 @@ document.registerElement('ws-header', WSHeader);
 function applyTemplate(containerElem, template) {
 	'use strict';
 
-	var lightDom = containerElem.children;
-
 	addLightDom(containerElem, template);
 
-	// eine Instanz des Observers erzeugen
+	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
+
 	var observer = new MutationObserver(function (mutations) {
+		var changed = false;
 		mutations.forEach(function (mutation) {
+			var target = mutation.target;
+			if (target instanceof Text) {
+				// text elements have no closest function
+				target = target.parentNode;
+			}
+			// ignore changes inside of pseudo shadow dom
+			if (target.closest(innerContainerSelector)) {
+				return;
+			}
+
 			console.log('Mutation:', mutation);
-			addLightDom(containerElem, template);
+			changed = true;
 		});
+
+		if (changed) {
+			addLightDom(containerElem, containerElem.querySelector(innerContainerSelector));
+		}
 	});
 
 	// Konfiguration des Observers: alles melden - Änderungen an Daten, Kindelementen und Attributen
-	var config = { attributes: true, childList: true, characterData: true };
+	var config = {
+		attributes: true,
+		childList: true,
+		characterData: true,
+		subtree: true
+	};
 
-	// eigentliche Observierung starten und Zielnode und Konfiguration übergeben
+	observer.observe(containerElem, config);
+}
+
+function addLightDom(containerElem, template) {
+	'use strict';
+
+	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
+
+	var contentTags = template.querySelectorAll('content');
+	contentTags.forEach(function (contentTag) {
+		contentTag.innerHTML = '';
+		var selection = contentTag.getAttribute('select');
+		if (selection) {
+			var selectedLightDomElems = Array.from(containerElem.querySelectorAll(selection)).filter(function (elem) {
+				return !elem.closest(innerContainerSelector);
+			});
+
+			selectedLightDomElems.forEach(function (selectedLightDomElem) {
+				var clone = selectedLightDomElem.cloneNode(true);
+				contentTag.appendChild(selectedLightDomElem.cloneNode(true));
+			});
+		}
+	});
+
+	var lightDom = Array.from(containerElem.children).filter(function (elem) {
+		return elem.classList && !elem.classList.contains(innerContainerSelector.substr(1));
+	});
 	var _iteratorNormalCompletion = true;
 	var _didIteratorError = false;
 	var _iteratorError = undefined;
@@ -834,7 +882,7 @@ function applyTemplate(containerElem, template) {
 		for (var _iterator = lightDom[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 			var child = _step.value;
 
-			observer.observe(child, config);
+			child.classList.add('light-dom');
 		}
 	} catch (err) {
 		_didIteratorError = true;
@@ -847,47 +895,6 @@ function applyTemplate(containerElem, template) {
 		} finally {
 			if (_didIteratorError) {
 				throw _iteratorError;
-			}
-		}
-	}
-}
-
-function addLightDom(containerElem, template) {
-	'use strict';
-
-	var contentTags = template.querySelectorAll('content');
-	contentTags.forEach(function (contentTag) {
-		var selection = contentTag.getAttribute('select');
-		if (selection) {
-			var selectedLightDomElems = containerElem.querySelectorAll(selection);
-
-			selectedLightDomElems.forEach(function (selectedLightDomElem) {
-				contentTag.appendChild(selectedLightDomElem.cloneNode(true));
-			});
-		}
-	});
-
-	var _iteratorNormalCompletion2 = true;
-	var _didIteratorError2 = false;
-	var _iteratorError2 = undefined;
-
-	try {
-		for (var _iterator2 = containerElem.children[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-			var child = _step2.value;
-
-			child.style.display = 'none';
-		}
-	} catch (err) {
-		_didIteratorError2 = true;
-		_iteratorError2 = err;
-	} finally {
-		try {
-			if (!_iteratorNormalCompletion2 && _iterator2.return) {
-				_iterator2.return();
-			}
-		} finally {
-			if (_didIteratorError2) {
-				throw _iteratorError2;
 			}
 		}
 	}

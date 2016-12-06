@@ -35,7 +35,7 @@ class WSHeader extends HTMLElement {
         document.addEventListener("WebComponentsReady", () => {
             let lang = this.getLanguage();
         this.setLanguage(lang);
-        
+
         this.checkIsLoggedIn()
           .then(() => this.getUser())
     .then(() => this.showUser())
@@ -48,7 +48,7 @@ class WSHeader extends HTMLElement {
     });
     });
     }
-    
+
     propagateError(reason) {
         let event = new CustomEvent("error", {
             detail: {
@@ -57,7 +57,7 @@ class WSHeader extends HTMLElement {
         });
         this.dispatchEvent(event);
     }
-    
+
     getAttributes() {
         this.state = Object.assign({}, this.state, {
             clientId: this.getAttribute('client-id'),
@@ -66,10 +66,10 @@ class WSHeader extends HTMLElement {
             tokenInfoUrl: this.getAttribute('tokeninfo-url'),
         });
     }
-    
+
     setupLanguages() {
         let languagesElem = this.shadowRoot.querySelector('#languages');
-        
+
         availableLanguages.map((lang) => {
             let dummy = document.createElement( 'div' );
         dummy.innerHTML = `<li>
@@ -80,11 +80,11 @@ class WSHeader extends HTMLElement {
         languagesElem.appendChild(node);
     });
     }
-    
+
     getLanguage() {
         return this.state.lang || window.localStorage.getItem(this.state.languageName) || availableLanguages[0];
     }
-    
+
     setLanguage(lang) {
         if (this.state.lang != lang) {
             this.state.lang = lang;
@@ -93,12 +93,12 @@ class WSHeader extends HTMLElement {
             this.propagateLanguageChange(lang);
         }
     }
-    
+
     showLanguage(lang) {
         this.shadowRoot.querySelector('#selectedLanguageFlag').className = "flag flag-" + lang;
         this.shadowRoot.querySelector('#selectedLanguage').innerText = lang;
     }
-    
+
     propagateLanguageChange(lang) {
         let event = new CustomEvent("language-changed", {
             detail: {
@@ -107,7 +107,7 @@ class WSHeader extends HTMLElement {
         });
         this.dispatchEvent(event);
     }
-    
+
     login() {
         let url = "https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid" +
           "&client_id=" + this.state.clientId +
@@ -242,23 +242,23 @@ class WSHeader extends HTMLElement {
 
 	getUser() {
 		return new Promise((resolve, reject) => {
-			  this.request('GET', `${this.state.userServiceUrl}?q=${this.state.userUID}`)
-			.then((data) => {
-			  let user = data[0];
-		if (!user) {
-			reject();
-		}
-		let userInfo = {
-			userName: user.name,
-			userEmail: user.email
-		};
-		this.state = Object.assign({}, this.state, userInfo);
-		resolve(userInfo);
-	}, (err) => {
-			this.logout();
-			reject(err);
+			this.request('GET', `${this.state.userServiceUrl}?login=${this.state.userUID}`)
+				.then((data) => {
+					let user = data[0];
+					if (!user) {
+						reject();
+					}
+					let userInfo = {
+						userName: user.name,
+						userEmail: user.email
+					};
+					this.state = Object.assign({}, this.state, userInfo);
+					resolve(userInfo);
+				}, (err) => {
+					this.logout();
+					reject(err);
+				});
 		});
-	});
 	}
 
 	showUser() {
@@ -267,12 +267,15 @@ class WSHeader extends HTMLElement {
 
 	setCookie(token) {
 		// setting domain does not work for dev localhost environment
-		//document.cookie = `${this.state.tokenName}=${token},path=${this.state.cookiePath};domain=${this.state.cookieDomain};`
-		document.cookie = `${this.state.tokenName}=${token};path=${this.state.cookiePath};`
+		if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+			document.cookie = `${this.state.tokenName}=${token};path=${this.state.cookiePath};`
+		} else {
+			document.cookie = `${this.state.tokenName}=${token};path=${this.state.cookiePath};domain=${this.state.cookieDomain};`;
+		}
 	}
 
 	removeCookie() {
-		document.cookie = `${this.state.tokenName}=;path=${this.state.cookiePath};domain=${this.state.cookieDomain};expires=Thu, 01 Jan 1970 00:00:01 GMT";`
+		document.cookie = `${this.state.tokenName}=;expires=Thu, 01 Jan 1970 00:00:01 GMT";`
 	}
 
 	// HELPERS

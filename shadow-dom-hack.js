@@ -9,19 +9,18 @@ function applyTemplate(containerElem, template) {
 		var changed = false;
 		mutations.forEach(function(mutation) {
 			var target = mutation.target;
-			if (target === containerElem) {
-				return;
-			}
 			if (target instanceof Text) {
 				// text elements have no closest function
 				target = target.parentNode;
+			}
+			if (target === containerElem) {
+				return;
 			}
 			// ignore changes inside of pseudo shadow dom
 			if(target.closest(innerContainerSelector)) {
 				return;
 			}
 
-			// console.log('Mutation:', mutation);
 			changed = true;
 		});
 
@@ -30,7 +29,7 @@ function applyTemplate(containerElem, template) {
 		}
 	});
 
-	// Konfiguration des Observers: alles melden - Änderungen an Daten, Kindelementen und Attributen
+	// Configuration of the observer
 	var config = {
 		attributes: true,
 		childList: true,
@@ -51,7 +50,8 @@ function addLightDom(containerElem, template) {
 		contentTag.innerHTML = '';
 		let selection = contentTag.getAttribute('select');
 		if (selection) {
-			let selectedLightDomElems = Array.from(containerElem.querySelectorAll(selection))
+			let selectedLightDomElems = Array.from(containerElem.children)
+				.filter(child => child.matches(selection))
 				.filter(elem => !elem.closest(innerContainerSelector));
 
 			selectedLightDomElems.forEach(selectedLightDomElem => {

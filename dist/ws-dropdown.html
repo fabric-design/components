@@ -587,6 +587,222 @@
     /* inject:js */
     'use strict';
 
+function applyTemplate(containerElem, template) {
+	'use strict';
+
+	addLightDom(containerElem, template);
+
+	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
+
+	var observer = new MutationObserver(function (mutations) {
+		var changed = false;
+		mutations.forEach(function (mutation) {
+			var target = mutation.target;
+			if (target instanceof Text) {
+				// text elements have no closest function
+				target = target.parentNode;
+			}
+			if (target === containerElem) {
+				return;
+			}
+			// ignore changes inside of pseudo shadow dom
+			if (target.closest(innerContainerSelector)) {
+				return;
+			}
+
+			changed = true;
+		});
+
+		if (changed) {
+			addLightDom(containerElem, containerElem.querySelector(innerContainerSelector));
+		}
+	});
+
+	// Configuration of the observer
+	var config = {
+		attributes: true,
+		childList: true,
+		characterData: true,
+		subtree: true
+	};
+
+	observer.observe(containerElem, config);
+}
+
+function addLightDom(containerElem, template) {
+	'use strict';
+
+	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
+
+	var contentTags = template.querySelectorAll('content');
+	Array.from(contentTags).forEach(function (contentTag) {
+		contentTag.innerHTML = '';
+		var selection = contentTag.getAttribute('select');
+		if (selection) {
+			var selectedLightDomElems = Array.from(containerElem.children).filter(function (child) {
+				return child.matches(selection);
+			}).filter(function (elem) {
+				return !elem.closest(innerContainerSelector);
+			});
+
+			selectedLightDomElems.forEach(function (selectedLightDomElem) {
+				var clone = selectedLightDomElem.cloneNode(true);
+				contentTag.appendChild(clone);
+			});
+		}
+	});
+
+	var lightDom = Array.from(containerElem.children).filter(function (elem) {
+		return elem.classList && !elem.classList.contains(innerContainerSelector.substr(1));
+	});
+	var _iteratorNormalCompletion = true;
+	var _didIteratorError = false;
+	var _iteratorError = undefined;
+
+	try {
+		for (var _iterator = lightDom[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+			var child = _step.value;
+
+			if (!child.classList.contains('light-dom')) {
+				child.classList.add('light-dom');
+			}
+		}
+	} catch (err) {
+		_didIteratorError = true;
+		_iteratorError = err;
+	} finally {
+		try {
+			if (!_iteratorNormalCompletion && _iterator.return) {
+				_iterator.return();
+			}
+		} finally {
+			if (_didIteratorError) {
+				throw _iteratorError;
+			}
+		}
+	}
+
+	containerElem.appendChild(template);
+}
+    'use strict';
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
+
+var ZWebComponent = function (_HTMLElement) {
+	_inherits(ZWebComponent, _HTMLElement);
+
+	function ZWebComponent() {
+		_classCallCheck(this, ZWebComponent);
+
+		return _possibleConstructorReturn(this, (ZWebComponent.__proto__ || Object.getPrototypeOf(ZWebComponent)).apply(this, arguments));
+	}
+
+	_createClass(ZWebComponent, [{
+		key: 'init',
+
+		// overwrite!
+		// do some initial stuff
+		// can return a state
+		value: function init(state) {}
+
+		// overwrite!
+		// update your state according to the current state
+
+	}, {
+		key: 'updateState',
+		value: function updateState(state) {
+			return state;
+		}
+
+		// overwrite!
+		// update the dom
+
+	}, {
+		key: 'updateUI',
+		value: function updateUI(state) {}
+
+		// don't overwrite
+
+	}, {
+		key: 'lifeCycle',
+		value: function lifeCycle(state) {
+			var newState = this.updateState(state);
+
+			this.updateUI(newState);
+
+			this.state = newState;
+		}
+
+		// don't overwrite
+
+	}, {
+		key: 'createdCallback',
+		value: function createdCallback() {
+			var clone = document.importNode(template.content, true);
+
+			// This element uses Shadow DOM.
+			applyTemplate(this, clone);
+
+			this.state = this.grabAttributes({});
+			var newState = this.init(this.state);
+			if (newState) {
+				this.state = newState;
+			}
+		}
+
+		// don't overwrite
+
+	}, {
+		key: 'attributeChangedCallback',
+		value: function attributeChangedCallback(attrName, oldVal, newVal) {
+			// update the state from the attributes
+			var newState = _extends({}, this.state);
+			newState[hyphenToCamelCase(attrName)] = newVal;
+
+			// update state and dom
+			this.lifeCycle(newState);
+		}
+	}, {
+		key: 'grabAttributes',
+
+
+		// don't overwrite
+		// grab initialy all attributes and put them in state
+		value: function grabAttributes(state) {
+			return Array.from(this.attributes).reduce(function (state, attribute) {
+				var attributeKeyValuePair = {};
+				attributeKeyValuePair[hyphenToCamelCase(attribute.nodeName)] = attribute.nodeValue;
+				return _extends({}, state, attributeKeyValuePair);
+			}, state);
+		}
+	}]);
+
+	return ZWebComponent;
+}(HTMLElement);
+
+function capitalizeFirstLetter(string) {
+	return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function hyphenToCamelCase(name) {
+	'use strict';
+
+	return name.split('-').map(function (part, index) {
+		return index === 0 ? part : capitalizeFirstLetter(part);
+	}).join('');
+}
+    'use strict';
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1190,82 +1406,6 @@ var WSDropdown = function (_HTMLElement) {
 
 
 document.registerElement('ws-dropdown', WSDropdown);
-    function applyTemplate(containerElem, template) {
-	'use strict';
-
-	addLightDom(containerElem, template);
-
-	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
-
-	var observer = new MutationObserver(function(mutations) {
-		var changed = false;
-		mutations.forEach(function(mutation) {
-			var target = mutation.target;
-			if (target === containerElem) {
-				return;
-			}
-			if (target instanceof Text) {
-				// text elements have no closest function
-				target = target.parentNode;
-			}
-			// ignore changes inside of pseudo shadow dom
-			if(target.closest(innerContainerSelector)) {
-				return;
-			}
-
-			// console.log('Mutation:', mutation);
-			changed = true;
-		});
-
-		if (changed) {
-			addLightDom(containerElem, containerElem.querySelector(innerContainerSelector));
-		}
-	});
-
-	// Konfiguration des Observers: alles melden - Änderungen an Daten, Kindelementen und Attributen
-	var config = {
-		attributes: true,
-		childList: true,
-		characterData: true,
-		subtree:true
-	};
-
-	observer.observe(containerElem, config);
-}
-
-function addLightDom(containerElem, template) {
-	'use strict';
-
-	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
-
-	let contentTags = template.querySelectorAll('content');
-	Array.from(contentTags).forEach(contentTag => {
-		contentTag.innerHTML = '';
-		let selection = contentTag.getAttribute('select');
-		if (selection) {
-			let selectedLightDomElems = Array.from(containerElem.querySelectorAll(selection))
-				.filter(elem => !elem.closest(innerContainerSelector));
-
-			selectedLightDomElems.forEach(selectedLightDomElem => {
-				var clone = selectedLightDomElem.cloneNode(true);
-				contentTag.appendChild(clone);
-			});
-		}
-	});
-
-	var lightDom = Array.from(containerElem.children).filter(elem => {
-		return elem.classList
-			&& !elem.classList.contains(innerContainerSelector.substr(1));
-	});
-	for(var child of lightDom) {
-		if (!child.classList.contains('light-dom')) {
-			child.classList.add('light-dom');
-		}
-	}
-
-	containerElem.appendChild(template);
-}
-
     /* endinject */
 })()
 </script>

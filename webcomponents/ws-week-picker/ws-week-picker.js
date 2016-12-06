@@ -76,6 +76,7 @@ class WSWeekPicker extends HTMLElement {
         return;
       }
 
+      this.pickedWeekWrapper = e.target.closest('.week');
       this.pickedWeekWrapper.classList.remove('now');
       this.pickedWeekWrapper = e.target;
       this.pickedWeekWrapper.classList.add('now');
@@ -340,7 +341,7 @@ function weekNumbersByMonth(year, month) {
   let monthWeeks = [];
   let firstWeek = getWeek(year, month, 1);
   let lastWeek = getWeek(year, month, 31);
-  for (let j=firstWeek; j<=lastWeek; j++) {
+  for (let j=firstWeek; j<=lastWeek; j++) { 
     monthWeeks.push(j);
   }
   return monthWeeks;

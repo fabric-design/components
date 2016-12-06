@@ -106,11 +106,11 @@ describe('WS-Header', function () {
 	it('should load the tokeninfo', function() {
 		var elem = wrapper.querySelector(elementName);
 
-		elem.state.tokenInfoUrl = 'abc';
+		elem.state.tokeninfoUrl = 'abc';
 		spyOn(elem, "request");
 
 		elem.getTokenInfo();
-		expect(elem.request).toHaveBeenCalledWith('GET',elem.state.tokenInfoUrl);
+		expect(elem.request).toHaveBeenCalledWith('GET',elem.state.tokeninfoUrl);
 	})
 
 	it('should load the userinfo', function() {

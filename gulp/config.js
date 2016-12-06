@@ -8,5 +8,6 @@ exports.default = {
     temp: './.tmp',
     tempTemplates: './.tmp/templates',
     styleguide: './demo/styleguide.scss',
-    shadowDomHack: 'shadow-dom-hack.js'
+    shadowDomHack: 'shadow-dom-hack.js',
+    zWcPrototype: 'zalando-web-component-prototype.js'
 }

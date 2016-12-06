@@ -68,6 +68,7 @@ gulp.task('sass:styleguide', function () {
 gulp.task('scripts', function () {
   return gulp.src([
     config.shadowDomHack,
+    config.zWcPrototype,
     config.webcomponentsFolder + '/**/*.js'
   ])
   .pipe(babel({
@@ -84,8 +85,9 @@ gulp.task('prepareFiles', function(done) {
 gulp.task('inject', ['prepareFiles'], function() {
   function injectScripts(folder) {
     return inject(gulp.src([
-        folder + '/*.js',
-        config.shadowDomHack
+        config.temp + '/' + config.shadowDomHack,
+        config.temp + '/' + config.zWcPrototype,
+        folder + '/*.js'
       ]), {
       starttag: '/* inject:js */',
       endtag: '/* endinject */',

@@ -275,7 +275,7 @@ class WSHeader extends HTMLElement {
 	}
 
 	removeCookie() {
-		document.cookie = `${this.state.tokenName}=;expires=Thu, 01 Jan 1970 00:00:01 GMT";`
+		document.cookie = `${this.state.tokenName}=;path=${this.state.cookiePath};expires=Thu, 01 Jan 1970 00:00:01 GMT;`
 	}
 
 	// HELPERS

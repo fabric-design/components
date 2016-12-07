@@ -1,6 +1,5 @@
 @import "node_modules/wholesale-styleguide-scss/variables";
-@import "node_modules/bourbon/app/assets/stylesheets/bourbon";
-@import "node_modules/bourbon-neat/app/assets/stylesheets/neat";
+@import "node_modules/wholesale-styleguide-scss/util";
 
 .flag {
   display: inline-block;
@@ -42,8 +41,6 @@ header.navigation {
   z-index: 999;
 
   .navigation-wrapper {
-    @include clearfix;
-    @include outer-container;
     position: relative;
     z-index: 9999;
     // z-index: 3;

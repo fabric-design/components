@@ -97,6 +97,8 @@
                     function({ detail: { item }}) {
                         console.log('Another way t get the value is: ' + document.querySelector('#ws-dropdown-button').value);
                     });
+
+            document.dispatchEvent(new CustomEvent("WebComponentsReady"));
         </script>
     </body>
 </html>

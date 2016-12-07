@@ -266,16 +266,22 @@ class WSHeader extends HTMLElement {
 	}
 
 	setCookie(token) {
+		var now = new Date();
+		now.setTime(now.getTime() + 60*60*1000); // in milliseconds
 		// setting domain does not work for dev localhost environment
 		if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
-			document.cookie = `${this.state.tokenName}=${token};path=${this.state.cookiePath};`
+			document.cookie = `${this.state.tokenName}=${token};path=${this.state.cookiePath};expires=${now.toGMTString()};`;
 		} else {
-			document.cookie = `${this.state.tokenName}=${token};path=${this.state.cookiePath};domain=${this.state.cookieDomain};`;
+			document.cookie = `${this.state.tokenName}=${token};path=${this.state.cookiePath};domain=${this.state.cookieDomain};expires=${now.toGMTString()};`;
 		}
 	}
 
 	removeCookie() {
-		document.cookie = `${this.state.tokenName}=;path=${this.state.cookiePath};expires=Thu, 01 Jan 1970 00:00:01 GMT;`
+		if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+			document.cookie = `${this.state.tokenName}=;path=${this.state.cookiePath};expires=${(new Date(0)).toGMTString()};`
+		} else {
+			document.cookie = `${this.state.tokenName}=;path=${this.state.cookiePath};domain=${this.state.cookieDomain};expires=${(new Date(0)).toGMTString()};`;
+		}
 	}
 
 	// HELPERS

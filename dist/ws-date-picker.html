@@ -25,7 +25,7 @@
 .flatpickr-wrapper {
   display: block;
   position: relative;
-  font-family: acuminpro, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "acumin-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
 }
 
@@ -35,7 +35,7 @@
   box-shadow: inset 0px 1px 3px 0px #e6e7ea;
   box-sizing: border-box;
   outline: none;
-  background-color: white;
+  background-color: #FFFFFF;
   height: 2.125rem;
   font-weight: normal;
   transition: border-color .2s linear, box-shadow .2s linear;
@@ -1078,7 +1078,7 @@ if (!("classList" in document.documentElement) && Object.defineProperty && typeo
           ~index ? classes.splice(index, 1) : classes.push(value);
         }),
         contains: function contains(value) {
-          return !! ~self.className.split(/\s+/).indexOf(value);
+          return !!~self.className.split(/\s+/).indexOf(value);
         }
       };
 
@@ -1105,7 +1105,7 @@ var WSDatePicker = function (_HTMLInputElement) {
     function WSDatePicker() {
         _classCallCheck(this, WSDatePicker);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(WSDatePicker).apply(this, arguments));
+        return _possibleConstructorReturn(this, (WSDatePicker.__proto__ || Object.getPrototypeOf(WSDatePicker)).apply(this, arguments));
     }
 
     _createClass(WSDatePicker, [{

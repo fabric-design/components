@@ -1,9 +1,8 @@
 <!-- inject:global -->
 <!-- endinject -->
 <template>
-    <div class="ws-week-picker">
-        <!-- inject:html -->
-        <div class="ws-week-wrapper">
+    <!-- inject:html -->
+    <div class="ws-week-wrapper">
   <input type="text" class="ws-week-input" readonly placeholder="week picker" /> <i class="icon icon-calendar"></i>
   <div class="ws-week-picker-calendar">
     <div class="year-selector prev-year">
@@ -23,12 +22,8 @@
   </div>
 </div>
 
-        <!-- endinject -->
-    </div>
+    <!-- endinject -->
     <style>
-        ws-week-picker > .light-dom {
-            display: none;
-        }
         /* inject:styles */
         @charset "UTF-8";
 
@@ -40,11 +35,11 @@
   font-style: normal;
 }
 
-.ws-week-picker .icon, .ws-week-picker [class^="icon-"], .ws-week-picker [class*=" icon-"] {
+.icon,[class^="icon-"],[class*=" icon-"] {
   line-height: 1rem;
 }
 
-.ws-week-picker .icon:before, .ws-week-picker [class^="icon-"]:before, .ws-week-picker [class*=" icon-"]:before {
+.icon:before,[class^="icon-"]:before,[class*=" icon-"]:before {
   font-family: "fontello";
   font-style: normal;
   font-weight: normal;
@@ -59,7 +54,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.ws-week-picker .icon16 {
+.icon16 {
   width: rem(16px);
   height: rem(16px);
   line-height: rem(16px);
@@ -67,7 +62,7 @@
   text-indent: -2px;
 }
 
-.ws-week-picker .icon24 {
+.icon24 {
   width: rem(24px);
   height: rem(24px);
   line-height: rem(24px);
@@ -75,7 +70,7 @@
   text-indent: -3px;
 }
 
-.ws-week-picker .icon32 {
+.icon32 {
   width: rem(32px);
   height: rem(32px);
   line-height: rem(32px);
@@ -83,7 +78,7 @@
   text-indent: -4px;
 }
 
-.ws-week-picker .icon48 {
+.icon48 {
   width: rem(48px);
   height: rem(48px);
   line-height: rem(48px);
@@ -91,11 +86,11 @@
   text-indent: -5px;
 }
 
-.ws-week-picker .icon-cross:before {
+.icon-cross:before {
   content: "";
 }
 
-.ws-week-picker .icon-calendar:before {
+.icon-calendar:before {
   content: "";
 }
 
@@ -105,40 +100,40 @@
      */
 
 @keyframes animateRightBall {
-  .ws-week-picker 0% {
+  0% {
     transform: translate3d(0, 0, 0);
   }
 
-  .ws-week-picker 50% {
+  50% {
     transform: translate3d(1.5em, 0, 0);
   }
 
-  .ws-week-picker 0% {
+  0% {
     transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes animateLeftBall {
-  .ws-week-picker 0% {
+  0% {
     transform: translate3d(0, 0, 0);
   }
 
-  .ws-week-picker 50% {
+  50% {
     transform: translate3d(-1.5em, 0, 0);
   }
 
-  .ws-week-picker 0% {
+  0% {
     transform: translate3d(0, 0, 0);
   }
 }
 
-.ws-week-picker input {
+input {
   display: block;
   font-family: "acumin-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1rem;
 }
 
-.ws-week-picker input:not([type]), .ws-week-picker input[type=text], .ws-week-picker input[type=url], .ws-week-picker input[type=password], .ws-week-picker input[type=tel], .ws-week-picker input[type=number], .ws-week-picker input[type=color], .ws-week-picker input[type=email] {
+input:not([type]),input[type=text],input[type=url],input[type=password],input[type=tel],input[type=number],input[type=color],input[type=email] {
   padding: rem(8px);
   border: 1px solid #BDBFC7;
   box-shadow: inset 0px 1px 3px 0px #e6e7ea;
@@ -150,36 +145,36 @@
   transition: border-color .2s linear, box-shadow .2s linear;
 }
 
-.ws-week-picker input:not([type]):focus, .ws-week-picker input[type=text]:focus, .ws-week-picker input[type=url]:focus, .ws-week-picker input[type=password]:focus, .ws-week-picker input[type=tel]:focus, .ws-week-picker input[type=number]:focus, .ws-week-picker input[type=color]:focus, .ws-week-picker input[type=email]:focus {
+input:not([type]):focus,input[type=text]:focus,input[type=url]:focus,input[type=password]:focus,input[type=tel]:focus,input[type=number]:focus,input[type=color]:focus,input[type=email]:focus {
   border-color: #008DC9;
   box-shadow: inset 0 1px 3px 0px #96e0ff;
 }
 
-.ws-week-picker input:not([type]):disabled, .ws-week-picker input[type=text]:disabled, .ws-week-picker input[type=url]:disabled, .ws-week-picker input[type=password]:disabled, .ws-week-picker input[type=tel]:disabled, .ws-week-picker input[type=number]:disabled, .ws-week-picker input[type=color]:disabled, .ws-week-picker input[type=email]:disabled {
+input:not([type]):disabled,input[type=text]:disabled,input[type=url]:disabled,input[type=password]:disabled,input[type=tel]:disabled,input[type=number]:disabled,input[type=color]:disabled,input[type=email]:disabled {
   background-color: #F5F6F9;
 }
 
-.ws-week-picker .input-wrapper {
+.input-wrapper {
   position: relative;
 }
 
-.ws-week-picker .input-wrapper .icon {
+.input-wrapper .icon {
   position: absolute;
   top: 10px;
   right: 8px;
 }
 
-.ws-week-picker input[type="search"] {
+input[type="search"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
 
-.ws-week-picker input[type="checkbox"], .ws-week-picker input[type="radio"] {
+input[type="checkbox"],input[type="radio"] {
   margin-right: 0.34375rem;
 }
 
-.ws-week-picker input[type="file"] {
+input[type="file"] {
   padding-bottom: 0.6875rem;
   width: 100%;
 }
@@ -200,12 +195,12 @@
 * Z-index function for managing the values
 */
 
-.ws-week-picker .ws-week-wrapper {
+.ws-week-wrapper {
   display: inline-block;
   position: relative;
 }
 
-.ws-week-picker .ws-week-wrapper > #ws-week-icon {
+.ws-week-wrapper > #ws-week-icon {
   right: 11px;
   top: 8px;
   position: absolute;
@@ -213,7 +208,7 @@
   height: 16px;
 }
 
-.ws-week-picker .ws-week-wrapper > input {
+.ws-week-wrapper > input {
   padding: 0.5rem;
   border: 1px solid #BDBFC7;
   box-shadow: inset 0px 1px 3px 0px #e6e7ea;
@@ -228,16 +223,16 @@
   width: 100%;
 }
 
-.ws-week-picker .ws-week-wrapper > input:focus {
+.ws-week-wrapper > input:focus {
   border-color: #008DC9;
   box-shadow: inset 0 1px 3px 0px #96e0ff;
 }
 
-.ws-week-picker .ws-week-wrapper > input:disabled {
+.ws-week-wrapper > input:disabled {
   background-color: #F5F6F9;
 }
 
-.ws-week-picker .ws-week-wrapper > input + .icon {
+.ws-week-wrapper > input + .icon {
   width: 16px;
   height: 16px;
   right: 11px;
@@ -245,7 +240,7 @@
   position: absolute;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar {
+.ws-week-wrapper > .ws-week-picker-calendar {
   padding: 13px 0;
   top: 40px;
   width: 596px;
@@ -258,76 +253,76 @@
   z-index: 8000;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar.opened {
+.ws-week-wrapper > .ws-week-picker-calendar.opened {
   display: block;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector {
+.ws-week-wrapper > .ws-week-picker-calendar > .year-selector {
   display: inline-block;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector > .icon {
+.ws-week-wrapper > .ws-week-picker-calendar > .year-selector > .icon {
   margin-top: 0.375rem;
   height: 0.75rem;
   width: 0.75rem;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector > .icon[disabled] {
+.ws-week-wrapper > .ws-week-picker-calendar > .year-selector > .icon[disabled] {
   visibility: hidden;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector > .year {
+.ws-week-wrapper > .ws-week-picker-calendar > .year-selector > .year {
   color: #CBCDD5;
   font-weight: 600;
   padding-bottom: 13px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.prev-year {
+.ws-week-wrapper > .ws-week-picker-calendar > .year-selector.prev-year {
   width: 85px;
   display: inline-block;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.prev-year > .checkPrevYear {
+.ws-week-wrapper > .ws-week-picker-calendar > .year-selector.prev-year > .checkPrevYear {
   float: left;
   margin-left: 18px;
   background: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMjkgMTI5IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMjkgMTI5IiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KICA8Zz4KICAgIDxwYXRoIGQ9Im04OC42LDEyMS4zYzAuOCwwLjggMS44LDEuMiAyLjksMS4yczIuMS0wLjQgMi45LTEuMmMxLjYtMS42IDEuNi00LjIgMC01LjhsLTUxLTUxIDUxLTUxYzEuNi0xLjYgMS42LTQuMiAwLTUuOHMtNC4yLTEuNi01LjgsMGwtNTQsNTMuOWMtMS42LDEuNi0xLjYsNC4yIDAsNS44bDU0LDUzLjl6IiBmaWxsPSIjMDAwMDAwIi8+CiAgPC9nPgo8L3N2Zz4K) 0 -2px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.prev-year > .year {
+.ws-week-wrapper > .ws-week-picker-calendar > .year-selector.prev-year > .year {
   margin-left: 38px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.cur-year {
+.ws-week-wrapper > .ws-week-picker-calendar > .year-selector.cur-year {
   width: 433px;
   margin: 0 -3px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.cur-year > .year {
+.ws-week-wrapper > .ws-week-picker-calendar > .year-selector.cur-year > .year {
   text-align: center;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.next-year {
+.ws-week-wrapper > .ws-week-picker-calendar > .year-selector.next-year {
   width: 76px;
   float: right;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.next-year > .checkNextYear {
+.ws-week-wrapper > .ws-week-picker-calendar > .year-selector.next-year > .checkNextYear {
   float: left;
   margin-left: -2px;
   background: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMjkgMTI5IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMjkgMTI5IiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KICA8Zz4KICAgIDxwYXRoIGQ9Im00MC40LDEyMS4zYy0wLjgsMC44LTEuOCwxLjItMi45LDEuMnMtMi4xLTAuNC0yLjktMS4yYy0xLjYtMS42LTEuNi00LjIgMC01LjhsNTEtNTEtNTEtNTFjLTEuNi0xLjYtMS42LTQuMiAwLTUuOCAxLjYtMS42IDQuMi0xLjYgNS44LDBsNTMuOSw1My45YzEuNiwxLjYgMS42LDQuMiAwLDUuOGwtNTMuOSw1My45eiIgZmlsbD0iIzAwMDAwMCIvPgogIDwvZz4KPC9zdmc+Cg==) 0 -2px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.next-year > .year {
+.ws-week-wrapper > .ws-week-picker-calendar > .year-selector.next-year > .year {
   float: left;
   margin-left: 13px;
   padding-right: 6px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .cur-year > .weeks, .ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .next-year > .weeks {
+.ws-week-wrapper > .ws-week-picker-calendar > .cur-year > .weeks,.ws-week-wrapper > .ws-week-picker-calendar > .next-year > .weeks {
   margin-left: -5px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .month {
+.ws-week-wrapper > .ws-week-picker-calendar .month {
   box-sizing: border-box;
   color: #CBCDD5;
   display: inline-block;
@@ -341,19 +336,19 @@
   background-color: #DEF5FE;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .weeks > .weekNumbers:last-child > .month {
+.ws-week-wrapper > .ws-week-picker-calendar .weeks > .weekNumbers:last-child > .month {
   padding-left: 0;
   width: 45px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .weekNumbers {
+.ws-week-wrapper > .ws-week-picker-calendar .weekNumbers {
   width: 35.3px;
   height: 35.3px;
   float: left;
   font-size: 14px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .week {
+.ws-week-wrapper > .ws-week-picker-calendar .week {
   background: 0 0;
   border: 1px solid transparent;
   border-radius: 150px;
@@ -368,16 +363,16 @@
   margin: 3px 6px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .week.now, .ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .week.now:hover {
+.ws-week-wrapper > .ws-week-picker-calendar .week.now,.ws-week-wrapper > .ws-week-picker-calendar .week.now:hover {
   background-color: #008DC9;
   color: #FFFFFF;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .week:hover {
+.ws-week-wrapper > .ws-week-picker-calendar .week:hover {
   background-color: #DEF5FE;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .week[disabled] {
+.ws-week-wrapper > .ws-week-picker-calendar .week[disabled] {
   color: #BDBFC7;
   background-color: #E9EAEF;
   cursor: not-allowed;
@@ -417,8 +412,7 @@ var WSWeekPicker = function (_HTMLElement) {
     value: function createdCallback() {
       // Take all main DOM elements
       var clone = document.importNode(template.content, true);
-      // this.appendChild(clone);
-      applyTemplate(this, clone);
+      this.createShadowRoot().appendChild(clone);
       this.open = false;
       this.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       this.getAttributes();
@@ -432,23 +426,23 @@ var WSWeekPicker = function (_HTMLElement) {
   }, {
     key: 'getElements',
     value: function getElements() {
-      this.wrapper = this.querySelector('.ws-week-wrapper');
-      this.input = this.querySelector('.ws-week-input');
-      this.calendar = this.querySelector('.ws-week-picker-calendar');
-      this.crossIcon = this.querySelector('input + i');
-      this.prevYearButton = this.querySelector('.checkPrevYear');
-      this.nextYearButton = this.querySelector('.checkNextYear');
+      this.wrapper = this.shadowRoot.querySelector('.ws-week-wrapper');
+      this.input = this.shadowRoot.querySelector('.ws-week-input');
+      this.calendar = this.shadowRoot.querySelector('.ws-week-picker-calendar');
+      this.crossIcon = this.shadowRoot.querySelector('input + i');
+      this.prevYearButton = this.shadowRoot.querySelector('.checkPrevYear');
+      this.nextYearButton = this.shadowRoot.querySelector('.checkNextYear');
       // Calculate previous year and take previous year and weeks elements
       this.prevYear = this.curYear - 1;
-      this.prevYearNumber = this.querySelector('.prev-year > .year');
-      this.prevYearWeeks = this.querySelector('.prev-year > .weeks');
+      this.prevYearNumber = this.shadowRoot.querySelector('.prev-year > .year');
+      this.prevYearWeeks = this.shadowRoot.querySelector('.prev-year > .weeks');
       // Take current year and weeks elements
-      this.curYearNumber = this.querySelector('.cur-year > .year');
-      this.curYearWeeks = this.querySelector('.cur-year > .weeks');
+      this.curYearNumber = this.shadowRoot.querySelector('.cur-year > .year');
+      this.curYearWeeks = this.shadowRoot.querySelector('.cur-year > .weeks');
       // Calculate next year and take next year and weeks elements
       this.nextYear = this.curYear + 1;
-      this.nextYearNumber = this.querySelector('.next-year > .year');
-      this.nextYearWeeks = this.querySelector('.next-year > .weeks');
+      this.nextYearNumber = this.shadowRoot.querySelector('.next-year > .year');
+      this.nextYearWeeks = this.shadowRoot.querySelector('.next-year > .weeks');
     }
 
     // Attach all event liteners
@@ -459,7 +453,7 @@ var WSWeekPicker = function (_HTMLElement) {
       var _this2 = this;
 
       document.addEventListener('click', function (e) {
-        _this2.open && e.target.closest('ws-week-picker') !== _this2 ? _this2.closeWeekPicker() : null;
+        return _this2.open && e.target != _this2 ? _this2.closeWeekPicker() : null;
       });
       this.input.addEventListener('click', function (e) {
         return _this2.open ? _this2.closeWeekPicker() : _this2.openWeekPicker();
@@ -597,20 +591,20 @@ var WSWeekPicker = function (_HTMLElement) {
       var prevYearWeeksNumbers = weeksNumbersForYear(this.prevYear).slice(10);
       if (parseDate(this.prevYear, prevYearWeeksNumbers[0][0]) < parseDate(this.minYear, this.minWeek)) {
         this.prevYearButton.setAttribute('disabled', 'disabled');
-        this.querySelector('.prev-year .year').setAttribute('disabled', 'disabled');
+        this.shadowRoot.querySelector('.prev-year .year').setAttribute('disabled', 'disabled');
       } else {
         this.prevYearButton.removeAttribute('disabled');
-        this.querySelector('.prev-year .year').removeAttribute('disabled');
+        this.shadowRoot.querySelector('.prev-year .year').removeAttribute('disabled');
       }
 
       this.nextYearNumber.innerHTML = '<span>' + this.nextYear + '</span>';
       var nextYearWeeksNumbers = weeksNumbersForYear(this.nextYear).slice(0, 2);
       if (parseDate(this.nextYear, nextYearWeeksNumbers[1][nextYearWeeksNumbers[1].length - 1]) > parseDate(this.maxYear, this.maxWeek)) {
         this.nextYearButton.setAttribute('disabled', 'disabled');
-        this.querySelector('.next-year .year').setAttribute('disabled', 'disabled');
+        this.shadowRoot.querySelector('.next-year .year').setAttribute('disabled', 'disabled');
       } else {
         this.nextYearButton.removeAttribute('disabled');
-        this.querySelector('.next-year .year').removeAttribute('disabled');
+        this.shadowRoot.querySelector('.next-year .year').removeAttribute('disabled');
       }
       this.curYearNumber.innerHTML = '<span>' + this.curYear + '</span>';
     }
@@ -653,11 +647,11 @@ var WSWeekPicker = function (_HTMLElement) {
 
       var wholeWeeks = void 0;
       if (this.selectedYear === this.curYear) {
-        wholeWeeks = this.querySelectorAll('.curYear.week');
+        wholeWeeks = this.shadowRoot.querySelectorAll('.curYear.week');
       } else if (this.selectedYear === this.prevYear) {
-        wholeWeeks = this.querySelectorAll('.prevYear.week');
+        wholeWeeks = this.shadowRoot.querySelectorAll('.prevYear.week');
       } else if (this.selectedYear === this.nextYear) {
-        wholeWeeks = this.querySelectorAll('.nextYear.week');
+        wholeWeeks = this.shadowRoot.querySelectorAll('.nextYear.week');
       } else {
         return;
       }
@@ -808,82 +802,6 @@ function weeksNumbersForYear(year) {
   }
   return weeks;
 }
-    function applyTemplate(containerElem, template) {
-	'use strict';
-
-	addLightDom(containerElem, template);
-
-	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
-
-	var observer = new MutationObserver(function(mutations) {
-		var changed = false;
-		mutations.forEach(function(mutation) {
-			var target = mutation.target;
-			if (target === containerElem) {
-				return;
-			}
-			if (target instanceof Text) {
-				// text elements have no closest function
-				target = target.parentNode;
-			}
-			// ignore changes inside of pseudo shadow dom
-			if(target.closest(innerContainerSelector)) {
-				return;
-			}
-
-			// console.log('Mutation:', mutation);
-			changed = true;
-		});
-
-		if (changed) {
-			addLightDom(containerElem, containerElem.querySelector(innerContainerSelector));
-		}
-	});
-
-	// Konfiguration des Observers: alles melden - Änderungen an Daten, Kindelementen und Attributen
-	var config = {
-		attributes: true,
-		childList: true,
-		characterData: true,
-		subtree:true
-	};
-
-	observer.observe(containerElem, config);
-}
-
-function addLightDom(containerElem, template) {
-	'use strict';
-
-	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
-
-	let contentTags = template.querySelectorAll('content');
-	Array.from(contentTags).forEach(contentTag => {
-		contentTag.innerHTML = '';
-		let selection = contentTag.getAttribute('select');
-		if (selection) {
-			let selectedLightDomElems = Array.from(containerElem.querySelectorAll(selection))
-				.filter(elem => !elem.closest(innerContainerSelector));
-
-			selectedLightDomElems.forEach(selectedLightDomElem => {
-				var clone = selectedLightDomElem.cloneNode(true);
-				contentTag.appendChild(clone);
-			});
-		}
-	});
-
-	var lightDom = Array.from(containerElem.children).filter(elem => {
-		return elem.classList
-			&& !elem.classList.contains(innerContainerSelector.substr(1));
-	});
-	for(var child of lightDom) {
-		if (!child.classList.contains('light-dom')) {
-			child.classList.add('light-dom');
-		}
-	}
-
-	containerElem.appendChild(template);
-}
-
     /* endinject */
 })()
 </script>

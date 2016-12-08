@@ -1,9 +1,8 @@
 <!-- inject:global -->
 <!-- endinject -->
 <template>
-    <div class="ws-dropdown">
-        <!-- inject:html -->
-        <template id="ws-dropdown-menu">
+    <!-- inject:html -->
+    <template id="ws-dropdown-menu">
     <ul class="dropdown-menu">
     </ul>
 
@@ -23,7 +22,7 @@
     </template>
 </template>
 
-        <template id="ws-dropdown">
+    <template id="ws-dropdown">
     <div class="dropdown">
         <content select="button,a" id='content'></content>
         <div class="dropdown-container" style="z-index: 1;">
@@ -32,12 +31,8 @@
         </div>
     </div>
 </template>
-        <!-- endinject -->
-    </div>
+    <!-- endinject -->
     <style>
-        ws-dropdown > .light-dom {
-            display: none;
-        }
         /* inject:styles */
         /**
  * Parse a numeric value from a string
@@ -55,12 +50,12 @@
 * Z-index function for managing the values
 */
 
-.ws-dropdown .dropdown {
+.dropdown {
   position: relative;
   display: block;
 }
 
-.ws-dropdown .dropdown .dropdown-container {
+.dropdown .dropdown-container {
   position: absolute;
   top: 100%;
   right: 0;
@@ -77,30 +72,30 @@
   z-index: 3;
 }
 
-.ws-dropdown .dropdown .dropdown-container.left {
+.dropdown .dropdown-container.left {
   right: auto;
   left: 0;
 }
 
-.ws-dropdown .dropdown .dropdown-container.right + .dropdown-arrow {
+.dropdown .dropdown-container.right + .dropdown-arrow {
   right: 1.25rem;
   left: auto;
 }
 
-.ws-dropdown .dropdown .dropdown-container .dropdown-root-menu {
+.dropdown .dropdown-container .dropdown-root-menu {
   right: 0;
   left: auto;
 }
 
-.ws-dropdown .dropdown .dropdown-container.mod-open {
+.dropdown .dropdown-container.mod-open {
   display: block;
 }
 
-.ws-dropdown .dropdown .dropdown-container.mod-open + .dropdown-arrow {
+.dropdown .dropdown-container.mod-open + .dropdown-arrow {
   display: block;
 }
 
-.ws-dropdown .dropdown .dropdown-menu {
+.dropdown .dropdown-menu {
   display: block;
   position: absolute;
   top: 0;
@@ -110,20 +105,20 @@
   width: 100%;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.mod-menu-open, .ws-dropdown .dropdown .dropdown-menu.mod-sub-open {
+.dropdown .dropdown-menu.mod-menu-open,.dropdown .dropdown-menu.mod-sub-open {
   left: 0;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.mod-sub-open > .dropdown-item > .text {
+.dropdown .dropdown-menu.mod-sub-open > .dropdown-item > .text {
   opacity: 0;
   z-index: -1;
 }
 
-.ws-dropdown .dropdown .dropdown-item {
+.dropdown .dropdown-item {
   list-style: none;
 }
 
-.ws-dropdown .dropdown .dropdown-item .text {
+.dropdown .dropdown-item .text {
   position: relative;
   font-size: 0.875rem;
   color: #626166;
@@ -140,15 +135,15 @@
   font-weight: normal;
 }
 
-.ws-dropdown .dropdown .dropdown-item .text:hover {
+.dropdown .dropdown-item .text:hover {
   background-color: #E9EAEF;
 }
 
-.ws-dropdown .dropdown .dropdown-item .text.is-active {
+.dropdown .dropdown-item .text.is-active {
   background-color: #DEF5FE;
 }
 
-.ws-dropdown .dropdown .dropdown-arrow {
+.dropdown .dropdown-arrow {
   display: none;
   position: absolute;
   width: 0.625rem;
@@ -161,176 +156,176 @@
   box-shadow: -1px -1px 1px rgba(115, 115, 115, 0.16);
 }
 
-.ws-dropdown .dropdown .dropdown-container.animate-close {
+.dropdown .dropdown-container.animate-close {
   animation: closeContainer .2s ease-in-out forwards;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item > .text {
   animation: dropDownIn 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) 0s forwards;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item > .text {
+.dropdown .dropdown-menu.animate-out > .dropdown-item > .text {
   animation: dropDownOut 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0.05s forwards;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item > .text {
+.dropdown .dropdown-menu.animate-sub-in > .dropdown-item > .text {
   animation: dropDownSubIn 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) 0s forwards;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item > .text {
+.dropdown .dropdown-menu.animate-sub-out > .dropdown-item > .text {
   animation: dropDownSubOut 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0.05s forwards;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(1) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(1) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(1) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(1) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(1) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(1) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(1) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(1) > .text {
   animation-delay: 0.035s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(2) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(2) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(2) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(2) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(2) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(2) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(2) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(2) > .text {
   animation-delay: 0.07s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(3) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(3) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(3) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(3) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(3) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(3) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(3) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(3) > .text {
   animation-delay: 0.105s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(4) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(4) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(4) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(4) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(4) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(4) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(4) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(4) > .text {
   animation-delay: 0.14s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(5) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(5) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(5) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(5) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(5) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(5) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(5) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(5) > .text {
   animation-delay: 0.175s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(6) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(6) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(6) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(6) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(6) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(6) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(6) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(6) > .text {
   animation-delay: 0.21s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(7) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(7) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(7) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(7) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(7) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(7) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(7) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(7) > .text {
   animation-delay: 0.245s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(8) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(8) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(8) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(8) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(8) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(8) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(8) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(8) > .text {
   animation-delay: 0.28s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(9) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(9) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(9) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(9) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(9) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(9) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(9) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(9) > .text {
   animation-delay: 0.315s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(10) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(10) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(10) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(10) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(10) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(10) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(10) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(10) > .text {
   animation-delay: 0.35s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(11) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(11) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(11) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(11) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(11) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(11) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(11) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(11) > .text {
   animation-delay: 0.385s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(12) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(12) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(12) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(12) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(12) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(12) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(12) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(12) > .text {
   animation-delay: 0.42s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(13) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(13) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(13) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(13) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(13) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(13) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(13) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(13) > .text {
   animation-delay: 0.455s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(14) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(14) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(14) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(14) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(14) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(14) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(14) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(14) > .text {
   animation-delay: 0.49s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(15) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(15) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(15) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(15) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(15) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(15) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(15) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(15) > .text {
   animation-delay: 0.525s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(16) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(16) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(16) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(16) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(16) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(16) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(16) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(16) > .text {
   animation-delay: 0.56s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(17) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(17) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(17) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(17) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(17) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(17) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(17) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(17) > .text {
   animation-delay: 0.595s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(18) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(18) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(18) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(18) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(18) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(18) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(18) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(18) > .text {
   animation-delay: 0.63s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(19) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(19) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(19) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(19) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(19) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(19) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(19) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(19) > .text {
   animation-delay: 0.665s;
 }
 
-.ws-dropdown .dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(20) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(20) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(20) > .text, .ws-dropdown .dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(20) > .text {
+.dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(20) > .text,.dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(20) > .text,.dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(20) > .text,.dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(20) > .text {
   animation-delay: 0.7s;
 }
 
 @keyframes closeContainer {
-  .ws-dropdown 100% {
+  100% {
     height: 0;
   }
 }
 
 @keyframes dropDownOut {
-  .ws-dropdown 0% {
+  0% {
     transform: translate3d(0, 0, 0);
     opacity: 1;
   }
 
-  .ws-dropdown 70% {
+  70% {
     opacity: 0;
   }
 
-  .ws-dropdown 100% {
+  100% {
     transform: translate3d(-100%, 0, 0);
   }
 }
 
 @keyframes dropDownIn {
-  .ws-dropdown 0% {
+  0% {
     transform: translate3d(-100%, 0, 0);
     opacity: 0;
   }
 
-  .ws-dropdown 100% {
+  100% {
     transform: translate3d(0%, 0, 0);
     opacity: 1;
   }
 }
 
 @keyframes dropDownSubOut {
-  .ws-dropdown 0% {
+  0% {
     transform: translate3d(0, 0, 0);
     opacity: 1;
   }
 
-  .ws-dropdown 70% {
+  70% {
     opacity: 0;
   }
 
-  .ws-dropdown 100% {
+  100% {
     transform: translate3d(100%, 0, 0);
   }
 }
 
 @keyframes dropDownSubIn {
-  .ws-dropdown 0% {
+  0% {
     transform: translate3d(0, 0, 0);
     opacity: 0;
   }
 
-  .ws-dropdown 100% {
+  100% {
     transform: translate3d(-100%, 0, 0);
     opacity: 1;
   }
 }
 
-.ws-dropdown .dropdown-menu {
+.dropdown-menu {
   display: block;
 }
 
-.ws-dropdown .dropdown {
+.dropdown {
   position: relative;
   display: inline-block;
 }
 
-.ws-dropdown .dropdown-container {
+.dropdown-container {
   position: absolute;
   top: 100%;
   right: 0;
@@ -347,24 +342,24 @@
   z-index: 3;
 }
 
-.ws-dropdown .dropdown-container.left {
+.dropdown-container.left {
   left: 0;
 }
 
-.ws-dropdown .dropdown-container .dropdown-root-menu {
+.dropdown-container .dropdown-root-menu {
   right: 0;
   left: auto;
 }
 
-.ws-dropdown .dropdown-container.mod-open {
+.dropdown-container.mod-open {
   display: block;
 }
 
-.ws-dropdown .dropdown-container.mod-open + .dropdown-arrow {
+.dropdown-container.mod-open + .dropdown-arrow {
   display: block;
 }
 
-.ws-dropdown .dropdown-menu {
+.dropdown-menu {
   position: absolute;
   top: 0;
   left: 100%;
@@ -373,16 +368,16 @@
   margin: 0;
 }
 
-.ws-dropdown .dropdown-menu.mod-menu-open, .ws-dropdown .dropdown-menu.mod-sub-open {
+.dropdown-menu.mod-menu-open,.dropdown-menu.mod-sub-open {
   left: 0;
 }
 
-.ws-dropdown .dropdown-menu.mod-sub-open > .dropdown-item > .text {
+.dropdown-menu.mod-sub-open > .dropdown-item > .text {
   opacity: 0;
   z-index: -1;
 }
 
-.ws-dropdown .dropdown-item .text {
+.dropdown-item .text {
   position: relative;
   font-size: 0.875rem;
   color: #626166;
@@ -398,15 +393,15 @@
   font-weight: normal;
 }
 
-.ws-dropdown .dropdown-item .text:hover {
+.dropdown-item .text:hover {
   background-color: #DEF5FE;
 }
 
-.ws-dropdown .dropdown-item .text.is-active {
+.dropdown-item .text.is-active {
   background-color: #00ABF2 !important;
 }
 
-.ws-dropdown .dropdown-arrow {
+.dropdown-arrow {
   display: none;
   position: absolute;
   width: 0.625rem;
@@ -419,161 +414,161 @@
   box-shadow: -1px -1px 1px #E9EAEF;
 }
 
-.ws-dropdown .dropdown-container.animate-close {
+.dropdown-container.animate-close {
   animation: closeContainer .2s ease-in-out forwards;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item > .text {
+.dropdown-menu.animate-in > .dropdown-item > .text {
   animation: dropDownIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
 }
 
-.ws-dropdown .dropdown-menu.animate-out > .dropdown-item > .text {
+.dropdown-menu.animate-out > .dropdown-item > .text {
   animation: dropDownOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
 }
 
-.ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item > .text {
+.dropdown-menu.animate-sub-in > .dropdown-item > .text {
   animation: dropDownSubIn 0.3s cubic-bezier(0.32, 0.97, 0.71, 0.95) 0s forwards;
 }
 
-.ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item > .text {
+.dropdown-menu.animate-sub-out > .dropdown-item > .text {
   animation: dropDownSubOut 0.3s cubic-bezier(0.53, 1.49, 1, 0.87) forwards;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(1) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(1) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(1) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(1) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(1) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(1) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(1) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(1) > .text {
   animation-delay: 0.025s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(2) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(2) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(2) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(2) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(2) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(2) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(2) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(2) > .text {
   animation-delay: 0.05s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(3) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(3) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(3) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(3) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(3) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(3) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(3) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(3) > .text {
   animation-delay: 0.075s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(4) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(4) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(4) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(4) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(4) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(4) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(4) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(4) > .text {
   animation-delay: 0.1s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(5) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(5) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(5) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(5) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(5) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(5) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(5) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(5) > .text {
   animation-delay: 0.125s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(6) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(6) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(6) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(6) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(6) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(6) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(6) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(6) > .text {
   animation-delay: 0.15s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(7) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(7) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(7) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(7) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(7) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(7) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(7) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(7) > .text {
   animation-delay: 0.175s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(8) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(8) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(8) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(8) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(8) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(8) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(8) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(8) > .text {
   animation-delay: 0.2s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(9) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(9) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(9) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(9) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(9) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(9) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(9) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(9) > .text {
   animation-delay: 0.225s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(10) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(10) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(10) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(10) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(10) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(10) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(10) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(10) > .text {
   animation-delay: 0.25s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(11) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(11) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(11) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(11) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(11) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(11) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(11) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(11) > .text {
   animation-delay: 0.275s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(12) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(12) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(12) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(12) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(12) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(12) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(12) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(12) > .text {
   animation-delay: 0.3s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(13) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(13) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(13) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(13) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(13) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(13) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(13) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(13) > .text {
   animation-delay: 0.325s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(14) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(14) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(14) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(14) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(14) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(14) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(14) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(14) > .text {
   animation-delay: 0.35s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(15) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(15) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(15) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(15) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(15) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(15) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(15) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(15) > .text {
   animation-delay: 0.375s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(16) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(16) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(16) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(16) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(16) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(16) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(16) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(16) > .text {
   animation-delay: 0.4s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(17) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(17) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(17) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(17) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(17) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(17) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(17) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(17) > .text {
   animation-delay: 0.425s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(18) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(18) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(18) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(18) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(18) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(18) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(18) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(18) > .text {
   animation-delay: 0.45s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(19) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(19) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(19) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(19) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(19) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(19) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(19) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(19) > .text {
   animation-delay: 0.475s;
 }
 
-.ws-dropdown .dropdown-menu.animate-in > .dropdown-item:nth-child(20) > .text, .ws-dropdown .dropdown-menu.animate-out > .dropdown-item:nth-child(20) > .text, .ws-dropdown .dropdown-menu.animate-sub-in > .dropdown-item:nth-child(20) > .text, .ws-dropdown .dropdown-menu.animate-sub-out > .dropdown-item:nth-child(20) > .text {
+.dropdown-menu.animate-in > .dropdown-item:nth-child(20) > .text,.dropdown-menu.animate-out > .dropdown-item:nth-child(20) > .text,.dropdown-menu.animate-sub-in > .dropdown-item:nth-child(20) > .text,.dropdown-menu.animate-sub-out > .dropdown-item:nth-child(20) > .text {
   animation-delay: 0.5s;
 }
 
 @keyframes closeContainer {
-  .ws-dropdown 100% {
+  100% {
     height: 0;
   }
 }
 
 @keyframes dropDownOut {
-  .ws-dropdown 0% {
+  0% {
     transform: translate3d(0, 0, 0);
     opacity: 1;
   }
 
-  .ws-dropdown 70% {
+  70% {
     opacity: 0;
   }
 
-  .ws-dropdown 100% {
+  100% {
     transform: translate3d(-100%, 0, 0);
   }
 }
 
 @keyframes dropDownIn {
-  .ws-dropdown 0% {
+  0% {
     transform: translate3d(-100%, 0, 0);
     opacity: 0;
   }
 
-  .ws-dropdown 100% {
+  100% {
     transform: translate3d(0%, 0, 0);
     opacity: 1;
   }
 }
 
 @keyframes dropDownSubOut {
-  .ws-dropdown 0% {
+  0% {
     transform: translate3d(0, 0, 0);
     opacity: 1;
   }
 
-  .ws-dropdown 70% {
+  70% {
     opacity: 0;
   }
 
-  .ws-dropdown 100% {
+  100% {
     transform: translate3d(100%, 0, 0);
   }
 }
 
 @keyframes dropDownSubIn {
-  .ws-dropdown 0% {
+  0% {
     transform: translate3d(0, 0, 0);
     opacity: 0;
   }
 
-  .ws-dropdown 100% {
+  100% {
     transform: translate3d(-100%, 0, 0);
     opacity: 1;
   }
@@ -1190,82 +1185,6 @@ var WSDropdown = function (_HTMLElement) {
 
 
 document.registerElement('ws-dropdown', WSDropdown);
-    function applyTemplate(containerElem, template) {
-	'use strict';
-
-	addLightDom(containerElem, template);
-
-	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
-
-	var observer = new MutationObserver(function(mutations) {
-		var changed = false;
-		mutations.forEach(function(mutation) {
-			var target = mutation.target;
-			if (target === containerElem) {
-				return;
-			}
-			if (target instanceof Text) {
-				// text elements have no closest function
-				target = target.parentNode;
-			}
-			// ignore changes inside of pseudo shadow dom
-			if(target.closest(innerContainerSelector)) {
-				return;
-			}
-
-			// console.log('Mutation:', mutation);
-			changed = true;
-		});
-
-		if (changed) {
-			addLightDom(containerElem, containerElem.querySelector(innerContainerSelector));
-		}
-	});
-
-	// Konfiguration des Observers: alles melden - Änderungen an Daten, Kindelementen und Attributen
-	var config = {
-		attributes: true,
-		childList: true,
-		characterData: true,
-		subtree:true
-	};
-
-	observer.observe(containerElem, config);
-}
-
-function addLightDom(containerElem, template) {
-	'use strict';
-
-	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
-
-	let contentTags = template.querySelectorAll('content');
-	Array.from(contentTags).forEach(contentTag => {
-		contentTag.innerHTML = '';
-		let selection = contentTag.getAttribute('select');
-		if (selection) {
-			let selectedLightDomElems = Array.from(containerElem.querySelectorAll(selection))
-				.filter(elem => !elem.closest(innerContainerSelector));
-
-			selectedLightDomElems.forEach(selectedLightDomElem => {
-				var clone = selectedLightDomElem.cloneNode(true);
-				contentTag.appendChild(clone);
-			});
-		}
-	});
-
-	var lightDom = Array.from(containerElem.children).filter(elem => {
-		return elem.classList
-			&& !elem.classList.contains(innerContainerSelector.substr(1));
-	});
-	for(var child of lightDom) {
-		if (!child.classList.contains('light-dom')) {
-			child.classList.add('light-dom');
-		}
-	}
-
-	containerElem.appendChild(template);
-}
-
     /* endinject */
 })()
 </script>

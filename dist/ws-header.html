@@ -76,8 +76,23 @@ header.navigation {
 }
 
 header.navigation .navigation-wrapper {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
   position: relative;
   z-index: 9999;
+}
+
+header.navigation .navigation-wrapper::after {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+header.navigation .navigation-wrapper::after {
+  clear: both;
+  content: "";
+  display: block;
 }
 
 header.navigation .logo {

@@ -41,6 +41,8 @@ header.navigation {
   z-index: 999;
 
   .navigation-wrapper {
+    @include clearfix;
+    @include outer-container;
     position: relative;
     z-index: 9999;
     // z-index: 3;

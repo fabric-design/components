@@ -64,8 +64,8 @@ Polymer({
         }
         // Check if menu projection or items are present
         if (!this.menuContainer && !this.items) {
-            throw new Error('No menu for dropdown available. Either you specify `items` attribute/property as array or '
-                + 'you add a `.dropdown-menu.dropdown-root-menu` element to the dropdown children');
+            //throw new Error('No menu for dropdown available. Either you specify `items` attribute/property as array or '
+            //    + 'you add a `.dropdown-menu.dropdown-root-menu` element to the dropdown children');
         }
     },
 

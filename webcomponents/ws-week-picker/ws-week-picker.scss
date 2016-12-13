@@ -32,7 +32,7 @@
 
   > .ws-week-picker-calendar {
     padding: 13px 0;
-    top: 40px;
+    top: 44px;
     width: 596px;
     height: 258px;
     padding-bottom: 19px;
@@ -50,9 +50,11 @@
       display: inline-block;
 
       > .icon {
-        margin-top: rem(6px);
+        margin-top: rem(5px);
         height: rem(12px);
         width: rem(12px);
+        cursor: pointer;
+        color: $heaven;
 
         &[disabled] {
           visibility: hidden;
@@ -66,14 +68,12 @@
       }
 
       &.prev-year {
-        width: 85px;
+        width: 84px;
         display: inline-block;
 
         > .checkPrevYear {
           float: left;
           margin-left: rem(11px);
-          cursor: pointer;
-          color: $heaven;
         }
 
         > .year {
@@ -91,14 +91,12 @@
       }
 
       &.next-year {
-        width: 76px;
+        width: 77px;
         float: right;
 
         > .checkNextYear {
           float: left;
           margin-left: rem(-2px);
-          cursor: pointer;
-          color: $heaven;
         }
 
         > .year {
@@ -167,6 +165,18 @@
         color: $bombay;
         cursor: not-allowed;
       }
+    }
+
+    .arrow-up {
+      $size: 10px;
+      width: 0;
+      height: 0;
+      border-left: $size solid transparent;
+      border-right: $size solid transparent;
+      border-bottom: $size solid $white;
+      position: absolute;
+      top: -1 * $size;
+      left: 20px;
     }
   }
 }

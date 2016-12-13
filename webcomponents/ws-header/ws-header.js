@@ -34,19 +34,19 @@ class WSHeader extends HTMLElement {
 
         document.addEventListener("WebComponentsReady", () => {
             let lang = this.getLanguage();
-        this.setLanguage(lang);
+			this.setLanguage(lang);
 
-        this.checkIsLoggedIn()
-          .then(() => this.getUser())
-    .then(() => this.showUser())
-    .catch((err) => {
-        let message = "Getting Token-/User-Info failed!";
-        if (err) {
-            message += " " + err.toString();
-        }
-        this.propagateError(message)
-    });
-    });
+			this.checkIsLoggedIn()
+			  .then(() => this.getUser())
+		.then(() => this.showUser())
+		.catch((err) => {
+			let message = "Getting Token-/User-Info failed!";
+			if (err) {
+				message += " " + err.toString();
+			}
+			this.propagateError(message)
+		});
+		});
     }
 
     propagateError(reason) {
@@ -242,7 +242,7 @@ class WSHeader extends HTMLElement {
 
 	getUser() {
 		return new Promise((resolve, reject) => {
-			this.request('GET', `${this.state.userServiceUrl}?login=${this.state.userUID}`)
+			this.request('GET', `${this.state.userServiceUrl}/${this.state.userUID}`)
 				.then((data) => {
 					let user = data[0];
 					if (!user) {

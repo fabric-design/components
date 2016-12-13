@@ -3,9 +3,6 @@
 @import "node_modules/wholesale-styleguide-scss/components/base/forms";
 @import "node_modules/wholesale-styleguide-scss/util";
 
-$icon-chevron-left: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMjkgMTI5IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMjkgMTI5IiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KICA8Zz4KICAgIDxwYXRoIGQ9Im04OC42LDEyMS4zYzAuOCwwLjggMS44LDEuMiAyLjksMS4yczIuMS0wLjQgMi45LTEuMmMxLjYtMS42IDEuNi00LjIgMC01LjhsLTUxLTUxIDUxLTUxYzEuNi0xLjYgMS42LTQuMiAwLTUuOHMtNC4yLTEuNi01LjgsMGwtNTQsNTMuOWMtMS42LDEuNi0xLjYsNC4yIDAsNS44bDU0LDUzLjl6IiBmaWxsPSIjMDAwMDAwIi8+CiAgPC9nPgo8L3N2Zz4K);
-$icon-chevron-right: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMjkgMTI5IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMjkgMTI5IiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KICA8Zz4KICAgIDxwYXRoIGQ9Im00MC40LDEyMS4zYy0wLjgsMC44LTEuOCwxLjItMi45LDEuMnMtMi4xLTAuNC0yLjktMS4yYy0xLjYtMS42LTEuNi00LjIgMC01LjhsNTEtNTEtNTEtNTFjLTEuNi0xLjYtMS42LTQuMiAwLTUuOCAxLjYtMS42IDQuMi0xLjYgNS44LDBsNTMuOSw1My45YzEuNiwxLjYgMS42LDQuMiAwLDUuOGwtNTMuOSw1My45eiIgZmlsbD0iIzAwMDAwMCIvPgogIDwvZz4KPC9zdmc+Cg==);
-
 .ws-week-wrapper {
   display: inline-block;
   position: relative;
@@ -63,7 +60,7 @@ $icon-chevron-right: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4w
       }
 
       > .year {
-        color: $ghost;
+        color: $santas-gray;
         font-weight: 600;
         padding-bottom: 13px;
       }
@@ -74,8 +71,9 @@ $icon-chevron-right: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4w
 
         > .checkPrevYear {
           float: left;
-          margin-left: 18px;
-          background: $icon-chevron-left 0 -2px;
+          margin-left: rem(11px);
+          cursor: pointer;
+          color: $heaven;
         }
 
         > .year {
@@ -98,14 +96,15 @@ $icon-chevron-right: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4w
 
         > .checkNextYear {
           float: left;
-          margin-left: -2px;
-          background: $icon-chevron-right 0 -2px;
+          margin-left: rem(-2px);
+          cursor: pointer;
+          color: $heaven;
         }
 
         > .year {
           float: left;
-          margin-left: 13px;
-          padding-right: 6px;
+          margin-left: rem(6px);
+          padding-right: rem(6px);
         }
       }
     }
@@ -117,7 +116,7 @@ $icon-chevron-right: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4w
 
     .month {
       box-sizing: border-box;
-      color: $ghost;
+      color: $heron;
       display: inline-block;
       width: 40px;
       height: 40px;
@@ -146,7 +145,7 @@ $icon-chevron-right: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4w
       border: 1px solid transparent;
       border-radius: 150px;
       box-sizing: border-box;
-      color: #393939;
+      color: $abbey;
       cursor: pointer;
       display: inline-block;
       width: 32px;
@@ -157,7 +156,7 @@ $icon-chevron-right: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4w
 
       &.now,
       &.now:hover {
-        background-color: $liverleaf;
+        background-color: $heaven;
         color: $white;
       }
       &:hover {
@@ -165,8 +164,7 @@ $icon-chevron-right: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4w
       }
 
       &[disabled] {
-        color: $french-gray;
-        background-color: $earl-gray;
+        color: $bombay;
         cursor: not-allowed;
       }
     }

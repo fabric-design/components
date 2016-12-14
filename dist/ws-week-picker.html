@@ -46,19 +46,60 @@
   speak: none;
   display: inline-block;
   text-decoration: inherit;
-  width: 1em;
   text-align: center;
   font-variant: normal;
   text-transform: none;
-  line-height: 1em;
-  margin-right: .2em;
-  margin-left: .2em;
+  font-size: 150%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon16 {
+  width: rem(16px);
+  height: rem(16px);
+  line-height: rem(16px);
+  font-size: rem(16px);
+  text-indent: -2px;
+}
+
+.icon24 {
+  width: rem(24px);
+  height: rem(24px);
+  line-height: rem(24px);
+  font-size: rem(24px);
+  text-indent: -3px;
+}
+
+.icon32 {
+  width: rem(32px);
+  height: rem(32px);
+  line-height: rem(32px);
+  font-size: rem(32px);
+  text-indent: -4px;
+}
+
+.icon48 {
+  width: rem(48px);
+  height: rem(48px);
+  line-height: rem(48px);
+  font-size: rem(48px);
+  text-indent: -5px;
+}
+
 .icon-cross:before {
   content: "";
+}
+
+.icon-calendar:before {
+  content: "";
+}
+
+.icon-right:before {
+  content: "";
+}
+
+.icon-left:before {
+  content: "";
 }
 
 /**
@@ -66,98 +107,58 @@
      * Example: <span class="icon-zalando spinner"><span></span></span>
      */
 
-@-webkit-keyframes animateRightBall {
-  0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-
-  50% {
-    -webkit-transform: translate3d(1.5em, 0, 0);
-    transform: translate3d(1.5em, 0, 0);
-  }
-
-  0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-}
-
 @keyframes animateRightBall {
   0% {
-    -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
 
   50% {
-    -webkit-transform: translate3d(1.5em, 0, 0);
     transform: translate3d(1.5em, 0, 0);
   }
 
   0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@-webkit-keyframes animateLeftBall {
-  0% {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-
-  50% {
-    -webkit-transform: translate3d(-1.5em, 0, 0);
-    transform: translate3d(-1.5em, 0, 0);
-  }
-
-  0% {
-    -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes animateLeftBall {
   0% {
-    -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
 
   50% {
-    -webkit-transform: translate3d(-1.5em, 0, 0);
     transform: translate3d(-1.5em, 0, 0);
   }
 
   0% {
-    -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
   }
 }
 
 input,select {
   display: block;
-  font-family: acuminpro, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "acumin-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1rem;
 }
 
-input:not([type=radio]):not([type=checkbox]),select {
+input:not([type]),input[type=text],input[type=url],input[type=password],input[type=tel],input[type=number],input[type=color],input[type=email],select {
   padding: rem(8px);
   border: 1px solid #BDBFC7;
   box-shadow: inset 0px 1px 3px 0px #e6e7ea;
   box-sizing: border-box;
   outline: none;
-  background-color: white;
+  background-color: #FFFFFF;
   height: rem(34px);
   font-weight: normal;
   transition: border-color .2s linear, box-shadow .2s linear;
 }
 
-input:not([type=radio]):not([type=checkbox]):focus,select:focus {
+input:not([type]):focus,input[type=text]:focus,input[type=url]:focus,input[type=password]:focus,input[type=tel]:focus,input[type=number]:focus,input[type=color]:focus,input[type=email]:focus,select:focus {
   border-color: #008DC9;
   box-shadow: inset 0 1px 3px 0px #96e0ff;
 }
 
-input:not([type=radio]):not([type=checkbox]):disabled,select:disabled {
+input:not([type]):disabled,input[type=text]:disabled,input[type=url]:disabled,input[type=password]:disabled,input[type=tel]:disabled,input[type=number]:disabled,input[type=color]:disabled,input[type=email]:disabled,select:disabled {
   background-color: #F5F6F9;
 }
 
@@ -227,7 +228,7 @@ select {
   box-shadow: inset 0px 1px 3px 0px #e6e7ea;
   box-sizing: border-box;
   outline: none;
-  background-color: white;
+  background-color: #FFFFFF;
   height: 2.125rem;
   font-weight: normal;
   transition: border-color .2s linear, box-shadow .2s linear;
@@ -411,7 +412,7 @@ var WSWeekPicker = function (_HTMLElement) {
   function WSWeekPicker() {
     _classCallCheck(this, WSWeekPicker);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(WSWeekPicker).apply(this, arguments));
+    return _possibleConstructorReturn(this, (WSWeekPicker.__proto__ || Object.getPrototypeOf(WSWeekPicker)).apply(this, arguments));
   }
 
   _createClass(WSWeekPicker, [{

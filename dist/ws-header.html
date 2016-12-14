@@ -34,13 +34,21 @@
         /* inject:styles */
         @charset "UTF-8";
 
-html {
-  box-sizing: border-box;
-}
+/**
+ * Parse a numeric value from a string
+ */
 
-*,*::after,*::before {
-  box-sizing: inherit;
-}
+/**
+ * Convert a pixel value to rem
+ */
+
+/**
+ * Convert a list of pixel values to rem values
+ */
+
+/**
+* Z-index function for managing the values
+*/
 
 .flag {
   display: inline-block;
@@ -78,13 +86,13 @@ header.navigation .navigation-wrapper {
 header.navigation .navigation-wrapper::after {
   clear: both;
   content: "";
-  display: table;
+  display: block;
 }
 
 header.navigation .navigation-wrapper::after {
   clear: both;
   content: "";
-  display: table;
+  display: block;
 }
 
 header.navigation .logo {
@@ -434,7 +442,7 @@ var WSHeader = function (_HTMLElement) {
 	function WSHeader() {
 		_classCallCheck(this, WSHeader);
 
-		return _possibleConstructorReturn(this, Object.getPrototypeOf(WSHeader).apply(this, arguments));
+		return _possibleConstructorReturn(this, (WSHeader.__proto__ || Object.getPrototypeOf(WSHeader)).apply(this, arguments));
 	}
 
 	_createClass(WSHeader, [{
@@ -687,7 +695,7 @@ var WSHeader = function (_HTMLElement) {
 			var _this7 = this;
 
 			return new Promise(function (resolve, reject) {
-				_this7.request('GET', _this7.state.userServiceUrl + '?q=' + _this7.state.userUID).then(function (data) {
+				_this7.request('GET', _this7.state.userServiceUrl + '/' + _this7.state.userUID).then(function (data) {
 					var user = data[0];
 					if (!user) {
 						reject();
@@ -712,14 +720,23 @@ var WSHeader = function (_HTMLElement) {
 	}, {
 		key: 'setCookie',
 		value: function setCookie(token) {
+			var now = new Date();
+			now.setTime(now.getTime() + 60 * 60 * 1000); // in milliseconds
 			// setting domain does not work for dev localhost environment
-			//document.cookie = `${this.state.tokenName}=${token},path=${this.state.cookiePath};domain=${this.state.cookieDomain};`
-			document.cookie = this.state.tokenName + '=' + token + ';path=' + this.state.cookiePath + ';';
+			if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+				document.cookie = this.state.tokenName + '=' + token + ';path=' + this.state.cookiePath + ';expires=' + now.toGMTString() + ';';
+			} else {
+				document.cookie = this.state.tokenName + '=' + token + ';path=' + this.state.cookiePath + ';domain=' + this.state.cookieDomain + ';expires=' + now.toGMTString() + ';';
+			}
 		}
 	}, {
 		key: 'removeCookie',
 		value: function removeCookie() {
-			document.cookie = this.state.tokenName + '=;path=' + this.state.cookiePath + ';domain=' + this.state.cookieDomain + ';expires=Thu, 01 Jan 1970 00:00:01 GMT";';
+			if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+				document.cookie = this.state.tokenName + '=;path=' + this.state.cookiePath + ';expires=' + new Date(0).toGMTString() + ';';
+			} else {
+				document.cookie = this.state.tokenName + '=;path=' + this.state.cookiePath + ';domain=' + this.state.cookieDomain + ';expires=' + new Date(0).toGMTString() + ';';
+			}
 		}
 
 		// HELPERS

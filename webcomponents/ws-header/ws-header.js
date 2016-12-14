@@ -253,7 +253,7 @@ class WSHeader extends HTMLElement {
 					};
 					this.state = Object.assign({}, this.state, userInfo);
 					resolve(userInfo);
-				}, (err) => {
+				}, err => {
 					this.logout();
 					reject(err);
 				});

@@ -1,11 +1,10 @@
 <!-- inject:global -->
 <!-- endinject -->
 <template>
-    <div class="ws-week-picker">
-        <!-- inject:html -->
-        <div class="ws-week-wrapper">
+    <!-- inject:html -->
+    <div class="ws-week-wrapper">
   <input type="text" class="ws-week-input" readonly placeholder="week picker" /> <i class="icon icon-calendar"></i>
-  <div class="ws-week-picker-calendar">
+  <div class="ws-week-picker">
     <div class="year-selector prev-year">
       <span class="icon checkPrevYear"></span>
       <div class="year"></div>
@@ -23,20 +22,126 @@
   </div>
 </div>
 
-        <!-- endinject -->
-    </div>
+    <!-- endinject -->
     <style>
-        ws-week-picker > .light-dom {
-            display: none;
-        }
         /* inject:styles */
-        .ws-week-picker input {
+        @charset "UTF-8";
+
+@font-face {
+  font-family: "fontello";
+  src: url("icons/font/fontello.eot?4287725");
+  src: url("icons/font/fontello.eot?4287725#iefix") format("embedded-opentype"), url("icons/font/fontello.woff2?4287725") format("woff2"), url("icons/font/fontello.woff?4287725") format("woff"), url("icons/font/fontello.ttf?4287725") format("truetype"), url("icons/font/fontello.svg?4287725#fontello") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon,[class^="icon-"],[class*=" icon-"] {
+  line-height: 1rem;
+}
+
+.icon:before,[class^="icon-"]:before,[class*=" icon-"]:before {
+  font-family: "fontello";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  font-size: 150%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon16 {
+  width: rem(16px);
+  height: rem(16px);
+  line-height: rem(16px);
+  font-size: rem(16px);
+  text-indent: -2px;
+}
+
+.icon24 {
+  width: rem(24px);
+  height: rem(24px);
+  line-height: rem(24px);
+  font-size: rem(24px);
+  text-indent: -3px;
+}
+
+.icon32 {
+  width: rem(32px);
+  height: rem(32px);
+  line-height: rem(32px);
+  font-size: rem(32px);
+  text-indent: -4px;
+}
+
+.icon48 {
+  width: rem(48px);
+  height: rem(48px);
+  line-height: rem(48px);
+  font-size: rem(48px);
+  text-indent: -5px;
+}
+
+.icon-cross:before {
+  content: "";
+}
+
+.icon-calendar:before {
+  content: "";
+}
+
+.icon-right:before {
+  content: "";
+}
+
+.icon-left:before {
+  content: "";
+}
+
+/**
+     * Spinner with zalando icon
+     * Example: <span class="icon-zalando spinner"><span></span></span>
+     */
+
+@keyframes animateRightBall {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(1.5em, 0, 0);
+  }
+
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes animateLeftBall {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-1.5em, 0, 0);
+  }
+
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+input,select {
   display: block;
   font-family: "acumin-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 1rem;
 }
 
-.ws-week-picker input:not([type]), .ws-week-picker input[type=text], .ws-week-picker input[type=url], .ws-week-picker input[type=password], .ws-week-picker input[type=tel], .ws-week-picker input[type=number], .ws-week-picker input[type=color], .ws-week-picker input[type=email] {
+input:not([type]),input[type=text],input[type=url],input[type=password],input[type=tel],input[type=number],input[type=color],input[type=email],select {
   padding: rem(8px);
   border: 1px solid #BDBFC7;
   box-shadow: inset 0px 1px 3px 0px #e6e7ea;
@@ -48,38 +153,43 @@
   transition: border-color .2s linear, box-shadow .2s linear;
 }
 
-.ws-week-picker input:not([type]):focus, .ws-week-picker input[type=text]:focus, .ws-week-picker input[type=url]:focus, .ws-week-picker input[type=password]:focus, .ws-week-picker input[type=tel]:focus, .ws-week-picker input[type=number]:focus, .ws-week-picker input[type=color]:focus, .ws-week-picker input[type=email]:focus {
+input:not([type]):focus,input[type=text]:focus,input[type=url]:focus,input[type=password]:focus,input[type=tel]:focus,input[type=number]:focus,input[type=color]:focus,input[type=email]:focus,select:focus {
   border-color: #008DC9;
   box-shadow: inset 0 1px 3px 0px #96e0ff;
 }
 
-.ws-week-picker input:not([type]):disabled, .ws-week-picker input[type=text]:disabled, .ws-week-picker input[type=url]:disabled, .ws-week-picker input[type=password]:disabled, .ws-week-picker input[type=tel]:disabled, .ws-week-picker input[type=number]:disabled, .ws-week-picker input[type=color]:disabled, .ws-week-picker input[type=email]:disabled {
+input:not([type]):disabled,input[type=text]:disabled,input[type=url]:disabled,input[type=password]:disabled,input[type=tel]:disabled,input[type=number]:disabled,input[type=color]:disabled,input[type=email]:disabled,select:disabled {
   background-color: #F5F6F9;
 }
 
-.ws-week-picker .input-wrapper {
+.input-wrapper {
   position: relative;
 }
 
-.ws-week-picker .input-wrapper .icon {
+.input-wrapper .icon {
   position: absolute;
   top: 10px;
   right: 8px;
 }
 
-.ws-week-picker input[type="search"] {
+input[type="search"] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
 
-.ws-week-picker input[type="checkbox"], .ws-week-picker input[type="radio"] {
+input[type="checkbox"],input[type="radio"] {
   margin-right: 0.34375rem;
 }
 
-.ws-week-picker input[type="file"] {
+input[type="file"] {
   padding-bottom: 0.6875rem;
   width: 100%;
+}
+
+select {
+  max-width: 100%;
+  width: auto;
 }
 
 /**
@@ -98,20 +208,21 @@
 * Z-index function for managing the values
 */
 
-.ws-week-picker .ws-week-wrapper {
+.ws-week-wrapper {
   display: inline-block;
   position: relative;
 }
 
-.ws-week-picker .ws-week-wrapper > #ws-week-icon {
+.ws-week-wrapper > #ws-week-icon {
   right: 11px;
+  background: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDUxMS42MzQgNTExLjYzNCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTExLjYzNCA1MTEuNjM0OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHBhdGggZD0iTTQ4Mi41MTMsODMuOTQyYy03LjIyNS03LjIzMy0xNS43OTctMTAuODUtMjUuNjk0LTEwLjg1aC0zNi41NDF2LTI3LjQxYzAtMTIuNTYtNC40NzctMjMuMzE1LTEzLjQyMi0zMi4yNjEgICBDMzk3LjkwNiw0LjQ3NSwzODcuMTU3LDAsMzc0LjU5MSwwaC0xOC4yNjhjLTEyLjU2NSwwLTIzLjMxOCw0LjQ3NS0zMi4yNjQsMTMuNDIyYy04Ljk0OSw4Ljk0NS0xMy40MjIsMTkuNzAxLTEzLjQyMiwzMi4yNjF2MjcuNDEgICBoLTEwOS42M3YtMjcuNDFjMC0xMi41Ni00LjQ3NS0yMy4zMTUtMTMuNDIyLTMyLjI2MUMxNzguNjQsNC40NzUsMTY3Ljg4NiwwLDE1NS4zMjEsMEgxMzcuMDUgICBjLTEyLjU2MiwwLTIzLjMxNyw0LjQ3NS0zMi4yNjQsMTMuNDIyYy04Ljk0NSw4Ljk0NS0xMy40MjEsMTkuNzAxLTEzLjQyMSwzMi4yNjF2MjcuNDFINTQuODIzYy05LjksMC0xOC40NjQsMy42MTctMjUuNjk3LDEwLjg1ICAgYy03LjIzMyw3LjIzMi0xMC44NSwxNS44LTEwLjg1LDI1LjY5N3YzNjUuNDUzYzAsOS44OSwzLjYxNywxOC40NTYsMTAuODUsMjUuNjkzYzcuMjMyLDcuMjMxLDE1Ljc5NiwxMC44NDksMjUuNjk3LDEwLjg0OWg0MDEuOTg5ICAgYzkuODk3LDAsMTguNDctMy42MTcsMjUuNjk0LTEwLjg0OWM3LjIzNC03LjIzNCwxMC44NTItMTUuODA0LDEwLjg1Mi0yNS42OTNWMTA5LjYzOSAgIEM0OTMuMzU3LDk5LjczOSw0ODkuNzQzLDkxLjE3NSw0ODIuNTEzLDgzLjk0MnogTTM0Ny4xODcsNDUuNjg2YzAtMi42NjcsMC44NDktNC44NTgsMi41Ni02LjU2NyAgIGMxLjcxMS0xLjcxMSwzLjkwMS0yLjU2OCw2LjU3LTIuNTY4aDE4LjI2OGMyLjY3LDAsNC44NTMsMC44NTQsNi41NywyLjU2OGMxLjcxMiwxLjcxMiwyLjU2NywzLjkwMywyLjU2Nyw2LjU2N3Y4Mi4yMjQgICBjMCwyLjY2Ni0wLjg1NSw0Ljg1My0yLjU2Nyw2LjU2N2MtMS43MTgsMS43MDktMy45LDIuNTY4LTYuNTcsMi41NjhoLTE4LjI2OGMtMi42NjksMC00Ljg1OS0wLjg1NS02LjU3LTIuNTY4ICAgYy0xLjcxMS0xLjcxNS0yLjU2LTMuOTAxLTIuNTYtNi41NjdWNDUuNjg2eiBNMTI3LjkxNSw0NS42ODZjMC0yLjY2NywwLjg1NS00Ljg1OCwyLjU2OC02LjU2NyAgIGMxLjcxNC0xLjcxMSwzLjkwMS0yLjU2OCw2LjU2Ny0yLjU2OGgxOC4yNzFjMi42NjcsMCw0Ljg1OCwwLjg1NCw2LjU2NywyLjU2OGMxLjcxMSwxLjcxMiwyLjU3LDMuOTAzLDIuNTcsNi41Njd2ODIuMjI0ICAgYzAsMi42NjYtMC44NTUsNC44NTYtMi41Nyw2LjU2N2MtMS43MTMsMS43MDktMy45LDIuNTY4LTYuNTY3LDIuNTY4SDEzNy4wNWMtMi42NjYsMC00Ljg1Ni0wLjg1NS02LjU2Ny0yLjU2OCAgIGMtMS43MDktMS43MTUtMi41NjgtMy45MDEtMi41NjgtNi41NjdWNDUuNjg2eiBNNDU2LjgxMiw0NzUuMDg4SDU0LjgyM3YtMjkyLjM2aDQwMS45ODlWNDc1LjA4OHoiIGZpbGw9IiMwMDAwMDAiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K);
   top: 8px;
   position: absolute;
   width: 16px;
   height: 16px;
 }
 
-.ws-week-picker .ws-week-wrapper > input {
+.ws-week-wrapper > input {
   padding: 0.5rem;
   border: 1px solid #BDBFC7;
   box-shadow: inset 0px 1px 3px 0px #e6e7ea;
@@ -126,16 +237,16 @@
   width: 100%;
 }
 
-.ws-week-picker .ws-week-wrapper > input:focus {
+.ws-week-wrapper > input:focus {
   border-color: #008DC9;
   box-shadow: inset 0 1px 3px 0px #96e0ff;
 }
 
-.ws-week-picker .ws-week-wrapper > input:disabled {
+.ws-week-wrapper > input:disabled {
   background-color: #F5F6F9;
 }
 
-.ws-week-picker .ws-week-wrapper > input + .icon {
+.ws-week-wrapper > input + .icon {
   width: 16px;
   height: 16px;
   right: 11px;
@@ -143,11 +254,15 @@
   position: absolute;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar {
+.ws-week-wrapper > input + .icon.icon-calendar {
+  background: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCIgdmlld0JveD0iMCAwIDUxMS42MzQgNTExLjYzNCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTExLjYzNCA1MTEuNjM0OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPHBhdGggZD0iTTQ4Mi41MTMsODMuOTQyYy03LjIyNS03LjIzMy0xNS43OTctMTAuODUtMjUuNjk0LTEwLjg1aC0zNi41NDF2LTI3LjQxYzAtMTIuNTYtNC40NzctMjMuMzE1LTEzLjQyMi0zMi4yNjEgICBDMzk3LjkwNiw0LjQ3NSwzODcuMTU3LDAsMzc0LjU5MSwwaC0xOC4yNjhjLTEyLjU2NSwwLTIzLjMxOCw0LjQ3NS0zMi4yNjQsMTMuNDIyYy04Ljk0OSw4Ljk0NS0xMy40MjIsMTkuNzAxLTEzLjQyMiwzMi4yNjF2MjcuNDEgICBoLTEwOS42M3YtMjcuNDFjMC0xMi41Ni00LjQ3NS0yMy4zMTUtMTMuNDIyLTMyLjI2MUMxNzguNjQsNC40NzUsMTY3Ljg4NiwwLDE1NS4zMjEsMEgxMzcuMDUgICBjLTEyLjU2MiwwLTIzLjMxNyw0LjQ3NS0zMi4yNjQsMTMuNDIyYy04Ljk0NSw4Ljk0NS0xMy40MjEsMTkuNzAxLTEzLjQyMSwzMi4yNjF2MjcuNDFINTQuODIzYy05LjksMC0xOC40NjQsMy42MTctMjUuNjk3LDEwLjg1ICAgYy03LjIzMyw3LjIzMi0xMC44NSwxNS44LTEwLjg1LDI1LjY5N3YzNjUuNDUzYzAsOS44OSwzLjYxNywxOC40NTYsMTAuODUsMjUuNjkzYzcuMjMyLDcuMjMxLDE1Ljc5NiwxMC44NDksMjUuNjk3LDEwLjg0OWg0MDEuOTg5ICAgYzkuODk3LDAsMTguNDctMy42MTcsMjUuNjk0LTEwLjg0OWM3LjIzNC03LjIzNCwxMC44NTItMTUuODA0LDEwLjg1Mi0yNS42OTNWMTA5LjYzOSAgIEM0OTMuMzU3LDk5LjczOSw0ODkuNzQzLDkxLjE3NSw0ODIuNTEzLDgzLjk0MnogTTM0Ny4xODcsNDUuNjg2YzAtMi42NjcsMC44NDktNC44NTgsMi41Ni02LjU2NyAgIGMxLjcxMS0xLjcxMSwzLjkwMS0yLjU2OCw2LjU3LTIuNTY4aDE4LjI2OGMyLjY3LDAsNC44NTMsMC44NTQsNi41NywyLjU2OGMxLjcxMiwxLjcxMiwyLjU2NywzLjkwMywyLjU2Nyw2LjU2N3Y4Mi4yMjQgICBjMCwyLjY2Ni0wLjg1NSw0Ljg1My0yLjU2Nyw2LjU2N2MtMS43MTgsMS43MDktMy45LDIuNTY4LTYuNTcsMi41NjhoLTE4LjI2OGMtMi42NjksMC00Ljg1OS0wLjg1NS02LjU3LTIuNTY4ICAgYy0xLjcxMS0xLjcxNS0yLjU2LTMuOTAxLTIuNTYtNi41NjdWNDUuNjg2eiBNMTI3LjkxNSw0NS42ODZjMC0yLjY2NywwLjg1NS00Ljg1OCwyLjU2OC02LjU2NyAgIGMxLjcxNC0xLjcxMSwzLjkwMS0yLjU2OCw2LjU2Ny0yLjU2OGgxOC4yNzFjMi42NjcsMCw0Ljg1OCwwLjg1NCw2LjU2NywyLjU2OGMxLjcxMSwxLjcxMiwyLjU3LDMuOTAzLDIuNTcsNi41Njd2ODIuMjI0ICAgYzAsMi42NjYtMC44NTUsNC44NTYtMi41Nyw2LjU2N2MtMS43MTMsMS43MDktMy45LDIuNTY4LTYuNTY3LDIuNTY4SDEzNy4wNWMtMi42NjYsMC00Ljg1Ni0wLjg1NS02LjU2Ny0yLjU2OCAgIGMtMS43MDktMS43MTUtMi41NjgtMy45MDEtMi41NjgtNi41NjdWNDUuNjg2eiBNNDU2LjgxMiw0NzUuMDg4SDU0LjgyM3YtMjkyLjM2aDQwMS45ODlWNDc1LjA4OHoiIGZpbGw9IiMwMDAwMDAiLz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K);
+}
+
+.ws-week-wrapper > .ws-week-picker {
   padding: 13px 0;
   top: 40px;
   width: 596px;
-  height: 258px;
+  height: 290px;
   padding-bottom: 19px;
   background-color: #FFFFFF;
   position: absolute;
@@ -156,76 +271,72 @@
   z-index: 8000;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar.opened {
+.ws-week-wrapper > .ws-week-picker.opened {
   display: block;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector {
+.ws-week-wrapper > .ws-week-picker > .year-selector {
   display: inline-block;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector > .icon {
+.ws-week-wrapper > .ws-week-picker > .year-selector > .icon {
   margin-top: 0.375rem;
   height: 0.75rem;
   width: 0.75rem;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector > .icon[disabled] {
-  visibility: hidden;
-}
-
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector > .year {
+.ws-week-wrapper > .ws-week-picker > .year-selector > .year {
   color: #CBCDD5;
   font-weight: 600;
   padding-bottom: 13px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.prev-year {
+.ws-week-wrapper > .ws-week-picker > .year-selector.prev-year {
   width: 85px;
   display: inline-block;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.prev-year > .checkPrevYear {
+.ws-week-wrapper > .ws-week-picker > .year-selector.prev-year > .checkPrevYear {
   float: left;
   margin-left: 18px;
   background: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMjkgMTI5IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMjkgMTI5IiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KICA8Zz4KICAgIDxwYXRoIGQ9Im04OC42LDEyMS4zYzAuOCwwLjggMS44LDEuMiAyLjksMS4yczIuMS0wLjQgMi45LTEuMmMxLjYtMS42IDEuNi00LjIgMC01LjhsLTUxLTUxIDUxLTUxYzEuNi0xLjYgMS42LTQuMiAwLTUuOHMtNC4yLTEuNi01LjgsMGwtNTQsNTMuOWMtMS42LDEuNi0xLjYsNC4yIDAsNS44bDU0LDUzLjl6IiBmaWxsPSIjMDAwMDAwIi8+CiAgPC9nPgo8L3N2Zz4K) 0 -2px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.prev-year > .year {
+.ws-week-wrapper > .ws-week-picker > .year-selector.prev-year > .year {
   margin-left: 38px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.cur-year {
+.ws-week-wrapper > .ws-week-picker > .year-selector.cur-year {
   width: 433px;
   margin: 0 -3px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.cur-year > .year {
+.ws-week-wrapper > .ws-week-picker > .year-selector.cur-year > .year {
   text-align: center;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.next-year {
+.ws-week-wrapper > .ws-week-picker > .year-selector.next-year {
   width: 76px;
   float: right;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.next-year > .checkNextYear {
+.ws-week-wrapper > .ws-week-picker > .year-selector.next-year > .checkNextYear {
   float: left;
   margin-left: -2px;
   background: url(data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxMjkgMTI5IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxMjkgMTI5IiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KICA8Zz4KICAgIDxwYXRoIGQ9Im00MC40LDEyMS4zYy0wLjgsMC44LTEuOCwxLjItMi45LDEuMnMtMi4xLTAuNC0yLjktMS4yYy0xLjYtMS42LTEuNi00LjIgMC01LjhsNTEtNTEtNTEtNTFjLTEuNi0xLjYtMS42LTQuMiAwLTUuOCAxLjYtMS42IDQuMi0xLjYgNS44LDBsNTMuOSw1My45YzEuNiwxLjYgMS42LDQuMiAwLDUuOGwtNTMuOSw1My45eiIgZmlsbD0iIzAwMDAwMCIvPgogIDwvZz4KPC9zdmc+Cg==) 0 -2px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .year-selector.next-year > .year {
+.ws-week-wrapper > .ws-week-picker > .year-selector.next-year > .year {
   float: left;
   margin-left: 13px;
   padding-right: 6px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .cur-year > .weeks, .ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar > .next-year > .weeks {
+.ws-week-wrapper > .ws-week-picker > .cur-year > .weeks,.ws-week-wrapper > .ws-week-picker > .next-year > .weeks {
   margin-left: -5px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .month {
+.ws-week-wrapper > .ws-week-picker .month {
   box-sizing: border-box;
   color: #CBCDD5;
   display: inline-block;
@@ -239,19 +350,19 @@
   background-color: #DEF5FE;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .weeks > .weekNumbers:last-child > .month {
+.ws-week-wrapper > .ws-week-picker .weeks > .weekNumbers:last-child > .month {
   padding-left: 0;
   width: 45px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .weekNumbers {
+.ws-week-wrapper > .ws-week-picker .weekNumbers {
   width: 35.3px;
   height: 35.3px;
   float: left;
   font-size: 14px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .week {
+.ws-week-wrapper > .ws-week-picker .week {
   background: 0 0;
   border: 1px solid transparent;
   border-radius: 150px;
@@ -266,19 +377,13 @@
   margin: 3px 6px;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .week.now, .ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .week.now:hover {
+.ws-week-wrapper > .ws-week-picker .week.now,.ws-week-wrapper > .ws-week-picker .week.now:hover {
   background-color: #008DC9;
   color: #FFFFFF;
 }
 
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .week:hover {
+.ws-week-wrapper > .ws-week-picker .week:hover {
   background-color: #DEF5FE;
-}
-
-.ws-week-picker .ws-week-wrapper > .ws-week-picker-calendar .week[disabled] {
-  color: #BDBFC7;
-  background-color: #E9EAEF;
-  cursor: not-allowed;
 }
         /* endinject */
     </style>
@@ -287,222 +392,6 @@
 <script>
 (function(){
     /* inject:js */
-    'use strict';
-
-function applyTemplate(containerElem, template) {
-	'use strict';
-
-	addLightDom(containerElem, template);
-
-	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
-
-	var observer = new MutationObserver(function (mutations) {
-		var changed = false;
-		mutations.forEach(function (mutation) {
-			var target = mutation.target;
-			if (target instanceof Text) {
-				// text elements have no closest function
-				target = target.parentNode;
-			}
-			if (target === containerElem) {
-				return;
-			}
-			// ignore changes inside of pseudo shadow dom
-			if (target.closest(innerContainerSelector)) {
-				return;
-			}
-
-			changed = true;
-		});
-
-		if (changed) {
-			addLightDom(containerElem, containerElem.querySelector(innerContainerSelector));
-		}
-	});
-
-	// Configuration of the observer
-	var config = {
-		attributes: true,
-		childList: true,
-		characterData: true,
-		subtree: true
-	};
-
-	observer.observe(containerElem, config);
-}
-
-function addLightDom(containerElem, template) {
-	'use strict';
-
-	var innerContainerSelector = '.' + containerElem.tagName.toLowerCase();
-
-	var contentTags = template.querySelectorAll('content');
-	Array.from(contentTags).forEach(function (contentTag) {
-		contentTag.innerHTML = '';
-		var selection = contentTag.getAttribute('select');
-		if (selection) {
-			var selectedLightDomElems = Array.from(containerElem.children).filter(function (child) {
-				return child.matches(selection);
-			}).filter(function (elem) {
-				return !elem.closest(innerContainerSelector);
-			});
-
-			selectedLightDomElems.forEach(function (selectedLightDomElem) {
-				var clone = selectedLightDomElem.cloneNode(true);
-				contentTag.appendChild(clone);
-			});
-		}
-	});
-
-	var lightDom = Array.from(containerElem.children).filter(function (elem) {
-		return elem.classList && !elem.classList.contains(innerContainerSelector.substr(1));
-	});
-	var _iteratorNormalCompletion = true;
-	var _didIteratorError = false;
-	var _iteratorError = undefined;
-
-	try {
-		for (var _iterator = lightDom[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-			var child = _step.value;
-
-			if (!child.classList.contains('light-dom')) {
-				child.classList.add('light-dom');
-			}
-		}
-	} catch (err) {
-		_didIteratorError = true;
-		_iteratorError = err;
-	} finally {
-		try {
-			if (!_iteratorNormalCompletion && _iterator.return) {
-				_iterator.return();
-			}
-		} finally {
-			if (_didIteratorError) {
-				throw _iteratorError;
-			}
-		}
-	}
-
-	containerElem.appendChild(template);
-}
-    'use strict';
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
-
-var ZWebComponent = function (_HTMLElement) {
-	_inherits(ZWebComponent, _HTMLElement);
-
-	function ZWebComponent() {
-		_classCallCheck(this, ZWebComponent);
-
-		return _possibleConstructorReturn(this, (ZWebComponent.__proto__ || Object.getPrototypeOf(ZWebComponent)).apply(this, arguments));
-	}
-
-	_createClass(ZWebComponent, [{
-		key: 'init',
-
-		// overwrite!
-		// do some initial stuff
-		// can return a state
-		value: function init(state) {}
-
-		// overwrite!
-		// update your state according to the current state
-
-	}, {
-		key: 'updateState',
-		value: function updateState(state) {
-			return state;
-		}
-
-		// overwrite!
-		// update the dom
-
-	}, {
-		key: 'updateUI',
-		value: function updateUI(state) {}
-
-		// don't overwrite
-
-	}, {
-		key: 'lifeCycle',
-		value: function lifeCycle(state) {
-			var newState = this.updateState(state);
-
-			this.updateUI(newState);
-
-			this.state = newState;
-		}
-
-		// don't overwrite
-
-	}, {
-		key: 'createdCallback',
-		value: function createdCallback() {
-			var clone = document.importNode(template.content, true);
-
-			// This element uses Shadow DOM.
-			applyTemplate(this, clone);
-
-			this.state = this.grabAttributes({});
-			var newState = this.init(this.state);
-			if (newState) {
-				this.state = newState;
-			}
-		}
-
-		// don't overwrite
-
-	}, {
-		key: 'attributeChangedCallback',
-		value: function attributeChangedCallback(attrName, oldVal, newVal) {
-			// update the state from the attributes
-			var newState = _extends({}, this.state);
-			newState[hyphenToCamelCase(attrName)] = newVal;
-
-			// update state and dom
-			this.lifeCycle(newState);
-		}
-	}, {
-		key: 'grabAttributes',
-
-
-		// don't overwrite
-		// grab initialy all attributes and put them in state
-		value: function grabAttributes(state) {
-			return Array.from(this.attributes).reduce(function (state, attribute) {
-				var attributeKeyValuePair = {};
-				attributeKeyValuePair[hyphenToCamelCase(attribute.nodeName)] = attribute.nodeValue;
-				return _extends({}, state, attributeKeyValuePair);
-			}, state);
-		}
-	}]);
-
-	return ZWebComponent;
-}(HTMLElement);
-
-function capitalizeFirstLetter(string) {
-	return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-function hyphenToCamelCase(name) {
-	'use strict';
-
-	return name.split('-').map(function (part, index) {
-		return index === 0 ? part : capitalizeFirstLetter(part);
-	}).join('');
-}
     'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -531,8 +420,7 @@ var WSWeekPicker = function (_HTMLElement) {
     value: function createdCallback() {
       // Take all main DOM elements
       var clone = document.importNode(template.content, true);
-      // this.appendChild(clone);
-      applyTemplate(this, clone);
+      this.createShadowRoot().appendChild(clone);
       this.open = false;
       this.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       this.getAttributes();
@@ -546,23 +434,23 @@ var WSWeekPicker = function (_HTMLElement) {
   }, {
     key: 'getElements',
     value: function getElements() {
-      this.wrapper = this.querySelector('.ws-week-wrapper');
-      this.input = this.querySelector('.ws-week-input');
-      this.calendar = this.querySelector('.ws-week-picker-calendar');
-      this.crossIcon = this.querySelector('input + i');
-      this.prevYearButton = this.querySelector('.checkPrevYear');
-      this.nextYearButton = this.querySelector('.checkNextYear');
+      this.wrapper = this.shadowRoot.querySelector('.ws-week-wrapper');
+      this.input = this.shadowRoot.querySelector('.ws-week-input');
+      this.calendar = this.shadowRoot.querySelector('.ws-week-picker');
+      this.crossIcon = this.shadowRoot.querySelector('input + i');
+      this.prevYearButton = this.shadowRoot.querySelector('.checkPrevYear');
+      this.nextYearButton = this.shadowRoot.querySelector('.checkNextYear');
       // Calculate previous year and take previous year and weeks elements
       this.prevYear = this.curYear - 1;
-      this.prevYearNumber = this.querySelector('.prev-year > .year');
-      this.prevYearWeeks = this.querySelector('.prev-year > .weeks');
+      this.prevYearNumber = this.shadowRoot.querySelector('.prev-year > .year');
+      this.prevYearWeeks = this.shadowRoot.querySelector('.prev-year > .weeks');
       // Take current year and weeks elements
-      this.curYearNumber = this.querySelector('.cur-year > .year');
-      this.curYearWeeks = this.querySelector('.cur-year > .weeks');
+      this.curYearNumber = this.shadowRoot.querySelector('.cur-year > .year');
+      this.curYearWeeks = this.shadowRoot.querySelector('.cur-year > .weeks');
       // Calculate next year and take next year and weeks elements
       this.nextYear = this.curYear + 1;
-      this.nextYearNumber = this.querySelector('.next-year > .year');
-      this.nextYearWeeks = this.querySelector('.next-year > .weeks');
+      this.nextYearNumber = this.shadowRoot.querySelector('.next-year > .year');
+      this.nextYearWeeks = this.shadowRoot.querySelector('.next-year > .weeks');
     }
 
     // Attach all event liteners
@@ -573,7 +461,7 @@ var WSWeekPicker = function (_HTMLElement) {
       var _this2 = this;
 
       document.addEventListener('click', function (e) {
-        _this2.open && e.target.closest('ws-week-picker') !== _this2 ? _this2.closeWeekPicker() : null;
+        return _this2.open && e.target != _this2 ? _this2.closeWeekPicker() : null;
       });
       this.input.addEventListener('click', function (e) {
         return _this2.open ? _this2.closeWeekPicker() : _this2.openWeekPicker();
@@ -585,43 +473,27 @@ var WSWeekPicker = function (_HTMLElement) {
         return _this2.calendarClick(e);
       });
       this.prevYearButton.addEventListener('click', function () {
-        if (parseDate(_this2.prevYear, _this2.prevYearWeeksNumbers[0][0]) < parseDate(_this2.minYear, _this2.minWeek)) {
-          return;
-        }
-        _this2.moveYearBefore();
+        return _this2.moveYearBefore();
       });
       this.nextYearButton.addEventListener('click', function () {
-        if (parseDate(_this2.nextYear, _this2.nextYearWeeksNumbers[1][_this2.nextYearWeeksNumbers[1].length - 1]) > parseDate(_this2.maxYear, _this2.maxWeek)) {
-          return;
-        }
-        _this2.moveYearAfter();
+        return _this2.moveYearAfter();
       });
     }
   }, {
     key: 'calendarClick',
     value: function calendarClick(e) {
       // If user pick on week number take all elements to return result to input field and close calendar
-      if (e.target.classList.contains('week')) {
-        var pickedWeekYear = void 0,
-            pickedWeek = parseInt(e.target.innerHTML);
-        if (e.target.classList.contains('prevYear')) {
-          pickedWeekYear = this.prevYear;
-        } else if (e.target.classList.contains('nextYear')) {
-          pickedWeekYear = this.nextYear;
+      if (e.target.className == 'week' || e.target.className == 'week now') {
+        if (e.target.parentElement.parentElement.parentElement.className == 'prev-year') {
+          this.pickedWeekYear = e.target.parentElement.parentElement.parentElement.children[1].firstElementChild.innerHTML;
         } else {
-          pickedWeekYear = this.curYear;
+          this.pickedWeekYear = e.target.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.innerHTML;
         }
-
-        var pickedDate = parseDate(pickedWeekYear, pickedWeek);
-        if (pickedDate < parseDate(this.minYear, this.minWeek) || pickedDate > parseDate(this.maxYear, this.maxWeek)) {
-          return;
-        }
-
-        this.pickedWeekWrapper = e.target.closest('.week');
-        this.pickedWeekWrapper.classList.remove('now');
+        this.pickedWeekWrapper.className = 'week';
         this.pickedWeekWrapper = e.target;
-        this.pickedWeekWrapper.classList.add('now');
+        this.pickedWeekWrapper.className = 'week now';
 
+        var pickedDate = parseDate(this.pickedWeekYear, this.pickedWeekWrapper.innerHTML);
         this.parseDates(pickedDate);
         this.setInputValue();
         this.closeWeekPicker();
@@ -656,11 +528,17 @@ var WSWeekPicker = function (_HTMLElement) {
     value: function openWeekPicker() {
       this.open = true;
       // Prevent on every click full redraw calendar
-      this.calendar.classList.add('opened');
-      this.input.classList.add('active');
+      this.calendar.className = 'ws-week-picker opened';
+      this.input.className = 'ws-week-input active';
       this.crossIcon.className = 'icon icon-cross';
-      this.buildCalendar();
-      this.highlightCurrentWeek();
+      // If input clear draw calendar and define current week and select it
+      if (!this.pickedWeekWrapper) {
+        this.buildCalendar();
+        this.highlightCurrentWeek();
+      } else {
+        // if input have value - define current week as selected at previous time
+        this.pickedWeekWrapper.className = 'week now';
+      }
     }
 
     // Close calendar if user don't click on calendar
@@ -669,8 +547,8 @@ var WSWeekPicker = function (_HTMLElement) {
     key: 'closeWeekPicker',
     value: function closeWeekPicker() {
       this.open = false;
-      this.calendar.classList.remove('opened');
-      this.input.classList.remove('active');
+      this.calendar.className = 'ws-week-picker';
+      this.input.className = 'ws-week-input used';
       this.crossIcon.className = 'icon icon-calendar';
     }
   }, {
@@ -709,24 +587,7 @@ var WSWeekPicker = function (_HTMLElement) {
     key: 'buildYears',
     value: function buildYears() {
       this.prevYearNumber.innerHTML = '<span>' + this.prevYear + '</span>';
-      var prevYearWeeksNumbers = weeksNumbersForYear(this.prevYear).slice(10);
-      if (parseDate(this.prevYear, prevYearWeeksNumbers[0][0]) < parseDate(this.minYear, this.minWeek)) {
-        this.prevYearButton.setAttribute('disabled', 'disabled');
-        this.querySelector('.prev-year .year').setAttribute('disabled', 'disabled');
-      } else {
-        this.prevYearButton.removeAttribute('disabled');
-        this.querySelector('.prev-year .year').removeAttribute('disabled');
-      }
-
       this.nextYearNumber.innerHTML = '<span>' + this.nextYear + '</span>';
-      var nextYearWeeksNumbers = weeksNumbersForYear(this.nextYear).slice(0, 2);
-      if (parseDate(this.nextYear, nextYearWeeksNumbers[1][nextYearWeeksNumbers[1].length - 1]) > parseDate(this.maxYear, this.maxWeek)) {
-        this.nextYearButton.setAttribute('disabled', 'disabled');
-        this.querySelector('.next-year .year').setAttribute('disabled', 'disabled');
-      } else {
-        this.nextYearButton.removeAttribute('disabled');
-        this.querySelector('.next-year .year').removeAttribute('disabled');
-      }
       this.curYearNumber.innerHTML = '<span>' + this.curYear + '</span>';
     }
 
@@ -741,21 +602,15 @@ var WSWeekPicker = function (_HTMLElement) {
       this.prevYearWeeksNumbers = weeksNumbersForYear(this.prevYear).slice(10);
       // Draw month and it weeks in different spans
       this.prevYearWeeksNumbers.forEach(function (month, i) {
-        _this3.prevYearWeeks.innerHTML += '<span class="weekNumbers">\n                                          <span class="month">' + self.months[i + 10] + '</span>\n                                          ' + month.map(function (week) {
-          return '<span class="prevYear week" \n                                                ' + (parseDate(_this3.prevYear, week) < parseDate(_this3.minYear, _this3.minWeek) ? 'disabled="disabled"' : '') + '>\n                                                ' + week + '</span>';
-        }).join('') + '\n                                          </span>\n                                       </span>';
+        _this3.prevYearWeeks.innerHTML += '<span class="weekNumbers">\n                                          <span class="month">' + self.months[i + 10] + '</span>\n                                          <span class="week">' + month.join('</span><span class="week">') + '</span>\n                                       </span>';
       });
       this.curYearWeeksNumbers = weeksNumbersForYear(this.curYear);
       this.curYearWeeksNumbers.forEach(function (month, i) {
-        _this3.curYearWeeks.innerHTML += '<span class="weekNumbers">\n                                          <span class="month">' + self.months[i] + '</span>\n                                          ' + month.map(function (week) {
-          return '<span class="curYear week" \n                                              ' + (parseDate(_this3.curYear, week) < parseDate(_this3.minYear, _this3.minWeek) || parseDate(_this3.curYear, week) > parseDate(_this3.maxYear, _this3.maxWeek) ? 'disabled="disabled"' : '') + '>' + week + '</span>';
-        }).join('') + '\n                                       </span>';
+        _this3.curYearWeeks.innerHTML += '<span class="weekNumbers">\n                                          <span class="month">' + self.months[i] + '</span>\n                                          <span class="week">' + month.join('</span><span class="week">') + '</span>\n                                       </span>';
       });
       this.nextYearWeeksNumbers = weeksNumbersForYear(this.nextYear).slice(0, 2);
       this.nextYearWeeksNumbers.forEach(function (month, i) {
-        _this3.nextYearWeeks.innerHTML += '<span class="weekNumbers">\n                                          <span class="month">' + self.months[i] + '</span>\n                                          ' + month.map(function (week) {
-          return '<span class="nextYear week" \n                                              ' + (parseDate(_this3.nextYear, week) > parseDate(_this3.maxYear, _this3.maxWeek) ? 'disabled="disabled"' : '') + '>' + week + '</span>';
-        }).join('') + '\n                                       </span>';
+        _this3.nextYearWeeks.innerHTML += '<span class="weekNumbers">\n                                          <span class="month">' + self.months[i] + '</span>\n                                          <span class="week">' + month.join('</span><span class="week">') + '</span>\n                                       </span>';
       });
     }
 
@@ -764,24 +619,15 @@ var WSWeekPicker = function (_HTMLElement) {
   }, {
     key: 'highlightCurrentWeek',
     value: function highlightCurrentWeek() {
-      var _this4 = this;
-
-      var wholeWeeks = void 0;
-      if (this.selectedYear === this.curYear) {
-        wholeWeeks = this.querySelectorAll('.curYear.week');
-      } else if (this.selectedYear === this.prevYear) {
-        wholeWeeks = this.querySelectorAll('.prevYear.week');
-      } else if (this.selectedYear === this.nextYear) {
-        wholeWeeks = this.querySelectorAll('.nextYear.week');
-      } else {
+      if (this.selectedYear !== this.curYear) {
         return;
       }
-
-      this.pickedWeekWrapper = Array.from(wholeWeeks).find(function (week) {
-        return parseInt(week.innerHTML) === _this4.selectedWeek;
-      });
-      if (this.pickedWeekWrapper) {
-        this.pickedWeekWrapper.classList.add('now');
+      var wholeWeeks = this.shadowRoot.querySelectorAll('.cur-year .week');
+      for (var i = 0; i < wholeWeeks.length; i++) {
+        if (wholeWeeks[i].innerHTML == this.selectedWeek && wholeWeeks[i].parentElement.firstElementChild.innerHTML == this.selectedMonth) {
+          this.pickedWeekWrapper = wholeWeeks[i];
+          this.pickedWeekWrapper.className = 'week now';
+        }
       }
     }
   }, {
@@ -791,17 +637,11 @@ var WSWeekPicker = function (_HTMLElement) {
       var selectedWeek = parseInt(this.getAttribute('week'));
       this.date = selectedYear && selectedWeek ? parseDate(selectedYear, selectedWeek) : new Date();
       this.parseDates(this.date);
-      this.minWeek = this.getAttribute('min-week') || 1;
-      this.minYear = this.getAttribute('min-year') || 0;
-      this.maxWeek = this.getAttribute('max-week') || 60;
-      this.maxYear = this.getAttribute('max-year') || 5000;
     }
   }, {
     key: 'parseDates',
     value: function parseDates(date) {
       this.curYear = this.selectedYear = date.getFullYear();
-      this.prevYear = this.curYear - 1;
-      this.nextYear = this.curYear + 1;
       this.selectedMonth = this.months[date.getMonth()];
       this.selectedWeek = getWeek(this.selectedYear, date.getMonth(), date.getDate());
     }
@@ -822,10 +662,6 @@ var WSWeekPicker = function (_HTMLElement) {
       switch (attrName) {
         case "year":
         case "week":
-        case "min-week":
-        case "max-week":
-        case "min-year":
-        case "max-year":
           this.getAttributes();
           this.buildCalendar();
           this.setInputValue();
@@ -885,7 +721,7 @@ function parseDate(year, week) {
 // It can be week number from previous year
 function janWeekNumbers(year) {
   var firstMonthWeeks = [];
-  var firstWeek = 1;
+  var firstWeek = getWeek(year, 0, 1);
   var lastWeek = getWeek(year, 0, 31);
   if (firstWeek != 1) {
     firstMonthWeeks[0] = firstWeek;
@@ -917,9 +753,6 @@ function weeksNumbersForYear(year) {
   weeks[0] = janWeekNumbers(year);
   for (var i = 1; i <= 11; i++) {
     weeks[i] = weekNumbersByMonth(year, i);
-    if (weeks[i - 1][weeks[i - 1].length - 1] === weeks[i][0]) {
-      weeks[i] = weeks[i].slice(1);
-    }
   }
   return weeks;
 }

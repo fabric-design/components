@@ -231,9 +231,8 @@ class WSHeader extends ZWebComponent {
 
 	getUser() {
 		return new Promise((resolve, reject) => {
-			this.request('GET', `${this.state.userserviceUrl}?q=${this.state.userUID}`)
-				.then((data) => {
-					let user = data[0];
+			this.request('GET', `${this.state.userserviceUrl}/${this.state.userUID}`)
+				.then((user) => {
 					if (!user) {
 						reject();
 					}
@@ -243,7 +242,7 @@ class WSHeader extends ZWebComponent {
 					};
 					this.state = Object.assign({}, this.state, userInfo);
 					resolve(userInfo);
-				}, (err) => {
+				}, err => {
 					this.logout();
 					reject(err);
 				});
@@ -255,13 +254,22 @@ class WSHeader extends ZWebComponent {
 	}
 
 	setCookie(token) {
+		var now = new Date();
+		now.setTime(now.getTime() + 60*60*1000); // in milliseconds
 		// setting domain does not work for dev localhost environment
-		//document.cookie = `${this.state.tokenName}=${token},path=${this.state.cookiePath};domain=${this.state.cookieDomain};`
-		document.cookie = `${this.state.tokenName}=${token};path=${this.state.cookiePath};`
+		if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+			document.cookie = `${this.state.tokenName}=${token};path=${this.state.cookiePath};expires=${now.toGMTString()};`;
+		} else {
+			document.cookie = `${this.state.tokenName}=${token};path=${this.state.cookiePath};domain=${this.state.cookieDomain};expires=${now.toGMTString()};`;
+		}
 	}
 
 	removeCookie() {
-		document.cookie = `${this.state.tokenName}=;path=${this.state.cookiePath};domain=${this.state.cookieDomain};expires=Thu, 01 Jan 1970 00:00:01 GMT";`
+		if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+			document.cookie = `${this.state.tokenName}=;path=${this.state.cookiePath};expires=${(new Date(0)).toGMTString()};`
+		} else {
+			document.cookie = `${this.state.tokenName}=;path=${this.state.cookiePath};domain=${this.state.cookieDomain};expires=${(new Date(0)).toGMTString()};`;
+		}
 	}
 
 	// HELPERS

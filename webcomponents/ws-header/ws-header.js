@@ -18,6 +18,7 @@ var state = {
 var urlAtStart = window.location.href;
 
 Polymer({
+    is: 'ws-header',
     // Use createdCallback instead of constructor to init an element.
     ready() {
         this.state = state;

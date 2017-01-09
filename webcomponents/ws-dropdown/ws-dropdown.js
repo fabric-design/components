@@ -21,6 +21,10 @@ window.WSDropdown = Polymer({
             type: Boolean,
             value: false
         },
+        filterable: {
+            type: Boolean,
+            value: false
+        },
         value: {
             type: Object,
             readOnly: false,

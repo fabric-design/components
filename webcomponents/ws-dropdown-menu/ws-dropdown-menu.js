@@ -20,6 +20,17 @@ Polymer({
             type: Boolean,
             value: false
         },
+        limit: {
+            type: Number,
+            value: 10
+        },
+        filterable: {
+            type: Boolean,
+            value: false
+        },
+        filter: {
+            type: String
+        },
         hasValue: {
             type: Boolean,
             computed: 'valueNotEmpty(value)'
@@ -36,6 +47,64 @@ Polymer({
             type: String,
             computed: 'getMenuClass(parent)'
         }
+    },
+
+    getHeight() {
+        return this.menuContainer.clientHeight;
+    },
+
+    isNotRendered() {
+        return !this.menuContainer;
+    },
+
+    isChildMenu(parent) {
+        return !!parent;
+    },
+
+    valueNotEmpty(value) {
+        return value && value.length;
+    },
+
+    itemsAreBound(items) {
+        return !!items;
+    },
+
+    getVisibleItems(item) {
+        return !item.stored && !item.filtered;
+    },
+
+    limitNotReached(index) {
+        return index < this.limit;
+    },
+
+    getMenuClass(parent) {
+        return `dropdown-menu ${!!parent ? '' : 'dropdown-root-menu'}`;
+    },
+
+    getItemLabel(item) {
+        return item.label || item;
+    },
+
+    getItemIconClass(icon) {
+        return `icon ${icon}`;
+    },
+
+    getItemAnchorClass(change) {
+        let item = change.base;
+        return `text ${item.selected ? 'is-active' : item.focused ? 'is-focused' : ''}`;
+    },
+
+    filterItems(event) {
+        let regex = new RegExp(event.target.value, 'i');
+        for (let i = this.items.length; i--;) {
+            if (this.items[i].label.match(regex)) {
+                this.set(`items.${i}.filtered`, false);
+            }
+            else {
+                this.set(`items.${i}.filtered`, true);
+            }
+        }
+        setTimeout(() => this.itemsChanged(), 0);
     },
 
     itemsChanged() {
@@ -85,47 +154,6 @@ Polymer({
         }, true)
     },
 
-    getHeight() {
-        return this.menuContainer.clientHeight;
-    },
-
-    isNotRendered() {
-        return !this.menuContainer;
-    },
-
-    isChildMenu(parent) {
-        return !!parent;
-    },
-
-    valueNotEmpty(value) {
-        return value && value.length;
-    },
-
-    itemsAreBound(items) {
-        return !!items;
-    },
-
-    itemNotSelected(item) {
-        return !item.stored;
-    },
-
-    getMenuClass(parent) {
-        return `dropdown-menu ${!!parent ? '' : 'dropdown-root-menu'}`;
-    },
-
-    getItemLabel(item) {
-        return item.label || item;
-    },
-
-    getItemIconClass(icon) {
-        return `icon ${icon}`;
-    },
-
-    getItemAnchorClass(change) {
-        let item = change.base;
-        return `text ${item.selected ? 'is-active' : item.focused ? 'is-focused' : ''}`;
-    },
-
     clearSelections() {
         if (this.items) {
             for (var i = 0; i < this.items.length; i++) {
@@ -162,9 +190,13 @@ Polymer({
             this.showChild(event.currentTarget.querySelector('ws-dropdown-menu'));
         }
         else if (item) {
-            this.set(`${type}.${index}.selected`, !item.selected);
             if (!this.multiple) {
+                this.clearSelections();
+                this.set(`${type}.${index}.selected`, !item.selected);
                 this.propagate('change', item);
+            }
+            else {
+                this.set(`${type}.${index}.selected`, !item.selected);
             }
         }
         else {
@@ -252,5 +284,10 @@ Polymer({
 
     propagate(eventName, detail) {
         this.fire(eventName, detail);
+    },
+
+    preventChange(event) {
+        event.preventDefault();
+        event.stopPropagation();
     }
 });

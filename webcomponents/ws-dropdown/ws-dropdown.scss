@@ -3,14 +3,20 @@
     @import "../../node_modules/wholesale-styleguide-scss/variables";
 
     $export-button-css: false;
+    $export-form-css: false;
 
     @import "../../node_modules/wholesale-styleguide-scss/components/base/buttons";
+    @import "../../node_modules/wholesale-styleguide-scss/components/base/forms";
     @import "../../node_modules/wholesale-styleguide-scss/components/complex/dropdown";
 
-    .dropdown .dropdown-submit button {
-        @include button-base;
-        @include button-style($button-background, $button-color, $button-shadow-color);
-        @include button-small;
-
+    .dropdown {
+        .dropdown-submit button {
+            @include button-base;
+            @include button-style($button-background, $button-color, $button-shadow-color);
+            @include button-small;
+        }
+        .dropdown-filter input {
+            @include default-input();
+        }
     }
 }

@@ -16,13 +16,25 @@
                     {label: 'Item 2.3'},
                     {label: 'Item 2.4'},
                 ]
-            },
-        ]
+            }
+        ];
+        var filterableItems = ['Wholesale', 'GoodBuy', 'Alpha', 'Payback', 'PlanetExpress', 'Aurelia', 'Angular', 'React', 'Gulp', 'Grunt', 'ESLint', 'WebComponents'];
     </script>
 </head>
-<body class="refills-patterns refills-components" style="padding-bottom: 240px">
+<body class="refills-patterns refills-components" style="padding-bottom: 240px; background: #FAFBFC">
     <link rel="import" href="../node_modules/Polymer/polymer.html">
     <link rel="import" href="../dist/ws-dropdown.html">
+    <div style="padding: 10px">
+        <h3>Filterable dropdown</h3>
+        <p>This dropdown has a filter option.</p>
+        <ws-dropdown id="drop-items-filter" style="display: inline-block" filterable multiple>
+            <button>Filterable</button>
+        </ws-dropdown>
+        <script>
+            document.getElementById('drop-items-filter').items = filterableItems;
+            document.getElementById('drop-items-filter').i18n = key => 'asd';
+        </script>
+    </div>
     <div style="padding: 10px">
         <h3>Multi select</h3>
         <p>This dropdown has a pre-defined orientation. Possible orientations are 'left' (default) and 'right'.</p>

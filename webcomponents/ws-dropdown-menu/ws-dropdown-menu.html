@@ -2,6 +2,11 @@
 <template is="dom-if" if="{{hasItems}}">
     <ul class$="[[menuClass]]">
         <template is="dom-if" if="{{isNotRendered()}}">{{attached()}}</template>
+        <template is="dom-if" if="{{filterable}}">
+            <li class="dropdown-filter">
+                <input type="text" value="{{filter}}" on-keyup="filterItems" on-change="preventChange" />
+            </li>
+        </template>
         <!-- Back button with separator -->
         <template is="dom-if" if="{{hasParent}}">
             <li class="dropdown-item" on-click="back">
@@ -27,17 +32,29 @@
             <li class="dropdown-item-separator"></li>
         </template>
         <!-- Item list -->
-        <template is="dom-repeat" items="[[items]]" on-dom-change="itemsChanged" filter="itemNotSelected" observe="stored">
-            <li class="dropdown-item" on-click="next" item="[[item]]">
-                <a class$="[[getItemAnchorClass(item.*)]]" href$="[[item.href]]">
-                    <template is="dom-if" if="[[item.icon]]">
-                        <i class$="[[getItemIconClass(item.icon)]]"></i>
+        <template is="dom-repeat"
+                  items="[[items]]"
+                  on-dom-change="itemsChanged"
+                  filter="getVisibleItems"
+                  observe="stored filtered"
+                  rendered-item-count="{{itemsRendered}}">
+            <template is="dom-if" if="[[limitNotReached(index)]]">
+                <li class="dropdown-item" on-click="next" item="[[item]]">
+                    <a class$="[[getItemAnchorClass(item.*)]]" href$="[[item.href]]">
+                        <template is="dom-if" if="[[item.icon]]">
+                            <i class$="[[getItemIconClass(item.icon)]]"></i>
+                        </template>
+                        [[getItemLabel(item)]]
+                    </a>
+                    <template is="dom-if" if="[[item.children]]">
+                        <ws-dropdown-menu items="[[item.children]]" parent="[[item]]"></ws-dropdown-menu>
                     </template>
-                    [[getItemLabel(item)]]
-                </a>
-                <template is="dom-if" if="[[item.children]]">
-                    <ws-dropdown-menu items="[[item.children]]" parent="[[item]]"></ws-dropdown-menu>
-                </template>
+                </li>
+            </template>
+        </template>
+        <template is="dom-if" if="{{!itemsRendered}}">
+            <li class="dropdown-item">
+                <a class="text is-disabled">No results found</a>
             </li>
         </template>
         <!-- Submit button -->

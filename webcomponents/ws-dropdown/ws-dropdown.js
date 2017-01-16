@@ -183,7 +183,7 @@ class WSDropdown extends HTMLElement {
             case "is-select":
             case "orientation":
                 if(typeof this.dropdownContainer === 'undefined'){
-				   this.grabElements();
+                   this.grabElements();
                 }
                 this.getAttributes();
                 this.draw();

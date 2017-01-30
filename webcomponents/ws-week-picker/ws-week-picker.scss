@@ -7,14 +7,6 @@
   display: inline-block;
   position: relative;
 
-  > #ws-week-icon {
-    right: 11px;
-    top: 8px;
-    position: absolute;
-    width: 16px;
-    height: 16px;
-  }
-
   > input {
     @include default-input();
     font-family: inherit;

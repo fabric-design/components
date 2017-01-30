@@ -209,14 +209,6 @@ input[type="file"] {
   position: relative;
 }
 
-.ws-week-wrapper > #ws-week-icon {
-  right: 11px;
-  top: 8px;
-  position: absolute;
-  width: 16px;
-  height: 16px;
-}
-
 .ws-week-wrapper > input {
   padding: 0.5rem;
   border: 1px solid #BDBFC7;
@@ -258,7 +250,7 @@ input[type="file"] {
   background-color: #FFFFFF;
   position: absolute;
   display: none;
-  box-shadow: 2px 3px 28px 3px #b8b8b8;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
   z-index: 8000;
 }
 
@@ -275,16 +267,21 @@ input[type="file"] {
   height: 0.75rem;
   width: 0.75rem;
   cursor: pointer;
-  color: #00ABF2;
+  color: #272829;
+  font-size: 0.8125rem;
 }
 
 .ws-week-wrapper > .ws-week-picker-calendar > .year-selector > .icon[disabled] {
   visibility: hidden;
 }
 
+.ws-week-wrapper > .ws-week-picker-calendar > .year-selector > .icon:hover {
+  color: #00ABF2;
+}
+
 .ws-week-wrapper > .ws-week-picker-calendar > .year-selector > .year {
-  color: #9B9BA3;
-  font-weight: 600;
+  color: #7a7980;
+  font-weight: 300;
   padding-bottom: 13px;
 }
 
@@ -333,7 +330,7 @@ input[type="file"] {
 
 .ws-week-wrapper > .ws-week-picker-calendar .month {
   box-sizing: border-box;
-  color: #7a7980;
+  color: #8B8A91;
   display: inline-block;
   width: 40px;
   height: 40px;
@@ -342,7 +339,7 @@ input[type="file"] {
   text-align: center;
   margin-left: 1px;
   margin-bottom: 4px;
-  background-color: #DEF5FE;
+  background-color: #F0F1F6;
 }
 
 .ws-week-wrapper > .ws-week-picker-calendar .weeks > .weekNumbers:last-child > .month {
@@ -354,7 +351,7 @@ input[type="file"] {
   width: 35.3px;
   height: 35.3px;
   float: left;
-  font-size: 14px;
+  font-size: 0.8125rem;
 }
 
 .ws-week-wrapper > .ws-week-picker-calendar .week {
@@ -362,11 +359,11 @@ input[type="file"] {
   border: 1px solid transparent;
   border-radius: 150px;
   box-sizing: border-box;
-  color: #454547;
+  color: #626166;
   cursor: pointer;
   display: inline-block;
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
   line-height: 31px;
   text-align: center;
   margin: 3px 6px;
@@ -378,11 +375,12 @@ input[type="file"] {
 }
 
 .ws-week-wrapper > .ws-week-picker-calendar .week:hover {
-  background-color: #DEF5FE;
+  background-color: #E9EAEF;
 }
 
 .ws-week-wrapper > .ws-week-picker-calendar .week[disabled] {
-  color: #ACADB5;
+  color: #BDBFC7;
+  background-color: #FFFFFF;
   cursor: not-allowed;
 }
 

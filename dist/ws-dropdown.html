@@ -366,6 +366,9 @@
   padding: 0.3125rem 0rem;
   width: 100%;
   margin: 0;
+  max-height: 40rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .dropdown-menu.mod-menu-open,.dropdown-menu.mod-sub-open {
@@ -1166,6 +1169,9 @@ var WSDropdown = function (_HTMLElement) {
                 case "items":
                 case "is-select":
                 case "orientation":
+                    if (typeof this.dropdownContainer === 'undefined') {
+                        this.grabElements();
+                    }
                     this.getAttributes();
                     this.draw();
                     break;

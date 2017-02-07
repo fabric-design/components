@@ -7,11 +7,12 @@ class WSDatePicker extends HTMLInputElement {
         let clone = document.importNode(template.content, true);
         // This element uses Shadow DOM.
         this.createShadowRoot().appendChild(clone);
-        let wsDatePicker = this.shadowRoot.querySelector('.ws-date-picker');
-        wsDatePicker.setAttribute('placeholder', this.getAttribute('placeholder'));
+        this.wsDatePicker = this.shadowRoot.querySelector('.ws-date-picker');
+        this.wsDatePicker.setAttribute('placeholder', this.getAttribute('placeholder'));
         // All logic in flatpickr.js file
         // API and guide how to use: https://chmln.github.io/flatpickr/
-        this.pickr = flatpickr(this.shadowRoot, wsDatePicker, {
+        this.pickr = flatpickr(this.shadowRoot, this.wsDatePicker, {
+            dateFormat: this.getAttribute('date-format') || 'd.m.Y',
             onChange: (date, value) => {
                 this.dispatchEvent(new CustomEvent('change', {detail: {date, value}}));
             },
@@ -19,6 +20,19 @@ class WSDatePicker extends HTMLInputElement {
                 this.dispatchEvent(new CustomEvent('close'));
             }
         });
+    }
+
+    attributeChangedCallback(attr, oldVal, newVal) {
+        switch (attr) {
+            case 'placeholder':
+                this.wsDatePicker.setAttribute('placeholder', newVal);
+                break;
+            case 'date-format':
+                if (this.pickr && this.pickr.config) {
+                    this.pickr.config.dateFormat = newVal;
+                }
+                break;
+        }
     }
 
     get value() {

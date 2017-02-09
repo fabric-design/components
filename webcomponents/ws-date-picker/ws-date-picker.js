@@ -40,8 +40,12 @@ class WSDatePicker extends HTMLInputElement {
     }
 
     set value(val) {
-        val = typeof val === 'string' ? new Date(val) : val;
-        this.pickr.setDate(val, false);
+        if (val) {
+            val = typeof val === 'string' ? new Date(val) : val;
+            this.pickr.setDate(val, false);
+        } else {
+            this.pickr.clear();
+        }
     }
 
     get type() {

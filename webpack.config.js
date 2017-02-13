@@ -7,15 +7,15 @@ module.exports = {
     path: path.resolve(__dirname, 'lib')
   },
   module: {
-	loaders: [
-		{
-		test: /\.js$/,
-		exclude: /(node_modules|bower_components)/,
-		loader: 'babel-loader',
-		query: {
-			presets: ['es2015']
-		}
-		}
-	]
+		loaders: [
+			{
+				test: /\.js$/,
+				exclude: /(node_modules|bower_components)/,
+				loader: 'babel-loader',
+				query: {
+					presets: ['es2015']
+				}
+			}
+		]
   }
 };

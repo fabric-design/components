@@ -1,6 +1,5 @@
-import {Component, h} from './preact';
+import {Component, createElement as h } from './preact';
 import WSHeaderNavLink from './ws-header-nav-link';
-// import './ws-header.scss';
 let urlAtStart = window.location.href;
 
 export default class WSHeader extends Component {
@@ -25,14 +24,14 @@ export default class WSHeader extends Component {
     }
 
 	componentDidMount() {
-		this.setState({
-			userServiceUrl: this.props.userServiceUrl,
-			tokenInfoUrl: this.props.tokenInfoUrl,
-			clientId: this.props.clientId
-		});
+		// this.setState({
+		// 	userServiceUrl: this.props.userServiceUrl,
+		// 	tokenInfoUrl: this.props.tokenInfoUrl,
+		// 	clientId: this.props.clientId
+		// });
 
-		let lang = this.getLanguage();
-		this.setLanguage(lang);
+		// let lang = this.getLanguage();
+		// this.setLanguage(lang);
 
 		this.checkIsLoggedIn()
 			.then(() => this.getUser())
@@ -67,8 +66,8 @@ export default class WSHeader extends Component {
 
 	login() {
 		let url = 'https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid' +
-			'&client_id=' + this.state.clientId +
-			'&redirect_uri=' + this.state.redirectUrl +
+			'&client_id=' + this.props.clientId +
+			'&redirect_uri=' + this.props.redirectUrl +
 			'&state=' + this.setSessionState();
 
 		window.location.href = url;
@@ -157,7 +156,7 @@ export default class WSHeader extends Component {
 
 	getTokenInfo() {
 		return new Promise((resolve, reject) => {
-			this.request('GET', this.state.tokenInfoUrl)
+			this.request('GET', this.props.tokenInfoUrl)
 				.then((data) => {
 					this.state = Object.assign({}, this.state, {
 						userUID: data.uid
@@ -172,7 +171,7 @@ export default class WSHeader extends Component {
 
 	getUser() {
 		return new Promise((resolve, reject) => {
-			this.request('GET', `${this.state.userServiceUrl}/${this.state.userUID}`)
+			this.request('GET', `${this.props.userServiceUrl}/${this.state.userUID}`)
 				.then(([user]) => {
 					if (!user) {
 						reject();
@@ -257,16 +256,14 @@ export default class WSHeader extends Component {
 	}
 
     render() {
-        let children = this.props.children || [];
-        return (
-            <div class="refills-patterns refills-components">
+        return <div class="refills-patterns refills-components">
                 <header class="navigation" role="banner">
                     <div class="navigation-wrapper">
-                        {children.filter(elem => elem.classList.contains('logo'))}
+                        {this.props.logoUrl ? <img class="logo" src={this.props.logoUrl} /> : null}
                         <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">MENU</a>
                         <nav role="navigation">
                             <ul id="js-navigation-menu" class="navigation-menu show">
-                                {children.filter(elem => elem.classList.contains('nav-link'))}
+                                {this.props.links ? this.props.links.map((link, index) => <WSHeaderNavLink link={link} key={index} />) : null}
                                 <li class="nav-link more dropdown-menu">
                                     <a href="javascript:void(0)">
                                         <span id="selectedLanguageFlag" class="flag flag-{this.state.lang}"></span>
@@ -274,19 +271,21 @@ export default class WSHeader extends Component {
                                     </a>
                                     <ul class="submenu" id="languages">
                                         {this.state.availableLanguages.map(lang => {
-                                            return <li onclick={this.setLanguage.bind(this, lang)}>
-                                                <a><span class="flag flag-${lang}"></span> <span translate="global.language.{{lang}}">{lang}</span></a>
+                                            return <li onclick={() => this.setLanguage(lang)}>
+                                                <a><span class={"flag flag-" + lang}></span> <span translate="global.language.{{lang}}">{lang}</span></a>
                                             </li>
                                         })}
                                     </ul>
                                 </li>
                                 <li class="nav-link" id="loggedInInfo">
                                     { this.state.loggedIn
-                                        ?   <a class="auto-size"><span translate="global.menu.signein">Login</span></a>
+                                        ?   <a class="auto-size" onclick={() => this.authenticate()}><span translate="global.menu.signein">Login</span></a>
                                         :   <div>
                                                 <span translate="global.menu.signedinas"></span>
-                                                <span id="userName">Loading...</span>
-                                                <a class="auto-size" id="logOutButton" type="button"><div id="logOutIcon"></div></a>
+                                                <span id="userName">{this.state.userName}</span>
+                                                <a className="auto-size" id="logOutButton" type="button" onclick={() => this.logout()}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enableBackground="new 0 0 100 100"><path d="M48.501,27.015c0,0.827,0.671,1.5,1.5,1.5h21.486v42.974H50.001c-0.829,0-1.5,0.672-1.5,1.5c0,0.829,0.671,1.5,1.5,1.5  h22.986c0.828,0,1.5-0.671,1.5-1.5V27.013c0-0.828-0.672-1.5-1.5-1.5H50.001C49.172,25.515,48.501,26.187,48.501,27.015z   M48.473,38.447c0,0.384,0.146,0.768,0.438,1.061l8.964,8.963h-30.86c-0.828,0-1.5,0.671-1.5,1.5c0,0.829,0.672,1.5,1.5,1.5h30.86  l-8.993,8.992c-0.293,0.293-0.439,0.677-0.439,1.062c0,0.383,0.146,0.768,0.439,1.061c0.585,0.586,1.536,0.586,2.121,0  l11.553-11.553c0.141-0.141,0.25-0.308,0.327-0.492c0.003-0.008,0.004-0.016,0.007-0.022c0.067-0.169,0.105-0.354,0.105-0.547  s-0.039-0.378-0.105-0.548c-0.003-0.007-0.004-0.015-0.007-0.021c-0.077-0.187-0.188-0.354-0.328-0.493L51.032,37.386  c-0.585-0.586-1.535-0.586-2.121,0C48.618,37.679,48.473,38.063,48.473,38.447z"></path></svg>
+                                                </a>
                                             </div>
                                     }
                                 </li>
@@ -295,6 +294,5 @@ export default class WSHeader extends Component {
                     </div>
                 </header>
             </div>
-        );
     }
 }

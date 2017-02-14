@@ -2,7 +2,8 @@ import { React, Component } from './imports';
 import WSHeaderNavLink from './ws-header-nav-link';
 import './ws-header.scss';
 let urlAtStart = window.location.href;
-let SESSION_TOKEN_NAME = null;
+let SESSION_TOKEN_NAME = 'session_token';
+let SESSION_STATE_NAME = 'session_state';
 
 // props: {
 // 	setLang?: (lang) => ;

@@ -1,102 +1,11 @@
-<html>
-    <head>
-        <script src="webcomponents.min.js"></script>
-        <link rel="stylesheet" href="styleguide.css" />
-        <link rel="import" href="../dist/ws-header.html" />
-        <link rel="import" href="../dist/ws-time-picker.html" />
-        <link rel="import" href="../dist/ws-date-picker.html" />
-        <link rel="import" href="../dist/ws-week-picker.html" />
-        <link rel="import" href="../dist/ws-notification.html" />
-        <link rel="import" href="../dist/ws-dropdown.html" />
-    </head>
-    <body class="refills-patterns refills-components" style="margin: 0;">
-        <ws-header
-            id="header"
-            userservice-url="https://cors-proxy-service.alpha.zalan.do/https://users.auth.zalando.com/api/employees"
-            tokeninfo-url="https://cors-proxy-service.alpha.zalan.do/https://info.services.auth.zalando.com:443/oauth2/tokeninfo"
-            redirect-url="https://org-structure.wholesale.zalan.do/login"
-            client-id="stups_org-structure-fe_b786e05a-9a44-48a2-a233-519263fa8a93">
-
-            <a href="/" class="logo" ui-sref="main.overview">
-                <img alt="Logo" src="#">
-                <span>Block Orders</span>
-            </a>
-            <li class="nav-link">
-                <a href="javascript:void(0)">Contact</a>
-            </li>
-        </ws-header>
-        <ws-time-picker id="time-picker"></ws-time-picker>
-        <ws-date-picker id="ws-datepicker"></ws-date-picker>
-        <ws-week-picker></ws-week-picker>
-        <ws-week-picker week="12" year="2017"></ws-week-picker>
-        <p>
-            Simple Dropdown with orientation left:
-            <ws-dropdown id="ws-dropdown-button" orientation="left" style="position: relative; left: 150px;">
-                <a>Click Me!</a>
-            </ws-dropdown>
-        </p>
-        <p>
-            Select Dropdown:
-            <ws-dropdown id="ws-dropdown-select" is-select="true" orientation="right" style="position: relative; left: 150px;">
-                <button>Click Me!</button>
-            </ws-dropdown>
-        </p>
-        <script>
-            document.querySelector('#header').addEventListener('error',
-            function({ detail: {message} }) {
-                console.log(message);
-            });
-            document.querySelector('#header').addEventListener('login-status-changed',
-            function({ detail: {loggedIn, token}}) {
-                console.log('logged in state: ' + loggedIn + ' with token: ' + token);
-            });
-            document.querySelector('#header').addEventListener('language-changed',
-            function({ detail: { language }}) {
-                console.log('language select: ' + language);
-            });
-            document.querySelector('#time-picker').addEventListener('time-changed',
-            function({ detail: { hours, minutes }}) {
-               console.log('time select: ' + hours + ':' + minutes);
-            });
-            document.querySelector('#ws-datepicker').addEventListener('change',
-            function({ detail: { date }}) {
-                console.log('date selected: ' + date);
-            });
-            document.querySelectorAll('ws-week-picker').forEach(elem => elem.addEventListener('change',
-            function({ detail: { week, year }}) {
-                console.log('week selected: W' + week + ' ' + year);
-            }));
-
-            var demoList = [{
-                label: 'Item 1',
-                value: 'Item 1'
-            }, {
-                label: 'Item 2',
-                href: 'www.google.de'
-            }, {
-                label: 'Item 3',
-                children: [{
-                    label: 'Sub-Item 3-1',
-                    value: 'Sub-Item 3-1'
-                }, {
-                    label: 'Sub-Item 3-2',
-                    value: 'Sub-Item 3-2',
-                    selected: true
-                }, {
-                    label: 'Sub-Item 3-3',
-                    value: 'Sub-Item 3-3'
-                }]
-            }];
-            document.querySelector('#ws-dropdown-button').setAttribute('items', JSON.stringify(demoList));
-            document.querySelector('#ws-dropdown-button').addEventListener('change',
-                    function({ detail: { item }}) {
-                        console.log('dropdown item selected: ' + JSON.stringify(item));
-                    });
-            document.querySelector('#ws-dropdown-select').setAttribute('items', JSON.stringify(demoList));
-            document.querySelector('#ws-dropdown-button').addEventListener('change',
-                    function({ detail: { item }}) {
-                        console.log('Another way t get the value is: ' + document.querySelector('#ws-dropdown-button').value);
-                    });
-        </script>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Preact Demo</title>
+    <link rel="stylesheet" href="styleguide.css" />
+</head>
+<body>
+    <script src="preact-bundle.js"></script>
+</body>
 </html>

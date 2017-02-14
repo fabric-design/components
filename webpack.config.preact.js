@@ -4,7 +4,7 @@ module.exports = {
   entry: './preact-components/index.js',
   output: {
     filename: 'preact-bundle.js',
-    path: path.resolve(__dirname, 'lib')
+    path: path.resolve(__dirname, 'demo')
   },
 	module: {
 		rules: [{
@@ -31,5 +31,10 @@ module.exports = {
 			'react': 'preact',
 			'react-dom': 'preact'
 		}
+	},
+	devServer: {
+			contentBase: path.join(__dirname, "demo"),
+			compress: true,
+			port: 8080
 	}
 };

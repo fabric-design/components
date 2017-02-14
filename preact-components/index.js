@@ -1,4 +1,4 @@
-import { createElement, Component, render } from './preact';
+import { React, render } from './imports';
 import WSHeader from './ws-header.js';
 
 render(<WSHeader title='Demo Page' links={[

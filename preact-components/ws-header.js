@@ -1,4 +1,4 @@
-import {Component, createElement } from './preact';
+import { React, Component } from './imports';
 import WSHeaderNavLink from './ws-header-nav-link';
 import './ws-header.scss';
 let urlAtStart = window.location.href;
@@ -150,7 +150,7 @@ class Header extends Component {
 		let url = 'https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid' +
 			'&client_id=' + this.props.clientId +
 			'&redirect_uri=' + this.props.redirectUrl +
-			'&state=' + this.setSessionState();
+			'&state=' + setSessionState();
 
 		window.location.href = url;
 	}
@@ -220,3 +220,23 @@ function getCookieValue(a) {
 	let b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
 	return b ? b.pop() : '';
 }
+
+function guid() {
+    function s4() {
+      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    }
+    return '' + s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+  }
+
+function setSessionState() {
+    // create new state guid
+    var state = guid();
+    var obj = {
+      state: state,
+      hash: window.location.hash
+    };
+
+    // save the state to check for it on return
+    window.localStorage.setItem(SESSION_STATE_NAME, state);
+    return encodeURIComponent(JSON.stringify(obj));
+  }

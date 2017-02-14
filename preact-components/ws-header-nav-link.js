@@ -1,4 +1,4 @@
-import {Component, createElement} from './preact';
+import { React, Component } from './imports';
 
 export default class WSHeaderNavLink extends Component {
 	render() {

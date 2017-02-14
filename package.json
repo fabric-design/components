@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "gulp test",
-    "serve": "gulp & lite-server",
+    "serve": "lite-server",
     "watch": "webpack --watch",
-    "build": "gulp --type=production build"
+    "watch:preact": "webpack --watch --config webpack.config.preact.js"
   },
   "repository": {
     "type": "git",

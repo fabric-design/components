@@ -1,9 +1,9 @@
-import {Component, createElement as h} from './preact';
+import {Component, createElement} from './preact';
 
 export default class WSHeaderNavLink extends Component {
-	render({ label, value, onclick, key }) {
-		return <li class='nav-link' key={key} onclick={() => onclick(value)} >
-			<a>{label}</a>
+	render() {
+		return <li class='nav-link' key={this.props.key} onClick={() => this.props.link.onclick && this.props.link.onclick(this.props.link.value)} >
+			<a>{this.props.link.label}</a>
 		</li>;
 	}
 }

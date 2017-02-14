@@ -1,7 +1,18 @@
-import {Component, createElement as h } from './preact';
+import {Component, createElement } from './preact';
 import WSHeaderNavLink from './ws-header-nav-link';
+import './ws-header.scss';
 let urlAtStart = window.location.href;
 let SESSION_TOKEN_NAME = null;
+
+// props: {
+// 	setLang?: (lang) => ;
+// 	setLogin?: ({ loggedIn, token }) =>;
+// 	clientId;
+// 	redirectUrl;
+// 	logoUrl?;
+// 	title;
+// 	links?: { label, value, onclick }[];
+// }
 
 class Header extends Component {
   constructor() {
@@ -9,6 +20,8 @@ class Header extends Component {
     this.state = {
       cookiePath: '/',
       cookieDomain: '.zalan.do',
+	  lang: null,
+	  languageStorageId: 'ws-language',
       loggedIn: null,
       id: null, //HEADER_COMPONENT_ID,
       redirectUrl: null, //REDIRECT_URL,
@@ -20,7 +33,7 @@ class Header extends Component {
       userEmail: null,
       userUID: null,
     };
-    this.setLanguage = this.setLanguage.bind(this);
+	this.state.lang = this.getLanguage(this.state);
   }
   componentDidMount() {
     this.checkIsLoggedIn();
@@ -57,14 +70,15 @@ class Header extends Component {
       document.cookie = `${SESSION_TOKEN_NAME}=${token};path=${this.state.cookiePath};`;
     }
   }
+	getLanguage(state) {
+		return window.localStorage.getItem(state.languageStorageId) || state.availableLanguages[0];
+	}
   setLanguage(lang) {
-    if (lang !== this.props.language) {
-      const event = new CustomEvent('language-changed', {
-        detail: {
-          language: lang,
-        },
-      });
-      this.props.setLang && this.props.setLang(event);
+    if (lang !== this.state.lang) {
+	  this.setState({ lang });
+	  // persist
+	  window.localStorage.setItem(this.state.languageStorageId, lang);
+      this.props.setLang && this.props.setLang(lang);
     }
   }
   removeCookie() {
@@ -119,13 +133,10 @@ class Header extends Component {
     if (this.state.loggedIn !== isLoggedIn) {
       this.setState({ loggedIn: isLoggedIn });
 
-      const event = new CustomEvent('login-status-changed', {
-        detail: {
+      this.props.setLogin && this.props.setLogin({
           loggedIn: isLoggedIn,
           token: token || null,
-        },
-      });
-      this.props.setLogin && this.props.setLogin(event);
+        });
     }
   }
   checkSessionState(state) {
@@ -159,15 +170,15 @@ class Header extends Component {
 			</a>
             <nav role="navigation">
               <ul id="js-navigation-menu" className="navigation-menu show">
-                {(this.props.isLoggedIn && this.state.userName) ?
+                {(this.state.isLoggedIn && this.state.userName) ?
                   <ul>
                     {this.props.links ? this.props.links.map((link, index) => <WSHeaderNavLink link={link} key={index} />) : null}
                   </ul>
                 : null}
                 <li className="nav-link more dropdown-menu">
-                  <a href={`#lang${this.props.language}`}>
-                    <span id="selectedLanguageFlag" className={`flag flag-${this.props.language}`} ref="selectedLanguageFlag"></span>
-                    <span id="selectedLanguage" ref="selectedLanguage"> {this.props.language}</span>
+                  <a href={`#lang${this.state.lang}`}>
+                    <span id="selectedLanguageFlag" className={`flag flag-${this.state.lang}`} ref="selectedLanguageFlag"></span>
+                    <span id="selectedLanguage" ref="selectedLanguage"> {this.state.lang}</span>
                   </a>
                   <ul className="submenu" id="languages" ref="languages">
                     {this.state.availableLanguages.map(lang =>
@@ -182,12 +193,12 @@ class Header extends Component {
                 </li>
                 <li className="nav-link" id="loggedInInfo" ref="loggedInInfo">
                   {(this.state.loggedIn && this.state.userName) ?
-                    <span onclick={() => this.logout()}>
+                    <span onClick={() => this.logout()}>
                       <span id="userName" ref="userName">{this.state.userName}</span>
                       <a className="auto-size" id="logOutButton" type="button">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enableBackground="new 0 0 100 100"><path d="M48.501,27.015c0,0.827,0.671,1.5,1.5,1.5h21.486v42.974H50.001c-0.829,0-1.5,0.672-1.5,1.5c0,0.829,0.671,1.5,1.5,1.5  h22.986c0.828,0,1.5-0.671,1.5-1.5V27.013c0-0.828-0.672-1.5-1.5-1.5H50.001C49.172,25.515,48.501,26.187,48.501,27.015z   M48.473,38.447c0,0.384,0.146,0.768,0.438,1.061l8.964,8.963h-30.86c-0.828,0-1.5,0.671-1.5,1.5c0,0.829,0.672,1.5,1.5,1.5h30.86  l-8.993,8.992c-0.293,0.293-0.439,0.677-0.439,1.062c0,0.383,0.146,0.768,0.439,1.061c0.585,0.586,1.536,0.586,2.121,0  l11.553-11.553c0.141-0.141,0.25-0.308,0.327-0.492c0.003-0.008,0.004-0.016,0.007-0.022c0.067-0.169,0.105-0.354,0.105-0.547  s-0.039-0.378-0.105-0.548c-0.003-0.007-0.004-0.015-0.007-0.021c-0.077-0.187-0.188-0.354-0.328-0.493L51.032,37.386  c-0.585-0.586-1.535-0.586-2.121,0C48.618,37.679,48.473,38.063,48.473,38.447z"></path></svg>
                       </a>
-                    </span> : <a className="auto-size" onclick={() => this.login()}><span>Login</span></a>}
+                    </span> : <a className="auto-size" onClick={() => this.login()}><span>Login</span></a>}
                 </li>
               </ul>
             </nav>

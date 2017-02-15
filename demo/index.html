@@ -25,7 +25,6 @@
                 <a href="javascript:void(0)">Contact</a>
             </li>
         </ws-header>
-        <ws-time-picker id="time-picker"></ws-time-picker>
         <ws-date-picker id="ws-datepicker"></ws-date-picker>
         <ws-week-picker></ws-week-picker>
         <ws-week-picker week="12" year="2017"></ws-week-picker>
@@ -53,10 +52,6 @@
             document.querySelector('#header').addEventListener('language-changed',
             function({ detail: { language }}) {
                 console.log('language select: ' + language);
-            });
-            document.querySelector('#time-picker').addEventListener('time-changed',
-            function({ detail: { hours, minutes }}) {
-               console.log('time select: ' + hours + ':' + minutes);
             });
             document.querySelector('#ws-datepicker').addEventListener('change',
             function({ detail: { date }}) {

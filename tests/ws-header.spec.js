@@ -1,3 +1,5 @@
+import {WSHeader} from '../components/ws-header';
+
 describe('WS-Header', function () {
     // var wsHeaderElement,
 	// 	wrapper,

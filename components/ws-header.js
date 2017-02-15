@@ -15,7 +15,7 @@ let SESSION_STATE_NAME = 'session_state';
 // 	links?: { label, value, onclick }[];
 // }
 
-class Header extends Component {
+class WSHeader extends Component {
   constructor() {
     super();
     this.state = {
@@ -210,7 +210,7 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default WSHeader;
 
 function getTokenFromUrl(url) {
 	let urlQueryTokenPart = /access_token=([^&]+)/.exec(url);

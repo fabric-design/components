@@ -21,13 +21,13 @@
     "components"
   ],
   "files": [
-    "dist"
+    "preact-components"
   ],
   "jspm": {
     "registry": "npm",
     "jspmPackage": true,
     "directories": {
-      "dist": "dist"
+      "preact-components": "preact-components"
     }
   },
   "author": "Fabian Weber",

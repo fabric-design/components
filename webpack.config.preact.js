@@ -1,9 +1,9 @@
 var path = require('path');
 
 module.exports = {
-  entry: './preact-components/index.js',
+  entry: './demo/demo_app.js',
   output: {
-    filename: 'preact-bundle.js',
+    filename: 'bundle.js',
     path: path.resolve(__dirname, 'demo')
   },
 	module: {

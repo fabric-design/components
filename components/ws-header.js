@@ -210,8 +210,6 @@ class WSHeader extends Component {
   }
 }
 
-export default WSHeader;
-
 function getTokenFromUrl(url) {
 	let urlQueryTokenPart = /access_token=([^&]+)/.exec(url);
 	return urlQueryTokenPart != null ? urlQueryTokenPart[1] : null;
@@ -241,3 +239,5 @@ function setSessionState() {
     window.localStorage.setItem(SESSION_STATE_NAME, state);
     return encodeURIComponent(JSON.stringify(obj));
   }
+
+export default WSHeader;

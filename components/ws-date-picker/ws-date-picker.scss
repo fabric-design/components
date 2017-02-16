@@ -1,0 +1,87 @@
+$icon-font-path: '../../node_modules/wholesale-styleguide-scss/icons/';
+@import "../../node_modules/wholesale-styleguide-scss/variables";
+@import "../../node_modules/wholesale-styleguide-scss/util";
+@import "../../node_modules/wholesale-styleguide-scss/components/base/icons";
+
+.ws-date-picker {
+	& > input {
+		display: inline-block;
+		padding-right: 1.5rem;
+	}
+	& > i {
+		position: relative;
+		top: 0.1rem;
+		left: -2rem;
+	}
+	.ws-date-picker-calendar {
+        background: #fff;
+        border: 1px solid #ddd;
+        font-size: 90%;
+        border-radius: 4px;
+        margin-top: 8px;
+        width: 300px;
+	}
+	table {
+		table-layout: fixed;
+		border: none;
+
+		caption {
+			padding: 0.5rem 0;
+			color: $asphalt;
+
+			i {
+				position: relative;
+    			top: 0.1rem;
+				color: $asphalt;
+			}
+			.prev {
+				float: left;
+				margin-left: 0.5rem;
+			}
+			.next {
+				float: right;
+				margin-right: 0.5rem;
+			}
+		}
+		tr:last-child {
+			padding-bottom: 0.5rem;
+		}
+		th:first-child, td:first-child {
+			padding-left: 0.5rem !important;
+		}
+		th:last-child, td:last-child {
+			padding-right: 0.5rem !important;
+		}
+		td, th {
+			padding: 0.5rem 0.3rem !important;
+			width: 1rem;
+			line-height: 1.9rem;
+			text-align: center;
+			background-color: $white !important;
+			border: none !important;
+			&.off, &.off .day {
+				color: $ghost;
+			}
+			a {
+				color: $asphalt;
+			}
+			&.active a {
+				background-color: $heaven;
+				display: block;
+				border-radius: 50%;
+				color: $white;
+			}
+		}
+		th {
+			background-color: $arctica !important;
+		}
+		.day {
+			color: $asphalt !important;
+
+			&.active {
+				background-color: $heaven;
+				border-radius: 50%;
+			}
+		}
+	}
+}

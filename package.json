@@ -42,9 +42,11 @@
     "lite-server": "^2.2.0",
     "mocha": "3.2.0",
     "mocha-webpack": "0.7.0",
+    "moment": "2.0.0",
     "node-sass": "4.5.0",
     "sass-loader": "5.0.1",
     "style-loader": "0.13.1",
+    "url-loader": "0.5.7",
     "webpack": "2.2.1",
     "webpack-dev-server": "2.3.0",
     "wholesale-styleguide-scss": "git+ssh://git@github.bus.zalan.do/WholesaleDesignSystem/Styleguide-SCSS.git"

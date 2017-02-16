@@ -4,12 +4,13 @@ import WSDatePickerCalendar from './ws-date-picker-calendar';
 import './ws-date-picker.scss';
 
 export default class WSDatePicker extends Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
+		let momentDay = this.props.date ? moment(this.props.date) : null;
 		this.state = {
 			show: false,
-			momentDay: null,
-			dateString: ''
+			momentDay,
+			dateString: momentDay ? momentDay.format('LL') : ''
 		};
 	}
 	toggleCalendar() {
@@ -20,6 +21,7 @@ export default class WSDatePicker extends Component {
 			momentDay,
 			dateString: momentDay.format('LL')
 		});
+		this.props.onUpdate && this.props.onUpdate(momentDay.toDate());
 	}
 	render() {
 		return <div className='ws-date-picker'>

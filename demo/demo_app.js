@@ -7,5 +7,6 @@ render(
 		<WSHeader title='Demo Page' links={[
 			{ label: 'Link', value: 'LinkValue', onclick: (value) => router.goTo(value) }
 		]}/>
-		<WSDatePicker />
+		<WSDatePicker onUpdate={(date) => console.log('New Date:', date)} />
+		<WSDatePicker onUpdate={(date) => console.log('New Date:', date)} date={Date.now()}/>
 	</div>, document.body);

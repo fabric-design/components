@@ -101,6 +101,9 @@ $dropdown-hover-background-color: $arctica !default;
 	}
 	.dropdown-menu {
 		@include dropdown();
+		max-height: 40rem;
+		overflow-y: scroll;
+		overflow-x: hidden;
 		&.mod-menu-open,
 		&.mod-sub-open {
 			left: 0;

@@ -697,10 +697,7 @@ var WSHeader = function (_HTMLElement) {
 			var _this7 = this;
 
 			return new Promise(function (resolve, reject) {
-				_this7.request('GET', _this7.state.userServiceUrl + '/' + _this7.state.userUID).then(function (_ref) {
-					var _ref2 = _slicedToArray(_ref, 1),
-					    user = _ref2[0];
-
+				_this7.request('GET', _this7.state.userServiceUrl + '/' + _this7.state.userUID).then(function (user) {
 					if (!user) {
 						reject();
 					}

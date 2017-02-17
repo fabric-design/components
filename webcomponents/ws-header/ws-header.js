@@ -243,7 +243,7 @@ class WSHeader extends HTMLElement {
 	getUser() {
 		return new Promise((resolve, reject) => {
 			this.request('GET', `${this.state.userServiceUrl}/${this.state.userUID}`)
-				.then(([user]) => {
+				.then((user) => {
 					if (!user) {
 						reject();
 					}

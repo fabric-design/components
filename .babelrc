@@ -1,12 +1,12 @@
 {
-  "presets": [
-	  ["es2015", {
-		  "modules": false
-	  }]
-  ],
-  "plugins": [
-	  ["transform-react-jsx", {
+	"presets": [
+		["es2015", {
+			"modules": false
+		}]
+	],
+	"plugins": [
+		["transform-react-jsx", {
 			"pragma": "React.createElement"
 		}]
-  ]
+	]
 }

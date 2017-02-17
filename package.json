@@ -9,7 +9,9 @@
     "test": "npm run test:react && npm run test:preact",
     "test:react": "mocha-webpack --webpack-config webpack.config.js \"tests/**/*.spec.js\"",
     "test:preact": "mocha-webpack --webpack-config webpack.config.preact.js \"tests/**/*.spec.js\"",
-    "tdd": "mocha-webpack --webpack-config webpack.config.js --watch \"tests/**/*.spec.js\""
+    "tdd": "mocha-webpack --webpack-config webpack.config.js --watch \"tests/**/*.spec.js\"",
+    "lint": "eslint components/**.js components/**.jsx tests/**.js tests/**.jsx",
+    "precommit": "npm run lint && npm run test"
   },
   "repository": {
     "type": "git",
@@ -39,6 +41,11 @@
     "babel-preset-stage-1": "^6.5.0",
     "chai": "3.5.0",
     "css-loader": "0.26.1",
+    "eslint": "3.15.0",
+    "eslint-config-airbnb": "14.1.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jsx-a11y": "4.0.0",
+    "eslint-plugin-react": "6.10.0",
     "lite-server": "^2.2.0",
     "mocha": "3.2.0",
     "mocha-webpack": "0.7.0",

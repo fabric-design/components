@@ -19,7 +19,7 @@ class WSWeekPicker extends HTMLElement {
   getElements() {
     this.wrapper = this.shadowRoot.querySelector('.ws-week-wrapper');
     this.input = this.shadowRoot.querySelector('.ws-week-input');
-    this.calendar = this.shadowRoot.querySelector('.ws-week-picker');
+    this.calendar = this.shadowRoot.querySelector('.ws-week-picker-calendar');
     this.crossIcon = this.shadowRoot.querySelector('input + i');
     this.prevYearButton = this.shadowRoot.querySelector('.checkPrevYear');
     this.nextYearButton = this.shadowRoot.querySelector('.checkNextYear');
@@ -42,23 +42,41 @@ class WSWeekPicker extends HTMLElement {
     this.input.addEventListener('click', (e) => this.open ? this.closeWeekPicker() : this.openWeekPicker());
     this.crossIcon.addEventListener('click', (e) => this.open ? this.closeWeekPicker() : this.openWeekPicker());
     this.calendar.addEventListener('click', (e) => this.calendarClick(e));
-    this.prevYearButton.addEventListener('click', () => this.moveYearBefore());
-    this.nextYearButton.addEventListener('click', () => this.moveYearAfter());
+    this.prevYearButton.addEventListener('click', () => {
+      if (parseDate(this.prevYear, this.prevYearWeeksNumbers[0][0]) < parseDate(this.minYear, this.minWeek)) {
+        return;
+      }
+      this.moveYearBefore();
+    });
+    this.nextYearButton.addEventListener('click', () => {
+      if (parseDate(this.nextYear, this.nextYearWeeksNumbers[1][this.nextYearWeeksNumbers[1].length - 1]) > parseDate(this.maxYear, this.maxWeek)) {
+        return;
+      }
+      this.moveYearAfter();
+    });
   }
 
   calendarClick(e) {
     // If user pick on week number take all elements to return result to input field and close calendar
-    if (e.target.className == 'week' || e.target.className == 'week now') {
-      if (e.target.parentElement.parentElement.parentElement.className == 'prev-year') {
-        this.pickedWeekYear = e.target.parentElement.parentElement.parentElement.children[1].firstElementChild.innerHTML
+    if (e.target.classList.contains('week')) {
+      let pickedWeekYear, pickedWeek = parseInt(e.target.innerHTML);
+      if (e.target.classList.contains('prevYear')) {
+        pickedWeekYear = this.prevYear;
+      } else if (e.target.classList.contains('nextYear')) {
+        pickedWeekYear = this.nextYear;
       } else {
-        this.pickedWeekYear = e.target.parentElement.parentElement.parentElement.firstElementChild.firstElementChild.innerHTML;
+        pickedWeekYear = this.curYear;
       }
-      this.pickedWeekWrapper.className = 'week';
-      this.pickedWeekWrapper = e.target;
-      this.pickedWeekWrapper.className = 'week now';
 
-      let pickedDate = parseDate(this.pickedWeekYear, this.pickedWeekWrapper.innerHTML);
+      let pickedDate = parseDate(pickedWeekYear, pickedWeek);
+      if (pickedDate < parseDate(this.minYear, this.minWeek) || pickedDate > parseDate(this.maxYear, this.maxWeek)) {
+        return;
+      }
+
+      this.pickedWeekWrapper.classList.remove('now');
+      this.pickedWeekWrapper = e.target;
+      this.pickedWeekWrapper.classList.add('now');
+
       this.parseDates(pickedDate);
       this.setInputValue();
       this.closeWeekPicker();
@@ -86,24 +104,18 @@ class WSWeekPicker extends HTMLElement {
   openWeekPicker() {
     this.open = true;
     // Prevent on every click full redraw calendar
-    this.calendar.className = 'ws-week-picker opened';
-    this.input.className = 'ws-week-input active';
+    this.calendar.classList.add('opened');
+    this.input.classList.add('active');
     this.crossIcon.className = 'icon icon-cross';
-    // If input clear draw calendar and define current week and select it
-    if (!this.pickedWeekWrapper) {
-      this.buildCalendar();
-      this.highlightCurrentWeek();
-    } else {
-      // if input have value - define current week as selected at previous time
-      this.pickedWeekWrapper.className = 'week now';
-    }
+    this.buildCalendar();
+    this.highlightCurrentWeek();
   }
 
   // Close calendar if user don't click on calendar
   closeWeekPicker() {
     this.open = false;
-    this.calendar.className = 'ws-week-picker';
-    this.input.className = 'ws-week-input used';
+    this.calendar.classList.remove('opened');
+    this.input.classList.remove('active');
     this.crossIcon.className = 'icon icon-calendar';
   }
 
@@ -132,7 +144,24 @@ class WSWeekPicker extends HTMLElement {
   // Draw span with year number
   buildYears() {
     this.prevYearNumber.innerHTML = `<span>${this.prevYear}</span>`;
+    let prevYearWeeksNumbers = weeksNumbersForYear(this.prevYear).slice(10);
+    if (parseDate(this.prevYear, prevYearWeeksNumbers[0][0]) < parseDate(this.minYear, this.minWeek)) {
+      this.prevYearButton.setAttribute('disabled', 'disabled');
+      this.shadowRoot.querySelector('.prev-year .year').setAttribute('disabled', 'disabled')
+    } else {
+      this.prevYearButton.removeAttribute('disabled');
+      this.shadowRoot.querySelector('.prev-year .year').removeAttribute('disabled');
+    }
+
     this.nextYearNumber.innerHTML = `<span>${this.nextYear}</span>`;
+    let nextYearWeeksNumbers = weeksNumbersForYear(this.nextYear).slice(0,2);
+    if (parseDate(this.nextYear, nextYearWeeksNumbers[1][nextYearWeeksNumbers[1].length - 1]) > parseDate(this.maxYear, this.maxWeek)) {
+      this.nextYearButton.setAttribute('disabled', 'disabled');
+      this.shadowRoot.querySelector('.next-year .year').setAttribute('disabled', 'disabled')
+    } else {
+      this.nextYearButton.removeAttribute('disabled');
+      this.shadowRoot.querySelector('.next-year .year').removeAttribute('disabled');
+    }
     this.curYearNumber.innerHTML = `<span>${this.curYear}</span>`;
   }
 
@@ -144,37 +173,55 @@ class WSWeekPicker extends HTMLElement {
     this.prevYearWeeksNumbers.forEach((month, i) => {
       this.prevYearWeeks.innerHTML += `<span class="weekNumbers">
                                           <span class="month">${self.months[i+10]}</span>
-                                          <span class="week">${month.join('</span><span class="week">')}</span>
+                                          ${month.map(week => {
+                                            return `<span class="prevYear week" 
+                                                ${parseDate(this.prevYear, week) < parseDate(this.minYear, this.minWeek) ? 'disabled="disabled"' : ''}>
+                                                ${week}</span>`
+                                          }).join('')}
+                                          </span>
                                        </span>`;
     });
     this.curYearWeeksNumbers = weeksNumbersForYear(this.curYear);
     this.curYearWeeksNumbers.forEach((month, i) => {
       this.curYearWeeks.innerHTML += `<span class="weekNumbers">
                                           <span class="month">${self.months[i]}</span>
-                                          <span class="week">${month.join('</span><span class="week">')}</span>
+                                          ${month.map(week => {
+                                            return `<span class="curYear week" 
+                                              ${parseDate(this.curYear, week) < parseDate(this.minYear, this.minWeek) 
+                                                || parseDate(this.curYear, week) > parseDate(this.maxYear, this.maxWeek)
+                                                ? 'disabled="disabled"' 
+                                                : ''}>${week}</span>`
+                                          }).join('')}
                                        </span>`;
     });
     this.nextYearWeeksNumbers = weeksNumbersForYear(this.nextYear).slice(0,2);
     this.nextYearWeeksNumbers.forEach((month, i) => {
       this.nextYearWeeks.innerHTML += `<span class="weekNumbers">
                                           <span class="month">${self.months[i]}</span>
-                                          <span class="week">${month.join('</span><span class="week">')}</span>
+                                          ${month.map(week => {
+                                            return `<span class="nextYear week" 
+                                              ${parseDate(this.nextYear, week) > parseDate(this.maxYear, this.maxWeek) ? 'disabled="disabled"' : ''}>${week}</span>`;
+                                          }).join('')}
                                        </span>`;
     });
   }
 
   // Highlight the current week number
   highlightCurrentWeek() {
-    if (this.selectedYear !== this.curYear) {
+	let wholeWeeks;
+    if (this.selectedYear === this.curYear) {
+      wholeWeeks = this.shadowRoot.querySelectorAll('.curYear.week');
+    } else if (this.selectedYear === this.prevYear) {
+      wholeWeeks = this.shadowRoot.querySelectorAll('.prevYear.week');
+    } else if (this.selectedYear === this.nextYear) {
+      wholeWeeks = this.shadowRoot.querySelectorAll('.nextYear.week');
+    } else {
       return;
     }
-    let wholeWeeks = this.shadowRoot.querySelectorAll('.cur-year .week');
-    for (let i=0; i<wholeWeeks.length; i++) {
-      if (wholeWeeks[i].innerHTML == this.selectedWeek &&
-        wholeWeeks[i].parentElement.firstElementChild.innerHTML == this.selectedMonth) {
-        this.pickedWeekWrapper = wholeWeeks[i];
-        this.pickedWeekWrapper.className = 'week now';
-      }
+
+    this.pickedWeekWrapper = Array.from(wholeWeeks).find(week => parseInt(week.innerHTML) === this.selectedWeek);
+    if (this.pickedWeekWrapper) {
+      this.pickedWeekWrapper.classList.add('now');
     }
   }
 
@@ -183,10 +230,16 @@ class WSWeekPicker extends HTMLElement {
     let selectedWeek = parseInt(this.getAttribute('week'));
     this.date = selectedYear && selectedWeek ? parseDate(selectedYear,selectedWeek) : new Date();
     this.parseDates(this.date);
+    this.minWeek = this.getAttribute('min-week') || 1;
+    this.minYear = this.getAttribute('min-year') || 0;
+    this.maxWeek = this.getAttribute('max-week') || 60;
+    this.maxYear = this.getAttribute('max-year') || 5000;
   }
 
   parseDates(date) {
     this.curYear = this.selectedYear = date.getFullYear();
+    this.prevYear = this.curYear - 1;
+    this.nextYear = this.curYear + 1;
     this.selectedMonth = this.months[date.getMonth()];
     this.selectedWeek = getWeek(this.selectedYear, date.getMonth(), date.getDate());
   }
@@ -205,6 +258,10 @@ class WSWeekPicker extends HTMLElement {
     switch (attrName) {
       case "year":
       case "week":
+      case "min-week":
+      case "max-week":
+      case "min-year":
+      case "max-year":
         this.getAttributes();
         this.buildCalendar();
         this.setInputValue();
@@ -260,7 +317,7 @@ function parseDate(year,week) {
 // It can be week number from previous year
 function janWeekNumbers(year) {
   let firstMonthWeeks = [];
-  let firstWeek = getWeek(year, 0, 1);
+  let firstWeek = 1;
   let lastWeek = getWeek(year, 0, 31);
   if (firstWeek != 1) {
     firstMonthWeeks[0] = firstWeek;
@@ -292,6 +349,9 @@ function weeksNumbersForYear(year) {
   weeks[0] = janWeekNumbers(year);
   for (let i=1; i<=11; i++){
     weeks[i] = weekNumbersByMonth(year, i);
+    if (weeks[i - 1][weeks[i - 1].length - 1] === weeks[i][0]) {
+      weeks[i] = weeks[i].slice(1);
+    }
   }
   return weeks;
 }

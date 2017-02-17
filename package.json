@@ -13,6 +13,10 @@
     "lint": "eslint components/**.js components/**.jsx tests/**.js tests/**.jsx",
     "precommit": "npm run lint && npm run test"
   },
+  "pre-commit": [
+    "test",
+    "lint"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.bus.zalan.do/WholesaleDesignSystem/Styleguide-Web-Components.git"
@@ -50,6 +54,7 @@
     "mocha": "3.2.0",
     "mocha-webpack": "0.7.0",
     "node-sass": "4.5.0",
+    "pre-commit": "1.2.2",
     "sass-loader": "5.0.1",
     "style-loader": "0.13.1",
     "webpack": "2.2.1",

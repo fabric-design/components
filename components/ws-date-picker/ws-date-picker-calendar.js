@@ -46,6 +46,7 @@ export default class WSDatePickerCalendar extends Component {
 				/>);
 		}
 		return <div className="ws-date-picker-calendar">
+				<div className="arrow-up"></div>
 				<table>
 					<caption>
 						<span className="prev" onClick={() => this.prevMonth()}><a href="#"><i className="icon icon-left" /></a></span>
@@ -54,14 +55,14 @@ export default class WSDatePickerCalendar extends Component {
 					</caption>
 					<thead>
 						<tr>
-							<th className='off'>CW</th>
-							<th className='off'>Mo</th>
-							<th className='off'>Tu</th>
-							<th className='off'>We</th>
-							<th className='off'>Th</th>
-							<th className='off'>Fr</th>
-							<th className='off'>Sa</th>
-							<th className='off'>Su</th>
+							<th>CW</th>
+							<th>Mo</th>
+							<th>Tu</th>
+							<th>We</th>
+							<th>Th</th>
+							<th>Fr</th>
+							<th>Sa</th>
+							<th>Su</th>
 						</tr>
 					</thead>
 					<tbody>

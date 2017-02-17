@@ -4,47 +4,75 @@ $icon-font-path: '../../node_modules/wholesale-styleguide-scss/icons/';
 @import "../../node_modules/wholesale-styleguide-scss/components/base/icons";
 
 .ws-date-picker {
+	position: relative;
+
 	& > input {
 		display: inline-block;
 		padding-right: 1.5rem;
 	}
 	& > i {
 		position: relative;
-		top: 0.1rem;
+		top: rem(5px);
 		left: -2rem;
+		height: rem(12px);
+		width: rem(12px);
 	}
 	.ws-date-picker-calendar {
-        background: #fff;
-        border: 1px solid #ddd;
-        font-size: 90%;
+        background: $white;
         border-radius: 4px;
-        margin-top: 8px;
-        width: 300px;
+		box-shadow: map-get($elevation-shadows, 'floating');
+		display: inline-block;
+		position: absolute;
+		top: rem(44px);
+		left: 0;
 	}
+	.arrow-up {
+		$size: 10px;
+		width: 0;
+		height: 0;
+		border-left: $size solid transparent;
+		border-right: $size solid transparent;
+		border-bottom: $size solid $white;
+		position: absolute;
+		top: -1 * $size;
+		left: 20px;
+	}
+
 	table {
 		table-layout: fixed;
 		border: none;
+		display: inline-block;
 
 		caption {
 			padding: 0.5rem 0;
-			color: $asphalt;
+			color: $heron;
+			font-weight: 300;
 
 			i {
 				position: relative;
     			top: 0.1rem;
-				color: $asphalt;
+				color: $base-font-color;
 			}
 			.prev {
 				float: left;
-				margin-left: 0.5rem;
+				margin-left: rem(6px);
+				padding-left: rem(6px);
 			}
 			.next {
 				float: right;
-				margin-right: 0.5rem;
+				margin-right: rem(6px);
+				padding-right: rem(6px);
 			}
 		}
-		tr:last-child {
-			padding-bottom: 0.5rem;
+		tbody {
+			font-size: $font-size-small;
+
+			&:before, &:after {
+				content: "_";
+				display: block;
+				line-height: 0.25rem;
+				color: transparent;
+			}
 		}
 		th:first-child, td:first-child {
 			padding-left: 0.5rem !important;
@@ -53,17 +81,17 @@ $icon-font-path: '../../node_modules/wholesale-styleguide-scss/icons/';
 			padding-right: 0.5rem !important;
 		}
 		td, th {
-			padding: 0.5rem 0.3rem !important;
-			width: 1rem;
-			line-height: 1.9rem;
+			padding: 0 rem(6px) !important;
+			width: 2rem;
+			line-height: 2rem;
 			text-align: center;
 			background-color: $white !important;
 			border: none !important;
 			&.off, &.off .day {
-				color: $ghost;
+				color: $french-gray;
 			}
 			a {
-				color: $asphalt;
+				color: $base-font-color;
 			}
 			&.active a {
 				background-color: $heaven;
@@ -73,14 +101,21 @@ $icon-font-path: '../../node_modules/wholesale-styleguide-scss/icons/';
 			}
 		}
 		th {
-			background-color: $arctica !important;
+			line-height: rem(39px);
+			color: $jumbo;
+			background-color: $silver !important;
+			font-weight: normal;
 		}
 		.day {
-			color: $asphalt !important;
+			color: $base-font-color !important;
 
-			&.active {
+			&.active, &.active:hover {
 				background-color: $heaven;
+				color: $white;
 				border-radius: 50%;
+			}
+			&:hover {
+				background-color: $earl-gray;
 			}
 		}
 	}

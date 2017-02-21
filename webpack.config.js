@@ -4,7 +4,7 @@ module.exports = {
   entry: './demo/demo_app.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'demo')
+    path: path.resolve(__dirname, 'demo'),
   },
   module: {
 		rules: [{
@@ -28,11 +28,11 @@ module.exports = {
 			{
 				test: /\.(png|woff|woff2|eot|ttf|svg)$/,
 				loader: 'url-loader?limit=100000'
-			}]
+			}],
   },
-	devServer: {
-			contentBase: path.join(__dirname, "demo"),
-			compress: true,
-			port: 8080
-	}
+  devServer: {
+    contentBase: path.join(__dirname, 'demo'),
+    compress: true,
+    port: 8080,
+  },
 };

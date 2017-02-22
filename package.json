@@ -27,13 +27,14 @@
     "components"
   ],
   "files": [
-    "preact-components"
+    "src"
   ],
   "jspm": {
     "registry": "npm",
     "jspmPackage": true,
+    "format": "esm",
     "directories": {
-      "preact-components": "preact-components"
+      "lib": "src"
     }
   },
   "author": "Fabian Weber",

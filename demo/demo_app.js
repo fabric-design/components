@@ -1,5 +1,5 @@
-import { React, render } from '../components/imports';
-import WSHeader from '../components/ws-header.js';
+import { React, render } from '../src/imports';
+import WSHeader from '../src/ws-header.js';
 
 render(<WSHeader title='Demo Page' links={[
 	{ label: 'Link', value: 'LinkValue', onclick: (value) => router.goTo(value) }

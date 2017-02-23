@@ -2,6 +2,8 @@ import { React, Component } from '../imports';
 import './ws-notification.scss';
 
 //const NOTIFICATIONS_SHOW_LIMIT = 3;
+const DEFAULT_NOTIFICATION_LIFETIME = 5000;
+const DEFAULT_NOTIFICATIOn_TYPE = 'info';
 
 export default class WSNotification extends Component {
   constructor() {
@@ -28,7 +30,13 @@ export default class WSNotification extends Component {
     window.removeEventListener('ws-notification-close');
   }
   addNotify (event) {
-    const {title, description, type, lifetime} = event.detail;
+    let {title, description, type, lifetime} = event.detail;
+    if (!lifetime) {
+      lifetime = DEFAULT_NOTIFICATION_LIFETIME;
+    }
+    if (!type) {
+      type = DEFAULT_NOTIFICATIOn_TYPE;
+    }
     this.setState({
       notifications: this.state.notifications.concat([{title, description, type, lifetime}])
     });
@@ -41,12 +49,10 @@ export default class WSNotification extends Component {
         this.refs.list.style.transition = `transform .35s cubic-bezier(.35, 1, .69, .98) .1s`;
         this.refs.list.style.transform = `translate3d(0, 0, 0)`;
     }, 0);
-    if (notification.lifetime) {
-      clearTimeout(this.state.timeoutId);
-      this.setState({timeoutId: setTimeout(function () {
-        return that.close(i);
-      }, notification.lifetime)});
-    }
+    clearTimeout(this.state.timeoutId);
+    this.setState({timeoutId: setTimeout(function () {
+      return that.close(i);
+    }, notification.lifetime)});
   }
   closeAllEvent() {
     let i;

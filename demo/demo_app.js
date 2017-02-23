@@ -1,6 +1,11 @@
 import { React, render } from '../components/imports';
-import WSHeader from '../components/ws-header.js';
+import WSHeader from '../components/ws-header/';
+import WSNotification from '../components/ws-notification/';
 
-render(<WSHeader title='Demo Page' links={[
-	{ label: 'Link', value: 'LinkValue', onclick: (value) => router.goTo(value) }
-]}/>, document.body);
+render(<div>
+	<WSHeader title='Demo Page' links={[
+		{ label: 'Link', value: 'LinkValue', onclick: (value) => router.goTo(value) }
+	]}/>
+	<WSNotification/>
+</div>
+, document.getElementById('root'));

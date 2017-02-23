@@ -3,7 +3,7 @@ import './ws-notification.scss';
 
 //const NOTIFICATIONS_SHOW_LIMIT = 3;
 const DEFAULT_NOTIFICATION_LIFETIME = 5000;
-const DEFAULT_NOTIFICATIOn_TYPE = 'info';
+const DEFAULT_NOTIFICATION_TYPE = 'info';
 
 export default class WSNotification extends Component {
   constructor() {
@@ -31,11 +31,13 @@ export default class WSNotification extends Component {
   }
   addNotify (event) {
     let {title, description, type, lifetime} = event.detail;
-    if (!lifetime) {
+    if (typeof lifetime === 'undefined') {
+      lifetime = 0;
+    } else if (!lifetime) {
       lifetime = DEFAULT_NOTIFICATION_LIFETIME;
     }
     if (!type) {
-      type = DEFAULT_NOTIFICATIOn_TYPE;
+      type = DEFAULT_NOTIFICATION_TYPE;
     }
     this.setState({
       notifications: this.state.notifications.concat([{title, description, type, lifetime}])
@@ -52,7 +54,7 @@ export default class WSNotification extends Component {
     clearTimeout(this.state.timeoutId);
     this.setState({timeoutId: setTimeout(function () {
       return that.close(i);
-    }, notification.lifetime)});
+    }, notification.lifetime || DEFAULT_NOTIFICATION_LIFETIME)});
   }
   closeAllEvent() {
     let i;
@@ -81,7 +83,7 @@ export default class WSNotification extends Component {
   render() {
     const that = this;
     let notificationsList = [];
-    this.state.notifications.reverse().forEach((notification, i) => {
+    this.state.notifications.forEach((notification, i) => {
       //if ((i <= NOTIFICATIONS_SHOW_LIMIT)) {
         notificationsList.push(<div className={`notification ${notification.type}`} key={`notification-${i}`} ref={`notification-${i}`} onClick={() => this.close(i)}>
           <div className="icons">

@@ -1,1 +1,1 @@
-export { WSHeader } from './ws-header.js';
+export { WSHeader } from './ws-header/ws-header.js';

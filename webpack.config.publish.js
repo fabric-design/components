@@ -1,10 +1,15 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-  entry: './demo/demo_app.js',
+  target: 'web',
+  entry: {
+    'ws-header': './components/ws-header/ws-header.js',
+  },
+  externals: [nodeExternals()],
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'demo'),
+    filename: '[name].js',
+    path: path.resolve(__dirname, 'dist/components'),
   },
   module: {
     rules: [{
@@ -25,16 +30,5 @@ module.exports = {
         loader: 'sass-loader', // compiles Sass to CSS
       }],
     }],
-  },
-  resolve: {
-    alias: {
-      react: 'preact',
-      'react-dom': 'preact',
-    },
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'demo'),
-    compress: true,
-    port: 8080,
   },
 };

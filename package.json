@@ -11,7 +11,8 @@
     "test:preact": "mocha-webpack --webpack-config webpack.config.preact.js \"tests/**/*.spec.js\"",
     "tdd": "mocha-webpack --webpack-config webpack.config.js --watch \"tests/**/*.spec.js\"",
     "lint": "eslint components/**.js components/**.jsx tests/**.js tests/**.jsx",
-    "precommit": "npm run lint && npm run test"
+    "precommit": "npm run lint && npm run test && npm run build",
+    "build": "webpack --config webpack.config.publish.js"
   },
   "pre-commit": [
     "test",
@@ -56,9 +57,11 @@
     "node-sass": "4.5.0",
     "pre-commit": "1.2.2",
     "sass-loader": "5.0.1",
+    "sinon": "1.17.7",
     "style-loader": "0.13.1",
     "webpack": "2.2.1",
     "webpack-dev-server": "2.3.0",
+    "webpack-node-externals": "1.5.4",
     "wholesale-styleguide-scss": "git+ssh://git@github.bus.zalan.do/WholesaleDesignSystem/Styleguide-SCSS.git"
   },
   "dependencies": {

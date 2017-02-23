@@ -40,7 +40,427 @@
 <script>
 (function(){
     /* inject:js */
+<<<<<<< HEAD
+    'use strict';
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+//Get the contents of the template (_currentScript is available with webcomponents.js, use currentScript if you don't use this Polyfill)
+var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
+var availableLanguages = ['de', 'en'];
+var state = {
+	tokenName: "zalando-internal-access_token",
+	stateName: "zalando-internal-access_state",
+	languageName: 'language',
+	cookiePath: '/',
+	cookieDomain: '.zalan.do',
+	lang: null,
+	loggedIn: null,
+	clientId: null,
+	redirectUrl: null,
+	userServiceUrl: null,
+	tokenInfoUrl: null
+};
+// Remember url at loadtime to not have sideeffects by ie Angular2
+var urlAtStart = window.location.href;
+
+var WSHeader = function (_HTMLElement) {
+	_inherits(WSHeader, _HTMLElement);
+
+	function WSHeader() {
+		_classCallCheck(this, WSHeader);
+
+		return _possibleConstructorReturn(this, (WSHeader.__proto__ || Object.getPrototypeOf(WSHeader)).apply(this, arguments));
+	}
+
+	_createClass(WSHeader, [{
+		key: 'createdCallback',
+
+		// Use createdCallback instead of constructor to init an element.
+		value: function createdCallback() {
+			var _this2 = this;
+
+			var clone = document.importNode(template.content, true);
+
+			// This element uses Shadow DOM.
+			this.createShadowRoot().appendChild(clone);
+
+			this.state = state;
+			this.getAttributes();
+
+			this.setupLanguages();
+
+			// would fire initial before
+
+			document.addEventListener("WebComponentsReady", function () {
+				var lang = _this2.getLanguage();
+				_this2.setLanguage(lang);
+
+				_this2.checkIsLoggedIn().then(function () {
+					return _this2.getUser();
+				}).then(function () {
+					return _this2.showUser();
+				}).catch(function (err) {
+					var message = "Getting Token-/User-Info failed!";
+					if (err) {
+						message += " " + err.toString();
+					}
+					_this2.propagateError(message);
+				});
+			});
+		}
+	}, {
+		key: 'propagateError',
+		value: function propagateError(reason) {
+			var event = new CustomEvent("error", {
+				detail: {
+					message: reason
+				}
+			});
+			this.dispatchEvent(event);
+		}
+	}, {
+		key: 'getAttributes',
+		value: function getAttributes() {
+			this.state = Object.assign({}, this.state, {
+				clientId: this.getAttribute('client-id'),
+				redirectUrl: this.getAttribute('redirect-url'),
+				userServiceUrl: this.getAttribute('userservice-url'),
+				tokenInfoUrl: this.getAttribute('tokeninfo-url')
+			});
+		}
+	}, {
+		key: 'setupLanguages',
+		value: function setupLanguages() {
+			var _this3 = this;
+
+			var languagesElem = this.shadowRoot.querySelector('#languages');
+
+			availableLanguages.map(function (lang) {
+				var dummy = document.createElement('div');
+				dummy.innerHTML = '<li>\n                <a><span class="flag flag-' + lang + '"></span> <span translate="global.language.{{lang}}">' + lang + '</span></a>\n            </li>';
+				var node = dummy.childNodes[0];
+				node.addEventListener("click", function () {
+					return _this3.setLanguage(lang);
+				});
+				languagesElem.appendChild(node);
+			});
+		}
+	}, {
+		key: 'getLanguage',
+		value: function getLanguage() {
+			return this.state.lang || window.localStorage.getItem(this.state.languageName) || availableLanguages[0];
+		}
+	}, {
+		key: 'setLanguage',
+		value: function setLanguage(lang) {
+			if (this.state.lang != lang) {
+				this.state.lang = lang;
+				window.localStorage.setItem(this.state.languageName, lang);
+				this.showLanguage(lang);
+				this.propagateLanguageChange(lang);
+			}
+		}
+	}, {
+		key: 'showLanguage',
+		value: function showLanguage(lang) {
+			this.shadowRoot.querySelector('#selectedLanguageFlag').className = "flag flag-" + lang;
+			this.shadowRoot.querySelector('#selectedLanguage').innerText = lang;
+		}
+	}, {
+		key: 'propagateLanguageChange',
+		value: function propagateLanguageChange(lang) {
+			var event = new CustomEvent("language-changed", {
+				detail: {
+					language: lang
+				}
+			});
+			this.dispatchEvent(event);
+		}
+	}, {
+		key: 'login',
+		value: function login() {
+			var url = "https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid" + "&client_id=" + this.state.clientId + "&redirect_uri=" + this.state.redirectUrl + "&state=" + this.setSessionState();
+
+			window.location.href = url;
+		}
+	}, {
+		key: 'logout',
+		value: function logout() {
+			this.removeCookie();
+
+			this.showLoggedOut();
+			this.propagateLoginStatusChange(false);
+		}
+	}, {
+		key: 'checkIsLoggedIn',
+		value: function checkIsLoggedIn() {
+			var _this4 = this;
+
+			return new Promise(function (resolve, reject) {
+				_this4.getToken(urlAtStart).then(function (token) {
+					// checking that token is still valid
+					_this4.getTokenInfo().then(function () {
+						_this4.showLoggedIn();
+
+						_this4.propagateLoginStatusChange(true, token);
+						resolve();
+					}, function (err) {
+						_this4.logout();
+						reject(err);
+					});
+				}, function (err) {
+					_this4.logout();
+					reject(err);
+				});
+			});
+		}
+	}, {
+		key: 'propagateLoginStatusChange',
+		value: function propagateLoginStatusChange(isLoggedIn, token) {
+			if (this.state.loggedIn !== isLoggedIn) {
+				this.state.loggedIn = isLoggedIn;
+
+				var event = new CustomEvent("login-status-changed", {
+					detail: {
+						loggedIn: isLoggedIn,
+						token: token || null
+					}
+				});
+				this.dispatchEvent(event);
+			}
+		}
+	}, {
+		key: 'showLoggedOut',
+		value: function showLoggedOut() {
+			var loggedInInfo = this.shadowRoot.querySelector('#loggedInInfo');
+			loggedInInfo.innerHTML = '<a class="auto-size"><span translate="global.menu.signein">Login</span></i></a>';
+			loggedInInfo.removeEventListener("click", this.logout);
+			loggedInInfo.addEventListener("click", this.login.bind(this));
+		}
+	}, {
+		key: 'showLoggedIn',
+		value: function showLoggedIn() {
+			var loggedInInfo = this.shadowRoot.querySelector('#loggedInInfo');
+			loggedInInfo.innerHTML = '<span translate="global.menu.signedinas"></span>\n\t\t\t<span id="userName">Loading...</span>\n\t\t\t<a class="auto-size" id="logOutButton" type="button"><div id="logOutIcon"></div></a>';
+			loggedInInfo.removeEventListener("click", this.login);
+			loggedInInfo.addEventListener("click", this.logout.bind(this));
+		}
+	}, {
+		key: 'setSessionState',
+		value: function setSessionState() {
+			// create new state guid
+			var state = this.guid();
+
+			// save the state to check for it on return
+			window.localStorage.setItem(this.state.stateName, state);
+			return state;
+		}
+	}, {
+		key: 'checkSessionState',
+		value: function checkSessionState(state) {
+			var valid = window.localStorage.getItem(this.state.stateName) === state;
+			window.localStorage.removeItem(this.state.stateName);
+			return valid;
+		}
+	}, {
+		key: 'getToken',
+		value: function getToken(url) {
+			var _this5 = this;
+
+			if (!url) {
+				url = window.location.href;
+			}
+			return new Promise(function (resolve, reject) {
+				var token = _this5.getTokenFromUrl(url);
+				if (token) {
+					var sessionState = _this5.getStateFromUrl(url);
+					if (_this5.checkSessionState(sessionState)) {
+						_this5.setCookie(token);
+						return resolve(token);
+					}
+				}
+				token = _this5.getCookieValue(_this5.state.tokenName);
+				if (token) {
+					return resolve(token);
+				}
+
+				reject();
+			});
+		}
+	}, {
+		key: 'getTokenFromUrl',
+		value: function getTokenFromUrl(url) {
+			var urlQueryTokenPart = /access_token=([^&]+)/.exec(url);
+			return urlQueryTokenPart != null ? urlQueryTokenPart[1] : null;
+		}
+	}, {
+		key: 'getStateFromUrl',
+		value: function getStateFromUrl(url) {
+			var urlQueryStatePart = /state=([^&]+)/.exec(url);
+			return urlQueryStatePart[1];
+		}
+	}, {
+		key: 'getTokenInfo',
+		value: function getTokenInfo() {
+			var _this6 = this;
+
+			return new Promise(function (resolve, reject) {
+				_this6.request('GET', _this6.state.tokenInfoUrl).then(function (data) {
+					_this6.state = Object.assign({}, _this6.state, {
+						userUID: data.uid
+					});
+					resolve(data.uid);
+				}, function (err) {
+					_this6.logout();
+					reject(err);
+				});
+			});
+		}
+	}, {
+		key: 'getUser',
+		value: function getUser() {
+			var _this7 = this;
+
+			return new Promise(function (resolve, reject) {
+				_this7.request('GET', _this7.state.userServiceUrl + '/' + _this7.state.userUID).then(function (_ref) {
+					var _ref2 = _slicedToArray(_ref, 1),
+					    user = _ref2[0];
+
+					if (!user) {
+						reject();
+					}
+					var userInfo = {
+						userName: user.name,
+						userEmail: user.email
+					};
+					_this7.state = Object.assign({}, _this7.state, userInfo);
+					resolve(userInfo);
+				}, function (err) {
+					_this7.logout();
+					reject(err);
+				});
+			});
+		}
+	}, {
+		key: 'showUser',
+		value: function showUser() {
+			this.shadowRoot.querySelector('#userName').innerText = this.state.userName;
+		}
+	}, {
+		key: 'setCookie',
+		value: function setCookie(token) {
+			var now = new Date();
+			now.setTime(now.getTime() + 60 * 60 * 1000); // in milliseconds
+			// setting domain does not work for dev localhost environment
+			if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+				document.cookie = this.state.tokenName + '=' + token + ';path=' + this.state.cookiePath + ';expires=' + now.toGMTString() + ';';
+			} else {
+				document.cookie = this.state.tokenName + '=' + token + ';path=' + this.state.cookiePath + ';domain=' + this.state.cookieDomain + ';expires=' + now.toGMTString() + ';';
+			}
+		}
+	}, {
+		key: 'removeCookie',
+		value: function removeCookie() {
+			if (location.hostname === "localhost" || location.hostname === "127.0.0.1") {
+				document.cookie = this.state.tokenName + '=;path=' + this.state.cookiePath + ';expires=' + new Date(0).toGMTString() + ';';
+			} else {
+				document.cookie = this.state.tokenName + '=;path=' + this.state.cookiePath + ';domain=' + this.state.cookieDomain + ';expires=' + new Date(0).toGMTString() + ';';
+			}
+		}
+
+		// HELPERS
+
+		// matches a cookie name in the cookie string and returns the last value
+
+	}, {
+		key: 'getCookieValue',
+		value: function getCookieValue(a) {
+			var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+			return b ? b.pop() : '';
+		}
+	}, {
+		key: 'guid',
+		value: function guid() {
+			function s4() {
+				return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+			}
+			return '' + s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+		}
+
+		// Method: 'GET', 'POST'
+
+	}, {
+		key: 'request',
+		value: function request(method, url) {
+			var _this8 = this;
+
+			var headers = new Headers();
+			return this.getToken(urlAtStart).then(function (token) {
+				headers.append("Authorization", 'Bearer ' + token);
+				return Promise.resolve();
+			}).then(function () {
+				return fetch(url, {
+					method: method,
+					headers: headers,
+					mode: 'cors',
+					cache: 'default'
+				}).then(_this8.checkStatus).then(function (response) {
+					return response.json();
+				});
+			});
+		}
+	}, {
+		key: 'checkStatus',
+		value: function checkStatus(response) {
+			if (response.status >= 200 && response.status < 300) {
+				return response;
+			} else {
+				var error = new Error(response.statusText);
+				error.response = response;
+				throw error;
+			}
+		}
+
+		// You can also define the other lifecycle methods.
+
+	}, {
+		key: 'attachedCallback',
+		value: function attachedCallback() {}
+	}, {
+		key: 'detachedCallback',
+		value: function detachedCallback() {}
+	}, {
+		key: 'attributeChangedCallback',
+		value: function attributeChangedCallback(attrName, oldVal, newVal) {
+			switch (attrName) {
+				case "redirect-url":
+				case "client-id":
+				case "userservice-url":
+					this.getAttributes();
+					break;
+			}
+		}
+	}]);
+
+	return WSHeader;
+}(HTMLElement);
+
+//Register the element with the document
+
+
+document.registerElement('ws-header', WSHeader);
+=======
     "use strict";function _classCallCheck(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function _possibleConstructorReturn(e,t){if(!e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!t||"object"!=typeof t&&"function"!=typeof t?e:t}function _inherits(e,t){if("function"!=typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function, not "+typeof t);e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,enumerable:!1,writable:!0,configurable:!0}}),t&&(Object.setPrototypeOf?Object.setPrototypeOf(e,t):e.__proto__=t)}var _createClass=function(){function e(e,t){for(var n=0;n<t.length;n++){var a=t[n];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,a.key,a)}}return function(t,n,a){return n&&e(t.prototype,n),a&&e(t,a),t}}(),template=(document._currentScript||document.currentScript).ownerDocument.querySelector("template"),availableLanguages=["de","en"],state={tokenName:"zalando-internal-access_token",stateName:"zalando-internal-access_state",languageName:"language",cookiePath:"/",cookieDomain:".zalan.do",lang:null,loggedIn:null,clientId:null,redirectUrl:null,userServiceUrl:null,tokenInfoUrl:null},urlAtStart=window.location.href,WSHeader=function(e){function t(){return _classCallCheck(this,t),_possibleConstructorReturn(this,(t.__proto__||Object.getPrototypeOf(t)).apply(this,arguments))}return _inherits(t,e),_createClass(t,[{key:"createdCallback",value:function(){var e=this,t=document.importNode(template.content,!0);this.createShadowRoot().appendChild(t),this.state=state,this.getAttributes(),this.setupLanguages(),document.addEventListener("WebComponentsReady",function(){var t=e.getLanguage();e.setLanguage(t),e.checkIsLoggedIn().then(function(){return e.getUser()}).then(function(){return e.showUser()})["catch"](function(t){var n="Getting Token-/User-Info failed!";t&&(n+=" "+t.toString()),e.propagateError(n)})})}},{key:"propagateError",value:function(e){var t=new CustomEvent("error",{detail:{message:e}});this.dispatchEvent(t)}},{key:"getAttributes",value:function(){this.state=Object.assign({},this.state,{clientId:this.getAttribute("client-id"),redirectUrl:this.getAttribute("redirect-url"),userServiceUrl:this.getAttribute("userservice-url"),tokenInfoUrl:this.getAttribute("tokeninfo-url")})}},{key:"setupLanguages",value:function(){var e=this,t=this.shadowRoot.querySelector("#languages");availableLanguages.map(function(n){var a=document.createElement("div");a.innerHTML='<li>\n                <a><span class="flag flag-'+n+'"></span> <span translate="global.language.{{lang}}">'+n+"</span></a>\n            </li>";var o=a.childNodes[0];o.addEventListener("click",function(){return e.setLanguage(n)}),t.appendChild(o)})}},{key:"getLanguage",value:function(){return this.state.lang||window.localStorage.getItem(this.state.languageName)||availableLanguages[0]}},{key:"setLanguage",value:function(e){this.state.lang!=e&&(this.state.lang=e,window.localStorage.setItem(this.state.languageName,e),this.showLanguage(e),this.propagateLanguageChange(e))}},{key:"showLanguage",value:function(e){this.shadowRoot.querySelector("#selectedLanguageFlag").className="flag flag-"+e,this.shadowRoot.querySelector("#selectedLanguage").innerText=e}},{key:"propagateLanguageChange",value:function(e){var t=new CustomEvent("language-changed",{detail:{language:e}});this.dispatchEvent(t)}},{key:"login",value:function(){var e="https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid&client_id="+this.state.clientId+"&redirect_uri="+this.state.redirectUrl+"&state="+this.setSessionState();window.location.href=e}},{key:"logout",value:function(){this.removeCookie(),this.showLoggedOut(),this.propagateLoginStatusChange(!1)}},{key:"checkIsLoggedIn",value:function(){var e=this;return new Promise(function(t,n){e.getToken(urlAtStart).then(function(a){e.getTokenInfo().then(function(){e.showLoggedIn(),e.propagateLoginStatusChange(!0,a),t()},function(t){e.logout(),n(t)})},function(t){e.logout(),n(t)})})}},{key:"propagateLoginStatusChange",value:function(e,t){if(this.state.loggedIn!==e){this.state.loggedIn=e;var n=new CustomEvent("login-status-changed",{detail:{loggedIn:e,token:t||null}});this.dispatchEvent(n)}}},{key:"showLoggedOut",value:function(){var e=this.shadowRoot.querySelector("#loggedInInfo");e.innerHTML='<a class="auto-size"><span translate="global.menu.signein">Login</span></i></a>',e.removeEventListener("click",this.logout),e.addEventListener("click",this.login.bind(this))}},{key:"showLoggedIn",value:function(){var e=this.shadowRoot.querySelector("#loggedInInfo");e.innerHTML='<span translate="global.menu.signedinas"></span>\n\t\t\t<span id="userName">Loading...</span>\n\t\t\t<a class="auto-size" id="logOutButton" type="button"><div id="logOutIcon"></div></a>',e.removeEventListener("click",this.login),e.addEventListener("click",this.logout.bind(this))}},{key:"setSessionState",value:function(){var e=this.guid();return window.localStorage.setItem(this.state.stateName,e),e}},{key:"checkSessionState",value:function(e){var t=window.localStorage.getItem(this.state.stateName)===e;return window.localStorage.removeItem(this.state.stateName),t}},{key:"getToken",value:function(e){var t=this;return e||(e=window.location.href),new Promise(function(n,a){var o=t.getTokenFromUrl(e);if(o){var i=t.getStateFromUrl(e);if(t.checkSessionState(i))return t.setCookie(o),n(o)}return(o=t.getCookieValue(t.state.tokenName))?n(o):void a()})}},{key:"getTokenFromUrl",value:function(e){var t=/access_token=([^&]+)/.exec(e);return null!=t?t[1]:null}},{key:"getStateFromUrl",value:function(e){var t=/state=([^&]+)/.exec(e);return t[1]}},{key:"getTokenInfo",value:function(){var e=this;return new Promise(function(t,n){e.request("GET",e.state.tokenInfoUrl).then(function(n){e.state=Object.assign({},e.state,{userUID:n.uid}),t(n.uid)},function(t){e.logout(),n(t)})})}},{key:"getUser",value:function(){var e=this;return new Promise(function(t,n){e.request("GET",e.state.userServiceUrl+"/"+e.state.userUID).then(function(a){a||n();var o={userName:a.name,userEmail:a.email};e.state=Object.assign({},e.state,o),t(o)},function(t){e.logout(),n(t)})})}},{key:"showUser",value:function(){this.shadowRoot.querySelector("#userName").innerText=this.state.userName}},{key:"setCookie",value:function(e){var t=new Date;t.setTime(t.getTime()+36e5),"localhost"===location.hostname||"127.0.0.1"===location.hostname?document.cookie=this.state.tokenName+"="+e+";path="+this.state.cookiePath+";expires="+t.toGMTString()+";":document.cookie=this.state.tokenName+"="+e+";path="+this.state.cookiePath+";domain="+this.state.cookieDomain+";expires="+t.toGMTString()+";"}},{key:"removeCookie",value:function(){"localhost"===location.hostname||"127.0.0.1"===location.hostname?document.cookie=this.state.tokenName+"=;path="+this.state.cookiePath+";expires="+new Date(0).toGMTString()+";":document.cookie=this.state.tokenName+"=;path="+this.state.cookiePath+";domain="+this.state.cookieDomain+";expires="+new Date(0).toGMTString()+";"}},{key:"getCookieValue",value:function(e){var t=document.cookie.match("(^|;)\\s*"+e+"\\s*=\\s*([^;]+)");return t?t.pop():""}},{key:"guid",value:function(){function e(){return Math.floor(65536*(1+Math.random())).toString(16).substring(1)}return""+e()+e()+"-"+e()+"-"+e()+"-"+e()+"-"+e()+e()+e()}},{key:"request",value:function(e,t){var n=this,a=new Headers;return this.getToken(urlAtStart).then(function(e){return a.append("Authorization","Bearer "+e),Promise.resolve()}).then(function(){return fetch(t,{method:e,headers:a,mode:"cors",cache:"default"}).then(n.checkStatus).then(function(e){return e.json()})})}},{key:"checkStatus",value:function(e){if(e.status>=200&&e.status<300)return e;var t=new Error(e.statusText);throw t.response=e,t}},{key:"attachedCallback",value:function(){}},{key:"detachedCallback",value:function(){}},{key:"attributeChangedCallback",value:function(e,t,n){switch(e){case"redirect-url":case"client-id":case"userservice-url":this.getAttributes()}}}]),t}(HTMLElement);document.registerElement("ws-header",WSHeader);
+>>>>>>> master
     /* endinject */
 })()
 </script>

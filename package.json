@@ -28,14 +28,14 @@
     "components"
   ],
   "files": [
-    "preact-components",
+    "components",
     "dist"
   ],
   "jspm": {
     "registry": "npm",
     "jspmPackage": true,
     "directories": {
-      "preact-components": "preact-components",
+      "components": "components",
       "dist": "dist"
     }
   },

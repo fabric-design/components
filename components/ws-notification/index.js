@@ -32,9 +32,9 @@ export default class WSNotification extends Component {
   addNotify (event) {
     let {title, description, type, lifetime} = event.detail;
     if (typeof lifetime === 'undefined') {
-      lifetime = 0;
-    } else if (!lifetime) {
       lifetime = DEFAULT_NOTIFICATION_LIFETIME;
+    } else if (!lifetime) {
+      lifetime = 2147483647;
     }
     if (!type) {
       type = DEFAULT_NOTIFICATION_TYPE;
@@ -54,7 +54,7 @@ export default class WSNotification extends Component {
     clearTimeout(this.state.timeoutId);
     this.setState({timeoutId: setTimeout(function () {
       return that.close(i);
-    }, notification.lifetime || DEFAULT_NOTIFICATION_LIFETIME)});
+    }, notification.lifetime)});
   }
   closeAllEvent() {
     let i;

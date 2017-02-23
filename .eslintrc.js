@@ -70,6 +70,18 @@ module.exports = {
     "react/self-closing-comp": 0,
     "react/prop-types": 0,
     "react/prefer-stateless-function": 1,
-    "require-yield": 0
+    "require-yield": 0,
+	"require-jsdoc": ["error", {
+        "require": {
+            "FunctionDeclaration": true,
+            "MethodDefinition": true,
+            "ClassDeclaration": true,
+            "ArrowFunctionExpression": false // Arrow functions are used mainly for callbacks (?) TBD
+        }
+    }],
+	"valid-jsdoc": ["error", { //tbd http://eslint.org/docs/rules/valid-jsdoc
+		"requireReturn": false, // only add @return if the method has one -> instead of @return {void}
+		"requireParamDescription": true
+	}]
   }
 };

@@ -1,6 +1,10 @@
-import { React, render } from '../components/imports';
-import WSHeader from '../components/ws-header.js';
+import { React, render } from '../src/imports';
+import WSHeader from '../src/ws-header/ws-header';
 
-render(<WSHeader title='Demo Page' links={[
-	{ label: 'Link', value: 'LinkValue', onclick: (value) => router.goTo(value) }
-]}/>, document.body);
+const linkValue = 'link_value';
+render(<WSHeader
+  title="Demo Page"
+  links={[
+    { label: 'Link', onclick: () => alert('Clicked on Link:', linkValue) },
+  ]}
+/>, document.body);

@@ -1,9 +1,13 @@
-import {React, Component} from './imports';
+import {React, Component} from '../imports';
 import {WSDropdownItem} from './ws-dropdown-item';
 
 const ANIMATION_START_EVENTS = ['oAnimationStart', 'MSAnimationStart', 'animationstart'];
 const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
 
+/**
+ * This class renders the menu inside a dropdown container. Since the wrapper WSDropdown is missing, which provides
+ * additional wrapping markup and functionality, you SHOULD NOT use this component as standalone.
+ */
 export class WSDropdownMenu extends Component {
 
   /**
@@ -38,8 +42,8 @@ export class WSDropdownMenu extends Component {
   };
 
   /**
-   * @param props {Object}
-   * @param context {Object}
+   * @param {Object} props React props
+   * @param {Object} context React context
    * @constructor
    */
   constructor(props, context) {
@@ -53,6 +57,15 @@ export class WSDropdownMenu extends Component {
   }
 
   /**
+   * Send the new height of this menu after update to the parent.
+   * This will be called when updateFilter did set the new state
+   * @returns {void}
+   */
+  componentDidUpdate() {
+    this.props.handle('change-size', this.getHeight());
+  }
+
+  /**
    * Gets the current height of the menu
    * @returns {Number}
    */
@@ -61,30 +74,11 @@ export class WSDropdownMenu extends Component {
   }
 
   /**
-   * Send the new height of this menu after update to the parent.
-   * This will be called when updateFilter did set the new state
-   * @void
-   */
-  componentDidUpdate() {
-    this.props.handle('change-size', this.getHeight());
-  }
-
-  /**
-   * Setting the input value as filter
-   * @param event {KeyboardEvent}
-   * @void
-   */
-  updateFilter(event) {
-    event.stopPropagation();
-    this.setState({filter: event.target.value});
-  }
-
-  /**
    * If there is a filter active it applies it on the available items
    * @returns {Array<Object>}
    */
   getFilteredItems() {
-    let regex = new RegExp(this.state.filter, 'i');
+    const regex = new RegExp(this.state.filter, 'i');
     return this.state.items.filter(item => {
       // Don't show items which doesn't match the filter
       if (this.props.filterable && this.state.filter && !regex.test(item.label)) {
@@ -96,9 +90,19 @@ export class WSDropdownMenu extends Component {
   }
 
   /**
+   * Setting the input value as filter
+   * @param {KeyboardEvent} event JavaScript event object
+   * @returns {void}
+   */
+  updateFilter(event) {
+    event.stopPropagation();
+    this.setState({filter: event.target.value});
+  }
+
+  /**
    * Deselect all items which are not stored as value. Only relevant for multi select dropdown.
    * When the dropdown will be closed the state will be restored
-   * @void
+   * @returns {void}
    */
   clearSelections() {
     if (this.state.items) {
@@ -112,7 +116,8 @@ export class WSDropdownMenu extends Component {
 
   /**
    * Handles submit action on multi select drop downs
-   * @void
+   * @param {Event} event JavaScript event object
+   * @returns {void}
    */
   submit(event) {
     event.stopPropagation();
@@ -127,8 +132,10 @@ export class WSDropdownMenu extends Component {
 
   /**
    * Handles data propagation from child menus
-   * @param type {String} Should be just show-parent
-   * @param data {*}
+   * This function uses arrow function to bind the scope to this instance
+   * @param {String} type Should be just show-parent
+   * @param {*} data Propagated data. Could be for instance a menu reference or the menu height.
+   * @returns {void}
    */
   handlePropagation = (type, data) => {
     switch (type) {
@@ -148,6 +155,7 @@ export class WSDropdownMenu extends Component {
         this.props.handle(type, data);
         break;
       case 'change-size':
+      default:
         this.props.handle(type, data);
         break;
     }
@@ -155,8 +163,8 @@ export class WSDropdownMenu extends Component {
 
   /**
    * Shows the child menu and hides the current menu
-   * @param subMenu {WSDropdownMenu}
-   * @void
+   * @param {WSDropdownMenu} subMenu The reference of the child menu to show
+   * @returns {void}
    */
   showChild(subMenu) {
     this.state.openSubMenu = subMenu;
@@ -167,7 +175,7 @@ export class WSDropdownMenu extends Component {
 
   /**
    * Shows this menu and hides currently open sub menu
-   * @void
+   * @returns {void}
    */
   showCurrent() {
     if (this.state.openSubMenu) {
@@ -180,11 +188,11 @@ export class WSDropdownMenu extends Component {
 
   /**
    * Animates a menu or sub menu into the view
-   * @param goBack {Boolean} True if a menu should be shown and a sub menu be hidden
-   * @void
+   * @param {Boolean} goBack True if a menu should be shown and a sub menu be hidden
+   * @returns {void}
    */
   animateIn(goBack) {
-    let inAnimation = goBack ? 'animate-in' : 'animate-sub-in';
+    const inAnimation = goBack ? 'animate-in' : 'animate-sub-in';
     // Create a clone of new sub menu for animations
     this.animateElement(this.menuContainer, inAnimation, menu => {
       menu.classList.remove('mod-sub-open');
@@ -194,11 +202,11 @@ export class WSDropdownMenu extends Component {
 
   /**
    * Animates a menu or sub menu out of the view
-   * @param goBack {Boolean} True if a menu should be hidden and a sub menu be shown
-   * @void
+   * @param {Boolean} goBack True if a menu should be hidden and a sub menu be shown
+   * @returns {void}
    */
   animateOut(goBack) {
-    let outAnimation = !goBack ? 'animate-out' : 'animate-sub-out';
+    const outAnimation = !goBack ? 'animate-out' : 'animate-sub-out';
     // Fade out old element and set mod-item-open if going back and mod-sub-open for going deeper
     this.animateElement(this.menuContainer, outAnimation, menu => {
       menu.classList.remove('mod-menu-open');
@@ -210,34 +218,35 @@ export class WSDropdownMenu extends Component {
 
   /**
    * Animates an element by adding a class with an css animation and executes a callback when the animation ends
-   * @param item {Element} The dom node to animate
-   * @param animationClass {String} The css class which holds the animation definition
-   * @param callback {Function} Callback which will be executed at the end of the animation
-   * @void
+   * @param {Element} item The dom node to animate
+   * @param {String} animationClass The css class which holds the animation definition
+   * @param {Function} callback Callback which will be executed at the end of the animation
+   * @returns {void}
    */
   animateElement(item, animationClass, callback) {
     let eventCounter = 0;
     // Handler for animation end event
-    let handler = event => {
+    const handler = () => {
       // Do nothing until all started events are done
-      if (--eventCounter) {
+      eventCounter -= 1;
+      if (eventCounter) {
         return;
       }
       // Remove all animation end event listeners from this item. They won't get called anymore
-      for (let eventName of ANIMATION_END_EVENTS) {
+      ANIMATION_END_EVENTS.forEach(eventName => {
         item.removeEventListener(eventName, handler);
-      }
+      });
       item.classList.remove(animationClass);
       callback(item);
     };
     // Listen for all possible animation end events
-    for (let eventName of ANIMATION_END_EVENTS) {
+    ANIMATION_END_EVENTS.forEach(eventName => {
       item.addEventListener(eventName, handler);
-    }
+    });
     // Increase started event counter for each animation start event
-    for (let eventName of ANIMATION_START_EVENTS) {
-      item.addEventListener(eventName, () => eventCounter++);
-    }
+    ANIMATION_START_EVENTS.forEach(eventName => {
+      item.addEventListener(eventName, () => { eventCounter += 1; });
+    });
     // Add class to start animation
     item.classList.add(animationClass);
   }
@@ -247,36 +256,40 @@ export class WSDropdownMenu extends Component {
    * @returns {Object}
    */
   render() {
-    const items = this.getFilteredItems().slice(0, this.props.limit);
-    const getAnchorClass = item => `text  ${item.selected ? 'is-active' : item.focused ? 'is-focused' : ''}`;
+    const limit = this.props.filterable ? this.props.limit : this.state.items.length;
+    const items = this.getFilteredItems().slice(0, limit);
 
     return (
-      <ul className={'dropdown-menu ' + (!this.props.parent ? 'dropdown-root-menu' : '')}
-          ref={element => this.menuContainer = element}>
+      <ul
+        className={`dropdown-menu ${!this.props.parent ? 'dropdown-root-menu' : ''}`}
+        ref={element => { this.menuContainer = element; }}
+      >
         {this.props.filterable &&
           <li className="dropdown-filter" key="filter">
-            <input type="text" defaultValue={this.state.filter} onKeyUp={event => this.updateFilter(event)}/>
+            <input type="text" defaultValue={this.state.filter} onKeyUp={event => this.updateFilter(event)} />
           </li>
         }
         {this.props.parent && [
-          <WSDropdownItem item={this.props.parent}
-                          icon="icon-left"
-                          isParent={true}
-                          handle={this.handlePropagation}
-                          key="parent"/>,
-          <li className="dropdown-item-separator" key="parent-separator"/>
+          <WSDropdownItem
+            item={this.props.parent}
+            icon="icon-left"
+            handle={this.handlePropagation}
+            key="parent"
+            isParent
+          />,
+          <li className="dropdown-item-separator" key="parent-separator" />
         ]}
         {this.state.value && [
           this.state.value.map((item, index) =>
-            <WSDropdownItem item={item} handle={this.handlePropagation} key={`value-${index}`}/>
+            <WSDropdownItem item={item} handle={this.handlePropagation} key={`value-${index}`} />
           ),
-          <li className="dropdown-item-separator" key="value-separator"/>
+          <li className="dropdown-item-separator" key="value-separator" />
         ]}
         {items.map((item, index) =>
-          <WSDropdownItem item={item} handle={this.handlePropagation} key={`item-${index}`}/>
+          <WSDropdownItem item={item} handle={this.handlePropagation} key={`item-${index}`} />
         )}
-        {!items || !items.length &&
-          <WSDropdownItem item={{label: 'No results found', disabled: true}} key="disabled"/>
+        {(!items || !items.length) &&
+          <WSDropdownItem item={{label: 'No results found', disabled: true}} key="disabled" />
         }
         {this.context.multiple &&
           <li className="dropdown-submit" key="submit">

@@ -1,5 +1,6 @@
 import { React, render } from '../src/imports';
 import { WSHeader, WSDropdown } from '../src/index';
+import WSDatePicker from '../components/ws-date-picker/ws-date-picker.js';
 import './index.scss';
 
 // Used to enable React Developer Tools
@@ -10,6 +11,8 @@ render(
     <WSHeader title='Demo Page' links={[
       { label: 'Link', value: 'LinkValue', onclick: (value) => console.log(value) }
     ]} />
+		<WSDatePicker onUpdate={(date) => console.log('New Date:', date)} />
+		<WSDatePicker onUpdate={(date) => console.log('New Date:', date)} date={Date.now()}/>
     <WSDropdown text="item 2" type="select" items={[
       'item 1',
       {

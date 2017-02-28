@@ -1,4 +1,4 @@
-var path = require('path');
+const path = require('path');
 
 module.exports = {
   entry: './demo/demo_app.js',
@@ -24,6 +24,10 @@ module.exports = {
       }, {
         loader: 'sass-loader', // compiles Sass to CSS
       }],
+    },
+    {
+      test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      loader: 'url-loader?limit=100000',
     }],
   },
   devServer: {

@@ -24,6 +24,10 @@ module.exports = {
       }, {
         loader: 'sass-loader', // compiles Sass to CSS
       }],
+    },
+    {
+      test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      loader: 'url-loader?limit=100000',
     }],
   },
   devServer: {

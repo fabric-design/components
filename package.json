@@ -32,9 +32,10 @@
   "jspm": {
     "registry": "npm",
     "jspmPackage": true,
-    "format": "esm",
+    "main": "index",
+    "format": "amd",
     "directories": {
-      "lib": "src"
+      "dist": "dist/amd"
     },
     "peerDependencies": {
       "preact": "7.1.0",

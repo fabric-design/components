@@ -1,7 +1,7 @@
-import { React, render } from '../components/imports';
-import WSHeader from '../components/ws-header/ws-header';
+import { React, render } from '../src/imports';
+import WSHeader from '../src/ws-header/ws-header';
 
-let linkValue = 'link_value';
+const linkValue = 'link_value';
 render(<WSHeader
   title="Demo Page"
   links={[

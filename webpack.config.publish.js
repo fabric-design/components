@@ -3,13 +3,14 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   target: 'web',
-  entry: {
-    'ws-header': './components/ws-header/ws-header.js',
-  },
+  entry: './src/index.js',
   externals: [nodeExternals()],
   output: {
-    filename: '[name].js',
+    filename: 'components.js',
     path: path.resolve(__dirname, 'dist/components'),
+    libraryTarget: 'umd',
+    library: 'wholesale-components',
+    umdNamedDefine: true,
   },
   module: {
     rules: [{

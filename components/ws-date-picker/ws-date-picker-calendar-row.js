@@ -12,10 +12,8 @@ export default class WSDatePickerCalendarWeek extends Component {
 			&& date === this.props.momentDay.date();
 	}
 	render() {
-		let weeknum = this.props.weeknum;
-		let month = this.props.month;
-		let year = this.props.year;
-		let momentWeek = moment().year(year).week(weeknum);
+		let {weekNumber, month, year} = this.props;
+		let momentWeek = moment().year(year).week(weekNumber);
 		let weekDays = [];
 		for (let day = 0; day < 7; day++) {
 			let momentDay = momentWeek.day(day);
@@ -30,7 +28,7 @@ export default class WSDatePickerCalendarWeek extends Component {
 				</td>);
 		}
 		return <tr>
-			<td className='off'>{weeknum}</td>
+			<td className='off'>{weekNumber}</td>
 			{weekDays}
 		</tr>;
 	}

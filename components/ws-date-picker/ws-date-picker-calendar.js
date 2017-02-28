@@ -37,7 +37,7 @@ export default class WSDatePickerCalendar extends Component {
 		var weeks = [];
 		for (var week = startWeek; week <= endWeek; week++) {
 			weeks.push(<WSDatePickerCalendarWeek
-				weeknum={week}
+				weekNumber={week}
 				year={this.state.year}
 				month={this.state.month}
 				momentDay={this.props.momentDay}

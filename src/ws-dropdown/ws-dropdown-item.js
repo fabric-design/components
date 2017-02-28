@@ -101,9 +101,9 @@ export class WSDropdownItem extends Component {
    * @param {*} data Data which was propagated. Can be height of child menu or reference of child
    * @returns {void}
    */
-  handlePropagation(type, data) {
+  handlePropagation = (type, data) => {
     this.props.handle(type, data);
-  }
+  };
 
   /**
    * Renders the dropdown item
@@ -118,8 +118,8 @@ export class WSDropdownItem extends Component {
     return (
       <li className="dropdown-item" onClick={event => this.onClick(event)}>
         <a className={anchorClass} href={this.state.href}>
-          {(this.state.icon || this.props.icon) &&
-            <i className={`icon ${this.state.icon || this.props.icon}`} />
+          {(this.props.icon || this.state.icon) &&
+            <i className={`icon ${this.props.icon || this.state.icon}`} />
           }
           {this.state.label}
         </a>

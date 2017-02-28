@@ -48,11 +48,11 @@ export class WSDropdownMenu extends Component {
    */
   constructor(props, context) {
     super(props, context);
+    this.openSubMenu = null;
     this.state = {
       filter: props.filter,
       items: props.items,
-      value: props.value,
-      openSubMenu: null
+      value: props.value
     };
   }
 
@@ -121,13 +121,13 @@ export class WSDropdownMenu extends Component {
    */
   submit(event) {
     event.stopPropagation();
-    this.state.value = this.state.items.filter(item => {
+    const value = this.state.items.filter(item => {
       item.stored = item.selected;
       return item.selected;
     });
     // Propagate new value
-    this.props.handle('change', this.state.value);
-    this.setState(this.state);
+    this.props.handle('change', value);
+    this.setState({value});
   }
 
   /**
@@ -167,7 +167,7 @@ export class WSDropdownMenu extends Component {
    * @returns {void}
    */
   showChild(subMenu) {
-    this.state.openSubMenu = subMenu;
+    this.openSubMenu = subMenu;
     this.props.handle('change-size', subMenu.getHeight());
     this.animateOut(false);
     subMenu.animateIn(false);
@@ -178,11 +178,11 @@ export class WSDropdownMenu extends Component {
    * @returns {void}
    */
   showCurrent() {
-    if (this.state.openSubMenu) {
+    if (this.openSubMenu) {
       this.props.handle('change-size', this.getHeight());
-      this.state.openSubMenu.animateOut(true);
+      this.openSubMenu.animateOut(true);
       this.animateIn(true);
-      this.state.openSubMenu = null;
+      this.openSubMenu = null;
     }
   }
 

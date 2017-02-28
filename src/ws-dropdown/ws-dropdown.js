@@ -53,9 +53,8 @@ export class WSDropdown extends Component {
     super(props);
     // Enforce value to be an array for consistent usage
     const arrayValue = props.value ? [props.value] : [];
+    this.opened = false;
     this.state = {
-      opened: false,
-      height: 0,
       text: props.text || props.value,
       value: this.enrichItems(Array.isArray(props.value) ? props.value : arrayValue),
       items: this.enrichItems(props.items)
@@ -117,15 +116,15 @@ export class WSDropdown extends Component {
    * @returns {void}
    */
   setValue(value) {
-    this.state.value = value;
     // Check if we have to update the text value
     if (this.props.type === 'select') {
-      if (Array.isArray(this.state.value)) {
-        this.state.text = this.state.value.map(item => item.label).join(', ');
+      let text;
+      if (Array.isArray(value)) {
+        text = value.map(item => item.label).join(', ');
       } else {
-        this.state.text = this.state.value.label;
+        text = value.label;
       }
-      this.setState(this.state);
+      this.setState({text, value});
     }
   }
 
@@ -135,7 +134,7 @@ export class WSDropdown extends Component {
    * @param {Object|Number} data Either new value or height of new menu
    * @returns {void}
    */
-  handlePropagation(type, data) {
+  handlePropagation = (type, data) => {
     if (type === 'change') {
       this.close();
       this.setValue(data);
@@ -143,7 +142,7 @@ export class WSDropdown extends Component {
     } else if (type === 'change-size') {
       this.adjustSize(data);
     }
-  }
+  };
 
   /**
    * Used to convert the items if they are strings into the required object structure
@@ -165,10 +164,10 @@ export class WSDropdown extends Component {
    * @returns {void}
    */
   open() {
-    if (this.state.opened) {
+    if (this.opened) {
       return;
     }
-    this.state.opened = true;
+    this.opened = true;
     this.dropdownContainer.style.height = 0;
     this.dropdownContainer.classList.add('mod-open');
     this.adjustSize(this.dropdownMenu.getHeight());
@@ -179,10 +178,10 @@ export class WSDropdown extends Component {
    * @returns {void}
    */
   close() {
-    if (!this.state.opened) {
+    if (!this.opened) {
       return;
     }
-    this.state.opened = false;
+    this.opened = false;
     this.animateElement(this.dropdownContainer, 'animate-close', container => {
       container.classList.remove('mod-open');
       // If this a multi select dropdown abort
@@ -232,7 +231,7 @@ export class WSDropdown extends Component {
    */
   render() {
     return (
-      <div className={`dropdown ${this.props.orientation}`} ref={element => { this.element = element; }}>
+      <div className={`dropdown ${this.props.orientation}`} ref={element => { if (element) this.element = element; }}>
         {this.props.type === 'anchor' &&
           <a onClick={() => this.open()}>{this.state.text}</a>
         }
@@ -242,7 +241,7 @@ export class WSDropdown extends Component {
         {this.props.type === 'select' &&
           <div className="select-box" onClick={() => this.open()}>{this.state.text}</div>
         }
-        <div className="dropdown-container" ref={element => { this.dropdownContainer = element; }}>
+        <div className="dropdown-container" ref={element => { if (element) this.dropdownContainer = element; }}>
           <WSDropdownMenu
             items={this.state.items}
             value={this.state.value}

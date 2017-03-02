@@ -1,6 +1,5 @@
 import { React, Component } from '../imports';
 import WSHeaderNavLink from './ws-header-nav-link';
-import './ws-header.scss';
 const urlAtStart = window.location.href;
 const SESSION_TOKEN_NAME = 'session_token';
 const SESSION_STATE_NAME = 'session_state';

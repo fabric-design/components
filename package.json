@@ -2,7 +2,6 @@
   "name": "styleguide-web-components",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --watch --config webpack.config.js",
     "start:preact": "webpack-dev-server --watch --config webpack.config.preact.js",
@@ -26,9 +25,7 @@
     "web",
     "components"
   ],
-  "files": [
-    "src"
-  ],
+  "main": "dist/commonjs/index.js",
   "jspm": {
     "registry": "npm",
     "jspmPackage": true,
@@ -42,7 +39,7 @@
       "preact-compat": "3.13.1"
     }
   },
-  "author": "Fabian Weber",
+  "author": "Zalando",
   "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^7.1.1",

@@ -279,12 +279,12 @@ export class WSDropdownMenu extends Component {
           />,
           <li className="dropdown-item-separator" key="parent-separator" />
         ]}
-        {this.state.value && [
+        {(this.state.value && this.state.value.length) ? [
           this.state.value.map((item, index) =>
             <WSDropdownItem item={item} handle={this.handlePropagation} key={`value-${index}`} />
           ),
           <li className="dropdown-item-separator" key="value-separator" />
-        ]}
+        ] : null}
         {items.map((item, index) =>
           <WSDropdownItem item={item} handle={this.handlePropagation} key={`item-${index}`} />
         )}

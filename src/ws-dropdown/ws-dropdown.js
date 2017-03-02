@@ -30,6 +30,7 @@ export class WSDropdown extends Component {
    */
   static propTypes = {
     type: React.PropTypes.oneOf(['anchor', 'button', 'select']),
+    text: React.PropTypes.string,
     items: React.PropTypes.array,
     multiple: React.PropTypes.bool,
     filterable: React.PropTypes.bool,
@@ -116,16 +117,18 @@ export class WSDropdown extends Component {
    * @returns {void}
    */
   setValue(value) {
+    let text = this.state.text;
     // Check if we have to update the text value
     if (this.props.type === 'select') {
-      let text;
       if (Array.isArray(value)) {
         text = value.map(item => item.label).join(', ');
       } else {
         text = value.label;
       }
-      this.setState({text, value});
     }
+    this.setState({text, value});
+    // Emit change event to propagate the value
+    this.element.dispatchEvent(new CustomEvent('change', {detail: value, bubbles: true}));
   }
 
   /**
@@ -231,7 +234,7 @@ export class WSDropdown extends Component {
    */
   render() {
     return (
-      <div className={`dropdown ${this.props.orientation}`} ref={element => { if (element) this.element = element; }}>
+      <div className="dropdown" ref={element => { if (element) this.element = element; }}>
         {this.props.type === 'anchor' &&
           <a onClick={() => this.open()}>{this.state.text}</a>
         }
@@ -241,7 +244,9 @@ export class WSDropdown extends Component {
         {this.props.type === 'select' &&
           <div className="select-box" onClick={() => this.open()}>{this.state.text}</div>
         }
-        <div className="dropdown-container" ref={element => { if (element) this.dropdownContainer = element; }}>
+        <div
+          className={`dropdown-container ${this.props.orientation}`}
+          ref={element => { if (element) this.dropdownContainer = element; }}>
           <WSDropdownMenu
             items={this.state.items}
             value={this.state.value}

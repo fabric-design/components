@@ -1,4 +1,4 @@
-import { React, Component } from './imports';
+import { React, Component } from '../imports';
 
 export default class WSHeaderNavLink extends Component {
   render() {

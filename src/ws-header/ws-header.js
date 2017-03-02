@@ -1,4 +1,4 @@
-import { React, Component } from './imports';
+import { React, Component } from '../imports';
 import WSHeaderNavLink from './ws-header-nav-link';
 import './ws-header.scss';
 const urlAtStart = window.location.href;
@@ -15,7 +15,7 @@ const SESSION_STATE_NAME = 'session_state';
 //    links?: { label, value, onclick }[];
 //  }
 
-export default class WSHeader extends Component {
+export class WSHeader extends Component {
   constructor() {
     super();
     this.state = {

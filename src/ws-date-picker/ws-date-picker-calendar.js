@@ -1,10 +1,10 @@
 import { React, Component } from '../imports';
-import WSDatePickerCalendarWeek from './ws-date-picker-calendar-row.js';
+import {WSDatePickerCalendarWeek} from './ws-date-picker-calendar-row.js';
 import moment from 'moment';
 
 let localeData = moment.localeData();
 
-export default class WSDatePickerCalendar extends Component {
+export class WSDatePickerCalendar extends Component {
 	constructor() {
 		super();
 		this.state = {

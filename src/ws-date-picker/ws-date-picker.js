@@ -1,9 +1,8 @@
 import { React, Component } from '../imports';
 import moment from 'moment';
-import WSDatePickerCalendar from './ws-date-picker-calendar';
-import './ws-date-picker.scss';
+import {WSDatePickerCalendar} from './ws-date-picker-calendar';
 
-export default class WSDatePicker extends Component {
+export class WSDatePicker extends Component {
 	constructor(props) {
 		super(props);
 		let momentDay = this.props.date ? moment(this.props.date) : null;

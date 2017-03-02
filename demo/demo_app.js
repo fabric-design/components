@@ -1,6 +1,5 @@
-import { React, render } from '../src/imports';
-import { WSHeader, WSDropdown } from '../src/index';
-import WSDatePicker from '../components/ws-date-picker/ws-date-picker.js';
+import {React, render} from '../src/imports';
+import {WSHeader, WSDropdown, WSDatePicker} from '../src/index';
 import './index.scss';
 
 // Used to enable React Developer Tools

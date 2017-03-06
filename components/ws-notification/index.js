@@ -5,7 +5,7 @@ import './ws-notification.scss';
 const DEFAULT_NOTIFICATION_LIFETIME = 5000;
 const DEFAULT_NOTIFICATION_TYPE = 'info';
 
-export default class WSNotification extends Component {
+export class WSNotification extends Component {
   constructor() {
     super();
     this.state = {

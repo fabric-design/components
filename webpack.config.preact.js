@@ -11,7 +11,7 @@ module.exports = {
       test: /\.js$/,
       use: [{
         loader: 'babel-loader',
-        options: { presets: ['es2015'] },
+        options: { babelrc: true },
       }],
       exclude: [/node_modules/],
     },
@@ -24,6 +24,10 @@ module.exports = {
       }, {
         loader: 'sass-loader', // compiles Sass to CSS
       }],
+    },
+    {
+      test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      loader: 'url-loader?limit=100000',
     }],
   },
   resolve: {

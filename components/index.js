@@ -1,1 +1,3 @@
-export { WSHeader } from './ws-header/ws-header.js';
+export { WSHeader } from 'ws-header/';
+export { WSNotification } from 'ws-notification/';
+export { WSDatePicker } from 'ws-date-picker/';

@@ -1,7 +1,7 @@
 import { React, Component } from '../imports';
 import moment from 'moment';
 
-export default class WSDatePickerCalendarWeek extends Component {
+export class WSDatePickerCalendarWeek extends Component {
 	isInMonth(momentDay, expectedMonth) {
 		return momentDay.month() === expectedMonth;
 	}

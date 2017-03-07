@@ -16,6 +16,7 @@ export class WSDropdown extends Component {
   static defaultProps = {
     type: 'anchor',
     text: '',
+    icon: '',
     items: [],
     multiple: false,
     filterable: false,
@@ -31,6 +32,7 @@ export class WSDropdown extends Component {
   static propTypes = {
     type: React.PropTypes.oneOf(['anchor', 'button', 'select']),
     text: React.PropTypes.string,
+    icon: React.PropTypes.string,
     items: React.PropTypes.array,
     multiple: React.PropTypes.bool,
     filterable: React.PropTypes.bool,
@@ -233,16 +235,20 @@ export class WSDropdown extends Component {
    * @returns {Object}
    */
   render() {
+    let icon;
+    if (this.props.icon) {
+      icon = <span className={`icon ${this.props.icon}`} />;
+    }
     return (
       <div className="dropdown" ref={element => { if (element) this.element = element; }}>
         {this.props.type === 'anchor' &&
-          <a onClick={() => this.open()}>{this.state.text}</a>
+          <a onClick={() => this.open()}>{icon} {this.state.text}</a>
         }
         {this.props.type === 'button' &&
-          <button onClick={() => this.open()}>{this.state.text}</button>
+          <button onClick={() => this.open()}>{icon} {this.state.text}</button>
         }
         {this.props.type === 'select' &&
-          <div className="select-box" onClick={() => this.open()}>{this.state.text}</div>
+          <div className="select-box" onClick={() => this.open()}>{icon} {this.state.text}</div>
         }
         <div
           className={`dropdown-container ${this.props.orientation}`}

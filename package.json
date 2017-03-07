@@ -34,6 +34,9 @@
     "directories": {
       "dist": "dist/amd"
     },
+    "dependencies": {
+      "moment": "2.0.0"
+    },
     "peerDependencies": {
       "preact": "7.1.0",
       "preact-compat": "3.13.1"
@@ -66,7 +69,6 @@
     "lite-server": "^2.2.0",
     "mocha": "3.2.0",
     "mocha-webpack": "0.7.0",
-    "moment": "2.0.0",
     "node-sass": "4.5.0",
     "pre-commit": "1.2.2",
     "preact": "7.1.0",
@@ -81,6 +83,9 @@
     "webpack": "2.2.1",
     "webpack-dev-server": "2.3.0",
     "wholesale-styleguide-scss": "git+ssh://git@github.bus.zalan.do/WholesaleDesignSystem/Styleguide-SCSS.git#dropdown-adjustments"
+  },
+  "dependencies": {
+    "moment": "2.0.0"
   },
   "peerDependencies": {
     "preact": "7.1.0",

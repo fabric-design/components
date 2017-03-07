@@ -94,8 +94,9 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
   }, {
     key: 'setValue',
     value: function setValue(value) {
+      var text = this.state.text;
+
       if (this.props.type === 'select') {
-        var text = void 0;
         if (Array.isArray(value)) {
           text = value.map(function (item) {
             return item.label;
@@ -103,8 +104,10 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
         } else {
           text = value.label;
         }
-        this.setState({ text: text, value: value });
       }
+      this.setState({ text: text, value: value });
+
+      this.element.dispatchEvent(new CustomEvent('change', { detail: value, bubbles: true }));
     }
   }, {
     key: 'enrichItems',
@@ -175,9 +178,13 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
     value: function render() {
       var _this4 = this;
 
+      var icon = void 0;
+      if (this.props.icon) {
+        icon = _imports.React.createElement('span', { className: 'icon ' + this.props.icon });
+      }
       return _imports.React.createElement(
         'div',
-        { className: 'dropdown ' + this.props.orientation, ref: function ref(element) {
+        { className: 'dropdown', ref: function ref(element) {
             if (element) _this4.element = element;
           } },
         this.props.type === 'anchor' && _imports.React.createElement(
@@ -185,6 +192,8 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
           { onClick: function onClick() {
               return _this4.open();
             } },
+          icon,
+          ' ',
           this.state.text
         ),
         this.props.type === 'button' && _imports.React.createElement(
@@ -192,6 +201,8 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
           { onClick: function onClick() {
               return _this4.open();
             } },
+          icon,
+          ' ',
           this.state.text
         ),
         this.props.type === 'select' && _imports.React.createElement(
@@ -199,11 +210,15 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
           { className: 'select-box', onClick: function onClick() {
               return _this4.open();
             } },
+          icon,
+          ' ',
           this.state.text
         ),
         _imports.React.createElement(
           'div',
-          { className: 'dropdown-container', ref: function ref(element) {
+          {
+            className: 'dropdown-container ' + this.props.orientation,
+            ref: function ref(element) {
               if (element) _this4.dropdownContainer = element;
             } },
           _imports.React.createElement(_wsDropdownMenu.WSDropdownMenu, {
@@ -232,6 +247,7 @@ Object.defineProperty(WSDropdown, 'defaultProps', {
   value: {
     type: 'anchor',
     text: '',
+    icon: '',
     items: [],
     multiple: false,
     filterable: false,
@@ -246,6 +262,8 @@ Object.defineProperty(WSDropdown, 'propTypes', {
   writable: true,
   value: {
     type: _imports.React.PropTypes.oneOf(['anchor', 'button', 'select']),
+    text: _imports.React.PropTypes.string,
+    icon: _imports.React.PropTypes.string,
     items: _imports.React.PropTypes.array,
     multiple: _imports.React.PropTypes.bool,
     filterable: _imports.React.PropTypes.bool,

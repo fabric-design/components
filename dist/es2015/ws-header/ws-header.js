@@ -8,7 +8,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import { React, Component } from '../imports';
 import WSHeaderNavLink from './ws-header-nav-link';
-import './ws-header.scss';
 var urlAtStart = window.location.href;
 var SESSION_TOKEN_NAME = 'session_token';
 var SESSION_STATE_NAME = 'session_state';

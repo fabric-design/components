@@ -13,6 +13,15 @@ Object.defineProperty(exports, 'WSHeader', {
   }
 });
 
+var _wsDatePicker = require('./ws-date-picker/ws-date-picker');
+
+Object.defineProperty(exports, 'WSDatePicker', {
+  enumerable: true,
+  get: function get() {
+    return _wsDatePicker.WSDatePicker;
+  }
+});
+
 var _wsDropdown = require('./ws-dropdown/ws-dropdown');
 
 Object.defineProperty(exports, 'WSDropdown', {

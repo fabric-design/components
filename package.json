@@ -35,7 +35,7 @@
       "dist": "dist/amd"
     },
     "dependencies": {
-      "moment": "2.0.0"
+      "moment": "^2.0.0"
     },
     "peerDependencies": {
       "preact": "7.1.0",
@@ -85,7 +85,7 @@
     "wholesale-styleguide-scss": "git+ssh://git@github.bus.zalan.do/WholesaleDesignSystem/Styleguide-SCSS.git#dropdown-adjustments"
   },
   "dependencies": {
-    "moment": "2.0.0"
+    "moment": "^2.0.0"
   },
   "peerDependencies": {
     "preact": "7.1.0",

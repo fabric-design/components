@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.bus.zalan.do/WholesaleDesignSystem/Styleguide-Web-Components.git"
+    "url": "https://github.com/wholesale-design-system/scss"
   },
   "keywords": [
     "styleguide",
@@ -59,10 +59,13 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.0",
+    "fs-then-native": "^2.0.0",
+    "glob": "^7.1.1",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-bump": "^2.7.0",
     "gulp-eslint": "^3.0.1",
+    "jsdoc-to-markdown": "^3.0.0",
     "karma": "^1.5.0",
     "lite-server": "^2.2.0",
     "mocha": "3.2.0",
@@ -74,10 +77,12 @@
     "preact-compat": "3.13.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "rimraf": "^2.6.1",
     "run-sequence": "^1.2.2",
     "sass-loader": "5.0.1",
     "sinon": "1.17.7",
     "style-loader": "0.13.1",
+    "through2": "^2.0.3",
     "url-loader": "0.5.7",
     "vinyl-paths": "^2.1.0",
     "webpack": "2.2.1",
@@ -88,5 +93,9 @@
   "peerDependencies": {
     "preact": "7.1.0",
     "preact-compat": "3.13.1"
+  },
+  "dependencies": {
+    "preact": "^7.1.0",
+    "preact-compat": "^3.13.1"
   }
 }

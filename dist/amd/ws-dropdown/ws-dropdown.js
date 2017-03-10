@@ -135,8 +135,9 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
     }, {
       key: 'setValue',
       value: function setValue(value) {
+        var text = this.state.text;
+
         if (this.props.type === 'select') {
-          var text = void 0;
           if (Array.isArray(value)) {
             text = value.map(function (item) {
               return item.label;
@@ -144,8 +145,10 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
           } else {
             text = value.label;
           }
-          this.setState({ text: text, value: value });
         }
+        this.setState({ text: text, value: value });
+
+        this.element.dispatchEvent(new CustomEvent('change', { detail: value, bubbles: true }));
       }
     }, {
       key: 'enrichItems',
@@ -218,7 +221,7 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
 
         return _imports.React.createElement(
           'div',
-          { className: 'dropdown ' + this.props.orientation, ref: function ref(element) {
+          { className: 'dropdown', ref: function ref(element) {
               if (element) _this4.element = element;
             } },
           this.props.type === 'anchor' && _imports.React.createElement(
@@ -244,7 +247,9 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
           ),
           _imports.React.createElement(
             'div',
-            { className: 'dropdown-container', ref: function ref(element) {
+            {
+              className: 'dropdown-container ' + this.props.orientation,
+              ref: function ref(element) {
                 if (element) _this4.dropdownContainer = element;
               } },
             _imports.React.createElement(_wsDropdownMenu.WSDropdownMenu, {
@@ -287,6 +292,7 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
     writable: true,
     value: {
       type: _imports.React.PropTypes.oneOf(['anchor', 'button', 'select']),
+      text: _imports.React.PropTypes.string,
       items: _imports.React.PropTypes.array,
       multiple: _imports.React.PropTypes.bool,
       filterable: _imports.React.PropTypes.bool,

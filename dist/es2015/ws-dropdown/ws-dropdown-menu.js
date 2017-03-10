@@ -209,9 +209,9 @@ export var WSDropdownMenu = function (_Component) {
           key: 'parent',
           isParent: true
         }), React.createElement('li', { className: 'dropdown-item-separator', key: 'parent-separator' })],
-        this.state.value && [this.state.value.map(function (item, index) {
+        this.state.value && this.state.value.length ? [this.state.value.map(function (item, index) {
           return React.createElement(WSDropdownItem, { item: item, handle: _this3.handlePropagation, key: 'value-' + index });
-        }), React.createElement('li', { className: 'dropdown-item-separator', key: 'value-separator' })],
+        }), React.createElement('li', { className: 'dropdown-item-separator', key: 'value-separator' })] : null,
         items.map(function (item, index) {
           return React.createElement(WSDropdownItem, { item: item, handle: _this3.handlePropagation, key: 'item-' + index });
         }),

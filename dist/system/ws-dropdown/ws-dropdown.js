@@ -140,8 +140,9 @@ System.register(['../imports', './ws-dropdown-menu'], function (_export, _contex
         }, {
           key: 'setValue',
           value: function setValue(value) {
+            var text = this.state.text;
+
             if (this.props.type === 'select') {
-              var text = void 0;
               if (Array.isArray(value)) {
                 text = value.map(function (item) {
                   return item.label;
@@ -149,8 +150,10 @@ System.register(['../imports', './ws-dropdown-menu'], function (_export, _contex
               } else {
                 text = value.label;
               }
-              this.setState({ text: text, value: value });
             }
+            this.setState({ text: text, value: value });
+
+            this.element.dispatchEvent(new CustomEvent('change', { detail: value, bubbles: true }));
           }
         }, {
           key: 'enrichItems',
@@ -223,7 +226,7 @@ System.register(['../imports', './ws-dropdown-menu'], function (_export, _contex
 
             return React.createElement(
               'div',
-              { className: 'dropdown ' + this.props.orientation, ref: function ref(element) {
+              { className: 'dropdown', ref: function ref(element) {
                   if (element) _this4.element = element;
                 } },
               this.props.type === 'anchor' && React.createElement(
@@ -249,7 +252,9 @@ System.register(['../imports', './ws-dropdown-menu'], function (_export, _contex
               ),
               React.createElement(
                 'div',
-                { className: 'dropdown-container', ref: function ref(element) {
+                {
+                  className: 'dropdown-container ' + this.props.orientation,
+                  ref: function ref(element) {
                     if (element) _this4.dropdownContainer = element;
                   } },
                 React.createElement(WSDropdownMenu, {
@@ -294,6 +299,7 @@ System.register(['../imports', './ws-dropdown-menu'], function (_export, _contex
         writable: true,
         value: {
           type: React.PropTypes.oneOf(['anchor', 'button', 'select']),
+          text: React.PropTypes.string,
           items: React.PropTypes.array,
           multiple: React.PropTypes.bool,
           filterable: React.PropTypes.bool,

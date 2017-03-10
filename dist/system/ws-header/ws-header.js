@@ -1,4 +1,4 @@
-System.register(['../imports', './ws-header-nav-link', './ws-header.scss'], function (_export, _context) {
+System.register(['../imports', './ws-header-nav-link'], function (_export, _context) {
   "use strict";
 
   var React, Component, WSHeaderNavLink, _createClass, urlAtStart, SESSION_TOKEN_NAME, SESSION_STATE_NAME, WSHeader;
@@ -66,7 +66,7 @@ System.register(['../imports', './ws-header-nav-link', './ws-header.scss'], func
       Component = _imports.Component;
     }, function (_wsHeaderNavLink) {
       WSHeaderNavLink = _wsHeaderNavLink.default;
-    }, function (_wsHeaderScss) {}],
+    }],
     execute: function () {
       _createClass = function () {
         function defineProperties(target, props) {

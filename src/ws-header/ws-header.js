@@ -1,4 +1,4 @@
-import { React, Component } from '../imports';
+import {React, Component} from '../imports';
 import WSHeaderNavLink from './ws-header-nav-link';
 const urlAtStart = window.location.href;
 const SESSION_TOKEN_NAME = 'session_token';
@@ -14,7 +14,27 @@ const SESSION_STATE_NAME = 'session_state';
 //    links?: { label, value, onclick }[];
 //  }
 
+
+/**
+ * The default Header to be used everywhere
+ * @class
+ * @extends Component
+ * @property {object} props             - properties
+ * @property {function} props.setLang   - handler which sets language
+ * @property {function} props.setLogin  - handler which sets Login information (token and boolan for loggedin)
+ * @property {number} props.clientId    - clientId
+ * @property {string} props.redirectUrl - URL to redirect after successfully login
+ * @property {string} props.logoUrl     - url for logo
+ * @property {string} props.title       - title of Header
+ * @property {array} props.links        - List of navigation links based on object format {label, value, onclick-Handler }
+ *
+ */
 export class WSHeader extends Component {
+
+  /**
+   * Constructor of WSHeader
+   * it is initializing default values for the state object
+   */
   constructor() {
     super();
     this.state = {
@@ -31,17 +51,34 @@ export class WSHeader extends Component {
       availableLanguages: ['de', 'en'],
       userName: null,
       userEmail: null,
-      userUID: null,
+      userUID: null
     };
     this.state.lang = this.getLanguage(this.state);
   }
+
+  /**
+   *
+   * Lifecycle: componentDidMount handler for component
+   * @returns {void}
+   */
   componentDidMount() {
     this.checkIsLoggedIn();
   }
+  /**
+   * Method to extract state parameter from url
+   * @param {String} url urlString to extract state parameter
+   * @returns {String} state information
+   */
   getStateFromUrl(url) {
     const urlQueryStatePart = /state=([^&]+)/.exec(url);
     return urlQueryStatePart[1];
   }
+
+  /**
+   * Method to get user auth token
+   * @param {String} orgUrl url to receive Token
+   * @returns {String} auth token
+   */
   getToken(orgUrl) {
     let url = orgUrl;
     const that = this;
@@ -70,6 +107,11 @@ export class WSHeader extends Component {
       document.cookie = `${SESSION_TOKEN_NAME}=${token};path=${this.state.cookiePath};`;
     }
   }
+  /**
+   * get Language from state / localStorage
+   * @param {object} state state object of component
+   * @returns {object}  language object
+   */
   getLanguage(state) {
     return window.localStorage.getItem(state.languageStorageId) || state.availableLanguages[0];
   }

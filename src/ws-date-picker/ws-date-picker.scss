@@ -133,7 +133,7 @@
         }
       }
       &:hover svg {
-        fill: $primary-color;
+        fill: $heaven;
       }
     }
     .flatpickr-current-month {
@@ -307,7 +307,7 @@
   .flatpickr-day.selected.nextMonthDay,
   .flatpickr-day.startRange.nextMonthDay,
   .flatpickr-day.endRange.nextMonthDay {
-    background: $primary-color;
+    background: $heaven;
     color: $white;
   }
   .flatpickr-day.selected.startRange,

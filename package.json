@@ -91,9 +91,6 @@
     "webpack-node-externals": "1.5.4",
     "wholesale-styleguide-scss": "git+ssh://git@github.com/wholesale-design-system/scss.git"
   },
-  "dependencies": {
-    "moment": "^2.0.0"
-  },
   "peerDependencies": {
     "preact": "7.1.0",
     "preact-compat": "3.13.1"

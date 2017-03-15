@@ -170,6 +170,10 @@ export var WSDropdown = function (_Component) {
     value: function render() {
       var _this4 = this;
 
+      var icon = void 0;
+      if (this.props.icon) {
+        icon = React.createElement('span', { className: 'icon ' + this.props.icon });
+      }
       return React.createElement(
         'div',
         { className: 'dropdown', ref: function ref(element) {
@@ -180,6 +184,8 @@ export var WSDropdown = function (_Component) {
           { onClick: function onClick() {
               return _this4.open();
             } },
+          icon,
+          ' ',
           this.state.text
         ),
         this.props.type === 'button' && React.createElement(
@@ -187,6 +193,8 @@ export var WSDropdown = function (_Component) {
           { onClick: function onClick() {
               return _this4.open();
             } },
+          icon,
+          ' ',
           this.state.text
         ),
         this.props.type === 'select' && React.createElement(
@@ -194,6 +202,8 @@ export var WSDropdown = function (_Component) {
           { className: 'select-box', onClick: function onClick() {
               return _this4.open();
             } },
+          icon,
+          ' ',
           this.state.text
         ),
         React.createElement(
@@ -228,6 +238,7 @@ Object.defineProperty(WSDropdown, 'defaultProps', {
   value: {
     type: 'anchor',
     text: '',
+    icon: '',
     items: [],
     multiple: false,
     filterable: false,
@@ -243,6 +254,7 @@ Object.defineProperty(WSDropdown, 'propTypes', {
   value: {
     type: React.PropTypes.oneOf(['anchor', 'button', 'select']),
     text: React.PropTypes.string,
+    icon: React.PropTypes.string,
     items: React.PropTypes.array,
     multiple: React.PropTypes.bool,
     filterable: React.PropTypes.bool,

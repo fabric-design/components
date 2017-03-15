@@ -124,6 +124,7 @@ var WSHeader = exports.WSHeader = function (_Component) {
     key: 'checkIsLoggedIn',
     value: function checkIsLoggedIn() {
       var that = this;
+
       function failureListener() {
         return that.logout();
       }

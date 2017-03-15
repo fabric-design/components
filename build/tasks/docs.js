@@ -8,6 +8,8 @@ const fs = require('fs-then-native');
 const glob = require('glob');
 const jsdoc2md = require('jsdoc-to-markdown');
 const rimraf = require('rimraf');
+var del = require('del');
+var vinylPaths = require('vinyl-paths');
 
 gulp.task('build-es2015-for-docs', () => {
   return gulp.src(paths.source)
@@ -17,7 +19,12 @@ gulp.task('build-es2015-for-docs', () => {
 
 gulp.task('build-api-docs', () => {
   const files = glob.sync(`${paths.output}/docs/es2015/**/**/*.js`); // glob allows pattern matching for filenames
-  const createdMdDocs = files.map(filename => {
+  const createdMdDocs = files
+  .filter(filename => {
+    const name = filename.match(/((\w)+(\-)*(\w))+(?=.js)/g)[0];
+    return name !== "imports";
+  })
+  .map(filename => {
     return {
       file: filename.match(/((\w)+(\-)*(\w))+(?=.js)/g)[0],
       markdown: jsdoc2md.renderSync({files: filename})
@@ -37,5 +44,11 @@ gulp.task('delete-es2015-for-docs', () => {
     });
 });
 
-gulp.task('generate-docs', done => runSequence('clean', 'build-es2015-for-docs', 'build-api-docs', 'delete-es2015-for-docs', done));
+// deletes all files in the output path
+gulp.task('clean-docs', function() {
+  return gulp.src([`${paths.output}/docs/`])
+    .pipe(vinylPaths(del));
+});
+
+gulp.task('generate-docs', done => runSequence('clean-docs', 'build-es2015-for-docs', 'build-api-docs', 'delete-es2015-for-docs', done));
 

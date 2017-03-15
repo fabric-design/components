@@ -165,6 +165,7 @@ define(['exports', '../imports', './ws-header-nav-link'], function (exports, _im
       key: 'checkIsLoggedIn',
       value: function checkIsLoggedIn() {
         var that = this;
+
         function failureListener() {
           return that.logout();
         }

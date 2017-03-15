@@ -49,40 +49,10 @@ gulp.task('build-system', () => {
     .pipe(gulp.dest(`${paths.output  }system`));
 });
 
-gulp.task('build-es2015-for-docs', () => {
-  return gulp.src(paths.source)
-    .pipe(to5(assign({}, compilerOptions.docs())))
-    .pipe(gulp.dest(`${paths.output}/docs/es2015`));
-});
-
-gulp.task('build-api-docs', () => {
-  const files = glob.sync(`${paths.output}/docs/es2015/**/**/*.js`); // glob allows pattern matching for filenames
-  const createdMdDocs = files.map(filename => {
-    return {
-      file: filename.match(/((\w)+(\-)*(\w))+(?=.js)/g)[0],
-      markdown: jsdoc2md.renderSync({files: filename})
-    };
-  });
-  const writeMdFiles = createdMdDocs.map(mdDoc => fs.writeFile(`${paths.output}/docs/${mdDoc.file}.md`, mdDoc.markdown));
-  return Promise.all(writeMdFiles);
-});
-
-gulp.task('delete-es2015-for-docs', () => {
-  return new Promise(
-    (resolve, reject) => {
-      rimraf(`${paths.output}/docs/es2015`, err => {
-        if (err) reject(err);
-        resolve();
-      });
-    });
-});
-
-gulp.task('generate-docs', done => runSequence('clean', 'build-es2015-for-docs', 'build-api-docs', 'delete-es2015-for-docs', done));
-
 gulp.task('build', callback => {
   return runSequence(
     'clean',
-    ['build-html', 'build-css', 'build-es2015', 'build-commonjs', 'build-amd', 'build-system', 'generate-docs'],
+    ['build-html', 'build-css', 'build-es2015', 'build-commonjs', 'build-amd', 'build-system'],
     callback
   );
 });

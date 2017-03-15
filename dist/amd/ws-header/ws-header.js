@@ -1,4 +1,4 @@
-define(['exports', '../imports', './ws-header-nav-link', './ws-header.scss'], function (exports, _imports, _wsHeaderNavLink) {
+define(['exports', '../imports', './ws-header-nav-link'], function (exports, _imports, _wsHeaderNavLink) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

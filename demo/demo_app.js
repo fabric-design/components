@@ -1,5 +1,5 @@
 import {React, render} from '../src/imports';
-import {WSHeader, WSDropdown, WSDatePicker} from '../src/index';
+import {WSHeader, WSDropdown, WSNotification, WSDatePicker} from '../src/index';
 import './index.scss';
 
 // Used to enable React Developer Tools
@@ -34,5 +34,6 @@ render(
       'item 5',
       'item 6'
     ]}/>
+    <WSNotification/>
   </div>
 , document.querySelector('#app-holder'));

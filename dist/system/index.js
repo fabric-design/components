@@ -1,4 +1,4 @@
-System.register(['./ws-header/ws-header', './ws-date-picker/ws-date-picker', './ws-dropdown/ws-dropdown'], function (_export, _context) {
+System.register(['./ws-header/ws-header', './ws-date-picker/ws-date-picker', './ws-dropdown/ws-dropdown', './ws-notification/ws-notification'], function (_export, _context) {
   "use strict";
 
   return {
@@ -17,6 +17,11 @@ System.register(['./ws-header/ws-header', './ws-date-picker/ws-date-picker', './
       _exportObj3.WSDropdown = _wsDropdownWsDropdown.WSDropdown;
 
       _export(_exportObj3);
+    }, function (_wsNotificationWsNotification) {
+      var _exportObj4 = {};
+      _exportObj4.WSNotification = _wsNotificationWsNotification.WSNotification;
+
+      _export(_exportObj4);
     }],
     execute: function () {}
   };

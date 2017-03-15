@@ -1,0 +1,25 @@
+@import "../../node_modules/wholesale-styleguide-scss/variables";
+@import "../../node_modules/wholesale-styleguide-scss/util";
+
+.ws-inline-edit {
+  width: 100%;
+  border: 1px solid transparent;
+  padding: 0.25rem 0.5rem;
+  line-height: 1.5rem;
+  box-sizing: border-box;
+  
+  > div {
+    font-weight: normal;
+    width: 100%;
+  }
+}
+
+.ws-inline-edit-field {
+  width: 100%;
+  
+  > input {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 -15rem 0 0;
+  }
+}

@@ -1,5 +1,5 @@
 import {React, render} from '../src/imports';
-import {WSHeader, WSDropdown, WSDatePicker} from '../src/index';
+import {WSHeader, WSDropdown, WSDatePicker, WSInlineEdit} from '../src/index';
 import './index.scss';
 
 // Used to enable React Developer Tools
@@ -34,5 +34,24 @@ render(
       'item 5',
       'item 6'
     ]}/>
+    <br/>
+    <div style="width: 60%">
+      <WSInlineEdit text="Some text to check" onUpdate={(text) => console.log(text)} ></WSInlineEdit>
+    </div>
+    <br/>
+    <table style="width:50%">
+      <tr>
+        <td><WSInlineEdit text="Some text to check" onUpdate={(text) => console.log(text)} ></WSInlineEdit></td>
+        <td><WSInlineEdit text="Some text to check" onUpdate={(text) => console.log(text)} ></WSInlineEdit></td>
+      </tr>
+      <tr>
+        <td><WSInlineEdit text="Some text to check" onUpdate={(text) => console.log(text)} ></WSInlineEdit></td>
+        <td><WSInlineEdit text="Some text to check" onUpdate={(text) => console.log(text)} ></WSInlineEdit></td>
+      </tr>
+      <tr>
+        <td><WSInlineEdit text="Some text to check" onUpdate={(text) => console.log(text)} ></WSInlineEdit></td>
+        <td><WSInlineEdit text="Some text to check" onUpdate={(text) => console.log(text)} ></WSInlineEdit></td>
+      </tr>
+    </table>
   </div>
 , document.querySelector('#app-holder'));

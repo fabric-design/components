@@ -64,6 +64,7 @@ export class WSHeader extends Component {
   componentDidMount() {
     this.checkIsLoggedIn();
   }
+
   /**
    * Method to extract state parameter from url
    * @param {String} url urlString to extract state parameter
@@ -100,9 +101,11 @@ export class WSHeader extends Component {
     }
     return null;
   }
+
   /**
    * Sets cookie for a given token
    * @param {String} token Token String
+   * @returns {void}
    */
   setCookie(token) {
     if (process.env.NODE_ENV !== 'dev') {
@@ -111,6 +114,7 @@ export class WSHeader extends Component {
       document.cookie = `${SESSION_TOKEN_NAME}=${token};path=${this.state.cookiePath};`;
     }
   }
+
   /**
    * get Language from state / localStorage
    * @param {object} state state object of component
@@ -119,9 +123,11 @@ export class WSHeader extends Component {
   getLanguage(state) {
     return window.localStorage.getItem(state.languageStorageId) || state.availableLanguages[0];
   }
+
   /**
    * Language string to set navigation
    * @param {String} lang Language string
+   * @returns {void}
    */
   setLanguage(lang) {
     if (lang !== this.state.lang) {
@@ -131,8 +137,10 @@ export class WSHeader extends Component {
       this.props.setLang && this.props.setLang(lang);
     }
   }
+
   /**
    * Removes cookie
+   * @returns {void}
    */
   removeCookie() {
     if (process.env.NODE_ENV !== 'dev') {
@@ -141,8 +149,10 @@ export class WSHeader extends Component {
       document.cookie = `${SESSION_TOKEN_NAME}=;path=${this.state.cookiePath};expires=Thu, 01 Jan 1970 00:00:01 GMT";`;
     }
   }
+
   /**
    * Helper method checking if the user is already loggedin
+   * @returns {void}
    */
   checkIsLoggedIn() {
     const that = this;
@@ -186,10 +196,12 @@ export class WSHeader extends Component {
     request.send();
     return true;
   }
+
   /**
    * Updates changed login status
    * @param {boolean} isLoggedIn updated status of loggedin user
    * @param {String} token Token String
+   * @returns {void}
    */
   propagateLoginStatusChange(isLoggedIn, token) {
     if (this.state.loggedIn !== isLoggedIn) {
@@ -201,10 +213,11 @@ export class WSHeader extends Component {
       });
     }
   }
+
   /**
    * Helper method checking current session state
    * @param {String} state String containing state
-   * @returns {Boolean} 
+   * @returns {Boolean} valid boolean
    */
   checkSessionState(state) {
     const stateObj = JSON.parse(decodeURIComponent(state));
@@ -213,6 +226,11 @@ export class WSHeader extends Component {
     window.localStorage.removeItem(SESSION_STATE_NAME);
     return valid;
   }
+
+  /**
+   * login
+   * @returns {void}
+   */
   login() {
     const url = `https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid
       &client_id=${this.props.clientId}
@@ -221,10 +239,20 @@ export class WSHeader extends Component {
 
     window.location.href = url;
   }
+
+  /**
+   * logout
+   * @returns {void}
+   */
   logout() {
     this.removeCookie();
     this.propagateLoginStatusChange(false);
   }
+
+  /**
+   * Render function of component
+   * @returns {JSX} JSX string representation of WSHeader
+   */
   render() {
     const that = this;
     return (
@@ -277,16 +305,30 @@ export class WSHeader extends Component {
   }
 }
 
+/**
+ * getTokenFromUrl
+ * @param {String} url url string
+ * @returns {String} token part
+ */
 function getTokenFromUrl(url) {
   const urlQueryTokenPart = /access_token=([^&]+)/.exec(url);
   return urlQueryTokenPart != null ? urlQueryTokenPart[1] : null;
 }
 
+/**
+ * Get Cookie Value
+ * @param {String} a cookie key to match
+ * @returns {String} cookie value for key
+ */
 function getCookieValue(a) {
   const b = document.cookie.match(`(^|;)\\s*${a}\\s*=\\s*([^;]+)`);
   return b ? b.pop() : '';
 }
 
+/**
+ * GUID
+ * @returns {String} string
+ */
 function guid() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
@@ -294,6 +336,10 @@ function guid() {
   return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
 }
 
+/**
+ * Sets Session State
+ * @returns {String} encoded URI component of state
+ */
 function setSessionState() {
   // create new state guid
   const state = guid();

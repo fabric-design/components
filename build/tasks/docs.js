@@ -25,12 +25,22 @@ gulp.task('build-api-docs', () => {
     return name !== "imports";
   })
   .map(filename => {
+    const splittedName = filename.split("/");
+    const filenameWithoutExt = filename.match(/((\w)+(\-)*(\w))+(?=.js)/g)[0];
     return {
-      file: filename.match(/((\w)+(\-)*(\w))+(?=.js)/g)[0],
+      file: filenameWithoutExt,
+      folder: filenameWithoutExt !== 'index' ? splittedName[splittedName.length - 2] : '',  // get the parent folder of file
       markdown: jsdoc2md.renderSync({files: filename})
     };
   });
-  const writeMdFiles = createdMdDocs.map(mdDoc => fs.writeFile(`${paths.output}/docs/${mdDoc.file}.md`, mdDoc.markdown));
+  const writeMdFiles = createdMdDocs.map(mdDoc => {
+    const folder = `${paths.output}docs/${mdDoc.folder}`;
+    const filePath = mdDoc.file !== 'index' ? `${paths.output}docs/${mdDoc.folder}/${mdDoc.file}.md` : `${paths.output}docs/${mdDoc.file}.md`;
+    if (!fs.existsSync(folder)) {
+      fs.mkdirSync(folder);
+    }
+    return fs.writeFile(filePath, mdDoc.markdown);
+  });
   return Promise.all(writeMdFiles);
 });
 

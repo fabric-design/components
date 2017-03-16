@@ -6,4 +6,9 @@ based on jsDocs
 Here we should add more descriptions
 Below are all components referenced
 
-**See**: [WSHeader](WSHeader)  
+**See**
+
+- [WSHeader](ws-header/ws-header.md)
+- [WSDatePicker](ws-date-picker/ws-date-picker.md)
+- [WSDropdown](ws-dropdown/ws-dropdown.md)
+

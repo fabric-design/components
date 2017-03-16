@@ -1,26 +1,17 @@
 @import "../../node_modules/wholesale-styleguide-scss/variables";
-@import "../../node_modules/wholesale-styleguide-scss/util";
 
 .ws-inline-edit {
-  width: 100%;
-  border: 1px solid transparent;
-  padding: 0.25rem 0.5rem;
-  line-height: 1.5rem;
-  box-sizing: border-box;
+  display: inline-block;
+  padding: $spacing-xx-small $spacing-x-small;
+  line-height: $base-line-height;
   .inlineValue {
     display: inline-block;
     font-weight: normal;
-    //width: 100%;
-    min-height: 1.5rem;
-    line-height: 1.5rem;
-    padding: 0 .5rem;
+    line-height: $base-line-height;
+    padding: 0 $spacing-x-small;
   }
   .inlineInput {
-    //width: 100%;
-    max-height: 1.5rem;
-    box-sizing: border-box;
     transition: all 0.5s ease;
-    //margin: 0 -15rem 0 0;
     &[disabled] {
       cursor: text;
       background-color: transparent;

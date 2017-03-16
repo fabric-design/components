@@ -1,4 +1,4 @@
-import { React, Component } from '../imports';
+import {React, Component} from '../imports';
 require('./ws-inline-edit.scss');
 
 //  props: {
@@ -44,7 +44,10 @@ export class WSInlineEdit extends Component {
   keyAction(e) {
     if (e.keyCode === 13) {
       // Enter to save
-      this.setState({text: e.target.value, isEditing: false});
+      this.setState({
+        text: e.target.value,
+        isEditing: false
+      });
     } else if (e.keyCode === 27) {
       // ESC to cancel
       this.setState({isEditing: false});
@@ -56,7 +59,10 @@ export class WSInlineEdit extends Component {
    * @returns {Object}
    */
   blurAction(e) {
-    this.setState({text: e.target.value, isEditing: false});
+    this.setState({
+      text: e.target.value,
+      isEditing: false
+    });
     this.updating(e.target.value);
   }
   /**

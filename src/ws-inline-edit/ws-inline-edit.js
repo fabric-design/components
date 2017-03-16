@@ -23,31 +23,33 @@ export class WSInlineEdit extends Component {
     this.state = {
       isEditing: false,
       text: props.text
-    }
+    };
   }
   /**
    * Function that show input when you click on div and focus it
    * @returns {void}
    */
   editElement() {
-    this.setState({isEditing: true}, () => {
-      this.editEl.focus();
-    });
-  };
+    if (!this.state.isEditing) {
+      this.setState({isEditing: true}, () => {
+        this.editEl.focus();
+      });
+    }
+  }
   /**
    * Function that save text when click 'Enter' or cancel when click 'Escape' button
    * @param {Object} e - click event
    * @returns {Object}
    */
   keyAction(e) {
-    if(e.keyCode === 13) {
+    if (e.keyCode === 13) {
       // Enter to save
       this.setState({text: e.target.value, isEditing: false});
-    } else if(e.keyCode === 27) {
+    } else if (e.keyCode === 27) {
       // ESC to cancel
       this.setState({isEditing: false});
     }
-  };
+  }
   /**
    * Function that save text when input on blur and send text value to updating function
    * @param {Object} e - click event
@@ -56,7 +58,7 @@ export class WSInlineEdit extends Component {
   blurAction(e) {
     this.setState({text: e.target.value, isEditing: false});
     this.updating(e.target.value);
-  };
+  }
   /**
    * Function that return value for outside use
    * @param {Object} text - text to show
@@ -69,24 +71,19 @@ export class WSInlineEdit extends Component {
    * Render the complete inline-edit component
    * @returns {Object}
    */
-  render({}, { text, isEditing }) {
-    if ( isEditing ) {
-      return(
-        <div class="ws-inline-edit">
-          <input
-            type = "text"
-            onBlur = { (e) => this.blurAction(e) }
-            onKeyDown = { (e) => this.keyAction(e) }
-            value = { text }
-            ref = { (el) => this.editEl = el } />
-        </div>
-      );
-    } else {
-      return(
-        <div class="ws-inline-edit" onClick = { () => this.editElement() }>
-          <div> { text } </div>
-        </div>
-      );
-    }
+  render() {
+    return (
+      <div className="ws-inline-edit" onClick={() => this.editElement()}>
+        <input
+          type="text"
+          className="inlineInput"
+          disabled={(!this.state.isEditing) ? 'disabled' : ''}
+          onBlur={e => this.blurAction(e)}
+          onKeyDown={e => this.keyAction(e)}
+          defaultValue={this.state.text}
+          ref={(el) => this.editEl = el}
+        />
+      </div>
+    );
   }
 }

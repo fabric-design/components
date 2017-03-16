@@ -1,5 +1,5 @@
 import {React, render} from '../src/imports';
-import {WSHeader, WSDropdown, WSDatePicker, WSInlineEdit} from '../src/index';
+import {WSHeader, WSDropdown, WSNotification, WSDatePicker, WSInlineEdit} from '../src/index';
 import './index.scss';
 
 // Used to enable React Developer Tools
@@ -34,10 +34,9 @@ render(
       'item 5',
       'item 6'
     ]}/>
+
     <br/>
     <div style="width: 60%">
-      <WSInlineEdit text="Some text to check" onUpdate={(text) => console.log(text)} />
-      <WSInlineEdit text="Some text to check" onUpdate={(text) => console.log(text)} />
       <WSInlineEdit text="Some text to check" onUpdate={(text) => console.log(text)} />
     </div>
     <br/>
@@ -59,5 +58,8 @@ render(
         <td colspan="3"><WSInlineEdit text="Some text to check" onUpdate={(text) => console.log(text)} /></td>
       </tr>
     </table>
+
+    <WSNotification/>
+
   </div>
 , document.querySelector('#app-holder'));

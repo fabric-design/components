@@ -100,6 +100,10 @@ export class WSHeader extends Component {
     }
     return null;
   }
+  /**
+   * Sets cookie for a given token
+   * @param {String} token Token String
+   */
   setCookie(token) {
     if (process.env.NODE_ENV !== 'dev') {
       document.cookie = `${SESSION_TOKEN_NAME}=${token};path=${this.state.cookiePath};domain=${this.state.cookieDomain};`;
@@ -115,6 +119,10 @@ export class WSHeader extends Component {
   getLanguage(state) {
     return window.localStorage.getItem(state.languageStorageId) || state.availableLanguages[0];
   }
+  /**
+   * Language string to set navigation
+   * @param {String} lang Language string
+   */
   setLanguage(lang) {
     if (lang !== this.state.lang) {
       this.setState({ lang });
@@ -123,6 +131,9 @@ export class WSHeader extends Component {
       this.props.setLang && this.props.setLang(lang);
     }
   }
+  /**
+   * Removes cookie
+   */
   removeCookie() {
     if (process.env.NODE_ENV !== 'dev') {
       document.cookie = `${SESSION_TOKEN_NAME}=;path=${this.state.cookiePath};domain=${this.state.cookieDomain};expires=Thu, 01 Jan 1970 00:00:01 GMT";`;
@@ -130,8 +141,12 @@ export class WSHeader extends Component {
       document.cookie = `${SESSION_TOKEN_NAME}=;path=${this.state.cookiePath};expires=Thu, 01 Jan 1970 00:00:01 GMT";`;
     }
   }
+  /**
+   * Helper method checking if the user is already loggedin
+   */
   checkIsLoggedIn() {
     const that = this;
+
     function failureListener() {
       return that.logout();
     }
@@ -171,6 +186,11 @@ export class WSHeader extends Component {
     request.send();
     return true;
   }
+  /**
+   * Updates changed login status
+   * @param {boolean} isLoggedIn updated status of loggedin user
+   * @param {String} token Token String
+   */
   propagateLoginStatusChange(isLoggedIn, token) {
     if (this.state.loggedIn !== isLoggedIn) {
       this.setState({ loggedIn: isLoggedIn });
@@ -181,6 +201,11 @@ export class WSHeader extends Component {
       });
     }
   }
+  /**
+   * Helper method checking current session state
+   * @param {String} state String containing state
+   * @returns {Boolean} 
+   */
   checkSessionState(state) {
     const stateObj = JSON.parse(decodeURIComponent(state));
     const valid = window.localStorage.getItem(SESSION_STATE_NAME) === stateObj.state;

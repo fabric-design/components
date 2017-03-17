@@ -1,13 +1,12 @@
 /**
  * Our Wholesale-Styleguide Component documentation
- * 
  * This is our Startpage for our component API
  * based on jsDocs
  * Here we should add more descriptions
  * Below are all components referenced 
- * See {@link ws-header/ws-header.md|WSHeader}
- * See {@link ws-date-picker/ws-date-picker.md|WSDatePicker}
- * See {@link ws-dropdown/ws-dropdown.md|WSDropdown}
+ * - See {@link ws-header/ws-header.md|WSHeader}
+ * - See {@link ws-date-picker/ws-date-picker.md|WSDatePicker}
+ * - See {@link ws-dropdown/ws-dropdown.md|WSDropdown}
  * @module WHStyleguide
  */
 

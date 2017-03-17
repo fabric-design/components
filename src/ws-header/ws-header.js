@@ -4,20 +4,11 @@ const urlAtStart = window.location.href;
 const SESSION_TOKEN_NAME = 'session_token';
 const SESSION_STATE_NAME = 'session_state';
 
-//  props: {
-//    setLang?: (lang) => ;
-//    setLogin?: ({ loggedIn, token }) =>;
-//    clientId;
-//    redirectUrl;
-//    logoUrl?;
-//    title;
-//    links?: { label, value, onclick }[];
-//  }
 
-
+export class WSHeader extends Component {
 /**
  * The default Header to be used everywhere
- * @class
+ * @class WSHeader
  * @extends Component
  * @property {object} props             - properties
  * @property {function} props.setLang   - handler which sets language
@@ -29,7 +20,6 @@ const SESSION_STATE_NAME = 'session_state';
  * @property {array} props.links        - List of navigation links based on object format {label, value, onclick-Handler }
  *
  */
-export class WSHeader extends Component {
 
   /**
    * Constructor of WSHeader
@@ -59,6 +49,7 @@ export class WSHeader extends Component {
   /**
    *
    * Lifecycle: componentDidMount handler for component
+   * @memberOf WSHeader#
    * @returns {void}
    */
   componentDidMount() {
@@ -78,7 +69,7 @@ export class WSHeader extends Component {
   /**
    * Method to get user auth token
    * @param {String} orgUrl url to receive Token
-   * @returns {String} auth token
+   * @returns {String} token string 
    */
   getToken(orgUrl) {
     let url = orgUrl;

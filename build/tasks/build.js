@@ -4,10 +4,6 @@ const to5 = require('gulp-babel');
 const paths = require('../paths');
 const compilerOptions = require('../babel-options');
 const assign = Object.assign || require('object.assign');
-const fs = require('fs-then-native');
-const glob = require('glob');
-const jsdoc2md = require('jsdoc-to-markdown');
-const rimraf = require('rimraf');
 
 gulp.task('build-html', () => {
   return gulp.src(paths.html)

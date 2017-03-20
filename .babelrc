@@ -2,7 +2,8 @@
   "presets": [
     ["es2015", {
       "modules": false
-    }]
+    }],
+    "stage-1"
   ],
   "plugins": [
     ["transform-class-properties", { "spec": true }],

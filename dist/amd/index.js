@@ -1,4 +1,4 @@
-define(['exports', './ws-header/ws-header', './ws-date-picker/ws-date-picker', './ws-dropdown/ws-dropdown'], function (exports, _wsHeader, _wsDatePicker, _wsDropdown) {
+define(['exports', './ws-header/ws-header', './ws-date-picker/ws-date-picker', './ws-dropdown/ws-dropdown', './ws-notification/ws-notification'], function (exports, _wsHeader, _wsDatePicker, _wsDropdown, _wsNotification) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -20,6 +20,12 @@ define(['exports', './ws-header/ws-header', './ws-date-picker/ws-date-picker', '
     enumerable: true,
     get: function () {
       return _wsDropdown.WSDropdown;
+    }
+  });
+  Object.defineProperty(exports, 'WSNotification', {
+    enumerable: true,
+    get: function () {
+      return _wsNotification.WSNotification;
     }
   });
 });

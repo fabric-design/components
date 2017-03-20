@@ -1,7 +1,7 @@
-var path = require('path');
-var paths = require('./paths');
+const path = require('path');
+const paths = require('./paths');
 
-exports.base = function() {
+exports.base = function () {
   return {
     filename: '',
     filenameRelative: '',
@@ -18,32 +18,38 @@ exports.base = function() {
       }]
     ],
     plugins: [
-      ['transform-class-properties', { spec: true }],
+      ['transform-class-properties', {spec: true}],
       ['transform-react-jsx', {
         pragma: 'React.createElement'
       }]
     ]
   };
-}
+};
 
-exports.commonjs = function() {
-  var options = exports.base();
+exports.commonjs = function () {
+  let options = exports.base();
   options.plugins.push('transform-es2015-modules-commonjs');
   return options;
 };
 
-exports.amd = function() {
-  var options = exports.base();
+exports.docs = function () {
+  const options = exports.base();
+  options.comments = true;
+  return options;
+};
+
+exports.amd = function () {
+  let options = exports.base();
   options.plugins.push('transform-es2015-modules-amd');
   return options;
 };
 
-exports.system = function() {
-  var options = exports.base();
+exports.system = function () {
+  let options = exports.base();
   options.plugins.push('transform-es2015-modules-systemjs');
   return options;
 };
 
-exports.es2015 = function() {
+exports.es2015 = function () {
   return exports.base();
 };

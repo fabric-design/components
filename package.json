@@ -98,9 +98,5 @@
   "peerDependencies": {
     "preact": "7.1.0",
     "preact-compat": "3.13.1"
-  },
-  "dependencies": {
-    "preact": "^7.1.0",
-    "preact-compat": "^3.13.1"
   }
 }

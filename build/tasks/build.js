@@ -7,42 +7,42 @@ const assign = Object.assign || require('object.assign');
 
 gulp.task('build-html', () => {
   return gulp.src(paths.html)
-    .pipe(gulp.dest(`${paths.output  }es2015`))
-    .pipe(gulp.dest(`${paths.output  }commonjs`))
-    .pipe(gulp.dest(`${paths.output  }amd`))
-    .pipe(gulp.dest(`${paths.output  }system`));
+    .pipe(gulp.dest(`${paths.output}es2015`))
+    .pipe(gulp.dest(`${paths.output}commonjs`))
+    .pipe(gulp.dest(`${paths.output}amd`))
+    .pipe(gulp.dest(`${paths.output}system`));
 });
 
 gulp.task('build-css', () => {
   return gulp.src(paths.css)
-    .pipe(gulp.dest(`${paths.output  }es2015`))
-    .pipe(gulp.dest(`${paths.output  }commonjs`))
-    .pipe(gulp.dest(`${paths.output  }amd`))
-    .pipe(gulp.dest(`${paths.output  }system`));
+    .pipe(gulp.dest(`${paths.output}es2015`))
+    .pipe(gulp.dest(`${paths.output}commonjs`))
+    .pipe(gulp.dest(`${paths.output}amd`))
+    .pipe(gulp.dest(`${paths.output}system`));
 });
 
 gulp.task('build-es2015', () => {
   return gulp.src(paths.source)
     .pipe(to5(assign({}, compilerOptions.es2015())))
-    .pipe(gulp.dest(`${paths.output  }es2015`));
+    .pipe(gulp.dest(`${paths.output}es2015`));
 });
 
 gulp.task('build-commonjs', () => {
   return gulp.src(paths.source)
     .pipe(to5(assign({}, compilerOptions.commonjs())))
-    .pipe(gulp.dest(`${paths.output  }commonjs`));
+    .pipe(gulp.dest(`${paths.output}commonjs`));
 });
 
 gulp.task('build-amd', () => {
   return gulp.src(paths.source)
     .pipe(to5(assign({}, compilerOptions.amd())))
-    .pipe(gulp.dest(`${paths.output  }amd`));
+    .pipe(gulp.dest(`${paths.output}amd`));
 });
 
 gulp.task('build-system', () => {
   return gulp.src(paths.source)
     .pipe(to5(assign({}, compilerOptions.system())))
-    .pipe(gulp.dest(`${paths.output  }system`));
+    .pipe(gulp.dest(`${paths.output}system`));
 });
 
 gulp.task('build', callback => {

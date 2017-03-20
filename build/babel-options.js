@@ -1,5 +1,5 @@
-let path = require('path');
-let paths = require('./paths');
+const path = require('path');
+const paths = require('./paths');
 
 exports.base = function () {
   return {

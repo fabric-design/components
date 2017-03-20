@@ -189,6 +189,7 @@ System.register(['../imports', './ws-header-nav-link'], function (_export, _cont
           key: 'checkIsLoggedIn',
           value: function checkIsLoggedIn() {
             var that = this;
+
             function failureListener() {
               return that.logout();
             }

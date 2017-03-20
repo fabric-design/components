@@ -60,6 +60,5 @@ render(
       </tbody>
     </table>
     <WSNotification />
-
   </div>
 , document.querySelector('#app-holder'));

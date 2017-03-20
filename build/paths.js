@@ -1,5 +1,5 @@
-var appRoot = 'src/';
-var outputRoot = 'dist/';
+const appRoot = 'src/';
+const outputRoot = 'dist/';
 
 module.exports = {
   root: appRoot,
@@ -8,6 +8,7 @@ module.exports = {
   css: appRoot + '**/*.scss',
   output: outputRoot,
   doc: './doc',
+  docsOutput: outputRoot.concat('docs/api/'),
   e2eSpecsSrc: 'test/e2e/src/*.js',
   e2eSpecsDist: 'test/e2e/dist/'
 };

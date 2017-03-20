@@ -12,7 +12,7 @@ System.register(['react', 'react-dom'], function (_export, _context) {
     execute: function () {
       _export('React', React = {
         createElement: _React_.createElement || _React_.h,
-        PropTypes: _React_.PropTypes || { oneOf: function oneOf() {} } });
+        PropTypes: _React_.PropTypes || { oneOf: function oneOf() {}, oneOfType: function oneOfType() {} } });
 
       _export('React', React);
 

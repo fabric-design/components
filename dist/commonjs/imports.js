@@ -17,7 +17,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var React = exports.React = {
   createElement: _React_.createElement || _React_.h,
-  PropTypes: _React_.PropTypes || { oneOf: function oneOf() {} } };
+  PropTypes: _React_.PropTypes || { oneOf: function oneOf() {}, oneOfType: function oneOfType() {} } };
 var Component = exports.Component = _React_.Component;
 var PureComponent = exports.PureComponent = _React_.PureComponent || _React_.Component;
 var render = exports.render = ReactDOM.render;

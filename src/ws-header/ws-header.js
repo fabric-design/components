@@ -1,20 +1,29 @@
-import { React, Component } from '../imports';
+import {React, Component} from '../imports';
 import WSHeaderNavLink from './ws-header-nav-link';
 const urlAtStart = window.location.href;
 const SESSION_TOKEN_NAME = 'session_token';
 const SESSION_STATE_NAME = 'session_state';
 
-//  props: {
-//    setLang?: (lang) => ;
-//    setLogin?: ({ loggedIn, token }) =>;
-//    clientId;
-//    redirectUrl;
-//    logoUrl?;
-//    title;
-//    links?: { label, value, onclick }[];
-//  }
-
+/**
+ * The default Header to be used everywhere
+ * @class WSHeader
+ * @extends Component
+ * @property {object} props             - properties
+ * @property {function} props.setLang   - handler which sets language
+ * @property {function} props.setLogin  - handler which sets Login information (token and boolan for loggedin)
+ * @property {number} props.clientId    - clientId
+ * @property {string} props.redirectUrl - URL to redirect after successfully login
+ * @property {string} props.logoUrl     - url for logo
+ * @property {string} props.title       - title of Header
+ * @property {array} props.links        - List of navigation links based on object format {label, value, onclick-Handler }
+ *
+ */
 export class WSHeader extends Component {
+
+  /**
+   * Constructor of WSHeader
+   * it is initializing default values for the state object
+   */
   constructor() {
     super();
     this.state = {
@@ -31,17 +40,34 @@ export class WSHeader extends Component {
       availableLanguages: ['de', 'en'],
       userName: null,
       userEmail: null,
-      userUID: null,
+      userUID: null
     };
     this.state.lang = this.getLanguage(this.state);
   }
+
+  /**
+   *
+   * Lifecycle: componentDidMount handler for component
+   */
   componentDidMount() {
     this.checkIsLoggedIn();
   }
+
+  /**
+   * Method to extract state parameter from url
+   * @param {String} url urlString to extract state parameter
+   * @returns {String} state information
+   */
   getStateFromUrl(url) {
     const urlQueryStatePart = /state=([^&]+)/.exec(url);
     return urlQueryStatePart[1];
   }
+
+  /**
+   * Method to get user auth token
+   * @param {String} orgUrl url to receive Token
+   * @returns {String} token string
+   */
   getToken(orgUrl) {
     let url = orgUrl;
     const that = this;
@@ -63,6 +89,11 @@ export class WSHeader extends Component {
     }
     return null;
   }
+
+  /**
+   * Sets cookie for a given token
+   * @param {String} token Token String
+   */
   setCookie(token) {
     if (process.env.NODE_ENV !== 'dev') {
       document.cookie = `${SESSION_TOKEN_NAME}=${token};path=${this.state.cookiePath};domain=${this.state.cookieDomain};`;
@@ -70,17 +101,32 @@ export class WSHeader extends Component {
       document.cookie = `${SESSION_TOKEN_NAME}=${token};path=${this.state.cookiePath};`;
     }
   }
+
+  /**
+   * get Language from state / localStorage
+   * @param {object} state state object of component
+   * @returns {object}  language object
+   */
   getLanguage(state) {
     return window.localStorage.getItem(state.languageStorageId) || state.availableLanguages[0];
   }
+
+  /**
+   * Language string to set navigation
+   * @param {String} lang Language string
+   */
   setLanguage(lang) {
     if (lang !== this.state.lang) {
-      this.setState({ lang });
+      this.setState({lang});
       // persist
       window.localStorage.setItem(this.state.languageStorageId, lang);
       this.props.setLang && this.props.setLang(lang);
     }
   }
+
+  /**
+   * Removes cookie
+   */
   removeCookie() {
     if (process.env.NODE_ENV !== 'dev') {
       document.cookie = `${SESSION_TOKEN_NAME}=;path=${this.state.cookiePath};domain=${this.state.cookieDomain};expires=Thu, 01 Jan 1970 00:00:01 GMT";`;
@@ -88,8 +134,13 @@ export class WSHeader extends Component {
       document.cookie = `${SESSION_TOKEN_NAME}=;path=${this.state.cookiePath};expires=Thu, 01 Jan 1970 00:00:01 GMT";`;
     }
   }
+
+  /**
+   * Helper method checking if the user is already loggedin
+   */
   checkIsLoggedIn() {
     const that = this;
+
     function failureListener() {
       return that.logout();
     }
@@ -129,6 +180,12 @@ export class WSHeader extends Component {
     request.send();
     return true;
   }
+
+  /**
+   * Updates changed login status
+   * @param {boolean} isLoggedIn updated status of loggedin user
+   * @param {String} token Token String
+   */
   propagateLoginStatusChange(isLoggedIn, token) {
     if (this.state.loggedIn !== isLoggedIn) {
       this.setState({ loggedIn: isLoggedIn });
@@ -139,6 +196,12 @@ export class WSHeader extends Component {
       });
     }
   }
+
+  /**
+   * Helper method checking current session state
+   * @param {String} state String containing state
+   * @returns {Boolean} valid boolean
+   */
   checkSessionState(state) {
     const stateObj = JSON.parse(decodeURIComponent(state));
     const valid = window.localStorage.getItem(SESSION_STATE_NAME) === stateObj.state;
@@ -146,6 +209,10 @@ export class WSHeader extends Component {
     window.localStorage.removeItem(SESSION_STATE_NAME);
     return valid;
   }
+
+  /**
+   * login
+   */
   login() {
     const url = `https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid
       &client_id=${this.props.clientId}
@@ -154,10 +221,19 @@ export class WSHeader extends Component {
 
     window.location.href = url;
   }
+
+  /**
+   * logout
+   */
   logout() {
     this.removeCookie();
     this.propagateLoginStatusChange(false);
   }
+
+  /**
+   * Render function of component
+   * @returns {JSX} JSX string representation of WSHeader
+   */
   render() {
     const that = this;
     return (
@@ -210,29 +286,51 @@ export class WSHeader extends Component {
   }
 }
 
+/**
+ * getTokenFromUrl
+ * @param {String} url url string
+ * @returns {String} token part
+ */
 function getTokenFromUrl(url) {
   const urlQueryTokenPart = /access_token=([^&]+)/.exec(url);
   return urlQueryTokenPart != null ? urlQueryTokenPart[1] : null;
 }
 
+/**
+ * Get Cookie Value
+ * @param {String} a cookie key to match
+ * @returns {String} cookie value for key
+ */
 function getCookieValue(a) {
   const b = document.cookie.match(`(^|;)\\s*${a}\\s*=\\s*([^;]+)`);
   return b ? b.pop() : '';
 }
 
+/**
+ * GUID
+ * @returns {String} string
+ */
 function guid() {
+  /**
+   * Helper method for calculating a unique Id
+   * @returns {Number}
+   */
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
   }
   return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
 }
 
+/**
+ * Sets Session State
+ * @returns {String} encoded URI component of state
+ */
 function setSessionState() {
   // create new state guid
   const state = guid();
   const obj = {
     state,
-    hash: window.location.hash,
+    hash: window.location.hash
   };
 
   // save the state to check for it on return

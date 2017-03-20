@@ -1,3 +1,10 @@
 $use-embedded-font: true;
 @import "~wholesale-styleguide-scss/index";
+
+@import "../src/ws-header/ws-header";
+@import "../src/ws-date-picker/ws-date-picker";
 @import "../src/ws-inline-edit/ws-inline-edit";
+
+.container {
+  margin: 20px;
+}

@@ -17,18 +17,16 @@ The default Header to be used everywhere
     -   `props.title` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** title of Header
     -   `props.links` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of navigation links based on object format {label, value, onclick-Handler }
 
-## constructor
+### constructor
 
 Constructor of WSHeader
 it is initializing default values for the state object
 
-## componentDidMount
+### componentDidMount
 
 Lifecycle: componentDidMount handler for component
 
-Returns **void** 
-
-## getStateFromUrl
+### getStateFromUrl
 
 Method to extract state parameter from url
 
@@ -38,7 +36,7 @@ Method to extract state parameter from url
 
 Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** state information
 
-## getToken
+### getToken
 
 Method to get user auth token
 
@@ -48,7 +46,7 @@ Method to get user auth token
 
 Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** token string
 
-## setCookie
+### setCookie
 
 Sets cookie for a given token
 
@@ -56,9 +54,7 @@ Sets cookie for a given token
 
 -   `token` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Token String
 
-Returns **void** 
-
-## getLanguage
+### getLanguage
 
 get Language from state / localStorage
 
@@ -68,7 +64,7 @@ get Language from state / localStorage
 
 Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** language object
 
-## setLanguage
+### setLanguage
 
 Language string to set navigation
 
@@ -76,21 +72,15 @@ Language string to set navigation
 
 -   `lang` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Language string
 
-Returns **void** 
-
-## removeCookie
+### removeCookie
 
 Removes cookie
 
-Returns **void** 
-
-## checkIsLoggedIn
+### checkIsLoggedIn
 
 Helper method checking if the user is already loggedin
 
-Returns **void** 
-
-## propagateLoginStatusChange
+### propagateLoginStatusChange
 
 Updates changed login status
 
@@ -99,9 +89,7 @@ Updates changed login status
 -   `isLoggedIn` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** updated status of loggedin user
 -   `token` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Token String
 
-Returns **void** 
-
-## checkSessionState
+### checkSessionState
 
 Helper method checking current session state
 
@@ -111,19 +99,15 @@ Helper method checking current session state
 
 Returns **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** valid boolean
 
-## login
+### login
 
 login
 
-Returns **void** 
-
-## logout
+### logout
 
 logout
 
-Returns **void** 
-
-## render
+### render
 
 Render function of component
 
@@ -154,6 +138,12 @@ Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 GUID
 
 Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** string
+
+## s4
+
+Helper method for calculating a unique Id
+
+Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
 ## setSessionState
 

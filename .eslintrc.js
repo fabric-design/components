@@ -74,7 +74,7 @@ module.exports = {
     }],
     "valid-jsdoc": ["error", {
       "prefer": {"arg": "param", "argument": "param", "return": "returns", "virtual": "abstract"},
-      "requireReturnDescription": true, // if we want to document our internal components the return value is mandatory otherwise methods / components are not parsed to Markdown
+      "requireReturnDescription": false,
       "requireParamDescription": true,
     }],
   }

@@ -4,8 +4,6 @@ const urlAtStart = window.location.href;
 const SESSION_TOKEN_NAME = 'session_token';
 const SESSION_STATE_NAME = 'session_state';
 
-
-export class WSHeader extends Component {
 /**
  * The default Header to be used everywhere
  * @class WSHeader
@@ -20,6 +18,7 @@ export class WSHeader extends Component {
  * @property {array} props.links        - List of navigation links based on object format {label, value, onclick-Handler }
  *
  */
+export class WSHeader extends Component {
 
   /**
    * Constructor of WSHeader
@@ -49,8 +48,6 @@ export class WSHeader extends Component {
   /**
    *
    * Lifecycle: componentDidMount handler for component
-   * @memberOf WSHeader#
-   * @returns {void}
    */
   componentDidMount() {
     this.checkIsLoggedIn();
@@ -69,7 +66,7 @@ export class WSHeader extends Component {
   /**
    * Method to get user auth token
    * @param {String} orgUrl url to receive Token
-   * @returns {String} token string 
+   * @returns {String} token string
    */
   getToken(orgUrl) {
     let url = orgUrl;
@@ -96,7 +93,6 @@ export class WSHeader extends Component {
   /**
    * Sets cookie for a given token
    * @param {String} token Token String
-   * @returns {void}
    */
   setCookie(token) {
     if (process.env.NODE_ENV !== 'dev') {
@@ -118,11 +114,10 @@ export class WSHeader extends Component {
   /**
    * Language string to set navigation
    * @param {String} lang Language string
-   * @returns {void}
    */
   setLanguage(lang) {
     if (lang !== this.state.lang) {
-      this.setState({ lang });
+      this.setState({lang});
       // persist
       window.localStorage.setItem(this.state.languageStorageId, lang);
       this.props.setLang && this.props.setLang(lang);
@@ -131,7 +126,6 @@ export class WSHeader extends Component {
 
   /**
    * Removes cookie
-   * @returns {void}
    */
   removeCookie() {
     if (process.env.NODE_ENV !== 'dev') {
@@ -143,7 +137,6 @@ export class WSHeader extends Component {
 
   /**
    * Helper method checking if the user is already loggedin
-   * @returns {void}
    */
   checkIsLoggedIn() {
     const that = this;
@@ -192,7 +185,6 @@ export class WSHeader extends Component {
    * Updates changed login status
    * @param {boolean} isLoggedIn updated status of loggedin user
    * @param {String} token Token String
-   * @returns {void}
    */
   propagateLoginStatusChange(isLoggedIn, token) {
     if (this.state.loggedIn !== isLoggedIn) {
@@ -220,7 +212,6 @@ export class WSHeader extends Component {
 
   /**
    * login
-   * @returns {void}
    */
   login() {
     const url = `https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid
@@ -233,7 +224,6 @@ export class WSHeader extends Component {
 
   /**
    * logout
-   * @returns {void}
    */
   logout() {
     this.removeCookie();
@@ -321,6 +311,10 @@ function getCookieValue(a) {
  * @returns {String} string
  */
 function guid() {
+  /**
+   * Helper method for calculating a unique Id
+   * @returns {Number}
+   */
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
   }
@@ -336,7 +330,7 @@ function setSessionState() {
   const state = guid();
   const obj = {
     state,
-    hash: window.location.hash,
+    hash: window.location.hash
   };
 
   // save the state to check for it on return

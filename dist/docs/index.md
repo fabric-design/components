@@ -6,8 +6,9 @@ Our Wholesale-Styleguide Component documentation
 This is our Startpage for our component API
 based on jsDocs
 Here we should add more descriptions
-Below are all components referenced 
+Below are all components referenced
 
 -   See [WSHeader](ws-header/ws-header.md)
 -   See [WSDatePicker](ws-date-picker/ws-date-picker.md)
 -   See [WSDropdown](ws-dropdown/ws-dropdown.md)
+-   See [WSNotification](ws-notification/ws-notification)

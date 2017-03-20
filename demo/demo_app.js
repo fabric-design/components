@@ -12,9 +12,7 @@ render(
     ]} />
     <div className="container">
       <br />
-      <WSDatePicker onUpdate={(date) => console.log('New Date:', date)} />
-      <br />
-      <WSDatePicker onUpdate={(date) => console.log('New Date:', date)} date={Date.now()}/>
+      <WSDatePicker onChange={(date) => console.log('New Date:', date)} value={Date.now()} />
       <br />
       <WSDropdown text="item 2" type="select" items={[
         'item 1',

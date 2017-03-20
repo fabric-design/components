@@ -37,7 +37,7 @@ render(
 
     <br />
     <div style={{width: '60%'}}>
-      <WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} />
+      <WSInlineEdit text="Some text to check" />
     </div>
     <br />
     <table style={{width: '50%'}}>

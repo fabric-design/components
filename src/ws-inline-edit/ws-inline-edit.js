@@ -1,16 +1,29 @@
 import {React, Component} from '../imports';
-require('./ws-inline-edit.scss');
-
-//  props: {
-//    text: 'Something'
-//  }
 
 /**
- * This class describes a Preact component which renders a inline-edit element.
+ * This class describes a Preact/React component which renders a inline-edit element.
  * The inline-edit component can be used everywhere in block where you want to have ability to change value.
  * As an example you can use it in div blocks, rows, tables.
  */
 export class WSInlineEdit extends Component {
+  
+  /**
+   * @propTypes
+   * Types of properties
+   */
+  static propTypes = {
+    text: React.PropTypes.string,
+    onUpdate: React.PropTypes.func
+  };
+  
+  /**
+   * @defaultProps
+   * Create default onUpdate function to prevent errors if user don't use it
+   */
+  static defaultProps = {
+    onUpdate: () => {}
+  };
+  
   /**
    * @param {Object} props Peact props
    * @constructor
@@ -25,6 +38,7 @@ export class WSInlineEdit extends Component {
       text: props.text
     };
   }
+  
   /**
    * Function that show input when you click on div and focus it
    * @returns {void}
@@ -36,6 +50,7 @@ export class WSInlineEdit extends Component {
       });
     }
   }
+  
   /**
    * Function that save text when click 'Enter' or cancel when click 'Escape' button
    * @param {Object} e - click event
@@ -53,6 +68,7 @@ export class WSInlineEdit extends Component {
       this.setState({isEditing: false});
     }
   }
+  
   /**
    * Function that save text when input on blur and send text value to updating function
    * @param {Object} e - click event
@@ -65,14 +81,18 @@ export class WSInlineEdit extends Component {
     });
     this.updating(e.target.value);
   }
+  
   /**
-   * Function that return value for outside use
+   * Function that return value for outside use if text is not the same
    * @param {Object} text - text to show
    * @returns {Object}
    */
   updating(text) {
-    this.props.onUpdate(text);
+    if (text !== this.props.text) {
+      this.props.onUpdate(text);
+    }
   }
+  
   /**
    * Render the complete inline-edit component
    * @returns {Object}

@@ -1,5 +1,5 @@
 import {React, render} from '../src/imports';
-import {WSHeader, WSDropdown, WSNotification, WSDatePicker} from '../src/index';
+import {WSHeader, WSDropdown, WSNotification, WSDatePicker, WSWeekPicker} from '../src/index';
 import './index.scss';
 
 // Used to enable React Developer Tools
@@ -13,6 +13,9 @@ render(
     <div className="container">
       <br />
       <WSDatePicker onChange={(date) => console.log('New Date:', date)} value={Date.now()} />
+      <br />
+      <br />
+      <WSWeekPicker onChange={({year, week}) => console.log('New week selected:', week)} />
       <br />
       <br />
       <WSDropdown text="item 2" type="select" items={[

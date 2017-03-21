@@ -1,0 +1,131 @@
+$icon-font-path: '../../node_modules/wholesale-styleguide-scss/icons/';
+@import "../../node_modules/wholesale-styleguide-scss/variables";
+@import "../../node_modules/wholesale-styleguide-scss/util";
+@import "../../node_modules/wholesale-styleguide-scss/components/base/icons";
+
+.ws-week-picker {
+  position: relative;
+
+  & > input {
+    cursor: pointer;
+    display: inline-block;
+    padding-right: 1.5rem;
+  }
+  & > i {
+    position: relative;
+    top: rem(5px);
+    left: -2rem;
+    height: rem(12px);
+    width: rem(12px);
+  }
+  .ws-date-picker-calendar {
+    background: $white;
+    border-radius: 4px;
+    box-shadow: map-get($elevation-shadows, 'floating');
+    display: inline-block;
+    position: absolute;
+    top: rem(44px);
+    left: 0;
+    z-index: map-get($z-layers, 'upper');
+  }
+  .arrow-up {
+    $size: 10px;
+    width: 0;
+    height: 0;
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-bottom: $size solid $white;
+    position: absolute;
+    top: -1 * $size;
+    left: 20px;
+  }
+
+  table {
+    table-layout: fixed;
+    border: none;
+    display: inline-block;
+
+    caption {
+      padding: 0.5rem 0;
+      color: $heron;
+      font-weight: 300;
+
+      i {
+        position: relative;
+          top: 0.1rem;
+        color: $base-font-color;
+      }
+      .prev {
+        float: left;
+        margin-left: rem(6px);
+        padding-left: rem(6px);
+      }
+      .next {
+        float: right;
+        margin-right: rem(6px);
+        padding-right: rem(6px);
+      }
+    }
+    tbody {
+      font-size: $font-size-small;
+
+      &:before, &:after {
+        content: "_";
+        display: block;
+        line-height: 0.25rem;
+        color: transparent;
+      }
+    }
+    th:first-child, td:first-child {
+      padding-left: 0.5rem !important;
+    }
+    th:last-child, td:last-child {
+      padding-right: 0.5rem !important;
+    }
+    td, th {
+      padding: 0 rem(6px) !important;
+      height: 1.7rem;
+      width: 1.7rem;
+      line-height: 1.7rem;
+      text-align: center;
+      background-color: $white !important;
+      border: none !important;
+      &.off, &.off .week {
+        color: $french-gray;
+      }
+      a {
+        color: $base-font-color;
+        display: block;
+        border-radius: 50%;
+      }
+      &.active a {
+        background-color: $heaven;
+        color: $white;
+      }
+      &.today a {
+        border: 1px solid $sail;
+      }
+    }
+    th {
+      line-height: rem(39px);
+      color: $jumbo;
+      background-color: $silver !important;
+      font-weight: normal;
+    }
+    .week {
+      color: $base-font-color !important;
+      display: block;
+      border-radius: 50%;
+      cursor: pointer;
+
+      &.active, &.active:hover {
+        background-color: $heaven;
+        color: $white;
+        border-radius: 50%;
+      }
+      &:hover {
+        background-color: $earl-gray;
+      }
+    }
+  }
+}

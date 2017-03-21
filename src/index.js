@@ -9,6 +9,7 @@
  * - See {@link ws-date-picker/ws-date-picker.md|WSDatePicker}
  * - See {@link ws-dropdown/ws-dropdown.md|WSDropdown}
  * - See {@link ws-notification/ws-notification|WSNotification}
+ * - See {@link ws-week-picker/ws-week-picker|WSWeekPicker}
  * @module WHStyleguide
  */
 
@@ -16,3 +17,4 @@ export {WSHeader} from './ws-header/ws-header';
 export {WSDatePicker} from './ws-date-picker/ws-date-picker';
 export {WSDropdown} from './ws-dropdown/ws-dropdown';
 export {WSNotification} from './ws-notification/ws-notification';
+export {WSWeekPicker} from './ws-week-picker/ws-week-picker';

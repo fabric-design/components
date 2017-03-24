@@ -222,9 +222,11 @@ function getWeeks(month, year) {
     startWeek = getDateOfISOWeek(startWeek, year).getMonth() !== month ? startWeek + 1 : startWeek;
   }
   let endWeek = getWeekOfYear(new Date(year, month + 1, 0));
-  // the last da of the year can already be in the first week of the next year
+  // the last day of the year can already be in the first week of the next year
   if (endWeek === 1) {
     endWeek = getWeekOfYear(new Date(year, month + 1, -7));
+  } else {
+    endWeek = getDateOfISOWeek(endWeek, year).getMonth() !== month ? endWeek - 1 : endWeek;
   }
   let weeks = [];
   for (let i = startWeek; i <= endWeek; i++) {

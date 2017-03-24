@@ -4,35 +4,29 @@ module.exports = {
   entry: './demo/demo_app.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'demo'),
+    path: path.resolve(__dirname, 'demo')
   },
   module: {
     rules: [{
       test: /\.js$/,
       use: [{
         loader: 'babel-loader',
-        options: { babelrc: true },
+        options: {babelrc: true}
       }],
-      exclude: [/node_modules/],
+      exclude: [/node_modules/]
+    },
+    {
+      test: /\.(png|jpg|jpeg|gif|svg|ttf|eot|woff|woff2)(\?.*$|$)/,
+      loader: 'file-loader?name=[path][name].[ext]'
     },
     {
       test: /\.scss$/,
-      use: [{
-        loader: 'style-loader', // creates style nodes from JS strings
-      }, {
-        loader: 'css-loader', // translates CSS into CommonJS
-      }, {
-        loader: 'sass-loader', // compiles Sass to CSS
-      }],
-    },
-    {
-      test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-      loader: 'url-loader?limit=100000',
-    }],
+      loaders: ['style-loader', 'css-loader', 'resolve-url-loader', 'sass-loader?sourceMap']
+    }]
   },
   devServer: {
     contentBase: path.join(__dirname, 'demo'),
     compress: true,
-    port: 8080,
-  },
+    port: 8080
+  }
 };

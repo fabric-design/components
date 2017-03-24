@@ -1,8 +1,9 @@
-$use-embedded-font: true;
+$icon-font-path: 'icons/';
 @import "~wholesale-styleguide-scss/index";
 
 @import "../src/ws-header/ws-header";
 @import "../src/ws-date-picker/ws-date-picker";
+@import "../src/ws-week-picker/ws-week-picker";
 
 .container {
   margin: 20px;

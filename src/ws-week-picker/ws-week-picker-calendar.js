@@ -88,8 +88,8 @@ export class WSWeekPickerCalendar extends Component {
         <div className="arrow-up"></div>
         <table>
           <caption>
-            <span className="prev" onClick={() => this.prevYear()}><a><i className="icon icon-left" /></a>{this.state.showingYear - 1}</span>
-            <span className="next" onClick={() => this.nextYear()}><a><i className="icon icon-right" /></a>{this.state.showingYear + 1}</span>
+            <span className="prev" onClick={() => this.prevYear()}><i className="icon icon-left" />{this.state.showingYear - 1}</span>
+            <span className="next" onClick={() => this.nextYear()}>{this.state.showingYear + 1}<i className="icon icon-right" /></span>
             {this.state.showingYear}
           </caption>
           <thead>

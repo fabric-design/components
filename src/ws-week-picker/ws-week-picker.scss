@@ -3,8 +3,35 @@ $icon-font-path: '../../node_modules/wholesale-styleguide-scss/icons/';
 @import "../../node_modules/wholesale-styleguide-scss/util";
 @import "../../node_modules/wholesale-styleguide-scss/components/base/icons";
 
+// PROPOSAL for mixin
+$padding: 1rem;
+// to allow padding with setting a transparent border
+@mixin table-padding ($top, $right, $bottom, $left) {
+  @if $top != 0 {
+    tr:first-child():before {
+      height: $top;
+    }
+  }
+  @if $right != 0 {
+    th:last-child(), td:last-child() {
+      padding-right: $right !important;
+    }
+  }
+  @if $bottom != 0 {
+    tr:first-child():after {
+      height: $bottom;
+    }
+  }
+  @if $left != 0 {
+    th:first-child(), td:first-child() {
+      padding-left: $left !important;
+    }
+  }
+}
+
 .ws-week-picker {
   position: relative;
+  display: inline-block;
 
   & > input {
     cursor: pointer;
@@ -12,11 +39,10 @@ $icon-font-path: '../../node_modules/wholesale-styleguide-scss/icons/';
     padding-right: 1.5rem;
   }
   & > i {
-    position: relative;
-    top: rem(5px);
-    left: -2rem;
-    height: rem(12px);
-    width: rem(12px);
+    position: absolute;
+    top: calc(0.5rem + 1px); // input has 1 pixel border (2px total)
+    right: 0.5rem;
+    cursor: pointer;
   }
   .ws-date-picker-calendar {
     background: $white;
@@ -42,18 +68,24 @@ $icon-font-path: '../../node_modules/wholesale-styleguide-scss/icons/';
 
   table {
     table-layout: fixed;
-    border: none;
     display: inline-block;
+    border: none;
+    font-size: $font-size-small;
 
     caption {
       padding: 0.5rem 0;
       color: $heron;
       font-weight: 300;
+      font-size: $base-font-size;
 
+      > span {
+        cursor: pointer;
+        line-height: 2rem;
+        height: 2rem;
+      }
       i {
         position: relative;
-          top: 0.1rem;
-        color: $base-font-color;
+        top: 0.45rem;
       }
       .prev {
         float: left;
@@ -66,8 +98,17 @@ $icon-font-path: '../../node_modules/wholesale-styleguide-scss/icons/';
         padding-right: rem(6px);
       }
     }
+    thead {
+      @include table-padding(0, $padding, 0, $padding);
+      border: none;
+
+      th {
+        padding: 0 !important;
+        line-height: 2rem;
+      }
+    }
     tbody {
-      font-size: $font-size-small;
+      @include table-padding(0, $padding, 0, $padding);
 
       &:before, &:after {
         content: "_";
@@ -75,34 +116,41 @@ $icon-font-path: '../../node_modules/wholesale-styleguide-scss/icons/';
         line-height: 0.25rem;
         color: transparent;
       }
-    }
-    th:first-child, td:first-child {
-      padding-left: 0.5rem !important;
-    }
-    th:last-child, td:last-child {
-      padding-right: 0.5rem !important;
+
+      td {
+        padding: rem(2px) rem(2px) !important;
+      }
     }
     td, th {
-      padding: 0 rem(6px) !important;
-      height: 1.7rem;
-      width: 1.7rem;
-      line-height: 1.7rem;
       text-align: center;
       background-color: $white !important;
       border: none !important;
+
       &.off, &.off .week {
         color: $french-gray;
       }
-      a {
+      .week {
+        width: 2rem;
+        line-height: 2rem;
         color: $base-font-color;
         display: block;
         border-radius: 50%;
+        cursor: pointer;
       }
-      &.active a {
+      &.active .week {
         background-color: $heaven;
         color: $white;
       }
-      &.today a {
+      &:hover:not(.active) {
+        .week {
+          background-color: $arctica;
+        }
+
+        :not(.off) .week {
+          color: $base-font-color;
+        }
+      }
+      &.today .week {
         border: 1px solid $sail;
       }
     }
@@ -111,21 +159,6 @@ $icon-font-path: '../../node_modules/wholesale-styleguide-scss/icons/';
       color: $jumbo;
       background-color: $silver !important;
       font-weight: normal;
-    }
-    .week {
-      color: $base-font-color !important;
-      display: block;
-      border-radius: 50%;
-      cursor: pointer;
-
-      &.active, &.active:hover {
-        background-color: $heaven;
-        color: $white;
-        border-radius: 50%;
-      }
-      &:hover {
-        background-color: $earl-gray;
-      }
     }
   }
 }

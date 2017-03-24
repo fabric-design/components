@@ -16,12 +16,18 @@ module.exports = {
       exclude: [/node_modules/]
     },
     {
-      test: /\.(png|jpg|jpeg|gif|svg|ttf|eot|woff|woff2)(\?.*$|$)/,
-      loader: 'file-loader?name=[path][name].[ext]'
+      test: /\.scss$/,
+      use: [{
+        loader: 'style-loader' // creates style nodes from JS strings
+      }, {
+        loader: 'css-loader' // translates CSS into CommonJS
+      }, {
+        loader: 'sass-loader?sourceMap' // compiles Sass to CSS
+      }]
     },
     {
-      test: /\.scss$/,
-      loaders: ['style-loader', 'css-loader', 'resolve-url-loader', 'sass-loader?sourceMap']
+      test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+      loader: 'url-loader?limit=100000'
     }]
   },
   devServer: {

@@ -56,7 +56,7 @@ export class WSWeekPickerCalendar extends Component {
   buildWeekRows(allMonths, weeksPerMonth) {
     // there are up to 5 weeks per month
     return [0, 1, 2, 3, 4].map(weekIndex =>
-      <tr>
+      <tr key={weekIndex}>
         {
           allMonths.map((month, monthIndex) => {
             const weekInMonth = weeksPerMonth[monthIndex][weekIndex];
@@ -95,7 +95,7 @@ export class WSWeekPickerCalendar extends Component {
             </caption>
             <thead>
               <tr>
-                {allMonths.map(month => <th>{month}</th>)}
+                {allMonths.map((month, index) => <th key={index}>{month}</th>)}
               </tr>
             </thead>
             <tbody>

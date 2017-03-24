@@ -53,7 +53,7 @@ $padding: 1rem;
   .ws-date-picker-calendar {
     background: $athens-gray;
     border-radius: 4px;
-    box-shadow: map-get($elevation-shadows, 'floating');
+    box-shadow: map-get($elevation-shadows, 'raised');
     display: inline-block;
     position: absolute;
     top: 2.95rem;

@@ -79,7 +79,7 @@ export class WSWeekPicker extends Component {
    * @returns {void}
    */
   onChange({week, year}) {
-    if (this.state.selectedWeek !== week && this.state.selectedYear !== year) {
+    if (this.state.selectedWeek !== week || this.state.selectedYear !== year) {
       this.setState({
         selectedYear: year,
         selectedWeek: week

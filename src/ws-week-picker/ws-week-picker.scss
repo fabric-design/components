@@ -37,7 +37,7 @@ $padding: 1rem;
 .ws-week-picker {
   position: relative;
   display: inline-block;
-  $arrowSize: 20px;
+  $arrowSize: 10px;
 
   & > input {
     cursor: pointer;
@@ -51,12 +51,12 @@ $padding: 1rem;
     cursor: pointer;
   }
   .ws-date-picker-calendar {
-    background: $white;
+    background: $athens-gray;
     border-radius: 4px;
     box-shadow: map-get($elevation-shadows, 'floating');
     display: inline-block;
     position: absolute;
-    top: rem(44px + $arrowSize/4);
+    top: rem(42px);
     left: 0;
     z-index: map-get($z-layers, 'upper');
   }
@@ -131,7 +131,7 @@ $padding: 1rem;
     }
     td, th {
       text-align: center;
-      background-color: $white !important;
+      background-color: transparent !important;
       border: none !important;
 
       &.off, &.off .week {

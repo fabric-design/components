@@ -56,7 +56,7 @@ $padding: 1rem;
     box-shadow: map-get($elevation-shadows, 'floating');
     display: inline-block;
     position: absolute;
-    top: rem(42px);
+    top: 2.95rem;
     left: 0;
     z-index: map-get($z-layers, 'upper');
   }
@@ -67,9 +67,9 @@ $padding: 1rem;
     z-index: -1;
     height: $arrowSize;
     width: $arrowSize;
-    left: 20px;
-    top: $arrowSize/4;
-    background: transparent;
+    left: 1rem;
+    top: 0.5rem;
+    background: $athens-gray;
     transform: rotate(45deg);
     @include arrow-tip-shadow;
   }

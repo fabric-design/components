@@ -1,7 +1,17 @@
 import {React, Component} from '../imports';
 
+/**
+ * Quick array of all month abriviations
+ */
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+/**
+ * Quick array of all month shown. There are two from the last year and two from the next year.
+ */
+const allMonths = [months[10], months[11]].concat(months).concat([months[0], months[1]]);
 
+/**
+ * Renders a week picker calendar component.
+ */
 export class WSWeekPickerCalendar extends Component {
   static defaultProps = {
     selectedYear: null,
@@ -22,6 +32,8 @@ export class WSWeekPickerCalendar extends Component {
   constructor(props) {
     super(props);
 
+    // if there is a week selected show the according year on start
+    // else show the current year
     const selectedDate = props.selectedYear != null && props.selectedWeek != null
       ? getDateOfISOWeek(props.selectedWeek, props.selectedYear) : new Date(Date.now());
     this.state = {
@@ -33,27 +45,52 @@ export class WSWeekPickerCalendar extends Component {
     this.todayWeek = getWeekOfYear(today);
   }
 
+  /**
+   * Show the previous year.
+   * @returns {void}
+  */
   prevYear() {
     this.setState({
       showingYear: this.state.showingYear - 1
     });
   }
 
+  /**
+   * Show the next year.
+   * @returns {void}
+  */
   nextYear() {
     this.setState({
       showingYear: this.state.showingYear + 1
     });
   }
 
+  /**
+   * Checks if a week is selected and therefor equals the input properties.
+   * @param {number} year Year of the week
+   * @param {number} week Week
+   * @returns {boolean}
+  */
   isActive(year, week) {
     return this.props.selectedYear === year && this.props.selectedWeek === week;
   }
 
+  /**
+   * Checks if a week is the current week.
+   * @param {number} year Year of the week
+   * @param {number} week Week
+   * @returns {boolean}
+  */
   isToday(year, week) {
     return this.todayYear === year && this.todayWeek === week;
   }
 
-  buildWeekRows(allMonths, weeksPerMonth) {
+  /**
+   * Builds an array of rows for the calendar. Every row holds one or none week of the month referenced by the column.
+   * @param {{week: number, year: number}[][]} weeksPerMonth Array that holds 4 or 5 weeks for every column index of allMonth.
+   * @returns {JSX.Elements[]}
+  */
+  buildWeekRows(weeksPerMonth) {
     // there are up to 5 weeks per month
     return [0, 1, 2, 3, 4].map(weekIndex =>
       <tr key={weekIndex}>
@@ -77,12 +114,15 @@ export class WSWeekPickerCalendar extends Component {
       </tr>);
   }
 
+  /**
+   * Renders the calendar.
+   * @returns {void}
+   */
   render() {
     const weeksPerMonth = [];
     for (let i = -2; i <= 13; i++) {
       weeksPerMonth.push(getWeeks(i, this.state.showingYear));
     }
-    const allMonths = [months[10], months[11]].concat(months).concat([months[0], months[1]]);
     return (
       <div>
         <div className="arrow-up"></div>
@@ -99,7 +139,7 @@ export class WSWeekPickerCalendar extends Component {
               </tr>
             </thead>
             <tbody>
-              {this.buildWeekRows(allMonths, weeksPerMonth)}
+              {this.buildWeekRows(weeksPerMonth)}
             </tbody>
           </table>
         </div>
@@ -108,9 +148,15 @@ export class WSWeekPickerCalendar extends Component {
   }
 }
 
-// src: http://stackoverflow.com/questions/16590500/javascript-calculate-date-from-week-number
-function getDateOfISOWeek(w, y) {
-    var simple = new Date(y, 0, 1 + (w - 1) * 7);
+/**
+ * Calculate a date from a week and its year. Date is based on the monday of that week.
+ * src: http://stackoverflow.com/questions/16590500/javascript-calculate-date-from-week-number
+ * @param {number} year Year of the week
+ * @param {number} week Week
+ * @returns {Date}
+*/
+function getDateOfISOWeek(week, year) {
+    var simple = new Date(year, 0, 1 + (week - 1) * 7);
     var dow = simple.getDay();
     var ISOweekStart = simple;
     if (dow <= 4)
@@ -120,7 +166,12 @@ function getDateOfISOWeek(w, y) {
     return ISOweekStart;
 }
 
-// src: https://gist.github.com/dblock/1081513
+/**
+ * Calculate a week number from a date. Weeks are starting on Monday.
+ * src: https://gist.github.com/dblock/1081513
+ * @param {Date} date Date
+ * @returns {Date}
+*/
 function getWeekOfYear(date) {
 
   // Create a copy of this date object
@@ -148,32 +199,38 @@ function getWeekOfYear(date) {
 
 }
 
-function getWeeks(m, y) {
-  while (m > 11) {
-    ++y;
-    m = m - 12;
+/**
+ * Calculate all weeks that are in a certain month.
+ * @param {number} week Week
+ * @param {number} year Year of the week
+ * @returns {{week: number, year: number}[]}
+*/
+function getWeeks(month, year) {
+  while (month > 11) {
+    ++year;
+    month = month - 12;
   }
-  while (m < 0) {
-    --y;
-    m = m + 12;
+  while (month < 0) {
+    --year;
+    month = month + 12;
   }
-  let startWeek = getWeekOfYear(new Date(y, m, 1));
+  let startWeek = getWeekOfYear(new Date(year, month, 1));
   // 1.1. is always 1st week
-  if (m === 0) {
+  if (month === 0) {
     startWeek = 1;
   } else {
-    startWeek = getDateOfISOWeek(startWeek, y).getMonth() !== m ? startWeek + 1 : startWeek;
+    startWeek = getDateOfISOWeek(startWeek, year).getMonth() !== month ? startWeek + 1 : startWeek;
   }
-  let endWeek = getWeekOfYear(new Date(y, m + 1, 0));
+  let endWeek = getWeekOfYear(new Date(year, month + 1, 0));
   // the last da of the year can already be in the first week of the next year
   if (endWeek === 1) {
-    endWeek = getWeekOfYear(new Date(y, m + 1, -7));
+    endWeek = getWeekOfYear(new Date(year, month + 1, -7));
   }
   let weeks = [];
   for (let i = startWeek; i <= endWeek; i++) {
     weeks.push({
       week: i,
-      year: y
+      year
     });
   }
   return weeks;

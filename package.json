@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "scripts": {
-    "start": "webpack-dev-server --devtool eval --progress --colors --content-base build webpack.config.js",
+    "start": "webpack-dev-server --progress --colors --content-base build webpack.config.js",
     "start:preact": "webpack-dev-server --watch --config webpack.config.preact.js",
     "test": "npm run test:react && npm run test:preact",
     "test:react": "mocha-webpack --webpack-config webpack.config.js \"tests/**/*.spec.js\"",

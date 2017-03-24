@@ -124,25 +124,22 @@ export class WSWeekPickerCalendar extends Component {
       weeksPerMonth.push(getWeeks(i, this.state.showingYear));
     }
     return (
-      <div>
-        <div className="arrow-up"></div>
-        <div className="ws-date-picker-calendar">
-          <table>
-            <caption>
-              <span className="prev" onClick={() => this.prevYear()}><i className="icon icon-left" />{this.state.showingYear - 1}</span>
-              <span className="next" onClick={() => this.nextYear()}>{this.state.showingYear + 1}<i className="icon icon-right" /></span>
-              <span>{this.state.showingYear}</span>
-            </caption>
-            <thead>
-              <tr>
-                {allMonths.map((month, index) => <th key={index}>{month}</th>)}
-              </tr>
-            </thead>
-            <tbody>
-              {this.buildWeekRows(weeksPerMonth)}
-            </tbody>
-          </table>
-        </div>
+      <div className="ws-date-picker-calendar">
+        <table>
+          <caption>
+            <span className="prev" onClick={() => this.prevYear()}><i className="icon icon-left" />{this.state.showingYear - 1}</span>
+            <span className="next" onClick={() => this.nextYear()}>{this.state.showingYear + 1}<i className="icon icon-right" /></span>
+            <span>{this.state.showingYear}</span>
+          </caption>
+          <thead>
+            <tr>
+              {allMonths.map((month, index) => <th key={index}>{month}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {this.buildWeekRows(weeksPerMonth)}
+          </tbody>
+        </table>
       </div>
     );
   }

@@ -59,19 +59,27 @@ $padding: 1rem;
     top: 2.95rem;
     left: 0;
     z-index: map-get($z-layers, 'upper');
-  }
-  .arrow-up {
-    content: "";
-    display: block;
-    position: relative;
-    z-index: -1;
-    height: $arrowSize;
-    width: $arrowSize;
-    left: 1rem;
-    top: 0.5rem;
-    background: $athens-gray;
-    transform: rotate(45deg);
-    @include arrow-tip-shadow;
+    border: 1px solid $earl-gray;
+
+    &:before, &:after {
+      position: absolute;
+      display: block;
+      pointer-events: none;
+      border: solid transparent;
+      content: '';
+      height: 0;
+      width: 0;
+      border-width: 0.5rem;
+      margin: 0 -8px;
+      border-bottom-color: $earl-gray;
+      bottom: 100%;
+      left: 1rem;
+    }
+    &:after {
+      border-width: calc(0.5rem - 1px);
+      margin: 0 -7px;
+      border-bottom-color: $athens-gray;
+    }
   }
 
   table {

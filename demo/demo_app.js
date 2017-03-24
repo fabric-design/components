@@ -1,5 +1,5 @@
 import {React, render} from '../src/imports';
-import {WSHeader, WSDropdown, WSNotification, WSDatePicker, WSWeekPicker} from '../src/index';
+import {WSHeader, WSDropdown, WSNotification, WSDatePicker, WSInlineEdit, WSWeekPicker} from '../src/index';
 import './index.scss';
 
 // Used to enable React Developer Tools
@@ -40,7 +40,32 @@ render(
         'item 5',
         'item 6'
       ]}/>
+      <br />
+      <WSNotification />
+      <br />
+      <div style={{width: '60%'}}>
+        <WSInlineEdit text="Some text to check" />
+      </div>
+      <br />
+      <table style={{width: '50%'}}>
+        <tbody>
+          <tr>
+            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+          </tr>
+          <tr>
+            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+            <td colSpan="2"><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+          </tr>
+          <tr>
+            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+            <td colSpan="3"><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <WSNotification/>
   </div>
 , document.querySelector('#app-holder'));

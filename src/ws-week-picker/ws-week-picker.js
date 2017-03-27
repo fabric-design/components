@@ -3,7 +3,13 @@ import {WSWeekPickerCalendar} from './ws-week-picker-calendar';
 import './ws-week-picker.scss';
 
 /**
- * Renders a week picker component.
+ * @class WSWeekPicker
+ * @extends Component
+ * @property {object} props               - properties
+ * @property {number} props.selectedYear  - set a preselected year
+ * @property {number} props.selectedWeek  - set a preselected week
+ * @property {function} props.onChange    - handler which notifies about picked week
+ *
  */
 export class WSWeekPicker extends Component {
   static defaultProps = {
@@ -34,7 +40,6 @@ export class WSWeekPicker extends Component {
 
   /**
    * Initialize a listener to clicks outside of the calender to close it.
-   * @returns {void}
    */
   componentDidMount() {
     this.outsideClickListener = document.body.addEventListener('click', e => {
@@ -46,7 +51,6 @@ export class WSWeekPicker extends Component {
 
   /**
    * Removes the click outside listener on deletion of this component.
-   * @returns {void}
    */
   componentWillUnmount() {
     document.body.removeEventListener(this.outsideClickListener);
@@ -55,7 +59,6 @@ export class WSWeekPicker extends Component {
   /**
    * Updates the internal state of the component if properties change.
    * @param {Object} newProps React properties
-   * @returns {void}
    */
   componentWillReceiveProps(newProps) {
     this.setState({
@@ -67,7 +70,6 @@ export class WSWeekPicker extends Component {
 
   /**
    * Open or closes the calendar.
-   * @returns {void}
    */
   toggleCalendar() {
     this.setState({show: !this.state.show});
@@ -76,7 +78,6 @@ export class WSWeekPicker extends Component {
   /**
    * Handler for new selections on the calendar.
    * @param {Object} {week, year} clicked on week and according year
-   * @returns {void}
    */
   onChange({week, year}) {
     if (this.state.selectedWeek !== week || this.state.selectedYear !== year) {
@@ -90,7 +91,6 @@ export class WSWeekPicker extends Component {
 
   /**
    * Renders the input and the calendar.
-   * @returns {void}
    */
   render() {
     return (
@@ -114,7 +114,7 @@ export class WSWeekPicker extends Component {
  * Check if a child element is descendant of a parent element
  * @param {Element} parent parent element
  * @param {Element} child child element
- * @returns {void}
+ * @returns {boolean}
  */
 function isDescendant(parent, child) {
   let node = child.parentNode;

@@ -10,7 +10,12 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 const allMonths = [months[10], months[11]].concat(months).concat([months[0], months[1]]);
 
 /**
- * Renders a week picker calendar component.
+ * @class WSWeekPickerCalendar
+ * @extends Component
+ * @property {object} props               - properties
+ * @property {number} props.selectedYear  - set a preselected year
+ * @property {number} props.selectedWeek  - set a preselected week
+ * @property {function} props.onChange    - handler which notifies about picked week
  */
 export class WSWeekPickerCalendar extends Component {
   static defaultProps = {
@@ -47,7 +52,6 @@ export class WSWeekPickerCalendar extends Component {
 
   /**
    * Show the previous year.
-   * @returns {void}
   */
   prevYear() {
     this.setState({
@@ -57,7 +61,6 @@ export class WSWeekPickerCalendar extends Component {
 
   /**
    * Show the next year.
-   * @returns {void}
   */
   nextYear() {
     this.setState({
@@ -87,10 +90,13 @@ export class WSWeekPickerCalendar extends Component {
 
   /**
    * Builds an array of rows for the calendar. Every row holds one or none week of the month referenced by the column.
-   * @param {{week: number, year: number}[][]} weeksPerMonth Array that holds 4 or 5 weeks for every column index of allMonth.
    * @returns {JSX.Elements[]}
   */
-  buildWeekRows(weeksPerMonth) {
+  buildWeekRows() {
+    const weeksPerMonth = [];
+    for (let i = -2; i <= 13; i++) {
+      weeksPerMonth.push(getWeeks(i, this.state.showingYear));
+    }
     // there are up to 5 weeks per month
     return [0, 1, 2, 3, 4].map(weekIndex =>
       <tr key={weekIndex}>
@@ -116,13 +122,8 @@ export class WSWeekPickerCalendar extends Component {
 
   /**
    * Renders the calendar.
-   * @returns {void}
    */
   render() {
-    const weeksPerMonth = [];
-    for (let i = -2; i <= 13; i++) {
-      weeksPerMonth.push(getWeeks(i, this.state.showingYear));
-    }
     return (
       <div className="ws-date-picker-calendar">
         <table>
@@ -137,7 +138,7 @@ export class WSWeekPickerCalendar extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.buildWeekRows(weeksPerMonth)}
+            {this.buildWeekRows()}
           </tbody>
         </table>
       </div>

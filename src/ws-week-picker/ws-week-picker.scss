@@ -1,6 +1,6 @@
 $icon-font-path: '../../node_modules/wholesale-styleguide-scss/icons/';
-@import "../../node_modules/wholesale-styleguide-scss/variables";
-@import "../../node_modules/wholesale-styleguide-scss/util";
+@import "../../node_modules/wholesale-styleguide-scss/utils/variables";
+@import "../../node_modules/wholesale-styleguide-scss/utils/helpers";
 @import "../../node_modules/wholesale-styleguide-scss/components/base/icons";
 
 // PROPOSAL for mixin
@@ -29,15 +29,9 @@ $padding: 1rem;
   }
 }
 
-// PROPOSAL for style change
-@mixin arrow-tip-shadow {
-  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0px 0px 9px rgba(0, 0, 0, 0.22);
-}
-
 .ws-week-picker {
   position: relative;
   display: inline-block;
-  $arrowSize: 10px;
 
   & > input {
     cursor: pointer;
@@ -51,9 +45,9 @@ $padding: 1rem;
     cursor: pointer;
   }
   .ws-date-picker-calendar {
-    background: $athens-gray;
+    background: $white;
     border-radius: 4px;
-    box-shadow: map-get($elevation-shadows, 'raised');
+    box-shadow: map-get($elevation-shadows, 'hovering');
     display: inline-block;
     position: absolute;
     top: 2.95rem;
@@ -78,7 +72,7 @@ $padding: 1rem;
     &:after {
       border-width: calc(0.5rem - 1px);
       margin: 0 -7px;
-      border-bottom-color: $athens-gray;
+      border-bottom-color: $white;
     }
   }
 

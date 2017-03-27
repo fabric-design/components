@@ -7,7 +7,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import { React, Component } from '../imports';
-import './ws-notification.scss';
 
 var DEFAULT_NOTIFICATION_LIFETIME = 5000;
 var DEFAULT_NOTIFICATION_TYPE = 'info';
@@ -73,9 +72,10 @@ export var WSNotification = function (_Component) {
     }
   }, {
     key: 'animateIn',
-    value: function animateIn(notification, i) {
-      var that = this;
-      var list = that.refs.list;
+    value: function animateIn(notification, index) {
+      var _this2 = this;
+
+      var list = this.refs.list;
       list.style.transition = 'none';
       list.style.transform = 'translate3d(0, 80px, 0)';
       setTimeout(function () {
@@ -84,43 +84,39 @@ export var WSNotification = function (_Component) {
       }, 0);
       clearTimeout(this.state.timeoutId);
       this.setState({ timeoutId: setTimeout(function () {
-          return that.close(i);
+          return _this2.close(index);
         }, notification.lifetime) });
     }
   }, {
     key: 'closeAllEvents',
     value: function closeAllEvents() {
-      var i = void 0;
-      for (i = 0; i < this.state.notifications.length; i++) {
+      for (var i = 0; i < this.state.notifications.length; i++) {
         this.close(i);
       }
     }
   }, {
     key: 'close',
-    value: function close(i) {
-      var _this2 = this;
+    value: function close(index) {
+      var _this3 = this;
 
-      var notification = this.refs['notification-' + i];
+      var notification = this.refs['notification-' + index];
       if (notification) {
-        var notifications = this.state.notifications.splice(i, 1);
+        var notifications = this.state.notifications.splice(index, 1);
         notification.style.transition = 'opacity .2s ease-out, max-height .8s ease, margin-bottom .8s ease';
         notification.style.willChange = 'opacity, max-height, margin-bottom';
         notification.style.opacity = 0;
         notification.style.maxHeight = 0;
         notification.style.marginBottom = '-4.5rem';
         setTimeout(function () {
-          clearTimeout(_this2.state.timeoutId);
-          _this2.setState({
-            timeoutId: null,
-            notifications: notifications
-          });
+          clearTimeout(_this3.state.timeoutId);
+          _this3.setState({ timeoutId: null, notifications: notifications });
         }, 1000);
       }
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       return React.createElement(
         'div',
@@ -131,9 +127,14 @@ export var WSNotification = function (_Component) {
           this.state.notifications.map(function (notification, i) {
             return React.createElement(
               'div',
-              { className: 'notification ' + notification.type, key: 'notification-' + i, ref: 'notification-' + i, onClick: function onClick() {
-                  return _this3.close(i);
-                } },
+              {
+                className: 'notification ' + notification.type,
+                key: 'notification-' + i,
+                ref: 'notification-' + i,
+                onClick: function onClick() {
+                  return _this4.close(i);
+                }
+              },
               React.createElement(
                 'div',
                 { className: 'icons' },

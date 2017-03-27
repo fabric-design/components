@@ -29,7 +29,7 @@ define(['exports', 'react', 'react-dom'], function (exports, _react, _reactDom) 
 
   var React = exports.React = {
     createElement: _React_.createElement || _React_.h,
-    PropTypes: _React_.PropTypes || { oneOf: function oneOf() {} } };
+    PropTypes: _React_.PropTypes || { oneOf: function oneOf() {}, oneOfType: function oneOfType() {} } };
   var Component = exports.Component = _React_.Component;
   var PureComponent = exports.PureComponent = _React_.PureComponent || _React_.Component;
   var render = exports.render = ReactDOM.render;

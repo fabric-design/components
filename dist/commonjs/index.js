@@ -30,3 +30,12 @@ Object.defineProperty(exports, 'WSDropdown', {
     return _wsDropdown.WSDropdown;
   }
 });
+
+var _wsNotification = require('./ws-notification/ws-notification');
+
+Object.defineProperty(exports, 'WSNotification', {
+  enumerable: true,
+  get: function get() {
+    return _wsNotification.WSNotification;
+  }
+});

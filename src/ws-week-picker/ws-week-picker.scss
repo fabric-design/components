@@ -96,12 +96,14 @@ $padding: 1rem;
 
       > span {
         cursor: pointer;
-        line-height: 2rem;
-        height: 2rem;
+        line-height: 1.75rem;
       }
       i {
         position: relative;
         top: 0.45rem;
+        &:before {
+          vertical-align: top;
+        }
       }
       .prev {
         float: left;

@@ -75,8 +75,13 @@ module.exports = {
     }],
     "valid-jsdoc": ["error", {
       "prefer": {"arg": "param", "argument": "param", "return": "returns", "virtual": "abstract"},
+      "requireReturn": false,
       "requireReturnDescription": false,
       "requireParamDescription": true,
     }],
+
+    // PROPOSAL
+    "no-return-assign": 0,
+    "no-mixed-operators": 0
   }
 };

@@ -15,7 +15,7 @@ const SESSION_STATE_NAME = 'session_state';
  * @property {string} props.redirectUrl - URL to redirect after successfully login
  * @property {string} props.logoUrl     - url for logo
  * @property {string} props.title       - title of Header
- * @property {array} props.links        - List of navigation links based on object format {label, value, onclick-Handler }
+ * @property {array} props.links        - List of navigation links based on object format {label, onclick-Handler }
  *
  */
 export class WSHeader extends Component {
@@ -137,14 +137,26 @@ export class WSHeader extends Component {
 
   /**
    * Helper method checking if the user is already loggedin
+   * @returns {boolean} Is user logged in
    */
   checkIsLoggedIn() {
     const that = this;
 
+    /**
+     * react to failure in user authentication
+     */
     function failureListener() {
-      return that.logout();
+      that.logout();
     }
+    /**
+     * react to success in user authentication
+     * @returns {boolean} is the user logged in
+     */
     function successListener() {
+      /**
+       * react to success in the user lookup
+       * set the local state with the looked up user name and email
+       */
       function userServiceSuccess() {
         const user = JSON.parse(this.responseText);
         that.setState({userName: user.name});

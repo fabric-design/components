@@ -123,6 +123,7 @@ export class WSWeekPickerCalendar extends Component {
 
   /**
    * Renders the calendar.
+   * @returns {JSX} virtual dom
    */
   render() {
     return (
@@ -150,8 +151,8 @@ export class WSWeekPickerCalendar extends Component {
 /**
  * Calculate a date from a week and its year. Date is based on the monday of that week.
  * src: http://stackoverflow.com/questions/16590500/javascript-calculate-date-from-week-number
- * @param {number} year Year of the week
  * @param {number} week Week
+ * @param {number} year Year of the week
  * @returns {Date}
 */
 function getDateOfISOWeek(week, year) {
@@ -195,38 +196,40 @@ function getWeekOfYear(date) {
 
 /**
  * Calculate all weeks that are in a certain month.
- * @param {number} week Week
- * @param {number} year Year of the week
+ * @param {number} month Month
+ * @param {number} year Year of the month
  * @returns {{week: number, year: number}[]}
 */
 function getWeeks(month, year) {
-  while (month > 11) {
-    ++year;
-    month -= 12;
+  let actualMonth = month;
+  let actualYear = year;
+  while (actualMonth > 11) {
+    actualYear += 1;
+    actualMonth -= 12;
   }
-  while (month < 0) {
-    --year;
-    month += 12;
+  while (actualMonth < 0) {
+    actualYear -= 1;
+    actualMonth += 12;
   }
-  let startWeek = getWeekOfYear(new Date(year, month, 1));
+  let startWeek = getWeekOfYear(new Date(actualYear, actualMonth, 1));
   // 1.1. is always 1st week
-  if (month === 0) {
+  if (actualMonth === 0) {
     startWeek = 1;
   } else {
-    startWeek = getDateOfISOWeek(startWeek, year).getMonth() !== month ? startWeek + 1 : startWeek;
+    startWeek = getDateOfISOWeek(startWeek, actualYear).getMonth() !== actualMonth ? startWeek + 1 : startWeek;
   }
-  let endWeek = getWeekOfYear(new Date(year, month + 1, 0));
+  let endWeek = getWeekOfYear(new Date(actualYear, actualMonth + 1, 0));
   // the last day of the year can already be in the first week of the next year
   if (endWeek === 1) {
-    endWeek = getWeekOfYear(new Date(year, month + 1, -7));
+    endWeek = getWeekOfYear(new Date(actualYear, actualMonth + 1, -7));
   } else {
-    endWeek = getDateOfISOWeek(endWeek, year).getMonth() !== month ? endWeek - 1 : endWeek;
+    endWeek = getDateOfISOWeek(endWeek, actualYear).getMonth() !== actualMonth ? endWeek - 1 : endWeek;
   }
   const weeks = [];
   for (let i = startWeek; i <= endWeek; i++) {
     weeks.push({
       week: i,
-      year
+      actualYear
     });
   }
   return weeks;

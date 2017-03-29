@@ -33,8 +33,8 @@ export class WSWeekPicker extends Component {
 
     this.state = {
       show: false,
-      selectedYear: null,
-      selectedWeek: null
+      selectedYear: props.selectedYear,
+      selectedWeek: props.selectedWeek
     };
   }
 
@@ -50,13 +50,6 @@ export class WSWeekPicker extends Component {
   }
 
   /**
-   * Removes the click outside listener on deletion of this component.
-   */
-  componentWillUnmount() {
-    document.body.removeEventListener(this.outsideClickListener);
-  }
-
-  /**
    * Updates the internal state of the component if properties change.
    * @param {Object} newProps React properties
    */
@@ -69,15 +62,17 @@ export class WSWeekPicker extends Component {
   }
 
   /**
-   * Open or closes the calendar.
+   * Removes the click outside listener on deletion of this component.
    */
-  toggleCalendar() {
-    this.setState({show: !this.state.show});
+  componentWillUnmount() {
+    document.body.removeEventListener(this.outsideClickListener);
   }
 
   /**
    * Handler for new selections on the calendar.
-   * @param {Object} {week, year} clicked on week and according year
+   * @param {object} param clicked on week and according year
+   * @param {number} param.week week
+   * @param {number} param.year year
    */
   onChange({week, year}) {
     if (this.state.selectedWeek !== week || this.state.selectedYear !== year) {
@@ -90,7 +85,15 @@ export class WSWeekPicker extends Component {
   }
 
   /**
+   * Open or closes the calendar.
+   */
+  toggleCalendar() {
+    this.setState({show: !this.state.show});
+  }
+
+  /**
    * Renders the input and the calendar.
+   * @returns {JSX} virtual dom
    */
   render() {
     return (

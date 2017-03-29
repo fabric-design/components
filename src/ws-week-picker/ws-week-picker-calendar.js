@@ -52,6 +52,7 @@ export class WSWeekPickerCalendar extends Component {
 
   /**
    * Show the previous year.
+   * @returns {void}
   */
   prevYear() {
     this.setState({
@@ -61,6 +62,7 @@ export class WSWeekPickerCalendar extends Component {
 
   /**
    * Show the next year.
+   * @returns {void}
   */
   nextYear() {
     this.setState({

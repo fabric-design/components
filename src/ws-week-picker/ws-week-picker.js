@@ -40,6 +40,7 @@ export class WSWeekPicker extends Component {
 
   /**
    * Initialize a listener to clicks outside of the calender to close it.
+   * @returns {void}
    */
   componentDidMount() {
     this.outsideClickListener = document.body.addEventListener('click', e => {
@@ -52,6 +53,7 @@ export class WSWeekPicker extends Component {
   /**
    * Updates the internal state of the component if properties change.
    * @param {Object} newProps React properties
+   * @returns {void}
    */
   componentWillReceiveProps(newProps) {
     this.setState({
@@ -63,6 +65,7 @@ export class WSWeekPicker extends Component {
 
   /**
    * Removes the click outside listener on deletion of this component.
+   * @returns {void}
    */
   componentWillUnmount() {
     document.body.removeEventListener(this.outsideClickListener);
@@ -73,6 +76,7 @@ export class WSWeekPicker extends Component {
    * @param {object} param clicked on week and according year
    * @param {number} param.week week
    * @param {number} param.year year
+   * @returns {void}
    */
   onChange({week, year}) {
     if (this.state.selectedWeek !== week || this.state.selectedYear !== year) {
@@ -86,6 +90,7 @@ export class WSWeekPicker extends Component {
 
   /**
    * Open or closes the calendar.
+   * @returns {void}
    */
   toggleCalendar() {
     this.setState({show: !this.state.show});
@@ -97,7 +102,7 @@ export class WSWeekPicker extends Component {
    */
   render() {
     return (
-      <div className="ws-week-picker" ref={elem => this.elem = elem}>
+      <div className="ws-week-picker" ref={elem => { this.elem = elem; }}>
         <input
           value={this.state.selectedWeek != null ? `Week ${this.state.selectedWeek}, ${this.state.selectedYear}` : ''}
           placeholder={'Please choose a week'}

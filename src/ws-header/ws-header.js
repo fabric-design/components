@@ -48,6 +48,7 @@ export class WSHeader extends Component {
   /**
    *
    * Lifecycle: componentDidMount handler for component
+   * @returns {void}
    */
   componentDidMount() {
     this.checkIsLoggedIn();
@@ -93,6 +94,7 @@ export class WSHeader extends Component {
   /**
    * Sets cookie for a given token
    * @param {String} token Token String
+   * @returns {void}
    */
   setCookie(token) {
     if (process.env.NODE_ENV !== 'dev') {
@@ -114,6 +116,7 @@ export class WSHeader extends Component {
   /**
    * Language string to set navigation
    * @param {String} lang Language string
+   * @returns {void}
    */
   setLanguage(lang) {
     if (lang !== this.state.lang) {
@@ -126,6 +129,7 @@ export class WSHeader extends Component {
 
   /**
    * Removes cookie
+   * @returns {void}
    */
   removeCookie() {
     if (process.env.NODE_ENV !== 'dev') {
@@ -144,6 +148,7 @@ export class WSHeader extends Component {
 
     /**
      * react to failure in user authentication
+     * @returns {void}
      */
     function failureListener() {
       that.logout();
@@ -156,6 +161,7 @@ export class WSHeader extends Component {
       /**
        * react to success in the user lookup
        * set the local state with the looked up user name and email
+       * @returns {void}
        */
       function userServiceSuccess() {
         const user = JSON.parse(this.responseText);
@@ -197,6 +203,7 @@ export class WSHeader extends Component {
    * Updates changed login status
    * @param {boolean} isLoggedIn updated status of loggedin user
    * @param {String} token Token String
+   * @returns {void}
    */
   propagateLoginStatusChange(isLoggedIn, token) {
     if (this.state.loggedIn !== isLoggedIn) {
@@ -224,6 +231,7 @@ export class WSHeader extends Component {
 
   /**
    * login
+   * @returns {void}
    */
   login() {
     const url = `https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid
@@ -236,6 +244,7 @@ export class WSHeader extends Component {
 
   /**
    * logout
+   * @returns {void}
    */
   logout() {
     this.removeCookie();

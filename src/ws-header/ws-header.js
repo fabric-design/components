@@ -147,11 +147,11 @@ export class WSHeader extends Component {
     function successListener() {
       function userServiceSuccess() {
         const user = JSON.parse(this.responseText);
-        that.setState({ userName: user.name });
-        that.setState({ userEmail: user.email });
+        that.setState({userName: user.name});
+        that.setState({userEmail: user.email});
       }
       const data = JSON.parse(this.responseText);
-      that.setState({ userUID: data.uid });
+      that.setState({userUID: data.uid});
       that.propagateLoginStatusChange(true, data.access_token);
       if (data.uid) {
         const requestUserServiceUrl = new XMLHttpRequest();
@@ -188,11 +188,11 @@ export class WSHeader extends Component {
    */
   propagateLoginStatusChange(isLoggedIn, token) {
     if (this.state.loggedIn !== isLoggedIn) {
-      this.setState({ loggedIn: isLoggedIn });
+      this.setState({loggedIn: isLoggedIn});
 
       this.props.setLogin && this.props.setLogin({
         loggedIn: isLoggedIn,
-        token: token || null,
+        token: token || null
       });
     }
   }

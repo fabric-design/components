@@ -10,6 +10,7 @@
     "test:preact": "mocha-webpack --webpack-config webpack.config.preact.js \"tests/**/*.spec.js\"",
     "tdd": "mocha-webpack --webpack-config webpack.config.js --watch \"tests/**/*.spec.js\"",
     "lint": "eslint src/**/*.js src/**/*.jsx tests/**.js tests/**.jsx",
+    "fix-linting": "eslint src/**/*.js src/**/*.jsx tests/**.js tests/**.jsx --fix",
     "precommit": "npm run lint && npm run test && npm run build",
     "build": "webpack --config webpack.config.publish.js"
   },

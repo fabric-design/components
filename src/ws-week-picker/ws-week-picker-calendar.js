@@ -106,7 +106,8 @@ export class WSWeekPickerCalendar extends Component {
             if (weekInMonth == null) return <td key={`${monthIndex}_${weekIndex}`}></td>;
             const {week, year} = weekInMonth;
             return (
-              <td className={(monthIndex < 2 || monthIndex > 13 ? 'off ' : '')
+              <td
+                className={(monthIndex < 2 || monthIndex > 13 ? 'off ' : '')
                   + (this.isActive(year, week) ? 'active ' : '')
                   + (this.isToday(year, week) ? 'today ' : '')}
                 key={`${monthIndex}_${weekIndex}`}
@@ -154,14 +155,11 @@ export class WSWeekPickerCalendar extends Component {
  * @returns {Date}
 */
 function getDateOfISOWeek(week, year) {
-    var simple = new Date(year, 0, 1 + (week - 1) * 7);
-    var dow = simple.getDay();
-    var ISOweekStart = simple;
-    if (dow <= 4)
-        ISOweekStart.setDate(simple.getDate() - simple.getDay() + 1);
-    else
-        ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
-    return ISOweekStart;
+  const simple = new Date(year, 0, 1 + (week - 1) * 7);
+  const dow = simple.getDay();
+  const ISOweekStart = simple;
+  if (dow <= 4) { ISOweekStart.setDate(simple.getDate() - simple.getDay() + 1); } else { ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay()); }
+  return ISOweekStart;
 }
 
 /**
@@ -171,12 +169,11 @@ function getDateOfISOWeek(week, year) {
  * @returns {Date}
 */
 function getWeekOfYear(date) {
-
   // Create a copy of this date object
-  var target  = new Date(date.valueOf());
+  const target = new Date(date.valueOf());
 
   // ISO week date weeks start on monday
-  var dayNr   = date.getDay();
+  const dayNr = date.getDay();
 
   // Set the target to the thursday of this week so the
   // target date is in the right year
@@ -184,17 +181,16 @@ function getWeekOfYear(date) {
 
   // ISO 8601 states that week 1 is the week
   // with january 4th in it
-  var jan4    = new Date(target.getFullYear(), 0, 4);
+  const jan4 = new Date(target.getFullYear(), 0, 4);
 
   // Number of days between target date and january 4th
-  var dayDiff = (target - jan4) / 86400000;
+  const dayDiff = (target - jan4) / 86400000;
 
   // Calculate week number: Week 1 (january 4th) plus the
   // number of weeks between target date and january 4th
-  var weekNr = 1 + Math.ceil(dayDiff / 7);
+  const weekNr = 1 + Math.ceil(dayDiff / 7);
 
   return weekNr;
-
 }
 
 /**
@@ -206,11 +202,11 @@ function getWeekOfYear(date) {
 function getWeeks(month, year) {
   while (month > 11) {
     ++year;
-    month = month - 12;
+    month -= 12;
   }
   while (month < 0) {
     --year;
-    month = month + 12;
+    month += 12;
   }
   let startWeek = getWeekOfYear(new Date(year, month, 1));
   // 1.1. is always 1st week
@@ -226,7 +222,7 @@ function getWeeks(month, year) {
   } else {
     endWeek = getDateOfISOWeek(endWeek, year).getMonth() !== month ? endWeek - 1 : endWeek;
   }
-  let weeks = [];
+  const weeks = [];
   for (let i = startWeek; i <= endWeek; i++) {
     weeks.push({
       week: i,

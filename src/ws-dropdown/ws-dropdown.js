@@ -252,7 +252,8 @@ export class WSDropdown extends Component {
         }
         <div
           className={`dropdown-container ${this.props.orientation}`}
-          ref={element => { if (element) this.dropdownContainer = element; }}>
+          ref={element => { if (element) this.dropdownContainer = element; }}
+        >
           <WSDropdownMenu
             items={this.state.items}
             value={this.state.value}

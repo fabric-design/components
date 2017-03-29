@@ -1,4 +1,4 @@
-import { React, Component } from '../imports';
+import {React, Component} from '../imports';
 
 /**
  * Helper Class which is just rendering a single navigation link element

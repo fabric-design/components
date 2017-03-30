@@ -118,11 +118,9 @@ export class WSNotification extends Component {
     if (notification) {
       const notifications = this.state.notifications.slice();
       notifications.splice(index, 1);
-      setTimeout(() => {
-        this.setState({
-          notifications
-        });
-      }, 0);
+      this.setState({
+        notifications
+      });
     }
   }
 

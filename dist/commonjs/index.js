@@ -31,11 +31,29 @@ Object.defineProperty(exports, 'WSDropdown', {
   }
 });
 
+var _wsInlineEdit = require('./ws-inline-edit/ws-inline-edit');
+
+Object.defineProperty(exports, 'WSInlineEdit', {
+  enumerable: true,
+  get: function get() {
+    return _wsInlineEdit.WSInlineEdit;
+  }
+});
+
 var _wsNotification = require('./ws-notification/ws-notification');
 
 Object.defineProperty(exports, 'WSNotification', {
   enumerable: true,
   get: function get() {
     return _wsNotification.WSNotification;
+  }
+});
+
+var _wsWeekPicker = require('./ws-week-picker/ws-week-picker');
+
+Object.defineProperty(exports, 'WSWeekPicker', {
+  enumerable: true,
+  get: function get() {
+    return _wsWeekPicker.WSWeekPicker;
   }
 });

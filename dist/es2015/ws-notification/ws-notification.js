@@ -20,8 +20,7 @@ export var WSNotification = function (_Component) {
     var _this = _possibleConstructorReturn(this, (WSNotification.__proto__ || Object.getPrototypeOf(WSNotification)).call(this));
 
     _this.state = {
-      notifications: [],
-      timeoutId: null
+      notifications: []
     };
 
     _this.addNotify = _this.addNotify.bind(_this);
@@ -39,7 +38,7 @@ export var WSNotification = function (_Component) {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
       if (prevState.notifications.length < this.state.notifications.length) {
-        this.animateIn(this.state.notifications[this.state.notifications.length - 1], this.state.notifications.length - 1);
+        this.animateIn();
       }
     }
   }, {
@@ -72,9 +71,7 @@ export var WSNotification = function (_Component) {
     }
   }, {
     key: 'animateIn',
-    value: function animateIn(notification, index) {
-      var _this2 = this;
-
+    value: function animateIn() {
       var list = this.refs.list;
       list.style.transition = 'none';
       list.style.transform = 'translate3d(0, 80px, 0)';
@@ -82,10 +79,6 @@ export var WSNotification = function (_Component) {
         list.style.transition = 'transform .35s cubic-bezier(.35, 1, .69, .98) .1s';
         list.style.transform = 'translate3d(0, 0, 0)';
       }, 0);
-      clearTimeout(this.state.timeoutId);
-      this.setState({ timeoutId: setTimeout(function () {
-          return _this2.close(index);
-        }, notification.lifetime) });
     }
   }, {
     key: 'closeAllEvents',
@@ -97,26 +90,19 @@ export var WSNotification = function (_Component) {
   }, {
     key: 'close',
     value: function close(index) {
-      var _this3 = this;
-
       var notification = this.refs['notification-' + index];
       if (notification) {
-        var notifications = this.state.notifications.splice(index, 1);
-        notification.style.transition = 'opacity .2s ease-out, max-height .8s ease, margin-bottom .8s ease';
-        notification.style.willChange = 'opacity, max-height, margin-bottom';
-        notification.style.opacity = 0;
-        notification.style.maxHeight = 0;
-        notification.style.marginBottom = '-4.5rem';
-        setTimeout(function () {
-          clearTimeout(_this3.state.timeoutId);
-          _this3.setState({ timeoutId: null, notifications: notifications });
-        }, 1000);
+        var notifications = this.state.notifications.slice();
+        notifications.splice(index, 1);
+        this.setState({
+          notifications: notifications
+        });
       }
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this2 = this;
 
       return React.createElement(
         'div',
@@ -132,7 +118,7 @@ export var WSNotification = function (_Component) {
                 key: 'notification-' + i,
                 ref: 'notification-' + i,
                 onClick: function onClick() {
-                  return _this4.close(i);
+                  return _this2.close(i);
                 }
               },
               React.createElement(
@@ -148,14 +134,14 @@ export var WSNotification = function (_Component) {
                 { className: 'content' },
                 React.createElement(
                   'div',
-                  { className: 'title' },
+                  { className: notification.description ? 'title' : 'title is-standalone' },
                   notification.title
                 ),
-                React.createElement(
+                notification.description ? React.createElement(
                   'p',
                   { className: 'description' },
                   notification.description
-                )
+                ) : null
               )
             );
           })

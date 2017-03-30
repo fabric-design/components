@@ -25,8 +25,7 @@ export class WSNotification extends Component {
   constructor() {
     super();
     this.state = {
-      notifications: [],
-      timeoutId: null
+      notifications: []
     };
     // Bind functions to this scope
     this.addNotify = this.addNotify.bind(this);
@@ -50,10 +49,7 @@ export class WSNotification extends Component {
    */
   componentDidUpdate(prevProps, prevState) {
     if (prevState.notifications.length < this.state.notifications.length) {
-      this.animateIn(
-        this.state.notifications[this.state.notifications.length - 1],
-        this.state.notifications.length - 1
-      );
+      this.animateIn();
     }
   }
 
@@ -90,10 +86,9 @@ export class WSNotification extends Component {
   /**
    * Start to animate in a notification
    * @param {Object} notification The notification to animate in
-   * @param {Number} index Index of notification in the list
    * @returns {void}
    */
-  animateIn(notification, index) {
+  animateIn() {
     const list = this.refs.list;
     list.style.transition = 'none';
     list.style.transform = 'translate3d(0, 80px, 0)';
@@ -101,8 +96,6 @@ export class WSNotification extends Component {
       list.style.transition = 'transform .35s cubic-bezier(.35, 1, .69, .98) .1s';
       list.style.transform = 'translate3d(0, 0, 0)';
     }, 0);
-    clearTimeout(this.state.timeoutId);
-    this.setState({timeoutId: setTimeout(() => this.close(index), notification.lifetime)});
   }
 
   /**
@@ -123,16 +116,11 @@ export class WSNotification extends Component {
   close(index) {
     const notification = this.refs[`notification-${index}`];
     if (notification) {
-      const notifications = this.state.notifications.splice(index, 1);
-      notification.style.transition = 'opacity .2s ease-out, max-height .8s ease, margin-bottom .8s ease';
-      notification.style.willChange = 'opacity, max-height, margin-bottom';
-      notification.style.opacity = 0;
-      notification.style.maxHeight = 0;
-      notification.style.marginBottom = '-4.5rem';
-      setTimeout(() => {
-        clearTimeout(this.state.timeoutId);
-        this.setState({timeoutId: null, notifications});
-      }, 1000);
+      const notifications = this.state.notifications.slice();
+      notifications.splice(index, 1);
+      this.setState({
+        notifications
+      });
     }
   }
 
@@ -157,8 +145,8 @@ export class WSNotification extends Component {
               <i className="icon icon-error" />
             </div>
             <div className="content">
-              <div className="title">{notification.title}</div>
-              <p className="description">{notification.description}</p>
+              <div className={(notification.description) ? 'title' : 'title is-standalone'}>{notification.title}</div>
+              {(notification.description) ? <p className="description">{notification.description}</p> : null}
             </div>
           </div>
         )}

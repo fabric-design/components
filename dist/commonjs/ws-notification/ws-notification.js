@@ -27,7 +27,8 @@ var WSNotification = exports.WSNotification = function (_Component) {
     var _this = _possibleConstructorReturn(this, (WSNotification.__proto__ || Object.getPrototypeOf(WSNotification)).call(this));
 
     _this.state = {
-      notifications: []
+      notifications: [],
+      timeoutId: null
     };
 
     _this.addNotify = _this.addNotify.bind(_this);
@@ -45,7 +46,7 @@ var WSNotification = exports.WSNotification = function (_Component) {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
       if (prevState.notifications.length < this.state.notifications.length) {
-        this.animateIn();
+        this.animateIn(this.state.notifications[this.state.notifications.length - 1], this.state.notifications.length - 1);
       }
     }
   }, {
@@ -78,7 +79,9 @@ var WSNotification = exports.WSNotification = function (_Component) {
     }
   }, {
     key: 'animateIn',
-    value: function animateIn() {
+    value: function animateIn(notification, index) {
+      var _this2 = this;
+
       var list = this.refs.list;
       list.style.transition = 'none';
       list.style.transform = 'translate3d(0, 80px, 0)';
@@ -86,6 +89,10 @@ var WSNotification = exports.WSNotification = function (_Component) {
         list.style.transition = 'transform .35s cubic-bezier(.35, 1, .69, .98) .1s';
         list.style.transform = 'translate3d(0, 0, 0)';
       }, 0);
+      clearTimeout(this.state.timeoutId);
+      this.setState({ timeoutId: setTimeout(function () {
+          return _this2.close(index);
+        }, notification.lifetime) });
     }
   }, {
     key: 'closeAllEvents',
@@ -109,7 +116,7 @@ var WSNotification = exports.WSNotification = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _imports.React.createElement(
         'div',
@@ -125,7 +132,7 @@ var WSNotification = exports.WSNotification = function (_Component) {
                 key: 'notification-' + i,
                 ref: 'notification-' + i,
                 onClick: function onClick() {
-                  return _this2.close(i);
+                  return _this3.close(i);
                 }
               },
               _imports.React.createElement(

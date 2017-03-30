@@ -25,7 +25,8 @@ export class WSNotification extends Component {
   constructor() {
     super();
     this.state = {
-      notifications: []
+      notifications: [],
+      timeoutId: null
     };
     // Bind functions to this scope
     this.addNotify = this.addNotify.bind(this);
@@ -49,7 +50,10 @@ export class WSNotification extends Component {
    */
   componentDidUpdate(prevProps, prevState) {
     if (prevState.notifications.length < this.state.notifications.length) {
-      this.animateIn();
+      this.animateIn(
+        this.state.notifications[this.state.notifications.length - 1],
+        this.state.notifications.length - 1
+      );
     }
   }
 
@@ -86,9 +90,10 @@ export class WSNotification extends Component {
   /**
    * Start to animate in a notification
    * @param {Object} notification The notification to animate in
+   * @param {Number} index Index of notification in the list
    * @returns {void}
    */
-  animateIn() {
+  animateIn(notification, index) {
     const list = this.refs.list;
     list.style.transition = 'none';
     list.style.transform = 'translate3d(0, 80px, 0)';
@@ -96,6 +101,8 @@ export class WSNotification extends Component {
       list.style.transition = 'transform .35s cubic-bezier(.35, 1, .69, .98) .1s';
       list.style.transform = 'translate3d(0, 0, 0)';
     }, 0);
+    clearTimeout(this.state.timeoutId);
+    this.setState({timeoutId: setTimeout(() => this.close(index), notification.lifetime)});
   }
 
   /**

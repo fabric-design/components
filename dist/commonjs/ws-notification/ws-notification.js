@@ -104,26 +104,19 @@ var WSNotification = exports.WSNotification = function (_Component) {
   }, {
     key: 'close',
     value: function close(index) {
-      var _this3 = this;
-
       var notification = this.refs['notification-' + index];
       if (notification) {
-        var notifications = this.state.notifications.splice(index, 1);
-        notification.style.transition = 'opacity .2s ease-out, max-height .8s ease, margin-bottom .8s ease';
-        notification.style.willChange = 'opacity, max-height, margin-bottom';
-        notification.style.opacity = 0;
-        notification.style.maxHeight = 0;
-        notification.style.marginBottom = '-4.5rem';
-        setTimeout(function () {
-          clearTimeout(_this3.state.timeoutId);
-          _this3.setState({ timeoutId: null, notifications: notifications });
-        }, 1000);
+        var notifications = this.state.notifications.slice();
+        notifications.splice(index, 1);
+        this.setState({
+          notifications: notifications
+        });
       }
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this3 = this;
 
       return _imports.React.createElement(
         'div',
@@ -139,7 +132,7 @@ var WSNotification = exports.WSNotification = function (_Component) {
                 key: 'notification-' + i,
                 ref: 'notification-' + i,
                 onClick: function onClick() {
-                  return _this4.close(i);
+                  return _this3.close(i);
                 }
               },
               _imports.React.createElement(
@@ -155,14 +148,14 @@ var WSNotification = exports.WSNotification = function (_Component) {
                 { className: 'content' },
                 _imports.React.createElement(
                   'div',
-                  { className: 'title' },
+                  { className: notification.description ? 'title' : 'title is-standalone' },
                   notification.title
                 ),
-                _imports.React.createElement(
+                notification.description ? _imports.React.createElement(
                   'p',
                   { className: 'description' },
                   notification.description
-                )
+                ) : null
               )
             );
           })

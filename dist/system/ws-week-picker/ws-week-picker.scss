@@ -1,0 +1,173 @@
+$icon-font-path: '../../node_modules/wholesale-styleguide-scss/icons/';
+@import "../../node_modules/wholesale-styleguide-scss/utils/variables";
+@import "../../node_modules/wholesale-styleguide-scss/utils/helpers";
+@import "../../node_modules/wholesale-styleguide-scss/components/base/icons";
+
+// PROPOSAL for mixin
+$padding: 1rem;
+// to allow padding with setting a transparent border
+@mixin table-padding ($top, $right, $bottom, $left) {
+  @if $top != 0 {
+    tr:first-child():before {
+      height: $top;
+    }
+  }
+  @if $right != 0 {
+    th:last-child(), td:last-child() {
+      padding-right: $right !important;
+    }
+  }
+  @if $bottom != 0 {
+    tr:first-child():after {
+      height: $bottom;
+    }
+  }
+  @if $left != 0 {
+    th:first-child(), td:first-child() {
+      padding-left: $left !important;
+    }
+  }
+}
+
+.ws-week-picker {
+  position: relative;
+  display: inline-block;
+
+  & > input {
+    cursor: pointer;
+    display: inline-block;
+    padding-right: 1.5rem;
+  }
+  & > i {
+    position: absolute;
+    top: calc(0.5rem + 1px); // input has 1 pixel border (2px total)
+    right: 0.5rem;
+    cursor: pointer;
+  }
+  .ws-date-picker-calendar {
+    background: $white;
+    border-radius: 4px;
+    box-shadow: map-get($elevation-shadows, 'hovering');
+    display: inline-block;
+    position: absolute;
+    top: 2.95rem;
+    left: 0;
+    z-index: map-get($z-layers, 'upper');
+    border: 1px solid $earl-gray;
+
+    &:before, &:after {
+      position: absolute;
+      display: block;
+      pointer-events: none;
+      border: solid transparent;
+      content: '';
+      height: 0;
+      width: 0;
+      border-width: 0.5rem;
+      margin: 0 -8px;
+      border-bottom-color: $earl-gray;
+      bottom: 100%;
+      left: 1rem;
+    }
+    &:after {
+      border-width: calc(0.5rem - 1px);
+      margin: 0 -7px;
+      border-bottom-color: $white;
+    }
+  }
+
+  table {
+    table-layout: fixed;
+    display: inline-block;
+    border: none;
+    font-size: $font-size-small;
+
+    caption {
+      padding: 0.5rem 0;
+      color: $heron;
+      font-weight: 300;
+      font-size: $base-font-size;
+
+      > span {
+        cursor: pointer;
+        line-height: 2rem;
+      }
+      i {
+        position: relative;
+        top: 0.45rem;
+      }
+      .prev {
+        float: left;
+        margin-left: rem(6px);
+        padding-left: rem(6px);
+      }
+      .next {
+        float: right;
+        margin-right: rem(6px);
+        padding-right: rem(6px);
+      }
+    }
+    thead {
+      @include table-padding(0, $padding, 0, $padding);
+      border: none;
+
+      th {
+        padding: 0 !important;
+        line-height: 2rem;
+      }
+    }
+    tbody {
+      @include table-padding(0, $padding, 0, $padding);
+
+      &:before, &:after {
+        content: "_";
+        display: block;
+        line-height: 0.25rem;
+        color: transparent;
+      }
+
+      td {
+        padding: rem(2px) rem(2px) !important;
+      }
+    }
+    td, th {
+      text-align: center;
+      background-color: transparent !important;
+      border: none !important;
+
+      &.off, &.off .week {
+        color: $french-gray;
+      }
+      .week {
+        width: 2rem;
+        line-height: 2rem;
+        color: $base-font-color;
+        display: block;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      &.active .week {
+        background-color: $heaven;
+        color: $white;
+      }
+      &:hover:not(.active) {
+        .week {
+          background-color: $arctica;
+        }
+
+        :not(.off) .week {
+          color: $base-font-color;
+        }
+      }
+      &.today .week {
+        border: 1px solid $sail;
+      }
+    }
+    th {
+      line-height: rem(39px);
+      color: $jumbo;
+      background-color: $silver !important;
+      font-weight: normal;
+    }
+  }
+}

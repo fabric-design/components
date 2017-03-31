@@ -101,7 +101,7 @@ export class WSWeekPicker extends Component {
           onClick={() => this.toggleCalendar()}
           readOnly
         />
-        <i className={`icon icon-${this.state.show ? 'cross' : 'calendar'} icon16`}
+        <i className={`icon icon-${this.state.show ? 'cross' : 'calendar'}`}
           onClick={() => this.toggleCalendar()}
         />
         {this.state.show ? <WSWeekPickerCalendar onChange={selection => this.onChange(selection)} selectedYear={this.state.selectedYear} selectedWeek={this.state.selectedWeek} /> : null}

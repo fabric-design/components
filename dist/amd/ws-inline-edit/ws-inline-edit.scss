@@ -1,0 +1,22 @@
+@import "../../node_modules/wholesale-styleguide-scss/utils/variables";
+
+.ws-inline-edit {
+  display: inline-block;
+  padding: $spacing-xx-small $spacing-x-small;
+  line-height: $base-line-height;
+  .inlineValue {
+    display: inline-block;
+    font-weight: normal;
+    line-height: $base-line-height;
+    padding: 0 $spacing-x-small;
+  }
+  .inlineInput {
+    transition: all 0.5s ease;
+    &[disabled] {
+      cursor: text;
+      background-color: transparent;
+      border-color: transparent;
+      box-shadow: 0 0 0;
+    }
+  }
+}

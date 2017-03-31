@@ -83,28 +83,20 @@ $padding: 1rem;
     font-size: $font-size-small;
 
     caption {
-      padding: 0.5rem 0;
+      padding: 0 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
       color: $heron;
       font-weight: 300;
       font-size: $base-font-size;
 
       > span {
         cursor: pointer;
-        line-height: 2rem;
+        line-height: 2.5rem;
       }
       i {
-        position: relative;
-        top: 0.45rem;
-      }
-      .prev {
-        float: left;
-        margin-left: rem(6px);
-        padding-left: rem(6px);
-      }
-      .next {
-        float: right;
-        margin-right: rem(6px);
-        padding-right: rem(6px);
+        font-size: 1rem;
       }
     }
     thead {

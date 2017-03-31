@@ -123,16 +123,11 @@ export class WSNotification extends Component {
   close(index) {
     const notification = this.refs[`notification-${index}`];
     if (notification) {
-      const notifications = this.state.notifications.splice(index, 1);
-      notification.style.transition = 'opacity .2s ease-out, max-height .8s ease, margin-bottom .8s ease';
-      notification.style.willChange = 'opacity, max-height, margin-bottom';
-      notification.style.opacity = 0;
-      notification.style.maxHeight = 0;
-      notification.style.marginBottom = '-4.5rem';
-      setTimeout(() => {
-        clearTimeout(this.state.timeoutId);
-        this.setState({timeoutId: null, notifications});
-      }, 1000);
+      const notifications = this.state.notifications.slice();
+      notifications.splice(index, 1);
+      this.setState({
+        notifications
+      });
     }
   }
 
@@ -157,8 +152,8 @@ export class WSNotification extends Component {
               <i className="icon icon-error" />
             </div>
             <div className="content">
-              <div className="title">{notification.title}</div>
-              <p className="description">{notification.description}</p>
+              <div className={(notification.description) ? 'title' : 'title is-standalone'}>{notification.title}</div>
+              {(notification.description) ? <p className="description">{notification.description}</p> : null}
             </div>
           </div>
         )}

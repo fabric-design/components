@@ -3,8 +3,8 @@ $use-embedded-font: true;
 @import "../src/ws-header/ws-header";
 @import "../src/ws-date-picker/ws-date-picker";
 @import "../src/ws-inline-edit/ws-inline-edit";
-@import "../src/ws-notification/ws-notification";
 @import "../src/ws-week-picker/ws-week-picker";
+@import "../src/ws-notification/ws-notification";
 
 .container {
   margin: 20px;

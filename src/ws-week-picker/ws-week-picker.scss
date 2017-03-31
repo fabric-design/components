@@ -95,9 +95,15 @@ $padding: 1rem;
       > span {
         cursor: pointer;
         line-height: 2.5rem;
+        display: inline-flex;
+        align-items: center;
       }
       i {
         font-size: 1rem;
+        //TODO: This overrides a magic-numbers declaration in the SCSS repo's icons.scss Remove once margin-top -25% hack is removed there.
+        &::before {
+          margin: 0;
+        }
       }
     }
     thead {

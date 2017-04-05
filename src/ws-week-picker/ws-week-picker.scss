@@ -1,29 +1,26 @@
-$icon-font-path: '../../node_modules/wholesale-styleguide-scss/icons/';
-@import "../../node_modules/wholesale-styleguide-scss/utils/variables";
-@import "../../node_modules/wholesale-styleguide-scss/utils/helpers";
-@import "../../node_modules/wholesale-styleguide-scss/components/icons";
+@import "~wholesale-styleguide-scss/utils/variables";
 
 // PROPOSAL for mixin
 $padding: 1rem;
 // to allow padding with setting a transparent border
 @mixin table-padding ($top, $right, $bottom, $left) {
   @if $top != 0 {
-    tr:first-child():before {
+    tr:first-child:before {
       height: $top;
     }
   }
   @if $right != 0 {
-    th:last-child(), td:last-child() {
+    th:last-child, td:last-child {
       padding-right: $right !important;
     }
   }
   @if $bottom != 0 {
-    tr:first-child():after {
+    tr:first-child:after {
       height: $bottom;
     }
   }
   @if $left != 0 {
-    th:first-child(), td:first-child() {
+    th:first-child, td:first-child {
       padding-left: $left !important;
     }
   }

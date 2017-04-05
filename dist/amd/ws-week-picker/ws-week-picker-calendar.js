@@ -163,16 +163,16 @@ define(['exports', '../imports'], function (exports, _imports) {
               ),
               _imports.React.createElement(
                 'span',
+                null,
+                this.state.showingYear
+              ),
+              _imports.React.createElement(
+                'span',
                 { className: 'next', onClick: function onClick() {
                     return _this3.nextYear();
                   } },
                 this.state.showingYear + 1,
                 _imports.React.createElement('i', { className: 'icon icon-right' })
-              ),
-              _imports.React.createElement(
-                'span',
-                null,
-                this.state.showingYear
               )
             ),
             _imports.React.createElement(

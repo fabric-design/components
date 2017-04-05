@@ -39,10 +39,10 @@ $padding: 1rem;
     padding-right: 1.5rem;
   }
   & > i {
-    font-size: 1rem;
+    font-size: 1.5rem;
     position: absolute;
     top: calc(0.5rem + 1px); // input has 1 pixel border (2px total)
-    right: 0.5rem;
+    right: 0.25rem;
     cursor: pointer;
   }
   .ws-date-picker-calendar {
@@ -99,7 +99,7 @@ $padding: 1rem;
         align-items: center;
       }
       i {
-        font-size: 1rem;
+        font-size: 1.5rem;
         //TODO: This overrides a magic-numbers declaration in the SCSS repo's icons.scss Remove once margin-top -25% hack is removed there.
         &::before {
           margin: 0;

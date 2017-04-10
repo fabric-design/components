@@ -206,8 +206,8 @@ export function getUserData(userServiceUrl, tokenInfoUrl, urlAtStart) {
 function requestUser(userServiceUrl, userUID, accessToken) {
   return new Promise((resolve, reject) => {
     const requestUserServiceUrl = new XMLHttpRequest();
-    requestUserServiceUrl.onload = ({responseText}) => {
-      const data = JSON.parse(responseText);
+    requestUserServiceUrl.onload = function userRequestSuccess() {
+      const data = JSON.parse(this.responseText);
       resolve({
         userName: data.name,
         userEmail: data.email
@@ -238,8 +238,8 @@ function requestUser(userServiceUrl, userUID, accessToken) {
 function validateToken(tokenInfoUrl, token) {
   return new Promise((resolve, reject) => {
     const request = new XMLHttpRequest();
-    request.onload = ({responseText}) => {
-      const data = JSON.parse(responseText);
+    request.onload = function tokenRequestSuccess() {
+      const data = JSON.parse(this.responseText);
       resolve({
         userUID: data.uid,
         accessToken: data.access_token

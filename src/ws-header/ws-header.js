@@ -60,7 +60,6 @@ export class WSHeader extends Component {
       }, () => {
         this.propagateLoginStatusChange(false);
       });
-    this.checkIsLoggedIn();
   }
 
   /**

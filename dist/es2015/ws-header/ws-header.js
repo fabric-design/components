@@ -7,10 +7,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 import { React, Component } from '../imports';
+import { login as _login, logout as _logout, getUserData } from './authentication';
 import WSHeaderNavLink from './ws-header-nav-link';
 var urlAtStart = window.location.href;
-var SESSION_TOKEN_NAME = 'session_token';
-var SESSION_STATE_NAME = 'session_state';
 
 export var WSHeader = function (_Component) {
   _inherits(WSHeader, _Component);
@@ -43,45 +42,21 @@ export var WSHeader = function (_Component) {
   _createClass(WSHeader, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.checkIsLoggedIn();
-    }
-  }, {
-    key: 'getStateFromUrl',
-    value: function getStateFromUrl(url) {
-      var urlQueryStatePart = /state=([^&]+)/.exec(url);
-      return urlQueryStatePart[1];
-    }
-  }, {
-    key: 'getToken',
-    value: function getToken(orgUrl) {
-      var url = orgUrl;
-      var that = this;
+      var _this2 = this;
 
-      if (!url) {
-        url = window.location.href;
-      }
-      var token = getTokenFromUrl(url);
-      if (token) {
-        var sessionState = that.getStateFromUrl(url);
-        if (that.checkSessionState(sessionState)) {
-          that.setCookie(token);
-          return token;
-        }
-      }
-      token = getCookieValue(SESSION_TOKEN_NAME);
-      if (token) {
-        return token;
-      }
-      return null;
-    }
-  }, {
-    key: 'setCookie',
-    value: function setCookie(token) {
-      if (process.env.NODE_ENV !== 'dev') {
-        document.cookie = SESSION_TOKEN_NAME + '=' + token + ';path=' + this.state.cookiePath + ';domain=' + this.state.cookieDomain + ';';
-      } else {
-        document.cookie = SESSION_TOKEN_NAME + '=' + token + ';path=' + this.state.cookiePath + ';';
-      }
+      getUserData(this.state.userServiceUrl, this.state.tokenInfoUrl, urlAtStart).then(function (_ref) {
+        var userName = _ref.userName,
+            userEmail = _ref.userEmail,
+            userUID = _ref.userUID,
+            accessToken = _ref.accessToken;
+
+        _this2.setState({
+          userName: userName, userEmail: userEmail, userUID: userUID
+        });
+        _this2.propagateLoginStatusChange(true, accessToken);
+      }, function () {
+        _this2.propagateLoginStatusChange(false);
+      });
     }
   }, {
     key: 'getLanguage',
@@ -95,61 +70,20 @@ export var WSHeader = function (_Component) {
         this.setState({ lang: lang });
 
         window.localStorage.setItem(this.state.languageStorageId, lang);
-        this.props.setLang && this.props.setLang(lang);
+        if (this.props.setLang != null) {
+          this.props.setLang(lang);
+        }
       }
     }
   }, {
-    key: 'removeCookie',
-    value: function removeCookie() {
-      if (process.env.NODE_ENV !== 'dev') {
-        document.cookie = SESSION_TOKEN_NAME + '=;path=' + this.state.cookiePath + ';domain=' + this.state.cookieDomain + ';expires=Thu, 01 Jan 1970 00:00:01 GMT";';
-      } else {
-        document.cookie = SESSION_TOKEN_NAME + '=;path=' + this.state.cookiePath + ';expires=Thu, 01 Jan 1970 00:00:01 GMT";';
-      }
+    key: 'login',
+    value: function login() {
+      _login(this.props.clientId, this.props.redirectUrl);
     }
   }, {
-    key: 'checkIsLoggedIn',
-    value: function checkIsLoggedIn() {
-      var that = this;
-
-      function failureListener() {
-        return that.logout();
-      }
-      function successListener() {
-        function userServiceSuccess() {
-          var user = JSON.parse(this.responseText);
-          that.setState({ userName: user.name });
-          that.setState({ userEmail: user.email });
-        }
-        var data = JSON.parse(this.responseText);
-        that.setState({ userUID: data.uid });
-        that.propagateLoginStatusChange(true, data.access_token);
-        if (data.uid) {
-          var requestUserServiceUrl = new XMLHttpRequest();
-          requestUserServiceUrl.onload = userServiceSuccess;
-          requestUserServiceUrl.onerror = failureListener;
-          if (process.env.NODE_ENV !== 'dev') {
-            requestUserServiceUrl.open('get', that.state.userServiceUrl + '/' + data.uid, true);
-          } else {
-            requestUserServiceUrl.open('get', '' + that.state.userServiceUrl, true);
-          }
-          requestUserServiceUrl.setRequestHeader('Authorization', 'Bearer ' + data.access_token);
-          requestUserServiceUrl.send();
-          return true;
-        }
-        return false;
-      }
-      var token = this.getToken(urlAtStart);
-      if (!token) {
-        return failureListener();
-      }
-      var request = new XMLHttpRequest();
-      request.onload = successListener;
-      request.onerror = failureListener;
-      request.open('get', that.state.tokenInfoUrl, true);
-      request.setRequestHeader('Authorization', 'Bearer ' + token.split('?')[0]);
-      request.send();
-      return true;
+    key: 'logout',
+    value: function logout() {
+      _logout();
     }
   }, {
     key: 'propagateLoginStatusChange',
@@ -157,38 +91,18 @@ export var WSHeader = function (_Component) {
       if (this.state.loggedIn !== isLoggedIn) {
         this.setState({ loggedIn: isLoggedIn });
 
-        this.props.setLogin && this.props.setLogin({
-          loggedIn: isLoggedIn,
-          token: token || null
-        });
+        if (this.props.setLogin) {
+          this.props.setLogin({
+            loggedIn: isLoggedIn,
+            token: token || null
+          });
+        }
       }
-    }
-  }, {
-    key: 'checkSessionState',
-    value: function checkSessionState(state) {
-      var stateObj = JSON.parse(decodeURIComponent(state));
-      var valid = window.localStorage.getItem(SESSION_STATE_NAME) === stateObj.state;
-      window.location.hash = stateObj.hash;
-      window.localStorage.removeItem(SESSION_STATE_NAME);
-      return valid;
-    }
-  }, {
-    key: 'login',
-    value: function login() {
-      var url = 'https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid\n      &client_id=' + this.props.clientId + '\n      &redirect_uri=' + this.props.redirectUrl + '\n      &state=' + setSessionState();
-
-      window.location.href = url;
-    }
-  }, {
-    key: 'logout',
-    value: function logout() {
-      this.removeCookie();
-      this.propagateLoginStatusChange(false);
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var that = this;
       return React.createElement(
@@ -267,7 +181,7 @@ export var WSHeader = function (_Component) {
                   this.state.loggedIn && this.state.userName ? React.createElement(
                     'span',
                     { onClick: function onClick() {
-                        return _this2.logout();
+                        return _this3.logout();
                       } },
                     React.createElement(
                       'span',
@@ -282,7 +196,7 @@ export var WSHeader = function (_Component) {
                   ) : React.createElement(
                     'a',
                     { className: 'auto-size', onClick: function onClick() {
-                        return _this2.login();
+                        return _this3.login();
                       } },
                     React.createElement(
                       'span',
@@ -301,31 +215,3 @@ export var WSHeader = function (_Component) {
 
   return WSHeader;
 }(Component);
-
-function getTokenFromUrl(url) {
-  var urlQueryTokenPart = /access_token=([^&]+)/.exec(url);
-  return urlQueryTokenPart != null ? urlQueryTokenPart[1] : null;
-}
-
-function getCookieValue(a) {
-  var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
-  return b ? b.pop() : '';
-}
-
-function guid() {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-  }
-  return '' + s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-}
-
-function setSessionState() {
-  var state = guid();
-  var obj = {
-    state: state,
-    hash: window.location.hash
-  };
-
-  window.localStorage.setItem(SESSION_STATE_NAME, state);
-  return encodeURIComponent(JSON.stringify(obj));
-}

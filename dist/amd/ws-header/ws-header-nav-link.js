@@ -53,8 +53,8 @@ define(["exports", "../imports"], function (exports, _imports) {
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var WSHeaderNavLink = function (_Component) {
-    _inherits(WSHeaderNavLink, _Component);
+  var WSHeaderNavLink = function (_PureComponent) {
+    _inherits(WSHeaderNavLink, _PureComponent);
 
     function WSHeaderNavLink() {
       _classCallCheck(this, WSHeaderNavLink);
@@ -82,7 +82,7 @@ define(["exports", "../imports"], function (exports, _imports) {
     }]);
 
     return WSHeaderNavLink;
-  }(_imports.Component);
+  }(_imports.PureComponent);
 
   exports.default = WSHeaderNavLink;
 });

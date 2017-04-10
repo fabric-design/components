@@ -1,7 +1,7 @@
 System.register(["../imports"], function (_export, _context) {
   "use strict";
 
-  var React, Component, _createClass, WSHeaderNavLink;
+  var React, PureComponent, _createClass, WSHeaderNavLink;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -36,7 +36,7 @@ System.register(["../imports"], function (_export, _context) {
   return {
     setters: [function (_imports) {
       React = _imports.React;
-      Component = _imports.Component;
+      PureComponent = _imports.PureComponent;
     }],
     execute: function () {
       _createClass = function () {
@@ -57,8 +57,8 @@ System.register(["../imports"], function (_export, _context) {
         };
       }();
 
-      WSHeaderNavLink = function (_Component) {
-        _inherits(WSHeaderNavLink, _Component);
+      WSHeaderNavLink = function (_PureComponent) {
+        _inherits(WSHeaderNavLink, _PureComponent);
 
         function WSHeaderNavLink() {
           _classCallCheck(this, WSHeaderNavLink);
@@ -86,7 +86,7 @@ System.register(["../imports"], function (_export, _context) {
         }]);
 
         return WSHeaderNavLink;
-      }(Component);
+      }(PureComponent);
 
       _export("default", WSHeaderNavLink);
     }

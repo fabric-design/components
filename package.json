@@ -11,7 +11,7 @@
     "tdd": "mocha-webpack --webpack-config webpack.config.js --watch \"tests/**/*.spec.js\"",
     "lint": "eslint components/**.js components/**.jsx tests/**.js tests/**.jsx",
     "precommit": "npm run lint && npm run test && npm run build",
-    "build": "webpack --config webpack.config.publish.js"
+    "build": "gulp build"
   },
   "pre-commit": [
     "test",
@@ -94,7 +94,8 @@
     "webpack": "2.2.1",
     "webpack-dev-server": "2.3.0",
     "webpack-node-externals": "1.5.4",
-    "wholesale-styleguide-scss": "git+ssh://git@github.com/wholesale-design-system/scss.git"
+    "wholesale-styleguide-scss": "git+ssh://git@github.com/wholesale-design-system/scss.git",
+    "yargs": "7.0.2"
   },
   "peerDependencies": {
     "preact": "7.1.0",

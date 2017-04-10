@@ -1,8 +1,7 @@
 import {React, Component} from '../imports';
+import {login, logout, getUserData} from './authentication';
 import WSHeaderNavLink from './ws-header-nav-link';
 const urlAtStart = window.location.href;
-const SESSION_TOKEN_NAME = 'session_token';
-const SESSION_STATE_NAME = 'session_state';
 
 /**
  * The default Header to be used everywhere
@@ -48,58 +47,20 @@ export class WSHeader extends Component {
   /**
    *
    * Lifecycle: componentDidMount handler for component
+   * Will check if the user is logged in already and query user data
+   * @returns {void};
    */
   componentDidMount() {
+    getUserData(this.state.userServiceUrl, this.state.tokenInfoUrl, urlAtStart)
+      .then(({userName, userEmail, userUID, accessToken}) => {
+        this.setState({
+          userName, userEmail, userUID
+        });
+        this.propagateLoginStatusChange(true, accessToken);
+      }, () => {
+        this.propagateLoginStatusChange(false);
+      });
     this.checkIsLoggedIn();
-  }
-
-  /**
-   * Method to extract state parameter from url
-   * @param {String} url urlString to extract state parameter
-   * @returns {String} state information
-   */
-  getStateFromUrl(url) {
-    const urlQueryStatePart = /state=([^&]+)/.exec(url);
-    return urlQueryStatePart[1];
-  }
-
-  /**
-   * Method to get user auth token
-   * @param {String} orgUrl url to receive Token
-   * @returns {String} token string
-   */
-  getToken(orgUrl) {
-    let url = orgUrl;
-    const that = this;
-
-    if (!url) {
-      url = window.location.href;
-    }
-    let token = getTokenFromUrl(url);
-    if (token) {
-      const sessionState = that.getStateFromUrl(url);
-      if (that.checkSessionState(sessionState)) {
-        that.setCookie(token);
-        return token;
-      }
-    }
-    token = getCookieValue(SESSION_TOKEN_NAME);
-    if (token) {
-      return token;
-    }
-    return null;
-  }
-
-  /**
-   * Sets cookie for a given token
-   * @param {String} token Token String
-   */
-  setCookie(token) {
-    if (process.env.NODE_ENV !== 'dev') {
-      document.cookie = `${SESSION_TOKEN_NAME}=${token};path=${this.state.cookiePath};domain=${this.state.cookieDomain};`;
-    } else {
-      document.cookie = `${SESSION_TOKEN_NAME}=${token};path=${this.state.cookiePath};`;
-    }
   }
 
   /**
@@ -114,120 +75,52 @@ export class WSHeader extends Component {
   /**
    * Language string to set navigation
    * @param {String} lang Language string
+   * @returns {void};
    */
   setLanguage(lang) {
     if (lang !== this.state.lang) {
       this.setState({lang});
       // persist
       window.localStorage.setItem(this.state.languageStorageId, lang);
-      this.props.setLang && this.props.setLang(lang);
+      if (this.props.setLang != null) {
+        this.props.setLang(lang);
+      }
     }
   }
 
   /**
-   * Removes cookie
+   * Start the zalando implicit oauth flow by redirecting to the auth portal
+   * @returns {void};
    */
-  removeCookie() {
-    if (process.env.NODE_ENV !== 'dev') {
-      document.cookie = `${SESSION_TOKEN_NAME}=;path=${this.state.cookiePath};domain=${this.state.cookieDomain};expires=Thu, 01 Jan 1970 00:00:01 GMT";`;
-    } else {
-      document.cookie = `${SESSION_TOKEN_NAME}=;path=${this.state.cookiePath};expires=Thu, 01 Jan 1970 00:00:01 GMT";`;
-    }
+  login() {
+    login(this.props.clientId, this.props.redirectUrl);
   }
 
   /**
-   * Helper method checking if the user is already loggedin
+   * Logs the user out removing set credentials
+   * @returns {void};
    */
-  checkIsLoggedIn() {
-    const that = this;
-
-    function failureListener() {
-      return that.logout();
-    }
-    function successListener() {
-      function userServiceSuccess() {
-        const user = JSON.parse(this.responseText);
-        that.setState({ userName: user.name });
-        that.setState({ userEmail: user.email });
-      }
-      const data = JSON.parse(this.responseText);
-      that.setState({ userUID: data.uid });
-      that.propagateLoginStatusChange(true, data.access_token);
-      if (data.uid) {
-        const requestUserServiceUrl = new XMLHttpRequest();
-        requestUserServiceUrl.onload = userServiceSuccess;
-        requestUserServiceUrl.onerror = failureListener;
-        if (process.env.NODE_ENV !== 'dev') {
-          requestUserServiceUrl.open('get', `${that.state.userServiceUrl}/${data.uid}`, true);
-        } else {
-          requestUserServiceUrl.open('get', `${that.state.userServiceUrl}`, true);
-        }
-        requestUserServiceUrl.setRequestHeader('Authorization', `Bearer ${data.access_token}`);
-        requestUserServiceUrl.send();
-        return true;
-      }
-      return false;
-    }
-    const token = this.getToken(urlAtStart);
-    if (!token) {
-      return failureListener();
-    }
-    const request = new XMLHttpRequest();
-    request.onload = successListener;
-    request.onerror = failureListener;
-    request.open('get', that.state.tokenInfoUrl, true);
-    request.setRequestHeader('Authorization', `Bearer ${token.split('?')[0]}`);
-    request.send();
-    return true;
+  logout() {
+    logout();
   }
 
   /**
    * Updates changed login status
    * @param {boolean} isLoggedIn updated status of loggedin user
    * @param {String} token Token String
+   * @returns {void};
    */
   propagateLoginStatusChange(isLoggedIn, token) {
     if (this.state.loggedIn !== isLoggedIn) {
-      this.setState({ loggedIn: isLoggedIn });
+      this.setState({loggedIn: isLoggedIn});
 
-      this.props.setLogin && this.props.setLogin({
-        loggedIn: isLoggedIn,
-        token: token || null,
-      });
+      if (this.props.setLogin) {
+        this.props.setLogin({
+          loggedIn: isLoggedIn,
+          token: token || null
+        });
+      }
     }
-  }
-
-  /**
-   * Helper method checking current session state
-   * @param {String} state String containing state
-   * @returns {Boolean} valid boolean
-   */
-  checkSessionState(state) {
-    const stateObj = JSON.parse(decodeURIComponent(state));
-    const valid = window.localStorage.getItem(SESSION_STATE_NAME) === stateObj.state;
-    window.location.hash = stateObj.hash;
-    window.localStorage.removeItem(SESSION_STATE_NAME);
-    return valid;
-  }
-
-  /**
-   * login
-   */
-  login() {
-    const url = `https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid
-      &client_id=${this.props.clientId}
-      &redirect_uri=${this.props.redirectUrl}
-      &state=${setSessionState()}`;
-
-    window.location.href = url;
-  }
-
-  /**
-   * logout
-   */
-  logout() {
-    this.removeCookie();
-    this.propagateLoginStatusChange(false);
   }
 
   /**
@@ -284,56 +177,4 @@ export class WSHeader extends Component {
       </div>
     );
   }
-}
-
-/**
- * getTokenFromUrl
- * @param {String} url url string
- * @returns {String} token part
- */
-function getTokenFromUrl(url) {
-  const urlQueryTokenPart = /access_token=([^&]+)/.exec(url);
-  return urlQueryTokenPart != null ? urlQueryTokenPart[1] : null;
-}
-
-/**
- * Get Cookie Value
- * @param {String} a cookie key to match
- * @returns {String} cookie value for key
- */
-function getCookieValue(a) {
-  const b = document.cookie.match(`(^|;)\\s*${a}\\s*=\\s*([^;]+)`);
-  return b ? b.pop() : '';
-}
-
-/**
- * GUID
- * @returns {String} string
- */
-function guid() {
-  /**
-   * Helper method for calculating a unique Id
-   * @returns {Number}
-   */
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-  }
-  return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
-}
-
-/**
- * Sets Session State
- * @returns {String} encoded URI component of state
- */
-function setSessionState() {
-  // create new state guid
-  const state = guid();
-  const obj = {
-    state,
-    hash: window.location.hash
-  };
-
-  // save the state to check for it on return
-  window.localStorage.setItem(SESSION_STATE_NAME, state);
-  return encodeURIComponent(JSON.stringify(obj));
 }

@@ -147,7 +147,7 @@ System.register(['../imports', './ws-week-picker-calendar', './ws-week-picker.sc
                 },
                 readOnly: true
               }),
-              React.createElement('i', { className: 'icon icon-' + (this.state.show ? 'cross' : 'calendar') + ' icon16',
+              React.createElement('i', { className: 'icon icon-' + (this.state.show ? 'cross' : 'calendar'),
                 onClick: function onClick() {
                   return _this3.toggleCalendar();
                 }

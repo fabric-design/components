@@ -221,16 +221,16 @@ System.register(['../imports'], function (_export, _context) {
                   ),
                   React.createElement(
                     'span',
+                    null,
+                    this.state.showingYear
+                  ),
+                  React.createElement(
+                    'span',
                     { className: 'next', onClick: function onClick() {
                         return _this3.nextYear();
                       } },
                     this.state.showingYear + 1,
                     React.createElement('i', { className: 'icon icon-right' })
-                  ),
-                  React.createElement(
-                    'span',
-                    null,
-                    this.state.showingYear
                   )
                 ),
                 React.createElement(

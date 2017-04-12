@@ -13,10 +13,6 @@
     "precommit": "npm run lint && npm run test && npm run build",
     "build": "webpack --config webpack.config.publish.js"
   },
-  "pre-commit": [
-    "test",
-    "lint"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/wholesale-design-system/scss"
@@ -61,6 +57,7 @@
     "chai": "3.5.0",
     "conventional-changelog": "^1.1.0",
     "css-loader": "0.26.1",
+    "del": "^2.2.2",
     "documentation": "^4.0.0-beta.18",
     "eslint": "^3.15.0",
     "eslint-config-airbnb": "^14.1.0",
@@ -94,7 +91,8 @@
     "webpack": "2.2.1",
     "webpack-dev-server": "2.3.0",
     "webpack-node-externals": "1.5.4",
-    "wholesale-styleguide-scss": "git+ssh://git@github.com/wholesale-design-system/scss.git#fb1a23ce7caf2a8e4c8da19272151c9032bee3d5"
+    "wholesale-styleguide-scss": "git+https://github.com/wholesale-design-system/scss.git",
+    "yargs": "^7.0.2"
   },
   "peerDependencies": {
     "preact": "7.1.0",

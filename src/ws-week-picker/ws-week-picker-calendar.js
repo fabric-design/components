@@ -1,7 +1,7 @@
 import {React, Component} from '../imports';
 
 /**
- * Quick array of all month abriviations
+ * Quick array of all month abbreviations
  */
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 /**
@@ -11,7 +11,6 @@ const allMonths = [months[10], months[11]].concat(months).concat([months[0], mon
 
 /**
  * @class WSWeekPickerCalendar
- * @extends Component
  * @property {object} props               - properties
  * @property {number} props.selectedYear  - set a preselected year
  * @property {number} props.selectedWeek  - set a preselected week
@@ -21,7 +20,7 @@ export class WSWeekPickerCalendar extends Component {
   static defaultProps = {
     selectedYear: null,
     selectedWeek: null,
-    onChange: () => {}
+    onChange: () => { }
   };
 
   static propTypes = {
@@ -39,7 +38,7 @@ export class WSWeekPickerCalendar extends Component {
 
     // if there is a week selected show the according year on start
     // else show the current year
-    const selectedDate = props.selectedYear != null && props.selectedWeek != null
+    const selectedDate = props.selectedYear !== null && props.selectedWeek !== null
       ? getDateOfISOWeek(props.selectedWeek, props.selectedYear) : new Date(Date.now());
     this.state = {
       showingYear: selectedDate.getFullYear()
@@ -53,7 +52,7 @@ export class WSWeekPickerCalendar extends Component {
   /**
    * Show the previous year.
    * @returns {void}
-  */
+   */
   prevYear() {
     this.setState({
       showingYear: this.state.showingYear - 1
@@ -63,7 +62,7 @@ export class WSWeekPickerCalendar extends Component {
   /**
    * Show the next year.
    * @returns {void}
-  */
+   */
   nextYear() {
     this.setState({
       showingYear: this.state.showingYear + 1
@@ -75,7 +74,7 @@ export class WSWeekPickerCalendar extends Component {
    * @param {number} year Year of the week
    * @param {number} week Week
    * @returns {boolean}
-  */
+   */
   isActive(year, week) {
     return this.props.selectedYear === year && this.props.selectedWeek === week;
   }
@@ -85,15 +84,15 @@ export class WSWeekPickerCalendar extends Component {
    * @param {number} year Year of the week
    * @param {number} week Week
    * @returns {boolean}
-  */
+   */
   isToday(year, week) {
     return this.todayYear === year && this.todayWeek === week;
   }
 
   /**
    * Builds an array of rows for the calendar. Every row holds one or none week of the month referenced by the column.
-   * @returns {JSX.Elements[]}
-  */
+   * @returns {Object}
+   */
   buildWeekRows() {
     const weeksPerMonth = [];
     for (let i = -2; i <= 13; i++) {
@@ -102,39 +101,45 @@ export class WSWeekPickerCalendar extends Component {
     // there are up to 5 weeks per month
     return [0, 1, 2, 3, 4].map(weekIndex =>
       <tr key={weekIndex}>
-        {
-          allMonths.map((month, monthIndex) => {
-            const weekInMonth = weeksPerMonth[monthIndex][weekIndex];
-            if (weekInMonth == null) return <td key={`${monthIndex}_${weekIndex}`}></td>;
-            const {week, year} = weekInMonth;
-            return (
-              <td
-                className={(monthIndex < 2 || monthIndex > 13 ? 'off ' : '')
-                  + (this.isActive(year, week) ? 'active ' : '')
-                  + (this.isToday(year, week) ? 'today ' : '')}
-                key={`${monthIndex}_${weekIndex}`}
-                onClick={() => this.props.onChange({week, year})}
-              >
-                <a className="week">{week}</a>
-              </td>
-            );
-          })
-        }
+        {allMonths.map((month, monthIndex) => {
+          const weekInMonth = weeksPerMonth[monthIndex][weekIndex];
+          if (weekInMonth === null) {
+            return <td key={`${monthIndex}_${weekIndex}`} />;
+          }
+          const {week, year} = weekInMonth;
+          return (
+            <td
+              className={(monthIndex < 2 || monthIndex > 13 ? 'off ' : '')
+                        + (this.isActive(year, week) ? 'active ' : '')
+                        + (this.isToday(year, week) ? 'today ' : '')}
+              key={`${monthIndex}_${weekIndex}`}
+              onClick={() => this.props.onChange({week, year})}
+            >
+              <a className="week">{week}</a>
+            </td>
+          );
+        })}
       </tr>);
   }
 
   /**
    * Renders the calendar.
-   * @returns {JSX} virtual dom
+   * @returns {Object} virtual dom
    */
   render() {
     return (
       <div className="ws-date-picker-calendar">
         <table>
           <caption>
-            <span className="prev" onClick={() => this.prevYear()}><i className="icon icon-left" />{this.state.showingYear - 1}</span>
-            <span className="next" onClick={() => this.nextYear()}>{this.state.showingYear + 1}<i className="icon icon-right" /></span>
+            <span className="prev" onClick={() => this.prevYear()}>
+              <span className="icon icon-left" />
+              {this.state.showingYear - 1}
+            </span>
             <span>{this.state.showingYear}</span>
+            <span className="next" onClick={() => this.nextYear()}>
+              {this.state.showingYear + 1}
+              <span className="icon icon-right" />
+            </span>
           </caption>
           <thead>
             <tr>
@@ -156,21 +161,25 @@ export class WSWeekPickerCalendar extends Component {
  * @param {number} week Week
  * @param {number} year Year of the week
  * @returns {Date}
-*/
+ */
 function getDateOfISOWeek(week, year) {
-  const simple = new Date(year, 0, 1 + (week - 1) * 7);
+  const simple = new Date(year, 0, 1 + ((week - 1) * 7));
   const dow = simple.getDay();
-  const ISOweekStart = simple;
-  if (dow <= 4) { ISOweekStart.setDate(simple.getDate() - simple.getDay() + 1); } else { ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay()); }
-  return ISOweekStart;
+  const ISOWeekStart = simple;
+  if (dow <= 4) {
+    ISOWeekStart.setDate(1 + (simple.getDate() - simple.getDay()));
+  } else {
+    ISOWeekStart.setDate(simple.getDate() + (8 - simple.getDay()));
+  }
+  return ISOWeekStart;
 }
 
 /**
  * Calculate a week number from a date. Weeks are starting on Monday.
  * src: https://gist.github.com/dblock/1081513
  * @param {Date} date Date
- * @returns {Date}
-*/
+ * @returns {Number}
+ */
 function getWeekOfYear(date) {
   // Create a copy of this date object
   const target = new Date(date.valueOf());
@@ -180,7 +189,7 @@ function getWeekOfYear(date) {
 
   // Set the target to the thursday of this week so the
   // target date is in the right year
-  target.setDate(target.getDate() - dayNr + 3);
+  target.setDate(target.getDate() - (dayNr + 3));
 
   // ISO 8601 states that week 1 is the week
   // with january 4th in it
@@ -191,17 +200,15 @@ function getWeekOfYear(date) {
 
   // Calculate week number: Week 1 (january 4th) plus the
   // number of weeks between target date and january 4th
-  const weekNr = 1 + Math.ceil(dayDiff / 7);
-
-  return weekNr;
+  return 1 + Math.ceil(dayDiff / 7);
 }
 
 /**
  * Calculate all weeks that are in a certain month.
- * @param {number} month Month
- * @param {number} year Year of the month
+ * @param {number} month Month to get weeks for
+ * @param {number} year Year of the week
  * @returns {{week: number, year: number}[]}
-*/
+ */
 function getWeeks(month, year) {
   let actualMonth = month;
   let actualYear = year;

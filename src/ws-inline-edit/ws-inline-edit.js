@@ -21,11 +21,12 @@ export class WSInlineEdit extends Component {
    * Create default onUpdate function to prevent errors if user don't use it
    */
   static defaultProps = {
+    text: '',
     onUpdate: () => {}
   };
 
   /**
-   * @param {Object} props Peact props
+   * @param {Object} props Preact props
    * @constructor
    */
   constructor(props) {
@@ -107,7 +108,7 @@ export class WSInlineEdit extends Component {
           onBlur={e => this.blurAction(e)}
           onKeyDown={e => this.keyAction(e)}
           defaultValue={this.state.text}
-          ref={el => this.editEl = el}
+          ref={el => { this.editEl = el; }}
         />
       </div>
     );

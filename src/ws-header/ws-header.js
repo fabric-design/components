@@ -7,7 +7,6 @@ const SESSION_STATE_NAME = 'session_state';
 /**
  * The default Header to be used everywhere
  * @class WSHeader
- * @extends Component
  * @property {object} props             - properties
  * @property {function} props.setLang   - handler which sets language
  * @property {function} props.setLogin  - handler which sets Login information (token and boolan for loggedin)
@@ -15,7 +14,7 @@ const SESSION_STATE_NAME = 'session_state';
  * @property {string} props.redirectUrl - URL to redirect after successfully login
  * @property {string} props.logoUrl     - url for logo
  * @property {string} props.title       - title of Header
- * @property {array} props.links        - List of navigation links based on object format {label, value, onclick-Handler }
+ * @property {array} props.links        - List of navigation links based on object format {label, onclick-Handler }
  *
  */
 export class WSHeader extends Component {
@@ -35,7 +34,7 @@ export class WSHeader extends Component {
       id: null, // HEADER_COMPONENT_ID,
       redirectUrl: null, // REDIRECT_URL,
       userServiceUrl: null, // CORS_SERVICE_URL + USER_SERVICE_URL,
-      tokenInfoUrl: null, // CORS_SERVICE_URL + TOKEN_SERVICE_URL,
+      tokenInfoUrl: '', // CORS_SERVICE_URL + TOKEN_SERVICE_URL,
       clientId: null, // getCookieValue(CLIENT_ID_COOKIE_NAME),
       availableLanguages: ['de', 'en'],
       userName: null,
@@ -46,8 +45,8 @@ export class WSHeader extends Component {
   }
 
   /**
-   *
    * Lifecycle: componentDidMount handler for component
+   * @returns {void}
    */
   componentDidMount() {
     this.checkIsLoggedIn();
@@ -93,6 +92,7 @@ export class WSHeader extends Component {
   /**
    * Sets cookie for a given token
    * @param {String} token Token String
+   * @returns {void}
    */
   setCookie(token) {
     if (process.env.NODE_ENV !== 'dev') {
@@ -114,18 +114,22 @@ export class WSHeader extends Component {
   /**
    * Language string to set navigation
    * @param {String} lang Language string
+   * @returns {void}
    */
   setLanguage(lang) {
     if (lang !== this.state.lang) {
       this.setState({lang});
       // persist
       window.localStorage.setItem(this.state.languageStorageId, lang);
-      this.props.setLang && this.props.setLang(lang);
+      if (this.props.setLang) {
+        this.props.setLang(lang);
+      }
     }
   }
 
   /**
    * Removes cookie
+   * @returns {void}
    */
   removeCookie() {
     if (process.env.NODE_ENV !== 'dev') {
@@ -136,22 +140,39 @@ export class WSHeader extends Component {
   }
 
   /**
-   * Helper method checking if the user is already loggedin
+   * Helper method checking if the user is already logged in
+   * @returns {Boolean|void}
    */
   checkIsLoggedIn() {
     const that = this;
 
+    /**
+     * React to failure in user authentication
+     * @returns {void}
+     */
     function failureListener() {
-      return that.logout();
+      that.logout();
     }
+
+    /**
+     * react to success in user authentication
+     * @returns {boolean} is the user logged in
+     */
     function successListener() {
+      const that2 = this;
+
+      /**
+       * react to success in the user lookup
+       * set the local state with the looked up user name and email
+       * @returns {void}
+       */
       function userServiceSuccess() {
         const user = JSON.parse(this.responseText);
-        that.setState({ userName: user.name });
-        that.setState({ userEmail: user.email });
+        that.setState({userName: user.name});
+        that.setState({userEmail: user.email});
       }
-      const data = JSON.parse(this.responseText);
-      that.setState({ userUID: data.uid });
+      const data = JSON.parse(that2.responseText);
+      that.setState({userUID: data.uid});
       that.propagateLoginStatusChange(true, data.access_token);
       if (data.uid) {
         const requestUserServiceUrl = new XMLHttpRequest();
@@ -168,6 +189,7 @@ export class WSHeader extends Component {
       }
       return false;
     }
+
     const token = this.getToken(urlAtStart);
     if (!token) {
       return failureListener();
@@ -183,17 +205,20 @@ export class WSHeader extends Component {
 
   /**
    * Updates changed login status
-   * @param {boolean} isLoggedIn updated status of loggedin user
+   * @param {boolean} isLoggedIn updated status of logged in user
    * @param {String} token Token String
+   * @returns {void}
    */
   propagateLoginStatusChange(isLoggedIn, token) {
     if (this.state.loggedIn !== isLoggedIn) {
-      this.setState({ loggedIn: isLoggedIn });
+      this.setState({loggedIn: isLoggedIn});
 
-      this.props.setLogin && this.props.setLogin({
-        loggedIn: isLoggedIn,
-        token: token || null,
-      });
+      if (this.props.setLogin) {
+        this.props.setLogin({
+          loggedIn: isLoggedIn,
+          token: token || null
+        });
+      }
     }
   }
 
@@ -211,23 +236,24 @@ export class WSHeader extends Component {
   }
 
   /**
-   * login
+   * Login
+   * @returns {void}
    */
   login() {
-    const url = `https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid
+    window.location.href = `https://auth.zalando.com/z/oauth2/authorize
+      ?realm=/employees&response_type=token&scope=uid
       &client_id=${this.props.clientId}
       &redirect_uri=${this.props.redirectUrl}
       &state=${setSessionState()}`;
-
-    window.location.href = url;
   }
 
   /**
-   * logout
+   * Logout
+   * @returns {void}
    */
   logout() {
     this.removeCookie();
-    this.propagateLoginStatusChange(false);
+    this.propagateLoginStatusChange(false, null);
   }
 
   /**
@@ -241,26 +267,30 @@ export class WSHeader extends Component {
         <header className="navigation" role="banner">
           <div className="navigation-wrapper">
             <a href="/">
-              {this.props.logoUrl ? <img className="logo" alt={`${this.props.title}_logo`} src={this.props.logoUrl} /> : null}
+              {this.props.logoUrl &&
+                <img className="logo" alt={`${this.props.title}_logo`} src={this.props.logoUrl} />
+              }
               <span>{this.props.title}</span>
             </a>
             <nav role="navigation">
               <ul id="js-navigation-menu" className="navigation-menu show">
-                {(this.state.isLoggedIn && this.state.userName) ?
+                {this.state.isLoggedIn && this.state.userName &&
                   <ul>
-                    {this.props.links ? this.props.links.map((link, index) => <WSHeaderNavLink link={link} key={index} />) : null}
+                    {this.props.links && this.props.links.map((link, index) =>
+                      <WSHeaderNavLink link={link} key={index} />
+                    )}
                   </ul>
-                : null}
+                }
                 <li className="nav-link more dropdown-menu">
                   <a href={`#lang${this.state.lang}`}>
-                    <span id="selectedLanguageFlag" className={`flag flag-${this.state.lang}`}></span>
+                    <span id="selectedLanguageFlag" className={`flag flag-${this.state.lang}`} />
                     <span id="selectedLanguage"> {this.state.lang}</span>
                   </a>
                   <ul className="submenu" id="languages">
                     {this.state.availableLanguages.map(lang =>
                       <li key={`lang-${lang}`} onClick={() => that.setLanguage(lang)}>
                         <a>
-                          <span className={`flag flag-${lang}`}></span>
+                          <span className={`flag flag-${lang}`} />
                           <span> {lang}</span>
                         </a>
                       </li>
@@ -272,7 +302,7 @@ export class WSHeader extends Component {
                     <span onClick={() => this.logout()}>
                       <span id="userName">{this.state.userName}</span>
                       <a className="auto-size" id="logOutButton" type="button">
-                        <i className="icon icon-close" />
+                        <span className="icon icon-close" />
                       </a>
                     </span> :
                     <a className="auto-size" onClick={() => this.login()}><span>Login</span></a>}
@@ -293,7 +323,7 @@ export class WSHeader extends Component {
  */
 function getTokenFromUrl(url) {
   const urlQueryTokenPart = /access_token=([^&]+)/.exec(url);
-  return urlQueryTokenPart != null ? urlQueryTokenPart[1] : null;
+  return urlQueryTokenPart !== null ? urlQueryTokenPart[1] : null;
 }
 
 /**
@@ -307,17 +337,18 @@ function getCookieValue(a) {
 }
 
 /**
- * GUID
+ * Generate a global unique identifier
  * @returns {String} string
  */
 function guid() {
   /**
    * Helper method for calculating a unique Id
-   * @returns {Number}
+   * @returns {String}
    */
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
   }
+
   return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
 }
 

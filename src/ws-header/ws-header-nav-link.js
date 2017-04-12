@@ -1,17 +1,18 @@
-import { React, Component } from '../imports';
+import {React} from '../imports';
 
 /**
- * Helper Class which is just rendering a single navigation link element
- * @class WSHeaderNavLink
+ * Helper component which is just rendering a single navigation link element
+ * @param {object} props                 - properties
+ * @param {string} props.key             - key for the list item
+ * @param {object} props.link            - link to render
+ * @param {function} props.link.onclick  - callback for clicks on the link
+ * @param {string} props.link.label      - label to show for the link
+ * @returns {JSX} rendered template
  */
-export default class WSHeaderNavLink extends Component {
-  /**
-   * Render method of class
-   * @return {JSX} rendered template
-   */
-  render() {
-    return (<li className="nav-link" key={this.props.key} onClick={() => this.props.link.onclick && this.props.link.onclick(this.props.link.value)} >
+export default function WSHeaderNavLink(props) {
+  return (
+    <li className="nav-link" key={props.key} onClick={() => props.link.onclick && props.link.onclick()} >
       <a>{this.props.link.label}</a>
-    </li>);
-  }
+    </li>
+  );
 }

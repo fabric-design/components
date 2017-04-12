@@ -6,7 +6,7 @@ import {React, Component} from '../imports';
  * As an example you can use it in div blocks, rows, tables.
  */
 export class WSInlineEdit extends Component {
-  
+
   /**
    * @propTypes
    * Types of properties
@@ -15,17 +15,18 @@ export class WSInlineEdit extends Component {
     text: React.PropTypes.string,
     onUpdate: React.PropTypes.func
   };
-  
+
   /**
    * @defaultProps
    * Create default onUpdate function to prevent errors if user don't use it
    */
   static defaultProps = {
+    text: '',
     onUpdate: () => {}
   };
-  
+
   /**
-   * @param {Object} props Peact props
+   * @param {Object} props Preact props
    * @constructor
    */
   constructor(props) {
@@ -38,7 +39,7 @@ export class WSInlineEdit extends Component {
       text: props.text
     };
   }
-  
+
   /**
    * Function that show input when you click on div and focus it
    * @returns {void}
@@ -50,7 +51,7 @@ export class WSInlineEdit extends Component {
       });
     }
   }
-  
+
   /**
    * Function that save text when click 'Enter' or cancel when click 'Escape' button
    * @param {Object} e - click event
@@ -68,7 +69,7 @@ export class WSInlineEdit extends Component {
       this.setState({isEditing: false});
     }
   }
-  
+
   /**
    * Function that save text when input on blur and send text value to updating function
    * @param {Object} e - click event
@@ -81,7 +82,7 @@ export class WSInlineEdit extends Component {
     });
     this.updating(e.target.value);
   }
-  
+
   /**
    * Function that return value for outside use if text is not the same
    * @param {Object} text - text to show
@@ -92,7 +93,7 @@ export class WSInlineEdit extends Component {
       this.props.onUpdate(text);
     }
   }
-  
+
   /**
    * Render the complete inline-edit component
    * @returns {Object}
@@ -107,7 +108,7 @@ export class WSInlineEdit extends Component {
           onBlur={e => this.blurAction(e)}
           onKeyDown={e => this.keyAction(e)}
           defaultValue={this.state.text}
-          ref={(el) => this.editEl = el}
+          ref={el => { this.editEl = el; }}
         />
       </div>
     );

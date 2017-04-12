@@ -14,7 +14,7 @@
   opacity: 0;
   visibility: hidden;
   text-align: center;
-  margin-top: rem(10px);
+  margin-top: $space-s;
   font-size: $base-font-size;
   line-height: $base-font-size * 2;
   border: 1px solid $earl-gray;
@@ -64,11 +64,11 @@
   }
   &:before {
     border-width: rem(8px);
-    margin: 0 -8px;
+    margin: 0 -$space-xs;
   }
   &:after {
     border-width: 7px;
-    margin: 0 -7px;
+    margin: 0 -$space-xs;
   }
   &.arrowTop {
     &:before {
@@ -95,12 +95,12 @@
     display: inline-block;
   }
   .flatpickr-month {
+    @include inset-spacing("m");
     background: transparent;
     color: $jumbo;
     fill: $jumbo;
     height: rem(16px);
     line-height: rem(16px);
-    padding: rem(16px);
     text-align: center;
     position: relative;
     user-select: none;
@@ -110,7 +110,7 @@
     .flatpickr-next-month {
       text-decoration: none;
       cursor: pointer;
-      margin-top: rem(-7px);
+      margin-top: -$space-xs;
       width: rem(30px);
       height: rem(30px);
       line-height: rem(38px);
@@ -119,11 +119,11 @@
       }
       &.flatpickr-prev-month {
         float: left;
-        margin-left: rem(-7px);
+        margin-left: -$space-xs;
       }
       &.flatpickr-next-month {
         float: right;
-        margin-right: rem(-7px);
+        margin-right: -$space-xs;
       }
       svg {
         width: rem(18px);
@@ -145,7 +145,7 @@
       text-align: center;
       span.cur-month {
         display: inline-block;
-        margin-right: rem(7px);
+        margin-right: $space-xs;
         padding: 0;
       }
       .numInputWrapper {
@@ -374,7 +374,7 @@
     }
     .flatpickr-weeks {
       width: rem(32px);
-      margin-left: rem(16px);
+      margin-left: $space-m;
       .flatpickr-day {
         margin-left: 0;
       }

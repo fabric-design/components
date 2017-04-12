@@ -39,11 +39,6 @@ var WSHeader = exports.WSHeader = function (_Component) {
       lang: null,
       languageStorageId: 'ws-language',
       loggedIn: null,
-      id: null,
-      redirectUrl: null,
-      userServiceUrl: null,
-      tokenInfoUrl: null,
-      clientId: null,
       availableLanguages: ['de', 'en'],
       userName: null,
       userEmail: null,
@@ -58,7 +53,7 @@ var WSHeader = exports.WSHeader = function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      (0, _authentication.getUserData)(this.state.userServiceUrl, this.state.tokenInfoUrl, urlAtStart).then(function (_ref) {
+      (0, _authentication.getUserData)(this.props.userServiceUrl, this.props.tokenInfoUrl, urlAtStart).then(function (_ref) {
         var userName = _ref.userName,
             userEmail = _ref.userEmail,
             userUID = _ref.userUID,

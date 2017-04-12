@@ -7,14 +7,16 @@ const urlAtStart = window.location.href;
  * The default Header to be used everywhere
  * @class WSHeader
  * @extends Component
- * @property {object} props             - properties
- * @property {function} props.setLang   - handler which sets language
- * @property {function} props.setLogin  - handler which sets Login information (token and boolan for loggedin)
- * @property {number} props.clientId    - clientId
- * @property {string} props.redirectUrl - URL to redirect after successfully login
- * @property {string} props.logoUrl     - url for logo
- * @property {string} props.title       - title of Header
- * @property {array} props.links        - List of navigation links based on object format {label, value, onclick-Handler }
+ * @property {object} props               - properties
+ * @property {function} props.setLang     - handler which sets language
+ * @property {function} props.setLogin    - handler which sets Login information (token and boolan for loggedin)
+ * @property {number} props.clientId      - clientId
+ * @property {string} props.redirectUrl   - URL to redirect after successfully login
+ * @property {string} props.userServiceUrl - URL to request user info from
+ * @property {string} props.tokenInfoUrl  - URL to validate token
+ * @property {string} props.logoUrl       - url for logo
+ * @property {string} props.title         - title of Header
+ * @property {array} props.links          - List of navigation links based on object format {label, value, onclick-Handler }
  *
  */
 export class WSHeader extends Component {
@@ -31,11 +33,6 @@ export class WSHeader extends Component {
       lang: null,
       languageStorageId: 'ws-language',
       loggedIn: null,
-      id: null, // HEADER_COMPONENT_ID,
-      redirectUrl: null, // REDIRECT_URL,
-      userServiceUrl: null, // CORS_SERVICE_URL + USER_SERVICE_URL,
-      tokenInfoUrl: null, // CORS_SERVICE_URL + TOKEN_SERVICE_URL,
-      clientId: null, // getCookieValue(CLIENT_ID_COOKIE_NAME),
       availableLanguages: ['de', 'en'],
       userName: null,
       userEmail: null,
@@ -51,7 +48,7 @@ export class WSHeader extends Component {
    * @returns {void};
    */
   componentDidMount() {
-    getUserData(this.state.userServiceUrl, this.state.tokenInfoUrl, urlAtStart)
+    getUserData(this.props.userServiceUrl, this.props.tokenInfoUrl, urlAtStart)
       .then(({userName, userEmail, userUID, accessToken}) => {
         this.setState({
           userName, userEmail, userUID

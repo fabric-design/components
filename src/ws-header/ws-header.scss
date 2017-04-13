@@ -227,7 +227,7 @@ header.navigation {
 
   .dropdown-menu {
     .flag {
-      margin-top: $space-l;
+      margin-top: $spacing-large;
     }
   }
 
@@ -301,10 +301,10 @@ header.navigation {
 
   #loggedInInfo {
     a {
-      margin-right: $space-m;
+      margin-right: $spacing-medium;
     }
     #logOutButton {
-      margin-left: $space-xs;
+      margin-left: $spacing-x-small;
       width: 1em;
       height: 1em;
       vertical-align: middle;
@@ -325,8 +325,8 @@ header.navigation {
   .logo {
     float: left;
     max-height: 60px;
-    margin-left: $space-m;
-    margin-right: $space-xl;
+    margin-left: $spacing-medium;
+    margin-right: $spacing-x-large;
     line-height: 60px;
     padding-top: 0;
 
@@ -344,7 +344,7 @@ header.navigation {
     & > span {
       display: block;
       float: right;
-      margin-left: $space-s;
+      margin-left: $small-spacing;
     }
     & img {
       padding: 1.2em 0;

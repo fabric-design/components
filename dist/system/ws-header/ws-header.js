@@ -133,6 +133,12 @@ System.register(['../imports', './authentication', './ws-header-nav-link'], func
           key: 'logout',
           value: function logout() {
             _logout();
+            this.setState({
+              loggedIn: false,
+              userName: null,
+              userEmail: null,
+              userUID: null
+            });
           }
         }, {
           key: 'propagateLoginStatusChange',

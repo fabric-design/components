@@ -98,6 +98,12 @@ export class WSHeader extends Component {
    */
   logout() {
     logout();
+    this.setState({
+      loggedIn: false,
+      userName: null,
+      userEmail: null,
+      userUID: null
+    });
   }
 
   /**

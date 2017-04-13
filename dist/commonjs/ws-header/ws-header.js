@@ -93,6 +93,12 @@ var WSHeader = exports.WSHeader = function (_Component) {
     key: 'logout',
     value: function logout() {
       (0, _authentication.logout)();
+      this.setState({
+        loggedIn: false,
+        userName: null,
+        userEmail: null,
+        userUID: null
+      });
     }
   }, {
     key: 'propagateLoginStatusChange',

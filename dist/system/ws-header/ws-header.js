@@ -1,7 +1,7 @@
 System.register(['../imports', './authentication', './ws-header-nav-link'], function (_export, _context) {
   "use strict";
 
-  var React, Component, _login, _logout, getUserData, WSHeaderNavLink, _createClass, urlAtStart, WSHeader;
+  var React, Component, _login, _logout, getUserData, WSHeaderNavLink, _createClass, urlAtStart, LOGIN_EVENT, LOGOUT_EVENT, WSHeader;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -65,6 +65,14 @@ System.register(['../imports', './authentication', './ws-header-nav-link'], func
 
       urlAtStart = window.location.href;
 
+      _export('LOGIN_EVENT', LOGIN_EVENT = 'WS_HEADER_LOGIN_EVENT');
+
+      _export('LOGIN_EVENT', LOGIN_EVENT);
+
+      _export('LOGOUT_EVENT', LOGOUT_EVENT = 'WS_HEADER_LOGOUT_EVENT');
+
+      _export('LOGOUT_EVENT', LOGOUT_EVENT);
+
       _export('WSHeader', WSHeader = function (_Component) {
         _inherits(WSHeader, _Component);
 
@@ -85,6 +93,14 @@ System.register(['../imports', './authentication', './ws-header-nav-link'], func
             userUID: null
           };
           _this.state.lang = _this.getLanguage(_this.state);
+          _this.eventListenersCallback = {
+            login: function login() {
+              return _this.login();
+            },
+            logout: function logout() {
+              return _this.logout();
+            }
+          };
           return _this;
         }
 
@@ -92,6 +108,8 @@ System.register(['../imports', './authentication', './ws-header-nav-link'], func
           key: 'componentDidMount',
           value: function componentDidMount() {
             var _this2 = this;
+
+            this.attachEventListeners();
 
             getUserData(this.props.userServiceUrl, this.props.tokenInfoUrl, urlAtStart).then(function (_ref) {
               var userName = _ref.userName,
@@ -106,6 +124,11 @@ System.register(['../imports', './authentication', './ws-header-nav-link'], func
             }, function () {
               _this2.propagateLoginStatusChange(false);
             });
+          }
+        }, {
+          key: 'componentWillUnmount',
+          value: function componentWillUnmount() {
+            this.detachEventListeners();
           }
         }, {
           key: 'getLanguage',
@@ -125,20 +148,37 @@ System.register(['../imports', './authentication', './ws-header-nav-link'], func
             }
           }
         }, {
+          key: 'attachEventListeners',
+          value: function attachEventListeners() {
+            window.addEventListener(LOGOUT_EVENT, this.eventListenersCallback.logout);
+            window.addEventListener(LOGIN_EVENT, this.eventListenersCallback.login);
+          }
+        }, {
+          key: 'detachEventListeners',
+          value: function detachEventListeners() {
+            window.removeEventListener(LOGOUT_EVENT, this.eventListenersCallback.logout);
+            window.removeEventListener(LOGIN_EVENT, this.eventListenersCallback.login);
+          }
+        }, {
           key: 'login',
           value: function login() {
-            _login(this.props.clientId, this.props.redirectUrl);
+            if (!this.state.loggedIn) {
+              _login(this.props.clientId, this.props.redirectUrl);
+            }
           }
         }, {
           key: 'logout',
           value: function logout() {
-            _logout();
-            this.setState({
-              loggedIn: false,
-              userName: null,
-              userEmail: null,
-              userUID: null
-            });
+            if (this.state.loggedIn) {
+              _logout();
+              this.propagateLoginStatusChange(false);
+              this.setState({
+                loggedIn: false,
+                userName: null,
+                userEmail: null,
+                userUID: null
+              });
+            }
           }
         }, {
           key: 'propagateLoginStatusChange',

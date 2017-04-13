@@ -10,6 +10,8 @@ import { React, Component } from '../imports';
 import { login as _login, logout as _logout, getUserData } from './authentication';
 import WSHeaderNavLink from './ws-header-nav-link';
 var urlAtStart = window.location.href;
+export var LOGIN_EVENT = 'WS_HEADER_LOGIN_EVENT';
+export var LOGOUT_EVENT = 'WS_HEADER_LOGOUT_EVENT';
 
 export var WSHeader = function (_Component) {
   _inherits(WSHeader, _Component);
@@ -31,6 +33,14 @@ export var WSHeader = function (_Component) {
       userUID: null
     };
     _this.state.lang = _this.getLanguage(_this.state);
+    _this.eventListenersCallback = {
+      login: function login() {
+        return _this.login();
+      },
+      logout: function logout() {
+        return _this.logout();
+      }
+    };
     return _this;
   }
 
@@ -38,6 +48,8 @@ export var WSHeader = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       var _this2 = this;
+
+      this.attachEventListeners();
 
       getUserData(this.props.userServiceUrl, this.props.tokenInfoUrl, urlAtStart).then(function (_ref) {
         var userName = _ref.userName,
@@ -52,6 +64,11 @@ export var WSHeader = function (_Component) {
       }, function () {
         _this2.propagateLoginStatusChange(false);
       });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.detachEventListeners();
     }
   }, {
     key: 'getLanguage',
@@ -71,20 +88,37 @@ export var WSHeader = function (_Component) {
       }
     }
   }, {
+    key: 'attachEventListeners',
+    value: function attachEventListeners() {
+      window.addEventListener(LOGOUT_EVENT, this.eventListenersCallback.logout);
+      window.addEventListener(LOGIN_EVENT, this.eventListenersCallback.login);
+    }
+  }, {
+    key: 'detachEventListeners',
+    value: function detachEventListeners() {
+      window.removeEventListener(LOGOUT_EVENT, this.eventListenersCallback.logout);
+      window.removeEventListener(LOGIN_EVENT, this.eventListenersCallback.login);
+    }
+  }, {
     key: 'login',
     value: function login() {
-      _login(this.props.clientId, this.props.redirectUrl);
+      if (!this.state.loggedIn) {
+        _login(this.props.clientId, this.props.redirectUrl);
+      }
     }
   }, {
     key: 'logout',
     value: function logout() {
-      _logout();
-      this.setState({
-        loggedIn: false,
-        userName: null,
-        userEmail: null,
-        userUID: null
-      });
+      if (this.state.loggedIn) {
+        _logout();
+        this.propagateLoginStatusChange(false);
+        this.setState({
+          loggedIn: false,
+          userName: null,
+          userEmail: null,
+          userUID: null
+        });
+      }
     }
   }, {
     key: 'propagateLoginStatusChange',

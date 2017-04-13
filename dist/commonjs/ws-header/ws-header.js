@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.WSHeader = undefined;
+exports.WSHeader = exports.LOGOUT_EVENT = exports.LOGIN_EVENT = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -24,6 +24,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var urlAtStart = window.location.href;
+var LOGIN_EVENT = exports.LOGIN_EVENT = 'WS_HEADER_LOGIN_EVENT';
+var LOGOUT_EVENT = exports.LOGOUT_EVENT = 'WS_HEADER_LOGOUT_EVENT';
 
 var WSHeader = exports.WSHeader = function (_Component) {
   _inherits(WSHeader, _Component);
@@ -45,6 +47,14 @@ var WSHeader = exports.WSHeader = function (_Component) {
       userUID: null
     };
     _this.state.lang = _this.getLanguage(_this.state);
+    _this.eventListenersCallback = {
+      login: function login() {
+        return _this.login();
+      },
+      logout: function logout() {
+        return _this.logout();
+      }
+    };
     return _this;
   }
 
@@ -52,6 +62,8 @@ var WSHeader = exports.WSHeader = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       var _this2 = this;
+
+      this.attachEventListeners();
 
       (0, _authentication.getUserData)(this.props.userServiceUrl, this.props.tokenInfoUrl, urlAtStart).then(function (_ref) {
         var userName = _ref.userName,
@@ -66,6 +78,11 @@ var WSHeader = exports.WSHeader = function (_Component) {
       }, function () {
         _this2.propagateLoginStatusChange(false);
       });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.detachEventListeners();
     }
   }, {
     key: 'getLanguage',
@@ -85,20 +102,37 @@ var WSHeader = exports.WSHeader = function (_Component) {
       }
     }
   }, {
+    key: 'attachEventListeners',
+    value: function attachEventListeners() {
+      window.addEventListener(LOGOUT_EVENT, this.eventListenersCallback.logout);
+      window.addEventListener(LOGIN_EVENT, this.eventListenersCallback.login);
+    }
+  }, {
+    key: 'detachEventListeners',
+    value: function detachEventListeners() {
+      window.removeEventListener(LOGOUT_EVENT, this.eventListenersCallback.logout);
+      window.removeEventListener(LOGIN_EVENT, this.eventListenersCallback.login);
+    }
+  }, {
     key: 'login',
     value: function login() {
-      (0, _authentication.login)(this.props.clientId, this.props.redirectUrl);
+      if (!this.state.loggedIn) {
+        (0, _authentication.login)(this.props.clientId, this.props.redirectUrl);
+      }
     }
   }, {
     key: 'logout',
     value: function logout() {
-      (0, _authentication.logout)();
-      this.setState({
-        loggedIn: false,
-        userName: null,
-        userEmail: null,
-        userUID: null
-      });
+      if (this.state.loggedIn) {
+        (0, _authentication.logout)();
+        this.propagateLoginStatusChange(false);
+        this.setState({
+          loggedIn: false,
+          userName: null,
+          userEmail: null,
+          userUID: null
+        });
+      }
     }
   }, {
     key: 'propagateLoginStatusChange',

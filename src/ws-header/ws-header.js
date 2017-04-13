@@ -2,6 +2,8 @@ import {React, Component} from '../imports';
 import {login, logout, getUserData} from './authentication';
 import WSHeaderNavLink from './ws-header-nav-link';
 const urlAtStart = window.location.href;
+export const LOGIN_EVENT = 'WS_HEADER_LOGIN_EVENT';
+export const LOGOUT_EVENT = 'WS_HEADER_LOGOUT_EVENT';
 
 /**
  * The default Header to be used everywhere
@@ -39,15 +41,22 @@ export class WSHeader extends Component {
       userUID: null
     };
     this.state.lang = this.getLanguage(this.state);
+    this.eventListenersCallback = {
+      login: () => this.login(),
+      logout: () => this.logout()
+    };
   }
 
   /**
    *
    * Lifecycle: componentDidMount handler for component
    * Will check if the user is logged in already and query user data
+   * Attach the login and logout event listeners
    * @returns {void};
    */
   componentDidMount() {
+    this.attachEventListeners();
+
     getUserData(this.props.userServiceUrl, this.props.tokenInfoUrl, urlAtStart)
       .then(({userName, userEmail, userUID, accessToken}) => {
         this.setState({
@@ -57,6 +66,16 @@ export class WSHeader extends Component {
       }, () => {
         this.propagateLoginStatusChange(false);
       });
+  }
+
+  /**
+   *
+   * Lifecycle: componentWillUnmount handler for component
+   * Remove the login and logout event listeners
+   * @returns {void};
+   */
+  componentWillUnmount() {
+    this.detachEventListeners();
   }
 
   /**
@@ -84,12 +103,24 @@ export class WSHeader extends Component {
     }
   }
 
+  attachEventListeners() {
+    window.addEventListener(LOGOUT_EVENT, this.eventListenersCallback.logout);
+    window.addEventListener(LOGIN_EVENT, this.eventListenersCallback.login);
+  }
+
+  detachEventListeners() {
+    window.removeEventListener(LOGOUT_EVENT, this.eventListenersCallback.logout);
+    window.removeEventListener(LOGIN_EVENT, this.eventListenersCallback.login);
+  }
+
   /**
    * Start the zalando implicit oauth flow by redirecting to the auth portal
    * @returns {void};
    */
   login() {
-    login(this.props.clientId, this.props.redirectUrl);
+    if (!this.state.loggedIn) {
+      login(this.props.clientId, this.props.redirectUrl);
+    }
   }
 
   /**
@@ -97,13 +128,16 @@ export class WSHeader extends Component {
    * @returns {void};
    */
   logout() {
-    logout();
-    this.setState({
-      loggedIn: false,
-      userName: null,
-      userEmail: null,
-      userUID: null
-    });
+    if (this.state.loggedIn) {
+      logout();
+      this.propagateLoginStatusChange(false);
+      this.setState({
+        loggedIn: false,
+        userName: null,
+        userEmail: null,
+        userUID: null
+      });
+    }
   }
 
   /**

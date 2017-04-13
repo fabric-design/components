@@ -101,14 +101,13 @@ define(['exports'], function (exports) {
 
   function getUserData(userServiceUrl, tokenInfoUrl, urlAtStart) {
     return new Promise(function (resolve, reject) {
-      var token = getToken(urlAtStart);
-      if (!token) {
+      var accessToken = getToken(urlAtStart);
+      if (!accessToken) {
         reject();
         return;
       }
-      validateToken(tokenInfoUrl, token).then(function (_ref) {
-        var userUID = _ref.userUID,
-            accessToken = _ref.accessToken;
+      validateToken(tokenInfoUrl, accessToken).then(function (_ref) {
+        var userUID = _ref.userUID;
 
         requestUser(userServiceUrl, userUID, accessToken).then(function (_ref2) {
           var userName = _ref2.userName,
@@ -152,8 +151,7 @@ define(['exports'], function (exports) {
       request.onload = function tokenRequestSuccess() {
         var data = JSON.parse(this.responseText);
         resolve({
-          userUID: data.uid,
-          accessToken: data.access_token
+          userUID: data.uid
         });
       };
       request.onerror = reject;

@@ -4,7 +4,7 @@ define(['exports', '../imports', './authentication', './ws-header-nav-link'], fu
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.WSHeader = undefined;
+  exports.WSHeader = exports.LOGOUT_EVENT = exports.LOGIN_EVENT = undefined;
 
   var _wsHeaderNavLink2 = _interopRequireDefault(_wsHeaderNavLink);
 
@@ -63,6 +63,8 @@ define(['exports', '../imports', './authentication', './ws-header-nav-link'], fu
   }
 
   var urlAtStart = window.location.href;
+  var LOGIN_EVENT = exports.LOGIN_EVENT = 'WS_HEADER_LOGIN_EVENT';
+  var LOGOUT_EVENT = exports.LOGOUT_EVENT = 'WS_HEADER_LOGOUT_EVENT';
 
   var WSHeader = exports.WSHeader = function (_Component) {
     _inherits(WSHeader, _Component);
@@ -84,6 +86,14 @@ define(['exports', '../imports', './authentication', './ws-header-nav-link'], fu
         userUID: null
       };
       _this.state.lang = _this.getLanguage(_this.state);
+      _this.eventListenersCallback = {
+        login: function login() {
+          return _this.login();
+        },
+        logout: function logout() {
+          return _this.logout();
+        }
+      };
       return _this;
     }
 
@@ -91,6 +101,8 @@ define(['exports', '../imports', './authentication', './ws-header-nav-link'], fu
       key: 'componentDidMount',
       value: function componentDidMount() {
         var _this2 = this;
+
+        this.attachEventListeners();
 
         (0, _authentication.getUserData)(this.props.userServiceUrl, this.props.tokenInfoUrl, urlAtStart).then(function (_ref) {
           var userName = _ref.userName,
@@ -105,6 +117,11 @@ define(['exports', '../imports', './authentication', './ws-header-nav-link'], fu
         }, function () {
           _this2.propagateLoginStatusChange(false);
         });
+      }
+    }, {
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {
+        this.detachEventListeners();
       }
     }, {
       key: 'getLanguage',
@@ -124,20 +141,37 @@ define(['exports', '../imports', './authentication', './ws-header-nav-link'], fu
         }
       }
     }, {
+      key: 'attachEventListeners',
+      value: function attachEventListeners() {
+        window.addEventListener(LOGOUT_EVENT, this.eventListenersCallback.logout);
+        window.addEventListener(LOGIN_EVENT, this.eventListenersCallback.login);
+      }
+    }, {
+      key: 'detachEventListeners',
+      value: function detachEventListeners() {
+        window.removeEventListener(LOGOUT_EVENT, this.eventListenersCallback.logout);
+        window.removeEventListener(LOGIN_EVENT, this.eventListenersCallback.login);
+      }
+    }, {
       key: 'login',
       value: function login() {
-        (0, _authentication.login)(this.props.clientId, this.props.redirectUrl);
+        if (!this.state.loggedIn) {
+          (0, _authentication.login)(this.props.clientId, this.props.redirectUrl);
+        }
       }
     }, {
       key: 'logout',
       value: function logout() {
-        (0, _authentication.logout)();
-        this.setState({
-          loggedIn: false,
-          userName: null,
-          userEmail: null,
-          userUID: null
-        });
+        if (this.state.loggedIn) {
+          (0, _authentication.logout)();
+          this.propagateLoginStatusChange(false);
+          this.setState({
+            loggedIn: false,
+            userName: null,
+            userEmail: null,
+            userUID: null
+          });
+        }
       }
     }, {
       key: 'propagateLoginStatusChange',

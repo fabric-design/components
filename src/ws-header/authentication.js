@@ -171,13 +171,13 @@ function setSessionState() {
  */
 export function getUserData(userServiceUrl, tokenInfoUrl, urlAtStart) {
   return new Promise((resolve, reject) => {
-    const token = getToken(urlAtStart);
-    if (!token) {
+    const accessToken = getToken(urlAtStart);
+    if (!accessToken) {
       reject();
       return;
     }
-    validateToken(tokenInfoUrl, token)
-      .then(({userUID, accessToken}) => {
+    validateToken(tokenInfoUrl, accessToken)
+      .then(({userUID}) => {
         requestUser(userServiceUrl, userUID, accessToken)
           .then(({userName, userEmail}) => {
             resolve({
@@ -241,8 +241,7 @@ function validateToken(tokenInfoUrl, token) {
     request.onload = function tokenRequestSuccess() {
       const data = JSON.parse(this.responseText);
       resolve({
-        userUID: data.uid,
-        accessToken: data.access_token
+        userUID: data.uid
       });
     };
     request.onerror = reject;

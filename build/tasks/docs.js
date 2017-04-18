@@ -42,10 +42,11 @@ gulp.task('build-jsdoc-to-md', () => {
     });
   });
   const writeMdFiles = createdMdDocs.map(mdDoc => {
-    const folder = `${paths.docsOutput}${mdDoc.folder}`;
-    const filePath = mdDoc.file !== 'index' ? `${paths.docsOutput}${mdDoc.folder}/${mdDoc.file}.md` : `${paths.docsOutput}${mdDoc.file}.md`;
-    if (!fs.existsSync(folder)) {
-      fs.mkdirSync(folder);
+    const rootApiFolder = paths.docsOutput.concat('/api/');
+    const componentFolder = `${rootApiFolder}${mdDoc.folder}`;
+    const filePath = mdDoc.file !== 'index' ? `${componentFolder}/${mdDoc.file}.md` : `${rootApiFolder}${mdDoc.file}.md`;
+    if (!fs.existsSync(componentFolder)) {
+      fs.mkdirSync(componentFolder);
     }
     return fs.writeFile(filePath, mdDoc.markdown);
   });

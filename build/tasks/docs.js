@@ -24,6 +24,7 @@ gulp.task('build-jsdoc-to-md', () => {
   const files = glob.sync(paths.source); // glob allows pattern matching for filenames
   const regexFileName = /((\w)+(\-)*(\w))+(?=.js)/g;
   const createdMdDocs = [];
+  const folderNamesSet = new Set();
   files
   .filter(filename => {
     const name = filename.match(regexFileName)[0];
@@ -34,23 +35,44 @@ gulp.task('build-jsdoc-to-md', () => {
     const filenameWithoutExt = filename.match(regexFileName)[0];
     const jsDocObj = docjs.buildSync([filename], {shallow: true});
     return docjs.formats.md(jsDocObj, {}, (err, output) => {
+      const folderName = filenameWithoutExt !== 'index' ? splittedName[splittedName.length - 2] : '/';
+      folderNamesSet.add(folderName);
       createdMdDocs.push({
         file: filenameWithoutExt,
-        folder: filenameWithoutExt !== 'index' ? splittedName[splittedName.length - 2] : '',  // get the parent folder of file
+        folder: folderName,  // get the parent folder of file
         markdown: output
       });
     });
   });
-  const writeMdFiles = createdMdDocs.map(mdDoc => {
-    const rootApiFolder = paths.docsOutput.concat('/api/');
-    const componentFolder = `${rootApiFolder}${mdDoc.folder}`;
-    const filePath = mdDoc.file !== 'index' ? `${componentFolder}/${mdDoc.file}.md` : `${rootApiFolder}${mdDoc.file}.md`;
+  // Reduce Array to (unique) Folder values ✅
+  // iterate over folders ✅
+  // for each folder get all elements in createdMdDocs ✅
+  // Write "#Foldername"✅
+  // concat the markdowns ✅
+  // writeFile(foldername.md)
+  // How to handle index.md ??
+
+  const createMdFiles = Array.from(folderNamesSet.values()).map(folder => {
+    const rootApiFolder = paths.docsOutput.concat('api/');
+    const componentFolder = folder.length > 1 ? `${rootApiFolder}${folder}/` : rootApiFolder;
+    const filePath = folder.length > 1 ? `${componentFolder}${folder}.md` : `${rootApiFolder}index.md`;
+    // get all components in a folder
+    const components = createdMdDocs.filter(entry => entry.folder === folder);
+/*    const getComponentName = (string) => {
+      const firstLetter = string.charAt(0).toUpperCase();
+      const fourthLetter = string.charAt(4).toUpperCase();
+      return `${firstLetter}${string.substring(1,2)}${fourthLetter}${string.substring(5)}`;
+    };*/
+    const rootMarkdown = `#${folder.toUpperCase()}\n`;
+    const markdown = rootMarkdown.concat(components.reduce((prev, next) => next.markdown.concat(prev), ''));
     if (!fs.existsSync(componentFolder)) {
       fs.mkdirSync(componentFolder);
     }
-    return fs.writeFile(filePath, mdDoc.markdown);
+    return fs.writeFile(filePath, markdown);
   });
-  return Promise.all(writeMdFiles);
+  return Promise.all(createMdFiles);
 });
+
+
 
 gulp.task('generate-docs', done => runSequence('clean-docs', 'create-docs-folder', 'build-jsdoc-to-md', done));

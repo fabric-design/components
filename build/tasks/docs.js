@@ -44,26 +44,15 @@ gulp.task('build-jsdoc-to-md', () => {
       });
     });
   });
-  // Reduce Array to (unique) Folder values ✅
-  // iterate over folders ✅
-  // for each folder get all elements in createdMdDocs ✅
-  // Write "#Foldername"✅
-  // concat the markdowns ✅
-  // writeFile(foldername.md)
-  // How to handle index.md ??
-
   const createMdFiles = Array.from(folderNamesSet.values()).map(folder => {
     const rootApiFolder = paths.docsOutput.concat('api/');
     const componentFolder = folder.length > 1 ? `${rootApiFolder}${folder}/` : rootApiFolder;
     const filePath = folder.length > 1 ? `${componentFolder}${folder}.md` : `${rootApiFolder}index.md`;
     // get all components in a folder
     const components = createdMdDocs.filter(entry => entry.folder === folder);
-/*    const getComponentName = (string) => {
-      const firstLetter = string.charAt(0).toUpperCase();
-      const fourthLetter = string.charAt(4).toUpperCase();
-      return `${firstLetter}${string.substring(1,2)}${fourthLetter}${string.substring(5)}`;
-    };*/
-    const rootMarkdown = `#${folder.toUpperCase()}\n`;
+    // helper method for transforming 'ws-component-name' into 'Ws
+    const getComponentName = string => string.split('-').map(elem => elem.charAt(0).toUpperCase().concat(elem.substring(1))).join('');
+    const rootMarkdown = `#${getComponentName(folder)}\n`;
     const markdown = rootMarkdown.concat(components.reduce((prev, next) => next.markdown.concat(prev), ''));
     if (!fs.existsSync(componentFolder)) {
       fs.mkdirSync(componentFolder);

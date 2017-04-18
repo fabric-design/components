@@ -52,7 +52,7 @@ gulp.task('build-jsdoc-to-md', () => {
     const components = createdMdDocs.filter(entry => entry.folder === folder);
     // helper method for transforming 'ws-component-name' into 'Ws
     const getComponentName = string => string.split('-').map(elem => elem.charAt(0).toUpperCase().concat(elem.substring(1))).join('');
-    const rootMarkdown = `#${getComponentName(folder)}\n`;
+    const rootMarkdown = `# ${getComponentName(folder)}\n`;
     const markdown = rootMarkdown.concat(components.reduce((prev, next) => next.markdown.concat(prev), ''));
     if (!fs.existsSync(componentFolder)) {
       fs.mkdirSync(componentFolder);

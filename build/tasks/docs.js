@@ -15,6 +15,11 @@ gulp.task('clean-docs', () =>
     .pipe(vinylPaths(del))
 );
 
+gulp.task('create-docs-folder', () => {
+  const folder = paths.docsOutput;
+  return !fs.existsSync(folder) ? fs.mkdirSync(folder) : false;
+});
+
 gulp.task('build-jsdoc-to-md', () => {
   const files = glob.sync(paths.source); // glob allows pattern matching for filenames
   const regexFileName = /((\w)+(\-)*(\w))+(?=.js)/g;
@@ -47,4 +52,4 @@ gulp.task('build-jsdoc-to-md', () => {
   return Promise.all(writeMdFiles);
 });
 
-gulp.task('generate-docs', done => runSequence('clean-docs', 'build-jsdoc-to-md', done));
+gulp.task('generate-docs', done => runSequence('clean-docs', 'create-docs-folder', 'build-jsdoc-to-md', done));

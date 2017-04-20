@@ -36,6 +36,22 @@ export class DropdownInput extends Component {
   }
 
   /**
+   * Prevent default change event to bubble up
+   * @returns {void}
+   */
+  componentDidMount() {
+    this.input.addEventListener('change', event => event.stopPropagation());
+  }
+
+  /**
+   * Prevent default change event to bubble up
+   * @returns {void}
+   */
+  componentWillUnmount() {
+    this.input.removeEventListener('change', event => event.stopPropagation());
+  }
+
+  /**
    * Call submit on enter key
    * @param {KeyboardEvent} event JavaScript Event object
    * @returns {Boolean}
@@ -55,7 +71,7 @@ export class DropdownInput extends Component {
    * @returns {void}
    */
   onChange(event) {
-    this.state.value = event.target.value;
+    this.setState({value: event.target.value});
   }
 
   /**
@@ -86,7 +102,8 @@ export class DropdownInput extends Component {
             defaultValue={this.state.value}
             placeholder={this.props.placeholder}
             onKeyDown={event => this.onKeyDown(event)}
-            onChange={event => this.onChange(event)}
+            onBlur={event => this.onChange(event)}
+            ref={element => { this.input = element; }}
           />
         </li>
         <li className="dropdown-submit" key="submit">

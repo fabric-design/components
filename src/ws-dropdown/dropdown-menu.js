@@ -59,12 +59,32 @@ export class DropdownMenu extends Component {
   }
 
   /**
+   * Prevent default change event to bubble up
+   * @returns {void}
+   */
+  componentDidMount() {
+    if (this.input) {
+      this.input.addEventListener('change', event => event.stopPropagation());
+    }
+  }
+
+  /**
    * Send the new height of this menu after update to the parent.
    * This will be called when updateFilter did set the new state
    * @returns {void}
    */
   componentDidUpdate() {
     this.props.handle('change-size', this.getHeight());
+  }
+
+  /**
+   * Prevent default change event to bubble up
+   * @returns {void}
+   */
+  componentWillUnmount() {
+    if (this.input) {
+      this.input.removeEventListener('change', event => event.stopPropagation());
+    }
   }
 
   /**
@@ -273,6 +293,7 @@ export class DropdownMenu extends Component {
               defaultValue={this.state.filter}
               placeholder={this.props.placeholder}
               onKeyUp={event => this.updateFilter(event)}
+              ref={element => { this.input = element; }}
             />
           </li>
         }

@@ -148,7 +148,6 @@ export class WSDropdown extends Component {
     if (type === 'change') {
       this.close();
       this.setValue(data);
-      this.element.dispatchEvent(new CustomEvent('change', {detail: data}));
     } else if (type === 'change-size') {
       this.adjustSize(data);
     }

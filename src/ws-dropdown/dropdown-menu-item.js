@@ -1,5 +1,5 @@
 import {React, Component} from '../imports';
-import {WSDropdownMenu} from './ws-dropdown-menu';
+import {DropdownMenu} from './dropdown-menu';
 
 /**
  * This class renders a list item inside a dropdown menu. Since the wrapper menu is missing this class is pretty
@@ -15,7 +15,7 @@ import {WSDropdownMenu} from './ws-dropdown-menu';
  *     disabled: Boolean // Adds thr class .is-disabled to the .dropdown-item
  * }
  */
-export class WSDropdownItem extends Component {
+export class DropdownMenuItem extends Component {
 
   /**
    * @type {Object}
@@ -114,9 +114,15 @@ export class WSDropdownItem extends Component {
     anchorClass += this.state.selected ? ' is-active' : '';
     anchorClass += this.state.focused ? ' is-focused' : '';
     anchorClass += this.state.disabled ? ' is-disabled' : '';
+    let itemClass = 'dropdown-item';
+    itemClass += this.props.isParent ? ' dropdown-parent-item' : '';
+    itemClass += this.state.children && !this.props.isParent ? ' has-children' : '';
 
     return (
-      <li className="dropdown-item" onClick={event => this.onClick(event)}>
+      <li
+        className={itemClass}
+        onClick={event => this.onClick(event)}
+      >
         <a className={anchorClass} href={this.state.href}>
           {(this.props.icon || this.state.icon) &&
             <i className={`icon ${this.props.icon || this.state.icon}`} />
@@ -124,7 +130,7 @@ export class WSDropdownItem extends Component {
           {this.state.label}
         </a>
         {!this.props.isParent && this.state.children &&
-          <WSDropdownMenu
+          <DropdownMenu
             items={this.state.children}
             parent={this.state}
             ref={element => { this.menu = element; }}

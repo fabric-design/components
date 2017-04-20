@@ -1,4 +1,4 @@
-define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _imports, _wsDropdownMenu) {
+define(['exports', '../imports', './dropdown-menu', './dropdown-input'], function (exports, _imports, _dropdownMenu, _dropdownInput) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -84,11 +84,10 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
         }
       });
 
-      var arrayValue = props.value ? [props.value] : [];
       _this.opened = false;
       _this.state = {
         text: props.text || props.value,
-        value: _this.enrichItems(Array.isArray(props.value) ? props.value : arrayValue),
+        value: _this.enrichItems(props.value),
         items: _this.enrichItems(props.items)
       };
 
@@ -143,7 +142,7 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
               return item.label;
             }).join(', ');
           } else {
-            text = value.label;
+            text = value.label || value;
           }
         }
         this.setState({ text: text, value: value });
@@ -155,7 +154,16 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
       value: function enrichItems(items) {
         var _this2 = this;
 
-        return items.map(function (item) {
+        var itemsToWrap = items;
+
+        if (!Array.isArray(items)) {
+          if (this.props.inputOnly) {
+            return items;
+          }
+
+          itemsToWrap = items ? [items] : [];
+        }
+        return itemsToWrap.map(function (item) {
           var enriched = (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' ? item : { label: item };
           if (enriched.children) {
             enriched.children = _this2.enrichItems(enriched.children);
@@ -215,64 +223,108 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
         item.classList.add(animationClass);
       }
     }, {
-      key: 'render',
-      value: function render() {
+      key: 'renderTrigger',
+      value: function renderTrigger() {
         var _this4 = this;
 
         var icon = void 0;
         if (this.props.icon) {
           icon = _imports.React.createElement('span', { className: 'icon ' + this.props.icon });
         }
+        switch (this.props.type) {
+          case 'anchor':
+            return _imports.React.createElement(
+              'a',
+              { onClick: function onClick() {
+                  return _this4.open();
+                } },
+              icon,
+              ' ',
+              this.state.text
+            );
+          case 'button':
+            return _imports.React.createElement(
+              'button',
+              { onClick: function onClick() {
+                  return _this4.open();
+                } },
+              icon,
+              ' ',
+              this.state.text
+            );
+          case 'select':
+            return _imports.React.createElement(
+              'div',
+              { className: 'select-box', onClick: function onClick() {
+                  return _this4.open();
+                } },
+              icon,
+              ' ',
+              this.state.text
+            );
+          case 'icon':
+          default:
+            return _imports.React.createElement(
+              'a',
+              { onClick: function onClick() {
+                  return _this4.open();
+                } },
+              icon
+            );
+        }
+      }
+    }, {
+      key: 'renderContent',
+      value: function renderContent() {
+        var _this5 = this;
+
+        if (this.props.inputOnly) {
+          return _imports.React.createElement(_dropdownInput.DropdownInput, {
+            value: this.state.value,
+            placeholder: this.props.placeholder,
+            handle: this.handlePropagation,
+            ref: function ref(element) {
+              _this5.dropdownMenu = element;
+            }
+          });
+        }
+        return _imports.React.createElement(_dropdownMenu.DropdownMenu, {
+          items: this.state.items,
+          value: this.state.value,
+          limit: this.props.limit,
+          filterable: this.props.filterable,
+          filter: this.props.filter,
+          placeholder: this.props.placeholder,
+          handle: this.handlePropagation,
+          ref: function ref(element) {
+            _this5.dropdownMenu = element;
+          }
+        });
+      }
+    }, {
+      key: 'render',
+      value: function render() {
+        var _this6 = this;
+
         return _imports.React.createElement(
           'div',
           { className: 'dropdown', ref: function ref(element) {
-              if (element) _this4.element = element;
+              if (element) {
+                _this6.element = element;
+              }
             } },
-          this.props.type === 'anchor' && _imports.React.createElement(
-            'a',
-            { onClick: function onClick() {
-                return _this4.open();
-              } },
-            icon,
-            ' ',
-            this.state.text
-          ),
-          this.props.type === 'button' && _imports.React.createElement(
-            'button',
-            { onClick: function onClick() {
-                return _this4.open();
-              } },
-            icon,
-            ' ',
-            this.state.text
-          ),
-          this.props.type === 'select' && _imports.React.createElement(
-            'div',
-            { className: 'select-box', onClick: function onClick() {
-                return _this4.open();
-              } },
-            icon,
-            ' ',
-            this.state.text
-          ),
+          this.renderTrigger(),
           _imports.React.createElement(
             'div',
             {
               className: 'dropdown-container ' + this.props.orientation,
               ref: function ref(element) {
-                if (element) _this4.dropdownContainer = element;
-              } },
-            _imports.React.createElement(_wsDropdownMenu.WSDropdownMenu, {
-              items: this.state.items,
-              value: this.state.value,
-              limit: this.props.limit,
-              filterable: this.props.filterable,
-              filter: this.props.filter,
-              handle: this.handlePropagation,
-              ref: function ref(element) {
-                _this4.dropdownMenu = element;
+                if (element) {
+                  _this6.dropdownContainer = element;
+                }
               }
-            })
+            },
+            this.renderContent()
           ),
           _imports.React.createElement('div', { className: 'dropdown-arrow' })
         );
@@ -291,10 +343,12 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
       icon: '',
       items: [],
       multiple: false,
+      inputOnly: false,
       filterable: false,
       filter: '',
       limit: 10,
       orientation: 'left',
+      placeholder: '',
       value: null
     }
   });
@@ -302,15 +356,17 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
     enumerable: true,
     writable: true,
     value: {
-      type: _imports.React.PropTypes.oneOf(['anchor', 'button', 'select']),
+      type: _imports.React.PropTypes.oneOf(['anchor', 'button', 'select', 'icon']),
       text: _imports.React.PropTypes.string,
       icon: _imports.React.PropTypes.string,
       items: _imports.React.PropTypes.array,
       multiple: _imports.React.PropTypes.bool,
       filterable: _imports.React.PropTypes.bool,
+      inputOnly: _imports.React.PropTypes.bool,
       filter: _imports.React.PropTypes.string,
       limit: _imports.React.PropTypes.number,
-      orientation: _imports.React.PropTypes.oneOf(['left', 'right'])
+      orientation: _imports.React.PropTypes.oneOf(['left', 'right']),
+      placeholder: _imports.React.PropTypes.string
     }
   });
   Object.defineProperty(WSDropdown, 'childContextTypes', {

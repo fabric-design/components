@@ -1,7 +1,7 @@
-System.register(['../imports', './ws-dropdown-menu'], function (_export, _context) {
+System.register(['../imports', './dropdown-menu'], function (_export, _context) {
   "use strict";
 
-  var React, Component, WSDropdownMenu, _createClass, WSDropdownItem;
+  var React, Component, DropdownMenu, _createClass, DropdownMenuItem;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -37,8 +37,8 @@ System.register(['../imports', './ws-dropdown-menu'], function (_export, _contex
     setters: [function (_imports) {
       React = _imports.React;
       Component = _imports.Component;
-    }, function (_wsDropdownMenu) {
-      WSDropdownMenu = _wsDropdownMenu.WSDropdownMenu;
+    }, function (_dropdownMenu) {
+      DropdownMenu = _dropdownMenu.DropdownMenu;
     }],
     execute: function () {
       _createClass = function () {
@@ -59,13 +59,13 @@ System.register(['../imports', './ws-dropdown-menu'], function (_export, _contex
         };
       }();
 
-      _export('WSDropdownItem', WSDropdownItem = function (_Component) {
-        _inherits(WSDropdownItem, _Component);
+      _export('DropdownMenuItem', DropdownMenuItem = function (_Component) {
+        _inherits(DropdownMenuItem, _Component);
 
-        function WSDropdownItem(props, context) {
-          _classCallCheck(this, WSDropdownItem);
+        function DropdownMenuItem(props, context) {
+          _classCallCheck(this, DropdownMenuItem);
 
-          var _this = _possibleConstructorReturn(this, (WSDropdownItem.__proto__ || Object.getPrototypeOf(WSDropdownItem)).call(this, props, context));
+          var _this = _possibleConstructorReturn(this, (DropdownMenuItem.__proto__ || Object.getPrototypeOf(DropdownMenuItem)).call(this, props, context));
 
           Object.defineProperty(_this, 'handlePropagation', {
             enumerable: true,
@@ -80,7 +80,7 @@ System.register(['../imports', './ws-dropdown-menu'], function (_export, _contex
           return _this;
         }
 
-        _createClass(WSDropdownItem, [{
+        _createClass(DropdownMenuItem, [{
           key: 'componentWillReceiveProps',
           value: function componentWillReceiveProps(props) {
             this.state = props.item;
@@ -114,19 +114,25 @@ System.register(['../imports', './ws-dropdown-menu'], function (_export, _contex
             anchorClass += this.state.selected ? ' is-active' : '';
             anchorClass += this.state.focused ? ' is-focused' : '';
             anchorClass += this.state.disabled ? ' is-disabled' : '';
+            var itemClass = 'dropdown-item';
+            itemClass += this.props.isParent ? ' dropdown-parent-item' : '';
+            itemClass += this.state.children && !this.props.isParent ? ' has-children' : '';
 
             return React.createElement(
               'li',
-              { className: 'dropdown-item', onClick: function onClick(event) {
+              {
+                className: itemClass,
+                onClick: function onClick(event) {
                   return _this2.onClick(event);
-                } },
+                }
+              },
               React.createElement(
                 'a',
                 { className: anchorClass, href: this.state.href },
                 (this.props.icon || this.state.icon) && React.createElement('i', { className: 'icon ' + (this.props.icon || this.state.icon) }),
                 this.state.label
               ),
-              !this.props.isParent && this.state.children && React.createElement(WSDropdownMenu, {
+              !this.props.isParent && this.state.children && React.createElement(DropdownMenu, {
                 items: this.state.children,
                 parent: this.state,
                 ref: function ref(element) {
@@ -138,12 +144,12 @@ System.register(['../imports', './ws-dropdown-menu'], function (_export, _contex
           }
         }]);
 
-        return WSDropdownItem;
+        return DropdownMenuItem;
       }(Component));
 
-      _export('WSDropdownItem', WSDropdownItem);
+      _export('DropdownMenuItem', DropdownMenuItem);
 
-      Object.defineProperty(WSDropdownItem, 'defaultProps', {
+      Object.defineProperty(DropdownMenuItem, 'defaultProps', {
         enumerable: true,
         writable: true,
         value: {
@@ -153,7 +159,7 @@ System.register(['../imports', './ws-dropdown-menu'], function (_export, _contex
           handle: function handle() {}
         }
       });
-      Object.defineProperty(WSDropdownItem, 'propTypes', {
+      Object.defineProperty(DropdownMenuItem, 'propTypes', {
         enumerable: true,
         writable: true,
         value: {
@@ -163,7 +169,7 @@ System.register(['../imports', './ws-dropdown-menu'], function (_export, _contex
           handle: React.PropTypes.func
         }
       });
-      Object.defineProperty(WSDropdownItem, 'contextTypes', {
+      Object.defineProperty(DropdownMenuItem, 'contextTypes', {
         enumerable: true,
         writable: true,
         value: {

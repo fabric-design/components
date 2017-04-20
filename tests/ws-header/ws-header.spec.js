@@ -1,4 +1,4 @@
-import {React, render} from '../../src/imports';
+import {React, render} from 'imports';
 import {WSHeader} from '../../src/index';
 import jasmineEnzyme from 'jasmine-enzyme';
 import { shallow, mount } from 'enzyme';

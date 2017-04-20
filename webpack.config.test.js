@@ -1,5 +1,5 @@
 const path = require('path');
-
+const webpack = require('webpack');
 module.exports = {
   devtool: 'inline-source-map', //just do inline source maps instead of the default
   module: {
@@ -27,9 +27,13 @@ module.exports = {
     }]
   },
   externals: {
-    'cheerio': 'window',
     'react/addons': true,
     'react/lib/ExecutionEnvironment': true,
     'react/lib/ReactContext': true
+  },
+  resolve: {
+    alias: {
+      imports: path.resolve(__dirname, 'src/imports.js')
+    }
   }
 };

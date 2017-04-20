@@ -90,6 +90,7 @@
     "preact": "7.2.1",
     "preact-compat": "3.14.3",
     "react": "15.5.4",
+    "react-addons-test-utils": "15.5.1",
     "react-dom": "15.5.4",
     "react-test-renderer": "15.5.4",
     "run-sequence": "1.2.2",

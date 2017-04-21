@@ -87,6 +87,11 @@ System.register(['../imports', './authentication', './ws-header-nav-link'], func
             lang: null,
             languageStorageId: 'ws-language',
             loggedIn: null,
+            id: null,
+            redirectUrl: null,
+            userServiceUrl: null,
+            tokenInfoUrl: '',
+            clientId: null,
             availableLanguages: ['de', 'en'],
             userName: null,
             userEmail: null,
@@ -212,7 +217,7 @@ System.register(['../imports', './authentication', './ws-header-nav-link'], func
                   React.createElement(
                     'a',
                     { href: '/' },
-                    this.props.logoUrl ? React.createElement('img', { className: 'logo', alt: this.props.title + '_logo', src: this.props.logoUrl }) : null,
+                    this.props.logoUrl && React.createElement('img', { className: 'logo', alt: this.props.title + '_logo', src: this.props.logoUrl }),
                     React.createElement(
                       'span',
                       null,
@@ -225,13 +230,13 @@ System.register(['../imports', './authentication', './ws-header-nav-link'], func
                     React.createElement(
                       'ul',
                       { id: 'js-navigation-menu', className: 'navigation-menu show' },
-                      this.state.isLoggedIn && this.state.userName ? React.createElement(
+                      this.state.isLoggedIn && this.state.userName && React.createElement(
                         'ul',
                         null,
-                        this.props.links ? this.props.links.map(function (link, index) {
+                        this.props.links && this.props.links.map(function (link, index) {
                           return React.createElement(WSHeaderNavLink, { link: link, key: index });
-                        }) : null
-                      ) : null,
+                        })
+                      ),
                       React.createElement(
                         'li',
                         { className: 'nav-link more dropdown-menu' },
@@ -286,7 +291,7 @@ System.register(['../imports', './authentication', './ws-header-nav-link'], func
                           React.createElement(
                             'a',
                             { className: 'auto-size', id: 'logOutButton', type: 'button' },
-                            React.createElement('i', { className: 'icon icon-close' })
+                            React.createElement('span', { className: 'icon icon-close' })
                           )
                         ) : React.createElement(
                           'a',

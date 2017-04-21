@@ -261,7 +261,8 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
               className: 'dropdown-container ' + this.props.orientation,
               ref: function ref(element) {
                 if (element) _this4.dropdownContainer = element;
-              } },
+              }
+            },
             _imports.React.createElement(_wsDropdownMenu.WSDropdownMenu, {
               items: this.state.items,
               value: this.state.value,

@@ -80,6 +80,11 @@ define(['exports', '../imports', './authentication', './ws-header-nav-link'], fu
         lang: null,
         languageStorageId: 'ws-language',
         loggedIn: null,
+        id: null,
+        redirectUrl: null,
+        userServiceUrl: null,
+        tokenInfoUrl: '',
+        clientId: null,
         availableLanguages: ['de', 'en'],
         userName: null,
         userEmail: null,
@@ -205,7 +210,7 @@ define(['exports', '../imports', './authentication', './ws-header-nav-link'], fu
               _imports.React.createElement(
                 'a',
                 { href: '/' },
-                this.props.logoUrl ? _imports.React.createElement('img', { className: 'logo', alt: this.props.title + '_logo', src: this.props.logoUrl }) : null,
+                this.props.logoUrl && _imports.React.createElement('img', { className: 'logo', alt: this.props.title + '_logo', src: this.props.logoUrl }),
                 _imports.React.createElement(
                   'span',
                   null,
@@ -218,13 +223,13 @@ define(['exports', '../imports', './authentication', './ws-header-nav-link'], fu
                 _imports.React.createElement(
                   'ul',
                   { id: 'js-navigation-menu', className: 'navigation-menu show' },
-                  this.state.isLoggedIn && this.state.userName ? _imports.React.createElement(
+                  this.state.isLoggedIn && this.state.userName && _imports.React.createElement(
                     'ul',
                     null,
-                    this.props.links ? this.props.links.map(function (link, index) {
+                    this.props.links && this.props.links.map(function (link, index) {
                       return _imports.React.createElement(_wsHeaderNavLink2.default, { link: link, key: index });
-                    }) : null
-                  ) : null,
+                    })
+                  ),
                   _imports.React.createElement(
                     'li',
                     { className: 'nav-link more dropdown-menu' },
@@ -279,7 +284,7 @@ define(['exports', '../imports', './authentication', './ws-header-nav-link'], fu
                       _imports.React.createElement(
                         'a',
                         { className: 'auto-size', id: 'logOutButton', type: 'button' },
-                        _imports.React.createElement('i', { className: 'icon icon-close' })
+                        _imports.React.createElement('span', { className: 'icon icon-close' })
                       )
                     ) : _imports.React.createElement(
                       'a',

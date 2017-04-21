@@ -266,7 +266,8 @@ System.register(['../imports', './ws-dropdown-menu'], function (_export, _contex
                   className: 'dropdown-container ' + this.props.orientation,
                   ref: function ref(element) {
                     if (element) _this4.dropdownContainer = element;
-                  } },
+                  }
+                },
                 React.createElement(WSDropdownMenu, {
                   items: this.state.items,
                   value: this.state.value,

@@ -35,6 +35,11 @@ export class WSHeader extends Component {
       lang: null,
       languageStorageId: 'ws-language',
       loggedIn: null,
+      id: null, // HEADER_COMPONENT_ID,
+      redirectUrl: null, // REDIRECT_URL,
+      userServiceUrl: null, // CORS_SERVICE_URL + USER_SERVICE_URL,
+      tokenInfoUrl: '', // CORS_SERVICE_URL + TOKEN_SERVICE_URL,
+      clientId: null, // getCookieValue(CLIENT_ID_COOKIE_NAME),
       availableLanguages: ['de', 'en'],
       userName: null,
       userEmail: null,
@@ -48,7 +53,6 @@ export class WSHeader extends Component {
   }
 
   /**
-   *
    * Lifecycle: componentDidMount handler for component
    * Will check if the user is logged in already and query user data
    * Attach the login and logout event listeners
@@ -142,7 +146,7 @@ export class WSHeader extends Component {
 
   /**
    * Updates changed login status
-   * @param {boolean} isLoggedIn updated status of loggedin user
+   * @param {boolean} isLoggedIn updated status of logged in user
    * @param {String} token Token String
    * @returns {void};
    */
@@ -170,26 +174,30 @@ export class WSHeader extends Component {
         <header className="navigation" role="banner">
           <div className="navigation-wrapper">
             <a href="/">
-              {this.props.logoUrl ? <img className="logo" alt={`${this.props.title}_logo`} src={this.props.logoUrl} /> : null}
+              {this.props.logoUrl &&
+                <img className="logo" alt={`${this.props.title}_logo`} src={this.props.logoUrl} />
+              }
               <span>{this.props.title}</span>
             </a>
             <nav role="navigation">
               <ul id="js-navigation-menu" className="navigation-menu show">
-                {(this.state.isLoggedIn && this.state.userName) ?
+                {this.state.isLoggedIn && this.state.userName &&
                   <ul>
-                    {this.props.links ? this.props.links.map((link, index) => <WSHeaderNavLink link={link} key={index} />) : null}
+                    {this.props.links && this.props.links.map((link, index) =>
+                      <WSHeaderNavLink link={link} key={index} />
+                    )}
                   </ul>
-                : null}
+                }
                 <li className="nav-link more dropdown-menu">
                   <a href={`#lang${this.state.lang}`}>
-                    <span id="selectedLanguageFlag" className={`flag flag-${this.state.lang}`}></span>
+                    <span id="selectedLanguageFlag" className={`flag flag-${this.state.lang}`} />
                     <span id="selectedLanguage"> {this.state.lang}</span>
                   </a>
                   <ul className="submenu" id="languages">
                     {this.state.availableLanguages.map(lang =>
                       <li key={`lang-${lang}`} onClick={() => that.setLanguage(lang)}>
                         <a>
-                          <span className={`flag flag-${lang}`}></span>
+                          <span className={`flag flag-${lang}`} />
                           <span> {lang}</span>
                         </a>
                       </li>
@@ -201,7 +209,7 @@ export class WSHeader extends Component {
                     <span onClick={() => this.logout()}>
                       <span id="userName">{this.state.userName}</span>
                       <a className="auto-size" id="logOutButton" type="button">
-                        <i className="icon icon-close" />
+                        <span className="icon icon-close" />
                       </a>
                     </span> :
                     <a className="auto-size" onClick={() => this.login()}><span>Login</span></a>}

@@ -212,7 +212,8 @@ export var WSDropdown = function (_Component) {
             className: 'dropdown-container ' + this.props.orientation,
             ref: function ref(element) {
               if (element) _this4.dropdownContainer = element;
-            } },
+            }
+          },
           React.createElement(WSDropdownMenu, {
             items: this.state.items,
             value: this.state.value,

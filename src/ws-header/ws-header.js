@@ -19,6 +19,29 @@ const SESSION_STATE_NAME = 'session_state';
  */
 export class WSHeader extends Component {
 
+    static defaultProps = {
+      setLang: () => {},
+      setLogin: () => {},
+      clientId: null,
+      redirectUrl: '',
+      logoUrl: null,
+      title: '',
+      links: []
+    };
+
+  /**
+   * @type {Object} props
+   */
+  static propTypes = {
+    setLang: React.PropTypes.function,
+    setLogin: React.PropTypes.function,
+    clientId: React.PropTypes.number,
+    redirectUrl: React.PropTypes.string,
+    logoUrl: React.PropTypes.string,
+    title: React.PropTypes.string,
+    links: React.PropTypes.array
+  };
+
   /**
    * Constructor of WSHeader
    * it is initializing default values for the state object

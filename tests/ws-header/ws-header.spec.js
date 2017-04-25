@@ -15,9 +15,17 @@ describe('Test: <WS-Header />', () => {
   });
 
   it('should initialize with custom title', () => {
+    // Document: If you want to test props you need to use Mount.
+    // seems like an issue with ES7 static
     const header = mount(<WSHeader title="Awesome Header" />);
     expect(header).toHaveProp('title');
-    expect(header).toHaveProp('title', 'Awesome Header');
+    expect(header).toHaveProp('title', 'Awesome Header'); // do we really need to test prop if text is shown ?
     expect(header.find('.navigation-wrapper > a > span')).toHaveText('Awesome Header');
-  })
+  });
+
+  it('should render navigation items', () => {
+    
+  });
+
+
 });

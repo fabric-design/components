@@ -7,7 +7,7 @@ module.exports = {
       test: /\.js$/,
       use: [{
         loader: 'babel-loader',
-        options: {babelrc: true}
+        options: require(path.resolve(__dirname, 'babelrc.preact.js'))
       }],
       exclude: [/node_modules/]
     },
@@ -27,13 +27,16 @@ module.exports = {
     }]
   },
   externals: {
-    'react/addons': true,
-    'react/lib/ExecutionEnvironment': true,
-    'react/lib/ReactContext': true
+    'react/addons': 'react',
+    'react/lib/ExecutionEnvironment': 'react',
+    'react/lib/ReactContext': 'react',
   },
   resolve: {
     alias: {
-      imports: path.resolve(__dirname, 'src/imports.js')
+      imports: path.resolve(__dirname, 'src/imports.js'),
+      'react': 'preact-compat',
+      'react-dom': 'preact-compat',
+      'react-dom/lib/ReactTestUtils': 'react-dom'
     }
   }
 };

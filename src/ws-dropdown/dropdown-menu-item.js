@@ -14,6 +14,11 @@ import {DropdownMenu} from './dropdown-menu';
  *     focused: Boolean, // Adds the class .is-focused to the .dropdown-item
  *     disabled: Boolean // Adds thr class .is-disabled to the .dropdown-item
  * }
+ * @property {Object} props React properties object
+ * @property {Object} props.item Dropdown item configuration
+ * @property {string} props.icon Class name of icon in trigger
+ * @property {Boolean} props.isParent Flag to identify if this item renders the parent dropdown item
+ * @property {Function} props.handle Function used to propagate data
  */
 export class DropdownMenuItem extends Component {
 

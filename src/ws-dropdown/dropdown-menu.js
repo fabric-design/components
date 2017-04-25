@@ -7,6 +7,15 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
 /**
  * This class renders the menu inside a dropdown container. Since the wrapper WSDropdown is missing, which provides
  * additional wrapping markup and functionality, you SHOULD NOT use this component as standalone.
+ * @property {Object} props React properties object
+ * @property {Object} props.parent Parent dropdown item. Only set if this is a child menu
+ * @property {Array<Object>} props.items List of dropdown item configs. Each item can contain label, value, disabled, selected
+ * @property {Object|Array<Object>} props.value Selected dropdown item(s)
+ * @property {Boolean} props.filterable Flag if the dropdown menu is filterable
+ * @property {string} props.filter Default filter value
+ * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
+ * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
+ * @property {Function} props.handle Function used to propagate data
  */
 export class DropdownMenu extends Component {
 

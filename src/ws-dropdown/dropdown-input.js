@@ -5,6 +5,10 @@ const KEY_ENTER = 13;
 /**
  * Renders renders a text input inside a dropdown container to provide a free text dropdown component.
  * Possible options are value and placeholder which are both strings.
+ * @property {Object} props React properties object
+ * @property {string} props.value Value of text input
+ * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
+ * @property {Function} props.handle Function used to propagate data
  */
 export class DropdownInput extends Component {
   /**

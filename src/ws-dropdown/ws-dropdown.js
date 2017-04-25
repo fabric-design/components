@@ -8,7 +8,7 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * This class describes a Preact/React component which renders a dropdown.
  * The dropdown can be used as select, multi select, filterable select or as a simple menu.
  * As trigger type you can choose between an anchor, button or a select like looking container.
- * @property {object} props React properties object
+ * @property {Object} props React properties object
  * @property {string} props.type Type of trigger. Can be anchor, button, select or icon
  * @property {string} props.text Text of trigger
  * @property {string} props.icon Class name of icon in trigger

@@ -121,7 +121,7 @@ define(['exports', '../imports'], function (exports, _imports) {
       value: function animateIn(notification, index) {
         var _this2 = this;
 
-        var list = this.refs.list;
+        var list = this.list;
         list.style.transition = 'none';
         list.style.transform = 'translate3d(0, 80px, 0)';
         setTimeout(function () {
@@ -143,7 +143,7 @@ define(['exports', '../imports'], function (exports, _imports) {
     }, {
       key: 'close',
       value: function close(index) {
-        var notification = this.refs['notification-' + index];
+        var notification = this['notification-' + index];
         if (notification) {
           var notifications = this.state.notifications.slice();
           notifications.splice(index, 1);
@@ -162,14 +162,18 @@ define(['exports', '../imports'], function (exports, _imports) {
           { className: 'ws-notification-wrapper' },
           _imports.React.createElement(
             'div',
-            { className: 'ws-notification-list', ref: 'list' },
+            { className: 'ws-notification-list', ref: function ref(element) {
+                _this3.list = element;
+              } },
             this.state.notifications.map(function (notification, i) {
               return _imports.React.createElement(
                 'div',
                 {
                   className: 'notification ' + notification.type,
                   key: 'notification-' + i,
-                  ref: 'notification-' + i,
+                  ref: function ref(element) {
+                    _this3['notification-' + i] = element;
+                  },
                   onClick: function onClick() {
                     return _this3.close(i);
                   }

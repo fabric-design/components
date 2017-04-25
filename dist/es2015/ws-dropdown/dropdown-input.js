@@ -25,6 +25,20 @@ export var DropdownInput = function (_Component) {
   }
 
   _createClass(DropdownInput, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.input.addEventListener('change', function (event) {
+        return event.stopPropagation();
+      });
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      this.input.removeEventListener('change', function (event) {
+        return event.stopPropagation();
+      });
+    }
+  }, {
     key: 'onKeyDown',
     value: function onKeyDown(event) {
       if (event.which === KEY_ENTER) {
@@ -37,7 +51,7 @@ export var DropdownInput = function (_Component) {
   }, {
     key: 'onChange',
     value: function onChange(event) {
-      this.state.value = event.target.value;
+      this.setState({ value: event.target.value });
     }
   }, {
     key: 'onSubmit',
@@ -69,8 +83,11 @@ export var DropdownInput = function (_Component) {
             onKeyDown: function onKeyDown(event) {
               return _this2.onKeyDown(event);
             },
-            onChange: function onChange(event) {
+            onBlur: function onBlur(event) {
               return _this2.onChange(event);
+            },
+            ref: function ref(element) {
+              _this2.input = element;
             }
           })
         ),

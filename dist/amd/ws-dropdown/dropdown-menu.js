@@ -102,9 +102,27 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
     }
 
     _createClass(DropdownMenu, [{
+      key: 'componentDidMount',
+      value: function componentDidMount() {
+        if (this.input) {
+          this.input.addEventListener('change', function (event) {
+            return event.stopPropagation();
+          });
+        }
+      }
+    }, {
       key: 'componentDidUpdate',
       value: function componentDidUpdate() {
         this.props.handle('change-size', this.getHeight());
+      }
+    }, {
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {
+        if (this.input) {
+          this.input.removeEventListener('change', function (event) {
+            return event.stopPropagation();
+          });
+        }
       }
     }, {
       key: 'getHeight',
@@ -249,6 +267,9 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
               placeholder: this.props.placeholder,
               onKeyUp: function onKeyUp(event) {
                 return _this3.updateFilter(event);
+              },
+              ref: function ref(element) {
+                _this3.input = element;
               }
             })
           ),

@@ -84,7 +84,6 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
               if (type === 'change') {
                 _this.close();
                 _this.setValue(data);
-                _this.element.dispatchEvent(new CustomEvent('change', { detail: data }));
               } else if (type === 'change-size') {
                 _this.adjustSize(data);
               }

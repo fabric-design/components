@@ -8,6 +8,17 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * This class describes a Preact/React component which renders a dropdown.
  * The dropdown can be used as select, multi select, filterable select or as a simple menu.
  * As trigger type you can choose between an anchor, button or a select like looking container.
+ * @property {object} props React properties object
+ * @property {string} props.type Type of trigger. Can be anchor, button, select or icon
+ * @property {string} props.text Text of trigger
+ * @property {string} props.icon Class name of icon in trigger
+ * @property {Boolean} props.multiple Flag if the dropdown is a multi select menu
+ * @property {Boolean} props.filterable Flag if the dropdown menu is filterable
+ * @property {Boolean} props.inputOnly Flag if the dropdown only contains a text input and a button
+ * @property {string} props.filter Default filter value
+ * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
+ * @property {string} props.orientation Dropdown orientation. Can be either left or right
+ * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
  */
 export class WSDropdown extends Component {
 

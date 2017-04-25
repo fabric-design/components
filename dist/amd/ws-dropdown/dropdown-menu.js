@@ -1,10 +1,10 @@
-define(['exports', '../imports', './ws-dropdown-item'], function (exports, _imports, _wsDropdownItem) {
+define(['exports', '../imports', './dropdown-menu-item'], function (exports, _imports, _dropdownMenuItem) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.WSDropdownMenu = undefined;
+  exports.DropdownMenu = undefined;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -57,13 +57,13 @@ define(['exports', '../imports', './ws-dropdown-item'], function (exports, _impo
   var ANIMATION_START_EVENTS = ['oAnimationStart', 'MSAnimationStart', 'animationstart'];
   var ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
 
-  var WSDropdownMenu = exports.WSDropdownMenu = function (_Component) {
-    _inherits(WSDropdownMenu, _Component);
+  var DropdownMenu = exports.DropdownMenu = function (_Component) {
+    _inherits(DropdownMenu, _Component);
 
-    function WSDropdownMenu(props, context) {
-      _classCallCheck(this, WSDropdownMenu);
+    function DropdownMenu(props, context) {
+      _classCallCheck(this, DropdownMenu);
 
-      var _this = _possibleConstructorReturn(this, (WSDropdownMenu.__proto__ || Object.getPrototypeOf(WSDropdownMenu)).call(this, props, context));
+      var _this = _possibleConstructorReturn(this, (DropdownMenu.__proto__ || Object.getPrototypeOf(DropdownMenu)).call(this, props, context));
 
       Object.defineProperty(_this, 'handlePropagation', {
         enumerable: true,
@@ -101,7 +101,7 @@ define(['exports', '../imports', './ws-dropdown-item'], function (exports, _impo
       return _this;
     }
 
-    _createClass(WSDropdownMenu, [{
+    _createClass(DropdownMenu, [{
       key: 'componentDidUpdate',
       value: function componentDidUpdate() {
         this.props.handle('change-size', this.getHeight());
@@ -235,19 +235,24 @@ define(['exports', '../imports', './ws-dropdown-item'], function (exports, _impo
         return _imports.React.createElement(
           'ul',
           {
-            className: 'dropdown-menu ' + (!this.props.parent ? 'dropdown-root-menu' : ''),
+            className: 'dropdown-menu ' + (!this.props.parent ? 'dropdown-root-menu' : 'dropdown-child-menu'),
             ref: function ref(element) {
               _this3.menuContainer = element;
             }
           },
           this.props.filterable && _imports.React.createElement(
             'li',
-            { className: 'dropdown-filter', key: 'filter' },
-            _imports.React.createElement('input', { type: 'text', defaultValue: this.state.filter, onKeyUp: function onKeyUp(event) {
+            { className: 'dropdown-input', key: 'filter' },
+            _imports.React.createElement('input', {
+              type: 'text',
+              defaultValue: this.state.filter,
+              placeholder: this.props.placeholder,
+              onKeyUp: function onKeyUp(event) {
                 return _this3.updateFilter(event);
-              } })
+              }
+            })
           ),
-          this.props.parent && [_imports.React.createElement(_wsDropdownItem.WSDropdownItem, {
+          this.props.parent && [_imports.React.createElement(_dropdownMenuItem.DropdownMenuItem, {
             item: this.props.parent,
             icon: 'icon-left',
             handle: this.handlePropagation,
@@ -255,31 +260,31 @@ define(['exports', '../imports', './ws-dropdown-item'], function (exports, _impo
             isParent: true
           }), _imports.React.createElement('li', { className: 'dropdown-item-separator', key: 'parent-separator' })],
           this.state.value && this.state.value.length ? [this.state.value.map(function (item, index) {
-            return _imports.React.createElement(_wsDropdownItem.WSDropdownItem, { item: item, handle: _this3.handlePropagation, key: 'value-' + index });
+            return _imports.React.createElement(_dropdownMenuItem.DropdownMenuItem, { item: item, handle: _this3.handlePropagation, key: 'value-' + index });
           }), _imports.React.createElement('li', { className: 'dropdown-item-separator', key: 'value-separator' })] : null,
           items.map(function (item, index) {
-            return _imports.React.createElement(_wsDropdownItem.WSDropdownItem, { item: item, handle: _this3.handlePropagation, key: 'item-' + index });
+            return _imports.React.createElement(_dropdownMenuItem.DropdownMenuItem, { item: item, handle: _this3.handlePropagation, key: 'item-' + index });
           }),
-          (!items || !items.length) && _imports.React.createElement(_wsDropdownItem.WSDropdownItem, { item: { label: 'No results found', disabled: true }, key: 'disabled' }),
-          this.context.multiple && _imports.React.createElement(
+          (!items || !items.length) && _imports.React.createElement(_dropdownMenuItem.DropdownMenuItem, { item: { label: 'No results found', disabled: true }, key: 'disabled' }),
+          this.context.multiple && [_imports.React.createElement('li', { className: 'dropdown-item-separator', key: 'submit-separator' }), _imports.React.createElement(
             'li',
             { className: 'dropdown-submit', key: 'submit' },
             _imports.React.createElement(
               'button',
-              { onClick: function onClick(event) {
+              { className: 'mod-small', onClick: function onClick(event) {
                   return _this3.submit(event);
                 } },
               'OK'
             )
-          )
+          )]
         );
       }
     }]);
 
-    return WSDropdownMenu;
+    return DropdownMenu;
   }(_imports.Component);
 
-  Object.defineProperty(WSDropdownMenu, 'defaultProps', {
+  Object.defineProperty(DropdownMenu, 'defaultProps', {
     enumerable: true,
     writable: true,
     value: {
@@ -288,11 +293,12 @@ define(['exports', '../imports', './ws-dropdown-item'], function (exports, _impo
       value: null,
       filterable: false,
       filter: null,
+      placeholder: '',
       limit: 10,
       handle: function handle() {}
     }
   });
-  Object.defineProperty(WSDropdownMenu, 'propTypes', {
+  Object.defineProperty(DropdownMenu, 'propTypes', {
     enumerable: true,
     writable: true,
     value: {
@@ -300,10 +306,11 @@ define(['exports', '../imports', './ws-dropdown-item'], function (exports, _impo
       items: _imports.React.PropTypes.array,
       filterable: _imports.React.PropTypes.bool,
       filter: _imports.React.PropTypes.string,
+      placeholder: _imports.React.PropTypes.string,
       limit: _imports.React.PropTypes.number
     }
   });
-  Object.defineProperty(WSDropdownMenu, 'contextTypes', {
+  Object.defineProperty(DropdownMenu, 'contextTypes', {
     enumerable: true,
     writable: true,
     value: {

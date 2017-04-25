@@ -1,6 +1,5 @@
 import {React, Component} from '../imports';
 import {WSWeekPickerCalendar} from './ws-week-picker-calendar';
-import './ws-week-picker.scss';
 
 /**
  * @class WSWeekPicker

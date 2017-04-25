@@ -1,5 +1,5 @@
 import {React, Component} from '../imports';
-import {WSDropdownItem} from './ws-dropdown-item';
+import {DropdownMenuItem} from './dropdown-menu-item';
 
 const ANIMATION_START_EVENTS = ['oAnimationStart', 'MSAnimationStart', 'animationstart'];
 const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
@@ -7,8 +7,17 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
 /**
  * This class renders the menu inside a dropdown container. Since the wrapper WSDropdown is missing, which provides
  * additional wrapping markup and functionality, you SHOULD NOT use this component as standalone.
+ * @property {Object} props React properties object
+ * @property {Object} props.parent Parent dropdown item. Only set if this is a child menu
+ * @property {Array<Object>} props.items List of dropdown item configs. Each item can contain label, value, disabled, selected
+ * @property {Object|Array<Object>} props.value Selected dropdown item(s)
+ * @property {Boolean} props.filterable Flag if the dropdown menu is filterable
+ * @property {string} props.filter Default filter value
+ * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
+ * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
+ * @property {Function} props.handle Function used to propagate data
  */
-export class WSDropdownMenu extends Component {
+export class DropdownMenu extends Component {
 
   /**
    * @type {Object}
@@ -19,6 +28,7 @@ export class WSDropdownMenu extends Component {
     value: null,
     filterable: false,
     filter: null,
+    placeholder: '',
     limit: 10,
     handle: () => {}
   };
@@ -31,6 +41,7 @@ export class WSDropdownMenu extends Component {
     items: React.PropTypes.array,
     filterable: React.PropTypes.bool,
     filter: React.PropTypes.string,
+    placeholder: React.PropTypes.string,
     limit: React.PropTypes.number
   };
 
@@ -57,12 +68,32 @@ export class WSDropdownMenu extends Component {
   }
 
   /**
+   * Prevent default change event to bubble up
+   * @returns {void}
+   */
+  componentDidMount() {
+    if (this.input) {
+      this.input.addEventListener('change', event => event.stopPropagation());
+    }
+  }
+
+  /**
    * Send the new height of this menu after update to the parent.
    * This will be called when updateFilter did set the new state
    * @returns {void}
    */
   componentDidUpdate() {
     this.props.handle('change-size', this.getHeight());
+  }
+
+  /**
+   * Prevent default change event to bubble up
+   * @returns {void}
+   */
+  componentWillUnmount() {
+    if (this.input) {
+      this.input.removeEventListener('change', event => event.stopPropagation());
+    }
   }
 
   /**
@@ -261,16 +292,22 @@ export class WSDropdownMenu extends Component {
 
     return (
       <ul
-        className={`dropdown-menu ${!this.props.parent ? 'dropdown-root-menu' : ''}`}
+        className={`dropdown-menu ${!this.props.parent ? 'dropdown-root-menu' : 'dropdown-child-menu'}`}
         ref={element => { this.menuContainer = element; }}
       >
         {this.props.filterable &&
-          <li className="dropdown-filter" key="filter">
-            <input type="text" defaultValue={this.state.filter} onKeyUp={event => this.updateFilter(event)} />
+          <li className="dropdown-input" key="filter">
+            <input
+              type="text"
+              defaultValue={this.state.filter}
+              placeholder={this.props.placeholder}
+              onKeyUp={event => this.updateFilter(event)}
+              ref={element => { this.input = element; }}
+            />
           </li>
         }
         {this.props.parent && [
-          <WSDropdownItem
+          <DropdownMenuItem
             item={this.props.parent}
             icon="icon-left"
             handle={this.handlePropagation}
@@ -281,21 +318,22 @@ export class WSDropdownMenu extends Component {
         ]}
         {(this.state.value && this.state.value.length) ? [
           this.state.value.map((item, index) =>
-            <WSDropdownItem item={item} handle={this.handlePropagation} key={`value-${index}`} />
+            <DropdownMenuItem item={item} handle={this.handlePropagation} key={`value-${index}`} />
           ),
           <li className="dropdown-item-separator" key="value-separator" />
         ] : null}
         {items.map((item, index) =>
-          <WSDropdownItem item={item} handle={this.handlePropagation} key={`item-${index}`} />
+          <DropdownMenuItem item={item} handle={this.handlePropagation} key={`item-${index}`} />
         )}
         {(!items || !items.length) &&
-          <WSDropdownItem item={{label: 'No results found', disabled: true}} key="disabled" />
+          <DropdownMenuItem item={{label: 'No results found', disabled: true}} key="disabled" />
         }
-        {this.context.multiple &&
+        {this.context.multiple && [
+          <li className="dropdown-item-separator" key="submit-separator" />,
           <li className="dropdown-submit" key="submit">
-            <button onClick={event => this.submit(event)}>OK</button>
+            <button className="mod-small" onClick={event => this.submit(event)}>OK</button>
           </li>
-        }
+        ]}
       </ul>
     );
   }

@@ -1,7 +1,7 @@
 System.register(['../imports'], function (_export, _context) {
   "use strict";
 
-  var React, Component, _createClass, WSInlineEdit;
+  var React, Component, PropTypes, _createClass, WSInlineEdit;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -37,6 +37,7 @@ System.register(['../imports'], function (_export, _context) {
     setters: [function (_imports) {
       React = _imports.React;
       Component = _imports.Component;
+      PropTypes = _imports.PropTypes;
     }],
     execute: function () {
       _createClass = function () {
@@ -149,8 +150,8 @@ System.register(['../imports'], function (_export, _context) {
         enumerable: true,
         writable: true,
         value: {
-          text: React.PropTypes.string,
-          onUpdate: React.PropTypes.func
+          text: PropTypes.string,
+          onUpdate: PropTypes.func
         }
       });
       Object.defineProperty(WSInlineEdit, 'defaultProps', {

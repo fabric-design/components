@@ -119,16 +119,16 @@ Object.defineProperty(DropdownMenuItem, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    item: _imports.React.PropTypes.object,
-    icon: _imports.React.PropTypes.string,
-    isParent: _imports.React.PropTypes.bool,
-    handle: _imports.React.PropTypes.func
+    item: _imports.PropTypes.object,
+    icon: _imports.PropTypes.string,
+    isParent: _imports.PropTypes.bool,
+    handle: _imports.PropTypes.func
   }
 });
 Object.defineProperty(DropdownMenuItem, 'contextTypes', {
   enumerable: true,
   writable: true,
   value: {
-    multiple: _imports.React.PropTypes.bool
+    multiple: _imports.PropTypes.bool
   }
 });

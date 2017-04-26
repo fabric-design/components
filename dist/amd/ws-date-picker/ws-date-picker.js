@@ -229,12 +229,12 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
     enumerable: true,
     writable: true,
     value: {
-      value: _imports.React.PropTypes.oneOfType([_imports.React.PropTypes.string, _imports.React.PropTypes.number]),
-      format: _imports.React.PropTypes.string,
-      placeholder: _imports.React.PropTypes.string,
-      iconOnly: _imports.React.PropTypes.bool,
-      options: _imports.React.PropTypes.object,
-      onChange: _imports.React.PropTypes.func
+      value: _imports.PropTypes.oneOfType([_imports.PropTypes.string, _imports.PropTypes.number]),
+      format: _imports.PropTypes.string,
+      placeholder: _imports.PropTypes.string,
+      iconOnly: _imports.PropTypes.bool,
+      options: _imports.PropTypes.object,
+      onChange: _imports.PropTypes.func
     }
   });
 });

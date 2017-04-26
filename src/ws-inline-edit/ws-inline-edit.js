@@ -1,4 +1,4 @@
-import {React, Component} from '../imports';
+import {React, Component, PropTypes} from '../imports';
 
 /**
  * This class describes a Preact/React component which renders a inline-edit element.
@@ -12,8 +12,8 @@ export class WSInlineEdit extends Component {
    * Types of properties
    */
   static propTypes = {
-    text: React.PropTypes.string,
-    onUpdate: React.PropTypes.func
+    text: PropTypes.string,
+    onUpdate: PropTypes.func
   };
 
   /**

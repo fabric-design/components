@@ -129,8 +129,8 @@ Object.defineProperty(DropdownInput, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    value: _imports.React.PropTypes.string,
-    placeholder: _imports.React.PropTypes.string,
-    handle: _imports.React.PropTypes.func
+    value: _imports.PropTypes.string,
+    placeholder: _imports.PropTypes.string,
+    handle: _imports.PropTypes.func
   }
 });

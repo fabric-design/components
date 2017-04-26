@@ -6,7 +6,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import { React, Component } from '../imports';
+import { React, Component, PropTypes } from '../imports';
 import { DropdownMenu } from './dropdown-menu';
 
 export var DropdownMenuItem = function (_Component) {
@@ -110,16 +110,16 @@ Object.defineProperty(DropdownMenuItem, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    item: React.PropTypes.object,
-    icon: React.PropTypes.string,
-    isParent: React.PropTypes.bool,
-    handle: React.PropTypes.func
+    item: PropTypes.object,
+    icon: PropTypes.string,
+    isParent: PropTypes.bool,
+    handle: PropTypes.func
   }
 });
 Object.defineProperty(DropdownMenuItem, 'contextTypes', {
   enumerable: true,
   writable: true,
   value: {
-    multiple: React.PropTypes.bool
+    multiple: PropTypes.bool
   }
 });

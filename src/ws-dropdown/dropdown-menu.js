@@ -1,4 +1,4 @@
-import {React, Component} from '../imports';
+import {React, Component, PropTypes} from '../imports';
 import {DropdownMenuItem} from './dropdown-menu-item';
 
 const ANIMATION_START_EVENTS = ['oAnimationStart', 'MSAnimationStart', 'animationstart'];
@@ -37,19 +37,19 @@ export class DropdownMenu extends Component {
    * @type {Object}
    */
   static propTypes = {
-    parent: React.PropTypes.object,
-    items: React.PropTypes.array,
-    filterable: React.PropTypes.bool,
-    filter: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    limit: React.PropTypes.number
+    parent: PropTypes.object,
+    items: PropTypes.array,
+    filterable: PropTypes.bool,
+    filter: PropTypes.string,
+    placeholder: PropTypes.string,
+    limit: PropTypes.number
   };
 
   /**
    * @type {Object}
    */
   static contextTypes = {
-    multiple: React.PropTypes.bool
+    multiple: PropTypes.bool
   };
 
   /**
@@ -182,7 +182,9 @@ export class DropdownMenu extends Component {
         this.showChild(data);
         break;
       case 'change':
-        this.clearSelections();
+        if (this.context.multiple) {
+          this.clearSelections();
+        }
         this.props.handle(type, data);
         break;
       case 'change-size':

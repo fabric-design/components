@@ -1,7 +1,7 @@
 System.register(['../imports'], function (_export, _context) {
   "use strict";
 
-  var React, Component, _createClass, months, allMonths, WSWeekPickerCalendar;
+  var React, Component, PropTypes, _createClass, months, allMonths, WSWeekPickerCalendar;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -97,6 +97,7 @@ System.register(['../imports'], function (_export, _context) {
     setters: [function (_imports) {
       React = _imports.React;
       Component = _imports.Component;
+      PropTypes = _imports.PropTypes;
     }],
     execute: function () {
       _createClass = function () {
@@ -283,9 +284,9 @@ System.register(['../imports'], function (_export, _context) {
         enumerable: true,
         writable: true,
         value: {
-          selectedYear: React.PropTypes.number,
-          selectedWeek: React.PropTypes.number,
-          onChange: React.PropTypes.func
+          selectedYear: PropTypes.number,
+          selectedWeek: PropTypes.number,
+          onChange: PropTypes.func
         }
       });
     }

@@ -1,4 +1,4 @@
-import {React, Component} from '../imports';
+import {React, Component, PropTypes} from '../imports';
 
 /**
  * Quick array of all month abbreviations
@@ -24,9 +24,9 @@ export class WSWeekPickerCalendar extends Component {
   };
 
   static propTypes = {
-    selectedYear: React.PropTypes.number,
-    selectedWeek: React.PropTypes.number,
-    onChange: React.PropTypes.func
+    selectedYear: PropTypes.number,
+    selectedWeek: PropTypes.number,
+    onChange: PropTypes.func
   };
 
   /**

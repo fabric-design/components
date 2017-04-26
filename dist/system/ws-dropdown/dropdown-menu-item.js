@@ -1,7 +1,7 @@
 System.register(['../imports', './dropdown-menu'], function (_export, _context) {
   "use strict";
 
-  var React, Component, DropdownMenu, _createClass, DropdownMenuItem;
+  var React, Component, PropTypes, DropdownMenu, _createClass, DropdownMenuItem;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -37,6 +37,7 @@ System.register(['../imports', './dropdown-menu'], function (_export, _context) 
     setters: [function (_imports) {
       React = _imports.React;
       Component = _imports.Component;
+      PropTypes = _imports.PropTypes;
     }, function (_dropdownMenu) {
       DropdownMenu = _dropdownMenu.DropdownMenu;
     }],
@@ -163,17 +164,17 @@ System.register(['../imports', './dropdown-menu'], function (_export, _context) 
         enumerable: true,
         writable: true,
         value: {
-          item: React.PropTypes.object,
-          icon: React.PropTypes.string,
-          isParent: React.PropTypes.bool,
-          handle: React.PropTypes.func
+          item: PropTypes.object,
+          icon: PropTypes.string,
+          isParent: PropTypes.bool,
+          handle: PropTypes.func
         }
       });
       Object.defineProperty(DropdownMenuItem, 'contextTypes', {
         enumerable: true,
         writable: true,
         value: {
-          multiple: React.PropTypes.bool
+          multiple: PropTypes.bool
         }
       });
     }

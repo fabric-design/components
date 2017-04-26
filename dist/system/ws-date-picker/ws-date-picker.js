@@ -1,7 +1,7 @@
 System.register(['../imports', './flatpickr'], function (_export, _context) {
   "use strict";
 
-  var React, Component, Flatpickr, _slicedToArray, _extends, _createClass, WSDatePicker;
+  var React, Component, PropTypes, Flatpickr, _slicedToArray, _extends, _createClass, WSDatePicker;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -37,6 +37,7 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
     setters: [function (_imports) {
       React = _imports.React;
       Component = _imports.Component;
+      PropTypes = _imports.PropTypes;
     }, function (_flatpickr) {
       Flatpickr = _flatpickr.default;
     }],
@@ -228,12 +229,12 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
         enumerable: true,
         writable: true,
         value: {
-          value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-          format: React.PropTypes.string,
-          placeholder: React.PropTypes.string,
-          iconOnly: React.PropTypes.bool,
-          options: React.PropTypes.object,
-          onChange: React.PropTypes.func
+          value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+          format: PropTypes.string,
+          placeholder: PropTypes.string,
+          iconOnly: PropTypes.bool,
+          options: PropTypes.object,
+          onChange: PropTypes.func
         }
       });
     }

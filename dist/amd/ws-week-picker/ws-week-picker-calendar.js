@@ -219,9 +219,9 @@ define(['exports', '../imports'], function (exports, _imports) {
     enumerable: true,
     writable: true,
     value: {
-      selectedYear: _imports.React.PropTypes.number,
-      selectedWeek: _imports.React.PropTypes.number,
-      onChange: _imports.React.PropTypes.func
+      selectedYear: _imports.PropTypes.number,
+      selectedWeek: _imports.PropTypes.number,
+      onChange: _imports.PropTypes.func
     }
   });
 

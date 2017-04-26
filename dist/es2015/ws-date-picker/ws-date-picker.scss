@@ -103,6 +103,7 @@
     line-height: rem(16px);
     text-align: center;
     position: relative;
+    box-sizing: content-box;
     user-select: none;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -357,6 +358,7 @@
     text-align: center;
     display: block;
     float: left;
+    box-sizing: content-box;
   }
   .flatpickr-weekdays .flatpickr-weekday:last-child {
     padding-right: rem(16px);

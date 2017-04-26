@@ -172,7 +172,7 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
                 selectedDate = _ref2[0];
 
             this.setState({ value: value });
-            this.element.dispatchEvent(new CustomEvent('change', { detail: selectedDate }));
+            this.element.dispatchEvent(new CustomEvent('change', { detail: selectedDate, bubbles: true }));
 
             if (this.props.onChange) {
               this.props.onChange(selectedDate);

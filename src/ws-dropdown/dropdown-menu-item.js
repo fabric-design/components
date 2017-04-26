@@ -1,4 +1,4 @@
-import {React, Component} from '../imports';
+import {React, Component, PropTypes} from '../imports';
 import {DropdownMenu} from './dropdown-menu';
 
 /**
@@ -36,17 +36,17 @@ export class DropdownMenuItem extends Component {
    * @type {Object}
    */
   static propTypes = {
-    item: React.PropTypes.object,
-    icon: React.PropTypes.string,
-    isParent: React.PropTypes.bool,
-    handle: React.PropTypes.func
+    item: PropTypes.object,
+    icon: PropTypes.string,
+    isParent: PropTypes.bool,
+    handle: PropTypes.func
   };
 
   /**
    * @type {Object}
    */
   static contextTypes = {
-    multiple: React.PropTypes.bool
+    multiple: PropTypes.bool
   };
 
   /**

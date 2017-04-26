@@ -1,4 +1,4 @@
-import {React, Component} from '../imports';
+import {React, Component, PropTypes} from '../imports';
 import {DropdownMenu} from './dropdown-menu';
 import {DropdownInput} from './dropdown-input';
 
@@ -44,24 +44,25 @@ export class WSDropdown extends Component {
    * @type {Object}
    */
   static propTypes = {
-    type: React.PropTypes.oneOf(['anchor', 'button', 'select', 'icon']),
-    text: React.PropTypes.string,
-    icon: React.PropTypes.string,
-    items: React.PropTypes.array,
-    multiple: React.PropTypes.bool,
-    filterable: React.PropTypes.bool,
-    inputOnly: React.PropTypes.bool,
-    filter: React.PropTypes.string,
-    limit: React.PropTypes.number,
-    orientation: React.PropTypes.oneOf(['left', 'right']),
-    placeholder: React.PropTypes.string
+    type: PropTypes.oneOf(['anchor', 'button', 'select', 'icon']),
+    text: PropTypes.string,
+    icon: PropTypes.string,
+    items: PropTypes.array,
+    multiple: PropTypes.bool,
+    filterable: PropTypes.bool,
+    inputOnly: PropTypes.bool,
+    filter: PropTypes.string,
+    limit: PropTypes.number,
+    orientation: PropTypes.oneOf(['left', 'right']),
+    placeholder: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array])
   };
 
   /**
    * @type {Object}
    */
   static childContextTypes = {
-    multiple: React.PropTypes.bool
+    multiple: PropTypes.bool
   };
 
   /**

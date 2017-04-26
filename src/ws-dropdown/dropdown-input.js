@@ -1,4 +1,4 @@
-import {React, Component} from '../imports';
+import {React, Component, PropTypes} from '../imports';
 
 const KEY_ENTER = 13;
 
@@ -24,9 +24,9 @@ export class DropdownInput extends Component {
    * @type {Object}
    */
   static propTypes = {
-    value: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    handle: React.PropTypes.func
+    value: PropTypes.string,
+    placeholder: PropTypes.string,
+    handle: PropTypes.func
   };
 
   /**

@@ -80,6 +80,7 @@
     "pre-commit": "1.2.2",
     "preact": "7.2.1",
     "preact-compat": "3.14.3",
+    "prop-types": "^15.5.8",
     "react": "15.5.4",
     "react-dom": "15.5.4",
     "run-sequence": "1.2.2",
@@ -97,6 +98,7 @@
   },
   "peerDependencies": {
     "preact": "7.1.0",
-    "preact-compat": "3.13.1"
+    "preact-compat": "3.13.1",
+    "prop-types": "^15.5.8"
   }
 }

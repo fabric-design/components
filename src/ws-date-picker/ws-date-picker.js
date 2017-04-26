@@ -1,4 +1,4 @@
-import {React, Component} from '../imports';
+import {React, Component, PropTypes} from '../imports';
 import Flatpickr from './flatpickr';
 
 /**
@@ -22,12 +22,12 @@ export class WSDatePicker extends Component {
   };
 
   static propTypes = {
-    value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-    format: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    iconOnly: React.PropTypes.bool,
-    options: React.PropTypes.object,
-    onChange: React.PropTypes.func
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    format: PropTypes.string,
+    placeholder: PropTypes.string,
+    iconOnly: PropTypes.bool,
+    options: PropTypes.object,
+    onChange: PropTypes.func
   };
 
   /**

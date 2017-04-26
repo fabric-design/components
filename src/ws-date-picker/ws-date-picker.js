@@ -45,7 +45,7 @@ export class WSDatePicker extends Component {
   }
 
   /**
-   * Initialize the flatpickr with given options
+   * Initialize the flatpickr with given options and prevent default change event
    * @returns {void}
    */
   componentDidMount() {
@@ -56,6 +56,8 @@ export class WSDatePicker extends Component {
       ...this.props.options,
       onChange: this.onChange.bind(this)
     });
+    // Prevent default change event bubbling
+    this.input.addEventListener('change', event => event.stopPropagation());
   }
 
   /**
@@ -74,11 +76,12 @@ export class WSDatePicker extends Component {
   }
 
   /**
-   * Destroy the flatpickr and all it's events and bindings
+   * Destroy the flatpickr and all events and bindings
    * @returns {void}
    */
   componentWillUnmount() {
     this.flatpickr.destroy();
+    this.input.removeEventListener('change', event => event.stopPropagation());
   }
 
   /**
@@ -111,7 +114,6 @@ export class WSDatePicker extends Component {
             defaultValue={this.state.value}
             placeholder={this.props.placeholder}
             ref={element => { this.input = element; }}
-            onChange={event => event.stopPropagation()}
             key="input"
           />,
           <span className="icon icon-calendar icon16" key="icon" />

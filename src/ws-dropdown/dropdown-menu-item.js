@@ -89,9 +89,14 @@ export class DropdownMenuItem extends Component {
       this.props.handle('show-child', this.menu);
     } else {
       if (!this.context.multiple) {
-        this.state.selected = true;
-        this.state.stored = true;
-        this.props.handle('change', this.state);
+        // If it is selected we publish null because it will be deselected in the upper menu
+        if (this.state.selected) {
+          this.props.handle('change', null);
+        } else {
+          this.state.selected = true;
+          this.state.stored = true;
+          this.props.handle('change', this.state);
+        }
       } else {
         // Only toggle selection state, change event will be fired on submit (button click)
         this.state.selected = !this.state.selected;
@@ -130,7 +135,7 @@ export class DropdownMenuItem extends Component {
         className={itemClass}
         onClick={event => this.onClick(event)}
       >
-        <a className={anchorClass} href={this.state.href}>
+        <a className={anchorClass} href={this.state.href} title={this.state.label}>
           {(this.props.icon || this.state.icon) &&
             <i className={`icon ${this.props.icon || this.state.icon}`} />
           }

@@ -146,8 +146,12 @@ export class WSDropdown extends Component {
       }
     }
     this.setState({text, value});
-    // Emit change event to propagate the value
-    this.element.dispatchEvent(new CustomEvent('change', {detail: value, bubbles: true}));
+    // Delay this event a bit to ensure the close animation happens
+    // For some reasons in chrome the animations are sometimes not executed when the dom changes at the same time
+    setTimeout(() => {
+      // Emit change event to propagate the value
+      this.element.dispatchEvent(new CustomEvent('change', {detail: value, bubbles: true}));
+    }, 100);
   }
 
   /**
@@ -233,8 +237,8 @@ export class WSDropdown extends Component {
     if (!this.opened) {
       return;
     }
-    this.opened = false;
     this.animateElement(this.dropdownContainer, 'animate-close', container => {
+      this.opened = false;
       container.classList.remove('mod-open');
       // If this a multi select dropdown abort
       if (this.props.multiple) {

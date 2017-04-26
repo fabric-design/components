@@ -182,6 +182,8 @@ export class DropdownMenu extends Component {
         this.showChild(data);
         break;
       case 'change':
+        // For multi select dropdown's the selected item's will be flagged as stored on submit
+        // Here we clear the selection flag for those
         if (this.context.multiple) {
           this.clearSelections();
         }

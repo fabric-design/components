@@ -267,14 +267,14 @@ export class WSDropdown extends Component {
     }
     switch (this.props.type) {
       case 'anchor':
-        return <a onClick={() => this.open()}>{icon} {this.state.text}</a>;
+        return <a className="dropdown-trigger" onClick={() => this.open()}>{icon} {this.state.text}</a>;
       case 'button':
-        return <button onClick={() => this.open()}>{icon} {this.state.text}</button>;
+        return <button className="dropdown-trigger" onClick={() => this.open()}>{icon} {this.state.text}</button>;
       case 'select':
-        return <div className="select-box" onClick={() => this.open()}>{icon} {this.state.text}</div>;
+        return <div className="dropdown-trigger select-box" onClick={() => this.open()}>{icon} {this.state.text}</div>;
       case 'icon':
       default:
-        return <a onClick={() => this.open()}>{icon}</a>;
+        return <a className="dropdown-trigger" onClick={() => this.open()}>{icon}</a>;
     }
   }
 

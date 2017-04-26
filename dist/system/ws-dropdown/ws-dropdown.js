@@ -92,20 +92,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
           });
 
           _this.opened = false;
-          _this.state = {
-            text: props.text || props.value,
-            value: _this.enrichItems(props.value),
-            items: _this.enrichItems(props.items)
-          };
-
-          _this.state.items.forEach(function (item) {
-            if (_this.state.value.find(function (val) {
-              return val.label === item.label;
-            })) {
-              item.selected = true;
-              item.stored = true;
-            }
-          });
+          _this.state = _this.createState(props);
           return _this;
         }
 
@@ -120,6 +107,11 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
           key: 'componentDidMount',
           value: function componentDidMount() {
             window.addEventListener('click', this.onDocumentClick.bind(this));
+          }
+        }, {
+          key: 'componentWillReceiveProps',
+          value: function componentWillReceiveProps(props) {
+            this.setState(this.createState(props));
           }
         }, {
           key: 'componentWillUnmount',
@@ -157,9 +149,30 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
             this.element.dispatchEvent(new CustomEvent('change', { detail: value, bubbles: true }));
           }
         }, {
+          key: 'createState',
+          value: function createState(props) {
+            var _this2 = this;
+
+            var state = {
+              text: props.text || props.value,
+              value: this.enrichItems(props.value),
+              items: this.enrichItems(props.items)
+            };
+
+            state.items.forEach(function (item) {
+              if (_this2.state.value.find(function (val) {
+                return val.value === item.value;
+              })) {
+                item.selected = true;
+                item.stored = true;
+              }
+            });
+            return state;
+          }
+        }, {
           key: 'enrichItems',
           value: function enrichItems(items) {
-            var _this2 = this;
+            var _this3 = this;
 
             var itemsToWrap = items;
 
@@ -173,7 +186,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
             return itemsToWrap.map(function (item) {
               var enriched = (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' ? item : { label: item };
               if (enriched.children) {
-                enriched.children = _this2.enrichItems(enriched.children);
+                enriched.children = _this3.enrichItems(enriched.children);
               }
               return enriched;
             });
@@ -192,7 +205,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
         }, {
           key: 'close',
           value: function close() {
-            var _this3 = this;
+            var _this4 = this;
 
             if (!this.opened) {
               return;
@@ -201,8 +214,8 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
             this.animateElement(this.dropdownContainer, 'animate-close', function (container) {
               container.classList.remove('mod-open');
 
-              if (_this3.props.multiple) {
-                _this3.dropdownMenu.clearSelections();
+              if (_this4.props.multiple) {
+                _this4.dropdownMenu.clearSelections();
               }
             });
           }
@@ -232,7 +245,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
         }, {
           key: 'renderTrigger',
           value: function renderTrigger() {
-            var _this4 = this;
+            var _this5 = this;
 
             var icon = void 0;
             if (this.props.icon) {
@@ -243,7 +256,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
                 return React.createElement(
                   'a',
                   { className: 'dropdown-trigger', onClick: function onClick() {
-                      return _this4.open();
+                      return _this5.open();
                     } },
                   icon,
                   ' ',
@@ -253,7 +266,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
                 return React.createElement(
                   'button',
                   { className: 'dropdown-trigger', onClick: function onClick() {
-                      return _this4.open();
+                      return _this5.open();
                     } },
                   icon,
                   ' ',
@@ -263,7 +276,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
                 return React.createElement(
                   'div',
                   { className: 'dropdown-trigger select-box', onClick: function onClick() {
-                      return _this4.open();
+                      return _this5.open();
                     } },
                   icon,
                   ' ',
@@ -274,7 +287,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
                 return React.createElement(
                   'a',
                   { className: 'dropdown-trigger', onClick: function onClick() {
-                      return _this4.open();
+                      return _this5.open();
                     } },
                   icon
                 );
@@ -283,7 +296,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
         }, {
           key: 'renderContent',
           value: function renderContent() {
-            var _this5 = this;
+            var _this6 = this;
 
             if (this.props.inputOnly) {
               return React.createElement(DropdownInput, {
@@ -291,7 +304,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
                 placeholder: this.props.placeholder,
                 handle: this.handlePropagation,
                 ref: function ref(element) {
-                  _this5.dropdownMenu = element;
+                  _this6.dropdownMenu = element;
                 }
               });
             }
@@ -304,20 +317,20 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
               placeholder: this.props.placeholder,
               handle: this.handlePropagation,
               ref: function ref(element) {
-                _this5.dropdownMenu = element;
+                _this6.dropdownMenu = element;
               }
             });
           }
         }, {
           key: 'render',
           value: function render() {
-            var _this6 = this;
+            var _this7 = this;
 
             return React.createElement(
               'div',
               { className: 'dropdown', ref: function ref(element) {
                   if (element) {
-                    _this6.element = element;
+                    _this7.element = element;
                   }
                 } },
               this.renderTrigger(),
@@ -327,7 +340,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
                   className: 'dropdown-container ' + this.props.orientation,
                   ref: function ref(element) {
                     if (element) {
-                      _this6.dropdownContainer = element;
+                      _this7.dropdownContainer = element;
                     }
                   }
                 },

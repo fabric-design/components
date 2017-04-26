@@ -288,7 +288,9 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
                 key: 'parent',
                 isParent: true
               }), React.createElement('li', { className: 'dropdown-item-separator', key: 'parent-separator' })],
-              this.state.value && this.state.value.length ? [this.state.value.map(function (item, index) {
+              this.state.value && this.state.value.length ? [this.state.items.filter(function (item) {
+                return item.stored;
+              }).map(function (item, index) {
                 return React.createElement(DropdownMenuItem, { item: item, handle: _this3.handlePropagation, key: 'value-' + index });
               }), React.createElement('li', { className: 'dropdown-item-separator', key: 'value-separator' })] : null,
               items.map(function (item, index) {

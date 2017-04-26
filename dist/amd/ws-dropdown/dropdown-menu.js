@@ -282,7 +282,9 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
             key: 'parent',
             isParent: true
           }), _imports.React.createElement('li', { className: 'dropdown-item-separator', key: 'parent-separator' })],
-          this.state.value && this.state.value.length ? [this.state.value.map(function (item, index) {
+          this.state.value && this.state.value.length ? [this.state.items.filter(function (item) {
+            return item.stored;
+          }).map(function (item, index) {
             return _imports.React.createElement(_dropdownMenuItem.DropdownMenuItem, { item: item, handle: _this3.handlePropagation, key: 'value-' + index });
           }), _imports.React.createElement('li', { className: 'dropdown-item-separator', key: 'value-separator' })] : null,
           items.map(function (item, index) {

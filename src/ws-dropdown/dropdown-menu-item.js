@@ -92,6 +92,7 @@ export class DropdownMenuItem extends Component {
         this.state.selected = true;
         this.props.handle('change', this.state);
       } else {
+        // Only toggle selection state, change event will be fired on submit (button click)
         this.state.selected = !this.state.selected;
       }
       // Use this strategy to keep the reference of this.state (item) into dropdown-menu items[x]

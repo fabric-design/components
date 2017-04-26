@@ -7,6 +7,8 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
 /**
  * This class describes a Preact/React component which renders a dropdown.
  * The dropdown can be used as select, multi select, filterable select or as a simple menu.
+ * Regarding the flags the changed value will look different. The flag inputOnly results in a string,
+ * the flag multiple results in an array and without those flags the change event details contain an object.
  * As trigger type you can choose between an anchor, button or a select like looking container.
  * @property {Object} props React properties object
  * @property {string} props.type Type of trigger. Can be anchor, button, select or icon
@@ -73,18 +75,7 @@ export class WSDropdown extends Component {
     super(props);
     // Enforce value to be an array for consistent usage
     this.opened = false;
-    this.state = {
-      text: props.text || props.value,
-      value: this.enrichItems(props.value),
-      items: this.enrichItems(props.items)
-    };
-    // Set states to items in item list for passed values
-    this.state.items.forEach(item => {
-      if (this.state.value.find(val => val.label === item.label)) {
-        item.selected = true;
-        item.stored = true;
-      }
-    });
+    this.state = this.createState(props);
   }
 
   /**
@@ -103,6 +94,15 @@ export class WSDropdown extends Component {
    */
   componentDidMount() {
     window.addEventListener('click', this.onDocumentClick.bind(this));
+  }
+
+  /**
+   * Handle changes of passed properties
+   * @param {Object} props React props
+   * @returns {void}
+   */
+  componentWillReceiveProps(props) {
+    this.setState(this.createState(props));
   }
 
   /**
@@ -148,6 +148,27 @@ export class WSDropdown extends Component {
     this.setState({text, value});
     // Emit change event to propagate the value
     this.element.dispatchEvent(new CustomEvent('change', {detail: value, bubbles: true}));
+  }
+
+  /**
+   * Create state object from properties
+   * @param {Object} props React props
+   * @returns {Object}
+   */
+  createState(props) {
+    const state = {
+      text: props.text || props.value,
+      value: this.enrichItems(props.value),
+      items: this.enrichItems(props.items)
+    };
+    // Set states to items in item list for passed values
+    state.items.forEach(item => {
+      if (state.value.find(val => val.value === item.value)) {
+        item.selected = true;
+        item.stored = true;
+      }
+    });
+    return state;
   }
 
   /**

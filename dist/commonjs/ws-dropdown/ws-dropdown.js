@@ -104,8 +104,6 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
   }, {
     key: 'createState',
     value: function createState(props) {
-      var _this2 = this;
-
       var state = {
         text: props.text || props.value,
         value: this.enrichItems(props.value),
@@ -113,7 +111,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
       };
 
       state.items.forEach(function (item) {
-        if (_this2.state.value.find(function (val) {
+        if (state.value.find(function (val) {
           return val.value === item.value;
         })) {
           item.selected = true;
@@ -125,7 +123,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
   }, {
     key: 'enrichItems',
     value: function enrichItems(items) {
-      var _this3 = this;
+      var _this2 = this;
 
       var itemsToWrap = items;
 
@@ -139,7 +137,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
       return itemsToWrap.map(function (item) {
         var enriched = (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' ? item : { label: item };
         if (enriched.children) {
-          enriched.children = _this3.enrichItems(enriched.children);
+          enriched.children = _this2.enrichItems(enriched.children);
         }
         return enriched;
       });
@@ -158,7 +156,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
   }, {
     key: 'close',
     value: function close() {
-      var _this4 = this;
+      var _this3 = this;
 
       if (!this.opened) {
         return;
@@ -167,8 +165,8 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
       this.animateElement(this.dropdownContainer, 'animate-close', function (container) {
         container.classList.remove('mod-open');
 
-        if (_this4.props.multiple) {
-          _this4.dropdownMenu.clearSelections();
+        if (_this3.props.multiple) {
+          _this3.dropdownMenu.clearSelections();
         }
       });
     }
@@ -198,7 +196,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
   }, {
     key: 'renderTrigger',
     value: function renderTrigger() {
-      var _this5 = this;
+      var _this4 = this;
 
       var icon = void 0;
       if (this.props.icon) {
@@ -209,7 +207,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
           return _imports.React.createElement(
             'a',
             { className: 'dropdown-trigger', onClick: function onClick() {
-                return _this5.open();
+                return _this4.open();
               } },
             icon,
             ' ',
@@ -219,7 +217,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
           return _imports.React.createElement(
             'button',
             { className: 'dropdown-trigger', onClick: function onClick() {
-                return _this5.open();
+                return _this4.open();
               } },
             icon,
             ' ',
@@ -229,7 +227,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
           return _imports.React.createElement(
             'div',
             { className: 'dropdown-trigger select-box', onClick: function onClick() {
-                return _this5.open();
+                return _this4.open();
               } },
             icon,
             ' ',
@@ -240,7 +238,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
           return _imports.React.createElement(
             'a',
             { className: 'dropdown-trigger', onClick: function onClick() {
-                return _this5.open();
+                return _this4.open();
               } },
             icon
           );
@@ -249,7 +247,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
   }, {
     key: 'renderContent',
     value: function renderContent() {
-      var _this6 = this;
+      var _this5 = this;
 
       if (this.props.inputOnly) {
         return _imports.React.createElement(_dropdownInput.DropdownInput, {
@@ -257,7 +255,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
           placeholder: this.props.placeholder,
           handle: this.handlePropagation,
           ref: function ref(element) {
-            _this6.dropdownMenu = element;
+            _this5.dropdownMenu = element;
           }
         });
       }
@@ -270,20 +268,20 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
         placeholder: this.props.placeholder,
         handle: this.handlePropagation,
         ref: function ref(element) {
-          _this6.dropdownMenu = element;
+          _this5.dropdownMenu = element;
         }
       });
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this7 = this;
+      var _this6 = this;
 
       return _imports.React.createElement(
         'div',
         { className: 'dropdown', ref: function ref(element) {
             if (element) {
-              _this7.element = element;
+              _this6.element = element;
             }
           } },
         this.renderTrigger(),
@@ -293,7 +291,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
             className: 'dropdown-container ' + this.props.orientation,
             ref: function ref(element) {
               if (element) {
-                _this7.dropdownContainer = element;
+                _this6.dropdownContainer = element;
               }
             }
           },

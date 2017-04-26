@@ -55,6 +55,7 @@ var DropdownMenuItem = exports.DropdownMenuItem = function (_Component) {
       } else {
         if (!this.context.multiple) {
           this.state.selected = true;
+          this.state.stored = true;
           this.props.handle('change', this.state);
         } else {
           this.state.selected = !this.state.selected;

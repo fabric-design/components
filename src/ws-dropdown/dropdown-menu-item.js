@@ -90,6 +90,7 @@ export class DropdownMenuItem extends Component {
     } else {
       if (!this.context.multiple) {
         this.state.selected = true;
+        this.state.stored = true;
         this.props.handle('change', this.state);
       } else {
         // Only toggle selection state, change event will be fired on submit (button click)

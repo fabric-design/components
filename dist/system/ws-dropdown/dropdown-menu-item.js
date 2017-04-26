@@ -98,6 +98,7 @@ System.register(['../imports', './dropdown-menu'], function (_export, _context) 
             } else {
               if (!this.context.multiple) {
                 this.state.selected = true;
+                this.state.stored = true;
                 this.props.handle('change', this.state);
               } else {
                 this.state.selected = !this.state.selected;

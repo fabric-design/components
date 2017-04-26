@@ -115,8 +115,11 @@ export class DropdownMenu extends Component {
       if (this.props.filterable && this.state.filter && !regex.test(item.label)) {
         return false;
       }
-      // Don't show items which were stored as value -> don't show them twice
-      return this.context.multiple ? !item.stored : true;
+      // When we use a filter or multiple items are selectable we show selected items separately
+      if (this.props.filterable || this.context.multiple) {
+        return !item.stored && !item.selected;
+      }
+      return true;
     });
   }
 
@@ -132,7 +135,7 @@ export class DropdownMenu extends Component {
 
   /**
    * Deselect all items which are not stored as value. Only relevant for multi select dropdown.
-   * When the dropdown will be closed the state will be restored
+   * When the dropdown will be closed without pressing submit the state will be restored
    * @returns {void}
    */
   clearSelections() {
@@ -182,10 +185,14 @@ export class DropdownMenu extends Component {
         this.showChild(data);
         break;
       case 'change':
-        // For multi select dropdown's the selected item's will be flagged as stored on submit
-        // Here we clear the selection flag for those
-        if (this.context.multiple) {
-          this.clearSelections();
+        this.clearSelections();
+        // If we have a single select we want to deselect the previous selected item
+        if (!this.context.multiple) {
+          const previous = this.state.items.find(item => item.stored && item !== data);
+          if (previous) {
+            previous.stored = false;
+            previous.selected = false;
+          }
         }
         this.props.handle(type, data);
         break;

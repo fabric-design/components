@@ -44,8 +44,16 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
             _this.showChild(data);
             break;
           case 'change':
-            if (_this.context.multiple) {
-              _this.clearSelections();
+            _this.clearSelections();
+
+            if (!_this.context.multiple) {
+              var previous = _this.state.items.find(function (item) {
+                return item.stored && item !== data;
+              });
+              if (previous) {
+                previous.stored = false;
+                previous.selected = false;
+              }
             }
             _this.props.handle(type, data);
             break;
@@ -105,7 +113,10 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
           return false;
         }
 
-        return _this2.context.multiple ? !item.stored : true;
+        if (_this2.props.filterable || _this2.context.multiple) {
+          return !item.stored && !item.selected;
+        }
+        return true;
       });
     }
   }, {

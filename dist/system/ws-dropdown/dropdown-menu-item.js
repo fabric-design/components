@@ -97,9 +97,13 @@ System.register(['../imports', './dropdown-menu'], function (_export, _context) 
               this.props.handle('show-child', this.menu);
             } else {
               if (!this.context.multiple) {
-                this.state.selected = true;
-                this.state.stored = true;
-                this.props.handle('change', this.state);
+                if (this.state.selected) {
+                  this.props.handle('change', null);
+                } else {
+                  this.state.selected = true;
+                  this.state.stored = true;
+                  this.props.handle('change', this.state);
+                }
               } else {
                 this.state.selected = !this.state.selected;
               }
@@ -130,7 +134,7 @@ System.register(['../imports', './dropdown-menu'], function (_export, _context) 
               },
               React.createElement(
                 'a',
-                { className: anchorClass, href: this.state.href },
+                { className: anchorClass, href: this.state.href, title: this.state.label },
                 (this.props.icon || this.state.icon) && React.createElement('i', { className: 'icon ' + (this.props.icon || this.state.icon) }),
                 this.state.label
               ),

@@ -1,7 +1,7 @@
 System.register(['../imports', './dropdown-menu', './dropdown-input'], function (_export, _context) {
   "use strict";
 
-  var React, Component, DropdownMenu, DropdownInput, _typeof, _createClass, ANIMATION_END_EVENTS, WSDropdown;
+  var React, Component, PropTypes, DropdownMenu, DropdownInput, _typeof, _createClass, ANIMATION_END_EVENTS, WSDropdown;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -37,6 +37,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
     setters: [function (_imports) {
       React = _imports.React;
       Component = _imports.Component;
+      PropTypes = _imports.PropTypes;
     }, function (_dropdownMenu) {
       DropdownMenu = _dropdownMenu.DropdownMenu;
     }, function (_dropdownInput) {
@@ -364,24 +365,25 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
         enumerable: true,
         writable: true,
         value: {
-          type: React.PropTypes.oneOf(['anchor', 'button', 'select', 'icon']),
-          text: React.PropTypes.string,
-          icon: React.PropTypes.string,
-          items: React.PropTypes.array,
-          multiple: React.PropTypes.bool,
-          filterable: React.PropTypes.bool,
-          inputOnly: React.PropTypes.bool,
-          filter: React.PropTypes.string,
-          limit: React.PropTypes.number,
-          orientation: React.PropTypes.oneOf(['left', 'right']),
-          placeholder: React.PropTypes.string
+          type: PropTypes.oneOf(['anchor', 'button', 'select', 'icon']),
+          text: PropTypes.string,
+          icon: PropTypes.string,
+          items: PropTypes.array,
+          multiple: PropTypes.bool,
+          filterable: PropTypes.bool,
+          inputOnly: PropTypes.bool,
+          filter: PropTypes.string,
+          limit: PropTypes.number,
+          orientation: PropTypes.oneOf(['left', 'right']),
+          placeholder: PropTypes.string,
+          value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array])
         }
       });
       Object.defineProperty(WSDropdown, 'childContextTypes', {
         enumerable: true,
         writable: true,
         value: {
-          multiple: React.PropTypes.bool
+          multiple: PropTypes.bool
         }
       });
     }

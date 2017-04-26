@@ -1,7 +1,7 @@
 System.register(['../imports', './ws-week-picker-calendar'], function (_export, _context) {
   "use strict";
 
-  var React, Component, WSWeekPickerCalendar, _createClass, WSWeekPicker;
+  var React, Component, PropTypes, WSWeekPickerCalendar, _createClass, WSWeekPicker;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -47,6 +47,7 @@ System.register(['../imports', './ws-week-picker-calendar'], function (_export, 
     setters: [function (_imports) {
       React = _imports.React;
       Component = _imports.Component;
+      PropTypes = _imports.PropTypes;
     }, function (_wsWeekPickerCalendar) {
       WSWeekPickerCalendar = _wsWeekPickerCalendar.WSWeekPickerCalendar;
     }],
@@ -184,9 +185,9 @@ System.register(['../imports', './ws-week-picker-calendar'], function (_export, 
         enumerable: true,
         writable: true,
         value: {
-          selectedYear: React.PropTypes.number,
-          selectedWeek: React.PropTypes.number,
-          onChange: React.PropTypes.func
+          selectedYear: PropTypes.number,
+          selectedWeek: PropTypes.number,
+          onChange: PropTypes.func
         }
       });
     }

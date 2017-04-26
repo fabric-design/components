@@ -105,8 +105,8 @@ Object.defineProperty(WSInlineEdit, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    text: _imports.React.PropTypes.string,
-    onUpdate: _imports.React.PropTypes.func
+    text: _imports.PropTypes.string,
+    onUpdate: _imports.PropTypes.func
   }
 });
 Object.defineProperty(WSInlineEdit, 'defaultProps', {

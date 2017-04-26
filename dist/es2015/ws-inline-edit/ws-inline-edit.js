@@ -6,7 +6,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import { React, Component } from '../imports';
+import { React, Component, PropTypes } from '../imports';
 
 export var WSInlineEdit = function (_Component) {
   _inherits(WSInlineEdit, _Component);
@@ -97,8 +97,8 @@ Object.defineProperty(WSInlineEdit, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    text: React.PropTypes.string,
-    onUpdate: React.PropTypes.func
+    text: PropTypes.string,
+    onUpdate: PropTypes.func
   }
 });
 Object.defineProperty(WSInlineEdit, 'defaultProps', {

@@ -1,7 +1,7 @@
 System.register(['../imports', './dropdown-menu-item'], function (_export, _context) {
   "use strict";
 
-  var React, Component, DropdownMenuItem, _createClass, ANIMATION_START_EVENTS, ANIMATION_END_EVENTS, DropdownMenu;
+  var React, Component, PropTypes, DropdownMenuItem, _createClass, ANIMATION_START_EVENTS, ANIMATION_END_EVENTS, DropdownMenu;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -37,6 +37,7 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
     setters: [function (_imports) {
       React = _imports.React;
       Component = _imports.Component;
+      PropTypes = _imports.PropTypes;
     }, function (_dropdownMenuItem) {
       DropdownMenuItem = _dropdownMenuItem.DropdownMenuItem;
     }],
@@ -86,7 +87,9 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
                   _this.showChild(data);
                   break;
                 case 'change':
-                  _this.clearSelections();
+                  if (_this.context.multiple) {
+                    _this.clearSelections();
+                  }
                   _this.props.handle(type, data);
                   break;
                 case 'change-size':
@@ -330,19 +333,19 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
         enumerable: true,
         writable: true,
         value: {
-          parent: React.PropTypes.object,
-          items: React.PropTypes.array,
-          filterable: React.PropTypes.bool,
-          filter: React.PropTypes.string,
-          placeholder: React.PropTypes.string,
-          limit: React.PropTypes.number
+          parent: PropTypes.object,
+          items: PropTypes.array,
+          filterable: PropTypes.bool,
+          filter: PropTypes.string,
+          placeholder: PropTypes.string,
+          limit: PropTypes.number
         }
       });
       Object.defineProperty(DropdownMenu, 'contextTypes', {
         enumerable: true,
         writable: true,
         value: {
-          multiple: React.PropTypes.bool
+          multiple: PropTypes.bool
         }
       });
     }

@@ -10,7 +10,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import { React, Component } from '../imports';
+import { React, Component, PropTypes } from '../imports';
 import Flatpickr from './flatpickr';
 
 export var WSDatePicker = function (_Component) {
@@ -127,11 +127,11 @@ Object.defineProperty(WSDatePicker, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-    format: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    iconOnly: React.PropTypes.bool,
-    options: React.PropTypes.object,
-    onChange: React.PropTypes.func
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    format: PropTypes.string,
+    placeholder: PropTypes.string,
+    iconOnly: PropTypes.bool,
+    options: PropTypes.object,
+    onChange: PropTypes.func
   }
 });

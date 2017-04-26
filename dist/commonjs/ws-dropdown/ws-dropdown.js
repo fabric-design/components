@@ -316,23 +316,24 @@ Object.defineProperty(WSDropdown, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    type: _imports.React.PropTypes.oneOf(['anchor', 'button', 'select', 'icon']),
-    text: _imports.React.PropTypes.string,
-    icon: _imports.React.PropTypes.string,
-    items: _imports.React.PropTypes.array,
-    multiple: _imports.React.PropTypes.bool,
-    filterable: _imports.React.PropTypes.bool,
-    inputOnly: _imports.React.PropTypes.bool,
-    filter: _imports.React.PropTypes.string,
-    limit: _imports.React.PropTypes.number,
-    orientation: _imports.React.PropTypes.oneOf(['left', 'right']),
-    placeholder: _imports.React.PropTypes.string
+    type: _imports.PropTypes.oneOf(['anchor', 'button', 'select', 'icon']),
+    text: _imports.PropTypes.string,
+    icon: _imports.PropTypes.string,
+    items: _imports.PropTypes.array,
+    multiple: _imports.PropTypes.bool,
+    filterable: _imports.PropTypes.bool,
+    inputOnly: _imports.PropTypes.bool,
+    filter: _imports.PropTypes.string,
+    limit: _imports.PropTypes.number,
+    orientation: _imports.PropTypes.oneOf(['left', 'right']),
+    placeholder: _imports.PropTypes.string,
+    value: _imports.PropTypes.oneOfType([_imports.PropTypes.string, _imports.PropTypes.object, _imports.PropTypes.array])
   }
 });
 Object.defineProperty(WSDropdown, 'childContextTypes', {
   enumerable: true,
   writable: true,
   value: {
-    multiple: _imports.React.PropTypes.bool
+    multiple: _imports.PropTypes.bool
   }
 });

@@ -81,7 +81,9 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
               _this.showChild(data);
               break;
             case 'change':
-              _this.clearSelections();
+              if (_this.context.multiple) {
+                _this.clearSelections();
+              }
               _this.props.handle(type, data);
               break;
             case 'change-size':
@@ -323,19 +325,19 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
     enumerable: true,
     writable: true,
     value: {
-      parent: _imports.React.PropTypes.object,
-      items: _imports.React.PropTypes.array,
-      filterable: _imports.React.PropTypes.bool,
-      filter: _imports.React.PropTypes.string,
-      placeholder: _imports.React.PropTypes.string,
-      limit: _imports.React.PropTypes.number
+      parent: _imports.PropTypes.object,
+      items: _imports.PropTypes.array,
+      filterable: _imports.PropTypes.bool,
+      filter: _imports.PropTypes.string,
+      placeholder: _imports.PropTypes.string,
+      limit: _imports.PropTypes.number
     }
   });
   Object.defineProperty(DropdownMenu, 'contextTypes', {
     enumerable: true,
     writable: true,
     value: {
-      multiple: _imports.React.PropTypes.bool
+      multiple: _imports.PropTypes.bool
     }
   });
 });

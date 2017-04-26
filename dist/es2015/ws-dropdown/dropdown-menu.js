@@ -6,7 +6,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import { React, Component } from '../imports';
+import { React, Component, PropTypes } from '../imports';
 import { DropdownMenuItem } from './dropdown-menu-item';
 
 var ANIMATION_START_EVENTS = ['oAnimationStart', 'MSAnimationStart', 'animationstart'];
@@ -36,7 +36,9 @@ export var DropdownMenu = function (_Component) {
             _this.showChild(data);
             break;
           case 'change':
-            _this.clearSelections();
+            if (_this.context.multiple) {
+              _this.clearSelections();
+            }
             _this.props.handle(type, data);
             break;
           case 'change-size':
@@ -277,18 +279,18 @@ Object.defineProperty(DropdownMenu, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    parent: React.PropTypes.object,
-    items: React.PropTypes.array,
-    filterable: React.PropTypes.bool,
-    filter: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    limit: React.PropTypes.number
+    parent: PropTypes.object,
+    items: PropTypes.array,
+    filterable: PropTypes.bool,
+    filter: PropTypes.string,
+    placeholder: PropTypes.string,
+    limit: PropTypes.number
   }
 });
 Object.defineProperty(DropdownMenu, 'contextTypes', {
   enumerable: true,
   writable: true,
   value: {
-    multiple: React.PropTypes.bool
+    multiple: PropTypes.bool
   }
 });

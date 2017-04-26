@@ -195,7 +195,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
         case 'anchor':
           return _imports.React.createElement(
             'a',
-            { onClick: function onClick() {
+            { className: 'dropdown-trigger', onClick: function onClick() {
                 return _this4.open();
               } },
             icon,
@@ -205,7 +205,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
         case 'button':
           return _imports.React.createElement(
             'button',
-            { onClick: function onClick() {
+            { className: 'dropdown-trigger', onClick: function onClick() {
                 return _this4.open();
               } },
             icon,
@@ -215,7 +215,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
         case 'select':
           return _imports.React.createElement(
             'div',
-            { className: 'select-box', onClick: function onClick() {
+            { className: 'dropdown-trigger select-box', onClick: function onClick() {
                 return _this4.open();
               } },
             icon,
@@ -226,7 +226,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
         default:
           return _imports.React.createElement(
             'a',
-            { onClick: function onClick() {
+            { className: 'dropdown-trigger', onClick: function onClick() {
                 return _this4.open();
               } },
             icon

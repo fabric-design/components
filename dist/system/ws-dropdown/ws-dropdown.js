@@ -242,7 +242,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
               case 'anchor':
                 return React.createElement(
                   'a',
-                  { onClick: function onClick() {
+                  { className: 'dropdown-trigger', onClick: function onClick() {
                       return _this4.open();
                     } },
                   icon,
@@ -252,7 +252,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
               case 'button':
                 return React.createElement(
                   'button',
-                  { onClick: function onClick() {
+                  { className: 'dropdown-trigger', onClick: function onClick() {
                       return _this4.open();
                     } },
                   icon,
@@ -262,7 +262,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
               case 'select':
                 return React.createElement(
                   'div',
-                  { className: 'select-box', onClick: function onClick() {
+                  { className: 'dropdown-trigger select-box', onClick: function onClick() {
                       return _this4.open();
                     } },
                   icon,
@@ -273,7 +273,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
               default:
                 return React.createElement(
                   'a',
-                  { onClick: function onClick() {
+                  { className: 'dropdown-trigger', onClick: function onClick() {
                       return _this4.open();
                     } },
                   icon

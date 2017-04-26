@@ -234,7 +234,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
           case 'anchor':
             return _imports.React.createElement(
               'a',
-              { onClick: function onClick() {
+              { className: 'dropdown-trigger', onClick: function onClick() {
                   return _this4.open();
                 } },
               icon,
@@ -244,7 +244,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
           case 'button':
             return _imports.React.createElement(
               'button',
-              { onClick: function onClick() {
+              { className: 'dropdown-trigger', onClick: function onClick() {
                   return _this4.open();
                 } },
               icon,
@@ -254,7 +254,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
           case 'select':
             return _imports.React.createElement(
               'div',
-              { className: 'select-box', onClick: function onClick() {
+              { className: 'dropdown-trigger select-box', onClick: function onClick() {
                   return _this4.open();
                 } },
               icon,
@@ -265,7 +265,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
           default:
             return _imports.React.createElement(
               'a',
-              { onClick: function onClick() {
+              { className: 'dropdown-trigger', onClick: function onClick() {
                   return _this4.open();
                 } },
               icon

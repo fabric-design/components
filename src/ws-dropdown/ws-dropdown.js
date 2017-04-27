@@ -39,7 +39,8 @@ export class WSDropdown extends Component {
     limit: 10,
     orientation: 'left',
     placeholder: '',
-    value: null
+    value: null,
+    onChange: () => {}
   };
 
   /**
@@ -57,7 +58,8 @@ export class WSDropdown extends Component {
     limit: PropTypes.number,
     orientation: PropTypes.oneOf(['left', 'right']),
     placeholder: PropTypes.string,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array])
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
+    onChange: PropTypes.func
   };
 
   /**
@@ -158,6 +160,10 @@ export class WSDropdown extends Component {
       text: this.getTextFromValue(value),
       value
     });
+    // Propagate change event for React
+    if (this.props.onChange) {
+      this.props.onChange(value);
+    }
     // Delay this event a bit to ensure the close animation happens
     // For some reasons in chrome the animations are sometimes not executed when the dom changes at the same time
     setTimeout(() => {

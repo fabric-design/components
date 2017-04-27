@@ -148,6 +148,10 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
           value: value
         });
 
+        if (this.props.onChange) {
+          this.props.onChange(value);
+        }
+
         setTimeout(function () {
           _this2.element.dispatchEvent(new CustomEvent('change', { detail: value, bubbles: true }));
         }, 100);
@@ -371,7 +375,8 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
       limit: 10,
       orientation: 'left',
       placeholder: '',
-      value: null
+      value: null,
+      onChange: function onChange() {}
     }
   });
   Object.defineProperty(WSDropdown, 'propTypes', {
@@ -389,7 +394,8 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
       limit: _imports.PropTypes.number,
       orientation: _imports.PropTypes.oneOf(['left', 'right']),
       placeholder: _imports.PropTypes.string,
-      value: _imports.PropTypes.oneOfType([_imports.PropTypes.string, _imports.PropTypes.object, _imports.PropTypes.array])
+      value: _imports.PropTypes.oneOfType([_imports.PropTypes.string, _imports.PropTypes.object, _imports.PropTypes.array]),
+      onChange: _imports.PropTypes.func
     }
   });
   Object.defineProperty(WSDropdown, 'childContextTypes', {

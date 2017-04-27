@@ -140,7 +140,7 @@ export class DropdownMenuItem extends Component {
         className={itemClass}
         onClick={event => this.onClick(event)}
       >
-        <a className={anchorClass} href={this.state.href} title={this.state.label}>
+        <a className={anchorClass} href={this.state.href} title={this.state.title || this.state.label}>
           {(this.props.icon || this.state.icon) &&
             <i className={`icon ${this.props.icon || this.state.icon}`} />
           }

@@ -100,6 +100,10 @@ export var WSDropdown = function (_Component) {
         value: value
       });
 
+      if (this.props.onChange) {
+        this.props.onChange(value);
+      }
+
       setTimeout(function () {
         _this2.element.dispatchEvent(new CustomEvent('change', { detail: value, bubbles: true }));
       }, 100);
@@ -322,7 +326,8 @@ Object.defineProperty(WSDropdown, 'defaultProps', {
     limit: 10,
     orientation: 'left',
     placeholder: '',
-    value: null
+    value: null,
+    onChange: function onChange() {}
   }
 });
 Object.defineProperty(WSDropdown, 'propTypes', {
@@ -340,7 +345,8 @@ Object.defineProperty(WSDropdown, 'propTypes', {
     limit: PropTypes.number,
     orientation: PropTypes.oneOf(['left', 'right']),
     placeholder: PropTypes.string,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array])
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
+    onChange: PropTypes.func
   }
 });
 Object.defineProperty(WSDropdown, 'childContextTypes', {

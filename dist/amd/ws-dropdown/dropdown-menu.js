@@ -121,6 +121,15 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
         }
       }
     }, {
+      key: 'componentWillReceiveProps',
+      value: function componentWillReceiveProps(props) {
+        this.setState({
+          filter: props.filter,
+          items: props.items,
+          value: props.value
+        });
+      }
+    }, {
       key: 'componentDidUpdate',
       value: function componentDidUpdate() {
         this.props.handle('change-size', this.getHeight());

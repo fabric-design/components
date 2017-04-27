@@ -96,7 +96,7 @@ var DropdownMenuItem = exports.DropdownMenuItem = function (_Component) {
         },
         _imports.React.createElement(
           'a',
-          { className: anchorClass, href: this.state.href, title: this.state.label },
+          { className: anchorClass, href: this.state.href, title: this.state.title || this.state.label },
           (this.props.icon || this.state.icon) && _imports.React.createElement('i', { className: 'icon ' + (this.props.icon || this.state.icon) }),
           this.state.label
         ),

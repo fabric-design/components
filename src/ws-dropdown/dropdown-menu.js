@@ -78,6 +78,19 @@ export class DropdownMenu extends Component {
   }
 
   /**
+   * Handle changes of passed properties
+   * @param {Object} props React props
+   * @returns {void}
+   */
+  componentWillReceiveProps(props) {
+    this.setState({
+      filter: props.filter,
+      items: props.items,
+      value: props.value
+    });
+  }
+
+  /**
    * Send the new height of this menu after update to the parent.
    * This will be called when updateFilter did set the new state
    * @returns {void}

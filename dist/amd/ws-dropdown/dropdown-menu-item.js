@@ -85,6 +85,10 @@ define(['exports', '../imports', './dropdown-menu'], function (exports, _imports
       value: function onClick(event) {
         event.stopPropagation();
 
+        if (this.state.disabled) {
+          return;
+        }
+
         if (this.props.isParent) {
           this.props.handle('go-back');
         } else if (this.state.children && this.state.children.length) {
@@ -114,6 +118,7 @@ define(['exports', '../imports', './dropdown-menu'], function (exports, _imports
         anchorClass += this.state.selected ? ' is-active' : '';
         anchorClass += this.state.focused ? ' is-focused' : '';
         anchorClass += this.state.disabled ? ' is-disabled' : '';
+        anchorClass += ' ' + (this.state.className || '');
         var itemClass = 'dropdown-item';
         itemClass += this.props.isParent ? ' dropdown-parent-item' : '';
         itemClass += this.state.children && !this.props.isParent ? ' has-children' : '';

@@ -264,7 +264,7 @@
     font-size: rem(14px);
     width: rem(32px);
     height: rem(32px);
-    line-height: rem(32px);
+    line-height: rem(28px); // Numbers on acumin-pro font are lower
     margin: rem(2px);
     display: inline-block;
     position: relative;
@@ -405,6 +405,7 @@
 }
 .flatpickr-input {
   cursor: pointer;
+  vertical-align: top;
 }
 input.flatpickr-input.active {
   border-color: $input-focused-border-color;

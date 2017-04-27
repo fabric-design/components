@@ -92,7 +92,7 @@ export class WSDatePicker extends Component {
    */
   onChange([selectedDate], value) {
     this.setState({value});
-    this.element.dispatchEvent(new CustomEvent('change', {detail: selectedDate, bubbles: true}));
+    this.element.dispatchEvent(new CustomEvent('change', {detail: {date: selectedDate, value}, bubbles: true}));
     // Propagate if wanted
     if (this.props.onChange) {
       this.props.onChange(selectedDate);

@@ -248,7 +248,7 @@ export var DropdownMenu = function (_Component) {
           key: 'parent',
           isParent: true
         }), React.createElement('li', { className: 'dropdown-item-separator', key: 'parent-separator' })],
-        this.state.value && this.state.value.length ? [this.state.items.filter(function (item) {
+        this.state.value && this.state.value.length && (this.context.multiple || this.props.filterable) ? [this.state.items.filter(function (item) {
           return item.stored;
         }).map(function (item, index) {
           return React.createElement(DropdownMenuItem, { item: item, handle: _this3.handlePropagation, key: 'value-' + index });

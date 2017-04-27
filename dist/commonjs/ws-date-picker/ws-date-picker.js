@@ -85,7 +85,7 @@ var WSDatePicker = exports.WSDatePicker = function (_Component) {
           selectedDate = _ref2[0];
 
       this.setState({ value: value });
-      this.element.dispatchEvent(new CustomEvent('change', { detail: selectedDate, bubbles: true }));
+      this.element.dispatchEvent(new CustomEvent('change', { detail: { date: selectedDate, value: value }, bubbles: true }));
 
       if (this.props.onChange) {
         this.props.onChange(selectedDate);

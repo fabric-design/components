@@ -80,6 +80,10 @@ export class DropdownMenuItem extends Component {
    */
   onClick(event) {
     event.stopPropagation();
+    // Do nothing if this item is disabled
+    if (this.state.disabled) {
+      return;
+    }
     // Click on parent means back navigation
     if (this.props.isParent) {
       // dropdown-item(go-back) -> dropdown-menu(show-parent) -> dropdown-item(show-parent) -> dropdown-menu
@@ -126,6 +130,7 @@ export class DropdownMenuItem extends Component {
     anchorClass += this.state.selected ? ' is-active' : '';
     anchorClass += this.state.focused ? ' is-focused' : '';
     anchorClass += this.state.disabled ? ' is-disabled' : '';
+    anchorClass += ` ${this.state.className || ''}`;
     let itemClass = 'dropdown-item';
     itemClass += this.props.isParent ? ' dropdown-parent-item' : '';
     itemClass += this.state.children && !this.props.isParent ? ' has-children' : '';

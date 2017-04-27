@@ -327,7 +327,7 @@ export class DropdownMenu extends Component {
           />,
           <li className="dropdown-item-separator" key="parent-separator" />
         ]}
-        {(this.state.value && this.state.value.length) ? [
+        {(this.state.value && this.state.value.length && (this.context.multiple || this.props.filterable)) ? [
           this.state.items.filter(item => item.stored).map((item, index) =>
             <DropdownMenuItem item={item} handle={this.handlePropagation} key={`value-${index}`} />
           ),

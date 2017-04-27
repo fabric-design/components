@@ -88,6 +88,7 @@ define(['exports', '../imports'], function (exports, _imports) {
       key: 'onKeyDown',
       value: function onKeyDown(event) {
         if (event.which === KEY_ENTER) {
+          this.onChange(event);
           this.onSubmit();
           event.preventDefault();
           return false;

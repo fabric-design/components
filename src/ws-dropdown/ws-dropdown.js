@@ -130,11 +130,11 @@ export class WSDropdown extends Component {
   }
 
   /**
-   * Set the value of the dropdown and update the display text if the trigger element is a select
-   * @param {Object|Array<Object>} value The new dropdown value
-   * @returns {void}
+   * Get text from labels of selected items
+   * @param {String|Object|Array<Object>} value Selected items
+   * @returns {String}
    */
-  setValue(value) {
+  getTextFromValue(value) {
     let text = this.state.text;
     // Check if we have to update the text value
     if (this.props.type === 'select') {
@@ -145,7 +145,19 @@ export class WSDropdown extends Component {
         text = value.label || value;
       }
     }
-    this.setState({text, value});
+    return text;
+  }
+
+  /**
+   * Set the value of the dropdown and update the display text if the trigger element is a select
+   * @param {Object|Array<Object>} value The new dropdown value
+   * @returns {void}
+   */
+  setValue(value) {
+    this.setState({
+      text: this.getTextFromValue(value),
+      value
+    });
     // Delay this event a bit to ensure the close animation happens
     // For some reasons in chrome the animations are sometimes not executed when the dom changes at the same time
     setTimeout(() => {
@@ -161,7 +173,7 @@ export class WSDropdown extends Component {
    */
   createState(props) {
     const state = {
-      text: props.text || props.value,
+      text: props.text || this.getTextFromValue(props.value),
       value: this.enrichItems(props.value),
       items: this.enrichItems(props.items)
     };

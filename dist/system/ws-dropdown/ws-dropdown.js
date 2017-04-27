@@ -131,10 +131,8 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
             }
           }
         }, {
-          key: 'setValue',
-          value: function setValue(value) {
-            var _this2 = this;
-
+          key: 'getTextFromValue',
+          value: function getTextFromValue(value) {
             var text = this.state.text;
 
             if (this.props.type === 'select') {
@@ -146,7 +144,17 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
                 text = value.label || value;
               }
             }
-            this.setState({ text: text, value: value });
+            return text;
+          }
+        }, {
+          key: 'setValue',
+          value: function setValue(value) {
+            var _this2 = this;
+
+            this.setState({
+              text: this.getTextFromValue(value),
+              value: value
+            });
 
             setTimeout(function () {
               _this2.element.dispatchEvent(new CustomEvent('change', { detail: value, bubbles: true }));
@@ -156,7 +164,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
           key: 'createState',
           value: function createState(props) {
             var state = {
-              text: props.text || props.value,
+              text: props.text || this.getTextFromValue(props.value),
               value: this.enrichItems(props.value),
               items: this.enrichItems(props.items)
             };

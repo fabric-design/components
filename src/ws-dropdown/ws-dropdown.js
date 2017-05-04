@@ -21,6 +21,7 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
  * @property {string} props.orientation Dropdown orientation. Can be either left or right
  * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
+ * @property {string} props.onChange Callback for react components to propagate value changes
  */
 export class WSDropdown extends Component {
 

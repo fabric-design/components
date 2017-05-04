@@ -313,6 +313,7 @@ export class DropdownMenu extends Component {
   render() {
     const limit = this.props.filterable ? this.props.limit : this.state.items.length;
     const items = this.getFilteredItems().slice(0, limit);
+    const hasValue = Array.isArray(this.state.value) ? this.state.value.length : this.state.value;
 
     return (
       <ul
@@ -340,7 +341,7 @@ export class DropdownMenu extends Component {
           />,
           <li className="dropdown-item-separator" key="parent-separator" />
         ]}
-        {(this.state.value && this.state.value.length && (this.context.multiple || this.props.filterable)) ? [
+        {(hasValue && (this.context.multiple || this.props.filterable)) ? [
           this.state.items.filter(item => item.stored).map((item, index) =>
             <DropdownMenuItem item={item} handle={this.handlePropagation} key={`value-${index}`} />
           ),

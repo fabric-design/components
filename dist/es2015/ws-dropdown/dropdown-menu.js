@@ -226,6 +226,7 @@ export var DropdownMenu = function (_Component) {
 
       var limit = this.props.filterable ? this.props.limit : this.state.items.length;
       var items = this.getFilteredItems().slice(0, limit);
+      var hasValue = Array.isArray(this.state.value) ? this.state.value.length : this.state.value;
 
       return React.createElement(
         'ul',
@@ -257,7 +258,7 @@ export var DropdownMenu = function (_Component) {
           key: 'parent',
           isParent: true
         }), React.createElement('li', { className: 'dropdown-item-separator', key: 'parent-separator' })],
-        this.state.value && this.state.value.length && (this.context.multiple || this.props.filterable) ? [this.state.items.filter(function (item) {
+        hasValue && (this.context.multiple || this.props.filterable) ? [this.state.items.filter(function (item) {
           return item.stored;
         }).map(function (item, index) {
           return React.createElement(DropdownMenuItem, { item: item, handle: _this3.handlePropagation, key: 'value-' + index });

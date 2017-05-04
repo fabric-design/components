@@ -5,9 +5,10 @@
 We in wholesale want the developers to choose frameworks they feel comfortable with. Still we want the UI to look and behave consistent. For that reason we decided to have components that can be used framework agnostic, web-components.
 
 ## Usage
-
-run `gulp` for building / watcher
-
+`npm install` and then run
+`gulp build` to build the components.
+`npm run start` to run the demo page with react.
+`npm run start:preact` demo page with preact.
 `gulp test` for test / watcher
 
 ## Demo

@@ -6,7 +6,6 @@ import {Component, PropTypes} from '../imports';
  * @property {Object} props React properties object
  * @property {Object} props.config Defines the configuration of the tile, e.g. the background color
  * @property {number} props.size Defines the width and height of the tile
- * @returns {string} HTML markup for the component
  */
 export class Tile extends Component {
 

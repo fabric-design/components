@@ -15,8 +15,6 @@
     overflow: auto;
     .tile {
       box-sizing: border-box;
-      min-width: rem(10px);
-      min-height: rem(10px);
       border: 1px solid white;
     }
   }

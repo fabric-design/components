@@ -21,7 +21,10 @@ export class WSTilesChart extends Component {
     data: {},
     config: {},
     title: '',
-    maxTileSize: 25
+    maxTileSize: 25,
+    minTileSize: 8,
+    height: 80,
+    width: 80
   };
 
   /**
@@ -42,7 +45,7 @@ export class WSTilesChart extends Component {
     super(props);
     this.state = {tileSize: 0};
 
-    this.calculateMaximumPossibleTileSize = this.calculateMaximumPossibleTileSize.bind(this);
+    this.getTileSize = this.getTileSize.bind(this);
   }
 
   /**
@@ -50,13 +53,10 @@ export class WSTilesChart extends Component {
    * @returns {void}
    */
   componentDidMount() {
-    const tilesAmount = this.props.data.groups.map(group => group.tilesSet.length).reduce((a, b) => a + b);
-
-    const tileSize = this.calculateMaximumPossibleTileSize(this.tilesChartContainer.clientWidth,
-      this.tilesChartContainer.clientHeight, tilesAmount);
-    this.setState({
-      tileSize: (tileSize < this.props.maxTileSize) ? tileSize : this.props.maxTileSize
-    });
+    this.setState({tileSize: this.getTileSize(
+      this.tilesChartContainer.clientWidth,
+      this.tilesChartContainer.clientHeight
+    )});
   }
 
   /**
@@ -73,11 +73,30 @@ export class WSTilesChart extends Component {
   }
 
   /**
+   * Returns the size to be used for the tile
+   * @param {number} width of the container
+   * @param {number} height of the container
+   * @returns {number}
+   */
+  getTileSize(width, height) {
+    const tilesAmount = this.props.data.groups.map(group => group.tilesSet.length).reduce((a, b) => a + b);
+    const tileSize = this.calculateMaximumPossibleTileSize(width, height, tilesAmount);
+
+    if (tileSize <= this.props.maxTileSize && tileSize >= this.props.minTileSize) {
+      return tileSize;
+    } else if (tileSize > this.props.maxTileSize) {
+      return this.props.maxTileSize;
+    }
+
+    return this.props.minTileSize;
+  }
+
+  /**
    * Calculates the maximum tile size based on total width, height and amount of tiles
    * @param {number} width of the container
    * @param {number} height of the container
    * @param {number} tilesAmount total number of tiles in the chart
-   * @returns {int}
+   * @returns {number}
    */
   calculateMaximumPossibleTileSize(width, height, tilesAmount) {
     const chartArea = (width < height) ? width * width : height * height;

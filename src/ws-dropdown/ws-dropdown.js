@@ -7,6 +7,8 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
 /**
  * This class describes a Preact/React component which renders a dropdown.
  * The dropdown can be used as select, multi select, filterable select or as a simple menu.
+ * Regarding the flags the changed value will look different. The flag inputOnly results in a string,
+ * the flag multiple results in an array and without those flags the change event details contain an object.
  * As trigger type you can choose between an anchor, button or a select like looking container.
  * @property {Object} props React properties object
  * @property {string} props.type Type of trigger. Can be anchor, button, select or icon
@@ -19,6 +21,7 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
  * @property {string} props.orientation Dropdown orientation. Can be either left or right
  * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
+ * @property {string} props.onChange Callback for react components to propagate value changes
  */
 export class WSDropdown extends Component {
 
@@ -37,7 +40,8 @@ export class WSDropdown extends Component {
     limit: 10,
     orientation: 'left',
     placeholder: '',
-    value: null
+    value: null,
+    onChange: () => {}
   };
 
   /**
@@ -55,7 +59,8 @@ export class WSDropdown extends Component {
     limit: PropTypes.number,
     orientation: PropTypes.oneOf(['left', 'right']),
     placeholder: PropTypes.string,
-    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array])
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
+    onChange: PropTypes.func
   };
 
   /**
@@ -73,18 +78,7 @@ export class WSDropdown extends Component {
     super(props);
     // Enforce value to be an array for consistent usage
     this.opened = false;
-    this.state = {
-      text: props.text || props.value,
-      value: this.enrichItems(props.value),
-      items: this.enrichItems(props.items)
-    };
-    // Set states to items in item list for passed values
-    this.state.items.forEach(item => {
-      if (this.state.value.find(val => val.label === item.label)) {
-        item.selected = true;
-        item.stored = true;
-      }
-    });
+    this.state = this.createState(props);
   }
 
   /**
@@ -103,6 +97,15 @@ export class WSDropdown extends Component {
    */
   componentDidMount() {
     window.addEventListener('click', this.onDocumentClick.bind(this));
+  }
+
+  /**
+   * Handle changes of passed properties
+   * @param {Object} props React props
+   * @returns {void}
+   */
+  componentWillReceiveProps(props) {
+    this.setState(this.createState(props));
   }
 
   /**
@@ -130,11 +133,11 @@ export class WSDropdown extends Component {
   }
 
   /**
-   * Set the value of the dropdown and update the display text if the trigger element is a select
-   * @param {Object|Array<Object>} value The new dropdown value
-   * @returns {void}
+   * Get text from labels of selected items
+   * @param {String|Object|Array<Object>} value Selected items
+   * @returns {String}
    */
-  setValue(value) {
+  getTextFromValue(value) {
     let text = this.state.text;
     // Check if we have to update the text value
     if (this.props.type === 'select') {
@@ -145,9 +148,50 @@ export class WSDropdown extends Component {
         text = value.label || value;
       }
     }
-    this.setState({text, value});
-    // Emit change event to propagate the value
-    this.element.dispatchEvent(new CustomEvent('change', {detail: value, bubbles: true}));
+    return text;
+  }
+
+  /**
+   * Set the value of the dropdown and update the display text if the trigger element is a select
+   * @param {Object|Array<Object>} value The new dropdown value
+   * @returns {void}
+   */
+  setValue(value) {
+    this.setState({
+      text: this.getTextFromValue(value),
+      value
+    });
+    // Propagate change event for React
+    if (this.props.onChange) {
+      this.props.onChange(value);
+    }
+    // Delay this event a bit to ensure the close animation happens
+    // For some reasons in chrome the animations are sometimes not executed when the dom changes at the same time
+    setTimeout(() => {
+      // Emit change event to propagate the value
+      this.element.dispatchEvent(new CustomEvent('change', {detail: value, bubbles: true}));
+    }, 100);
+  }
+
+  /**
+   * Create state object from properties
+   * @param {Object} props React props
+   * @returns {Object}
+   */
+  createState(props) {
+    const state = {
+      text: props.text || this.getTextFromValue(props.value),
+      value: this.enrichItems(props.value),
+      items: this.enrichItems(props.items)
+    };
+    // Set states to items in item list for passed values
+    state.items.forEach(item => {
+      if (state.value.find(val => val.value === item.value)) {
+        item.selected = true;
+        item.stored = true;
+      }
+    });
+    return state;
   }
 
   /**
@@ -212,8 +256,8 @@ export class WSDropdown extends Component {
     if (!this.opened) {
       return;
     }
-    this.opened = false;
     this.animateElement(this.dropdownContainer, 'animate-close', container => {
+      this.opened = false;
       container.classList.remove('mod-open');
       // If this a multi select dropdown abort
       if (this.props.multiple) {
@@ -267,14 +311,14 @@ export class WSDropdown extends Component {
     }
     switch (this.props.type) {
       case 'anchor':
-        return <a onClick={() => this.open()}>{icon} {this.state.text}</a>;
+        return <a className="dropdown-trigger" onClick={() => this.open()}>{icon} {this.state.text}</a>;
       case 'button':
-        return <button onClick={() => this.open()}>{icon} {this.state.text}</button>;
+        return <button className="dropdown-trigger" onClick={() => this.open()}>{icon} {this.state.text}</button>;
       case 'select':
-        return <div className="select-box" onClick={() => this.open()}>{icon} {this.state.text}</div>;
+        return <div className="dropdown-trigger select-box" onClick={() => this.open()}>{icon} {this.state.text}</div>;
       case 'icon':
       default:
-        return <a onClick={() => this.open()}>{icon}</a>;
+        return <a className="dropdown-trigger" onClick={() => this.open()}>{icon}</a>;
     }
   }
 

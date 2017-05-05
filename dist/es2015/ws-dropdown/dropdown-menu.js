@@ -36,8 +36,16 @@ export var DropdownMenu = function (_Component) {
             _this.showChild(data);
             break;
           case 'change':
-            if (_this.context.multiple) {
-              _this.clearSelections();
+            _this.clearSelections();
+
+            if (!_this.context.multiple) {
+              var previous = _this.state.items.find(function (item) {
+                return item.stored && item !== data;
+              });
+              if (previous) {
+                previous.stored = false;
+                previous.selected = false;
+              }
             }
             _this.props.handle(type, data);
             break;
@@ -66,6 +74,15 @@ export var DropdownMenu = function (_Component) {
           return event.stopPropagation();
         });
       }
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(props) {
+      this.setState({
+        filter: props.filter,
+        items: props.items,
+        value: props.value
+      });
     }
   }, {
     key: 'componentDidUpdate',
@@ -97,7 +114,10 @@ export var DropdownMenu = function (_Component) {
           return false;
         }
 
-        return _this2.context.multiple ? !item.stored : true;
+        if (_this2.props.filterable || _this2.context.multiple) {
+          return !item.stored && !item.selected;
+        }
+        return true;
       });
     }
   }, {
@@ -206,6 +226,7 @@ export var DropdownMenu = function (_Component) {
 
       var limit = this.props.filterable ? this.props.limit : this.state.items.length;
       var items = this.getFilteredItems().slice(0, limit);
+      var hasValue = Array.isArray(this.state.value) ? this.state.value.length : this.state.value;
 
       return React.createElement(
         'ul',
@@ -237,7 +258,9 @@ export var DropdownMenu = function (_Component) {
           key: 'parent',
           isParent: true
         }), React.createElement('li', { className: 'dropdown-item-separator', key: 'parent-separator' })],
-        this.state.value && this.state.value.length ? [this.state.value.map(function (item, index) {
+        hasValue && (this.context.multiple || this.props.filterable) ? [this.state.items.filter(function (item) {
+          return item.stored;
+        }).map(function (item, index) {
           return React.createElement(DropdownMenuItem, { item: item, handle: _this3.handlePropagation, key: 'value-' + index });
         }), React.createElement('li', { className: 'dropdown-item-separator', key: 'value-separator' })] : null,
         items.map(function (item, index) {

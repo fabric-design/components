@@ -141,6 +141,10 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
         }, this.props.options, {
           onChange: this.onChange.bind(this)
         }));
+
+        this.input.addEventListener('change', function (event) {
+          return event.stopPropagation();
+        }, true);
       }
     }, {
       key: 'componentWillReceiveProps',
@@ -159,6 +163,9 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
       key: 'componentWillUnmount',
       value: function componentWillUnmount() {
         this.flatpickr.destroy();
+        this.input.removeEventListener('change', function (event) {
+          return event.stopPropagation();
+        }, true);
       }
     }, {
       key: 'onChange',
@@ -167,7 +174,7 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
             selectedDate = _ref2[0];
 
         this.setState({ value: value });
-        this.element.dispatchEvent(new CustomEvent('change', { detail: selectedDate }));
+        this.element.dispatchEvent(new CustomEvent('change', { detail: { date: selectedDate, value: value }, bubbles: true }));
 
         if (this.props.onChange) {
           this.props.onChange(selectedDate);
@@ -191,9 +198,6 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
             placeholder: this.props.placeholder,
             ref: function ref(element) {
               _this3.input = element;
-            },
-            onChange: function onChange(event) {
-              return event.stopPropagation();
             },
             key: 'input'
           }), _imports.React.createElement('span', { className: 'icon icon-calendar icon16', key: 'icon' })],

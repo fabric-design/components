@@ -42,6 +42,7 @@ export var DropdownInput = function (_Component) {
     key: 'onKeyDown',
     value: function onKeyDown(event) {
       if (event.which === KEY_ENTER) {
+        this.onChange(event);
         this.onSubmit();
         event.preventDefault();
         return false;

@@ -80,6 +80,10 @@ export class DropdownMenuItem extends Component {
    */
   onClick(event) {
     event.stopPropagation();
+    // Do nothing if this item is disabled
+    if (this.state.disabled) {
+      return;
+    }
     // Click on parent means back navigation
     if (this.props.isParent) {
       // dropdown-item(go-back) -> dropdown-menu(show-parent) -> dropdown-item(show-parent) -> dropdown-menu
@@ -89,9 +93,16 @@ export class DropdownMenuItem extends Component {
       this.props.handle('show-child', this.menu);
     } else {
       if (!this.context.multiple) {
-        this.state.selected = true;
-        this.props.handle('change', this.state);
+        // If it is selected we publish null because it will be deselected in the upper menu
+        if (this.state.selected) {
+          this.props.handle('change', null);
+        } else {
+          this.state.selected = true;
+          this.state.stored = true;
+          this.props.handle('change', this.state);
+        }
       } else {
+        // Only toggle selection state, change event will be fired on submit (button click)
         this.state.selected = !this.state.selected;
       }
       // Use this strategy to keep the reference of this.state (item) into dropdown-menu items[x]
@@ -119,6 +130,7 @@ export class DropdownMenuItem extends Component {
     anchorClass += this.state.selected ? ' is-active' : '';
     anchorClass += this.state.focused ? ' is-focused' : '';
     anchorClass += this.state.disabled ? ' is-disabled' : '';
+    anchorClass += ` ${this.state.className || ''}`;
     let itemClass = 'dropdown-item';
     itemClass += this.props.isParent ? ' dropdown-parent-item' : '';
     itemClass += this.state.children && !this.props.isParent ? ' has-children' : '';
@@ -128,7 +140,7 @@ export class DropdownMenuItem extends Component {
         className={itemClass}
         onClick={event => this.onClick(event)}
       >
-        <a className={anchorClass} href={this.state.href}>
+        <a className={anchorClass} href={this.state.href} title={this.state.title || this.state.label}>
           {(this.props.icon || this.state.icon) &&
             <i className={`icon ${this.props.icon || this.state.icon}`} />
           }

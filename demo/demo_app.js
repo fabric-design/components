@@ -79,7 +79,7 @@ render(
       </table>
       <br />
       <div style={{width: '80px', height:'80px'}}>
-        <WSTilesChart height="100" width="100" title="Chart title"
+        <WSTilesChart title="Chart title"
           data={dashboardMockData.data} config={dashboardMockData.config}/>
       </div>
     </div>

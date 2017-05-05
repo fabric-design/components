@@ -14,7 +14,8 @@ export class WSTilesChart extends Component {
   static defaultProps = {
     data: {},
     config: {},
-    title: ''
+    title: '',
+    maxTileSize: 25
   };
 
   /**
@@ -23,7 +24,8 @@ export class WSTilesChart extends Component {
   static propTypes = {
     data: PropTypes.object,
     config: PropTypes.object,
-    title: PropTypes.string
+    title: PropTypes.string,
+    maxTileSize: PropTypes.number
   };
 
   /**
@@ -40,15 +42,14 @@ export class WSTilesChart extends Component {
 
   componentDidMount() {
     //Calculate the tiles size
-    const containerWidth = this.tilesChartContainer.clientWidth;
-    const containerHeight = this.tilesChartContainer.clientHeight;
     const tilesAmount = this.props.data.groups.map(group=> {
       return group.tilesSet.length
     }).reduce((a, b)=>a + b);
 
+    const tileSize = this.calculateMaximumPossibleTileSize(this.tilesChartContainer.clientWidth,
+      this.tilesChartContainer.clientHeight, tilesAmount);
     this.setState({
-      tileSize: this.calculateMaximumPossibleTileSize(containerWidth,
-        containerHeight, tilesAmount)
+      tileSize: (tileSize<this.props.maxTileSize)? tileSize:this.props.maxTileSize
     });
   }
 

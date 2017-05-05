@@ -64,7 +64,7 @@ export class WSTilesChart extends Component {
   }
 
   /**
-   * Render the complete dropdown
+   * Renders the chart
    * @returns {Object}
    */
   render() {

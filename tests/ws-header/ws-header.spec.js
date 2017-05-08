@@ -16,6 +16,15 @@ describe('Test: <WS-Header />', () => {
 
   const dummyLinks = ['Home', 'About', 'Details'];
 
+  const mockAuthResponse = {
+    uid: "chuckNorrisIsEverywhere",
+    access_token: "chuckNorrisCanBeAnAccessToken",
+  };
+
+  const mockUserLookUpResponse = {
+    name: 'Chuck Norris',
+    email: 'chuck.norris@zalando.de'
+  };
 
   const defaultState = {
     availableLanguages: ['de', 'en'],
@@ -89,7 +98,26 @@ describe('Test: <WS-Header />', () => {
   });
 
   it('should show navigation links when logged in ', () => {
-
+    const header = render(<WSHeader title="Awesome Navigation" links={dummyLinks} /> , container); 
+    // Preact returns HTMLDomElement with component in ._component variable || React is returning WSHeader Object 
+    const headerComponent = header._component || header;
+    const renderedHeader = container;
+    //spy
+    spyOn(headerComponent, 'checkIsLoggedIn', () => {
+      expect(this.props).toBeDefined();
+      expect(this.state).toBeDefined();
+      expect(this.setState).toBeDefined();
+      this.setState({
+        userUID: mockAuthResponse.uid,
+        access_token: mockAuthResponse.access_token,
+        userName: mockUserLookUpResponse.name,
+        userEmail: mockUserLookUpResponse.email});
+      this.propagateLoginStatusChange(true, mockAuthResponse.access_token);
+    });
+    headerComponent.login();
+    expect(headerComponent.props.links.length).toEqual(dummyLinks.length);
+    expect(renderedHeader.querySelector('#loggedInInfo').textContent).toBe('Logout');
+    expect(renderedHeader.querySelector('#nav-links .nav-link')).not.toBeNull();
   });
 
   it('should call props.setLogin function when login is successfully', () => {

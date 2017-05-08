@@ -57,3 +57,12 @@ Object.defineProperty(exports, 'WSWeekPicker', {
     return _wsWeekPicker.WSWeekPicker;
   }
 });
+
+var _wsTilesChart = require('./ws-tiles-chart/ws-tiles-chart');
+
+Object.defineProperty(exports, 'WSTilesChart', {
+  enumerable: true,
+  get: function get() {
+    return _wsTilesChart.WSTilesChart;
+  }
+});

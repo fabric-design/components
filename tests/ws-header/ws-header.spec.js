@@ -1,31 +1,107 @@
 import {React, render} from 'imports';
 import {WSHeader} from '../../src/index';
-import jasmineEnzyme from 'jasmine-enzyme';
-import { shallow, mount } from 'enzyme';
 
 describe('Test: <WS-Header />', () => {
-  // this is just a placeholder
+  let container;
+
+  const defaultProps = {
+      setLang: () => {},
+      setLogin: () => {},
+      clientId: null,
+      redirectUrl: '',
+      logoUrl: null,
+      title: '',
+      links: []
+    };
+
+  const dummyLinks = ['Home', 'About', 'Details'];
+
+
+  const defaultState = {
+    availableLanguages: ['de', 'en'],
+  }
+
   beforeEach(() => {
-    jasmineEnzyme();
+    container = document.createElement('div');
+    document.querySelector("body").appendChild(container);
+    expect(React).toBeDefined();
+    expect(render).toBeDefined();
   });
 
-  it('should render component', () => {
-    const header = shallow(<WSHeader />);
-    expect(header).toBePresent();
+  afterEach(() => {
+    document.querySelector("body").innerHTML = "";
   });
 
-  it('should initialize with custom title', () => {
-    // Document: If you want to test props you need to use Mount.
-    // seems like an issue with ES7 static
-    const header = mount(<WSHeader title="Awesome Header" />);
-    expect(header).toHaveProp('title');
-    expect(header).toHaveProp('title', 'Awesome Header'); // do we really need to test prop if text is shown ?
-    expect(header.find('.navigation-wrapper > a > span')).toHaveText('Awesome Header');
+  /**
+   * Doing some stuff here
+   * 
+   */
+  it('should have default properties set', () => {
+    // initialization has to been done for every testcase
+    const header = render(<WSHeader />, container); 
+    // Preact returns HTMLDomElement with component in ._component variable || React is returning WSHeader Object 
+    const headerComponent = header._component || header;
+    const renderedHeader = container;
+
+    expect(headerComponent).toBeDefined();
+    expect(headerComponent.props).toBeDefined();
+    expect(headerComponent.props).toEqual(jasmine.objectContaining(
+      {
+        clientId: defaultProps.clientId,
+        redirectUrl: defaultProps.redirectUrl,
+        logoUrl: defaultProps.logoUrl,
+        title: defaultProps.title,
+      }
+    ));
+    expect(headerComponent.props.links.length).toBe(defaultProps.links.length);
   });
 
-  it('should render navigation items', () => {
-    
+  it('should render with default properties', () => {
+    const header = render(<WSHeader />, container); 
+    // Preact returns HTMLDomElement with component in ._component variable || React is returning WSHeader Object 
+    const headerComponent = header._component || header;
+    const renderedHeader = container;
+    expect(renderedHeader.querySelector('.nav-title').textContent).toBe('');
+    expect(renderedHeader.querySelector('.logo')).toBeNull();
+    expect(renderedHeader.querySelector('.js-navigation-menu .nav-link')).toBeNull();
+
   });
 
+  it('should render title "Awesome Navigation" ', () => {
+    const header = render(<WSHeader title="Awesome Navigation"/>, container); 
+    // Preact returns HTMLDomElement with component in ._component variable || React is returning WSHeader Object 
+    const headerComponent = header._component || header;
+    const renderedHeader = container;
+    expect(headerComponent.props.title).toBe("Awesome Navigation");
+    expect(renderedHeader.querySelector('.nav-title').textContent).toBe("Awesome Navigation");
+    expect(renderedHeader.querySelector('#selectedLanguage').textContent).toBe(defaultState.availableLanguages[0]);
+    expect(renderedHeader.querySelector('#loggedInInfo').textContent).toBe('Login');
+  });
+
+  it('should not show any navigation links when not logged in ', () => {
+    const header = render(<WSHeader title="Awesome Navigation" links={dummyLinks} /> , container); 
+    // Preact returns HTMLDomElement with component in ._component variable || React is returning WSHeader Object 
+    const headerComponent = header._component || header;
+    const renderedHeader = container;
+    expect(headerComponent.props.links.length).toEqual(dummyLinks.length);
+    expect(renderedHeader.querySelector('#loggedInInfo').textContent).toBe('Login');
+    expect(renderedHeader.querySelector('#nav-links .nav-link')).toBeNull();
+  });
+
+  it('should show navigation links when logged in ', () => {
+
+  });
+
+  it('should call props.setLogin function when login is successfully', () => {
+
+  });
+
+  it('should call props.setLogout function when logout is triggered', () => {
+
+  });
+
+  it('should change language state', () => {
+
+  });
 
 });

@@ -284,7 +284,6 @@ export class WSHeader extends Component {
    * @returns {JSX} JSX string representation of WSHeader
    */
   render() {
-    const that = this;
     return (
       <div className="refills-patterns refills-components">
         <header className="navigation" role="banner">
@@ -293,11 +292,11 @@ export class WSHeader extends Component {
               {this.props.logoUrl &&
                 <img className="logo" alt={`${this.props.title}_logo`} src={this.props.logoUrl} />
               }
-              <span>{this.props.title}</span>
+              <span className="nav-title">{this.props.title}</span>
             </a>
             <nav role="navigation">
               <ul id="js-navigation-menu" className="navigation-menu show">
-                {this.state.isLoggedIn && this.state.userName &&
+                {this.state.loggedIn && this.state.userName &&
                   <ul>
                     {this.props.links && this.props.links.map((link, index) =>
                       <WSHeaderNavLink link={link} key={index} />
@@ -307,14 +306,14 @@ export class WSHeader extends Component {
                 <li className="nav-link more dropdown-menu">
                   <a href={`#lang${this.state.lang}`}>
                     <span id="selectedLanguageFlag" className={`flag flag-${this.state.lang}`} />
-                    <span id="selectedLanguage"> {this.state.lang}</span>
+                    <span id="selectedLanguage">{this.state.lang}</span>
                   </a>
                   <ul className="submenu" id="languages">
                     {this.state.availableLanguages.map(lang =>
                       <li key={`lang-${lang}`} onClick={() => that.setLanguage(lang)}>
                         <a>
                           <span className={`flag flag-${lang}`} />
-                          <span> {lang}</span>
+                          <span>{lang}</span>
                         </a>
                       </li>
                     )}

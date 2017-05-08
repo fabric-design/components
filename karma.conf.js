@@ -44,7 +44,6 @@ module.exports = config => {
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: ['mocha'],
 
-
     // web server port
     port: 9876,
 
@@ -65,8 +64,14 @@ module.exports = config => {
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
     // when chrome 59 is released we can add --headless flag to it (future)
-    browsers: ['Chrome'],
-
+    browsers: ['ChromeDebugging'],
+    // custom configuration to debug Karma + Chrome in VS Code
+    customLaunchers: {
+      ChromeDebugging: {
+        base: 'Chrome',
+        flags: [ '--remote-debugging-port=9333' ]
+      }
+    },
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
@@ -75,6 +80,6 @@ module.exports = config => {
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity,
-    webpack: require('./webpack.config.test.js')
+    webpack: require('./webpack.config.preact.test.js')
   });
 };

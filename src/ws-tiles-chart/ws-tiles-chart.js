@@ -23,8 +23,8 @@ export class WSTilesChart extends Component {
     title: '',
     maxTileSize: 25,
     minTileSize: 8,
-    height: 80,
-    width: 80
+    width: 80,
+    height: 80
   };
 
   /**
@@ -34,7 +34,9 @@ export class WSTilesChart extends Component {
     data: PropTypes.object,
     config: PropTypes.object,
     title: PropTypes.string,
-    maxTileSize: PropTypes.number
+    maxTileSize: PropTypes.number,
+    width: PropTypes.number,
+    height: PropTypes.number
   };
 
   /**
@@ -44,6 +46,7 @@ export class WSTilesChart extends Component {
   constructor(props) {
     super(props);
     this.state = {tileSize: 0};
+    this.titleDivSize = 30;
 
     this.getTileSize = this.getTileSize.bind(this);
   }
@@ -52,11 +55,8 @@ export class WSTilesChart extends Component {
    * Calculate the tiles size
    * @returns {void}
    */
-  componentDidMount() {
-    this.setState({tileSize: this.getTileSize(
-      this.tilesChartContainer.clientWidth,
-      this.tilesChartContainer.clientHeight
-    )});
+  componentWillMount() {
+    this.setState({tileSize: this.getTileSize()});
   }
 
   /**
@@ -74,13 +74,14 @@ export class WSTilesChart extends Component {
 
   /**
    * Returns the size to be used for the tile
-   * @param {number} width of the container
-   * @param {number} height of the container
    * @returns {number}
    */
-  getTileSize(width, height) {
+  getTileSize() {
     const tilesAmount = this.props.data.groups.map(group => group.tilesSet.length).reduce((a, b) => a + b);
-    const tileSize = this.calculateMaximumPossibleTileSize(width, height, tilesAmount);
+
+    const tileSize = this.calculateMaximumPossibleTileSize(
+      this.props.width, this.props.height - this.titleDivSize, tilesAmount
+    );
 
     if (tileSize <= this.props.maxTileSize && tileSize >= this.props.minTileSize) {
       return tileSize;
@@ -108,14 +109,11 @@ export class WSTilesChart extends Component {
    * @returns {Object}
    */
   render() {
-    const {data, config, title} = this.props;
+    const {data, config, title, width, height} = this.props;
     return (
-      <div className="ws-tiles-chart">
+      <div className="ws-tiles-chart" style={{width: `${width}px`, height: `${height}px`}}>
         <div className="tiles-chart-title">{title}</div>
-        <div
-          className="tiles-chart-container"
-          ref={element => { this.tilesChartContainer = element; }}
-        >
+        <div className="tiles-chart-container" style={{height: `${height - this.titleDivSize}px`}}>
           {data.groups.map(group => group.tilesSet.map(tile =>
             <Tile
               data={tile}

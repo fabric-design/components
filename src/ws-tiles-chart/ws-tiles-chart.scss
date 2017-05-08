@@ -1,8 +1,7 @@
 .ws-tiles-chart {
-  width: 100%;
-  height: 100%;
   .tiles-chart-title {
-    margin-bottom: rem(20px);
+    height: rem(30px);
+    vertical-align: top;
     text-align: center;
     font-weight: 500;
   }
@@ -10,8 +9,6 @@
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    width: 100%;
-    height: 80%;
     overflow: auto;
     .tile {
       box-sizing: border-box;

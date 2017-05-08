@@ -29,7 +29,7 @@ export var WSHeader = function (_Component) {
       id: null,
       redirectUrl: null,
       userServiceUrl: null,
-      tokenInfoUrl: null,
+      tokenInfoUrl: '',
       clientId: null,
       availableLanguages: ['de', 'en'],
       userName: null,
@@ -95,7 +95,9 @@ export var WSHeader = function (_Component) {
         this.setState({ lang: lang });
 
         window.localStorage.setItem(this.state.languageStorageId, lang);
-        this.props.setLang && this.props.setLang(lang);
+        if (this.props.setLang) {
+          this.props.setLang(lang);
+        }
       }
     }
   }, {
@@ -113,15 +115,18 @@ export var WSHeader = function (_Component) {
       var that = this;
 
       function failureListener() {
-        return that.logout();
+        that.logout();
       }
+
       function successListener() {
+        var that2 = this;
+
         function userServiceSuccess() {
           var user = JSON.parse(this.responseText);
           that.setState({ userName: user.name });
           that.setState({ userEmail: user.email });
         }
-        var data = JSON.parse(this.responseText);
+        var data = JSON.parse(that2.responseText);
         that.setState({ userUID: data.uid });
         that.propagateLoginStatusChange(true, data.access_token);
         if (data.uid) {
@@ -139,6 +144,7 @@ export var WSHeader = function (_Component) {
         }
         return false;
       }
+
       var token = this.getToken(urlAtStart);
       if (!token) {
         return failureListener();
@@ -157,10 +163,12 @@ export var WSHeader = function (_Component) {
       if (this.state.loggedIn !== isLoggedIn) {
         this.setState({ loggedIn: isLoggedIn });
 
-        this.props.setLogin && this.props.setLogin({
-          loggedIn: isLoggedIn,
-          token: token || null
-        });
+        if (this.props.setLogin) {
+          this.props.setLogin({
+            loggedIn: isLoggedIn,
+            token: token || null
+          });
+        }
       }
     }
   }, {
@@ -175,15 +183,13 @@ export var WSHeader = function (_Component) {
   }, {
     key: 'login',
     value: function login() {
-      var url = 'https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid\n      &client_id=' + this.props.clientId + '\n      &redirect_uri=' + this.props.redirectUrl + '\n      &state=' + setSessionState();
-
-      window.location.href = url;
+      window.location.href = 'https://auth.zalando.com/z/oauth2/authorize\n      ?realm=/employees&response_type=token&scope=uid\n      &client_id=' + this.props.clientId + '\n      &redirect_uri=' + this.props.redirectUrl + '\n      &state=' + setSessionState();
     }
   }, {
     key: 'logout',
     value: function logout() {
       this.removeCookie();
-      this.propagateLoginStatusChange(false);
+      this.propagateLoginStatusChange(false, null);
     }
   }, {
     key: 'render',
@@ -203,7 +209,7 @@ export var WSHeader = function (_Component) {
             React.createElement(
               'a',
               { href: '/' },
-              this.props.logoUrl ? React.createElement('img', { className: 'logo', alt: this.props.title + '_logo', src: this.props.logoUrl }) : null,
+              this.props.logoUrl && React.createElement('img', { className: 'logo', alt: this.props.title + '_logo', src: this.props.logoUrl }),
               React.createElement(
                 'span',
                 null,
@@ -216,13 +222,13 @@ export var WSHeader = function (_Component) {
               React.createElement(
                 'ul',
                 { id: 'js-navigation-menu', className: 'navigation-menu show' },
-                this.state.isLoggedIn && this.state.userName ? React.createElement(
+                this.state.isLoggedIn && this.state.userName && React.createElement(
                   'ul',
                   null,
-                  this.props.links ? this.props.links.map(function (link, index) {
+                  this.props.links && this.props.links.map(function (link, index) {
                     return React.createElement(WSHeaderNavLink, { link: link, key: index });
-                  }) : null
-                ) : null,
+                  })
+                ),
                 React.createElement(
                   'li',
                   { className: 'nav-link more dropdown-menu' },
@@ -277,7 +283,7 @@ export var WSHeader = function (_Component) {
                     React.createElement(
                       'a',
                       { className: 'auto-size', id: 'logOutButton', type: 'button' },
-                      React.createElement('i', { className: 'icon icon-close' })
+                      React.createElement('span', { className: 'icon icon-close' })
                     )
                   ) : React.createElement(
                     'a',
@@ -304,7 +310,7 @@ export var WSHeader = function (_Component) {
 
 function getTokenFromUrl(url) {
   var urlQueryTokenPart = /access_token=([^&]+)/.exec(url);
-  return urlQueryTokenPart != null ? urlQueryTokenPart[1] : null;
+  return urlQueryTokenPart !== null ? urlQueryTokenPart[1] : null;
 }
 
 function getCookieValue(a) {
@@ -316,6 +322,7 @@ function guid() {
   function s4() {
     return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
   }
+
   return '' + s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 

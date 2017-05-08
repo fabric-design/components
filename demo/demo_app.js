@@ -1,5 +1,6 @@
 import {React, render} from '../src/imports';
-import {WSHeader, WSDropdown, WSNotification, WSDatePicker, WSInlineEdit, WSWeekPicker} from '../src/index';
+import {WSHeader, WSDropdown, WSNotification, WSDatePicker, WSInlineEdit, WSWeekPicker, WSTilesChart} from '../src/index';
+import {dashboardMockData} from './mockdata'
 import './index.scss';
 
 // Used to enable React Developer Tools
@@ -18,10 +19,19 @@ render(
       <WSWeekPicker onChange={({year, week}) => console.log('New week selected:', week)} />
       <br />
       <br />
-      <WSDropdown text="item 2" type="select" items={[
-        'item 1',
+      <WSDropdown text="Multiple" type="select" placeholder="Filter values.." filterable multiple items={[
+        'New',
+        'New From Template',
+        'Open',
+        'Test value 1',
+        'Open Recent',
+        'Save'
+      ]} />
+      <br />
+      <WSDropdown text="Simple" type="select" items={[
+        'New',
         {
-          label: 'item 2',
+          label: 'New From Template',
           children: [
             'item 2.1',
             {
@@ -35,11 +45,12 @@ render(
             }
           ]
         },
-        'item 3',
-        'item 4',
-        'item 5',
-        'item 6'
-      ]}/>
+        'Open',
+        'Open Recent',
+        'Save'
+      ]} />
+      <br />
+      <WSDropdown text="Input" type="select" placeholder="tasd" value="222" inputOnly />
       <br />
       <WSNotification />
       <br />
@@ -66,6 +77,10 @@ render(
           </tr>
         </tbody>
       </table>
+      <br />
+        <WSTilesChart
+          title="Chart title" data={dashboardMockData.data} config={dashboardMockData.config} width={100} height={100}
+        />
     </div>
   </div>
 , document.querySelector('#app-holder'));

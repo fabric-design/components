@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.render = exports.PureComponent = exports.Component = exports.React = undefined;
+exports.render = exports.PropTypes = exports.PureComponent = exports.Component = exports.React = undefined;
 
 var _react = require('react');
 
@@ -13,11 +13,16 @@ var _reactDom = require('react-dom');
 
 var ReactDOM = _interopRequireWildcard(_reactDom);
 
+var _propTypes = require('prop-types');
+
+var types = _interopRequireWildcard(_propTypes);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var React = exports.React = {
-  createElement: _React_.createElement || _React_.h,
-  PropTypes: _React_.PropTypes || { oneOf: function oneOf() {}, oneOfType: function oneOfType() {} } };
+  createElement: _React_.createElement || _React_.h
+};
 var Component = exports.Component = _React_.Component;
 var PureComponent = exports.PureComponent = _React_.PureComponent || _React_.Component;
+var PropTypes = exports.PropTypes = types;
 var render = exports.render = ReactDOM.render;

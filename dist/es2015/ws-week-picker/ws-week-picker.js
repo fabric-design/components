@@ -6,9 +6,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import { React, Component } from '../imports';
+import { React, Component, PropTypes } from '../imports';
 import { WSWeekPickerCalendar } from './ws-week-picker-calendar';
-import './ws-week-picker.scss';
 
 export var WSWeekPicker = function (_Component) {
   _inherits(WSWeekPicker, _Component);
@@ -20,8 +19,8 @@ export var WSWeekPicker = function (_Component) {
 
     _this.state = {
       show: false,
-      selectedYear: null,
-      selectedWeek: null
+      selectedYear: props.selectedYear,
+      selectedWeek: props.selectedWeek
     };
     return _this;
   }
@@ -38,23 +37,18 @@ export var WSWeekPicker = function (_Component) {
       });
     }
   }, {
-    key: 'componentWillUnmount',
-    value: function componentWillUnmount() {
-      document.body.removeEventListener(this.outsideClickListener);
-    }
-  }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(newProps) {
       this.setState({
-        selectedYear: newProps.selectedYear == null ? newProps.selectedYear : this.state.selectedYear,
-        selectedWeek: newProps.selectedWeek == null ? newProps.selectedWeek : this.state.selectedWeek,
-        show: newProps.show == null ? newProps.show : this.state.show
+        selectedYear: newProps.selectedYear === null ? newProps.selectedYear : this.state.selectedYear,
+        selectedWeek: newProps.selectedWeek === null ? newProps.selectedWeek : this.state.selectedWeek,
+        show: newProps.show === null ? newProps.show : this.state.show
       });
     }
   }, {
-    key: 'toggleCalendar',
-    value: function toggleCalendar() {
-      this.setState({ show: !this.state.show });
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      document.body.removeEventListener('click', this.outsideClickListener);
     }
   }, {
     key: 'onChange',
@@ -67,8 +61,15 @@ export var WSWeekPicker = function (_Component) {
           selectedYear: year,
           selectedWeek: week
         });
-        this.props.onChange && this.props.onChange({ week: week, year: year });
+        if (this.props.onChange) {
+          this.props.onChange({ week: week, year: year });
+        }
       }
+    }
+  }, {
+    key: 'toggleCalendar',
+    value: function toggleCalendar() {
+      this.setState({ show: !this.state.show });
     }
   }, {
     key: 'render',
@@ -78,24 +79,29 @@ export var WSWeekPicker = function (_Component) {
       return React.createElement(
         'div',
         { className: 'ws-week-picker', ref: function ref(elem) {
-            return _this3.elem = elem;
+            _this3.elem = elem;
           } },
         React.createElement('input', {
-          value: this.state.selectedWeek != null ? 'Week ' + this.state.selectedWeek + ', ' + this.state.selectedYear : '',
+          value: this.state.selectedWeek !== null ? 'Week ' + this.state.selectedWeek + ', ' + this.state.selectedYear : '',
           placeholder: 'Please choose a week',
           onClick: function onClick() {
             return _this3.toggleCalendar();
           },
           readOnly: true
         }),
-        React.createElement('i', { className: 'icon icon-' + (this.state.show ? 'cross' : 'calendar'),
+        React.createElement('span', {
+          className: 'icon icon-' + (this.state.show ? 'cross' : 'calendar'),
           onClick: function onClick() {
             return _this3.toggleCalendar();
           }
         }),
-        this.state.show ? React.createElement(WSWeekPickerCalendar, { onChange: function onChange(selection) {
+        this.state.show && React.createElement(WSWeekPickerCalendar, {
+          onChange: function onChange(selection) {
             return _this3.onChange(selection);
-          }, selectedYear: this.state.selectedYear, selectedWeek: this.state.selectedWeek }) : null
+          },
+          selectedYear: this.state.selectedYear,
+          selectedWeek: this.state.selectedWeek
+        })
       );
     }
   }]);
@@ -116,15 +122,15 @@ Object.defineProperty(WSWeekPicker, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    selectedYear: React.PropTypes.number,
-    selectedWeek: React.PropTypes.number,
-    onChange: React.PropTypes.func
+    selectedYear: PropTypes.number,
+    selectedWeek: PropTypes.number,
+    onChange: PropTypes.func
   }
 });
 
 function isDescendant(parent, child) {
   var node = child.parentNode;
-  while (node != null) {
+  while (node !== null) {
     if (node === parent) {
       return true;
     }

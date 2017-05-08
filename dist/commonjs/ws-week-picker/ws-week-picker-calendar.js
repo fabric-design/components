@@ -27,7 +27,7 @@ var WSWeekPickerCalendar = exports.WSWeekPickerCalendar = function (_Component) 
 
     var _this = _possibleConstructorReturn(this, (WSWeekPickerCalendar.__proto__ || Object.getPrototypeOf(WSWeekPickerCalendar)).call(this, props));
 
-    var selectedDate = props.selectedYear != null && props.selectedWeek != null ? getDateOfISOWeek(props.selectedWeek, props.selectedYear) : new Date(Date.now());
+    var selectedDate = props.selectedYear !== null && props.selectedWeek !== null ? getDateOfISOWeek(props.selectedWeek, props.selectedYear) : new Date(Date.now());
     _this.state = {
       showingYear: selectedDate.getFullYear()
     };
@@ -78,13 +78,16 @@ var WSWeekPickerCalendar = exports.WSWeekPickerCalendar = function (_Component) 
           { key: weekIndex },
           allMonths.map(function (month, monthIndex) {
             var weekInMonth = weeksPerMonth[monthIndex][weekIndex];
-            if (weekInMonth == null) return _imports.React.createElement('td', { key: monthIndex + '_' + weekIndex });
+            if (weekInMonth === null) {
+              return _imports.React.createElement('td', { key: monthIndex + '_' + weekIndex });
+            }
             var week = weekInMonth.week,
                 year = weekInMonth.year;
 
             return _imports.React.createElement(
               'td',
-              { className: (monthIndex < 2 || monthIndex > 13 ? 'off ' : '') + (_this2.isActive(year, week) ? 'active ' : '') + (_this2.isToday(year, week) ? 'today ' : ''),
+              {
+                className: (monthIndex < 2 || monthIndex > 13 ? 'off ' : '') + (_this2.isActive(year, week) ? 'active ' : '') + (_this2.isToday(year, week) ? 'today ' : ''),
                 key: monthIndex + '_' + weekIndex,
                 onClick: function onClick() {
                   return _this2.props.onChange({ week: week, year: year });
@@ -119,7 +122,7 @@ var WSWeekPickerCalendar = exports.WSWeekPickerCalendar = function (_Component) 
               { className: 'prev', onClick: function onClick() {
                   return _this3.prevYear();
                 } },
-              _imports.React.createElement('i', { className: 'icon icon-left' }),
+              _imports.React.createElement('span', { className: 'icon icon-left' }),
               this.state.showingYear - 1
             ),
             _imports.React.createElement(
@@ -133,7 +136,7 @@ var WSWeekPickerCalendar = exports.WSWeekPickerCalendar = function (_Component) 
                   return _this3.nextYear();
                 } },
               this.state.showingYear + 1,
-              _imports.React.createElement('i', { className: 'icon icon-right' })
+              _imports.React.createElement('span', { className: 'icon icon-right' })
             )
           ),
           _imports.React.createElement(
@@ -177,18 +180,22 @@ Object.defineProperty(WSWeekPickerCalendar, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    selectedYear: _imports.React.PropTypes.number,
-    selectedWeek: _imports.React.PropTypes.number,
-    onChange: _imports.React.PropTypes.func
+    selectedYear: _imports.PropTypes.number,
+    selectedWeek: _imports.PropTypes.number,
+    onChange: _imports.PropTypes.func
   }
 });
 
 function getDateOfISOWeek(week, year) {
   var simple = new Date(year, 0, 1 + (week - 1) * 7);
   var dow = simple.getDay();
-  var ISOweekStart = simple;
-  if (dow <= 4) ISOweekStart.setDate(simple.getDate() - simple.getDay() + 1);else ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
-  return ISOweekStart;
+  var ISOWeekStart = simple;
+  if (dow <= 4) {
+    ISOWeekStart.setDate(1 + (simple.getDate() - simple.getDay()));
+  } else {
+    ISOWeekStart.setDate(simple.getDate() + (8 - simple.getDay()));
+  }
+  return ISOWeekStart;
 }
 
 function getWeekOfYear(date) {
@@ -196,45 +203,45 @@ function getWeekOfYear(date) {
 
   var dayNr = date.getDay();
 
-  target.setDate(target.getDate() - dayNr + 3);
+  target.setDate(target.getDate() - (dayNr + 3));
 
   var jan4 = new Date(target.getFullYear(), 0, 4);
 
   var dayDiff = (target - jan4) / 86400000;
 
-  var weekNr = 1 + Math.ceil(dayDiff / 7);
-
-  return weekNr;
+  return 1 + Math.ceil(dayDiff / 7);
 }
 
 function getWeeks(month, year) {
-  while (month > 11) {
-    ++year;
-    month = month - 12;
+  var actualMonth = month;
+  var actualYear = year;
+  while (actualMonth > 11) {
+    actualYear += 1;
+    actualMonth -= 12;
   }
-  while (month < 0) {
-    --year;
-    month = month + 12;
+  while (actualMonth < 0) {
+    actualYear -= 1;
+    actualMonth += 12;
   }
-  var startWeek = getWeekOfYear(new Date(year, month, 1));
+  var startWeek = getWeekOfYear(new Date(actualYear, actualMonth, 1));
 
-  if (month === 0) {
+  if (actualMonth === 0) {
     startWeek = 1;
   } else {
-    startWeek = getDateOfISOWeek(startWeek, year).getMonth() !== month ? startWeek + 1 : startWeek;
+    startWeek = getDateOfISOWeek(startWeek, actualYear).getMonth() !== actualMonth ? startWeek + 1 : startWeek;
   }
-  var endWeek = getWeekOfYear(new Date(year, month + 1, 0));
+  var endWeek = getWeekOfYear(new Date(actualYear, actualMonth + 1, 0));
 
   if (endWeek === 1) {
-    endWeek = getWeekOfYear(new Date(year, month + 1, -7));
+    endWeek = getWeekOfYear(new Date(actualYear, actualMonth + 1, -7));
   } else {
-    endWeek = getDateOfISOWeek(endWeek, year).getMonth() !== month ? endWeek - 1 : endWeek;
+    endWeek = getDateOfISOWeek(endWeek, actualYear).getMonth() !== actualMonth ? endWeek - 1 : endWeek;
   }
   var weeks = [];
   for (var i = startWeek; i <= endWeek; i++) {
     weeks.push({
       week: i,
-      year: year
+      actualYear: actualYear
     });
   }
   return weeks;

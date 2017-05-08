@@ -94,7 +94,7 @@ export class WSNotification extends Component {
    * @returns {void}
    */
   animateIn(notification, index) {
-    const list = this.refs.list;
+    const list = this.list;
     list.style.transition = 'none';
     list.style.transform = 'translate3d(0, 80px, 0)';
     setTimeout(() => {
@@ -121,7 +121,7 @@ export class WSNotification extends Component {
    * @returns {void}
    */
   close(index) {
-    const notification = this.refs[`notification-${index}`];
+    const notification = this[`notification-${index}`];
     if (notification) {
       const notifications = this.state.notifications.slice();
       notifications.splice(index, 1);
@@ -137,12 +137,12 @@ export class WSNotification extends Component {
    */
   render() {
     return (<div className="ws-notification-wrapper">
-      <div className="ws-notification-list" ref="list">
+      <div className="ws-notification-list" ref={element => { this.list = element; }}>
         {this.state.notifications.map((notification, i) =>
           <div
             className={`notification ${notification.type}`}
             key={`notification-${i}`}
-            ref={`notification-${i}`}
+            ref={element => { this[`notification-${i}`] = element; }}
             onClick={() => this.close(i)}
           >
             <div className="icons">

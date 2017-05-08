@@ -1,7 +1,7 @@
 System.register(['../imports', './flatpickr'], function (_export, _context) {
   "use strict";
 
-  var React, Component, Flatpickr, _slicedToArray, _extends, _createClass, WSDatePicker;
+  var React, Component, PropTypes, Flatpickr, _slicedToArray, _extends, _createClass, WSDatePicker;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -37,6 +37,7 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
     setters: [function (_imports) {
       React = _imports.React;
       Component = _imports.Component;
+      PropTypes = _imports.PropTypes;
     }, function (_flatpickr) {
       Flatpickr = _flatpickr.default;
     }],
@@ -138,6 +139,10 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
             }, this.props.options, {
               onChange: this.onChange.bind(this)
             }));
+
+            this.input.addEventListener('change', function (event) {
+              return event.stopPropagation();
+            }, true);
           }
         }, {
           key: 'componentWillReceiveProps',
@@ -156,6 +161,9 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
           key: 'componentWillUnmount',
           value: function componentWillUnmount() {
             this.flatpickr.destroy();
+            this.input.removeEventListener('change', function (event) {
+              return event.stopPropagation();
+            }, true);
           }
         }, {
           key: 'onChange',
@@ -164,7 +172,7 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
                 selectedDate = _ref2[0];
 
             this.setState({ value: value });
-            this.element.dispatchEvent(new CustomEvent('change', { detail: selectedDate }));
+            this.element.dispatchEvent(new CustomEvent('change', { detail: { date: selectedDate, value: value }, bubbles: true }));
 
             if (this.props.onChange) {
               this.props.onChange(selectedDate);
@@ -188,9 +196,6 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
                 placeholder: this.props.placeholder,
                 ref: function ref(element) {
                   _this3.input = element;
-                },
-                onChange: function onChange(event) {
-                  return event.stopPropagation();
                 },
                 key: 'input'
               }), React.createElement('span', { className: 'icon icon-calendar icon16', key: 'icon' })],
@@ -228,12 +233,12 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
         enumerable: true,
         writable: true,
         value: {
-          value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-          format: React.PropTypes.string,
-          placeholder: React.PropTypes.string,
-          iconOnly: React.PropTypes.bool,
-          options: React.PropTypes.object,
-          onChange: React.PropTypes.func
+          value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+          format: PropTypes.string,
+          placeholder: PropTypes.string,
+          iconOnly: PropTypes.bool,
+          options: PropTypes.object,
+          onChange: PropTypes.func
         }
       });
     }

@@ -1,4 +1,15 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DropdownMenu = undefined;
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _imports = require('../imports');
+
+var _dropdownMenuItem = require('./dropdown-menu-item');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -6,19 +17,16 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import { React, Component } from '../imports';
-import { WSDropdownItem } from './ws-dropdown-item';
-
 var ANIMATION_START_EVENTS = ['oAnimationStart', 'MSAnimationStart', 'animationstart'];
 var ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
 
-export var WSDropdownMenu = function (_Component) {
-  _inherits(WSDropdownMenu, _Component);
+var DropdownMenu = exports.DropdownMenu = function (_Component) {
+  _inherits(DropdownMenu, _Component);
 
-  function WSDropdownMenu(props, context) {
-    _classCallCheck(this, WSDropdownMenu);
+  function DropdownMenu(props, context) {
+    _classCallCheck(this, DropdownMenu);
 
-    var _this = _possibleConstructorReturn(this, (WSDropdownMenu.__proto__ || Object.getPrototypeOf(WSDropdownMenu)).call(this, props, context));
+    var _this = _possibleConstructorReturn(this, (DropdownMenu.__proto__ || Object.getPrototypeOf(DropdownMenu)).call(this, props, context));
 
     Object.defineProperty(_this, 'handlePropagation', {
       enumerable: true,
@@ -37,6 +45,16 @@ export var WSDropdownMenu = function (_Component) {
             break;
           case 'change':
             _this.clearSelections();
+
+            if (!_this.context.multiple) {
+              var previous = _this.state.items.find(function (item) {
+                return item.stored && item !== data;
+              });
+              if (previous) {
+                previous.stored = false;
+                previous.selected = false;
+              }
+            }
             _this.props.handle(type, data);
             break;
           case 'change-size':
@@ -56,10 +74,37 @@ export var WSDropdownMenu = function (_Component) {
     return _this;
   }
 
-  _createClass(WSDropdownMenu, [{
+  _createClass(DropdownMenu, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (this.input) {
+        this.input.addEventListener('change', function (event) {
+          return event.stopPropagation();
+        });
+      }
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(props) {
+      this.setState({
+        filter: props.filter,
+        items: props.items,
+        value: props.value
+      });
+    }
+  }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
       this.props.handle('change-size', this.getHeight());
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      if (this.input) {
+        this.input.removeEventListener('change', function (event) {
+          return event.stopPropagation();
+        });
+      }
     }
   }, {
     key: 'getHeight',
@@ -77,7 +122,10 @@ export var WSDropdownMenu = function (_Component) {
           return false;
         }
 
-        return _this2.context.multiple ? !item.stored : true;
+        if (_this2.props.filterable || _this2.context.multiple) {
+          return !item.stored && !item.selected;
+        }
+        return true;
       });
     }
   }, {
@@ -186,54 +234,66 @@ export var WSDropdownMenu = function (_Component) {
 
       var limit = this.props.filterable ? this.props.limit : this.state.items.length;
       var items = this.getFilteredItems().slice(0, limit);
+      var hasValue = Array.isArray(this.state.value) ? this.state.value.length : this.state.value;
 
-      return React.createElement(
+      return _imports.React.createElement(
         'ul',
         {
-          className: 'dropdown-menu ' + (!this.props.parent ? 'dropdown-root-menu' : ''),
+          className: 'dropdown-menu ' + (!this.props.parent ? 'dropdown-root-menu' : 'dropdown-child-menu'),
           ref: function ref(element) {
             _this3.menuContainer = element;
           }
         },
-        this.props.filterable && React.createElement(
+        this.props.filterable && _imports.React.createElement(
           'li',
-          { className: 'dropdown-filter', key: 'filter' },
-          React.createElement('input', { type: 'text', defaultValue: this.state.filter, onKeyUp: function onKeyUp(event) {
+          { className: 'dropdown-input', key: 'filter' },
+          _imports.React.createElement('input', {
+            type: 'text',
+            defaultValue: this.state.filter,
+            placeholder: this.props.placeholder,
+            onKeyUp: function onKeyUp(event) {
               return _this3.updateFilter(event);
-            } })
+            },
+            ref: function ref(element) {
+              _this3.input = element;
+            }
+          })
         ),
-        this.props.parent && [React.createElement(WSDropdownItem, {
+        this.props.parent && [_imports.React.createElement(_dropdownMenuItem.DropdownMenuItem, {
           item: this.props.parent,
           icon: 'icon-left',
           handle: this.handlePropagation,
           key: 'parent',
           isParent: true
-        }), React.createElement('li', { className: 'dropdown-item-separator', key: 'parent-separator' })],
-        this.state.value && this.state.value.length ? [this.state.value.map(function (item, index) {
-          return React.createElement(WSDropdownItem, { item: item, handle: _this3.handlePropagation, key: 'value-' + index });
-        }), React.createElement('li', { className: 'dropdown-item-separator', key: 'value-separator' })] : null,
+        }), _imports.React.createElement('li', { className: 'dropdown-item-separator', key: 'parent-separator' })],
+        hasValue && (this.context.multiple || this.props.filterable) ? [this.state.items.filter(function (item) {
+          return item.stored;
+        }).map(function (item, index) {
+          return _imports.React.createElement(_dropdownMenuItem.DropdownMenuItem, { item: item, handle: _this3.handlePropagation, key: 'value-' + index });
+        }), _imports.React.createElement('li', { className: 'dropdown-item-separator', key: 'value-separator' })] : null,
         items.map(function (item, index) {
-          return React.createElement(WSDropdownItem, { item: item, handle: _this3.handlePropagation, key: 'item-' + index });
+          return _imports.React.createElement(_dropdownMenuItem.DropdownMenuItem, { item: item, handle: _this3.handlePropagation, key: 'item-' + index });
         }),
-        (!items || !items.length) && React.createElement(WSDropdownItem, { item: { label: 'No results found', disabled: true }, key: 'disabled' }),
-        this.context.multiple && React.createElement(
+        (!items || !items.length) && _imports.React.createElement(_dropdownMenuItem.DropdownMenuItem, { item: { label: 'No results found', disabled: true }, key: 'disabled' }),
+        this.context.multiple && [_imports.React.createElement('li', { className: 'dropdown-item-separator', key: 'submit-separator' }), _imports.React.createElement(
           'li',
           { className: 'dropdown-submit', key: 'submit' },
-          React.createElement(
+          _imports.React.createElement(
             'button',
-            { onClick: function onClick(event) {
+            { className: 'mod-small', onClick: function onClick(event) {
                 return _this3.submit(event);
               } },
             'OK'
           )
-        )
+        )]
       );
     }
   }]);
 
-  return WSDropdownMenu;
-}(Component);
-Object.defineProperty(WSDropdownMenu, 'defaultProps', {
+  return DropdownMenu;
+}(_imports.Component);
+
+Object.defineProperty(DropdownMenu, 'defaultProps', {
   enumerable: true,
   writable: true,
   value: {
@@ -242,25 +302,27 @@ Object.defineProperty(WSDropdownMenu, 'defaultProps', {
     value: null,
     filterable: false,
     filter: null,
+    placeholder: '',
     limit: 10,
     handle: function handle() {}
   }
 });
-Object.defineProperty(WSDropdownMenu, 'propTypes', {
+Object.defineProperty(DropdownMenu, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    parent: React.PropTypes.object,
-    items: React.PropTypes.array,
-    filterable: React.PropTypes.bool,
-    filter: React.PropTypes.string,
-    limit: React.PropTypes.number
+    parent: _imports.PropTypes.object,
+    items: _imports.PropTypes.array,
+    filterable: _imports.PropTypes.bool,
+    filter: _imports.PropTypes.string,
+    placeholder: _imports.PropTypes.string,
+    limit: _imports.PropTypes.number
   }
 });
-Object.defineProperty(WSDropdownMenu, 'contextTypes', {
+Object.defineProperty(DropdownMenu, 'contextTypes', {
   enumerable: true,
   writable: true,
   value: {
-    multiple: React.PropTypes.bool
+    multiple: _imports.PropTypes.bool
   }
 });

@@ -6,7 +6,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import { React, Component } from '../imports';
+import { React, Component, PropTypes } from '../imports';
 
 export var WSInlineEdit = function (_Component) {
   _inherits(WSInlineEdit, _Component);
@@ -24,7 +24,7 @@ export var WSInlineEdit = function (_Component) {
   }
 
   _createClass(WSInlineEdit, [{
-    key: "editElement",
+    key: 'editElement',
     value: function editElement() {
       var _this2 = this;
 
@@ -35,7 +35,7 @@ export var WSInlineEdit = function (_Component) {
       }
     }
   }, {
-    key: "keyAction",
+    key: 'keyAction',
     value: function keyAction(e) {
       if (e.keyCode === 13) {
         this.setState({
@@ -47,7 +47,7 @@ export var WSInlineEdit = function (_Component) {
       }
     }
   }, {
-    key: "blurAction",
+    key: 'blurAction',
     value: function blurAction(e) {
       this.setState({
         text: e.target.value,
@@ -56,25 +56,25 @@ export var WSInlineEdit = function (_Component) {
       this.updating(e.target.value);
     }
   }, {
-    key: "updating",
+    key: 'updating',
     value: function updating(text) {
       if (text !== this.props.text) {
         this.props.onUpdate(text);
       }
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       var _this3 = this;
 
       return React.createElement(
-        "div",
-        { className: "ws-inline-edit", onClick: function onClick() {
+        'div',
+        { className: 'ws-inline-edit', onClick: function onClick() {
             return _this3.editElement();
           } },
-        React.createElement("input", {
-          type: "text",
-          className: "inlineInput",
+        React.createElement('input', {
+          type: 'text',
+          className: 'inlineInput',
           disabled: !this.state.isEditing ? 'disabled' : '',
           onBlur: function onBlur(e) {
             return _this3.blurAction(e);
@@ -84,7 +84,7 @@ export var WSInlineEdit = function (_Component) {
           },
           defaultValue: this.state.text,
           ref: function ref(el) {
-            return _this3.editEl = el;
+            _this3.editEl = el;
           }
         })
       );
@@ -93,18 +93,19 @@ export var WSInlineEdit = function (_Component) {
 
   return WSInlineEdit;
 }(Component);
-Object.defineProperty(WSInlineEdit, "propTypes", {
+Object.defineProperty(WSInlineEdit, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    text: React.PropTypes.string,
-    onUpdate: React.PropTypes.func
+    text: PropTypes.string,
+    onUpdate: PropTypes.func
   }
 });
-Object.defineProperty(WSInlineEdit, "defaultProps", {
+Object.defineProperty(WSInlineEdit, 'defaultProps', {
   enumerable: true,
   writable: true,
   value: {
+    text: '',
     onUpdate: function onUpdate() {}
   }
 });

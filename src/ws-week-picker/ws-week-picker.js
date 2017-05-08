@@ -1,6 +1,5 @@
-import {React, Component} from '../imports';
+import {React, Component, PropTypes} from '../imports';
 import {WSWeekPickerCalendar} from './ws-week-picker-calendar';
-import './ws-week-picker.scss';
 
 /**
  * @class WSWeekPicker
@@ -18,9 +17,9 @@ export class WSWeekPicker extends Component {
   };
 
   static propTypes = {
-    selectedYear: React.PropTypes.number,
-    selectedWeek: React.PropTypes.number,
-    onChange: React.PropTypes.func
+    selectedYear: PropTypes.number,
+    selectedWeek: PropTypes.number,
+    onChange: PropTypes.func
   };
 
   /**

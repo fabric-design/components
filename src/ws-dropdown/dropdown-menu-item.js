@@ -1,5 +1,5 @@
-import {React, Component} from '../imports';
-import {WSDropdownMenu} from './ws-dropdown-menu';
+import {React, Component, PropTypes} from '../imports';
+import {DropdownMenu} from './dropdown-menu';
 
 /**
  * This class renders a list item inside a dropdown menu. Since the wrapper menu is missing this class is pretty
@@ -14,8 +14,13 @@ import {WSDropdownMenu} from './ws-dropdown-menu';
  *     focused: Boolean, // Adds the class .is-focused to the .dropdown-item
  *     disabled: Boolean // Adds thr class .is-disabled to the .dropdown-item
  * }
+ * @property {Object} props React properties object
+ * @property {Object} props.item Dropdown item configuration
+ * @property {string} props.icon Class name of icon in trigger
+ * @property {Boolean} props.isParent Flag to identify if this item renders the parent dropdown item
+ * @property {Function} props.handle Function used to propagate data
  */
-export class WSDropdownItem extends Component {
+export class DropdownMenuItem extends Component {
 
   /**
    * @type {Object}
@@ -31,17 +36,17 @@ export class WSDropdownItem extends Component {
    * @type {Object}
    */
   static propTypes = {
-    item: React.PropTypes.object,
-    icon: React.PropTypes.string,
-    isParent: React.PropTypes.bool,
-    handle: React.PropTypes.func
+    item: PropTypes.object,
+    icon: PropTypes.string,
+    isParent: PropTypes.bool,
+    handle: PropTypes.func
   };
 
   /**
    * @type {Object}
    */
   static contextTypes = {
-    multiple: React.PropTypes.bool
+    multiple: PropTypes.bool
   };
 
   /**
@@ -75,6 +80,10 @@ export class WSDropdownItem extends Component {
    */
   onClick(event) {
     event.stopPropagation();
+    // Do nothing if this item is disabled
+    if (this.state.disabled) {
+      return;
+    }
     // Click on parent means back navigation
     if (this.props.isParent) {
       // dropdown-item(go-back) -> dropdown-menu(show-parent) -> dropdown-item(show-parent) -> dropdown-menu
@@ -84,9 +93,16 @@ export class WSDropdownItem extends Component {
       this.props.handle('show-child', this.menu);
     } else {
       if (!this.context.multiple) {
-        this.state.selected = true;
-        this.props.handle('change', this.state);
+        // If it is selected we publish null because it will be deselected in the upper menu
+        if (this.state.selected) {
+          this.props.handle('change', null);
+        } else {
+          this.state.selected = true;
+          this.state.stored = true;
+          this.props.handle('change', this.state);
+        }
       } else {
+        // Only toggle selection state, change event will be fired on submit (button click)
         this.state.selected = !this.state.selected;
       }
       // Use this strategy to keep the reference of this.state (item) into dropdown-menu items[x]
@@ -114,17 +130,24 @@ export class WSDropdownItem extends Component {
     anchorClass += this.state.selected ? ' is-active' : '';
     anchorClass += this.state.focused ? ' is-focused' : '';
     anchorClass += this.state.disabled ? ' is-disabled' : '';
+    anchorClass += ` ${this.state.className || ''}`;
+    let itemClass = 'dropdown-item';
+    itemClass += this.props.isParent ? ' dropdown-parent-item' : '';
+    itemClass += this.state.children && !this.props.isParent ? ' has-children' : '';
 
     return (
-      <li className="dropdown-item" onClick={event => this.onClick(event)}>
-        <a className={anchorClass} href={this.state.href}>
+      <li
+        className={itemClass}
+        onClick={event => this.onClick(event)}
+      >
+        <a className={anchorClass} href={this.state.href} title={this.state.title || this.state.label}>
           {(this.props.icon || this.state.icon) &&
             <i className={`icon ${this.props.icon || this.state.icon}`} />
           }
           {this.state.label}
         </a>
         {!this.props.isParent && this.state.children &&
-          <WSDropdownMenu
+          <DropdownMenu
             items={this.state.children}
             parent={this.state}
             ref={element => { this.menu = element; }}

@@ -75,7 +75,7 @@ export var WSNotification = function (_Component) {
     value: function animateIn(notification, index) {
       var _this2 = this;
 
-      var list = this.refs.list;
+      var list = this.list;
       list.style.transition = 'none';
       list.style.transform = 'translate3d(0, 80px, 0)';
       setTimeout(function () {
@@ -97,7 +97,7 @@ export var WSNotification = function (_Component) {
   }, {
     key: 'close',
     value: function close(index) {
-      var notification = this.refs['notification-' + index];
+      var notification = this['notification-' + index];
       if (notification) {
         var notifications = this.state.notifications.slice();
         notifications.splice(index, 1);
@@ -116,14 +116,18 @@ export var WSNotification = function (_Component) {
         { className: 'ws-notification-wrapper' },
         React.createElement(
           'div',
-          { className: 'ws-notification-list', ref: 'list' },
+          { className: 'ws-notification-list', ref: function ref(element) {
+              _this3.list = element;
+            } },
           this.state.notifications.map(function (notification, i) {
             return React.createElement(
               'div',
               {
                 className: 'notification ' + notification.type,
                 key: 'notification-' + i,
-                ref: 'notification-' + i,
+                ref: function ref(element) {
+                  _this3['notification-' + i] = element;
+                },
                 onClick: function onClick() {
                   return _this3.close(i);
                 }

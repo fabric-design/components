@@ -1,10 +1,10 @@
-define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _imports, _wsDropdownMenu) {
+define(['exports', '../imports', './dropdown-menu'], function (exports, _imports, _dropdownMenu) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.WSDropdownItem = undefined;
+  exports.DropdownMenuItem = undefined;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -54,13 +54,13 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var WSDropdownItem = exports.WSDropdownItem = function (_Component) {
-    _inherits(WSDropdownItem, _Component);
+  var DropdownMenuItem = exports.DropdownMenuItem = function (_Component) {
+    _inherits(DropdownMenuItem, _Component);
 
-    function WSDropdownItem(props, context) {
-      _classCallCheck(this, WSDropdownItem);
+    function DropdownMenuItem(props, context) {
+      _classCallCheck(this, DropdownMenuItem);
 
-      var _this = _possibleConstructorReturn(this, (WSDropdownItem.__proto__ || Object.getPrototypeOf(WSDropdownItem)).call(this, props, context));
+      var _this = _possibleConstructorReturn(this, (DropdownMenuItem.__proto__ || Object.getPrototypeOf(DropdownMenuItem)).call(this, props, context));
 
       Object.defineProperty(_this, 'handlePropagation', {
         enumerable: true,
@@ -75,7 +75,7 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
       return _this;
     }
 
-    _createClass(WSDropdownItem, [{
+    _createClass(DropdownMenuItem, [{
       key: 'componentWillReceiveProps',
       value: function componentWillReceiveProps(props) {
         this.state = props.item;
@@ -85,14 +85,23 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
       value: function onClick(event) {
         event.stopPropagation();
 
+        if (this.state.disabled) {
+          return;
+        }
+
         if (this.props.isParent) {
           this.props.handle('go-back');
         } else if (this.state.children && this.state.children.length) {
           this.props.handle('show-child', this.menu);
         } else {
           if (!this.context.multiple) {
-            this.state.selected = true;
-            this.props.handle('change', this.state);
+            if (this.state.selected) {
+              this.props.handle('change', null);
+            } else {
+              this.state.selected = true;
+              this.state.stored = true;
+              this.props.handle('change', this.state);
+            }
           } else {
             this.state.selected = !this.state.selected;
           }
@@ -109,19 +118,26 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
         anchorClass += this.state.selected ? ' is-active' : '';
         anchorClass += this.state.focused ? ' is-focused' : '';
         anchorClass += this.state.disabled ? ' is-disabled' : '';
+        anchorClass += ' ' + (this.state.className || '');
+        var itemClass = 'dropdown-item';
+        itemClass += this.props.isParent ? ' dropdown-parent-item' : '';
+        itemClass += this.state.children && !this.props.isParent ? ' has-children' : '';
 
         return _imports.React.createElement(
           'li',
-          { className: 'dropdown-item', onClick: function onClick(event) {
+          {
+            className: itemClass,
+            onClick: function onClick(event) {
               return _this2.onClick(event);
-            } },
+            }
+          },
           _imports.React.createElement(
             'a',
-            { className: anchorClass, href: this.state.href },
+            { className: anchorClass, href: this.state.href, title: this.state.title || this.state.label },
             (this.props.icon || this.state.icon) && _imports.React.createElement('i', { className: 'icon ' + (this.props.icon || this.state.icon) }),
             this.state.label
           ),
-          !this.props.isParent && this.state.children && _imports.React.createElement(_wsDropdownMenu.WSDropdownMenu, {
+          !this.props.isParent && this.state.children && _imports.React.createElement(_dropdownMenu.DropdownMenu, {
             items: this.state.children,
             parent: this.state,
             ref: function ref(element) {
@@ -133,10 +149,10 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
       }
     }]);
 
-    return WSDropdownItem;
+    return DropdownMenuItem;
   }(_imports.Component);
 
-  Object.defineProperty(WSDropdownItem, 'defaultProps', {
+  Object.defineProperty(DropdownMenuItem, 'defaultProps', {
     enumerable: true,
     writable: true,
     value: {
@@ -146,21 +162,21 @@ define(['exports', '../imports', './ws-dropdown-menu'], function (exports, _impo
       handle: function handle() {}
     }
   });
-  Object.defineProperty(WSDropdownItem, 'propTypes', {
+  Object.defineProperty(DropdownMenuItem, 'propTypes', {
     enumerable: true,
     writable: true,
     value: {
-      item: _imports.React.PropTypes.object,
-      icon: _imports.React.PropTypes.string,
-      isParent: _imports.React.PropTypes.bool,
-      handle: _imports.React.PropTypes.func
+      item: _imports.PropTypes.object,
+      icon: _imports.PropTypes.string,
+      isParent: _imports.PropTypes.bool,
+      handle: _imports.PropTypes.func
     }
   });
-  Object.defineProperty(WSDropdownItem, 'contextTypes', {
+  Object.defineProperty(DropdownMenuItem, 'contextTypes', {
     enumerable: true,
     writable: true,
     value: {
-      multiple: _imports.React.PropTypes.bool
+      multiple: _imports.PropTypes.bool
     }
   });
 });

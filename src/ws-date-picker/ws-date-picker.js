@@ -1,4 +1,4 @@
-import {React, Component} from '../imports';
+import {React, Component, PropTypes} from '../imports';
 import Flatpickr from './flatpickr';
 
 /**
@@ -22,12 +22,12 @@ export class WSDatePicker extends Component {
   };
 
   static propTypes = {
-    value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-    format: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    iconOnly: React.PropTypes.bool,
-    options: React.PropTypes.object,
-    onChange: React.PropTypes.func
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    format: PropTypes.string,
+    placeholder: PropTypes.string,
+    iconOnly: PropTypes.bool,
+    options: PropTypes.object,
+    onChange: PropTypes.func
   };
 
   /**
@@ -45,7 +45,7 @@ export class WSDatePicker extends Component {
   }
 
   /**
-   * Initialize the flatpickr with given options
+   * Initialize the flatpickr with given options and prevent default change event
    * @returns {void}
    */
   componentDidMount() {
@@ -56,6 +56,8 @@ export class WSDatePicker extends Component {
       ...this.props.options,
       onChange: this.onChange.bind(this)
     });
+    // Prevent default change event bubbling
+    this.input.addEventListener('change', event => event.stopPropagation(), true);
   }
 
   /**
@@ -74,11 +76,12 @@ export class WSDatePicker extends Component {
   }
 
   /**
-   * Destroy the flatpickr and all it's events and bindings
+   * Destroy the flatpickr and all events and bindings
    * @returns {void}
    */
   componentWillUnmount() {
     this.flatpickr.destroy();
+    this.input.removeEventListener('change', event => event.stopPropagation(), true);
   }
 
   /**
@@ -89,7 +92,7 @@ export class WSDatePicker extends Component {
    */
   onChange([selectedDate], value) {
     this.setState({value});
-    this.element.dispatchEvent(new CustomEvent('change', {detail: selectedDate}));
+    this.element.dispatchEvent(new CustomEvent('change', {detail: {date: selectedDate, value}, bubbles: true}));
     // Propagate if wanted
     if (this.props.onChange) {
       this.props.onChange(selectedDate);
@@ -111,7 +114,6 @@ export class WSDatePicker extends Component {
             defaultValue={this.state.value}
             placeholder={this.props.placeholder}
             ref={element => { this.input = element; }}
-            onChange={event => event.stopPropagation()}
             key="input"
           />,
           <span className="icon icon-calendar icon16" key="icon" />

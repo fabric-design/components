@@ -1,4 +1,4 @@
-define(['exports', './ws-header/ws-header', './ws-date-picker/ws-date-picker', './ws-dropdown/ws-dropdown', './ws-inline-edit/ws-inline-edit', './ws-notification/ws-notification', './ws-week-picker/ws-week-picker'], function (exports, _wsHeader, _wsDatePicker, _wsDropdown, _wsInlineEdit, _wsNotification, _wsWeekPicker) {
+define(['exports', './ws-header/ws-header', './ws-date-picker/ws-date-picker', './ws-dropdown/ws-dropdown', './ws-inline-edit/ws-inline-edit', './ws-notification/ws-notification', './ws-week-picker/ws-week-picker', './ws-tiles-chart/ws-tiles-chart'], function (exports, _wsHeader, _wsDatePicker, _wsDropdown, _wsInlineEdit, _wsNotification, _wsWeekPicker, _wsTilesChart) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -38,6 +38,12 @@ define(['exports', './ws-header/ws-header', './ws-date-picker/ws-date-picker', '
     enumerable: true,
     get: function () {
       return _wsWeekPicker.WSWeekPicker;
+    }
+  });
+  Object.defineProperty(exports, 'WSTilesChart', {
+    enumerable: true,
+    get: function () {
+      return _wsTilesChart.WSTilesChart;
     }
   });
 });

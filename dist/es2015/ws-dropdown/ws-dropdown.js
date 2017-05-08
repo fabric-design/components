@@ -8,8 +8,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import { React, Component } from '../imports';
-import { WSDropdownMenu } from './ws-dropdown-menu';
+import { React, Component, PropTypes } from '../imports';
+import { DropdownMenu } from './dropdown-menu';
+import { DropdownInput } from './dropdown-input';
 
 var ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
 
@@ -28,29 +29,14 @@ export var WSDropdown = function (_Component) {
         if (type === 'change') {
           _this.close();
           _this.setValue(data);
-          _this.element.dispatchEvent(new CustomEvent('change', { detail: data }));
         } else if (type === 'change-size') {
           _this.adjustSize(data);
         }
       }
     });
 
-    var arrayValue = props.value ? [props.value] : [];
     _this.opened = false;
-    _this.state = {
-      text: props.text || props.value,
-      value: _this.enrichItems(Array.isArray(props.value) ? props.value : arrayValue),
-      items: _this.enrichItems(props.items)
-    };
-
-    _this.state.items.forEach(function (item) {
-      if (_this.state.value.find(function (val) {
-        return val.label === item.label;
-      })) {
-        item.selected = true;
-        item.stored = true;
-      }
-    });
+    _this.state = _this.createState(props);
     return _this;
   }
 
@@ -65,6 +51,11 @@ export var WSDropdown = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       window.addEventListener('click', this.onDocumentClick.bind(this));
+    }
+  }, {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(props) {
+      this.setState(this.createState(props));
     }
   }, {
     key: 'componentWillUnmount',
@@ -84,8 +75,8 @@ export var WSDropdown = function (_Component) {
       }
     }
   }, {
-    key: 'setValue',
-    value: function setValue(value) {
+    key: 'getTextFromValue',
+    value: function getTextFromValue(value) {
       var text = this.state.text;
 
       if (this.props.type === 'select') {
@@ -94,22 +85,66 @@ export var WSDropdown = function (_Component) {
             return item.label;
           }).join(', ');
         } else {
-          text = value.label;
+          text = value.label || value;
         }
       }
-      this.setState({ text: text, value: value });
+      return text;
+    }
+  }, {
+    key: 'setValue',
+    value: function setValue(value) {
+      var _this2 = this;
 
-      this.element.dispatchEvent(new CustomEvent('change', { detail: value, bubbles: true }));
+      this.setState({
+        text: this.getTextFromValue(value),
+        value: value
+      });
+
+      if (this.props.onChange) {
+        this.props.onChange(value);
+      }
+
+      setTimeout(function () {
+        _this2.element.dispatchEvent(new CustomEvent('change', { detail: value, bubbles: true }));
+      }, 100);
+    }
+  }, {
+    key: 'createState',
+    value: function createState(props) {
+      var state = {
+        text: props.text || this.getTextFromValue(props.value),
+        value: this.enrichItems(props.value),
+        items: this.enrichItems(props.items)
+      };
+
+      state.items.forEach(function (item) {
+        if (state.value.find(function (val) {
+          return val.value === item.value;
+        })) {
+          item.selected = true;
+          item.stored = true;
+        }
+      });
+      return state;
     }
   }, {
     key: 'enrichItems',
     value: function enrichItems(items) {
-      var _this2 = this;
+      var _this3 = this;
 
-      return items.map(function (item) {
+      var itemsToWrap = items;
+
+      if (!Array.isArray(items)) {
+        if (this.props.inputOnly) {
+          return items;
+        }
+
+        itemsToWrap = items ? [items] : [];
+      }
+      return itemsToWrap.map(function (item) {
         var enriched = (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' ? item : { label: item };
         if (enriched.children) {
-          enriched.children = _this2.enrichItems(enriched.children);
+          enriched.children = _this3.enrichItems(enriched.children);
         }
         return enriched;
       });
@@ -128,17 +163,17 @@ export var WSDropdown = function (_Component) {
   }, {
     key: 'close',
     value: function close() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (!this.opened) {
         return;
       }
-      this.opened = false;
       this.animateElement(this.dropdownContainer, 'animate-close', function (container) {
+        _this4.opened = false;
         container.classList.remove('mod-open');
 
-        if (_this3.props.multiple) {
-          _this3.dropdownMenu.clearSelections();
+        if (_this4.props.multiple) {
+          _this4.dropdownMenu.clearSelections();
         }
       });
     }
@@ -166,64 +201,108 @@ export var WSDropdown = function (_Component) {
       item.classList.add(animationClass);
     }
   }, {
-    key: 'render',
-    value: function render() {
-      var _this4 = this;
+    key: 'renderTrigger',
+    value: function renderTrigger() {
+      var _this5 = this;
 
       var icon = void 0;
       if (this.props.icon) {
         icon = React.createElement('span', { className: 'icon ' + this.props.icon });
       }
+      switch (this.props.type) {
+        case 'anchor':
+          return React.createElement(
+            'a',
+            { className: 'dropdown-trigger', onClick: function onClick() {
+                return _this5.open();
+              } },
+            icon,
+            ' ',
+            this.state.text
+          );
+        case 'button':
+          return React.createElement(
+            'button',
+            { className: 'dropdown-trigger', onClick: function onClick() {
+                return _this5.open();
+              } },
+            icon,
+            ' ',
+            this.state.text
+          );
+        case 'select':
+          return React.createElement(
+            'div',
+            { className: 'dropdown-trigger select-box', onClick: function onClick() {
+                return _this5.open();
+              } },
+            icon,
+            ' ',
+            this.state.text
+          );
+        case 'icon':
+        default:
+          return React.createElement(
+            'a',
+            { className: 'dropdown-trigger', onClick: function onClick() {
+                return _this5.open();
+              } },
+            icon
+          );
+      }
+    }
+  }, {
+    key: 'renderContent',
+    value: function renderContent() {
+      var _this6 = this;
+
+      if (this.props.inputOnly) {
+        return React.createElement(DropdownInput, {
+          value: this.state.value,
+          placeholder: this.props.placeholder,
+          handle: this.handlePropagation,
+          ref: function ref(element) {
+            _this6.dropdownMenu = element;
+          }
+        });
+      }
+      return React.createElement(DropdownMenu, {
+        items: this.state.items,
+        value: this.state.value,
+        limit: this.props.limit,
+        filterable: this.props.filterable,
+        filter: this.props.filter,
+        placeholder: this.props.placeholder,
+        handle: this.handlePropagation,
+        ref: function ref(element) {
+          _this6.dropdownMenu = element;
+        }
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this7 = this;
+
       return React.createElement(
         'div',
         { className: 'dropdown', ref: function ref(element) {
-            if (element) _this4.element = element;
+            if (element) {
+              _this7.element = element;
+            }
           } },
-        this.props.type === 'anchor' && React.createElement(
-          'a',
-          { onClick: function onClick() {
-              return _this4.open();
-            } },
-          icon,
-          ' ',
-          this.state.text
-        ),
-        this.props.type === 'button' && React.createElement(
-          'button',
-          { onClick: function onClick() {
-              return _this4.open();
-            } },
-          icon,
-          ' ',
-          this.state.text
-        ),
-        this.props.type === 'select' && React.createElement(
-          'div',
-          { className: 'select-box', onClick: function onClick() {
-              return _this4.open();
-            } },
-          icon,
-          ' ',
-          this.state.text
-        ),
+        this.renderTrigger(),
         React.createElement(
           'div',
           {
             className: 'dropdown-container ' + this.props.orientation,
             ref: function ref(element) {
-              if (element) _this4.dropdownContainer = element;
-            } },
-          React.createElement(WSDropdownMenu, {
-            items: this.state.items,
-            value: this.state.value,
-            limit: this.props.limit,
-            filterable: this.props.filterable,
-            filter: this.props.filter,
-            handle: this.handlePropagation,
-            ref: function ref(element) {
-              _this4.dropdownMenu = element;
+              if (element) {
+                _this7.dropdownContainer = element;
+              }
             }
-          })
+          },
+          this.renderContent()
         ),
         React.createElement('div', { className: 'dropdown-arrow' })
       );
@@ -241,32 +320,39 @@ Object.defineProperty(WSDropdown, 'defaultProps', {
     icon: '',
     items: [],
     multiple: false,
+    inputOnly: false,
     filterable: false,
     filter: '',
     limit: 10,
     orientation: 'left',
-    value: null
+    placeholder: '',
+    value: null,
+    onChange: function onChange() {}
   }
 });
 Object.defineProperty(WSDropdown, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    type: React.PropTypes.oneOf(['anchor', 'button', 'select']),
-    text: React.PropTypes.string,
-    icon: React.PropTypes.string,
-    items: React.PropTypes.array,
-    multiple: React.PropTypes.bool,
-    filterable: React.PropTypes.bool,
-    filter: React.PropTypes.string,
-    limit: React.PropTypes.number,
-    orientation: React.PropTypes.oneOf(['left', 'right'])
+    type: PropTypes.oneOf(['anchor', 'button', 'select', 'icon']),
+    text: PropTypes.string,
+    icon: PropTypes.string,
+    items: PropTypes.array,
+    multiple: PropTypes.bool,
+    filterable: PropTypes.bool,
+    inputOnly: PropTypes.bool,
+    filter: PropTypes.string,
+    limit: PropTypes.number,
+    orientation: PropTypes.oneOf(['left', 'right']),
+    placeholder: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
+    onChange: PropTypes.func
   }
 });
 Object.defineProperty(WSDropdown, 'childContextTypes', {
   enumerable: true,
   writable: true,
   value: {
-    multiple: React.PropTypes.bool
+    multiple: PropTypes.bool
   }
 });

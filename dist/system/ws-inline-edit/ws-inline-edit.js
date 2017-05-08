@@ -1,7 +1,7 @@
-System.register(["../imports"], function (_export, _context) {
+System.register(['../imports'], function (_export, _context) {
   "use strict";
 
-  var React, Component, _createClass, WSInlineEdit;
+  var React, Component, PropTypes, _createClass, WSInlineEdit;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -37,6 +37,7 @@ System.register(["../imports"], function (_export, _context) {
     setters: [function (_imports) {
       React = _imports.React;
       Component = _imports.Component;
+      PropTypes = _imports.PropTypes;
     }],
     execute: function () {
       _createClass = function () {
@@ -57,7 +58,7 @@ System.register(["../imports"], function (_export, _context) {
         };
       }();
 
-      _export("WSInlineEdit", WSInlineEdit = function (_Component) {
+      _export('WSInlineEdit', WSInlineEdit = function (_Component) {
         _inherits(WSInlineEdit, _Component);
 
         function WSInlineEdit(props) {
@@ -73,7 +74,7 @@ System.register(["../imports"], function (_export, _context) {
         }
 
         _createClass(WSInlineEdit, [{
-          key: "editElement",
+          key: 'editElement',
           value: function editElement() {
             var _this2 = this;
 
@@ -84,7 +85,7 @@ System.register(["../imports"], function (_export, _context) {
             }
           }
         }, {
-          key: "keyAction",
+          key: 'keyAction',
           value: function keyAction(e) {
             if (e.keyCode === 13) {
               this.setState({
@@ -96,7 +97,7 @@ System.register(["../imports"], function (_export, _context) {
             }
           }
         }, {
-          key: "blurAction",
+          key: 'blurAction',
           value: function blurAction(e) {
             this.setState({
               text: e.target.value,
@@ -105,25 +106,25 @@ System.register(["../imports"], function (_export, _context) {
             this.updating(e.target.value);
           }
         }, {
-          key: "updating",
+          key: 'updating',
           value: function updating(text) {
             if (text !== this.props.text) {
               this.props.onUpdate(text);
             }
           }
         }, {
-          key: "render",
+          key: 'render',
           value: function render() {
             var _this3 = this;
 
             return React.createElement(
-              "div",
-              { className: "ws-inline-edit", onClick: function onClick() {
+              'div',
+              { className: 'ws-inline-edit', onClick: function onClick() {
                   return _this3.editElement();
                 } },
-              React.createElement("input", {
-                type: "text",
-                className: "inlineInput",
+              React.createElement('input', {
+                type: 'text',
+                className: 'inlineInput',
                 disabled: !this.state.isEditing ? 'disabled' : '',
                 onBlur: function onBlur(e) {
                   return _this3.blurAction(e);
@@ -133,7 +134,7 @@ System.register(["../imports"], function (_export, _context) {
                 },
                 defaultValue: this.state.text,
                 ref: function ref(el) {
-                  return _this3.editEl = el;
+                  _this3.editEl = el;
                 }
               })
             );
@@ -143,20 +144,21 @@ System.register(["../imports"], function (_export, _context) {
         return WSInlineEdit;
       }(Component));
 
-      _export("WSInlineEdit", WSInlineEdit);
+      _export('WSInlineEdit', WSInlineEdit);
 
-      Object.defineProperty(WSInlineEdit, "propTypes", {
+      Object.defineProperty(WSInlineEdit, 'propTypes', {
         enumerable: true,
         writable: true,
         value: {
-          text: React.PropTypes.string,
-          onUpdate: React.PropTypes.func
+          text: PropTypes.string,
+          onUpdate: PropTypes.func
         }
       });
-      Object.defineProperty(WSInlineEdit, "defaultProps", {
+      Object.defineProperty(WSInlineEdit, 'defaultProps', {
         enumerable: true,
         writable: true,
         value: {
+          text: '',
           onUpdate: function onUpdate() {}
         }
       });

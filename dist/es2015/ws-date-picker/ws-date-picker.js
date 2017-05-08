@@ -10,7 +10,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import { React, Component } from '../imports';
+import { React, Component, PropTypes } from '../imports';
 import Flatpickr from './flatpickr';
 
 export var WSDatePicker = function (_Component) {
@@ -40,6 +40,10 @@ export var WSDatePicker = function (_Component) {
       }, this.props.options, {
         onChange: this.onChange.bind(this)
       }));
+
+      this.input.addEventListener('change', function (event) {
+        return event.stopPropagation();
+      }, true);
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -58,6 +62,9 @@ export var WSDatePicker = function (_Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       this.flatpickr.destroy();
+      this.input.removeEventListener('change', function (event) {
+        return event.stopPropagation();
+      }, true);
     }
   }, {
     key: 'onChange',
@@ -66,7 +73,7 @@ export var WSDatePicker = function (_Component) {
           selectedDate = _ref2[0];
 
       this.setState({ value: value });
-      this.element.dispatchEvent(new CustomEvent('change', { detail: selectedDate }));
+      this.element.dispatchEvent(new CustomEvent('change', { detail: { date: selectedDate, value: value }, bubbles: true }));
 
       if (this.props.onChange) {
         this.props.onChange(selectedDate);
@@ -90,9 +97,6 @@ export var WSDatePicker = function (_Component) {
           placeholder: this.props.placeholder,
           ref: function ref(element) {
             _this3.input = element;
-          },
-          onChange: function onChange(event) {
-            return event.stopPropagation();
           },
           key: 'input'
         }), React.createElement('span', { className: 'icon icon-calendar icon16', key: 'icon' })],
@@ -127,11 +131,11 @@ Object.defineProperty(WSDatePicker, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-    format: React.PropTypes.string,
-    placeholder: React.PropTypes.string,
-    iconOnly: React.PropTypes.bool,
-    options: React.PropTypes.object,
-    onChange: React.PropTypes.func
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    format: PropTypes.string,
+    placeholder: PropTypes.string,
+    iconOnly: PropTypes.bool,
+    options: PropTypes.object,
+    onChange: PropTypes.func
   }
 });

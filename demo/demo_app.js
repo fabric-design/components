@@ -1,5 +1,6 @@
 import {React, render} from '../src/imports';
-import {WSHeader, WSDropdown, WSNotification, WSDatePicker, WSInlineEdit, WSWeekPicker} from '../src/index';
+import {WSHeader, WSDropdown, WSNotification, WSDatePicker, WSInlineEdit, WSWeekPicker, WSTilesChart} from '../src/index';
+import {dashboardMockData} from './mockdata'
 import './index.scss';
 
 // Used to enable React Developer Tools
@@ -76,6 +77,10 @@ render(
           </tr>
         </tbody>
       </table>
+      <br />
+        <WSTilesChart
+          title="Chart title" data={dashboardMockData.data} config={dashboardMockData.config} width={100} height={100}
+        />
     </div>
   </div>
 , document.querySelector('#app-holder'));

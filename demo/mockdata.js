@@ -1,24 +1,15 @@
 export const dashboardMockData = {
   data: {
-    groups: [{
-      key: 'lessThan2h',
-      tilesSet: [{key: '1'}, {key: '2'}, {key: '3'}, {key: '4'}, {key: '5'}]
-    },
-      {
-        key: 'from2hTo1Day',
-        tilesSet: [{key: '6'}, {key: '7'}, {key: '8'}, {key: '9'}, {key: '10'}]
-      },
-      {
-        key: 'moreThan1Day',
-        tilesSet: [{key: '11'}, {key: '12'}, {key: '13'}, {key: '14'},
-          {key: '15'}, {key: '15'}]
-      }]
+    groups: {
+      lessThan2h: ['1', '2', '3', 'd', 'e'],
+      from2hTo1Day: ['c', 'x', 'v', 'r', 'z'],
+      moreThan1Day: ['t', 'r', 'g', 'l', '5', '6']
+    }
   },
   config: {
-    groupConfigs: [
-      {key: 'lessThan2h', backgroundColor: '#FF4D4D'},
-      {key: 'from2hTo1Day', backgroundColor: '#ffcc33'},
-      {key: 'moreThan1Day', backgroundColor: '#39AC39'}
-    ]
+    lessThan2h:'#FF4D4D',
+    from2hTo1Day: '#ffcc33',
+    moreThan1Day: '#39AC39'
   }
+
 }

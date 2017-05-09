@@ -7,7 +7,7 @@ import {Tile} from './tile';
  * @class WSTilesChart
  * @property {Object} props React properties object
  * @property {Object} props.data Defines the Groups of tiles that should be shown in the chart
- * @property {Object} props.config Defines the configuration of the component, e.g. the color of each group of tiles
+ * @property {Object} props.config Defines the color of each group of tiles
  * @property {string} props.title Title of the chart
  * @property {number} props.maxTileSize Defines the maximum size that the tile can be
  *
@@ -77,7 +77,8 @@ export class WSTilesChart extends Component {
    * @returns {number}
    */
   getTileSize() {
-    const tilesAmount = this.props.data.groups.map(group => group.tilesSet.length).reduce((a, b) => a + b);
+    const groups = this.props.data.groups || {};
+    const tilesAmount = Object.keys(groups).map(groupName => groups[groupName].length).reduce((a, b) => a + b);
 
     const tileSize = this.calculateMaximumPossibleTileSize(
       this.props.width, this.props.height - this.titleDivSize, tilesAmount
@@ -110,14 +111,16 @@ export class WSTilesChart extends Component {
    */
   render() {
     const {data, config, title, width, height} = this.props;
+    const groups = data.groups || {};
     return (
       <div className="ws-tiles-chart" style={{width: `${width}px`, height: `${height}px`}}>
         <div className="tiles-chart-title">{title}</div>
         <div className="tiles-chart-container" style={{height: `${height - this.titleDivSize}px`}}>
-          {data.groups.map(group => group.tilesSet.map(tile =>
+          {Object.keys(groups).map(groupName => groups[groupName].map(tile =>
             <Tile
               data={tile}
-              config={this.getGroupConfig(config, group)}
+              tileClass={groupName}
+              config={config[groupName]}
               size={this.state.tileSize}
             />
           ))}

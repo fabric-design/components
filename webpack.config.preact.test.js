@@ -1,7 +1,7 @@
 const path = require('path');
-const webpack = require('webpack');
+
 module.exports = {
-  devtool: 'inline-source-map', //just do inline source maps instead of the default
+  devtool: 'inline-source-map', // just do inline source maps instead of the default
   output: {
     filename: 'bundle.test.js',
     path: path.resolve(__dirname, 'tests')
@@ -11,7 +11,7 @@ module.exports = {
       test: /\.js$/,
       use: [{
         loader: 'babel-loader',
-        options: require(path.resolve(__dirname, 'babelrc.js'))
+        options: require(path.resolve(__dirname, 'babelrc.js')) // eslint-disable-line
       }],
       exclude: [/node_modules/]
     },
@@ -33,7 +33,7 @@ module.exports = {
   resolve: {
     alias: {
       imports: path.resolve(__dirname, 'src/imports.js'),
-      'react': 'preact',
+      react: 'preact',
       'react-dom': 'preact'
     }
   }

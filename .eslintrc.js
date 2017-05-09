@@ -88,6 +88,6 @@ module.exports = {
     // PROPOSAL
     "no-mixed-operators": 0,
     // jasmine
-    "jasmine/no-global-setup": false,
+    "jasmine/no-global-setup": 0,
   }
 };

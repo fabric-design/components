@@ -15,7 +15,8 @@ module.exports = config => {
 
     // list of files / patterns to load in the browser
     files: [
-      'tests/**/*.js'
+      'tests/**/*.js',
+      'tests/index.scss'
     ],
 
 
@@ -30,7 +31,8 @@ module.exports = config => {
     preprocessors: {
       // add webpack as preprocessor
       'src/**/*.js': ['webpack', 'sourcemap'],
-      'tests/**/*.js': ['webpack', 'sourcemap']
+      'tests/**/*.js': ['webpack', 'sourcemap'],
+      'tests/index.scss': ['webpack', 'sourcemap']
     },
     plugins: [
       'karma-jasmine',
@@ -69,7 +71,7 @@ module.exports = config => {
     customLaunchers: {
       ChromeDebugging: {
         base: 'Chrome',
-        flags: [ '--remote-debugging-port=9333' ]
+        flags: ['--remote-debugging-port=9333']
       }
     },
 
@@ -80,6 +82,6 @@ module.exports = config => {
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity,
-    webpack: require('./webpack.config.preact.test.js')
+    webpack: require('./webpack.config.preact.test.js') // eslint-disable-line global-require
   });
 };

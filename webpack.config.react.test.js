@@ -32,7 +32,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      imports: path.resolve(__dirname, 'src/imports.js'),
+      imports: path.resolve(__dirname, 'src/imports.js')
     }
   }
 };

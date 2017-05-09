@@ -19,15 +19,15 @@ const SESSION_STATE_NAME = 'session_state';
  */
 export class WSHeader extends Component {
 
-    static defaultProps = {
-      setLang: () => {},
-      setLogin: () => {},
-      clientId: null,
-      redirectUrl: '',
-      logoUrl: null,
-      title: '',
-      links: []
-    };
+  static defaultProps = {
+    setLang: () => {},
+    setLogin: () => {},
+    clientId: null,
+    redirectUrl: '',
+    logoUrl: null,
+    title: '',
+    links: []
+  };
 
   /**
    * @type {Object} props
@@ -284,6 +284,7 @@ export class WSHeader extends Component {
    * @returns {JSX} JSX string representation of WSHeader
    */
   render() {
+    const that = this;
     return (
       <div className="refills-patterns refills-components">
         <header className="navigation" role="banner">

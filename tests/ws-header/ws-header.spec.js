@@ -14,7 +14,12 @@ describe('Test: <WS-Header />', () => {
       links: []
     };
 
-  const dummyLinks = ['Home', 'About', 'Details'];
+
+  const dummyLinks = [
+      { label: 'Home', value: 'HomeValue', onclick: (value) => console.log(value) },
+      { label: 'Link', value: 'LinkValue', onclick: (value) => console.log(value) },
+      { label: 'Details', value: 'DetailsValue', onclick: (value) => console.log(value) }
+  ];
 
   const mockAuthResponse = {
     uid: "chuckNorrisIsEverywhere",
@@ -35,10 +40,6 @@ describe('Test: <WS-Header />', () => {
     document.querySelector("body").appendChild(container);
     expect(React).toBeDefined();
     expect(render).toBeDefined();
-  });
-
-  afterEach(() => {
-    document.querySelector("body").innerHTML = "";
   });
 
   /**
@@ -97,15 +98,13 @@ describe('Test: <WS-Header />', () => {
     expect(renderedHeader.querySelector('#nav-links .nav-link')).toBeNull();
   });
 
-  it('should show navigation links when logged in ', () => {
-    const header = render(<WSHeader title="Awesome Navigation" links={dummyLinks} /> , container); 
+  it('should show navigation links when logged in ', (done) => {
+    let header = render(<WSHeader title="Awesome Navigation" links={dummyLinks} /> , container); 
     // Preact returns HTMLDomElement with component in ._component variable || React is returning WSHeader Object 
     const headerComponent = header._component || header;
     const renderedHeader = container;
-    //spy
-    spyOn(headerComponent, 'checkIsLoggedIn', () => {
-      expect(this.props).toBeDefined();
-      expect(this.state).toBeDefined();
+    // preact-specific
+    spyOn(headerComponent.__proto__, 'checkIsLoggedIn').and.callFake(function() {
       expect(this.setState).toBeDefined();
       this.setState({
         userUID: mockAuthResponse.uid,
@@ -113,11 +112,18 @@ describe('Test: <WS-Header />', () => {
         userName: mockUserLookUpResponse.name,
         userEmail: mockUserLookUpResponse.email});
       this.propagateLoginStatusChange(true, mockAuthResponse.access_token);
+      return true;
     });
-    headerComponent.login();
-    expect(headerComponent.props.links.length).toEqual(dummyLinks.length);
-    expect(renderedHeader.querySelector('#loggedInInfo').textContent).toBe('Logout');
-    expect(renderedHeader.querySelector('#nav-links .nav-link')).not.toBeNull();
+    spyOn(headerComponent.__proto__, 'render').and.callThrough();
+    headerComponent.checkIsLoggedIn();
+    // We have to wait some ms as re-rendering needs some time 
+    setTimeout(() => {
+      expect(headerComponent.render).toHaveBeenCalled()
+      expect(headerComponent.props.links.length).toEqual(dummyLinks.length);
+      expect(renderedHeader.querySelector('#loggedInInfo').textContent).toBe(mockUserLookUpResponse.name);
+      expect(renderedHeader.querySelector('#nav-links .nav-link')).not.toBeNull();
+      done();
+    }, 300)
   });
 
   it('should call props.setLogin function when login is successfully', () => {

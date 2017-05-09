@@ -1,4 +1,4 @@
-import {React, Component} from '../imports';
+import {React, Component, PropTypes} from '../imports';
 import WSHeaderNavLink from './ws-header-nav-link';
 const urlAtStart = window.location.href;
 const SESSION_TOKEN_NAME = 'session_token';
@@ -33,13 +33,13 @@ export class WSHeader extends Component {
    * @type {Object} props
    */
   static propTypes = {
-    setLang: React.PropTypes.function,
-    setLogin: React.PropTypes.function,
-    clientId: React.PropTypes.number,
-    redirectUrl: React.PropTypes.string,
-    logoUrl: React.PropTypes.string,
-    title: React.PropTypes.string,
-    links: React.PropTypes.array
+    setLang: PropTypes.func,
+    setLogin: PropTypes.func,
+    clientId: PropTypes.number,
+    redirectUrl: PropTypes.string,
+    logoUrl: PropTypes.string,
+    title: PropTypes.string,
+    links: PropTypes.array
   };
 
   /**
@@ -296,9 +296,9 @@ export class WSHeader extends Component {
             </a>
             <nav role="navigation">
               <ul id="js-navigation-menu" className="navigation-menu show">
-                {this.state.loggedIn && this.state.userName &&
+                {this.state.loggedIn && this.state.userName.length > 0 &&
                   <ul id="nav-links">
-                    {this.props.links && this.props.links.map((link, index) =>
+                    {this.props.links.length > 0 && this.props.links.map((link, index) =>
                       <WSHeaderNavLink link={link} key={index} />
                     )}
                   </ul>

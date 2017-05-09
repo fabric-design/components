@@ -186,10 +186,11 @@ export class WSDropdown extends Component {
     };
     // Set states to items in item list for passed values
     state.items.forEach(item => {
-      if (state.value.find(val => val.value === item.value)) {
-        item.selected = true;
-        item.stored = true;
-      }
+      // Check if item is is values or set it to false
+      // This also un-sets previous selected items when the value from outside changed
+      const isActive = !!state.value.find(val => val.value === item.value);
+      item.selected = isActive;
+      item.stored = isActive;
     });
     return state;
   }

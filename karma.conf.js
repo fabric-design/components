@@ -62,18 +62,18 @@ module.exports = config => {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
+    // when chrome 59 is released we can add --headless flag to it (future)
+    // Create chrome launcher without andbox because docker has none
+    customLaunchers: {
+      Chrome_without_sandbox: {
+        base: 'Chrome',
+        flags: ['--no-sandbox'] // with sandbox it fails under Docker
+      }
+    },
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    // when chrome 59 is released we can add --headless flag to it (future)
-    browsers: ['ChromeDebugging'],
-    // custom configuration to debug Karma + Chrome in VS Code
-    customLaunchers: {
-      ChromeDebugging: {
-        base: 'Chrome',
-        flags: ['--remote-debugging-port=9333']
-      }
-    },
+    browsers: ['Chrome_without_sandbox'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

@@ -297,7 +297,7 @@ export class WSHeader extends Component {
             </a>
             <nav role="navigation">
               <ul id="js-navigation-menu" className="navigation-menu show">
-                {this.state.loggedIn && this.state.userName.length > 0 &&
+                {this.state.loggedIn && this.state.userName !== null &&
                   <ul id="nav-links">
                     {this.props.links.length > 0 && this.props.links.map((link, index) =>
                       <WSHeaderNavLink link={link} key={index} />

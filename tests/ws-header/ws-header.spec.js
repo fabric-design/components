@@ -108,7 +108,8 @@ describe('Test: <WS-Header />', () => {
     const headerComponent = header._component || header;
     const renderedHeader = container;
     // preact-specific
-    spyOn(headerComponent.__proto__, 'checkIsLoggedIn').and.callFake(() => {
+    // don't use arrow functions as they get binded wrong!
+    spyOn(headerComponent.__proto__, 'checkIsLoggedIn').and.callFake(function checkIsLoggedIn() {
       expect(this.setState).toBeDefined();
       this.setState({
         userUID: mockAuthResponse.uid,

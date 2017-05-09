@@ -76,12 +76,12 @@ System.register(['react', '../imports'], function (_export, _context) {
                 size = _props.size;
 
             var style = {
-              backgroundColor: config.backgroundColor,
+              backgroundColor: config,
               width: size + 'px',
               height: size + 'px'
             };
 
-            return React.createElement('div', { className: 'tile', style: style });
+            return React.createElement('div', { className: 'tile ' + this.props.tileClass, style: style });
           }
         }]);
 
@@ -94,8 +94,9 @@ System.register(['react', '../imports'], function (_export, _context) {
         enumerable: true,
         writable: true,
         value: {
-          data: PropTypes.object,
-          config: PropTypes.object,
+          identifier: PropTypes.string,
+          config: PropTypes.string,
+          tileClass: PropTypes.string,
           size: PropTypes.number
         }
       });
@@ -103,8 +104,9 @@ System.register(['react', '../imports'], function (_export, _context) {
         enumerable: true,
         writable: true,
         value: {
-          data: {},
-          config: {},
+          identifier: '',
+          config: '',
+          tileClass: '',
           size: 25
         }
       });

@@ -79,12 +79,12 @@ define(['exports', 'react', '../imports'], function (exports, _react, _imports) 
             size = _props.size;
 
         var style = {
-          backgroundColor: config.backgroundColor,
+          backgroundColor: config,
           width: size + 'px',
           height: size + 'px'
         };
 
-        return _react2.default.createElement('div', { className: 'tile', style: style });
+        return _react2.default.createElement('div', { className: 'tile ' + this.props.tileClass, style: style });
       }
     }]);
 
@@ -95,8 +95,9 @@ define(['exports', 'react', '../imports'], function (exports, _react, _imports) 
     enumerable: true,
     writable: true,
     value: {
-      data: _imports.PropTypes.object,
-      config: _imports.PropTypes.object,
+      identifier: _imports.PropTypes.string,
+      config: _imports.PropTypes.string,
+      tileClass: _imports.PropTypes.string,
       size: _imports.PropTypes.number
     }
   });
@@ -104,8 +105,9 @@ define(['exports', 'react', '../imports'], function (exports, _react, _imports) 
     enumerable: true,
     writable: true,
     value: {
-      data: {},
-      config: {},
+      identifier: '',
+      config: '',
+      tileClass: '',
       size: 25
     }
   });

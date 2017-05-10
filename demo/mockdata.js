@@ -5,11 +5,5 @@ export const dashboardMockData = {
       from2hTo1Day: ['c', 'x', 'v', 'r', 'z'],
       moreThan1Day: ['t', 'r', 'g', 'l', '5', '6']
     }
-  },
-  config: {
-    lessThan2h:'#FF4D4D',
-    from2hTo1Day: '#ffcc33',
-    moreThan1Day: '#39AC39'
   }
-
 }

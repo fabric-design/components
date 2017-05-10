@@ -60,19 +60,6 @@ export class WSTilesChart extends Component {
   }
 
   /**
-   * Finds the config of the group
-   * @param {array} config Array of group configurations
-   * @param {object} group to be filtered
-   * @returns {object}
-   */
-  getGroupConfig(config, group) {
-    if (config.groupConfigs) {
-      return config.groupConfigs.find(groupConfig => groupConfig.key === group.key);
-    }
-    return {};
-  }
-
-  /**
    * Returns the size to be used for the tile
    * @returns {number}
    */

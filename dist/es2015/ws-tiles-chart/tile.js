@@ -26,12 +26,12 @@ export var Tile = function (_Component) {
           size = _props.size;
 
       var style = {
-        backgroundColor: config.backgroundColor,
+        backgroundColor: config,
         width: size + 'px',
         height: size + 'px'
       };
 
-      return React.createElement('div', { className: 'tile', style: style });
+      return React.createElement('div', { className: 'tile ' + this.props.tileClass, style: style });
     }
   }]);
 
@@ -41,8 +41,9 @@ Object.defineProperty(Tile, 'propTypes', {
   enumerable: true,
   writable: true,
   value: {
-    data: PropTypes.object,
-    config: PropTypes.object,
+    identifier: PropTypes.string,
+    config: PropTypes.string,
+    tileClass: PropTypes.string,
     size: PropTypes.number
   }
 });
@@ -50,8 +51,9 @@ Object.defineProperty(Tile, 'defaultProps', {
   enumerable: true,
   writable: true,
   value: {
-    data: {},
-    config: {},
+    identifier: '',
+    config: '',
+    tileClass: '',
     size: 25
   }
 });

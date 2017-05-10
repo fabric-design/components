@@ -82,20 +82,11 @@ System.register(['react', '../imports', './tile'], function (_export, _context) 
             this.setState({ tileSize: this.getTileSize() });
           }
         }, {
-          key: 'getGroupConfig',
-          value: function getGroupConfig(config, group) {
-            if (config.groupConfigs) {
-              return config.groupConfigs.find(function (groupConfig) {
-                return groupConfig.key === group.key;
-              });
-            }
-            return {};
-          }
-        }, {
           key: 'getTileSize',
           value: function getTileSize() {
-            var tilesAmount = this.props.data.groups.map(function (group) {
-              return group.tilesSet.length;
+            var groups = this.props.data.groups || {};
+            var tilesAmount = Object.keys(groups).map(function (groupName) {
+              return groups[groupName].length;
             }).reduce(function (a, b) {
               return a + b;
             });
@@ -128,6 +119,7 @@ System.register(['react', '../imports', './tile'], function (_export, _context) 
                 width = _props.width,
                 height = _props.height;
 
+            var groups = data.groups || {};
             return React.createElement(
               'div',
               { className: 'ws-tiles-chart', style: { width: width + 'px', height: height + 'px' } },
@@ -139,11 +131,12 @@ System.register(['react', '../imports', './tile'], function (_export, _context) 
               React.createElement(
                 'div',
                 { className: 'tiles-chart-container', style: { height: height - this.titleDivSize + 'px' } },
-                data.groups.map(function (group) {
-                  return group.tilesSet.map(function (tile) {
+                Object.keys(groups).map(function (groupName) {
+                  return groups[groupName].map(function (tile) {
                     return React.createElement(Tile, {
                       data: tile,
-                      config: _this2.getGroupConfig(config, group),
+                      tileClass: groupName,
+                      config: config[groupName],
                       size: _this2.state.tileSize
                     });
                   });

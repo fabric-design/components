@@ -44,20 +44,11 @@ var WSTilesChart = exports.WSTilesChart = function (_Component) {
       this.setState({ tileSize: this.getTileSize() });
     }
   }, {
-    key: 'getGroupConfig',
-    value: function getGroupConfig(config, group) {
-      if (config.groupConfigs) {
-        return config.groupConfigs.find(function (groupConfig) {
-          return groupConfig.key === group.key;
-        });
-      }
-      return {};
-    }
-  }, {
     key: 'getTileSize',
     value: function getTileSize() {
-      var tilesAmount = this.props.data.groups.map(function (group) {
-        return group.tilesSet.length;
+      var groups = this.props.data.groups || {};
+      var tilesAmount = Object.keys(groups).map(function (groupName) {
+        return groups[groupName].length;
       }).reduce(function (a, b) {
         return a + b;
       });
@@ -90,6 +81,7 @@ var WSTilesChart = exports.WSTilesChart = function (_Component) {
           width = _props.width,
           height = _props.height;
 
+      var groups = data.groups || {};
       return _react2.default.createElement(
         'div',
         { className: 'ws-tiles-chart', style: { width: width + 'px', height: height + 'px' } },
@@ -101,11 +93,12 @@ var WSTilesChart = exports.WSTilesChart = function (_Component) {
         _react2.default.createElement(
           'div',
           { className: 'tiles-chart-container', style: { height: height - this.titleDivSize + 'px' } },
-          data.groups.map(function (group) {
-            return group.tilesSet.map(function (tile) {
+          Object.keys(groups).map(function (groupName) {
+            return groups[groupName].map(function (tile) {
               return _react2.default.createElement(_tile.Tile, {
                 data: tile,
-                config: _this2.getGroupConfig(config, group),
+                tileClass: groupName,
+                config: config[groupName],
                 size: _this2.state.tileSize
               });
             });

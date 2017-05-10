@@ -78,9 +78,7 @@ render(
         </tbody>
       </table>
       <br />
-        <WSTilesChart
-          title="Chart title" data={dashboardMockData.data} config={dashboardMockData.config} width={100} height={100}
-        />
+        <WSTilesChart title="Chart title" data={dashboardMockData.data} width={100} height={100} />
     </div>
   </div>
 , document.querySelector('#app-holder'));

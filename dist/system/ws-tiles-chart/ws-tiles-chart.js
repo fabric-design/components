@@ -82,16 +82,6 @@ System.register(['react', '../imports', './tile'], function (_export, _context) 
             this.setState({ tileSize: this.getTileSize() });
           }
         }, {
-          key: 'getGroupConfig',
-          value: function getGroupConfig(config, group) {
-            if (config.groupConfigs) {
-              return config.groupConfigs.find(function (groupConfig) {
-                return groupConfig.key === group.key;
-              });
-            }
-            return {};
-          }
-        }, {
           key: 'getTileSize',
           value: function getTileSize() {
             var groups = this.props.data.groups || {};

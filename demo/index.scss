@@ -11,3 +11,14 @@ $use-embedded-font: true;
 .container {
   margin: 20px;
 }
+
+
+//Example of how to style ws-tiles-chart using classes (.tile.groupName).
+.ws-tiles-chart .tile {
+  &.from2hTo1Day {
+    background-color: $grandis;
+  }
+  &.moreThan1Day {
+    background-color: $flamingo;
+  }
+}

@@ -71,7 +71,7 @@ describe('Test: <WS-Header />', () => {
   it('should render with default properties', () => {
     const header = new TestComponent(<WSHeader />);
     expect(header.component).toBeDefined();
-    expect(header.q('.nav-title')).elementsTextToBe('');
+    expect(header.q('.nav-title').textContent).toBe('');
     expect(header.q('.logo')).toBeNull();
     expect(header.q('.js-navigation-menu .nav-link')).toBeNull();
   });

@@ -1,5 +1,6 @@
-/* eslint-disable no-underscore-dangle, import/extensions, no-proto */
-import {React, render} from 'imports';
+/* eslint-disable import/extensions, no-proto */
+import {React} from 'imports';
+import {TestComponent} from '../test-component';
 import {WSHeader} from '../../src/index';
 
 /**
@@ -53,13 +54,10 @@ describe('Test: <WS-Header />', () => {
    */
   it('should have default properties set', () => {
     // initialization has to been done for every testcase
-    const header = render(<WSHeader />, container);
-    // Preact returns HTMLDomElement with component in ._component variable || React is returning WSHeader Object
-    const headerComponent = header._component || header;
-
-    expect(headerComponent).toBeDefined();
-    expect(headerComponent.props).toBeDefined();
-    expect(headerComponent.props).toEqual(jasmine.objectContaining(
+    const header = new TestComponent(<WSHeader />);
+    expect(header.component).toBeDefined();
+    expect(header.component.props).toBeDefined();
+    expect(header.component.props).toEqual(jasmine.objectContaining(
       {
         clientId: defaultProps.clientId,
         redirectUrl: defaultProps.redirectUrl,
@@ -67,49 +65,37 @@ describe('Test: <WS-Header />', () => {
         title: defaultProps.title
       }
     ));
-    expect(headerComponent.props.links.length).toBe(defaultProps.links.length);
+    expect(header.component.props.links.length).toBe(defaultProps.links.length);
   });
 
   it('should render with default properties', () => {
-    const header = render(<WSHeader />, container);
-    // Preact returns HTMLDomElement with component in ._component variable || React is returning WSHeader Object
-    const headerComponent = header._component || header;
-    const renderedHeader = container;
-    expect(headerComponent).toBeDefined();
-    expect(renderedHeader.querySelector('.nav-title').textContent).toBe('');
-    expect(renderedHeader.querySelector('.logo')).toBeNull();
-    expect(renderedHeader.querySelector('.js-navigation-menu .nav-link')).toBeNull();
+    const header = new TestComponent(<WSHeader />);
+    expect(header.component).toBeDefined();
+    expect(header.q('.nav-title').textContent).toBe('');
+    expect(header.q('.logo')).toBeNull();
+    expect(header.q('.js-navigation-menu .nav-link')).toBeNull();
   });
 
   it('should render title "Awesome Navigation" ', () => {
-    const header = render(<WSHeader title="Awesome Navigation" />, container);
-    // Preact returns HTMLDomElement with component in ._component variable || React is returning WSHeader Object
-    const headerComponent = header._component || header;
-    const renderedHeader = container;
-    expect(headerComponent.props.title).toBe('Awesome Navigation');
-    expect(renderedHeader.querySelector('.nav-title').textContent).toBe('Awesome Navigation');
-    expect(renderedHeader.querySelector('#selectedLanguage').textContent).toBe(defaultState.availableLanguages[0]);
-    expect(renderedHeader.querySelector('#loggedInInfo').textContent).toBe('Login');
+    const header = new TestComponent(<WSHeader title="Awesome Navigation" />);
+    expect(header.component.props.title).toBe('Awesome Navigation');
+    expect(header.q('.nav-title').textContent).toBe('Awesome Navigation');
+    expect(header.q('#selectedLanguage').textContent).toBe(defaultState.availableLanguages[0]);
+    expect(header.q('#loggedInInfo').textContent).toBe('Login');
   });
 
   it('should not show any navigation links when not logged in ', () => {
-    const header = render(<WSHeader title="Awesome Navigation" links={dummyLinks} />, container);
-    // Preact returns HTMLDomElement with component in ._component variable || React is returning WSHeader Object
-    const headerComponent = header._component || header;
-    const renderedHeader = container;
-    expect(headerComponent.props.links.length).toEqual(dummyLinks.length);
-    expect(renderedHeader.querySelector('#loggedInInfo').textContent).toBe('Login');
-    expect(renderedHeader.querySelector('#nav-links .nav-link')).toBeNull();
+    const header = new TestComponent(<WSHeader title="Awesome Navigation" links={dummyLinks} />);
+    expect(header.component.props.links.length).toEqual(dummyLinks.length);
+    expect(header.q('#loggedInInfo').textContent).toBe('Login');
+    expect(header.q('#nav-links .nav-link')).toBeNull();
   });
 
   it('should show navigation links when logged in ', done => {
-    const header = render(<WSHeader title="Awesome Navigation" links={dummyLinks} />, container);
-    // Preact returns HTMLDomElement with component in ._component variable || React is returning WSHeader Object
-    const headerComponent = header._component || header;
-    const renderedHeader = container;
+    const header = new TestComponent(<WSHeader title="Awesome Navigation" links={dummyLinks} />);
     // preact-specific
     // don't use arrow functions as they get binded wrong!
-    spyOn(headerComponent.__proto__, 'checkIsLoggedIn').and.callFake(function checkIsLoggedIn() {
+    spyOn(header.component.__proto__, 'checkIsLoggedIn').and.callFake(function checkIsLoggedIn() {
       expect(this.setState).toBeDefined();
       this.setState({
         userUID: mockAuthResponse.uid,
@@ -119,27 +105,25 @@ describe('Test: <WS-Header />', () => {
       this.propagateLoginStatusChange(true, mockAuthResponse.access_token);
       return true;
     });
-    spyOn(headerComponent.__proto__, 'render').and.callThrough();
-    headerComponent.checkIsLoggedIn();
+    spyOn(header.component.__proto__, 'render').and.callThrough();
+    header.component.checkIsLoggedIn();
     // We have to wait some ms as re-rendering needs some time
     setTimeout(() => {
-      expect(headerComponent.render).toHaveBeenCalled();
-      expect(headerComponent.props.links.length).toEqual(dummyLinks.length);
-      expect(renderedHeader.querySelector('#loggedInInfo').textContent).toBe(mockUserLookUpResponse.name);
-      expect(renderedHeader.querySelector('#nav-links .nav-link')).not.toBeNull();
+      expect(header.component.render).toHaveBeenCalled();
+      expect(header.component.props.links.length).toEqual(dummyLinks.length);
+      expect(header.q('#loggedInInfo').textContent).toBe(mockUserLookUpResponse.name);
+      expect(header.q('#nav-links .nav-link')).not.toBeNull();
       done();
     }, 300);
   });
 
   it('should call props.setLogin function when loggedIn changes (login & logout)', () => {
     const mockSetLogin = jasmine.createSpy('mockSetLogin');
-    const header = render(<WSHeader title="Awesome Navigation" links={dummyLinks} setLogin={mockSetLogin} />, container);
-    // Preact returns HTMLDomElement with component in ._component variable || React is returning WSHeader Object
-    const headerComponent = header._component || header;
+    const header = new TestComponent(<WSHeader title="Awesome Navigation" links={dummyLinks} setLogin={mockSetLogin} />);
     // check for successfull login
-    headerComponent.propagateLoginStatusChange(true, mockAuthResponse.access_token);
-    expect(headerComponent.props.setLogin).toHaveBeenCalled();
-    expect(headerComponent.props.setLogin.calls.mostRecent()).toEqual(jasmine.objectContaining(
+    header.component.propagateLoginStatusChange(true, mockAuthResponse.access_token);
+    expect(header.component.props.setLogin).toHaveBeenCalled();
+    expect(header.component.props.setLogin.calls.mostRecent()).toEqual(jasmine.objectContaining(
       {
         args: [{
           loggedIn: true,
@@ -148,9 +132,9 @@ describe('Test: <WS-Header />', () => {
       }
       ));
     // logout
-    headerComponent.propagateLoginStatusChange(false, null);
-    expect(headerComponent.props.setLogin).toHaveBeenCalled();
-    expect(headerComponent.props.setLogin.calls.mostRecent()).toEqual(jasmine.objectContaining(
+    header.component.propagateLoginStatusChange(false, null);
+    expect(header.component.props.setLogin).toHaveBeenCalled();
+    expect(header.component.props.setLogin.calls.mostRecent()).toEqual(jasmine.objectContaining(
       {
         args: [{
           loggedIn: false,
@@ -162,17 +146,14 @@ describe('Test: <WS-Header />', () => {
 
   it('should change language state', done => {
     const mockSetLang = jasmine.createSpy('mockSetLang');
-    const header = render(<WSHeader title="Awesome Navigation" links={dummyLinks} setLang={mockSetLang} />, container);
-    // Preact returns HTMLDomElement with component in ._component variable || React is returning WSHeader Object
-    const headerComponent = header._component || header;
-    const renderedHeader = container;
+    const header = new TestComponent(<WSHeader title="Awesome Navigation" links={dummyLinks} setLang={mockSetLang} />);
     // initially 'de' if not check your localStorage
-    expect(headerComponent.state.lang).toEqual(defaultState.availableLanguages[0]);
-    headerComponent.setLanguage(defaultState.availableLanguages[1]);
-    expect(headerComponent.state.lang).toEqual(defaultState.availableLanguages[1]);
-    expect(headerComponent.props.setLang).toHaveBeenCalled();
+    expect(header.component.state.lang).toEqual(defaultState.availableLanguages[0]);
+    header.component.setLanguage(defaultState.availableLanguages[1]);
+    expect(header.component.state.lang).toEqual(defaultState.availableLanguages[1]);
+    expect(header.component.props.setLang).toHaveBeenCalled();
     setTimeout(() => {
-      expect(renderedHeader.querySelector('#selectedLanguage').textContent).toBe(defaultState.availableLanguages[1]);
+      expect(header.q('#selectedLanguage').textContent).toBe(defaultState.availableLanguages[1]);
       done();
     }, 300);
   });

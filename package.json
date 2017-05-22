@@ -5,14 +5,13 @@
   "scripts": {
     "start": "webpack-dev-server --progress --colors --content-base build webpack.config.js",
     "start:preact": "webpack-dev-server --watch --config webpack.config.preact.js",
-    "test": "npm run test:react && npm run test:preact",
-    "test:react": "mocha-webpack --webpack-config webpack.config.js \"tests/**/*.spec.js\"",
-    "test:preact": "mocha-webpack --webpack-config webpack.config.preact.js \"tests/**/*.spec.js\"",
-    "tdd": "mocha-webpack --webpack-config webpack.config.js --watch \"tests/**/*.spec.js\"",
-    "lint": "eslint src/**/*.js src/**/*.jsx tests/**.js tests/**.jsx",
-    "fix-linting": "eslint src/**/*.js src/**/*.jsx tests/**.js tests/**.jsx --fix",
+    "test": "gulp test",
+    "test:react": "gulp test:react",
+    "test:preact": "gulp test:preact",
+    "tdd": "gulp tdd",
+    "lint": "gulp lint",
     "precommit": "npm run lint && npm run test && npm run build",
-    "build": "webpack --config webpack.config.publish.js"
+    "build": "gulp build"
   },
   "repository": {
     "type": "git",
@@ -106,6 +105,7 @@
   "peerDependencies": {
     "preact": "7.1.0",
     "preact-compat": "3.13.1",
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "wholesale-styleguide-scss": "git+https://github.com/wholesale-design-system/scss.git"
   }
 }

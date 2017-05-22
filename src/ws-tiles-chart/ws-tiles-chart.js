@@ -10,7 +10,12 @@ import {Tile} from './tile';
  * @property {Object} props.config Defines the color of each group of tiles
  * @property {string} props.title Title of the chart
  * @property {number} props.maxTileSize Defines the maximum size that the tile can be
- *
+ * @property {number} props.minTileSize Defines the minimum size that the tile can be
+ * @property {number} props.width Defines width of the chart
+ * @property {number} props.height Defines height of the chart
+ * @property {func} props.onMouseEnter Defines function that is called for onMouseEnter event
+ * @property {func} props.onMouseLeave Defines function that is called for onMouseLeave event
+ * @property {func} props.onClick Defines function that is called for onCLick event
  */
 export class WSTilesChart extends Component {
 
@@ -24,7 +29,10 @@ export class WSTilesChart extends Component {
     maxTileSize: 25,
     minTileSize: 8,
     width: 80,
-    height: 80
+    height: 80,
+    onMouseEnter: () => {},
+    onMouseLeave: () => {},
+    onClick: () => {}
   };
 
   /**
@@ -36,7 +44,10 @@ export class WSTilesChart extends Component {
     title: PropTypes.string,
     maxTileSize: PropTypes.number,
     width: PropTypes.number,
-    height: PropTypes.number
+    height: PropTypes.number,
+    onMouseEnter: PropTypes.func,
+    onMouseLeave: PropTypes.func,
+    onClick: PropTypes.func
   };
 
   /**
@@ -102,13 +113,19 @@ export class WSTilesChart extends Component {
     return (
       <div className="ws-tiles-chart" style={{width: `${width}px`, height: `${height}px`}}>
         <div className="tiles-chart-title">{title}</div>
-        <div className="tiles-chart-container" style={{height: `${height - this.titleDivSize}px`}}>
+        <div
+          className="tiles-chart-container"
+          style={{height: `${height - this.titleDivSize}px`}}
+          onMouseEnter={this.props.onMouseEnter}
+          onMouseLeave={this.props.onMouseLeave}
+        >
           {Object.keys(groups).map(groupName => groups[groupName].map(tile =>
             <Tile
-              data={tile}
-              tileClass={groupName}
+              identifier={tile}
+              groupName={groupName}
               config={config[groupName]}
               size={this.state.tileSize}
+              onClick={this.props.onClick}
             />
           ))}
         </div>

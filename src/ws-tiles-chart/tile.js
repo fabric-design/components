@@ -6,8 +6,9 @@ import {Component, PropTypes} from '../imports';
  * @property {Object} props React properties object
  * @property {Object} props.identifier identifier of the tile
  * @property {Object} props.config Defines the background color of the tile
- * @property {Object} props.tileClass The class of the tile which can also be used for color styling
+ * @property {Object} props.groupName The class of the tile which can also be used for color styling
  * @property {number} props.size Defines the width and height of the tile
+ * @property {func} props.onClick function(groupName,identifier,element) that is called when a tile is clicked
  */
 export class Tile extends Component {
 
@@ -17,8 +18,9 @@ export class Tile extends Component {
   static propTypes = {
     identifier: PropTypes.string,
     config: PropTypes.string,
-    tileClass: PropTypes.string,
-    size: PropTypes.number
+    groupName: PropTypes.string,
+    size: PropTypes.number,
+    onClick: PropTypes.func
   };
 
 
@@ -28,8 +30,9 @@ export class Tile extends Component {
   static defaultProps = {
     identifier: '',
     config: '',
-    tileClass: '',
-    size: 25
+    groupName: '',
+    size: 25,
+    onClick: () => {}
   };
 
   /**
@@ -45,7 +48,11 @@ export class Tile extends Component {
     };
 
     return (
-      <div className={`tile ${this.props.tileClass}`} style={style} />
+      <div
+        className={`tile ${this.props.groupName}`}
+        style={style}
+        onClick={() => this.props.onClick(this.props.groupName, this.props.identifier)}
+      />
     );
   }
 }

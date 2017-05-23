@@ -32,9 +32,6 @@
     "directories": {
       "dist": "dist/amd"
     },
-    "dependencies": {
-      "moment": "^2.0.0"
-    },
     "peerDependencies": {
       "preact": "7.2.1",
       "preact-compat": "3.14.3"

@@ -34,11 +34,26 @@ During the current development phase we are providing a basic demo page within t
 - Execute `npm run start` to start a demo web page  which integrates all components with the react framework.
 - Execute `npm run start:preact` to start a demo web page which integrates all components with the preact framework.
 
-In 'demo/index.html' you will find already build components.
+In 'demo/index.html' you will a vanillajs solution how to integrate components into a react tech stack.
 
 ## Contributing
 
 Our Zalando Wholesale Styleguide is in active development and we welcome any contributions and feedback. See our [Contributing](CONTRIBUTING.MD) for detailed information on how to contribute.
+
+## Internal API Documentation
+
+For better onboarding of interested contributers we are providing a auto-generated documentation of our components [API Documentation](docs/api/index.md). For the development and testing of our components we are using gulp, webpack, karma and jasmine. 
+
+- `npm run lint` for linting the source code of our components and tests
+- `npm run test` runs both test scenarios (react and preact)
+  - `npm run test:preact` for running component tests only with the preact framework
+  - `npm run test:react` for running component tests only with the react framework
+- `npm run tdd` continous test runner for components (uses preact)
+- `npm run docs` generates documentation in docs/api based on jsdocs in the components (src-folder)
+- `npm run build` builds our components into the dist folder for later integration. We are currently transpiling our components into AMD, CommmonJS, ES2015 and Systemjs modules. 
+- `npm run precommit` we are recommending that before you commit / do a pull-request you should execute this command. It runs the linter, tests and builds everything.
+- `npm run start` starts our demo application with webpack dev server at http://localhost:8080. Provides the scss library and react framework.
+  - `npm run start:preact` starts our demo application with webpack dev server at http://localhost:8080. Provides the scss library and preact framework.
 
 ## Contact
 

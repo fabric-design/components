@@ -11,9 +11,9 @@ In this repository we are developing the components which can be used later in y
 
 ## How it works
 
-Basically the components in this repository are one part of the styleguide. We are not providing or installing any framework (react or preact) or styles [styles](https://github.com/wholesale-design-system/scss), therefore if you want to use the components you have to provide the framework and styles in your project environment.
+Basically the components in this repository are one part of the styleguide. We are not providing or installing any framework (react or preact) or [styles](https://github.com/wholesale-design-system/scss), therefore if you want to use the components you have to provide the framework and styles in your project environment yourself.
 
-We have abstracted our imports from specific frameworks as we think developers should have the opportunity to decide which framework they want to use. 
+We have abstracted our imports from specific frameworks as we think developers should have the opportunity to decide which framework they want to use and especially in our domain every Wholesale application has to use the styles per default.
 
 ## Getting started (How to integrate)
 
@@ -43,6 +43,8 @@ Our Zalando Wholesale Styleguide is in active development and we welcome any con
 ## Internal API Documentation
 
 For better onboarding of interested contributers we are providing a auto-generated documentation of our components [API Documentation](docs/api/index.md). For the development and testing of our components we are using gulp, webpack, karma and jasmine. 
+
+## Development Tasks (npm scripts)
 
 - `npm run lint` for linting the source code of our components and tests
 - `npm run test` runs both test scenarios (react and preact)

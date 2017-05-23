@@ -8,8 +8,10 @@
  * - See {@link ws-header/ws-header.md|WSHeader}
  * - See {@link ws-date-picker/ws-date-picker.md|WSDatePicker}
  * - See {@link ws-dropdown/ws-dropdown.md|WSDropdown}
+ * - See {@link ws-inline-edit/ws-inline-edit.md|WSInlineEdit}
  * - See {@link ws-notification/ws-notification.md|WSNotification}
  * - See {@link ws-week-picker/ws-week-picker.md|WSWeekPicker}
+ * - See {@link ws-tiles-chart/ws-tiles-chart.md|WSTilesChart}
  * @module WHStyleguide
  */
 

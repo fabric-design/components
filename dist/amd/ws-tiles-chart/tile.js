@@ -74,6 +74,8 @@ define(['exports', 'react', '../imports'], function (exports, _react, _imports) 
     _createClass(Tile, [{
       key: 'render',
       value: function render() {
+        var _this2 = this;
+
         var _props = this.props,
             config = _props.config,
             size = _props.size;
@@ -84,7 +86,13 @@ define(['exports', 'react', '../imports'], function (exports, _react, _imports) 
           height: size + 'px'
         };
 
-        return _react2.default.createElement('div', { className: 'tile ' + this.props.tileClass, style: style });
+        return _react2.default.createElement('div', {
+          className: 'tile ' + this.props.groupName,
+          style: style,
+          onClick: function onClick() {
+            return _this2.props.onClick(_this2.props.groupName, _this2.props.identifier);
+          }
+        });
       }
     }]);
 
@@ -97,8 +105,9 @@ define(['exports', 'react', '../imports'], function (exports, _react, _imports) 
     value: {
       identifier: _imports.PropTypes.string,
       config: _imports.PropTypes.string,
-      tileClass: _imports.PropTypes.string,
-      size: _imports.PropTypes.number
+      groupName: _imports.PropTypes.string,
+      size: _imports.PropTypes.number,
+      onClick: _imports.PropTypes.func
     }
   });
   Object.defineProperty(Tile, 'defaultProps', {
@@ -107,8 +116,9 @@ define(['exports', 'react', '../imports'], function (exports, _react, _imports) 
     value: {
       identifier: '',
       config: '',
-      tileClass: '',
-      size: 25
+      groupName: '',
+      size: 25,
+      onClick: function onClick() {}
     }
   });
 });

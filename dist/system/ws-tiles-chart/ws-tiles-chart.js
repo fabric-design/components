@@ -130,14 +130,20 @@ System.register(['react', '../imports', './tile'], function (_export, _context) 
               ),
               React.createElement(
                 'div',
-                { className: 'tiles-chart-container', style: { height: height - this.titleDivSize + 'px' } },
+                {
+                  className: 'tiles-chart-container',
+                  style: { height: height - this.titleDivSize + 'px' },
+                  onMouseEnter: this.props.onMouseEnter,
+                  onMouseLeave: this.props.onMouseLeave
+                },
                 Object.keys(groups).map(function (groupName) {
                   return groups[groupName].map(function (tile) {
                     return React.createElement(Tile, {
-                      data: tile,
-                      tileClass: groupName,
+                      identifier: tile,
+                      groupName: groupName,
                       config: config[groupName],
-                      size: _this2.state.tileSize
+                      size: _this2.state.tileSize,
+                      onClick: _this2.props.onClick
                     });
                   });
                 })
@@ -161,7 +167,10 @@ System.register(['react', '../imports', './tile'], function (_export, _context) 
           maxTileSize: 25,
           minTileSize: 8,
           width: 80,
-          height: 80
+          height: 80,
+          onMouseEnter: function onMouseEnter() {},
+          onMouseLeave: function onMouseLeave() {},
+          onClick: function onClick() {}
         }
       });
       Object.defineProperty(WSTilesChart, 'propTypes', {
@@ -173,7 +182,10 @@ System.register(['react', '../imports', './tile'], function (_export, _context) 
           title: PropTypes.string,
           maxTileSize: PropTypes.number,
           width: PropTypes.number,
-          height: PropTypes.number
+          height: PropTypes.number,
+          onMouseEnter: PropTypes.func,
+          onMouseLeave: PropTypes.func,
+          onClick: PropTypes.func
         }
       });
     }

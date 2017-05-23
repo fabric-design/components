@@ -92,14 +92,20 @@ var WSTilesChart = exports.WSTilesChart = function (_Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'tiles-chart-container', style: { height: height - this.titleDivSize + 'px' } },
+          {
+            className: 'tiles-chart-container',
+            style: { height: height - this.titleDivSize + 'px' },
+            onMouseEnter: this.props.onMouseEnter,
+            onMouseLeave: this.props.onMouseLeave
+          },
           Object.keys(groups).map(function (groupName) {
             return groups[groupName].map(function (tile) {
               return _react2.default.createElement(_tile.Tile, {
-                data: tile,
-                tileClass: groupName,
+                identifier: tile,
+                groupName: groupName,
                 config: config[groupName],
-                size: _this2.state.tileSize
+                size: _this2.state.tileSize,
+                onClick: _this2.props.onClick
               });
             });
           })
@@ -121,7 +127,10 @@ Object.defineProperty(WSTilesChart, 'defaultProps', {
     maxTileSize: 25,
     minTileSize: 8,
     width: 80,
-    height: 80
+    height: 80,
+    onMouseEnter: function onMouseEnter() {},
+    onMouseLeave: function onMouseLeave() {},
+    onClick: function onClick() {}
   }
 });
 Object.defineProperty(WSTilesChart, 'propTypes', {
@@ -133,6 +142,9 @@ Object.defineProperty(WSTilesChart, 'propTypes', {
     title: _imports.PropTypes.string,
     maxTileSize: _imports.PropTypes.number,
     width: _imports.PropTypes.number,
-    height: _imports.PropTypes.number
+    height: _imports.PropTypes.number,
+    onMouseEnter: _imports.PropTypes.func,
+    onMouseLeave: _imports.PropTypes.func,
+    onClick: _imports.PropTypes.func
   }
 });

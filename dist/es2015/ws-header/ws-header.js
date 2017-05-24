@@ -6,7 +6,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import { React, Component } from '../imports';
+import { React, Component, PropTypes } from '../imports';
 import WSHeaderNavLink from './ws-header-nav-link';
 var urlAtStart = window.location.href;
 var SESSION_TOKEN_NAME = 'session_token';
@@ -183,7 +183,7 @@ export var WSHeader = function (_Component) {
   }, {
     key: 'login',
     value: function login() {
-      window.location.href = 'https://auth.zalando.com/z/oauth2/authorize\n      ?realm=/employees&response_type=token&scope=uid\n      &client_id=' + this.props.clientId + '\n      &redirect_uri=' + this.props.redirectUrl + '\n      &state=' + setSessionState();
+      window.location.href = 'https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid&client_id=' + this.props.clientId + '&redirect_uri=' + this.props.redirectUrl + '&state=' + setSessionState();
     }
   }, {
     key: 'logout',
@@ -212,7 +212,7 @@ export var WSHeader = function (_Component) {
               this.props.logoUrl && React.createElement('img', { className: 'logo', alt: this.props.title + '_logo', src: this.props.logoUrl }),
               React.createElement(
                 'span',
-                null,
+                { className: 'nav-title' },
                 this.props.title
               )
             ),
@@ -222,10 +222,10 @@ export var WSHeader = function (_Component) {
               React.createElement(
                 'ul',
                 { id: 'js-navigation-menu', className: 'navigation-menu show' },
-                this.state.isLoggedIn && this.state.userName && React.createElement(
+                this.state.loggedIn && this.state.userName !== null && React.createElement(
                   'ul',
-                  null,
-                  this.props.links && this.props.links.map(function (link, index) {
+                  { id: 'nav-links' },
+                  this.props.links.length > 0 && this.props.links.map(function (link, index) {
                     return React.createElement(WSHeaderNavLink, { link: link, key: index });
                   })
                 ),
@@ -239,7 +239,6 @@ export var WSHeader = function (_Component) {
                     React.createElement(
                       'span',
                       { id: 'selectedLanguage' },
-                      ' ',
                       this.state.lang
                     )
                   ),
@@ -259,7 +258,6 @@ export var WSHeader = function (_Component) {
                           React.createElement(
                             'span',
                             null,
-                            ' ',
                             lang
                           )
                         )
@@ -307,6 +305,33 @@ export var WSHeader = function (_Component) {
 
   return WSHeader;
 }(Component);
+
+Object.defineProperty(WSHeader, 'defaultProps', {
+  enumerable: true,
+  writable: true,
+  value: {
+    setLang: function setLang() {},
+    setLogin: function setLogin() {},
+    clientId: null,
+    redirectUrl: '',
+    logoUrl: null,
+    title: '',
+    links: []
+  }
+});
+Object.defineProperty(WSHeader, 'propTypes', {
+  enumerable: true,
+  writable: true,
+  value: {
+    setLang: PropTypes.func,
+    setLogin: PropTypes.func,
+    clientId: PropTypes.number,
+    redirectUrl: PropTypes.string,
+    logoUrl: PropTypes.string,
+    title: PropTypes.string,
+    links: PropTypes.array
+  }
+});
 
 function getTokenFromUrl(url) {
   var urlQueryTokenPart = /access_token=([^&]+)/.exec(url);

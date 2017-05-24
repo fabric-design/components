@@ -263,11 +263,7 @@ export class WSHeader extends Component {
    * @returns {void}
    */
   login() {
-    window.location.href = `https://auth.zalando.com/z/oauth2/authorize
-      ?realm=/employees&response_type=token&scope=uid
-      &client_id=${this.props.clientId}
-      &redirect_uri=${this.props.redirectUrl}
-      &state=${setSessionState()}`;
+    window.location.href = `https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid&client_id=${this.props.clientId}&redirect_uri=${this.props.redirectUrl}&state=${setSessionState()}`;
   }
 
   /**

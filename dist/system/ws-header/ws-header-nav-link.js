@@ -5,13 +5,13 @@ System.register(["../imports"], function (_export, _context) {
   function WSHeaderNavLink(props) {
     return React.createElement(
       "li",
-      { className: "nav-link", key: props.key, onClick: function onClick() {
-          return props.link.onclick && props.link.onclick();
+      { className: "nav-link", onClick: function onClick() {
+          return props.link.onclick && props.link.onclick(props.link.value);
         } },
       React.createElement(
         "a",
         null,
-        this.props.link.label
+        props.link.label
       )
     );
   }

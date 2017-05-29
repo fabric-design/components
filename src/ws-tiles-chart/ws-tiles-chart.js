@@ -115,7 +115,7 @@ export class WSTilesChart extends Component {
         <div className="tiles-chart-title">{title}</div>
         <div
           className="tiles-chart-container"
-          style={{height: `${height - this.titleDivSize}px`}}
+          style={{maxHeight: `${height - this.titleDivSize}px`}}
           onMouseEnter={this.props.onMouseEnter}
           onMouseLeave={this.props.onMouseLeave}
         >

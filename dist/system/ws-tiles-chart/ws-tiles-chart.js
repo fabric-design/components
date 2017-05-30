@@ -84,22 +84,34 @@ System.register(['react', '../imports', './tile'], function (_export, _context) 
         }, {
           key: 'getTileSize',
           value: function getTileSize() {
-            var groups = this.props.data.groups || {};
+            var _props = this.props,
+                height = _props.height,
+                width = _props.width,
+                maxTileSize = _props.maxTileSize,
+                minTileSize = _props.minTileSize,
+                data = _props.data;
+
+            var groups = data.groups || {};
+
+            if (maxTileSize === minTileSize || Object.keys(groups).length === 0) {
+              return minTileSize;
+            }
+
             var tilesAmount = Object.keys(groups).map(function (groupName) {
               return groups[groupName].length;
             }).reduce(function (a, b) {
               return a + b;
             });
 
-            var tileSize = this.calculateMaximumPossibleTileSize(this.props.width, this.props.height - this.titleDivSize, tilesAmount);
+            var tileSize = this.calculateMaximumPossibleTileSize(width, height - this.titleDivSize, tilesAmount);
 
-            if (tileSize <= this.props.maxTileSize && tileSize >= this.props.minTileSize) {
+            if (tileSize <= maxTileSize && tileSize >= minTileSize) {
               return tileSize;
-            } else if (tileSize > this.props.maxTileSize) {
-              return this.props.maxTileSize;
+            } else if (tileSize > maxTileSize) {
+              return maxTileSize;
             }
 
-            return this.props.minTileSize;
+            return minTileSize;
           }
         }, {
           key: 'calculateMaximumPossibleTileSize',
@@ -112,12 +124,12 @@ System.register(['react', '../imports', './tile'], function (_export, _context) 
           value: function render() {
             var _this2 = this;
 
-            var _props = this.props,
-                data = _props.data,
-                config = _props.config,
-                title = _props.title,
-                width = _props.width,
-                height = _props.height;
+            var _props2 = this.props,
+                data = _props2.data,
+                config = _props2.config,
+                title = _props2.title,
+                width = _props2.width,
+                height = _props2.height;
 
             var groups = data.groups || {};
             return React.createElement(
@@ -132,7 +144,7 @@ System.register(['react', '../imports', './tile'], function (_export, _context) 
                 'div',
                 {
                   className: 'tiles-chart-container',
-                  style: { height: height - this.titleDivSize + 'px' },
+                  style: { maxHeight: height - this.titleDivSize + 'px' },
                   onMouseEnter: this.props.onMouseEnter,
                   onMouseLeave: this.props.onMouseLeave
                 },

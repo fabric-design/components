@@ -75,20 +75,26 @@ export class WSTilesChart extends Component {
    * @returns {number}
    */
   getTileSize() {
-    const groups = this.props.data.groups || {};
+    const {height, width, maxTileSize, minTileSize, data} = this.props;
+    const groups = data.groups || {};
+
+    if (maxTileSize === minTileSize || Object.keys(groups).length === 0) {
+      return minTileSize;
+    }
+
     const tilesAmount = Object.keys(groups).map(groupName => groups[groupName].length).reduce((a, b) => a + b);
 
     const tileSize = this.calculateMaximumPossibleTileSize(
-      this.props.width, this.props.height - this.titleDivSize, tilesAmount
+      width, height - this.titleDivSize, tilesAmount
     );
 
-    if (tileSize <= this.props.maxTileSize && tileSize >= this.props.minTileSize) {
+    if (tileSize <= maxTileSize && tileSize >= minTileSize) {
       return tileSize;
-    } else if (tileSize > this.props.maxTileSize) {
-      return this.props.maxTileSize;
+    } else if (tileSize > maxTileSize) {
+      return maxTileSize;
     }
 
-    return this.props.minTileSize;
+    return minTileSize;
   }
 
   /**

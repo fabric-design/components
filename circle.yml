@@ -22,6 +22,8 @@ checkout:
     - git config --global user.name "${CIRCLE_PROJECT_USERNAME}"
 
 dependencies:
+  pre:
+    - sudo apt-get update; sudo apt-get install jq
   override:
     - npm install -g gulp-cli aurelia-cli
     - npm install
@@ -37,6 +39,15 @@ test:
     - gulp lint
 
 deployment:
+  patch:
+    branch: [master, release, test-base]
+    commands:
+      - gulp prepare-release
+      - git add package.json doc/CHANGELOG.md
+      - git commit -m "Bumped version to $(jq -r .version package.json) [skip ci]"
+      - git tag -a $(jq -r .version package.json) -m "Automatic release via CircleCI"
+      - git push origin $CIRCLE_BRANCH
+      - gulp release
   master:
     branch: /.*/
     commands:

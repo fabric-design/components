@@ -1,3 +1,13 @@
+<a name="0.3.4"></a>
+## 0.3.4 (2017-06-01)
+
+
+### Features
+
+* **versioning:** Implemented release publishing and automatic patch versioning ([c810d34](https://github.com/wholesale-design-system/components/commit/c810d34))
+
+
+
 <a name="0.3.3"></a>
 ## 0.3.3 (2017-06-01)
 

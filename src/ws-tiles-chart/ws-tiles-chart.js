@@ -9,10 +9,10 @@ import {Tile} from './tile';
  * @property {Object} props.data Defines the Groups of tiles that should be shown in the chart
  * @property {Object} props.config Defines the color of each group of tiles
  * @property {string} props.title Title of the chart
- * @property {number} props.maxTileSize Defines the maximum size that the tile can be
- * @property {number} props.minTileSize Defines the minimum size that the tile can be
- * @property {number} props.width Defines width of the chart
- * @property {number} props.height Defines height of the chart
+ * @property {number} props.maxTileSize Defines the maximum size that the tile can be (in pixels)
+ * @property {number} props.minTileSize Defines the minimum size that the tile can be (in pixels)
+ * @property {number} props.width Defines width of the chart (in pixels)
+ * @property {number} props.height Defines height of the chart (in pixels)
  * @property {func} props.onMouseEnter Defines function that is called for onMouseEnter event
  * @property {func} props.onMouseLeave Defines function that is called for onMouseLeave event
  * @property {func} props.onClick Defines function that is called for onCLick event

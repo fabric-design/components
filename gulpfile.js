@@ -1,25 +1,8 @@
-/**
- *  Welcome to your gulpfile!
- *  The gulp tasks are splitted in several files in the gulp directory
- *  because putting all here was really too long
- */
-
-'use strict';
-
-var gulp = require('gulp');
-var wrench = require('wrench');
-var runSequence = require('run-sequence');
-
-/**
- *  This will load all js or coffee files in the gulp directory
- *  in order to load all gulp tasks
- */
-wrench.readdirSyncRecursive('./gulp').filter(function(file) {
-  return (/\.(js|coffee)$/i).test(file);
-}).map(function(file) {
-  require('./gulp/' + file);
-});
-
-gulp.task('default', ['sass:styleguide'], function(callback) {
-  runSequence('build', 'watch', callback);
-});
+// all gulp tasks are located in the ./build/tasks directory
+// gulp configuration is in files in ./build directory
+require('./build/tasks/build');
+require('./build/tasks/docs');
+require('./build/tasks/clean');
+require('./build/tasks/lint');
+require('./build/tasks/prepare-release');
+require('./build/tasks/test');

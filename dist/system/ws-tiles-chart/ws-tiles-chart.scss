@@ -1,0 +1,19 @@
+.ws-tiles-chart {
+  .tiles-chart-title {
+    height: rem(30px);
+    vertical-align: top;
+    text-align: center;
+    font-weight: 500;
+  }
+  .tiles-chart-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    overflow: auto;
+    .tile {
+      box-sizing: border-box;
+      border: 1px solid white;
+      background-color: $forest-green;
+    }
+  }
+}

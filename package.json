@@ -59,7 +59,7 @@
     "conventional-github-releaser": "^1.1.9",
     "css-loader": "0.26.4",
     "del": "2.2.2",
-    "documentation": "4.0.0-beta.19",
+    "documentation": "^4.0.0-rc.1",
     "eslint": "3.19.0",
     "eslint-config-airbnb": "14.1.0",
     "eslint-plugin-import": "2.2.0",

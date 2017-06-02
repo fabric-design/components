@@ -237,7 +237,7 @@ define(['exports', '../imports', './ws-header-nav-link'], function (exports, _im
     }, {
       key: 'login',
       value: function login() {
-        window.location.href = 'https://auth.zalando.com/z/oauth2/authorize\n      ?realm=/employees&response_type=token&scope=uid\n      &client_id=' + this.props.clientId + '\n      &redirect_uri=' + this.props.redirectUrl + '\n      &state=' + setSessionState();
+        window.location.href = 'https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid&client_id=' + this.props.clientId + '&redirect_uri=' + this.props.redirectUrl + '&state=' + setSessionState();
       }
     }, {
       key: 'logout',
@@ -266,7 +266,7 @@ define(['exports', '../imports', './ws-header-nav-link'], function (exports, _im
                 this.props.logoUrl && _imports.React.createElement('img', { className: 'logo', alt: this.props.title + '_logo', src: this.props.logoUrl }),
                 _imports.React.createElement(
                   'span',
-                  null,
+                  { className: 'nav-title' },
                   this.props.title
                 )
               ),
@@ -276,10 +276,10 @@ define(['exports', '../imports', './ws-header-nav-link'], function (exports, _im
                 _imports.React.createElement(
                   'ul',
                   { id: 'js-navigation-menu', className: 'navigation-menu show' },
-                  this.state.isLoggedIn && this.state.userName && _imports.React.createElement(
+                  this.state.loggedIn && this.state.userName !== null && _imports.React.createElement(
                     'ul',
-                    null,
-                    this.props.links && this.props.links.map(function (link, index) {
+                    { id: 'nav-links' },
+                    this.props.links.length > 0 && this.props.links.map(function (link, index) {
                       return _imports.React.createElement(_wsHeaderNavLink2.default, { link: link, key: index });
                     })
                   ),
@@ -293,7 +293,6 @@ define(['exports', '../imports', './ws-header-nav-link'], function (exports, _im
                       _imports.React.createElement(
                         'span',
                         { id: 'selectedLanguage' },
-                        ' ',
                         this.state.lang
                       )
                     ),
@@ -313,7 +312,6 @@ define(['exports', '../imports', './ws-header-nav-link'], function (exports, _im
                             _imports.React.createElement(
                               'span',
                               null,
-                              ' ',
                               lang
                             )
                           )
@@ -361,6 +359,33 @@ define(['exports', '../imports', './ws-header-nav-link'], function (exports, _im
 
     return WSHeader;
   }(_imports.Component);
+
+  Object.defineProperty(WSHeader, 'defaultProps', {
+    enumerable: true,
+    writable: true,
+    value: {
+      setLang: function setLang() {},
+      setLogin: function setLogin() {},
+      clientId: null,
+      redirectUrl: '',
+      logoUrl: null,
+      title: '',
+      links: []
+    }
+  });
+  Object.defineProperty(WSHeader, 'propTypes', {
+    enumerable: true,
+    writable: true,
+    value: {
+      setLang: _imports.PropTypes.func,
+      setLogin: _imports.PropTypes.func,
+      clientId: _imports.PropTypes.number,
+      redirectUrl: _imports.PropTypes.string,
+      logoUrl: _imports.PropTypes.string,
+      title: _imports.PropTypes.string,
+      links: _imports.PropTypes.array
+    }
+  });
 
   function getTokenFromUrl(url) {
     var urlQueryTokenPart = /access_token=([^&]+)/.exec(url);

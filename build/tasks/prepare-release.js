@@ -7,7 +7,8 @@ const bump = require('gulp-bump');
 const args = require('../args');
 const changelogOpts = {
   preset: 'angular',
-  releaseCount: 1
+  releaseCount: 1,
+  targetCommitish: args.branch
 };
 
 // utilizes the bump plugin to bump the

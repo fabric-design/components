@@ -1,3 +1,13 @@
+<a name="0.1.1"></a>
+## [0.1.1](https://github.com/wholesale-design-system/components/compare/0.3.9...v0.1.1) (2017-06-02)
+
+
+### Bug Fixes
+
+* **package:** Change version ([#76](https://github.com/wholesale-design-system/components/issues/76)) ([6135c4e](https://github.com/wholesale-design-system/components/commit/6135c4e))
+
+
+
 <a name="0.3.9"></a>
 ## [0.3.9](https://github.com/wholesale-design-system/components/compare/0.3.8...v0.3.9) (2017-06-02)
 

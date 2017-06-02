@@ -1,6 +1,6 @@
 {
   "name": "styleguide-web-components",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "",
   "scripts": {
     "start": "webpack-dev-server --progress --colors --content-base build webpack.config.js",

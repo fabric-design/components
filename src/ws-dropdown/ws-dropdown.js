@@ -304,7 +304,7 @@ export class WSDropdown extends Component {
   }
 
   disabledStyle() {
-    return this.props.disabled === true ? ' disabled' : '';
+    return this.props.disabled ? ' disabled' : '';
   }
 
   /**

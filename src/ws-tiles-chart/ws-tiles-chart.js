@@ -56,7 +56,7 @@ export class WSTilesChart extends Component {
    */
   constructor(props) {
     super(props);
-    this.state = {tileSize: 0};
+    this.state = {tileSize: 0, groupOver: ''};
     this.titleDivSize = 30;
 
     this.getTileSize = this.getTileSize.bind(this);
@@ -128,10 +128,13 @@ export class WSTilesChart extends Component {
           {Object.keys(groups).map(groupName => groups[groupName].map(tile =>
             <Tile
               identifier={tile}
+              className={this.state.groupOver === groupName ? 'group-over' : ''}
               groupName={groupName}
               config={config[groupName]}
               size={this.state.tileSize}
               onClick={this.props.onClick}
+              onMouseEnter={() => this.setState({groupOver: groupName})}
+              onMouseLeave={() => this.setState({groupOver: ''})}
             />
           ))}
         </div>

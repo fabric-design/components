@@ -20,7 +20,9 @@ export class Tile extends Component {
     config: PropTypes.string,
     groupName: PropTypes.string,
     size: PropTypes.number,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    onMouseEnter: PropTypes.func.isRequired,
+    onMouseLeave: PropTypes.func.isRequired
   };
 
 
@@ -40,7 +42,7 @@ export class Tile extends Component {
    * @returns {Object}
    */
   render() {
-    const {config, size} = this.props;
+    const {identifier, config, size, groupName, className} = this.props;
     const style = {
       backgroundColor: config,
       width: `${size}px`,
@@ -49,9 +51,11 @@ export class Tile extends Component {
 
     return (
       <div
-        className={`tile ${this.props.groupName}`}
+        className={`tile ${groupName} ${className}`}
         style={style}
-        onClick={() => this.props.onClick(this.props.groupName, this.props.identifier)}
+        onClick={() => this.props.onClick(groupName, identifier)}
+        onMouseEnter={this.props.onMouseEnter}
+        onMouseLeave={this.props.onMouseLeave}
       />
     );
   }

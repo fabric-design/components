@@ -15,10 +15,19 @@ $use-embedded-font: true;
 
 //Example of how to style ws-tiles-chart using classes (.tile.groupName).
 .ws-tiles-chart .tile {
+  &.lessThan2h.group-over {
+      background-color: $madang;
+  }
   &.from2hTo1Day {
-    background-color: $grandis;
+    background-color: $west-side;
+    &.group-over{
+      background-color: $grandis;
+    }
   }
   &.moreThan1Day {
     background-color: $flamingo;
+    &.group-over{
+      background-color:$geraldine
+    }
   }
 }

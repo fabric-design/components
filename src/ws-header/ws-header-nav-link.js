@@ -11,8 +11,8 @@ import {React} from '../imports';
  */
 export default function WSHeaderNavLink(props) {
   return (
-    <li className="nav-link" key={props.key} onClick={() => props.link.onclick && props.link.onclick()} >
-      <a>{this.props.link.label}</a>
+    <li className="nav-link" onClick={() => props.link.onclick && props.link.onclick(props.link.value)} >
+      <a>{props.link.label}</a>
     </li>
   );
 }

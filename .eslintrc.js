@@ -1,16 +1,21 @@
 module.exports = {
-  "extends": "airbnb",
+  "extends": [
+    "airbnb",
+    "plugin:jasmine/recommended"
+  ],
   // Required to validate the code as babel interprets it. Used for static properties
   "parser": "babel-eslint",
   "env": {
     "browser": true,
     "node": true,
     "mocha": true,
-    "es6": true
+    "es6": true,
+    "jasmine": true
   },
   "plugins": [
     "react",
-    "jsx-a11y"
+    "jsx-a11y",
+    "jasmine"
   ],
   "parserOptions": {
     "ecmaVersion": 6,
@@ -81,6 +86,8 @@ module.exports = {
     }],
 
     // PROPOSAL
-    "no-mixed-operators": 0
+    "no-mixed-operators": 0,
+    // jasmine
+    "jasmine/no-global-setup": 0,
   }
 };

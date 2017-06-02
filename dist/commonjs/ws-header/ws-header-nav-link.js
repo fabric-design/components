@@ -10,13 +10,13 @@ var _imports = require("../imports");
 function WSHeaderNavLink(props) {
   return _imports.React.createElement(
     "li",
-    { className: "nav-link", key: props.key, onClick: function onClick() {
-        return props.link.onclick && props.link.onclick();
+    { className: "nav-link", onClick: function onClick() {
+        return props.link.onclick && props.link.onclick(props.link.value);
       } },
     _imports.React.createElement(
       "a",
       null,
-      this.props.link.label
+      props.link.label
     )
   );
 }

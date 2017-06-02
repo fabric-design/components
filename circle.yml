@@ -35,6 +35,7 @@ compile:
 test:
   override:
     - gulp lint
+    - gulp test
 
 deployment:
   master:

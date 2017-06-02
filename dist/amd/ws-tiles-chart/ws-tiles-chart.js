@@ -70,7 +70,7 @@ define(['exports', 'react', '../imports', './tile'], function (exports, _react, 
 
       var _this = _possibleConstructorReturn(this, (WSTilesChart.__proto__ || Object.getPrototypeOf(WSTilesChart)).call(this, props));
 
-      _this.state = { tileSize: 0 };
+      _this.state = { tileSize: 0, groupOver: '' };
       _this.titleDivSize = 30;
 
       _this.getTileSize = _this.getTileSize.bind(_this);
@@ -153,10 +153,17 @@ define(['exports', 'react', '../imports', './tile'], function (exports, _react, 
               return groups[groupName].map(function (tile) {
                 return _react2.default.createElement(_tile.Tile, {
                   identifier: tile,
+                  className: _this2.state.groupOver === groupName ? 'group-over' : '',
                   groupName: groupName,
                   config: config[groupName],
                   size: _this2.state.tileSize,
-                  onClick: _this2.props.onClick
+                  onClick: _this2.props.onClick,
+                  onMouseEnter: function onMouseEnter() {
+                    return _this2.setState({ groupOver: groupName });
+                  },
+                  onMouseLeave: function onMouseLeave() {
+                    return _this2.setState({ groupOver: '' });
+                  }
                 });
               });
             })

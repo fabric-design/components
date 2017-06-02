@@ -1,3 +1,13 @@
+<a name="0.3.9"></a>
+## [0.3.9](https://github.com/wholesale-design-system/components/compare/0.3.8...v0.3.9) (2017-06-02)
+
+
+### Bug Fixes
+
+* **date-picker:** Made icon clickable again ([#73](https://github.com/wholesale-design-system/components/issues/73)) ([30c7c47](https://github.com/wholesale-design-system/components/commit/30c7c47))
+
+
+
 <a name="0.3.8"></a>
 ## 0.3.8 (2017-06-02)
 

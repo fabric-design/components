@@ -303,10 +303,6 @@ export class WSDropdown extends Component {
     item.classList.add(animationClass);
   }
 
-  disabledStyle() {
-    return this.props.disabled ? ' disabled' : '';
-  }
-
   /**
    * Renders the dropdown trigger element
    * @returns {Object}
@@ -316,28 +312,41 @@ export class WSDropdown extends Component {
     if (this.props.icon) {
       icon = <span className={`icon ${this.props.icon}`} />;
     }
+    const disabledStyle = this.props.disabled ? ' is-disabled' : '';
     switch (this.props.type) {
       case 'anchor':
-        return <a className={"dropdown-trigger" + this.disabledStyle()}
-          onClick={() => this.open()}>
+        return (
+          <a
+            className={`dropdown-trigger ${disabledStyle}`}
+            onClick={() => this.open()}
+          >
             {icon} {this.state.text}
-        </a>;
+          </a>);
       case 'button':
-        return <button className={"dropdown-trigger" + this.disabledStyle()}
-          onClick={() => this.open()}>
+        return (
+          <button
+            className={`dropdown-trigger ${disabledStyle}`}
+            onClick={() => this.open()}
+          >
             {icon} {this.state.text}
-        </button>;
+          </button>);
       case 'select':
-        return <div className={"dropdown-trigger select-box" + this.disabledStyle()}
-          onClick={() => this.open()}>
+        return (
+          <div
+            className={`dropdown-trigger select-box ${disabledStyle}`}
+            onClick={() => this.open()}
+          >
             {icon} {this.state.text}
-        </div>;
+          </div>);
       case 'icon':
       default:
-        return <a className={"dropdown-trigger" + this.disabledStyle()}
-          onClick={() => this.open()}>
+        return (
+          <a
+            className={`dropdown-trigger ${disabledStyle}`}
+            onClick={() => this.open()}
+          >
             {icon}
-        </a>;
+          </a>);
     }
   }
 

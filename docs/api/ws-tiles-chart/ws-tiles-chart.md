@@ -12,7 +12,13 @@ This class describes a Preact/React component which renders a tiles chart
     -   `props.data` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Defines the Groups of tiles that should be shown in the chart
     -   `props.config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Defines the color of each group of tiles
     -   `props.title` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Title of the chart
-    -   `props.maxTileSize` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Defines the maximum size that the tile can be
+    -   `props.maxTileSize` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Defines the maximum size that the tile can be (in pixels)
+    -   `props.minTileSize` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Defines the minimum size that the tile can be (in pixels)
+    -   `props.width` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Defines width of the chart (in pixels)
+    -   `props.height` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Defines height of the chart (in pixels)
+    -   `props.onMouseEnter` **func** Defines function that is called for onMouseEnter event
+    -   `props.onMouseLeave` **func** Defines function that is called for onMouseLeave event
+    -   `props.onClick` **func** Defines function that is called for onCLick event
 
 ### constructor
 

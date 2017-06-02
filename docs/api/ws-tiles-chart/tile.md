@@ -11,8 +11,9 @@ This class describes a Preact/React component which renders a single tile
 -   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties object
     -   `props.identifier` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** identifier of the tile
     -   `props.config` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Defines the background color of the tile
-    -   `props.tileClass` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The class of the tile which can also be used for color styling
+    -   `props.groupName` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The class of the tile which can also be used for color styling
     -   `props.size` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Defines the width and height of the tile
+    -   `props.onClick` **func** function(groupName,identifier,element) that is called when a tile is clicked
 
 ### render
 

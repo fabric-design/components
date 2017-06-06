@@ -71,6 +71,8 @@ System.register(['react', '../imports'], function (_export, _context) {
         _createClass(Tile, [{
           key: 'render',
           value: function render() {
+            var _this2 = this;
+
             var _props = this.props,
                 config = _props.config,
                 size = _props.size;
@@ -81,7 +83,13 @@ System.register(['react', '../imports'], function (_export, _context) {
               height: size + 'px'
             };
 
-            return React.createElement('div', { className: 'tile ' + this.props.tileClass, style: style });
+            return React.createElement('div', {
+              className: 'tile ' + this.props.groupName,
+              style: style,
+              onClick: function onClick() {
+                return _this2.props.onClick(_this2.props.groupName, _this2.props.identifier);
+              }
+            });
           }
         }]);
 
@@ -96,8 +104,9 @@ System.register(['react', '../imports'], function (_export, _context) {
         value: {
           identifier: PropTypes.string,
           config: PropTypes.string,
-          tileClass: PropTypes.string,
-          size: PropTypes.number
+          groupName: PropTypes.string,
+          size: PropTypes.number,
+          onClick: PropTypes.func
         }
       });
       Object.defineProperty(Tile, 'defaultProps', {
@@ -106,8 +115,9 @@ System.register(['react', '../imports'], function (_export, _context) {
         value: {
           identifier: '',
           config: '',
-          tileClass: '',
-          size: 25
+          groupName: '',
+          size: 25,
+          onClick: function onClick() {}
         }
       });
     }

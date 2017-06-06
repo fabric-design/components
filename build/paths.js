@@ -1,9 +1,11 @@
 const appRoot = 'src/';
 const outputRoot = 'dist/';
+const testRoot = 'tests/';
 
 module.exports = {
   root: appRoot,
   source: appRoot + '**/*.js',
+  tests:  testRoot + '**/*.js',
   html: appRoot + '**/*.html',
   css: appRoot + '**/*.scss',
   output: outputRoot,

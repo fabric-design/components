@@ -1,97 +1,62 @@
-# Web-Components implementation for Wholesale
+# Zalando Wholesale Styleguide Components
+[![CircleCI](https://circleci.com/gh/wholesale-design-system/components/tree/release.svg?style=svg)](https://circleci.com/gh/wholesale-design-system/components/tree/release)
+[![Styleguide](https://img.shields.io/github/issues/wholesale-design-system/components.svg)](https://github.com/wholesale-design-system/components/issues)
+[![GitHub contributors](https://img.shields.io/github/contributors/wholesale-design-system/components.svg)]()
 
-## Aim
+## Motivation
 
-We in wholesale want the developers to choose frameworks they feel comfortable with. Still we want the UI to look and behave consistent. For that reason we decided to have components that can be used framework agnostic, web-components.
+At Zalando Wholesale we are developing a lot of web applications from small to mid-complex. As we are developing them in different cross-functional teams we wanted to guarantee the same look and feel in all of our applications independent from people and their development background. For guaranteeing same UI across applications and development teams we are developing a component-based Styleguide which provides a SCSS library and (P)React based components which can be all used independently. 
 
-## Usage
-`npm install` and then run
-`gulp build` to build the components.
-`npm run start` to run the demo page with react.
-`npm run start:preact` demo page with preact.
-`gulp test` for test / watcher
+In this repository we are developing the components which can be used later in your application. 
 
-## Demo
+## How it works
 
-In 'demo/index.html' you will find already build web-components. And see how you can integrate them in a vanilla setup.
+Basically the components in this repository are one part of the styleguide. We are not providing or installing any framework (react or preact) or [styles](https://github.com/wholesale-design-system/scss), therefore if you want to use the components you have to provide the framework and styles in your project environment yourself.
 
-## Integration with Angular 2
+We have abstracted our imports from specific frameworks as we think developers should have the opportunity to decide which framework they want to use and especially in our domain every Wholesale application has to use the styles per default.
 
-Check out the implementation of the header for an ng2 project: `https://github.bus.zalan.do/alpha/organizational-structure-frontend/blob/master/frontend/src/app.ts`.
+## Getting started (How to integrate)
 
-## How to extend
+The package is not yet published on npm as we are still working in a beta phase. 
 
-Create a folder under `webcomponents` with the name of your web-component. In there you can have .html, .scss and .js files that will be merged into one file by the build process.
+First of all you should install react / preact (if not already done) and our scss rules:
 
-### How do Web-Components work
+- `npm i -D -E preact prop-types` or `npm i -D -E react react-dom prop-types`
+- `npm i -D -E git+https://github.com/wholesale-design-system/scss.git`
+- Follow [How to integrate component into your build system
+](https://github.com/wholesale-design-system/components/wiki/How-to-integrate-component-into-your-build-system) instructions for integrate the components into your build process.
+- Alternatively you can find a simple vanillaJS setup [here](/demo/demo_app.js)
 
-Checkout the specification: [W3C](https://www.w3.org/standards/techs/components#w3c_all).
+## Running Demo Page
 
-Checkout a tutorial: [webcomponents.org](http://webcomponents.org/articles/introduction-to-custom-elements/).
+During the current development phase we are providing a basic demo page within the project which runs locally at [http://localhost:8080](http://localhost:8080) :
 
-**Summing up:**
-Web-Components are written as js classes. On these components certain life-cycle-functions are called: createdCallback, attachedCallback, detachedCallback, attributeChangedCallback. 
-More on those following. Apart from that, you have to implement most of the logic and DOM-manipulation yourself.
+- Execute `npm run start` to start a demo web page  which integrates all components with the react framework.
+- Execute `npm run start:preact` to start a demo web page which integrates all components with the preact framework.
 
-#### View-Part
+In 'demo/index.html' you will a vanillajs solution how to integrate components into a react tech stack.
 
-The view part of the Web-Component is query from a `<template/>`. The DOM you provide in your .html will be rendered in that. Then you put this DOM under a shadow-root:
+## Contributing
 
-```javascript
-    var template = (document._currentScript || document.currentScript).ownerDocument.querySelector('template');
-    ...
-    // in your component
-    createdCallback() {
-    		let clone = document.importNode(template.content, true);
-    
-    		// This element uses Shadow DOM.
-    		this.createShadowRoot().appendChild(clone);
-    		... 
-    }
-```
+Our Zalando Wholesale Styleguide is in active development and we welcome any contributions and feedback. See our [Contributing](CONTRIBUTING.MD) for detailed information on how to contribute.
 
-#### Inputs
+## Internal API Documentation
 
-Everytime you change an attribute on the element-tag of the web-component the attributeChangedCallback is called. On that call you could react and rerender your DOM:
+For better onboarding of interested contributers we are providing a auto-generated documentation of our components [API Documentation](docs/api/index.md). For the development and testing of our components we are using gulp, webpack, karma and jasmine. 
 
-```javascript
-    // in your component
-    attributeChangedCallback(attrName, oldVal, newVal) {
-        switch (attrName) {
-            case "redirect-url":
-            case "client-id":
-            case "userservice-url":
-                this.myGetAttributesIntoStateFunction();
-                this.myRerenderFunction();
-                break;
-        }
-    };
-```
+## Development Tasks (npm scripts)
 
-#### Outputs
+- `npm run lint` for linting the source code of our components and tests
+- `npm run test` runs both test scenarios (react and preact)
+  - `npm run test:preact` for running component tests only with the preact framework
+  - `npm run test:react` for running component tests only with the react framework
+- `npm run tdd` continous test runner for components (uses preact)
+- `npm run docs` generates documentation in docs/api based on jsdocs in the components (src-folder)
+- `npm run build` builds our components into the dist folder for later integration. We are currently transpiling our components into AMD, CommmonJS, ES2015 and Systemjs modules. 
+- `npm run precommit` we are recommending that before you commit / do a pull-request you should execute this command. It runs the linter, tests and builds everything.
+- `npm run start` starts our demo application with webpack dev server at http://localhost:8080. Provides the scss library and react framework.
+  - `npm run start:preact` starts our demo application with webpack dev server at http://localhost:8080. Provides the scss library and preact framework.
 
-You communicate with the outside world either by the outside world calling functions directly on the component like `document.querySelector('#header').logout()`. Or you trigger custom events on the element:
+## Contact
 
-```javascript
-    // in your component
-    propagateLoginStatusChange(isLoggedIn, token) {
-        ...
-        let event = new CustomEvent("login-status-changed", {
-            detail: {
-                loggedIn: isLoggedIn,
-                token: token
-            }
-        });
-        this.dispatchEvent(event);
-    }
-    
-    // outside the component
-    document.querySelector('#header').addEventListener('login-status-changed',
-        function({ detail: {loggedIn, token}}) {
-            console.log('logged in state: ' + loggedIn + ' with token: ' + token);
-        });
-```
-
-### Quirks
-
-Webcomponents need a polyfill in some browsers. Use the webcomponentsjs polyfill.
+For any further contact feel free to reach out one of us [here](MAINTAINERS). We are all friendly and will be more then happy to answer any question regarding our styleguide.

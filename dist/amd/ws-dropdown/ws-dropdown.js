@@ -166,12 +166,11 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
         };
 
         state.items.forEach(function (item) {
-          if (state.value.find(function (val) {
+          var isActive = !!state.value.find(function (val) {
             return val.value === item.value;
-          })) {
-            item.selected = true;
-            item.stored = true;
-          }
+          });
+          item.selected = isActive;
+          item.stored = isActive;
         });
         return state;
       }

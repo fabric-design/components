@@ -41,7 +41,8 @@ export class WSDropdown extends Component {
     orientation: 'left',
     placeholder: '',
     value: null,
-    onChange: () => {}
+    onChange: () => {},
+    disabled: false
   };
 
   /**
@@ -60,7 +61,8 @@ export class WSDropdown extends Component {
     orientation: PropTypes.oneOf(['left', 'right']),
     placeholder: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    disabled: PropTypes.bool
   };
 
   /**
@@ -240,7 +242,7 @@ export class WSDropdown extends Component {
    * @returns {void}
    */
   open() {
-    if (this.opened) {
+    if (this.opened || this.props.disabled) {
       return;
     }
     this.opened = true;
@@ -310,16 +312,41 @@ export class WSDropdown extends Component {
     if (this.props.icon) {
       icon = <span className={`icon ${this.props.icon}`} />;
     }
+    const disabledStyle = this.props.disabled ? ' is-disabled' : '';
     switch (this.props.type) {
       case 'anchor':
-        return <a className="dropdown-trigger" onClick={() => this.open()}>{icon} {this.state.text}</a>;
+        return (
+          <a
+            className={`dropdown-trigger ${disabledStyle}`}
+            onClick={() => this.open()}
+          >
+            {icon} {this.state.text}
+          </a>);
       case 'button':
-        return <button className="dropdown-trigger" onClick={() => this.open()}>{icon} {this.state.text}</button>;
+        return (
+          <button
+            className={`dropdown-trigger ${disabledStyle}`}
+            onClick={() => this.open()}
+          >
+            {icon} {this.state.text}
+          </button>);
       case 'select':
-        return <div className="dropdown-trigger select-box" onClick={() => this.open()}>{icon} {this.state.text}</div>;
+        return (
+          <div
+            className={`dropdown-trigger select-box ${disabledStyle}`}
+            onClick={() => this.open()}
+          >
+            {icon} {this.state.text}
+          </div>);
       case 'icon':
       default:
-        return <a className="dropdown-trigger" onClick={() => this.open()}>{icon}</a>;
+        return (
+          <a
+            className={`dropdown-trigger ${disabledStyle}`}
+            onClick={() => this.open()}
+          >
+            {icon}
+          </a>);
     }
   }
 

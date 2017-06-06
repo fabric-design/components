@@ -8,20 +8,23 @@ machine:
 
 general:
   artifacts:
-      - "styleguide/index.html"
-      - "styleguide/scripts"
-      - "styleguide/src/style/assets"
+    - "styleguide/index.html"
+    - "styleguide/scripts"
+    - "styleguide/src/style/assets"
   branches:
     ignore:
       - gh-pages
 
 checkout:
   post:
+    - git pull origin ${CIRCLE_BRANCH}
     - git clone git@github.com:wholesale-design-system/styleguide.git
     - git config --global user.email circleci@circleci
     - git config --global user.name "${CIRCLE_PROJECT_USERNAME}"
 
 dependencies:
+  pre:
+    - sudo apt-get update; sudo apt-get install jq
   override:
     - npm install -g gulp-cli aurelia-cli
     - npm install
@@ -38,7 +41,20 @@ test:
     - gulp test
 
 deployment:
-  master:
+  release:
+    branch: [master, release]
+    commands:
+      - gulp prepare-release
+      - git add package.json doc/CHANGELOG.md dist
+      - git commit -m "Bumped version to $(jq -r .version package.json) [skip ci]"
+      - git tag -f -a $(jq -r .version package.json) -m "Automatic release via CircleCI"
+      - git push origin $CIRCLE_BRANCH
+      - gulp release --branch="${CIRCLE_BRANCH}"
+      - au build:
+          pwd: styleguide
+      - au publish --commit ${CIRCLE_SHA1} --repo "${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH}" --target "${TARGET}":
+          pwd: styleguide
+  styleguide:
     branch: /.*/
     commands:
       - au build:

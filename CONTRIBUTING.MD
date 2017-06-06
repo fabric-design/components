@@ -26,6 +26,8 @@ You'll get feedback about your pull request as soon as possible.
 
 As we are generating changelogs based on successfully merged pull-requests we have to enforce a specific layout for git commit messages. 
 
+The general layout of commit messages should be `<type>(<component(s)>): <message>`
+
 _patches:_
 
 ```sh
@@ -43,5 +45,5 @@ _other changes:_
 You decide, e.g., docs, chore, etc.
 
 ```sh
-git commit -a -m "docs: fixed up the docs a bit"
+git commit -a -m "docs(component): fixed up the docs a bit"
 ```

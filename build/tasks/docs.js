@@ -33,7 +33,7 @@ gulp.task('build-jsdoc-to-md', done => {
     // Filter file names to match tag name pattern
     .then(fileNames => fileNames.filter(fileName => {
       const name = fileName.match(REGEX_FILE_NAME)[0];
-      return name !== 'imports';
+      return name !== 'imports' && name !== 'index';
     }))
     // Generate markdown for each file
     .then(fileNames =>
@@ -49,7 +49,8 @@ gulp.task('build-jsdoc-to-md', done => {
     .then(groups => Object.keys(groups).forEach(folderName => {
       const group = groups[folderName];
       const fileName = `${paths.apiDoc}/${folderName}.md`;
-      const content = `# ${folderName}\n${group.map(doc => doc.markdown).join('\n')}`;
+      const normalize = doc => doc.markdown.replace(/<!--.*?-->\n*/g, '');
+      const content = `# ${folderName}\n${group.map(normalize).join('')}`;
       if (!fs.existsSync(paths.apiDoc)) {
         fs.mkdirSync(paths.apiDoc);
       }

@@ -4,8 +4,8 @@
 **Trigger**:
 The dropdown trigger is the element you can click to open the dropdown.
 It can be one of the following types: `anchor`, `button`, `select`, `icon` and the default is `type="anchor"`.
-The displayed text inside the trigger can be set via the `text` and `icon` attribute. 
-If you want to specify the icon you have to take a name from our <a href="#/elements/icons">icon list</a> 
+The displayed text inside the trigger can be set via the `text` and `icon` attribute.
+If you want to specify the icon you have to take a name from our <a href="#/elements/icons">icon list</a>
 like `text="Click me" icon="icon-filter"`. As following you can see an example of each type.
 <div style="display: flex;">
   <div style="flex: 25% 1 1">
@@ -41,12 +41,12 @@ An item can be either a simple string or a object containing the following keys:
  - **disabled**: boolean |adds the class .is-disabled to the item
  - **className**: string | classes which get's added to the item</li></ul>
 
-**Value**: 
+**Value**:
 You can pass an item as value to the dropdown and it will mark the specific item as selected for you.
 The value you can pass into the dropdown differs from the combination of tags you choose.
 When you specify the `multiple="1"` flag, the value can be a dropdown item or a list of dropdown items.
 In case you specify the `input-only="1"` flag the value must be a simple string!
-Are those two flags not specified the value can be a dropdown item represented as an object or just it's value as a string. 
+Are those two flags not specified the value can be a dropdown item represented as an object or just it's value as a string.
 
 ## Simple dropdown menu
 The simple dropdown menu only contains one level of menu items and provides the ability to select only one item at the same time.
@@ -54,20 +54,20 @@ All changes are propagated via a custom change event which contains the selected
 
 <ws-dropdown items.bind='["Item 1", "Item 2", "Item 3"]' text="Click me" change.delegate="log('dd1 changed', $event)"></ws-dropdown>
 ```html
-<ws-dropdown 
-  items='["Item 1", "Item 2", "Item 3"]' 
+<ws-dropdown
+  items='["Item 1", "Item 2", "Item 3"]'
   text="Click me">
 </ws-dropdown>
 ```
 
 ## Hierarchical dropdown menu
 Sometimes not everything fits into one menu and we have to group our items and create a hierarchical menu.
-This happens quite often on page headers or context menu's (right click). To create a hierarchical menu you 
+This happens quite often on page headers or context menu's (right click). To create a hierarchical menu you
 just have to add the children for the dropdown item as you want.
 
 <ws-dropdown items.bind='["Item 1", {"label": "Item 2", "children": ["Item 2.1", {"label": "Item 2.2", "children": ["Item 2.2.1", "Item 2.2.2", "Item 2.2.3", "Item 2.2.4"]}]}, "Item 3"]' text="Click me" change.delegate="log('dd1 changed', $event)"></ws-dropdown>
 ```html
-<ws-dropdown 
+<ws-dropdown
   items='["Item 1", {"label": "Item 2", "children": ["Item 2.1", {"label": "Item 2.2", "children": ["Item 2.2.1", "Item 2.2.2", "Item 2.2.3", "Item 2.2.4"]}]}, "Item 3"]'
   text="Click me">
 </ws-dropdown>
@@ -95,10 +95,10 @@ interpreted as false.
 <ws-dropdown items.bind='["Item 1", "Item 2", "Item 3"]' value="Item 2" multiple="1" text="Select a value" type="select" style="display: inline-block; width: 150px"></ws-dropdown>
 ```html
 <ws-dropdown
-  items='["Item 1", "Item 2", "Item 3"]' 
+  items='["Item 1", "Item 2", "Item 3"]'
   value="Item 2"
   text="Select a value"
-  multiple="1" 
+  multiple="1"
   type="select">
 </ws-dropdown>
 ```
@@ -113,12 +113,12 @@ the default filter with the attribute `filter="blue"` and the maximum amount of 
 <ws-dropdown items.bind='["Car (Blue)", "Car (Red)", "Car (Orange)", "Bus (Blue)", "Bus (Red)", "Bus (Orange)", "Yet (Blue)", "Yet (Red)", "Yet (Orange)"]' filterable="1" filter="blue" limit="7" text="Select a value" type="select" style="display: inline-block; width: 150px"></ws-dropdown>
 ```html
 <ws-dropdown
-  items.bind='["Car (Blue)", "Car (Red)", "Car (Orange)", "Bus (Blue)", "Bus (Red)", "Bus (Orange)", "Yet (Blue)", "Yet (Red)", "Yet (Orange)"]' 
-  filterable="1" 
-  filter="blue" 
+  items.bind='["Car (Blue)", "Car (Red)", "Car (Orange)", "Bus (Blue)", "Bus (Red)", "Bus (Orange)", "Yet (Blue)", "Yet (Red)", "Yet (Orange)"]'
+  filterable="1"
+  filter="blue"
   limit="7"
-  text="Select a value" 
-  type="select" 
+  text="Select a value"
+  type="select"
   style="display: inline-block; width: 150px">
 </ws-dropdown>
 ```
@@ -132,12 +132,12 @@ the `value` attribute also the `placeholder` attribute to set the placeholder fo
 
 <ws-dropdown type="button" text="Click me" placeholder="Insert a text" value="Default value" input-only="1"></ws-dropdown>
 ```html
-<ws-dropdown 
+<ws-dropdown
   type="button"
   text="Click me"
-  placeholder="Insert a text" 
-  value="Default value" 
+  placeholder="Insert a text"
+  value="Default value"
   input-only="1">
 </ws-dropdown>
 ```
-  
+

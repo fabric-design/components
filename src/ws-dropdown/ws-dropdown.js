@@ -229,7 +229,7 @@ export class WSDropdown extends Component {
       itemsToWrap = items ? [items] : [];
     }
     return itemsToWrap.map(item => {
-      const enriched = typeof item === 'object' ? item : {label: item};
+      const enriched = typeof item === 'object' ? item : {label: item, value: item};
       if (enriched.children) {
         enriched.children = this.enrichItems(enriched.children);
       }

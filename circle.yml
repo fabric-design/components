@@ -44,8 +44,8 @@ deployment:
   release:
     branch: [master, release]
     commands:
-      - gulp prepare-release
-      - git add package.json doc/CHANGELOG.md dist
+      - gulp generate-docs bump-version changelog
+      - git add package.json doc dist
       - git commit -m "Bumped version to $(jq -r .version package.json) [skip ci]"
       - git tag -f -a $(jq -r .version package.json) -m "Automatic release via CircleCI"
       - git push origin $CIRCLE_BRANCH

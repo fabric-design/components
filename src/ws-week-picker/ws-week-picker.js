@@ -112,7 +112,7 @@ export class WSWeekPicker extends Component {
           readOnly
         />
         <span
-          className={`icon icon-${this.state.show ? 'cross' : 'calendar'}`}
+          className={`icon icon16 ${this.state.show ? '' : 'icon-calendar'}`}
           onClick={() => this.toggleCalendar()}
         />
         {this.state.show &&

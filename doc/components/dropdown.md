@@ -26,6 +26,11 @@ like `text="Click me" icon="icon-filter"`. As following you can see an example o
   </div>
 </div>
 
+**Disabled**
+As any common html element the dropdown can be disabled by adding the `disabled="1"` flag to it.
+The style of the trigger will change and the dropdown con not be opened any more.
+<ws-dropdown type="button" text="Click me" items.bind='["Item 1", "Item 2"]' disabled="1"></ws-dropdown>
+
 **Items**:
 All dropdown elements requires the items attribute to be specified with an list of dropdown items.
 An item can be either a simple string or a object containing the following keys:

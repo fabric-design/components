@@ -36,8 +36,11 @@ var Tile = exports.Tile = function (_Component) {
       var _this2 = this;
 
       var _props = this.props,
+          identifier = _props.identifier,
           config = _props.config,
-          size = _props.size;
+          size = _props.size,
+          groupName = _props.groupName,
+          className = _props.className;
 
       var style = {
         backgroundColor: config,
@@ -46,11 +49,13 @@ var Tile = exports.Tile = function (_Component) {
       };
 
       return _react2.default.createElement('div', {
-        className: 'tile ' + this.props.groupName,
+        className: 'tile ' + groupName + ' ' + className,
         style: style,
         onClick: function onClick() {
-          return _this2.props.onClick(_this2.props.groupName, _this2.props.identifier);
-        }
+          return _this2.props.onClick(groupName, identifier);
+        },
+        onMouseEnter: this.props.onMouseEnter,
+        onMouseLeave: this.props.onMouseLeave
       });
     }
   }]);
@@ -66,7 +71,9 @@ Object.defineProperty(Tile, 'propTypes', {
     config: _imports.PropTypes.string,
     groupName: _imports.PropTypes.string,
     size: _imports.PropTypes.number,
-    onClick: _imports.PropTypes.func
+    onClick: _imports.PropTypes.func,
+    onMouseEnter: _imports.PropTypes.func.isRequired,
+    onMouseLeave: _imports.PropTypes.func.isRequired
   }
 });
 Object.defineProperty(Tile, 'defaultProps', {

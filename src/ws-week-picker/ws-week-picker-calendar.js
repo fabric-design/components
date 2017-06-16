@@ -103,7 +103,7 @@ export class WSWeekPickerCalendar extends Component {
       <tr key={weekIndex}>
         {allMonths.map((month, monthIndex) => {
           const weekInMonth = weeksPerMonth[monthIndex][weekIndex];
-          if (weekInMonth === null) {
+          if (weekInMonth === null || weekInMonth === undefined) {
             return <td key={`${monthIndex}_${weekIndex}`} />;
           }
           const {week, year} = weekInMonth;
@@ -238,7 +238,7 @@ function getWeeks(month, year) {
   for (let i = startWeek; i <= endWeek; i++) {
     weeks.push({
       week: i,
-      actualYear
+      year: actualYear
     });
   }
   return weeks;

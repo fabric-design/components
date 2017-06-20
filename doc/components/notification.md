@@ -11,7 +11,7 @@ To create a notification you have to publish a custom event to the window contai
 The type of the event has to be `ws-notification-open` and the details has to be an object containing:
 - **title**: string, required
 - **description**: string, optional
-- **type**: info|error|warning|success, default: info
+- **type**: string, oneOf: info|error|warning|success, default: info
 - **lifetime**: number, milliseconds until disappearing, default: 2147483647
 
 <button class="mod-small" id="notification1" click.delegate="notification({title: 'Do you want to stay logged in?', type: 'info', lifetime: 5000})">Show notification</button>

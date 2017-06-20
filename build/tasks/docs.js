@@ -24,7 +24,7 @@ function createDocForFile(filename) {
 
 // deletes all files in the output path
 gulp.task('clean-docs', () =>
-  gulp.src([`${paths.docsOutput}`])
+  gulp.src([`${paths.apiDoc}`])
     .pipe(vinylPaths(del))
 );
 

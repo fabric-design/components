@@ -3,8 +3,8 @@ import Flatpickr from './flatpickr';
 
 /**
  * Renders a date picker component which is based on flatpickr.
- * Possible properties to set are the value as formatted string or Date object.
- * To specify a date format pls have a look at the flatpickr formatting rules.
+ * To specify a date format call the setFormat function with the corresponding format.
+ * Pls have a look at the flatpickr formatting rules.
  * You can set additional options to the flatpickr by passing the options property.
  * If you only want to display an icon instead of a input set prop iconOnly.
  *
@@ -14,7 +14,6 @@ export class WSDatePicker extends Component {
 
   static defaultProps = {
     value: null,
-    format: 'd.m.Y',
     placeholder: '',
     iconOnly: false,
     options: {},
@@ -23,12 +22,22 @@ export class WSDatePicker extends Component {
 
   static propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    format: PropTypes.string,
     placeholder: PropTypes.string,
     iconOnly: PropTypes.bool,
     options: PropTypes.object,
     onChange: PropTypes.func
   };
+
+  static format = 'd.m.Y';
+
+  /**
+   * Set the format for all date picker instances
+   * @param {string} format Format following flatpickr options
+   * @returns {void}
+   */
+  static setFormat(format) {
+    this.format = format;
+  }
 
   /**
    * @param {Object} props React properties
@@ -52,7 +61,7 @@ export class WSDatePicker extends Component {
     this.flatpickr = new Flatpickr(this.input, {
       weekNumbers: true,
       defaultDate: this.state.value,
-      dateFormat: this.props.format,
+      dateFormat: this.constructor.format,
       ...this.props.options,
       onChange: this.onChange.bind(this)
     });

@@ -1,7 +1,6 @@
 /* eslint-disable import/extensions, no-proto */
 import 'babel-polyfill';
 import {React, render} from 'imports';
-import {TestComponent} from '../test-component';
 import {WSWeekPicker} from '../../src/index';
 import {wait} from '../async';
 

@@ -88,7 +88,7 @@ System.register(['../imports'], function (_export, _context) {
     for (var i = startWeek; i <= endWeek; i++) {
       weeks.push({
         week: i,
-        actualYear: actualYear
+        year: actualYear
       });
     }
     return weeks;
@@ -180,7 +180,7 @@ System.register(['../imports'], function (_export, _context) {
                 { key: weekIndex },
                 allMonths.map(function (month, monthIndex) {
                   var weekInMonth = weeksPerMonth[monthIndex][weekIndex];
-                  if (weekInMonth === null) {
+                  if (weekInMonth === null || weekInMonth === undefined) {
                     return React.createElement('td', { key: monthIndex + '_' + weekIndex });
                   }
                   var week = weekInMonth.week,
@@ -229,7 +229,7 @@ System.register(['../imports'], function (_export, _context) {
                   ),
                   React.createElement(
                     'span',
-                    null,
+                    { className: 'current_year' },
                     this.state.showingYear
                   ),
                   React.createElement(

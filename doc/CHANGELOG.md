@@ -1,3 +1,8 @@
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/wholesale-design-system/components/compare/1.0.2...v1.0.3) (2017-07-04)
+
+
+
 <a name="1.0.2"></a>
 ## [1.0.2](https://github.com/wholesale-design-system/components/compare/0.3.7...v1.0.2) (2017-07-04)
 

@@ -115,6 +115,13 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
       _export('WSDatePicker', WSDatePicker = function (_Component) {
         _inherits(WSDatePicker, _Component);
 
+        _createClass(WSDatePicker, null, [{
+          key: 'setFormat',
+          value: function setFormat(format) {
+            this.format = format;
+          }
+        }]);
+
         function WSDatePicker(props) {
           _classCallCheck(this, WSDatePicker);
 
@@ -135,7 +142,7 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
             this.flatpickr = new Flatpickr(this.input, _extends({
               weekNumbers: true,
               defaultDate: this.state.value,
-              dateFormat: this.props.format
+              dateFormat: this.constructor.format
             }, this.props.options, {
               onChange: this.onChange.bind(this)
             }));
@@ -222,7 +229,6 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
         writable: true,
         value: {
           value: null,
-          format: 'd.m.Y',
           placeholder: '',
           iconOnly: false,
           options: {},
@@ -234,12 +240,16 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
         writable: true,
         value: {
           value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-          format: PropTypes.string,
           placeholder: PropTypes.string,
           iconOnly: PropTypes.bool,
           options: PropTypes.object,
           onChange: PropTypes.func
         }
+      });
+      Object.defineProperty(WSDatePicker, 'format', {
+        enumerable: true,
+        writable: true,
+        value: 'd.m.Y'
       });
     }
   };

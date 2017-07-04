@@ -78,7 +78,7 @@ var WSWeekPickerCalendar = exports.WSWeekPickerCalendar = function (_Component) 
           { key: weekIndex },
           allMonths.map(function (month, monthIndex) {
             var weekInMonth = weeksPerMonth[monthIndex][weekIndex];
-            if (weekInMonth === null) {
+            if (weekInMonth === null || weekInMonth === undefined) {
               return _imports.React.createElement('td', { key: monthIndex + '_' + weekIndex });
             }
             var week = weekInMonth.week,
@@ -241,7 +241,7 @@ function getWeeks(month, year) {
   for (var i = startWeek; i <= endWeek; i++) {
     weeks.push({
       week: i,
-      actualYear: actualYear
+      year: actualYear
     });
   }
   return weeks;

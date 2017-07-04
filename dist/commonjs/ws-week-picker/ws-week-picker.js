@@ -98,7 +98,7 @@ var WSWeekPicker = exports.WSWeekPicker = function (_Component) {
           readOnly: true
         }),
         _imports.React.createElement('span', {
-          className: 'icon icon-' + (this.state.show ? 'cross' : 'calendar'),
+          className: 'icon icon16 ' + (this.state.show ? '' : 'icon-calendar'),
           onClick: function onClick() {
             return _this3.toggleCalendar();
           }

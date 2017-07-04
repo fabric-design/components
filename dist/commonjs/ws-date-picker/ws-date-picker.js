@@ -28,6 +28,13 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var WSDatePicker = exports.WSDatePicker = function (_Component) {
   _inherits(WSDatePicker, _Component);
 
+  _createClass(WSDatePicker, null, [{
+    key: 'setFormat',
+    value: function setFormat(format) {
+      this.format = format;
+    }
+  }]);
+
   function WSDatePicker(props) {
     _classCallCheck(this, WSDatePicker);
 
@@ -48,7 +55,7 @@ var WSDatePicker = exports.WSDatePicker = function (_Component) {
       this.flatpickr = new _flatpickr2.default(this.input, _extends({
         weekNumbers: true,
         defaultDate: this.state.value,
-        dateFormat: this.props.format
+        dateFormat: this.constructor.format
       }, this.props.options, {
         onChange: this.onChange.bind(this)
       }));
@@ -133,7 +140,6 @@ Object.defineProperty(WSDatePicker, 'defaultProps', {
   writable: true,
   value: {
     value: null,
-    format: 'd.m.Y',
     placeholder: '',
     iconOnly: false,
     options: {},
@@ -145,10 +151,14 @@ Object.defineProperty(WSDatePicker, 'propTypes', {
   writable: true,
   value: {
     value: _imports.PropTypes.oneOfType([_imports.PropTypes.string, _imports.PropTypes.number]),
-    format: _imports.PropTypes.string,
     placeholder: _imports.PropTypes.string,
     iconOnly: _imports.PropTypes.bool,
     options: _imports.PropTypes.object,
     onChange: _imports.PropTypes.func
   }
+});
+Object.defineProperty(WSDatePicker, 'format', {
+  enumerable: true,
+  writable: true,
+  value: 'd.m.Y'
 });

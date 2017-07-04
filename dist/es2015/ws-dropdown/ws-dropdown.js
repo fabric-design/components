@@ -141,7 +141,7 @@ export var WSDropdown = function (_Component) {
         itemsToWrap = items ? [items] : [];
       }
       return itemsToWrap.map(function (item) {
-        var enriched = (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' ? item : { label: item };
+        var enriched = (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' ? item : { label: item, value: item };
         if (enriched.children) {
           enriched.children = _this3.enrichItems(enriched.children);
         }

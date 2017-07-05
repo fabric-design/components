@@ -166,7 +166,7 @@ define(['exports', '../imports'], function (exports, _imports) {
               ),
               _imports.React.createElement(
                 'span',
-                null,
+                { className: 'current_year' },
                 this.state.showingYear
               ),
               _imports.React.createElement(

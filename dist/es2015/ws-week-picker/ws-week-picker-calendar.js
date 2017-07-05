@@ -120,7 +120,7 @@ export var WSWeekPickerCalendar = function (_Component) {
             ),
             React.createElement(
               'span',
-              null,
+              { className: 'current_year' },
               this.state.showingYear
             ),
             React.createElement(

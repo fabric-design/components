@@ -229,7 +229,7 @@ System.register(['../imports'], function (_export, _context) {
                   ),
                   React.createElement(
                     'span',
-                    null,
+                    { className: 'current_year' },
                     this.state.showingYear
                   ),
                   React.createElement(

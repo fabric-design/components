@@ -17,6 +17,7 @@ export var WSWeekPicker = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (WSWeekPicker.__proto__ || Object.getPrototypeOf(WSWeekPicker)).call(this, props));
 
+    _this.element = null;
     _this.state = {
       show: false,
       selectedYear: props.selectedYear,
@@ -31,7 +32,7 @@ export var WSWeekPicker = function (_Component) {
       var _this2 = this;
 
       this.outsideClickListener = document.body.addEventListener('click', function (e) {
-        if (_this2.state.show && !isDescendant(_this2.elem, e.target)) {
+        if (_this2.state.show && !isDescendant(_this2.element, e.target)) {
           _this2.setState({ show: false });
         }
       });
@@ -63,6 +64,8 @@ export var WSWeekPicker = function (_Component) {
         });
         if (this.props.onChange) {
           this.props.onChange({ week: week, year: year });
+        } else {
+          this.element.dispatchEvent(new CustomEvent('change', { week: week, year: year }, { bubbles: true }));
         }
       }
     }
@@ -78,8 +81,8 @@ export var WSWeekPicker = function (_Component) {
 
       return React.createElement(
         'div',
-        { className: 'ws-week-picker', ref: function ref(elem) {
-            _this3.elem = elem;
+        { className: 'ws-week-picker', ref: function ref(element) {
+            _this3.element = element;
           } },
         React.createElement('input', {
           value: this.state.selectedWeek !== null ? 'Week ' + this.state.selectedWeek + ', ' + this.state.selectedYear : '',

@@ -207,7 +207,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
         }, {
           key: 'open',
           value: function open() {
-            if (this.opened) {
+            if (this.opened || this.props.disabled) {
               return;
             }
             this.opened = true;
@@ -264,13 +264,17 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
             if (this.props.icon) {
               icon = React.createElement('span', { className: 'icon ' + this.props.icon });
             }
+            var disabledStyle = this.props.disabled ? ' is-disabled' : '';
             switch (this.props.type) {
               case 'anchor':
                 return React.createElement(
                   'a',
-                  { className: 'dropdown-trigger', onClick: function onClick() {
+                  {
+                    className: 'dropdown-trigger ' + disabledStyle,
+                    onClick: function onClick() {
                       return _this5.open();
-                    } },
+                    }
+                  },
                   icon,
                   ' ',
                   this.state.text
@@ -278,9 +282,12 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
               case 'button':
                 return React.createElement(
                   'button',
-                  { className: 'dropdown-trigger', onClick: function onClick() {
+                  {
+                    className: 'dropdown-trigger ' + disabledStyle,
+                    onClick: function onClick() {
                       return _this5.open();
-                    } },
+                    }
+                  },
                   icon,
                   ' ',
                   this.state.text
@@ -288,9 +295,12 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
               case 'select':
                 return React.createElement(
                   'div',
-                  { className: 'dropdown-trigger select-box', onClick: function onClick() {
+                  {
+                    className: 'dropdown-trigger select-box ' + disabledStyle,
+                    onClick: function onClick() {
                       return _this5.open();
-                    } },
+                    }
+                  },
                   icon,
                   ' ',
                   this.state.text
@@ -299,9 +309,12 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
               default:
                 return React.createElement(
                   'a',
-                  { className: 'dropdown-trigger', onClick: function onClick() {
+                  {
+                    className: 'dropdown-trigger ' + disabledStyle,
+                    onClick: function onClick() {
                       return _this5.open();
-                    } },
+                    }
+                  },
                   icon
                 );
             }
@@ -385,7 +398,8 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
           orientation: 'left',
           placeholder: '',
           value: null,
-          onChange: function onChange() {}
+          onChange: function onChange() {},
+          disabled: false
         }
       });
       Object.defineProperty(WSDropdown, 'propTypes', {
@@ -404,7 +418,8 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
           orientation: PropTypes.oneOf(['left', 'right']),
           placeholder: PropTypes.string,
           value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
-          onChange: PropTypes.func
+          onChange: PropTypes.func,
+          disabled: PropTypes.bool
         }
       });
       Object.defineProperty(WSDropdown, 'childContextTypes', {

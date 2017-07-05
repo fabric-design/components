@@ -160,7 +160,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
   }, {
     key: 'open',
     value: function open() {
-      if (this.opened) {
+      if (this.opened || this.props.disabled) {
         return;
       }
       this.opened = true;
@@ -217,13 +217,17 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
       if (this.props.icon) {
         icon = _imports.React.createElement('span', { className: 'icon ' + this.props.icon });
       }
+      var disabledStyle = this.props.disabled ? ' is-disabled' : '';
       switch (this.props.type) {
         case 'anchor':
           return _imports.React.createElement(
             'a',
-            { className: 'dropdown-trigger', onClick: function onClick() {
+            {
+              className: 'dropdown-trigger ' + disabledStyle,
+              onClick: function onClick() {
                 return _this5.open();
-              } },
+              }
+            },
             icon,
             ' ',
             this.state.text
@@ -231,9 +235,12 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
         case 'button':
           return _imports.React.createElement(
             'button',
-            { className: 'dropdown-trigger', onClick: function onClick() {
+            {
+              className: 'dropdown-trigger ' + disabledStyle,
+              onClick: function onClick() {
                 return _this5.open();
-              } },
+              }
+            },
             icon,
             ' ',
             this.state.text
@@ -241,9 +248,12 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
         case 'select':
           return _imports.React.createElement(
             'div',
-            { className: 'dropdown-trigger select-box', onClick: function onClick() {
+            {
+              className: 'dropdown-trigger select-box ' + disabledStyle,
+              onClick: function onClick() {
                 return _this5.open();
-              } },
+              }
+            },
             icon,
             ' ',
             this.state.text
@@ -252,9 +262,12 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
         default:
           return _imports.React.createElement(
             'a',
-            { className: 'dropdown-trigger', onClick: function onClick() {
+            {
+              className: 'dropdown-trigger ' + disabledStyle,
+              onClick: function onClick() {
                 return _this5.open();
-              } },
+              }
+            },
             icon
           );
       }
@@ -336,7 +349,8 @@ Object.defineProperty(WSDropdown, 'defaultProps', {
     orientation: 'left',
     placeholder: '',
     value: null,
-    onChange: function onChange() {}
+    onChange: function onChange() {},
+    disabled: false
   }
 });
 Object.defineProperty(WSDropdown, 'propTypes', {
@@ -355,7 +369,8 @@ Object.defineProperty(WSDropdown, 'propTypes', {
     orientation: _imports.PropTypes.oneOf(['left', 'right']),
     placeholder: _imports.PropTypes.string,
     value: _imports.PropTypes.oneOfType([_imports.PropTypes.string, _imports.PropTypes.object, _imports.PropTypes.array]),
-    onChange: _imports.PropTypes.func
+    onChange: _imports.PropTypes.func,
+    disabled: _imports.PropTypes.bool
   }
 });
 Object.defineProperty(WSDropdown, 'childContextTypes', {

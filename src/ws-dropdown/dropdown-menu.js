@@ -130,7 +130,7 @@ export class DropdownMenu extends Component {
       }
       // When we use a filter or multiple items are selectable we show selected items separately
       if (this.props.filterable || this.context.multiple) {
-        return !item.stored && !item.selected;
+        return !item.stored;
       }
       return true;
     });

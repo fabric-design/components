@@ -123,7 +123,7 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
         }
 
         if (_this2.props.filterable || _this2.context.multiple) {
-          return !item.stored && !item.selected;
+          return !item.stored;
         }
         return true;
       });

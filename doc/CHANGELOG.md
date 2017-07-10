@@ -1,3 +1,13 @@
+<a name="1.0.5"></a>
+## [1.0.5](https://github.com/wholesale-design-system/components/compare/1.0.4...v1.0.5) (2017-07-10)
+
+
+### Bug Fixes
+
+* **dropdown:** Show correct label for preselected value ([#94](https://github.com/wholesale-design-system/components/issues/94)) ([ed83683](https://github.com/wholesale-design-system/components/commit/ed83683))
+
+
+
 <a name="1.0.4"></a>
 ## [1.0.4](https://github.com/wholesale-design-system/components/compare/1.0.3...v1.0.4) (2017-07-05)
 

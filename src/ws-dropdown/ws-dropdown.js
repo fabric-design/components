@@ -140,11 +140,11 @@ export class WSDropdown extends Component {
    * @returns {String}
    */
   getTextFromValue(value) {
-    let text = this.state.text;
+    let text = this.state ? this.state.text : '';
     // Check if we have to update the text value
     if (this.props.type === 'select') {
       if (Array.isArray(value)) {
-        text = value.map(item => item.label).join(', ');
+        text = value.map(item => item.label || item).join(', ');
       } else {
         // Value can be object from dropdown item or simple string from input
         text = value.label || value;
@@ -181,8 +181,11 @@ export class WSDropdown extends Component {
    * @returns {Object}
    */
   createState(props) {
+    const isEmptyValue =
+      !props.value || Array.isArray(props.value) && props.value.length === 0;
+
     const state = {
-      text: props.text || this.getTextFromValue(props.value),
+      text: !isEmptyValue ? this.getTextFromValue(props.value) : props.text,
       value: this.enrichItems(props.value),
       items: this.enrichItems(props.items)
     };

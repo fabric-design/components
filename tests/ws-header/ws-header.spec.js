@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {React} from 'imports';
 import {TestComponent} from '../test-component';
 import {WSHeader} from '../../src/ws-header/ws-header';

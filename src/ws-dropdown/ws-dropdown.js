@@ -389,11 +389,12 @@ export class WSDropdown extends Component {
    * @returns {Object}
    */
   render() {
+    const isWide = this.props.type === 'select' ? 'mod-wide' : '';
     return (
       <div className="dropdown" ref={element => { if (element) { this.element = element; } }}>
         {this.renderTrigger()}
         <div
-          className={`dropdown-container ${this.props.orientation}`}
+          className={`dropdown-container ${this.props.orientation} ${isWide}`}
           ref={element => { if (element) { this.dropdownContainer = element; } }}
         >
           {this.renderContent()}

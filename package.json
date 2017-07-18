@@ -99,7 +99,7 @@
     "webpack": "2.3.3",
     "webpack-dev-server": "2.4.2",
     "webpack-node-externals": "1.5.4",
-    "wholesale-styleguide-scss": "git+https://github.com/wholesale-design-system/scss.git",
+    "wholesale-styleguide-scss": "git+https://github.com/wholesale-design-system/scss.git#cards-and-labels",
     "yargs": "7.0.2"
   },
   "peerDependencies": {

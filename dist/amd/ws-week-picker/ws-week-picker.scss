@@ -82,14 +82,12 @@ $padding: $space-m;
     display: inline-block;
     border: none;
     font-size: $font-size-small;
-    font-family: 'acumin-pro-semi-condensed';
-
     caption {
-      padding: $padding;
+      padding: $space-xs;
       display: flex;
       justify-content: space-between;
       align-content: center;
-      color: $heron;
+      color: $jumbo;
       font-weight: 300;
       font-size: $base-font-size;
 
@@ -115,7 +113,6 @@ $padding: $space-m;
       th {
         padding: 0;
         line-height: $space-xl;
-        font-weight: bold;
       }
     }
     tbody {
@@ -123,10 +120,11 @@ $padding: $space-m;
 
       td {
         padding: $space-xxs / 2;
+        font-size: $font-size-small;
       }
       tr:first-child {
         td {
-          padding-top: 0;
+          padding-top: $space-xxs;
         }
       }
     }
@@ -137,12 +135,13 @@ $padding: $space-m;
       border: none !important;
 
       &.off, &.off .week {
-        color: $french-gray;
+        color: $bombay;
       }
       .week {
         width: $space-xl;
-        line-height: $space-xl;
-        color: $base-font-color;
+        height: $space-xl;
+        line-height: $space-xl - rem(2px); // Fix for acumin-pro
+        color: $asphalt;
         display: block;
         border-radius: 50%;
         cursor: pointer;
@@ -150,7 +149,6 @@ $padding: $space-m;
       &.active .week {
         background-color: $heaven;
         color: $white;
-        font-weight: bold;
       }
       &:hover:not(.active) {
         .week {
@@ -167,7 +165,7 @@ $padding: $space-m;
     }
     th {
       line-height: rem(39px);
-      color: $jumbo;
+      color: $santas-gray;
       font-weight: normal;
     }
   }

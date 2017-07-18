@@ -224,7 +224,7 @@ System.register(['../imports'], function (_export, _context) {
                     { className: 'prev', onClick: function onClick() {
                         return _this3.prevYear();
                       } },
-                    React.createElement('span', { className: 'icon icon-left' }),
+                    React.createElement('span', { className: 'icon icon32 icon-left' }),
                     this.state.showingYear - 1
                   ),
                   React.createElement(
@@ -238,7 +238,7 @@ System.register(['../imports'], function (_export, _context) {
                         return _this3.nextYear();
                       } },
                     this.state.showingYear + 1,
-                    React.createElement('span', { className: 'icon icon-right' })
+                    React.createElement('span', { className: 'icon icon32 icon-right' })
                   )
                 ),
                 React.createElement(

@@ -1,3 +1,15 @@
+<a name="1.0.6"></a>
+## [1.0.6](https://github.com/wholesale-design-system/components/compare/1.0.5...v1.0.6) (2017-07-18)
+
+
+### Bug Fixes
+
+* **date-picker:** Fixed styling according to the design system ([535ada0](https://github.com/wholesale-design-system/components/commit/535ada0))
+* **dropdown:** Made dropdown as wide as select is ([#97](https://github.com/wholesale-design-system/components/issues/97)) ([a25c878](https://github.com/wholesale-design-system/components/commit/a25c878))
+* **week-picker:** Fixed week picker according to the design system ([8cd687e](https://github.com/wholesale-design-system/components/commit/8cd687e))
+
+
+
 <a name="1.0.5"></a>
 ## [1.0.5](https://github.com/wholesale-design-system/components/compare/1.0.4...v1.0.5) (2017-07-10)
 

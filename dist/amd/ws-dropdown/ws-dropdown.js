@@ -346,6 +346,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
       value: function render() {
         var _this7 = this;
 
+        var isWide = this.props.type === 'select' ? 'mod-wide' : '';
         return _imports.React.createElement(
           'div',
           { className: 'dropdown', ref: function ref(element) {
@@ -357,7 +358,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
           _imports.React.createElement(
             'div',
             {
-              className: 'dropdown-container ' + this.props.orientation,
+              className: 'dropdown-container ' + this.props.orientation + ' ' + isWide,
               ref: function ref(element) {
                 if (element) {
                   _this7.dropdownContainer = element;

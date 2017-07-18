@@ -122,7 +122,7 @@ var WSWeekPickerCalendar = exports.WSWeekPickerCalendar = function (_Component) 
               { className: 'prev', onClick: function onClick() {
                   return _this3.prevYear();
                 } },
-              _imports.React.createElement('span', { className: 'icon icon-left' }),
+              _imports.React.createElement('span', { className: 'icon icon32 icon-left' }),
               this.state.showingYear - 1
             ),
             _imports.React.createElement(
@@ -136,7 +136,7 @@ var WSWeekPickerCalendar = exports.WSWeekPickerCalendar = function (_Component) 
                   return _this3.nextYear();
                 } },
               this.state.showingYear + 1,
-              _imports.React.createElement('span', { className: 'icon icon-right' })
+              _imports.React.createElement('span', { className: 'icon icon32 icon-right' })
             )
           ),
           _imports.React.createElement(

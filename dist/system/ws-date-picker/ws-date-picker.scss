@@ -19,7 +19,7 @@
   line-height: $base-font-size * 2;
   border: 1px solid $earl-gray;
   border-radius: $base-border-radius;
-  background: $athens-gray;
+  background: $white;
   box-shadow: map-get($elevation-shadows, raised);
   &.open,
   &.inline {
@@ -138,10 +138,11 @@
       }
     }
     .flatpickr-current-month {
-      font-size: rem(16px);
+      font-size: $base-font-size;
       color: inherit;
       line-height: inherit;
       font-weight: 300;
+      margin-top: -$space-xxs;
       display: inline-block;
       text-align: center;
       span.cur-month {
@@ -261,7 +262,7 @@
     color: $asphalt;
     cursor: pointer;
     font-weight: 400;
-    font-size: rem(14px);
+    font-size: $font-size-small;
     width: rem(32px);
     height: rem(32px);
     line-height: rem(28px); // Numbers on acumin-pro font are lower
@@ -348,12 +349,13 @@
   }
   span.flatpickr-weekday {
     cursor: default;
-    color: $bombay;
-    font-size: rem(14px);
-    height: rem(32px);
-    line-height: rem(32px);
-    width: rem(32px);
+    color: $santas-gray;
+    font-size: $font-size-small;
+    height: $space-xl;
+    line-height: $space-xl;
+    width: $space-xl;
     padding: rem(0 2px);
+    margin-bottom: $space-xxs / 2;
     background: $silver;
     text-align: center;
     display: block;

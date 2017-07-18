@@ -307,6 +307,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
     value: function render() {
       var _this7 = this;
 
+      var isWide = this.props.type === 'select' ? 'mod-wide' : '';
       return _imports.React.createElement(
         'div',
         { className: 'dropdown', ref: function ref(element) {
@@ -318,7 +319,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
         _imports.React.createElement(
           'div',
           {
-            className: 'dropdown-container ' + this.props.orientation,
+            className: 'dropdown-container ' + this.props.orientation + ' ' + isWide,
             ref: function ref(element) {
               if (element) {
                 _this7.dropdownContainer = element;

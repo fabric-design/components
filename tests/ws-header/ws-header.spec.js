@@ -50,7 +50,7 @@ describe('A WSHeader', () => {
   });
 
   it('initializes correctly', () => {
-    WSHeader.storage.set('locale', 'test');
+    WSHeader.storage.set('locale', 'de');
     const header = new WSHeader({
       loginUrl: '1111',
       refreshUrl: 222,
@@ -63,6 +63,14 @@ describe('A WSHeader', () => {
     expect(header.authorization.refreshUrl).toBe(222);
     expect(header.authorization.businessPartnerId).toBe('333');
     expect(header.authorization.clientId).toBe(444);
-    expect(header.state.locale).toBe('test');
+    expect(header.state.locale).toBe('de');
+  });
+
+  it('initializes with fallback language', () => {
+    WSHeader.storage.set('locale', 'test');
+    const header = new WSHeader({
+      loginUrl: '1111'
+    });
+    expect(header.state.locale).toBe('en');
   });
 });

@@ -10,7 +10,7 @@ $header-border-color: schema-color(4) !default;
   line-height: $header-height;
   position: relative;
   z-index: 3;
-  box-shadow: $paper-shadow-1;
+  box-shadow: $paper-shadow-2;
 }
 
 @mixin level-2() {
@@ -25,7 +25,7 @@ $header-border-color: schema-color(4) !default;
   transform: translate3d(0, -100%, 0);
   transition: transform .15s linear;
   overflow: hidden;
-  box-shadow: $paper-shadow-2;
+  box-shadow: $paper-shadow-3;
   &.is-active {
     transform: translate3d(0, 0, 0);
   }

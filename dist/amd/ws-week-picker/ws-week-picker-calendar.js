@@ -117,7 +117,7 @@ define(['exports', '../imports'], function (exports, _imports) {
             { key: weekIndex },
             allMonths.map(function (month, monthIndex) {
               var weekInMonth = weeksPerMonth[monthIndex][weekIndex];
-              if (weekInMonth === null) {
+              if (weekInMonth === null || weekInMonth === undefined) {
                 return _imports.React.createElement('td', { key: monthIndex + '_' + weekIndex });
               }
               var week = weekInMonth.week,
@@ -161,12 +161,12 @@ define(['exports', '../imports'], function (exports, _imports) {
                 { className: 'prev', onClick: function onClick() {
                     return _this3.prevYear();
                   } },
-                _imports.React.createElement('span', { className: 'icon icon-left' }),
+                _imports.React.createElement('span', { className: 'icon icon32 icon-left' }),
                 this.state.showingYear - 1
               ),
               _imports.React.createElement(
                 'span',
-                null,
+                { className: 'current_year' },
                 this.state.showingYear
               ),
               _imports.React.createElement(
@@ -175,7 +175,7 @@ define(['exports', '../imports'], function (exports, _imports) {
                     return _this3.nextYear();
                   } },
                 this.state.showingYear + 1,
-                _imports.React.createElement('span', { className: 'icon icon-right' })
+                _imports.React.createElement('span', { className: 'icon icon32 icon-right' })
               )
             ),
             _imports.React.createElement(
@@ -280,7 +280,7 @@ define(['exports', '../imports'], function (exports, _imports) {
     for (var i = startWeek; i <= endWeek; i++) {
       weeks.push({
         week: i,
-        actualYear: actualYear
+        year: actualYear
       });
     }
     return weeks;

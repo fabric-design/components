@@ -1,4 +1,5 @@
 $notification-width: rem(368px) !default;
+$notification-line-height: 2rem !default;
 $notification-font-color: $base-font-color !default;
 $notification-font-size: $base-font-size !default;
 $notification-background-color: $silver !default;
@@ -42,12 +43,12 @@ $notification-error-color: $flamingo !default;
     }
     .icons {
         float: left;
-        width: $heading-line-height;
-        height: $heading-line-height;
+        width: $notification-line-height;
+        height: $notification-line-height;
         margin: $space-inline-m;
         .icon {
             font-size: rem(48px);
-            line-height: $heading-line-height;
+            line-height: $notification-line-height;
             display: none;
             &:before {
                 margin-top: 0;

@@ -71,7 +71,7 @@ export var WSWeekPickerCalendar = function (_Component) {
           { key: weekIndex },
           allMonths.map(function (month, monthIndex) {
             var weekInMonth = weeksPerMonth[monthIndex][weekIndex];
-            if (weekInMonth === null) {
+            if (weekInMonth === null || weekInMonth === undefined) {
               return React.createElement('td', { key: monthIndex + '_' + weekIndex });
             }
             var week = weekInMonth.week,
@@ -115,12 +115,12 @@ export var WSWeekPickerCalendar = function (_Component) {
               { className: 'prev', onClick: function onClick() {
                   return _this3.prevYear();
                 } },
-              React.createElement('span', { className: 'icon icon-left' }),
+              React.createElement('span', { className: 'icon icon32 icon-left' }),
               this.state.showingYear - 1
             ),
             React.createElement(
               'span',
-              null,
+              { className: 'current_year' },
               this.state.showingYear
             ),
             React.createElement(
@@ -129,7 +129,7 @@ export var WSWeekPickerCalendar = function (_Component) {
                   return _this3.nextYear();
                 } },
               this.state.showingYear + 1,
-              React.createElement('span', { className: 'icon icon-right' })
+              React.createElement('span', { className: 'icon icon32 icon-right' })
             )
           ),
           React.createElement(
@@ -234,7 +234,7 @@ function getWeeks(month, year) {
   for (var i = startWeek; i <= endWeek; i++) {
     weeks.push({
       week: i,
-      actualYear: actualYear
+      year: actualYear
     });
   }
   return weeks;

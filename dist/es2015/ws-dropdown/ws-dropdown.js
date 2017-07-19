@@ -77,12 +77,12 @@ export var WSDropdown = function (_Component) {
   }, {
     key: 'getTextFromValue',
     value: function getTextFromValue(value) {
-      var text = this.state.text;
+      var text = this.state ? this.state.text : '';
 
       if (this.props.type === 'select') {
         if (Array.isArray(value)) {
           text = value.map(function (item) {
-            return item.label;
+            return item.label || item;
           }).join(', ');
         } else {
           text = value.label || value;
@@ -111,8 +111,10 @@ export var WSDropdown = function (_Component) {
   }, {
     key: 'createState',
     value: function createState(props) {
+      var isEmptyValue = !props.value || Array.isArray(props.value) && props.value.length === 0;
+
       var state = {
-        text: props.text || this.getTextFromValue(props.value),
+        text: !isEmptyValue ? this.getTextFromValue(props.value) : props.text,
         value: this.enrichItems(props.value),
         items: this.enrichItems(props.items)
       };
@@ -141,7 +143,7 @@ export var WSDropdown = function (_Component) {
         itemsToWrap = items ? [items] : [];
       }
       return itemsToWrap.map(function (item) {
-        var enriched = (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' ? item : { label: item };
+        var enriched = (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' ? item : { label: item, value: item };
         if (enriched.children) {
           enriched.children = _this3.enrichItems(enriched.children);
         }
@@ -296,6 +298,7 @@ export var WSDropdown = function (_Component) {
     value: function render() {
       var _this7 = this;
 
+      var isWide = this.props.type === 'select' ? 'mod-wide' : '';
       return React.createElement(
         'div',
         { className: 'dropdown', ref: function ref(element) {
@@ -307,7 +310,7 @@ export var WSDropdown = function (_Component) {
         React.createElement(
           'div',
           {
-            className: 'dropdown-container ' + this.props.orientation,
+            className: 'dropdown-container ' + this.props.orientation + ' ' + isWide,
             ref: function ref(element) {
               if (element) {
                 _this7.dropdownContainer = element;

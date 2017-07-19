@@ -66,7 +66,7 @@ export class WSTilesChart extends Component {
    * Calculate the tiles size
    * @returns {void}
    */
-  componentWillMount() {
+  componentWillReceiveProps() {
     this.setState({tileSize: this.getTileSize()});
   }
 

@@ -1,33 +1,10 @@
-define(['exports', 'react', 'react-dom', 'prop-types'], function (exports, _react, _reactDom, _propTypes) {
+define(['exports', './abstract-storage'], function (exports, _abstractStorage) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.Component = exports.render = exports.PropTypes = exports.PureComponent = exports.React = undefined;
-
-  var _React_ = _interopRequireWildcard(_react);
-
-  var ReactDOM = _interopRequireWildcard(_reactDom);
-
-  var types = _interopRequireWildcard(_propTypes);
-
-  function _interopRequireWildcard(obj) {
-    if (obj && obj.__esModule) {
-      return obj;
-    } else {
-      var newObj = {};
-
-      if (obj != null) {
-        for (var key in obj) {
-          if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
-        }
-      }
-
-      newObj.default = obj;
-      return newObj;
-    }
-  }
+  exports.LocalStorage = undefined;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -77,35 +54,42 @@ define(['exports', 'react', 'react-dom', 'prop-types'], function (exports, _reac
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var React = exports.React = {
-    createElement: _React_.createElement || _React_.h
-  };
-  var PureComponent = exports.PureComponent = _React_.PureComponent || _React_.Component;
-  var PropTypes = exports.PropTypes = types;
-  var render = exports.render = ReactDOM.render;
+  var LocalStorage = exports.LocalStorage = function (_AbstractStorage) {
+    _inherits(LocalStorage, _AbstractStorage);
 
-  var Component = exports.Component = function (_React_$Component) {
-    _inherits(Component, _React_$Component);
+    function LocalStorage() {
+      _classCallCheck(this, LocalStorage);
 
-    function Component() {
-      _classCallCheck(this, Component);
-
-      return _possibleConstructorReturn(this, (Component.__proto__ || Object.getPrototypeOf(Component)).apply(this, arguments));
+      return _possibleConstructorReturn(this, (LocalStorage.__proto__ || Object.getPrototypeOf(LocalStorage)).apply(this, arguments));
     }
 
-    _createClass(Component, [{
-      key: 'dispatchEvent',
-      value: function dispatchEvent(name, detail) {
-        var bubbles = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+    _createClass(LocalStorage, [{
+      key: 'set',
+      value: function set(key, value) {
+        var encodedValue = encodeURIComponent(JSON.stringify(value));
+        localStorage.setItem('' + name + key, encodedValue);
+      }
+    }, {
+      key: 'get',
+      value: function get(key) {
+        var encodedValue = localStorage.getItem(key);
 
-        var event = new CustomEvent(name, { detail: detail, bubbles: bubbles });
-
-        if (this.element) {
-          this.element.dispatchEvent(event);
+        if (encodedValue) {
+          try {
+            return JSON.parse(decodeURIComponent(encodedValue));
+          } catch (e) {
+            console.warn('Could not deserialize ' + key);
+          }
         }
+        return undefined;
+      }
+    }, {
+      key: 'remove',
+      value: function remove(key) {
+        localStorage.removeItem('' + this.name + key);
       }
     }]);
 
-    return Component;
-  }(_React_.Component);
+    return LocalStorage;
+  }(_abstractStorage.AbstractStorage);
 });

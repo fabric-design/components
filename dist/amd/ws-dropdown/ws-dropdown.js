@@ -133,7 +133,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
               return item.label || item;
             }).join(', ');
           } else {
-            text = value.label || value;
+            text = value ? value.label : value;
           }
         }
         return text;

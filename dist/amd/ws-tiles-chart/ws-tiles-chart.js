@@ -78,8 +78,8 @@ define(['exports', 'react', '../imports', './tile'], function (exports, _react, 
     }
 
     _createClass(WSTilesChart, [{
-      key: 'componentWillMount',
-      value: function componentWillMount() {
+      key: 'componentWillReceiveProps',
+      value: function componentWillReceiveProps() {
         this.setState({ tileSize: this.getTileSize() });
       }
     }, {

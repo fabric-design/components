@@ -53,7 +53,7 @@ This class describes a Preact/React component which renders a tiles chart
 
 -   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties
 
-### componentWillMount
+### componentWillReceiveProps
 
 Calculate the tiles size
 

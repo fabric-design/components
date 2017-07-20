@@ -39,6 +39,11 @@ var WSTilesChart = exports.WSTilesChart = function (_Component) {
   }
 
   _createClass(WSTilesChart, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.setState({ tileSize: this.getTileSize(this.props) });
+    }
+  }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
       this.setState({ tileSize: this.getTileSize(nextProps) });

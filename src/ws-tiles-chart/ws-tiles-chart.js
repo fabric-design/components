@@ -64,18 +64,20 @@ export class WSTilesChart extends Component {
 
   /**
    * Calculate the tiles size
+   * @param {Object} nextProps next props received
    * @returns {void}
    */
-  componentWillReceiveProps() {
-    this.setState({tileSize: this.getTileSize()});
+  componentWillReceiveProps(nextProps) {
+    this.setState({tileSize: this.getTileSize(nextProps)});
   }
 
   /**
    * Returns the size to be used for the tile
+   * @param {Object} props props of the component
    * @returns {number}
    */
-  getTileSize() {
-    const {height, width, maxTileSize, minTileSize, data} = this.props;
+  getTileSize(props) {
+    const {height, width, maxTileSize, minTileSize, data} = props;
     const groups = data.groups || {};
 
     if (maxTileSize === minTileSize || Object.keys(groups).length === 0) {

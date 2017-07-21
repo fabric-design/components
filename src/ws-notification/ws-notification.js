@@ -62,8 +62,8 @@ export class WSNotification extends Component {
    * @returns {void}
    */
   componentWillUnmount() {
-    window.removeEventListener('ws-notification-open');
-    window.removeEventListener('ws-notification-close');
+    window.removeEventListener('ws-notification-open', this.addNotify);
+    window.removeEventListener('ws-notification-close', this.closeAllEvents);
   }
 
   /**

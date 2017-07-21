@@ -1,8 +1,5 @@
-import {SimpleSteam} from './simple-steam';
-
 /**
  * This class implements the OAuth2 authorization via the implicit flow.
- *
  */
 export class Authorization {
 
@@ -19,9 +16,28 @@ export class Authorization {
     this.refreshUrl = refreshUrl;
     this.clientId = clientId;
     this.businessPartnerId = businessPartnerId;
-    this.authorized = new SimpleSteam();
     // Check if the access token will expire soon and we can refresh it
     this.checkExpiration();
+  }
+
+  /**
+   * Set a listener for access token changes
+   * @param {Function} callback Gets called when the access token changes
+   * @returns {void}
+   */
+  onAccessTokenChange(callback) {
+    this.accessTokenChange = callback;
+  }
+
+  /**
+   * Get's called when ever the access token changes
+   * @param {string|null} accessToken New access token
+   * @returns {void}
+   */
+  changeAccessToken(accessToken) {
+    if (typeof this.accessTokenChange === 'function') {
+      this.accessTokenChange(accessToken);
+    }
   }
 
   /**
@@ -65,9 +81,9 @@ export class Authorization {
     // Check if we already have an access token stored
     } else if (this.storage.get('access_token')) {
       // Put data into authorized stream
-      this.authorized.publish(this.storage.get('access_token'));
+      this.changeAccessToken(this.storage.get('access_token'));
     } else {
-      this.authorized.publish(null);
+      this.changeAccessToken(null);
     }
   }
 
@@ -83,7 +99,7 @@ export class Authorization {
     this.storage.set('refresh_token', params.refresh_token);
     this.storage.set('expires_at', new Date().getTime() + expires * 1000);
     // Put data into authorized stream
-    this.authorized.publish(params.access_token);
+    this.changeAccessToken(params.access_token);
   }
 
   /**
@@ -143,7 +159,7 @@ export class Authorization {
     this.storage.remove('access_key');
     this.storage.remove('refresh_key');
     this.storage.remove('expires_at');
-    this.authorized.publish(null);
+    this.changeAccessToken(null);
   }
 
   /**

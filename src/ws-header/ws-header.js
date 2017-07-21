@@ -68,7 +68,7 @@ export class WSHeader extends Component {
   static getAccessToken(queryString = location.hash.substr(1)) {
     return new Promise(resolve => {
       const authorization = new Authorization(this.storage);
-      authorization.authorized.subscribe(accessToken => resolve(accessToken));
+      authorization.onAccessTokenChange(accessToken => resolve(accessToken));
       authorization.tryFetchToken(queryString);
     });
   }
@@ -151,7 +151,7 @@ export class WSHeader extends Component {
       props.businessPartnerId
     );
     // Listen to authorization changes
-    this.authorization.authorized.subscribe(accessToken => {
+    this.authorization.onAccessTokenChange(accessToken => {
       if (this.mounted) {
         this.setState({isLoggedIn: !!accessToken});
       } else {

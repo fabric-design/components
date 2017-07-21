@@ -1,3 +1,13 @@
+<a name="1.0.8"></a>
+## [1.0.8](https://github.com/wholesale-design-system/components/compare/1.0.7...v1.0.8) (2017-07-21)
+
+
+### Bug Fixes
+
+* **notification:** removeEventListener should have 2 arguments not only one ([#103](https://github.com/wholesale-design-system/components/issues/103)) ([a157a43](https://github.com/wholesale-design-system/components/commit/a157a43))
+
+
+
 <a name="1.0.7"></a>
 ## [1.0.7](https://github.com/wholesale-design-system/components/compare/1.0.6...v1.0.7) (2017-07-21)
 

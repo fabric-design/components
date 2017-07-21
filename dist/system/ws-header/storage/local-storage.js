@@ -1,7 +1,7 @@
-System.register(['react', 'react-dom', 'prop-types'], function (_export, _context) {
+System.register(['./abstract-storage'], function (_export, _context) {
   "use strict";
 
-  var _React_, ReactDOM, types, _createClass, React, PureComponent, PropTypes, render, Component;
+  var AbstractStorage, _createClass, LocalStorage;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -34,12 +34,8 @@ System.register(['react', 'react-dom', 'prop-types'], function (_export, _contex
   }
 
   return {
-    setters: [function (_react) {
-      _React_ = _react;
-    }, function (_reactDom) {
-      ReactDOM = _reactDom;
-    }, function (_propTypes) {
-      types = _propTypes;
+    setters: [function (_abstractStorage) {
+      AbstractStorage = _abstractStorage.AbstractStorage;
     }],
     execute: function () {
       _createClass = function () {
@@ -60,50 +56,46 @@ System.register(['react', 'react-dom', 'prop-types'], function (_export, _contex
         };
       }();
 
-      _export('React', React = {
-        createElement: _React_.createElement || _React_.h
-      });
+      _export('LocalStorage', LocalStorage = function (_AbstractStorage) {
+        _inherits(LocalStorage, _AbstractStorage);
 
-      _export('React', React);
+        function LocalStorage() {
+          _classCallCheck(this, LocalStorage);
 
-      _export('PureComponent', PureComponent = _React_.PureComponent || _React_.Component);
-
-      _export('PureComponent', PureComponent);
-
-      _export('PropTypes', PropTypes = types);
-
-      _export('PropTypes', PropTypes);
-
-      _export('render', render = ReactDOM.render);
-
-      _export('render', render);
-
-      _export('Component', Component = function (_React_$Component) {
-        _inherits(Component, _React_$Component);
-
-        function Component() {
-          _classCallCheck(this, Component);
-
-          return _possibleConstructorReturn(this, (Component.__proto__ || Object.getPrototypeOf(Component)).apply(this, arguments));
+          return _possibleConstructorReturn(this, (LocalStorage.__proto__ || Object.getPrototypeOf(LocalStorage)).apply(this, arguments));
         }
 
-        _createClass(Component, [{
-          key: 'dispatchEvent',
-          value: function dispatchEvent(name, detail) {
-            var bubbles = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+        _createClass(LocalStorage, [{
+          key: 'set',
+          value: function set(key, value) {
+            var encodedValue = encodeURIComponent(JSON.stringify(value));
+            localStorage.setItem('' + name + key, encodedValue);
+          }
+        }, {
+          key: 'get',
+          value: function get(key) {
+            var encodedValue = localStorage.getItem(key);
 
-            var event = new CustomEvent(name, { detail: detail, bubbles: bubbles });
-
-            if (this.element) {
-              this.element.dispatchEvent(event);
+            if (encodedValue) {
+              try {
+                return JSON.parse(decodeURIComponent(encodedValue));
+              } catch (e) {
+                console.warn('Could not deserialize ' + key);
+              }
             }
+            return undefined;
+          }
+        }, {
+          key: 'remove',
+          value: function remove(key) {
+            localStorage.removeItem('' + this.name + key);
           }
         }]);
 
-        return Component;
-      }(_React_.Component));
+        return LocalStorage;
+      }(AbstractStorage));
 
-      _export('Component', Component);
+      _export('LocalStorage', LocalStorage);
     }
   };
 });

@@ -141,7 +141,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
                   return item.label || item;
                 }).join(', ');
               } else {
-                text = value.label || value;
+                text = value ? value.label : value;
               }
             }
             return text;

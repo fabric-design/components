@@ -94,7 +94,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
             return item.label || item;
           }).join(', ');
         } else {
-          text = value.label || value;
+          text = value ? value.label : value;
         }
       }
       return text;

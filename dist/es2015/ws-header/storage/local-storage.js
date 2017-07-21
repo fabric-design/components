@@ -6,38 +6,43 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import * as _React_ from 'react';
-import * as ReactDOM from 'react-dom';
-import * as types from 'prop-types';
+import { AbstractStorage } from './abstract-storage';
 
-export var React = {
-  createElement: _React_.createElement || _React_.h
-};
-export var PureComponent = _React_.PureComponent || _React_.Component;
-export var PropTypes = types;
-export var render = ReactDOM.render;
+export var LocalStorage = function (_AbstractStorage) {
+  _inherits(LocalStorage, _AbstractStorage);
 
-export var Component = function (_React_$Component) {
-  _inherits(Component, _React_$Component);
+  function LocalStorage() {
+    _classCallCheck(this, LocalStorage);
 
-  function Component() {
-    _classCallCheck(this, Component);
-
-    return _possibleConstructorReturn(this, (Component.__proto__ || Object.getPrototypeOf(Component)).apply(this, arguments));
+    return _possibleConstructorReturn(this, (LocalStorage.__proto__ || Object.getPrototypeOf(LocalStorage)).apply(this, arguments));
   }
 
-  _createClass(Component, [{
-    key: 'dispatchEvent',
-    value: function dispatchEvent(name, detail) {
-      var bubbles = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  _createClass(LocalStorage, [{
+    key: 'set',
+    value: function set(key, value) {
+      var encodedValue = encodeURIComponent(JSON.stringify(value));
+      localStorage.setItem('' + name + key, encodedValue);
+    }
+  }, {
+    key: 'get',
+    value: function get(key) {
+      var encodedValue = localStorage.getItem(key);
 
-      var event = new CustomEvent(name, { detail: detail, bubbles: bubbles });
-
-      if (this.element) {
-        this.element.dispatchEvent(event);
+      if (encodedValue) {
+        try {
+          return JSON.parse(decodeURIComponent(encodedValue));
+        } catch (e) {
+          console.warn('Could not deserialize ' + key);
+        }
       }
+      return undefined;
+    }
+  }, {
+    key: 'remove',
+    value: function remove(key) {
+      localStorage.removeItem('' + this.name + key);
     }
   }]);
 
-  return Component;
-}(_React_.Component);
+  return LocalStorage;
+}(AbstractStorage);

@@ -1,3 +1,20 @@
+<a name="1.0.9"></a>
+## [1.0.9](https://github.com/wholesale-design-system/components/compare/1.0.8...v1.0.9) (2017-07-21)
+
+
+### Bug Fixes
+
+* **header:** Fixed icon alignment ([e2f608b](https://github.com/wholesale-design-system/components/commit/e2f608b))
+* **header:** Fixed shadows and unit tests ([a0871b1](https://github.com/wholesale-design-system/components/commit/a0871b1))
+* **header:** Refactored header to use simpler callback approach instead of simple stream for propagating access token ([44a2237](https://github.com/wholesale-design-system/components/commit/44a2237))
+
+
+### Features
+
+* **header:** Implemented new header with authentication, locale management and according to design ([93f5db0](https://github.com/wholesale-design-system/components/commit/93f5db0))
+
+
+
 <a name="1.0.8"></a>
 ## [1.0.8](https://github.com/wholesale-design-system/components/compare/1.0.7...v1.0.8) (2017-07-21)
 

@@ -1,3 +1,13 @@
+<a name="1.0.7"></a>
+## [1.0.7](https://github.com/wholesale-design-system/components/compare/1.0.6...v1.0.7) (2017-07-21)
+
+
+### Bug Fixes
+
+* **tiles-chart:** update tile size when rerendering ([352aa0e](https://github.com/wholesale-design-system/components/commit/352aa0e))
+
+
+
 <a name="1.0.6"></a>
 ## [1.0.6](https://github.com/wholesale-design-system/components/compare/1.0.5...v1.0.6) (2017-07-18)
 

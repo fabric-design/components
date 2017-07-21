@@ -1,160 +1,75 @@
-/* eslint-disable import/extensions, no-proto */
+/* eslint-disable */
 import {React} from 'imports';
-import {TestComponent} from '../test-component';
-import {WSHeader} from '../../src/index';
+import {WSHeader} from '../../src/ws-header/ws-header';
+import {CookieStorage} from '../../src/ws-header/storage/cookie-storage';
+import {LocalStorage} from '../../src/ws-header/storage/local-storage';
 
-/**
- * Tests for WS-Header
- * Info: If you want to test the render output after state / props change
- * you have to do a setTimeout (see other tests) as Jasmine expect is faster then the .render() method
- */
-describe('Test: <WS-Header />', () => {
-  let container;
+function clearStorage() {
+  WSHeader.storage.remove('access_token');
+  WSHeader.storage.remove('refresh_token');
+  WSHeader.storage.remove('expires_at');
+}
 
-  const defaultProps = {
-    setLang: () => {},
-    setLogin: () => {},
-    clientId: null,
-    redirectUrl: '',
-    logoUrl: null,
-    title: '',
-    links: []
-  };
+describe('A WSHeader', () => {
 
+  it('set\'s the storage type', () => {
+    WSHeader.storage = null;
 
-  const dummyLinks = [
-    {label: 'Home', value: 'HomeValue', onclick: value => value},
-    {label: 'Link', value: 'LinkValue', onclick: value => value},
-    {label: 'Details', value: 'DetailsValue', onclick: value => value}
-  ];
+    WSHeader.setStorageType('local', 'test');
+    expect(WSHeader.storage instanceof CookieStorage).toBeFalsy();
+    expect(WSHeader.storage instanceof LocalStorage).toBeTruthy();
+    expect(WSHeader.storage.name).toBe('test-');
 
-  const mockAuthResponse = {
-    uid: 'chuckNorrisIsEverywhere',
-    access_token: 'chuckNorrisCanBeAnAccessToken'
-  };
-
-  const mockUserLookUpResponse = {
-    name: 'Chuck Norris',
-    email: 'chuck.norris@zalando.de'
-  };
-
-  const defaultState = {
-    availableLanguages: ['de', 'en']
-  };
-
-  beforeEach(() => {
-    container = document.createElement('div');
-    document.querySelector('body').appendChild(container);
-    window.localStorage.clear();
+    WSHeader.setStorageType('cookie', 'asd');
+    expect(WSHeader.storage instanceof CookieStorage).toBeTruthy();
+    expect(WSHeader.storage instanceof LocalStorage).toBeFalsy();
+    expect(WSHeader.storage.name).toBe('asd-');
   });
 
-  /**
-   * Doing some stuff here
-   *
-   */
-  it('should have default properties set', () => {
-    // initialization has to been done for every testcase
-    const header = new TestComponent(<WSHeader />);
-    expect(header.component).toBeDefined();
-    expect(header.component.props).toBeDefined();
-    expect(header.component.props).toEqual(jasmine.objectContaining(
-      {
-        clientId: defaultProps.clientId,
-        redirectUrl: defaultProps.redirectUrl,
-        logoUrl: defaultProps.logoUrl,
-        title: defaultProps.title
-      }
-    ));
-    expect(header.component.props.links.length).toBe(defaultProps.links.length);
+  it('get\'s the access token', done => {
+    const tokenName = 'asd';
+    // Only test the basic function, the general authorization ist tested elsewhere
+    WSHeader.storage.set('access_token', tokenName);
+    WSHeader.getAccessToken()
+      .then(accessToken => {
+        expect(accessToken).toBe(tokenName);
+        WSHeader.storage.remove('access_token');
+        done();
+      });
   });
 
-  it('should render with default properties', () => {
-    const header = new TestComponent(<WSHeader />);
-    expect(header.component).toBeDefined();
-    expect(header.q('.nav-title').textContent).toBe('');
-    expect(header.q('.logo')).toBeNull();
-    expect(header.q('.js-navigation-menu .nav-link')).toBeNull();
+  it('doesn\'t get an access token', done => {
+    const tokenName = 'asd';
+    // Only test the basic function, the general authorization ist tested elsewhere
+    WSHeader.getAccessToken(`test&no_token=${tokenName}&tests`)
+      .then(accessToken => {
+        expect(accessToken).toBeFalsy();
+        done();
+      });
   });
 
-  it('should render title "Awesome Navigation" ', () => {
-    const header = new TestComponent(<WSHeader title="Awesome Navigation" />);
-    expect(header.component.props.title).toBe('Awesome Navigation');
-    expect(header.q('.nav-title').textContent).toBe('Awesome Navigation');
-    expect(header.q('#selectedLanguage').textContent).toBe(defaultState.availableLanguages[0]);
-    expect(header.q('#loggedInInfo').textContent).toBe('Login');
-  });
-
-  it('should not show any navigation links when not logged in ', () => {
-    const header = new TestComponent(<WSHeader title="Awesome Navigation" links={dummyLinks} />);
-    expect(header.component.props.links.length).toEqual(dummyLinks.length);
-    expect(header.q('#loggedInInfo').textContent).toBe('Login');
-    expect(header.q('#nav-links .nav-link')).toBeNull();
-  });
-
-  it('should show navigation links when logged in ', done => {
-    const header = new TestComponent(<WSHeader title="Awesome Navigation" links={dummyLinks} />);
-    // preact-specific
-    // don't use arrow functions as they get binded wrong!
-    spyOn(header.component.__proto__, 'checkIsLoggedIn').and.callFake(function checkIsLoggedIn() {
-      expect(this.setState).toBeDefined();
-      this.setState({
-        userUID: mockAuthResponse.uid,
-        access_token: mockAuthResponse.access_token,
-        userName: mockUserLookUpResponse.name,
-        userEmail: mockUserLookUpResponse.email});
-      this.propagateLoginStatusChange(true, mockAuthResponse.access_token);
-      return true;
+  it('initializes correctly', () => {
+    WSHeader.storage.set('locale', 'de');
+    const header = new WSHeader({
+      loginUrl: '1111',
+      refreshUrl: 222,
+      businessPartnerId: '333',
+      clientId: 444
     });
-    spyOn(header.component.__proto__, 'render').and.callThrough();
-    header.component.checkIsLoggedIn();
-    // We have to wait some ms as re-rendering needs some time
-    setTimeout(() => {
-      expect(header.component.render).toHaveBeenCalled();
-      expect(header.component.props.links.length).toEqual(dummyLinks.length);
-      expect(header.q('#loggedInInfo').textContent).toBe(mockUserLookUpResponse.name);
-      expect(header.q('#nav-links .nav-link')).not.toBeNull();
-      done();
-    }, 300);
+
+    expect(header.authorization).toBeTruthy();
+    expect(header.authorization.loginUrl).toBe('1111');
+    expect(header.authorization.refreshUrl).toBe(222);
+    expect(header.authorization.businessPartnerId).toBe('333');
+    expect(header.authorization.clientId).toBe(444);
+    expect(header.state.locale).toBe('de');
   });
 
-  it('should call props.setLogin function when loggedIn changes (login & logout)', () => {
-    const mockSetLogin = jasmine.createSpy('mockSetLogin');
-    const header = new TestComponent(<WSHeader title="Awesome Navigation" links={dummyLinks} setLogin={mockSetLogin} />);
-    // check for successfull login
-    header.component.propagateLoginStatusChange(true, mockAuthResponse.access_token);
-    expect(header.component.props.setLogin).toHaveBeenCalled();
-    expect(header.component.props.setLogin.calls.mostRecent()).toEqual(jasmine.objectContaining(
-      {
-        args: [{
-          loggedIn: true,
-          token: mockAuthResponse.access_token
-        }]
-      }
-      ));
-    // logout
-    header.component.propagateLoginStatusChange(false, null);
-    expect(header.component.props.setLogin).toHaveBeenCalled();
-    expect(header.component.props.setLogin.calls.mostRecent()).toEqual(jasmine.objectContaining(
-      {
-        args: [{
-          loggedIn: false,
-          token: null
-        }]
-      }
-      ));
-  });
-
-  it('should change language state', done => {
-    const mockSetLang = jasmine.createSpy('mockSetLang');
-    const header = new TestComponent(<WSHeader title="Awesome Navigation" links={dummyLinks} setLang={mockSetLang} />);
-    // initially 'de' if not check your localStorage
-    expect(header.component.state.lang).toEqual(defaultState.availableLanguages[0]);
-    header.component.setLanguage(defaultState.availableLanguages[1]);
-    expect(header.component.state.lang).toEqual(defaultState.availableLanguages[1]);
-    expect(header.component.props.setLang).toHaveBeenCalled();
-    setTimeout(() => {
-      expect(header.q('#selectedLanguage').textContent).toBe(defaultState.availableLanguages[1]);
-      done();
-    }, 300);
+  it('initializes with fallback language', () => {
+    WSHeader.storage.set('locale', 'test');
+    const header = new WSHeader({
+      loginUrl: '1111'
+    });
+    expect(header.state.locale).toBe('en');
   });
 });

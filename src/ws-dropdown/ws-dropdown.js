@@ -147,7 +147,7 @@ export class WSDropdown extends Component {
         text = value.map(item => item.label || item).join(', ');
       } else {
         // Value can be object from dropdown item or simple string from input
-        text = value.label || value;
+        text = value ? value.label : value;
       }
     }
     return text;

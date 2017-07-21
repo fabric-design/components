@@ -8,15 +8,41 @@ window.React = React;
 
 render(
   <div>
-    <WSHeader title='Demo Page' links={[
-      { label: 'Link', value: 'LinkValue', onclick: (value) => console.log(value) }
-    ]} />
+    <WSHeader
+      appName="Demo Page"
+      clientId="stups_abba-frontend-release_180e00be-2b66-4e44-ac95-37f10068c015"
+      links={[
+        {label: 'Link', href: 'LinkValue', onClick: (value) => console.log(value)},
+        {
+          label: 'Link2',
+          href: '2222',
+          children: [
+            {label: 'Sub link 1', href: 'Go go app 1'},
+            {label: 'Sub link 1', href: 'Go go app 1'}
+          ]
+        },
+        {
+          label: 'Link3',
+          href: '33333',
+          children: [
+            {label: 'Sub link 1', href: 'Go go app 1'},
+            {label: 'Sub link 1', href: 'Go go app 1'},
+            {label: 'Sub link 1', href: 'Go go app 1'},
+            {label: 'Sub link 1', href: 'Go go app 1'},
+            {label: 'Sub link 1', href: 'Go go app 1'},
+            {label: 'Sub link 1', href: 'Go go app 1'},
+            {label: 'Sub link 1', href: 'Go go app 1'},
+            {label: 'Sub link 2', href: 'Go go app 2'}
+          ]
+        }
+      ]}
+    />
     <div className="container">
       <br />
-      <WSDatePicker onChange={(date) => console.log('New Date:', date)} value={Date.now()} />
+      <WSDatePicker onChange={(date) => console.log('New Date:', date)} value={Date.now()}/>
       <br />
       <br />
-      <WSWeekPicker onChange={({year, week}) => console.log('New week selected:', week)} />
+      <WSWeekPicker onChange={({year, week}) => console.log('New week selected:', week)}/>
       <br />
       <br />
       <WSDropdown text="Multiple" type="button" placeholder="Filter values.." filterable multiple items={[
@@ -26,7 +52,7 @@ render(
         'Test value 1',
         'Open Recent',
         'Save'
-      ]} />
+      ]}/>
       <br />
       <WSDropdown text="Simple Wide" type="select" items={[
         'New',
@@ -40,7 +66,7 @@ render(
                 'item 2.3.1',
                 'item 2.3.2',
                 'item 2.3.3',
-                'item 2.3.4',
+                'item 2.3.4'
               ]
             }
           ]
@@ -48,37 +74,37 @@ render(
         'Open',
         'Open Recent',
         'Save'
-      ]} />
+      ]}/>
       <br />
-      <WSDropdown text="Input" type="select" placeholder="tasd" value="222" inputOnly />
+      <WSDropdown text="Input" type="select" placeholder="tasd" value="222" inputOnly/>
       <br />
       <WSNotification />
       <br />
       <div style={{width: '60%'}}>
-        <WSInlineEdit text="Some text to check" />
+        <WSInlineEdit text="Some text to check"/>
       </div>
       <br />
       <table style={{width: '50%'}}>
         <tbody>
           <tr>
-            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
-            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
-            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
-            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)}/></td>
+            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)}/></td>
+            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)}/></td>
+            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)}/></td>
           </tr>
           <tr>
-            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
-            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
-            <td colSpan="2"><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)}/></td>
+            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)}/></td>
+            <td colSpan="2"><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)}/></td>
           </tr>
           <tr>
-            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
-            <td colSpan="3"><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)}/></td>
+            <td colSpan="3"><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)}/></td>
           </tr>
         </tbody>
       </table>
       <br />
-        <WSTilesChart title="Chart title" data={dashboardMockData.data} width={100} height={100} />
+      <WSTilesChart title="Chart title" data={dashboardMockData.data} width={100} height={100}/>
     </div>
   </div>
-, document.querySelector('#app-holder'));
+  , document.querySelector('#app-holder'));

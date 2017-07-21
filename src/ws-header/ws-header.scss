@@ -86,6 +86,9 @@ $header-border-color: schema-color(4) !default;
         display: inline-block;
         margin-right: 5px;
       }
+      .icon {
+        vertical-align: middle;
+      }
     }
   }
   .level-2 {

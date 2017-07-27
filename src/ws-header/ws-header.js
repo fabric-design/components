@@ -237,7 +237,7 @@ export class WSHeader extends Component {
         <div className="level-1">
           <div className="application-name">
             {this.props.appLogo &&
-              <figure className="app-logo">
+              <figure className="application-logo">
                 <img src={this.props.appLogo} alt="Application logo" />
               </figure>
             }

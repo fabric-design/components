@@ -1,3 +1,14 @@
+<a name="1.0.10"></a>
+## [1.0.10](https://github.com/wholesale-design-system/components/compare/1.0.9...v1.0.10) (2017-07-27)
+
+
+### Bug Fixes
+
+* **dropdown:** Fixed text generation for dropdowns with type != select ([7825a38](https://github.com/wholesale-design-system/components/commit/7825a38))
+* **header:** Fixed style of application logo ([3edce09](https://github.com/wholesale-design-system/components/commit/3edce09))
+
+
+
 <a name="1.0.9"></a>
 ## [1.0.9](https://github.com/wholesale-design-system/components/compare/1.0.8...v1.0.9) (2017-07-21)
 

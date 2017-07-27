@@ -186,7 +186,7 @@ export var WSHeader = function (_Component) {
             { className: 'application-name' },
             this.props.appLogo && React.createElement(
               'figure',
-              { className: 'app-logo' },
+              { className: 'application-logo' },
               React.createElement('img', { src: this.props.appLogo, alt: 'Application logo' })
             ),
             this.props.appName

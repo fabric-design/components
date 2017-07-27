@@ -137,17 +137,19 @@ export class WSDropdown extends Component {
   /**
    * Get text from labels of selected items
    * @param {String|Object|Array<Object>} value Selected items
+   * @param {Array<*>} args Optionally a default text can be passed
    * @returns {String}
    */
-  getTextFromValue(value) {
-    let text = this.state ? this.state.text : '';
+  getTextFromValue(value, ...args) {
+    const propsText = args.length > 0 ? args[0] : '';
+    let text = propsText || (this.state && this.state.text ? this.state.text : '');
     // Check if we have to update the text value
     if (this.props.type === 'select') {
-      if (Array.isArray(value)) {
+      if (Array.isArray(value) && value.length) {
         text = value.map(item => item.label || item).join(', ');
-      } else {
+      } else if (value) {
         // Value can be object from dropdown item or simple string from input
-        text = value ? value.label : value;
+        text = value.label;
       }
     }
     return text;
@@ -181,11 +183,8 @@ export class WSDropdown extends Component {
    * @returns {Object}
    */
   createState(props) {
-    const isEmptyValue =
-      !props.value || Array.isArray(props.value) && props.value.length === 0;
-
     const state = {
-      text: !isEmptyValue ? this.getTextFromValue(props.value) : props.text,
+      text: this.getTextFromValue(props.value, props.text),
       value: this.enrichItems(props.value),
       items: this.enrichItems(props.items)
     };

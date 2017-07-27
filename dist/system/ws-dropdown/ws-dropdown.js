@@ -133,15 +133,16 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
         }, {
           key: 'getTextFromValue',
           value: function getTextFromValue(value) {
-            var text = this.state ? this.state.text : '';
+            var propsText = (arguments.length <= 1 ? 0 : arguments.length - 1) > 0 ? arguments.length <= 1 ? undefined : arguments[1] : '';
+            var text = propsText || (this.state && this.state.text ? this.state.text : '');
 
             if (this.props.type === 'select') {
-              if (Array.isArray(value)) {
+              if (Array.isArray(value) && value.length) {
                 text = value.map(function (item) {
                   return item.label || item;
                 }).join(', ');
-              } else {
-                text = value ? value.label : value;
+              } else if (value) {
+                text = value.label;
               }
             }
             return text;
@@ -167,10 +168,8 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
         }, {
           key: 'createState',
           value: function createState(props) {
-            var isEmptyValue = !props.value || Array.isArray(props.value) && props.value.length === 0;
-
             var state = {
-              text: !isEmptyValue ? this.getTextFromValue(props.value) : props.text,
+              text: this.getTextFromValue(props.value, props.text),
               value: this.enrichItems(props.value),
               items: this.enrichItems(props.items)
             };

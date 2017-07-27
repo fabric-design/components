@@ -240,7 +240,7 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
                   { className: 'application-name' },
                   this.props.appLogo && React.createElement(
                     'figure',
-                    { className: 'app-logo' },
+                    { className: 'application-logo' },
                     React.createElement('img', { src: this.props.appLogo, alt: 'Application logo' })
                   ),
                   this.props.appName

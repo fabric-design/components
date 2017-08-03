@@ -13,7 +13,7 @@ export class LocalStorage extends AbstractStorage {
    */
   set(key, value) {
     const encodedValue = encodeURIComponent(JSON.stringify(value));
-    localStorage.setItem(`${name}${key}`, encodedValue);
+    localStorage.setItem(`${this.name}${key}`, encodedValue);
   }
 
   /**
@@ -22,7 +22,7 @@ export class LocalStorage extends AbstractStorage {
    * @returns {*}
    */
   get(key) {
-    const encodedValue = localStorage.getItem(key);
+    const encodedValue = localStorage.getItem(`${this.name}${key}`);
 
     if (encodedValue) {
       try {

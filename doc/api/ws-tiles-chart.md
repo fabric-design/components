@@ -55,13 +55,27 @@ This class describes a Preact/React component which renders a tiles chart
 
 ### componentWillMount
 
-Calculate the tiles size
+Called before the component mounts to calculate the tiles size
+
+Returns **void** 
+
+### componentWillReceiveProps
+
+Called when the props updates to calculate the tiles size
+
+**Parameters**
+
+-   `nextProps` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** next props received
 
 Returns **void** 
 
 ### getTileSize
 
 Returns the size to be used for the tile
+
+**Parameters**
+
+-   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** props of the component
 
 Returns **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 

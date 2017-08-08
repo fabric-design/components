@@ -1,6 +1,5 @@
 /* eslint-disable */
 import {React} from 'imports';
-import {TestComponent} from '../test-component';
 import {WSHeader} from '../../src/ws-header/ws-header';
 import {CookieStorage} from '../../src/ws-header/storage/cookie-storage';
 import {LocalStorage} from '../../src/ws-header/storage/local-storage';

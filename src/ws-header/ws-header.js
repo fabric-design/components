@@ -68,7 +68,7 @@ export class WSHeader extends Component {
   static getAccessToken(queryString = location.hash.substr(1)) {
     return new Promise(resolve => {
       const authorization = new Authorization(this.storage);
-      authorization.authorized.subscribe(accessToken => resolve(accessToken));
+      authorization.onAccessTokenChange(accessToken => resolve(accessToken));
       authorization.tryFetchToken(queryString);
     });
   }
@@ -151,7 +151,7 @@ export class WSHeader extends Component {
       props.businessPartnerId
     );
     // Listen to authorization changes
-    this.authorization.authorized.subscribe(accessToken => {
+    this.authorization.onAccessTokenChange(accessToken => {
       if (this.mounted) {
         this.setState({isLoggedIn: !!accessToken});
       } else {
@@ -237,7 +237,7 @@ export class WSHeader extends Component {
         <div className="level-1">
           <div className="application-name">
             {this.props.appLogo &&
-              <figure className="app-logo">
+              <figure className="application-logo">
                 <img src={this.props.appLogo} alt="Application logo" />
               </figure>
             }
@@ -265,7 +265,7 @@ export class WSHeader extends Component {
               <li>
                 <WSDropdown
                   className="locale"
-                  icon="icon-sort-down"
+                  icon="icon24 icon-sort-down"
                   items={this.locales}
                   text={this.state.locale}
                   onChange={item => this.setLocale(item.value)}
@@ -279,7 +279,7 @@ export class WSHeader extends Component {
                 </li>
               :
                 <li onClick={() => this.authorization.unauthorize()}>
-                  <a><span className="icon-power icon24" /></a>
+                  <a><span className="icon icon24 icon-power" /></a>
                 </li>
               }
             </ul>

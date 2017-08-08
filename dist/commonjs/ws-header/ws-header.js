@@ -44,7 +44,7 @@ var WSHeader = exports.WSHeader = function (_Component) {
 
       return new Promise(function (resolve) {
         var authorization = new _authorization.Authorization(_this2.storage);
-        authorization.authorized.subscribe(function (accessToken) {
+        authorization.onAccessTokenChange(function (accessToken) {
           return resolve(accessToken);
         });
         authorization.tryFetchToken(queryString);
@@ -107,7 +107,7 @@ var WSHeader = exports.WSHeader = function (_Component) {
 
       this.authorization = new _authorization.Authorization(WSHeader.storage, props.loginUrl, props.refreshUrl, props.clientId, props.businessPartnerId);
 
-      this.authorization.authorized.subscribe(function (accessToken) {
+      this.authorization.onAccessTokenChange(function (accessToken) {
         if (_this3.mounted) {
           _this3.setState({ isLoggedIn: !!accessToken });
         } else {
@@ -197,7 +197,7 @@ var WSHeader = exports.WSHeader = function (_Component) {
             { className: 'application-name' },
             this.props.appLogo && _imports.React.createElement(
               'figure',
-              { className: 'app-logo' },
+              { className: 'application-logo' },
               _imports.React.createElement('img', { src: this.props.appLogo, alt: 'Application logo' })
             ),
             this.props.appName
@@ -245,7 +245,7 @@ var WSHeader = exports.WSHeader = function (_Component) {
                 null,
                 _imports.React.createElement(_wsDropdown.WSDropdown, {
                   className: 'locale',
-                  icon: 'icon-sort-down',
+                  icon: 'icon24 icon-sort-down',
                   items: this.locales,
                   text: this.state.locale,
                   onChange: function onChange(item) {
@@ -273,7 +273,7 @@ var WSHeader = exports.WSHeader = function (_Component) {
                 _imports.React.createElement(
                   'a',
                   null,
-                  _imports.React.createElement('span', { className: 'icon-power icon24' })
+                  _imports.React.createElement('span', { className: 'icon icon24 icon-power' })
                 )
               )
             )

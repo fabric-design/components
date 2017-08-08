@@ -52,8 +52,8 @@ var WSNotification = exports.WSNotification = function (_Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      window.removeEventListener('ws-notification-open');
-      window.removeEventListener('ws-notification-close');
+      window.removeEventListener('ws-notification-open', this.addNotify);
+      window.removeEventListener('ws-notification-close', this.closeAllEvents);
     }
   }, {
     key: 'addNotify',

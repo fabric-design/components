@@ -1,7 +1,7 @@
-System.register(['./simple-steam'], function (_export, _context) {
+System.register([], function (_export, _context) {
   "use strict";
 
-  var SimpleSteam, _slicedToArray, _createClass, Authorization;
+  var _slicedToArray, _createClass, Authorization;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -10,9 +10,7 @@ System.register(['./simple-steam'], function (_export, _context) {
   }
 
   return {
-    setters: [function (_simpleSteam) {
-      SimpleSteam = _simpleSteam.SimpleSteam;
-    }],
+    setters: [],
     execute: function () {
       _slicedToArray = function () {
         function sliceIterator(arr, i) {
@@ -84,12 +82,23 @@ System.register(['./simple-steam'], function (_export, _context) {
           this.refreshUrl = refreshUrl;
           this.clientId = clientId;
           this.businessPartnerId = businessPartnerId;
-          this.authorized = new SimpleSteam();
 
           this.checkExpiration();
         }
 
         _createClass(Authorization, [{
+          key: 'onAccessTokenChange',
+          value: function onAccessTokenChange(callback) {
+            this.accessTokenChange = callback;
+          }
+        }, {
+          key: 'changeAccessToken',
+          value: function changeAccessToken(accessToken) {
+            if (typeof this.accessTokenChange === 'function') {
+              this.accessTokenChange(accessToken);
+            }
+          }
+        }, {
           key: 'checkExpiration',
           value: function checkExpiration() {
             var _this = this;
@@ -127,9 +136,9 @@ System.register(['./simple-steam'], function (_export, _context) {
               }
               this.updateTokens(queryParams);
             } else if (this.storage.get('access_token')) {
-              this.authorized.publish(this.storage.get('access_token'));
+              this.changeAccessToken(this.storage.get('access_token'));
             } else {
-              this.authorized.publish(null);
+              this.changeAccessToken(null);
             }
           }
         }, {
@@ -140,7 +149,7 @@ System.register(['./simple-steam'], function (_export, _context) {
             this.storage.set('refresh_token', params.refresh_token);
             this.storage.set('expires_at', new Date().getTime() + expires * 1000);
 
-            this.authorized.publish(params.access_token);
+            this.changeAccessToken(params.access_token);
           }
         }, {
           key: 'authorize',
@@ -179,7 +188,7 @@ System.register(['./simple-steam'], function (_export, _context) {
             this.storage.remove('access_key');
             this.storage.remove('refresh_key');
             this.storage.remove('expires_at');
-            this.authorized.publish(null);
+            this.changeAccessToken(null);
           }
         }, {
           key: 'createAndRememberUUID',

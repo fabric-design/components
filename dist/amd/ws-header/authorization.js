@@ -1,10 +1,9 @@
-define(['exports', './simple-steam'], function (exports, _simpleSteam) {
+define(['exports'], function (exports) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.Authorization = undefined;
 
   var _slicedToArray = function () {
     function sliceIterator(arr, i) {
@@ -82,12 +81,23 @@ define(['exports', './simple-steam'], function (exports, _simpleSteam) {
       this.refreshUrl = refreshUrl;
       this.clientId = clientId;
       this.businessPartnerId = businessPartnerId;
-      this.authorized = new _simpleSteam.SimpleSteam();
 
       this.checkExpiration();
     }
 
     _createClass(Authorization, [{
+      key: 'onAccessTokenChange',
+      value: function onAccessTokenChange(callback) {
+        this.accessTokenChange = callback;
+      }
+    }, {
+      key: 'changeAccessToken',
+      value: function changeAccessToken(accessToken) {
+        if (typeof this.accessTokenChange === 'function') {
+          this.accessTokenChange(accessToken);
+        }
+      }
+    }, {
       key: 'checkExpiration',
       value: function checkExpiration() {
         var _this = this;
@@ -125,9 +135,9 @@ define(['exports', './simple-steam'], function (exports, _simpleSteam) {
           }
           this.updateTokens(queryParams);
         } else if (this.storage.get('access_token')) {
-          this.authorized.publish(this.storage.get('access_token'));
+          this.changeAccessToken(this.storage.get('access_token'));
         } else {
-          this.authorized.publish(null);
+          this.changeAccessToken(null);
         }
       }
     }, {
@@ -138,7 +148,7 @@ define(['exports', './simple-steam'], function (exports, _simpleSteam) {
         this.storage.set('refresh_token', params.refresh_token);
         this.storage.set('expires_at', new Date().getTime() + expires * 1000);
 
-        this.authorized.publish(params.access_token);
+        this.changeAccessToken(params.access_token);
       }
     }, {
       key: 'authorize',
@@ -177,7 +187,7 @@ define(['exports', './simple-steam'], function (exports, _simpleSteam) {
         this.storage.remove('access_key');
         this.storage.remove('refresh_key');
         this.storage.remove('expires_at');
-        this.authorized.publish(null);
+        this.changeAccessToken(null);
       }
     }, {
       key: 'createAndRememberUUID',

@@ -1,201 +1,194 @@
 # ws-header
-## WSHeaderNavLink
+## Authorization
 
-Helper component which is just rendering a single navigation link element
+This class implements the OAuth2 authorization via the implicit flow.
 
 **Parameters**
 
--   `props` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** properties
-    -   `props.key` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** key for the list item
-    -   `props.link` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** link to render
-        -   `props.link.onclick` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** callback for clicks on the link
-        -   `props.link.label` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** label to show for the link
+-   `storage`  
+-   `loginUrl`   (optional, default `''`)
+-   `refreshUrl`   (optional, default `''`)
+-   `clientId`   (optional, default `''`)
+-   `businessPartnerId`   (optional, default `''`)
 
-Returns **JSX** rendered template
+### constructor
+
+**Parameters**
+
+-   `storage` **AbstractStorage** Key value storage
+-   `loginUrl` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Url the user get's redirected to authorize (optional, default `''`)
+-   `refreshUrl` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Url the app will send a POST to request a new access token (optional, default `''`)
+-   `clientId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** OAuth2 client id (optional, default `''`)
+-   `businessPartnerId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** OAuth2 business partner id (optional, default `''`)
+
+### onAccessTokenChange
+
+Set a listener for access token changes
+
+**Parameters**
+
+-   `callback` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** Gets called when the access token changes
+
+Returns **void** 
+
+### changeAccessToken
+
+Get's called when ever the access token changes
+
+**Parameters**
+
+-   `accessToken` **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** New access token
+
+Returns **void** 
+
+### tryFetchToken
+
+Tries to parse the access token from the given query string
+
+**Parameters**
+
+-   `queryString` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Query string without leading ?
+
+Returns **void** 
+
+### authorize
+
+Redirect the user to the OAuth2 authorization page
+
+Returns **void** 
+
+### refresh
+
+Request a new access token
+
+**Parameters**
+
+-   `token` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Refresh token
+
+Returns **void** 
+
+### unauthorize
+
+Remove authorization
+
+Returns **void** 
 ## WSHeader
 
 **Extends Component**
 
-The default Header to be used everywhere
+This component renders a generic header which provides authentication and language management
 
-**Properties**
+Optionally call WSHeader.setStorageType('cookie', 'zalando') If you want a to use cookies instead of localStorage
+to persist the tokens. You can call WSHeader.getAccessToken().then(token => ...) to get the current access token.
+It will resolve null when no access token is present and therefore the user isn't logged in.
+If you configured the header with a refreshUrl you should subscribe the ws-auth-changed event. It will be emitted
+when the access token was refreshed and it will have the access token in the event details.
 
--   `props` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** properties
-    -   `props.setLang` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** handler which sets language
-    -   `props.setLogin` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** handler which sets Login information (token and boolan for loggedin)
-    -   `props.clientId` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** clientId
-    -   `props.redirectUrl` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** URL to redirect after successfully login
-    -   `props.logoUrl` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** url for logo
-    -   `props.title` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** title of Header
-    -   `props.links` **[array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of navigation links based on object format {label, onclick-Handler }
+**Parameters**
+
+-   `props`  
 
 ### constructor
 
-Constructor of WSHeader
-it is initializing default values for the state object
+**Parameters**
+
+-   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** React/Preact properties
 
 ### componentDidMount
 
-Lifecycle: componentDidMount handler for component
+Detect mounted state to prevent calling setState to early
 
 Returns **void** 
 
-### getStateFromUrl
+### setLocale
 
-Method to extract state parameter from url
-
-**Parameters**
-
--   `url` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** urlString to extract state parameter
-
-Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** state information
-
-### getToken
-
-Method to get user auth token
+Changes the locale to the given one
 
 **Parameters**
 
--   `orgUrl` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** url to receive Token
-
-Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** token string
-
-### setCookie
-
-Sets cookie for a given token
-
-**Parameters**
-
--   `token` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Token String
+-   `newLocale` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The new locale
 
 Returns **void** 
 
-### getLanguage
+### initState
 
-get Language from state / localStorage
-
-**Parameters**
-
--   `state` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** state object of component
-
-Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** language object
-
-### setLanguage
-
-Language string to set navigation
-
-**Parameters**
-
--   `lang` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Language string
+Initialize the component state
 
 Returns **void** 
 
-### removeCookie
+### initAuthorization
 
-Removes cookie
-
-Returns **void** 
-
-### checkIsLoggedIn
-
-Helper method checking if the user is already logged in
-
-Returns **([Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | void)** 
-
-### propagateLoginStatusChange
-
-Updates changed login status
+Initialize the OAuth2 authorization
 
 **Parameters**
 
--   `isLoggedIn` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** updated status of logged in user
--   `token` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Token String
+-   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** React/Preact props
 
 Returns **void** 
 
-### checkSessionState
+### enterMenuItem
 
-Helper method checking current session state
+Get's called when the mouse enters a menu item
 
 **Parameters**
 
--   `state` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** String containing state
-
-Returns **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** valid boolean
-
-### login
-
-Login
+-   `index` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** The index of the item in the link list
 
 Returns **void** 
 
-### logout
+### leaveMenuItem
 
-Logout
+Get's called when the mouse leaves a menu item
+
+**Parameters**
+
+-   `index` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** The index of the item in the link list
+
+Returns **void** 
+
+### enterLevel2
+
+Get's called when the mouse enters into the level 2 (sub menu)
+
+Returns **void** 
+
+### leaveLevel2
+
+Get's called when the mouse leaves the level 2 (sub menu)
 
 Returns **void** 
 
 ### render
 
-Render function of component
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
-Returns **JSX** JSX string representation of WSHeader
+### storage
 
-### propTypes
+Default storage instance
 
-## failureListener
+### setStorageType
 
-React to failure in user authentication
-
-Returns **void** 
-
-## successListener
-
-react to success in user authentication
-
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** is the user logged in
-
-## userServiceSuccess
-
-react to success in the user lookup
-set the local state with the looked up user name and email
-
-Returns **void** 
-
-## getTokenFromUrl
-
-getTokenFromUrl
+Initialize the storage
 
 **Parameters**
 
--   `url` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** url string
+-   `type` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Can be either cookie or local
+-   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage name will be used as key prefix
 
-Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** token part
+Returns **void** 
 
-## getCookieValue
+### getAccessToken
 
-Get Cookie Value
+Tries to get the access token from authorization class
 
 **Parameters**
 
--   `a` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** cookie key to match
+-   `queryString` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The current query string to parse the token from (optional, default `location.hash.substr(1)`)
 
-Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** cookie value for key
+Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
-## guid
+### getLocale
 
-Generate a global unique identifier
+Retrieve the persisted locale
 
-Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** string
-
-## s4
-
-Helper method for calculating a unique Id
-
-Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-## setSessionState
-
-Sets Session State
-
-Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** encoded URI component of state
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 

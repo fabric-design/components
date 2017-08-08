@@ -75,6 +75,18 @@ $header-border-color: schema-color(4) !default;
       text-transform: uppercase;
       display: inline-block;
     }
+    .application-logo {
+      margin: 0;
+      height: 16px;
+      display: inline-block;
+      vertical-align: sub;
+      margin-right: $space-xs;
+      font-size: 0;
+      img {
+        width: inherit;
+        height: inherit;
+      }
+    }
     .main-menu {
       @include main-menu;
     }
@@ -85,6 +97,9 @@ $header-border-color: schema-color(4) !default;
       .locale {
         display: inline-block;
         margin-right: 5px;
+      }
+      .icon {
+        vertical-align: middle;
       }
     }
   }

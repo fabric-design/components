@@ -251,6 +251,7 @@ export class WSHeader extends Component {
                   onMouseEnter={() => this.enterMenuItem(index)}
                   onMouseLeave={() => this.leaveMenuItem(index)}
                   ref={element => { this.menuItems[index] = element; }}
+                  className={(link.isCurrent) ? 'is-current' : null}
                 >
                   <a href={link.href} onClick={event => { if (link.onClick) link.onClick(event); }}>
                     {link.label}
@@ -288,13 +289,14 @@ export class WSHeader extends Component {
           className="level-2"
           onMouseEnter={() => this.enterLevel2()}
           onMouseLeave={() => this.leaveLevel2()}
+          onClick={() => this.leaveLevel2()}
           ref={element => { this.level2 = element; }}
         >
           {this.props.links.map((parent, index) =>
             parent.children && parent.children.length &&
             <ul className="main-sub-menu" key={`sub-menu${index}`} ref={element => { this.subMenus[index] = element; }}>
               {parent.children.map((child, childIndex) =>
-                <li key={`sub-link-${index}-${childIndex}`}>
+                <li key={`sub-link-${index}-${childIndex}`} className={(child.isCurrent) ? 'is-current' : null}>
                   <a href={child.href} onClick={event => { if (child.onClick) child.onClick(event); }}>
                     {child.label}
                   </a>

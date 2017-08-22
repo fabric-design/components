@@ -92,11 +92,12 @@ System.register(['../imports', './ws-week-picker-calendar'], function (_export, 
           value: function componentDidMount() {
             var _this2 = this;
 
-            this.outsideClickListener = document.body.addEventListener('click', function (e) {
+            this.outsideClickListener = function (e) {
               if (_this2.state.show && !isDescendant(_this2.element, e.target)) {
                 _this2.setState({ show: false });
               }
-            });
+            };
+            document.body.addEventListener('click', this.outsideClickListener);
           }
         }, {
           key: 'componentWillReceiveProps',

@@ -42,11 +42,12 @@ export class WSWeekPicker extends Component {
    * @returns {void}
    */
   componentDidMount() {
-    this.outsideClickListener = document.body.addEventListener('click', e => {
+    this.outsideClickListener = e => {
       if (this.state.show && !isDescendant(this.element, e.target)) {
         this.setState({show: false});
       }
-    });
+    };
+    document.body.addEventListener('click', this.outsideClickListener);
   }
 
   /**

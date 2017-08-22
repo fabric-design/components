@@ -25,6 +25,7 @@ var WSWeekPicker = exports.WSWeekPicker = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (WSWeekPicker.__proto__ || Object.getPrototypeOf(WSWeekPicker)).call(this, props));
 
+    _this.element = null;
     _this.state = {
       show: false,
       selectedYear: props.selectedYear,
@@ -38,11 +39,12 @@ var WSWeekPicker = exports.WSWeekPicker = function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      this.outsideClickListener = document.body.addEventListener('click', function (e) {
-        if (_this2.state.show && !isDescendant(_this2.elem, e.target)) {
+      this.outsideClickListener = function (e) {
+        if (_this2.state.show && !isDescendant(_this2.element, e.target)) {
           _this2.setState({ show: false });
         }
-      });
+      };
+      document.body.addEventListener('click', this.outsideClickListener);
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -71,6 +73,8 @@ var WSWeekPicker = exports.WSWeekPicker = function (_Component) {
         });
         if (this.props.onChange) {
           this.props.onChange({ week: week, year: year });
+        } else {
+          this.element.dispatchEvent(new CustomEvent('change', { week: week, year: year }, { bubbles: true }));
         }
       }
     }
@@ -86,8 +90,8 @@ var WSWeekPicker = exports.WSWeekPicker = function (_Component) {
 
       return _imports.React.createElement(
         'div',
-        { className: 'ws-week-picker', ref: function ref(elem) {
-            _this3.elem = elem;
+        { className: 'ws-week-picker', ref: function ref(element) {
+            _this3.element = element;
           } },
         _imports.React.createElement('input', {
           value: this.state.selectedWeek !== null ? 'Week ' + this.state.selectedWeek + ', ' + this.state.selectedYear : '',
@@ -98,7 +102,7 @@ var WSWeekPicker = exports.WSWeekPicker = function (_Component) {
           readOnly: true
         }),
         _imports.React.createElement('span', {
-          className: 'icon icon-' + (this.state.show ? 'cross' : 'calendar'),
+          className: 'icon icon16 ' + (this.state.show ? '' : 'icon-calendar'),
           onClick: function onClick() {
             return _this3.toggleCalendar();
           }
@@ -108,7 +112,11 @@ var WSWeekPicker = exports.WSWeekPicker = function (_Component) {
             return _this3.onChange(selection);
           },
           selectedYear: this.state.selectedYear,
-          selectedWeek: this.state.selectedWeek
+          selectedWeek: this.state.selectedWeek,
+          minYear: this.props.minYear,
+          minWeek: this.props.minWeek,
+          maxYear: this.props.maxYear,
+          maxWeek: this.props.maxWeek
         })
       );
     }
@@ -123,6 +131,10 @@ Object.defineProperty(WSWeekPicker, 'defaultProps', {
   value: {
     selectedYear: null,
     selectedWeek: null,
+    minYear: null,
+    minWeek: null,
+    maxYear: null,
+    maxWeek: null,
     onChange: function onChange() {}
   }
 });
@@ -132,6 +144,10 @@ Object.defineProperty(WSWeekPicker, 'propTypes', {
   value: {
     selectedYear: _imports.PropTypes.number,
     selectedWeek: _imports.PropTypes.number,
+    minYear: _imports.PropTypes.number,
+    minWeek: _imports.PropTypes.number,
+    maxYear: _imports.PropTypes.number,
+    maxWeek: _imports.PropTypes.number,
     onChange: _imports.PropTypes.func
   }
 });

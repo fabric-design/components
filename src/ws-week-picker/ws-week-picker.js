@@ -6,6 +6,10 @@ import {WSWeekPickerCalendar} from './ws-week-picker-calendar';
  * @property {object} props               - properties
  * @property {number} props.selectedYear  - set a preselected year
  * @property {number} props.selectedWeek  - set a preselected week
+ * @property {number} props.minYear  - set a minimum year
+ * @property {number} props.minWeek  - set a minimum week
+ * @property {number} props.maxYear  - set a maximum year
+ * @property {number} props.maxWeek  - set a maximum week
  * @property {function} props.onChange    - handler which notifies about picked week
  *
  */
@@ -13,12 +17,20 @@ export class WSWeekPicker extends Component {
   static defaultProps = {
     selectedYear: null,
     selectedWeek: null,
+    minYear: null,
+    minWeek: null,
+    maxYear: null,
+    maxWeek: null,
     onChange: () => {}
   };
 
   static propTypes = {
     selectedYear: PropTypes.number,
     selectedWeek: PropTypes.number,
+    minYear: PropTypes.number,
+    minWeek: PropTypes.number,
+    maxYear: PropTypes.number,
+    maxWeek: PropTypes.number,
     onChange: PropTypes.func
   };
 
@@ -29,6 +41,7 @@ export class WSWeekPicker extends Component {
   constructor(props) {
     super(props);
 
+    this.element = null;
     this.state = {
       show: false,
       selectedYear: props.selectedYear,
@@ -41,11 +54,12 @@ export class WSWeekPicker extends Component {
    * @returns {void}
    */
   componentDidMount() {
-    this.outsideClickListener = document.body.addEventListener('click', e => {
-      if (this.state.show && !isDescendant(this.elem, e.target)) {
+    this.outsideClickListener = e => {
+      if (this.state.show && !isDescendant(this.element, e.target)) {
         this.setState({show: false});
       }
-    });
+    };
+    document.body.addEventListener('click', this.outsideClickListener);
   }
 
   /**
@@ -83,6 +97,8 @@ export class WSWeekPicker extends Component {
       });
       if (this.props.onChange) {
         this.props.onChange({week, year});
+      } else {
+        this.element.dispatchEvent(new CustomEvent('change', {week, year}, {bubbles: true}));
       }
     }
   }
@@ -101,7 +117,7 @@ export class WSWeekPicker extends Component {
    */
   render() {
     return (
-      <div className="ws-week-picker" ref={elem => { this.elem = elem; }}>
+      <div className="ws-week-picker" ref={element => { this.element = element; }}>
         <input
           value={this.state.selectedWeek !== null ? `Week ${this.state.selectedWeek}, ${this.state.selectedYear}` : ''}
           placeholder={'Please choose a week'}
@@ -109,7 +125,7 @@ export class WSWeekPicker extends Component {
           readOnly
         />
         <span
-          className={`icon icon-${this.state.show ? 'cross' : 'calendar'}`}
+          className={`icon icon16 ${this.state.show ? '' : 'icon-calendar'}`}
           onClick={() => this.toggleCalendar()}
         />
         {this.state.show &&
@@ -117,6 +133,10 @@ export class WSWeekPicker extends Component {
             onChange={selection => this.onChange(selection)}
             selectedYear={this.state.selectedYear}
             selectedWeek={this.state.selectedWeek}
+            minYear={this.props.minYear}
+            minWeek={this.props.minWeek}
+            maxYear={this.props.maxYear}
+            maxWeek={this.props.maxWeek}
           />
         }
       </div>

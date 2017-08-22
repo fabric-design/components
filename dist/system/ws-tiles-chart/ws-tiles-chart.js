@@ -69,7 +69,7 @@ System.register(['react', '../imports', './tile'], function (_export, _context) 
 
           var _this = _possibleConstructorReturn(this, (WSTilesChart.__proto__ || Object.getPrototypeOf(WSTilesChart)).call(this, props));
 
-          _this.state = { tileSize: 0 };
+          _this.state = { tileSize: 0, groupOver: '' };
           _this.titleDivSize = 30;
 
           _this.getTileSize = _this.getTileSize.bind(_this);
@@ -79,17 +79,21 @@ System.register(['react', '../imports', './tile'], function (_export, _context) 
         _createClass(WSTilesChart, [{
           key: 'componentWillMount',
           value: function componentWillMount() {
-            this.setState({ tileSize: this.getTileSize() });
+            this.setState({ tileSize: this.getTileSize(this.props) });
+          }
+        }, {
+          key: 'componentWillReceiveProps',
+          value: function componentWillReceiveProps(nextProps) {
+            this.setState({ tileSize: this.getTileSize(nextProps) });
           }
         }, {
           key: 'getTileSize',
-          value: function getTileSize() {
-            var _props = this.props,
-                height = _props.height,
-                width = _props.width,
-                maxTileSize = _props.maxTileSize,
-                minTileSize = _props.minTileSize,
-                data = _props.data;
+          value: function getTileSize(props) {
+            var height = props.height,
+                width = props.width,
+                maxTileSize = props.maxTileSize,
+                minTileSize = props.minTileSize,
+                data = props.data;
 
             var groups = data.groups || {};
 
@@ -124,12 +128,12 @@ System.register(['react', '../imports', './tile'], function (_export, _context) 
           value: function render() {
             var _this2 = this;
 
-            var _props2 = this.props,
-                data = _props2.data,
-                config = _props2.config,
-                title = _props2.title,
-                width = _props2.width,
-                height = _props2.height;
+            var _props = this.props,
+                data = _props.data,
+                config = _props.config,
+                title = _props.title,
+                width = _props.width,
+                height = _props.height;
 
             var groups = data.groups || {};
             return React.createElement(
@@ -152,10 +156,17 @@ System.register(['react', '../imports', './tile'], function (_export, _context) 
                   return groups[groupName].map(function (tile) {
                     return React.createElement(Tile, {
                       identifier: tile,
+                      className: _this2.state.groupOver === groupName ? 'group-over' : '',
                       groupName: groupName,
                       config: config[groupName],
                       size: _this2.state.tileSize,
-                      onClick: _this2.props.onClick
+                      onClick: _this2.props.onClick,
+                      onMouseEnter: function onMouseEnter() {
+                        return _this2.setState({ groupOver: groupName });
+                      },
+                      onMouseLeave: function onMouseLeave() {
+                        return _this2.setState({ groupOver: '' });
+                      }
                     });
                   });
                 })

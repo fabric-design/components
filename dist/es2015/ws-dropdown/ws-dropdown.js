@@ -77,15 +77,16 @@ export var WSDropdown = function (_Component) {
   }, {
     key: 'getTextFromValue',
     value: function getTextFromValue(value) {
-      var text = this.state.text;
+      var propsText = (arguments.length <= 1 ? 0 : arguments.length - 1) > 0 ? arguments.length <= 1 ? undefined : arguments[1] : '';
+      var text = propsText || (this.state && this.state.text ? this.state.text : '');
 
       if (this.props.type === 'select') {
-        if (Array.isArray(value)) {
+        if (Array.isArray(value) && value.length) {
           text = value.map(function (item) {
-            return item.label;
+            return item.label || item;
           }).join(', ');
-        } else {
-          text = value.label || value;
+        } else if (value) {
+          text = value.label;
         }
       }
       return text;
@@ -112,7 +113,7 @@ export var WSDropdown = function (_Component) {
     key: 'createState',
     value: function createState(props) {
       var state = {
-        text: props.text || this.getTextFromValue(props.value),
+        text: this.getTextFromValue(props.value, props.text),
         value: this.enrichItems(props.value),
         items: this.enrichItems(props.items)
       };
@@ -141,7 +142,7 @@ export var WSDropdown = function (_Component) {
         itemsToWrap = items ? [items] : [];
       }
       return itemsToWrap.map(function (item) {
-        var enriched = (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' ? item : { label: item };
+        var enriched = (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' ? item : { label: item, value: item };
         if (enriched.children) {
           enriched.children = _this3.enrichItems(enriched.children);
         }
@@ -151,7 +152,7 @@ export var WSDropdown = function (_Component) {
   }, {
     key: 'open',
     value: function open() {
-      if (this.opened) {
+      if (this.opened || this.props.disabled) {
         return;
       }
       this.opened = true;
@@ -208,13 +209,17 @@ export var WSDropdown = function (_Component) {
       if (this.props.icon) {
         icon = React.createElement('span', { className: 'icon ' + this.props.icon });
       }
+      var disabledStyle = this.props.disabled ? ' is-disabled' : '';
       switch (this.props.type) {
         case 'anchor':
           return React.createElement(
             'a',
-            { className: 'dropdown-trigger', onClick: function onClick() {
+            {
+              className: 'dropdown-trigger ' + disabledStyle,
+              onClick: function onClick() {
                 return _this5.open();
-              } },
+              }
+            },
             icon,
             ' ',
             this.state.text
@@ -222,9 +227,12 @@ export var WSDropdown = function (_Component) {
         case 'button':
           return React.createElement(
             'button',
-            { className: 'dropdown-trigger', onClick: function onClick() {
+            {
+              className: 'dropdown-trigger ' + disabledStyle,
+              onClick: function onClick() {
                 return _this5.open();
-              } },
+              }
+            },
             icon,
             ' ',
             this.state.text
@@ -232,9 +240,12 @@ export var WSDropdown = function (_Component) {
         case 'select':
           return React.createElement(
             'div',
-            { className: 'dropdown-trigger select-box', onClick: function onClick() {
+            {
+              className: 'dropdown-trigger select-box ' + disabledStyle,
+              onClick: function onClick() {
                 return _this5.open();
-              } },
+              }
+            },
             icon,
             ' ',
             this.state.text
@@ -243,9 +254,12 @@ export var WSDropdown = function (_Component) {
         default:
           return React.createElement(
             'a',
-            { className: 'dropdown-trigger', onClick: function onClick() {
+            {
+              className: 'dropdown-trigger ' + disabledStyle,
+              onClick: function onClick() {
                 return _this5.open();
-              } },
+              }
+            },
             icon
           );
       }
@@ -283,6 +297,7 @@ export var WSDropdown = function (_Component) {
     value: function render() {
       var _this7 = this;
 
+      var isWide = this.props.type === 'select' ? 'mod-wide' : '';
       return React.createElement(
         'div',
         { className: 'dropdown', ref: function ref(element) {
@@ -294,7 +309,7 @@ export var WSDropdown = function (_Component) {
         React.createElement(
           'div',
           {
-            className: 'dropdown-container ' + this.props.orientation,
+            className: 'dropdown-container ' + this.props.orientation + ' ' + isWide,
             ref: function ref(element) {
               if (element) {
                 _this7.dropdownContainer = element;
@@ -326,7 +341,8 @@ Object.defineProperty(WSDropdown, 'defaultProps', {
     orientation: 'left',
     placeholder: '',
     value: null,
-    onChange: function onChange() {}
+    onChange: function onChange() {},
+    disabled: false
   }
 });
 Object.defineProperty(WSDropdown, 'propTypes', {
@@ -345,7 +361,8 @@ Object.defineProperty(WSDropdown, 'propTypes', {
     orientation: PropTypes.oneOf(['left', 'right']),
     placeholder: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    disabled: PropTypes.bool
   }
 });
 Object.defineProperty(WSDropdown, 'childContextTypes', {

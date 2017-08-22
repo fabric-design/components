@@ -14,18 +14,30 @@ const allMonths = [months[10], months[11]].concat(months).concat([months[0], mon
  * @property {object} props               - properties
  * @property {number} props.selectedYear  - set a preselected year
  * @property {number} props.selectedWeek  - set a preselected week
+ * @property {number} props.minYear  - set a minimum year
+ * @property {number} props.minWeek  - set a minimum week
+ * @property {number} props.maxYear  - set a maximum year
+ * @property {number} props.maxWeek  - set a maximum week
  * @property {function} props.onChange    - handler which notifies about picked week
  */
 export class WSWeekPickerCalendar extends Component {
   static defaultProps = {
     selectedYear: null,
     selectedWeek: null,
+    minYear: null,
+    minWeek: null,
+    maxYear: null,
+    maxWeek: null,
     onChange: () => { }
   };
 
   static propTypes = {
     selectedYear: PropTypes.number,
     selectedWeek: PropTypes.number,
+    minYear: PropTypes.number,
+    minWeek: PropTypes.number,
+    maxYear: PropTypes.number,
+    maxWeek: PropTypes.number,
     onChange: PropTypes.func
   };
 
@@ -90,6 +102,22 @@ export class WSWeekPickerCalendar extends Component {
   }
 
   /**
+   * Checks if a week is in the required timeframe.
+   * @param {number} year Year of the week
+   * @param {number} week Week
+   * @returns {boolean}
+   */
+  isInTimeframe(year, week) {
+    if (this.props.minYear && (this.props.minYear > year || (this.props.minYear === year && this.props.minWeek > week))) {
+      return false;
+    }
+    if (this.props.maxYear && (this.props.maxYear < year || (this.props.maxYear === year && this.props.maxWeek < week))) {
+      return false;
+    }
+    return true;
+  }
+
+  /**
    * Builds an array of rows for the calendar. Every row holds one or none week of the month referenced by the column.
    * @returns {Object}
    */
@@ -103,13 +131,14 @@ export class WSWeekPickerCalendar extends Component {
       <tr key={weekIndex}>
         {allMonths.map((month, monthIndex) => {
           const weekInMonth = weeksPerMonth[monthIndex][weekIndex];
-          if (weekInMonth === null) {
+          if (weekInMonth === null || weekInMonth === undefined) {
             return <td key={`${monthIndex}_${weekIndex}`} />;
           }
           const {week, year} = weekInMonth;
           return (
             <td
               className={(monthIndex < 2 || monthIndex > 13 ? 'off ' : '')
+                        + (!this.isInTimeframe(year, week) ? 'disable ' : '')
                         + (this.isActive(year, week) ? 'active ' : '')
                         + (this.isToday(year, week) ? 'today ' : '')}
               key={`${monthIndex}_${weekIndex}`}
@@ -132,13 +161,13 @@ export class WSWeekPickerCalendar extends Component {
         <table>
           <caption>
             <span className="prev" onClick={() => this.prevYear()}>
-              <span className="icon icon-left" />
+              <span className="icon icon32 icon-left" />
               {this.state.showingYear - 1}
             </span>
-            <span>{this.state.showingYear}</span>
+            <span className="current_year">{this.state.showingYear}</span>
             <span className="next" onClick={() => this.nextYear()}>
               {this.state.showingYear + 1}
-              <span className="icon icon-right" />
+              <span className="icon icon32 icon-right" />
             </span>
           </caption>
           <thead>
@@ -180,7 +209,7 @@ function getDateOfISOWeek(week, year) {
  * @param {Date} date Date
  * @returns {Number}
  */
-function getWeekOfYear(date) {
+export function getWeekOfYear(date) {
   // Create a copy of this date object
   const target = new Date(date.valueOf());
 
@@ -238,7 +267,7 @@ function getWeeks(month, year) {
   for (let i = startWeek; i <= endWeek; i++) {
     weeks.push({
       week: i,
-      actualYear
+      year: actualYear
     });
   }
   return weeks;

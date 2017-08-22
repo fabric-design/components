@@ -41,7 +41,8 @@ export class WSDropdown extends Component {
     orientation: 'left',
     placeholder: '',
     value: null,
-    onChange: () => {}
+    onChange: () => {},
+    disabled: false
   };
 
   /**
@@ -60,7 +61,8 @@ export class WSDropdown extends Component {
     orientation: PropTypes.oneOf(['left', 'right']),
     placeholder: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    disabled: PropTypes.bool
   };
 
   /**
@@ -135,17 +137,19 @@ export class WSDropdown extends Component {
   /**
    * Get text from labels of selected items
    * @param {String|Object|Array<Object>} value Selected items
+   * @param {Array<*>} args Optionally a default text can be passed
    * @returns {String}
    */
-  getTextFromValue(value) {
-    let text = this.state.text;
+  getTextFromValue(value, ...args) {
+    const propsText = args.length > 0 ? args[0] : '';
+    let text = propsText || (this.state && this.state.text ? this.state.text : '');
     // Check if we have to update the text value
     if (this.props.type === 'select') {
-      if (Array.isArray(value)) {
-        text = value.map(item => item.label).join(', ');
-      } else {
+      if (Array.isArray(value) && value.length) {
+        text = value.map(item => item.label || item).join(', ');
+      } else if (value) {
         // Value can be object from dropdown item or simple string from input
-        text = value.label || value;
+        text = value.label;
       }
     }
     return text;
@@ -180,7 +184,7 @@ export class WSDropdown extends Component {
    */
   createState(props) {
     const state = {
-      text: props.text || this.getTextFromValue(props.value),
+      text: this.getTextFromValue(props.value, props.text),
       value: this.enrichItems(props.value),
       items: this.enrichItems(props.items)
     };
@@ -227,7 +231,7 @@ export class WSDropdown extends Component {
       itemsToWrap = items ? [items] : [];
     }
     return itemsToWrap.map(item => {
-      const enriched = typeof item === 'object' ? item : {label: item};
+      const enriched = typeof item === 'object' ? item : {label: item, value: item};
       if (enriched.children) {
         enriched.children = this.enrichItems(enriched.children);
       }
@@ -240,7 +244,7 @@ export class WSDropdown extends Component {
    * @returns {void}
    */
   open() {
-    if (this.opened) {
+    if (this.opened || this.props.disabled) {
       return;
     }
     this.opened = true;
@@ -310,16 +314,41 @@ export class WSDropdown extends Component {
     if (this.props.icon) {
       icon = <span className={`icon ${this.props.icon}`} />;
     }
+    const disabledStyle = this.props.disabled ? ' is-disabled' : '';
     switch (this.props.type) {
       case 'anchor':
-        return <a className="dropdown-trigger" onClick={() => this.open()}>{icon} {this.state.text}</a>;
+        return (
+          <a
+            className={`dropdown-trigger ${disabledStyle}`}
+            onClick={() => this.open()}
+          >
+            {icon} {this.state.text}
+          </a>);
       case 'button':
-        return <button className="dropdown-trigger" onClick={() => this.open()}>{icon} {this.state.text}</button>;
+        return (
+          <button
+            className={`dropdown-trigger ${disabledStyle}`}
+            onClick={() => this.open()}
+          >
+            {icon} {this.state.text}
+          </button>);
       case 'select':
-        return <div className="dropdown-trigger select-box" onClick={() => this.open()}>{icon} {this.state.text}</div>;
+        return (
+          <div
+            className={`dropdown-trigger select-box ${disabledStyle}`}
+            onClick={() => this.open()}
+          >
+            {icon} {this.state.text}
+          </div>);
       case 'icon':
       default:
-        return <a className="dropdown-trigger" onClick={() => this.open()}>{icon}</a>;
+        return (
+          <a
+            className={`dropdown-trigger ${disabledStyle}`}
+            onClick={() => this.open()}
+          >
+            {icon}
+          </a>);
     }
   }
 
@@ -359,11 +388,12 @@ export class WSDropdown extends Component {
    * @returns {Object}
    */
   render() {
+    const isWide = this.props.type === 'select' ? 'mod-wide' : '';
     return (
       <div className="dropdown" ref={element => { if (element) { this.element = element; } }}>
         {this.renderTrigger()}
         <div
-          className={`dropdown-container ${this.props.orientation}`}
+          className={`dropdown-container ${this.props.orientation} ${isWide}`}
           ref={element => { if (element) { this.dropdownContainer = element; } }}
         >
           {this.renderContent()}

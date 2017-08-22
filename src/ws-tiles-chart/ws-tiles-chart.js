@@ -56,26 +56,36 @@ export class WSTilesChart extends Component {
    */
   constructor(props) {
     super(props);
-    this.state = {tileSize: 0};
+    this.state = {tileSize: 0, groupOver: ''};
     this.titleDivSize = 30;
 
     this.getTileSize = this.getTileSize.bind(this);
   }
 
   /**
-   * Calculate the tiles size
+   * Called before the component mounts to calculate the tiles size
    * @returns {void}
    */
   componentWillMount() {
-    this.setState({tileSize: this.getTileSize()});
+    this.setState({tileSize: this.getTileSize(this.props)});
+  }
+
+  /**
+   * Called when the props updates to calculate the tiles size
+   * @param {Object} nextProps next props received
+   * @returns {void}
+   */
+  componentWillReceiveProps(nextProps) {
+    this.setState({tileSize: this.getTileSize(nextProps)});
   }
 
   /**
    * Returns the size to be used for the tile
+   * @param {Object} props props of the component
    * @returns {number}
    */
-  getTileSize() {
-    const {height, width, maxTileSize, minTileSize, data} = this.props;
+  getTileSize(props) {
+    const {height, width, maxTileSize, minTileSize, data} = props;
     const groups = data.groups || {};
 
     if (maxTileSize === minTileSize || Object.keys(groups).length === 0) {
@@ -128,10 +138,13 @@ export class WSTilesChart extends Component {
           {Object.keys(groups).map(groupName => groups[groupName].map(tile =>
             <Tile
               identifier={tile}
+              className={this.state.groupOver === groupName ? 'group-over' : ''}
               groupName={groupName}
               config={config[groupName]}
               size={this.state.tileSize}
               onClick={this.props.onClick}
+              onMouseEnter={() => this.setState({groupOver: groupName})}
+              onMouseLeave={() => this.setState({groupOver: ''})}
             />
           ))}
         </div>

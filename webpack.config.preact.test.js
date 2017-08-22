@@ -11,7 +11,7 @@ module.exports = {
       test: /\.js$/,
       use: [{
         loader: 'babel-loader',
-        options: require(path.resolve(__dirname, 'babelrc.js')) // eslint-disable-line
+        options: { babelrc: true },
       }],
       exclude: [/node_modules/]
     },
@@ -34,7 +34,7 @@ module.exports = {
     alias: {
       imports: path.resolve(__dirname, 'src/imports.js'),
       react: 'preact',
-      'react-dom': 'preact'
+      'react-dom': 'preact-compat'
     }
   }
 };

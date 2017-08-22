@@ -1,27 +1,30 @@
 @import "~wholesale-styleguide-scss/utils/variables";
 
-// PROPOSAL for mixin
-$padding: 1rem;
+$padding: $space-m;
 // to allow padding with setting a transparent border
 @mixin table-padding ($top, $right, $bottom, $left) {
   @if $top != 0 {
-    tr:first-child:before {
-      height: $top;
+    tr:first-child {
+      td, th {
+        padding-top: $top;
+      }
     }
   }
   @if $right != 0 {
     th:last-child, td:last-child {
-      padding-right: $right !important;
+      padding-right: $right;
     }
   }
   @if $bottom != 0 {
-    tr:first-child:after {
-      height: $bottom;
+    tr:last-child {
+      td, th {
+        padding-bottom: $bottom;
+      }
     }
   }
   @if $left != 0 {
     th:first-child, td:first-child {
-      padding-left: $left !important;
+      padding-left: $left;
     }
   }
 }
@@ -33,18 +36,18 @@ $padding: 1rem;
   & > input {
     cursor: pointer;
     display: inline-block;
-    padding-right: 1.5rem;
+    padding-right: 2.25rem;
   }
-  & > i {
-    font-size: 1.5rem;
+
+  // icon
+  & > span {
     position: absolute;
-    top: calc(0.5rem + 1px); // input has 1 pixel border (2px total)
-    right: 0.25rem;
+    right: 0.625rem;
+    top: 0.625rem;
     cursor: pointer;
   }
   .ws-date-picker-calendar {
     background: $white;
-    border-radius: 3px;
     box-shadow: map-get($elevation-shadows, 'hovering');
     display: inline-block;
     position: absolute;
@@ -79,28 +82,28 @@ $padding: 1rem;
     display: inline-block;
     border: none;
     font-size: $font-size-small;
-
     caption {
-      padding: 0 1rem;
+      padding: $space-xs;
       display: flex;
       justify-content: space-between;
       align-content: center;
-      color: $heron;
+      color: $jumbo;
       font-weight: 300;
       font-size: $base-font-size;
 
       > span {
-        cursor: pointer;
-        line-height: 2.5rem;
         display: inline-flex;
         align-items: center;
       }
-      i {
-        font-size: 1.5rem;
-        //TODO: This overrides a magic-numbers declaration in the SCSS repo's icons.scss Remove once margin-top -25% hack is removed there.
-        &::before {
-          margin: 0;
-        }
+
+      .prev, .next {
+        cursor: pointer;
+      }
+      .icon-left {
+        margin-right: $space-s;
+      }
+      .icon-right {
+        margin-left: $space-s;
       }
     }
     thead {
@@ -108,36 +111,41 @@ $padding: 1rem;
       border: none;
 
       th {
-        padding: 0 !important;
-        line-height: 2rem;
+        padding: 0;
+        line-height: $space-xl;
       }
     }
     tbody {
-      @include table-padding(0, $padding, 0, $padding);
-
-      &:before, &:after {
-        content: "_";
-        display: block;
-        line-height: 0.25rem;
-        color: transparent;
-      }
+      @include table-padding(0, $padding, $padding, $padding);
 
       td {
-        padding: rem(2px) rem(2px) !important;
+        padding: $space-xxs / 2;
+        font-size: $font-size-small;
+      }
+      tr:first-child {
+        td {
+          padding-top: $space-xxs;
+        }
       }
     }
     td, th {
       text-align: center;
+      /* overwriting the default styling for tables in the styleguide */
       background-color: transparent !important;
       border: none !important;
 
-      &.off, &.off .week {
-        color: $french-gray;
+      &.off, &.off .week, &.disable .week {
+        color: $bombay;
+      }
+      &.disable {
+        pointer-events: none;
+        cursor: not-allowed;
       }
       .week {
-        width: 2rem;
-        line-height: 2rem;
-        color: $base-font-color;
+        width: $space-xl;
+        height: $space-xl;
+        line-height: $space-xl - rem(2px); // Fix for acumin-pro
+        color: $asphalt;
         display: block;
         border-radius: 50%;
         cursor: pointer;
@@ -156,13 +164,12 @@ $padding: 1rem;
         }
       }
       &.today .week {
-        border: 1px solid $sail;
+        background-color: $arctica;
       }
     }
     th {
       line-height: rem(39px);
-      color: $jumbo;
-      background-color: $silver !important;
+      color: $santas-gray;
       font-weight: normal;
     }
   }

@@ -56,6 +56,17 @@ export var WSWeekPickerCalendar = function (_Component) {
       return this.todayYear === year && this.todayWeek === week;
     }
   }, {
+    key: 'isInTimeframe',
+    value: function isInTimeframe(year, week) {
+      if (this.props.minYear && (this.props.minYear > year || this.props.minYear === year && this.props.minWeek > week)) {
+        return false;
+      }
+      if (this.props.maxYear && (this.props.maxYear < year || this.props.maxYear === year && this.props.maxWeek < week)) {
+        return false;
+      }
+      return true;
+    }
+  }, {
     key: 'buildWeekRows',
     value: function buildWeekRows() {
       var _this2 = this;
@@ -71,7 +82,7 @@ export var WSWeekPickerCalendar = function (_Component) {
           { key: weekIndex },
           allMonths.map(function (month, monthIndex) {
             var weekInMonth = weeksPerMonth[monthIndex][weekIndex];
-            if (weekInMonth === null) {
+            if (weekInMonth === null || weekInMonth === undefined) {
               return React.createElement('td', { key: monthIndex + '_' + weekIndex });
             }
             var week = weekInMonth.week,
@@ -80,7 +91,7 @@ export var WSWeekPickerCalendar = function (_Component) {
             return React.createElement(
               'td',
               {
-                className: (monthIndex < 2 || monthIndex > 13 ? 'off ' : '') + (_this2.isActive(year, week) ? 'active ' : '') + (_this2.isToday(year, week) ? 'today ' : ''),
+                className: (monthIndex < 2 || monthIndex > 13 ? 'off ' : '') + (!_this2.isInTimeframe(year, week) ? 'disable ' : '') + (_this2.isActive(year, week) ? 'active ' : '') + (_this2.isToday(year, week) ? 'today ' : ''),
                 key: monthIndex + '_' + weekIndex,
                 onClick: function onClick() {
                   return _this2.props.onChange({ week: week, year: year });
@@ -115,12 +126,12 @@ export var WSWeekPickerCalendar = function (_Component) {
               { className: 'prev', onClick: function onClick() {
                   return _this3.prevYear();
                 } },
-              React.createElement('span', { className: 'icon icon-left' }),
+              React.createElement('span', { className: 'icon icon32 icon-left' }),
               this.state.showingYear - 1
             ),
             React.createElement(
               'span',
-              null,
+              { className: 'current_year' },
               this.state.showingYear
             ),
             React.createElement(
@@ -129,7 +140,7 @@ export var WSWeekPickerCalendar = function (_Component) {
                   return _this3.nextYear();
                 } },
               this.state.showingYear + 1,
-              React.createElement('span', { className: 'icon icon-right' })
+              React.createElement('span', { className: 'icon icon32 icon-right' })
             )
           ),
           React.createElement(
@@ -166,6 +177,10 @@ Object.defineProperty(WSWeekPickerCalendar, 'defaultProps', {
   value: {
     selectedYear: null,
     selectedWeek: null,
+    minYear: null,
+    minWeek: null,
+    maxYear: null,
+    maxWeek: null,
     onChange: function onChange() {}
   }
 });
@@ -175,6 +190,10 @@ Object.defineProperty(WSWeekPickerCalendar, 'propTypes', {
   value: {
     selectedYear: PropTypes.number,
     selectedWeek: PropTypes.number,
+    minYear: PropTypes.number,
+    minWeek: PropTypes.number,
+    maxYear: PropTypes.number,
+    maxWeek: PropTypes.number,
     onChange: PropTypes.func
   }
 });
@@ -191,7 +210,7 @@ function getDateOfISOWeek(week, year) {
   return ISOWeekStart;
 }
 
-function getWeekOfYear(date) {
+export function getWeekOfYear(date) {
   var target = new Date(date.valueOf());
 
   var dayNr = date.getDay();
@@ -234,7 +253,7 @@ function getWeeks(month, year) {
   for (var i = startWeek; i <= endWeek; i++) {
     weeks.push({
       week: i,
-      actualYear: actualYear
+      year: actualYear
     });
   }
   return weeks;

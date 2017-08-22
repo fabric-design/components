@@ -1,389 +1,309 @@
 import {React, Component, PropTypes} from '../imports';
-import WSHeaderNavLink from './ws-header-nav-link';
-const urlAtStart = window.location.href;
-const SESSION_TOKEN_NAME = 'session_token';
-const SESSION_STATE_NAME = 'session_state';
+import {CookieStorage} from './storage/cookie-storage';
+import {LocalStorage} from './storage/local-storage';
+import {Authorization} from './authorization';
+import {WSDropdown} from '../ws-dropdown/ws-dropdown';
 
 /**
- * The default Header to be used everywhere
- * @class WSHeader
- * @property {object} props             - properties
- * @property {function} props.setLang   - handler which sets language
- * @property {function} props.setLogin  - handler which sets Login information (token and boolan for loggedin)
- * @property {number} props.clientId    - clientId
- * @property {string} props.redirectUrl - URL to redirect after successfully login
- * @property {string} props.logoUrl     - url for logo
- * @property {string} props.title       - title of Header
- * @property {array} props.links        - List of navigation links based on object format {label, onclick-Handler }
+ * This component renders a generic header which provides authentication and language management
  *
+ * Optionally call WSHeader.setStorageType('cookie', 'zalando') If you want a to use cookies instead of localStorage
+ * to persist the tokens. You can call WSHeader.getAccessToken().then(token => ...) to get the current access token.
+ * It will resolve null when no access token is present and therefore the user isn't logged in.
+ * If you configured the header with a refreshUrl you should subscribe the ws-auth-changed event. It will be emitted
+ * when the access token was refreshed and it will have the access token in the event details.
  */
 export class WSHeader extends Component {
 
+  /**
+   * Default storage instance
+   * @type {AbstractStorage}
+   */
+  static storage = new LocalStorage();
+
   static defaultProps = {
-    setLang: () => {},
-    setLogin: () => {},
+    loginUrl: 'https://identity.zalando.com/oauth2/authorize',
+    refreshUrl: null,
+    businessPartnerId: '810d1d00-4312-43e5-bd31-d8373fdd24c7',
     clientId: null,
-    redirectUrl: '',
-    logoUrl: null,
-    title: '',
-    links: []
+    links: [],
+    appName: 'Zalando',
+    appLogo: null,
+    onLocaleChange: () => {},
+    onAuthChange: () => {}
   };
 
-  /**
-   * @type {Object} props
-   */
   static propTypes = {
-    setLang: PropTypes.func,
-    setLogin: PropTypes.func,
-    clientId: PropTypes.number,
-    redirectUrl: PropTypes.string,
-    logoUrl: PropTypes.string,
-    title: PropTypes.string,
-    links: PropTypes.array
+    loginUrl: PropTypes.string,
+    refreshUrl: PropTypes.string,
+    businessPartnerId: PropTypes.string,
+    clientId: PropTypes.string,
+    links: PropTypes.array,
+    appName: PropTypes.string,
+    appLogo: PropTypes.string,
+    onLocaleChange: PropTypes.func,
+    onAuthChange: PropTypes.func
   };
 
   /**
-   * Constructor of WSHeader
-   * it is initializing default values for the state object
+   * Initialize the storage
+   * @param {string} type Can be either cookie or local
+   * @param {string} name Storage name will be used as key prefix
+   * @returns {void}
    */
-  constructor() {
-    super();
-    this.state = {
-      cookiePath: '/',
-      cookieDomain: '.zalan.do',
-      lang: null,
-      languageStorageId: 'ws-language',
-      loggedIn: null,
-      id: null, // HEADER_COMPONENT_ID,
-      redirectUrl: null, // REDIRECT_URL,
-      userServiceUrl: null, // CORS_SERVICE_URL + USER_SERVICE_URL,
-      tokenInfoUrl: '', // CORS_SERVICE_URL + TOKEN_SERVICE_URL,
-      clientId: null, // getCookieValue(CLIENT_ID_COOKIE_NAME),
-      availableLanguages: ['de', 'en'],
-      userName: null,
-      userEmail: null,
-      userUID: null
-    };
-    this.state.lang = this.getLanguage(this.state);
+  static setStorageType(type, name) {
+    // Create storage for persisting keys
+    if (type === 'cookie') {
+      this.storage = new CookieStorage(name);
+    } else {
+      this.storage = new LocalStorage(name);
+    }
   }
 
   /**
-   * Lifecycle: componentDidMount handler for component
+   * Tries to get the access token from authorization class
+   * @param {string} queryString The current query string to parse the token from
+   * @returns {Promise}
+   */
+  static getAccessToken(queryString = location.hash.substr(1)) {
+    return new Promise(resolve => {
+      const authorization = new Authorization(this.storage);
+      authorization.onAccessTokenChange(accessToken => resolve(accessToken));
+      authorization.tryFetchToken(queryString);
+    });
+  }
+
+  /**
+   * Retrieve the persisted locale
+   * @returns {string}
+   */
+  static getLocale() {
+    const locale = WSHeader.storage.get('locale') || window.navigator.language.replace(/([a-z]+)-.*/, '$1');
+    if (['de', 'en'].indexOf(locale) === -1) {
+      return 'en';
+    }
+    return locale;
+  }
+
+  /**
+   * @param {Object} props React/Preact properties
+   */
+  constructor(props) {
+    super(props);
+    this.initState();
+    this.initAuthorization(props);
+    this.mounted = false;
+    this.locales = [
+      {label: 'German', value: 'de'},
+      {label: 'English', value: 'en'}
+    ];
+    this.subMenus = [];
+    this.menuItems = [];
+    this.level2 = null;
+  }
+
+  /**
+   * Detect mounted state to prevent calling setState to early
    * @returns {void}
    */
   componentDidMount() {
-    this.checkIsLoggedIn();
+    this.mounted = true;
   }
 
   /**
-   * Method to extract state parameter from url
-   * @param {String} url urlString to extract state parameter
-   * @returns {String} state information
-   */
-  getStateFromUrl(url) {
-    const urlQueryStatePart = /state=([^&]+)/.exec(url);
-    return urlQueryStatePart[1];
-  }
-
-  /**
-   * Method to get user auth token
-   * @param {String} orgUrl url to receive Token
-   * @returns {String} token string
-   */
-  getToken(orgUrl) {
-    let url = orgUrl;
-    const that = this;
-
-    if (!url) {
-      url = window.location.href;
-    }
-    let token = getTokenFromUrl(url);
-    if (token) {
-      const sessionState = that.getStateFromUrl(url);
-      if (that.checkSessionState(sessionState)) {
-        that.setCookie(token);
-        return token;
-      }
-    }
-    token = getCookieValue(SESSION_TOKEN_NAME);
-    if (token) {
-      return token;
-    }
-    return null;
-  }
-
-  /**
-   * Sets cookie for a given token
-   * @param {String} token Token String
+   * Changes the locale to the given one
+   * @param {string} newLocale The new locale
    * @returns {void}
    */
-  setCookie(token) {
-    if (process.env.NODE_ENV !== 'dev') {
-      document.cookie = `${SESSION_TOKEN_NAME}=${token};path=${this.state.cookiePath};domain=${this.state.cookieDomain};`;
+  setLocale(newLocale) {
+    this.setState({locale: newLocale});
+    WSHeader.storage.set('locale', newLocale);
+    this.dispatchEvent('ws-locale-changed', newLocale);
+    // Propagate value in React world
+    if (typeof this.props.onLocaleChange === 'function') {
+      this.props.onLocaleChange(newLocale);
+    }
+  }
+
+  /**
+   * Initialize the component state
+   * @returns {void}
+   */
+  initState() {
+    this.state = {
+      isLoggedIn: false,
+      locale: WSHeader.getLocale()
+    };
+  }
+
+  /**
+   * Initialize the OAuth2 authorization
+   * @param {Object} props React/Preact props
+   * @returns {void}
+   */
+  initAuthorization(props) {
+    // Initialize authorization with implicit flow
+    this.authorization = new Authorization(
+      WSHeader.storage,
+      props.loginUrl,
+      props.refreshUrl,
+      props.clientId,
+      props.businessPartnerId
+    );
+    // Listen to authorization changes
+    this.authorization.onAccessTokenChange(accessToken => {
+      if (this.mounted) {
+        this.setState({isLoggedIn: !!accessToken});
+      } else {
+        this.state.isLoggedIn = !!accessToken;
+      }
+
+      this.dispatchEvent('ws-auth-changed', accessToken);
+    });
+    // Check if we was redirected from the auth page and an access token is available
+    this.authorization.tryFetchToken(location.hash.substr(1));
+    // Listen for authentication requests
+    window.addEventListener('ws-authorize', () => {
+      this.authorization.authorize();
+    });
+    // Listen for authentication removal requests
+    window.addEventListener('ws-unauthorize', () => {
+      this.authorization.unauthorize();
+    });
+  }
+
+  /**
+   * Get's called when the mouse enters a menu item
+   * @param {number} index The index of the item in the link list
+   * @returns {void}
+   */
+  enterMenuItem(index) {
+    clearInterval(this.leaveTimeout);
+    this.subMenus.forEach(subMenu => subMenu.classList.remove('is-active'));
+    this.menuItems.forEach(item => item.classList.remove('is-hovered'));
+    // Show sub menu or hide level 2 completely
+    if (this.subMenus[index]) {
+      this.level2.classList.add('is-active');
+      const subMenu = this.subMenus[index];
+      subMenu.classList.add('is-active');
+      const item = this.menuItems[index];
+      item.classList.add('is-hovered');
     } else {
-      document.cookie = `${SESSION_TOKEN_NAME}=${token};path=${this.state.cookiePath};`;
+      this.leaveLevel2();
     }
   }
 
   /**
-   * get Language from state / localStorage
-   * @param {object} state state object of component
-   * @returns {object}  language object
-   */
-  getLanguage(state) {
-    return window.localStorage.getItem(state.languageStorageId) || state.availableLanguages[0];
-  }
-
-  /**
-   * Language string to set navigation
-   * @param {String} lang Language string
+   * Get's called when the mouse leaves a menu item
+   * @param {number} index The index of the item in the link list
    * @returns {void}
    */
-  setLanguage(lang) {
-    if (lang !== this.state.lang) {
-      this.setState({lang});
-      // persist
-      window.localStorage.setItem(this.state.languageStorageId, lang);
-      if (this.props.setLang) {
-        this.props.setLang(lang);
+  leaveMenuItem(index) {
+    this.leaveTimeout = setTimeout(() => {
+      this.level2.classList.remove('is-active');
+      if (this.subMenus[index]) {
+        const subMenu = this.subMenus[index];
+        subMenu.classList.remove('is-active');
+        const item = this.menuItems[index];
+        item.classList.remove('is-hovered');
       }
-    }
+    }, 10);
   }
 
   /**
-   * Removes cookie
+   * Get's called when the mouse enters into the level 2 (sub menu)
    * @returns {void}
    */
-  removeCookie() {
-    if (process.env.NODE_ENV !== 'dev') {
-      document.cookie = `${SESSION_TOKEN_NAME}=;path=${this.state.cookiePath};domain=${this.state.cookieDomain};expires=Thu, 01 Jan 1970 00:00:01 GMT";`;
-    } else {
-      document.cookie = `${SESSION_TOKEN_NAME}=;path=${this.state.cookiePath};expires=Thu, 01 Jan 1970 00:00:01 GMT";`;
-    }
+  enterLevel2() {
+    clearInterval(this.leaveTimeout);
   }
 
   /**
-   * Helper method checking if the user is already logged in
-   * @returns {Boolean|void}
-   */
-  checkIsLoggedIn() {
-    const that = this;
-
-    /**
-     * React to failure in user authentication
-     * @returns {void}
-     */
-    function failureListener() {
-      that.logout();
-    }
-
-    /**
-     * react to success in user authentication
-     * @returns {boolean} is the user logged in
-     */
-    function successListener() {
-      const that2 = this;
-
-      /**
-       * react to success in the user lookup
-       * set the local state with the looked up user name and email
-       * @returns {void}
-       */
-      function userServiceSuccess() {
-        const user = JSON.parse(this.responseText);
-        that.setState({userName: user.name});
-        that.setState({userEmail: user.email});
-      }
-      const data = JSON.parse(that2.responseText);
-      that.setState({userUID: data.uid});
-      that.propagateLoginStatusChange(true, data.access_token);
-      if (data.uid) {
-        const requestUserServiceUrl = new XMLHttpRequest();
-        requestUserServiceUrl.onload = userServiceSuccess;
-        requestUserServiceUrl.onerror = failureListener;
-        if (process.env.NODE_ENV !== 'dev') {
-          requestUserServiceUrl.open('get', `${that.state.userServiceUrl}/${data.uid}`, true);
-        } else {
-          requestUserServiceUrl.open('get', `${that.state.userServiceUrl}`, true);
-        }
-        requestUserServiceUrl.setRequestHeader('Authorization', `Bearer ${data.access_token}`);
-        requestUserServiceUrl.send();
-        return true;
-      }
-      return false;
-    }
-
-    const token = this.getToken(urlAtStart);
-    if (!token) {
-      return failureListener();
-    }
-    const request = new XMLHttpRequest();
-    request.onload = successListener;
-    request.onerror = failureListener;
-    request.open('get', that.state.tokenInfoUrl, true);
-    request.setRequestHeader('Authorization', `Bearer ${token.split('?')[0]}`);
-    request.send();
-    return true;
-  }
-
-  /**
-   * Updates changed login status
-   * @param {boolean} isLoggedIn updated status of logged in user
-   * @param {String} token Token String
+   * Get's called when the mouse leaves the level 2 (sub menu)
    * @returns {void}
    */
-  propagateLoginStatusChange(isLoggedIn, token) {
-    if (this.state.loggedIn !== isLoggedIn) {
-      this.setState({loggedIn: isLoggedIn});
-
-      if (this.props.setLogin) {
-        this.props.setLogin({
-          loggedIn: isLoggedIn,
-          token: token || null
-        });
-      }
-    }
+  leaveLevel2() {
+    this.subMenus.forEach(subMenu => subMenu.classList.remove('is-active'));
+    this.menuItems.forEach(item => item.classList.remove('is-hovered'));
+    this.level2.classList.remove('is-active');
   }
 
   /**
-   * Helper method checking current session state
-   * @param {String} state String containing state
-   * @returns {Boolean} valid boolean
-   */
-  checkSessionState(state) {
-    const stateObj = JSON.parse(decodeURIComponent(state));
-    const valid = window.localStorage.getItem(SESSION_STATE_NAME) === stateObj.state;
-    window.location.hash = stateObj.hash;
-    window.localStorage.removeItem(SESSION_STATE_NAME);
-    return valid;
-  }
-
-  /**
-   * Login
-   * @returns {void}
-   */
-  login() {
-    window.location.href = `https://auth.zalando.com/z/oauth2/authorize?realm=/employees&response_type=token&scope=uid&client_id=${this.props.clientId}&redirect_uri=${this.props.redirectUrl}&state=${setSessionState()}`;
-  }
-
-  /**
-   * Logout
-   * @returns {void}
-   */
-  logout() {
-    this.removeCookie();
-    this.propagateLoginStatusChange(false, null);
-  }
-
-  /**
-   * Render function of component
-   * @returns {JSX} JSX string representation of WSHeader
+   * @returns {Object}
    */
   render() {
-    const that = this;
     return (
-      <div className="refills-patterns refills-components">
-        <header className="navigation" role="banner">
-          <div className="navigation-wrapper">
-            <a href="/">
-              {this.props.logoUrl &&
-                <img className="logo" alt={`${this.props.title}_logo`} src={this.props.logoUrl} />
-              }
-              <span className="nav-title">{this.props.title}</span>
-            </a>
-            <nav role="navigation">
-              <ul id="js-navigation-menu" className="navigation-menu show">
-                {this.state.loggedIn && this.state.userName !== null &&
-                  <ul id="nav-links">
-                    {this.props.links.length > 0 && this.props.links.map((link, index) =>
-                      <WSHeaderNavLink link={link} key={index} />
-                    )}
-                  </ul>
-                }
-                <li className="nav-link more dropdown-menu">
-                  <a href={`#lang${this.state.lang}`}>
-                    <span id="selectedLanguageFlag" className={`flag flag-${this.state.lang}`} />
-                    <span id="selectedLanguage">{this.state.lang}</span>
-                  </a>
-                  <ul className="submenu" id="languages">
-                    {this.state.availableLanguages.map(lang =>
-                      <li key={`lang-${lang}`} onClick={() => that.setLanguage(lang)}>
-                        <a>
-                          <span className={`flag flag-${lang}`} />
-                          <span>{lang}</span>
-                        </a>
-                      </li>
-                    )}
-                  </ul>
-                </li>
-                <li className="nav-link" id="loggedInInfo">
-                  {(this.state.loggedIn && this.state.userName) ?
-                    <span onClick={() => this.logout()}>
-                      <span id="userName">{this.state.userName}</span>
-                      <a className="auto-size" id="logOutButton" type="button">
-                        <span className="icon icon-close" />
-                      </a>
-                    </span> :
-                    <a className="auto-size" onClick={() => this.login()}><span>Login</span></a>}
-                </li>
-              </ul>
-            </nav>
+      <header className="ws-header" ref={element => { this.element = element; }}>
+        <div className="level-1">
+          <div className="application-name">
+            {this.props.appLogo &&
+              <figure className="application-logo">
+                <img src={this.props.appLogo} alt="Application logo" />
+              </figure>
+            }
+            {this.props.appName}
           </div>
-        </header>
-      </div>
+          <nav className="main-menu">
+            <ul>
+              {this.props.links.map((link, index) =>
+                <li
+                  key={`header-link${index}`}
+                  onMouseEnter={() => this.enterMenuItem(index)}
+                  onMouseLeave={() => this.leaveMenuItem(index)}
+                  ref={element => { this.menuItems[index] = element; }}
+                >
+                  <a href={link.href} onClick={event => { if (link.onClick) link.onClick(event); }}>
+                    {link.label}
+                  </a>
+                </li>
+              )}
+            </ul>
+          </nav>
+          <nav className="menu-controls">
+            <ul>
+              <li>
+                <WSDropdown
+                  className="locale"
+                  icon="icon24 icon-sort-down"
+                  items={this.locales}
+                  text={this.state.locale}
+                  onChange={item => this.setLocale(item.value)}
+                  orientation="right"
+                  type="anchor"
+                />
+              </li>
+              {!this.state.isLoggedIn ?
+                <li onClick={() => this.authorization.authorize()}>
+                  <a>Login</a>
+                </li>
+              :
+                <li onClick={() => this.authorization.unauthorize()}>
+                  <a><span className="icon icon24 icon-power" /></a>
+                </li>
+              }
+            </ul>
+          </nav>
+        </div>
+        <div
+          className="level-2"
+          onMouseEnter={() => this.enterLevel2()}
+          onMouseLeave={() => this.leaveLevel2()}
+          ref={element => { this.level2 = element; }}
+        >
+          {this.props.links.map((parent, index) =>
+            parent.children && parent.children.length &&
+            <ul className="main-sub-menu" key={`sub-menu${index}`} ref={element => { this.subMenus[index] = element; }}>
+              {parent.children.map((child, childIndex) =>
+                <li key={`sub-link-${index}-${childIndex}`}>
+                  <a href={child.href} onClick={event => { if (child.onClick) child.onClick(event); }}>
+                    {child.label}
+                  </a>
+                </li>
+              )}
+            </ul>
+          )}
+        </div>
+      </header>
     );
   }
-}
-
-/**
- * getTokenFromUrl
- * @param {String} url url string
- * @returns {String} token part
- */
-function getTokenFromUrl(url) {
-  const urlQueryTokenPart = /access_token=([^&]+)/.exec(url);
-  return urlQueryTokenPart !== null ? urlQueryTokenPart[1] : null;
-}
-
-/**
- * Get Cookie Value
- * @param {String} a cookie key to match
- * @returns {String} cookie value for key
- */
-function getCookieValue(a) {
-  const b = document.cookie.match(`(^|;)\\s*${a}\\s*=\\s*([^;]+)`);
-  return b ? b.pop() : '';
-}
-
-/**
- * Generate a global unique identifier
- * @returns {String} string
- */
-function guid() {
-  /**
-   * Helper method for calculating a unique Id
-   * @returns {String}
-   */
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-  }
-
-  return `${s4()}${s4()}-${s4()}-${s4()}-${s4()}-${s4()}${s4()}${s4()}`;
-}
-
-/**
- * Sets Session State
- * @returns {String} encoded URI component of state
- */
-function setSessionState() {
-  // create new state guid
-  const state = guid();
-  const obj = {
-    state,
-    hash: window.location.hash
-  };
-
-  // save the state to check for it on return
-  window.localStorage.setItem(SESSION_STATE_NAME, state);
-  return encodeURIComponent(JSON.stringify(obj));
 }

@@ -134,8 +134,12 @@ $padding: $space-m;
       background-color: transparent !important;
       border: none !important;
 
-      &.off, &.off .week {
+      &.off, &.off .week, &.disable .week {
         color: $bombay;
+      }
+      &.disable {
+        pointer-events: none;
+        cursor: not-allowed;
       }
       .week {
         width: $space-xl;

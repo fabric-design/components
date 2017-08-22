@@ -165,7 +165,11 @@ System.register(['../imports', './ws-week-picker-calendar'], function (_export, 
                   return _this3.onChange(selection);
                 },
                 selectedYear: this.state.selectedYear,
-                selectedWeek: this.state.selectedWeek
+                selectedWeek: this.state.selectedWeek,
+                minYear: this.props.minYear,
+                minWeek: this.props.minWeek,
+                maxYear: this.props.maxYear,
+                maxWeek: this.props.maxWeek
               })
             );
           }
@@ -182,6 +186,10 @@ System.register(['../imports', './ws-week-picker-calendar'], function (_export, 
         value: {
           selectedYear: null,
           selectedWeek: null,
+          minYear: null,
+          minWeek: null,
+          maxYear: null,
+          maxWeek: null,
           onChange: function onChange() {}
         }
       });
@@ -191,6 +199,10 @@ System.register(['../imports', './ws-week-picker-calendar'], function (_export, 
         value: {
           selectedYear: PropTypes.number,
           selectedWeek: PropTypes.number,
+          minYear: PropTypes.number,
+          minWeek: PropTypes.number,
+          maxYear: PropTypes.number,
+          maxWeek: PropTypes.number,
           onChange: PropTypes.func
         }
       });

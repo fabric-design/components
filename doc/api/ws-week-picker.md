@@ -20,6 +20,10 @@ Quick array of all month shown. There are two from the last year and two from th
 -   `props` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** properties
     -   `props.selectedYear` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a preselected year
     -   `props.selectedWeek` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a preselected week
+    -   `props.minYear` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a minimum year
+    -   `props.minWeek` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a minimum week
+    -   `props.maxYear` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a maximum year
+    -   `props.maxWeek` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a maximum week
     -   `props.onChange` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** handler which notifies about picked week
 
 ### constructor
@@ -54,6 +58,17 @@ Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 ### isToday
 
 Checks if a week is the current week.
+
+**Parameters**
+
+-   `year` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Year of the week
+-   `week` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Week
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### isInTimeframe
+
+Checks if a week is in the required timeframe.
 
 **Parameters**
 
@@ -120,6 +135,10 @@ Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refere
 -   `props` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** properties
     -   `props.selectedYear` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a preselected year
     -   `props.selectedWeek` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a preselected week
+    -   `props.minYear` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a minimum year
+    -   `props.minWeek` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a minimum week
+    -   `props.maxYear` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a maximum year
+    -   `props.maxWeek` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a maximum week
     -   `props.onChange` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** handler which notifies about picked week
 
 ### constructor

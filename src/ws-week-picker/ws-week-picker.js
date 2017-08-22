@@ -6,6 +6,10 @@ import {WSWeekPickerCalendar} from './ws-week-picker-calendar';
  * @property {object} props               - properties
  * @property {number} props.selectedYear  - set a preselected year
  * @property {number} props.selectedWeek  - set a preselected week
+ * @property {number} props.minYear  - set a minimum year
+ * @property {number} props.minWeek  - set a minimum week
+ * @property {number} props.maxYear  - set a maximum year
+ * @property {number} props.maxWeek  - set a maximum week
  * @property {function} props.onChange    - handler which notifies about picked week
  *
  */
@@ -13,12 +17,20 @@ export class WSWeekPicker extends Component {
   static defaultProps = {
     selectedYear: null,
     selectedWeek: null,
+    minYear: null,
+    minWeek: null,
+    maxYear: null,
+    maxWeek: null,
     onChange: () => {}
   };
 
   static propTypes = {
     selectedYear: PropTypes.number,
     selectedWeek: PropTypes.number,
+    minYear: PropTypes.number,
+    minWeek: PropTypes.number,
+    maxYear: PropTypes.number,
+    maxWeek: PropTypes.number,
     onChange: PropTypes.func
   };
 
@@ -121,6 +133,10 @@ export class WSWeekPicker extends Component {
             onChange={selection => this.onChange(selection)}
             selectedYear={this.state.selectedYear}
             selectedWeek={this.state.selectedWeek}
+            minYear={this.props.minYear}
+            minWeek={this.props.minWeek}
+            maxYear={this.props.maxYear}
+            maxWeek={this.props.maxWeek}
           />
         }
       </div>

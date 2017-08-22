@@ -149,7 +149,11 @@ define(['exports', '../imports', './ws-week-picker-calendar'], function (exports
               return _this3.onChange(selection);
             },
             selectedYear: this.state.selectedYear,
-            selectedWeek: this.state.selectedWeek
+            selectedWeek: this.state.selectedWeek,
+            minYear: this.props.minYear,
+            minWeek: this.props.minWeek,
+            maxYear: this.props.maxYear,
+            maxWeek: this.props.maxWeek
           })
         );
       }
@@ -164,6 +168,10 @@ define(['exports', '../imports', './ws-week-picker-calendar'], function (exports
     value: {
       selectedYear: null,
       selectedWeek: null,
+      minYear: null,
+      minWeek: null,
+      maxYear: null,
+      maxWeek: null,
       onChange: function onChange() {}
     }
   });
@@ -173,6 +181,10 @@ define(['exports', '../imports', './ws-week-picker-calendar'], function (exports
     value: {
       selectedYear: _imports.PropTypes.number,
       selectedWeek: _imports.PropTypes.number,
+      minYear: _imports.PropTypes.number,
+      minWeek: _imports.PropTypes.number,
+      maxYear: _imports.PropTypes.number,
+      maxWeek: _imports.PropTypes.number,
       onChange: _imports.PropTypes.func
     }
   });

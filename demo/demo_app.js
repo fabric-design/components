@@ -42,7 +42,13 @@ render(
       <WSDatePicker onChange={(date) => console.log('New Date:', date)} value={Date.now()}/>
       <br />
       <br />
-      <WSWeekPicker onChange={({year, week}) => console.log('New week selected:', week)}/>
+      <p>WeekPicker with bounds set</p>
+      <WSWeekPicker
+        minYear="2016"
+        minWeek="5"
+        maxYear="2019"
+        maxWeek="45"
+        onChange={({year, week}) => console.log('New week selected:', week)}/>
       <br />
       <br />
       <WSDropdown text="Multiple" type="button" placeholder="Filter values.." filterable multiple items={[

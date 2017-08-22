@@ -7,6 +7,8 @@ exports.WSWeekPickerCalendar = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+exports.getWeekOfYear = getWeekOfYear;
+
 var _imports = require('../imports');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -63,6 +65,17 @@ var WSWeekPickerCalendar = exports.WSWeekPickerCalendar = function (_Component) 
       return this.todayYear === year && this.todayWeek === week;
     }
   }, {
+    key: 'isInTimeframe',
+    value: function isInTimeframe(year, week) {
+      if (this.props.minYear && (this.props.minYear > year || this.props.minYear === year && this.props.minWeek > week)) {
+        return false;
+      }
+      if (this.props.maxYear && (this.props.maxYear < year || this.props.maxYear === year && this.props.maxWeek < week)) {
+        return false;
+      }
+      return true;
+    }
+  }, {
     key: 'buildWeekRows',
     value: function buildWeekRows() {
       var _this2 = this;
@@ -87,7 +100,7 @@ var WSWeekPickerCalendar = exports.WSWeekPickerCalendar = function (_Component) 
             return _imports.React.createElement(
               'td',
               {
-                className: (monthIndex < 2 || monthIndex > 13 ? 'off ' : '') + (_this2.isActive(year, week) ? 'active ' : '') + (_this2.isToday(year, week) ? 'today ' : ''),
+                className: (monthIndex < 2 || monthIndex > 13 ? 'off ' : '') + (!_this2.isInTimeframe(year, week) ? 'disable ' : '') + (_this2.isActive(year, week) ? 'active ' : '') + (_this2.isToday(year, week) ? 'today ' : ''),
                 key: monthIndex + '_' + weekIndex,
                 onClick: function onClick() {
                   return _this2.props.onChange({ week: week, year: year });
@@ -173,6 +186,10 @@ Object.defineProperty(WSWeekPickerCalendar, 'defaultProps', {
   value: {
     selectedYear: null,
     selectedWeek: null,
+    minYear: null,
+    minWeek: null,
+    maxYear: null,
+    maxWeek: null,
     onChange: function onChange() {}
   }
 });
@@ -182,6 +199,10 @@ Object.defineProperty(WSWeekPickerCalendar, 'propTypes', {
   value: {
     selectedYear: _imports.PropTypes.number,
     selectedWeek: _imports.PropTypes.number,
+    minYear: _imports.PropTypes.number,
+    minWeek: _imports.PropTypes.number,
+    maxYear: _imports.PropTypes.number,
+    maxWeek: _imports.PropTypes.number,
     onChange: _imports.PropTypes.func
   }
 });

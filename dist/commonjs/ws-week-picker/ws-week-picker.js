@@ -112,7 +112,11 @@ var WSWeekPicker = exports.WSWeekPicker = function (_Component) {
             return _this3.onChange(selection);
           },
           selectedYear: this.state.selectedYear,
-          selectedWeek: this.state.selectedWeek
+          selectedWeek: this.state.selectedWeek,
+          minYear: this.props.minYear,
+          minWeek: this.props.minWeek,
+          maxYear: this.props.maxYear,
+          maxWeek: this.props.maxWeek
         })
       );
     }
@@ -127,6 +131,10 @@ Object.defineProperty(WSWeekPicker, 'defaultProps', {
   value: {
     selectedYear: null,
     selectedWeek: null,
+    minYear: null,
+    minWeek: null,
+    maxYear: null,
+    maxWeek: null,
     onChange: function onChange() {}
   }
 });
@@ -136,6 +144,10 @@ Object.defineProperty(WSWeekPicker, 'propTypes', {
   value: {
     selectedYear: _imports.PropTypes.number,
     selectedWeek: _imports.PropTypes.number,
+    minYear: _imports.PropTypes.number,
+    minWeek: _imports.PropTypes.number,
+    maxYear: _imports.PropTypes.number,
+    maxWeek: _imports.PropTypes.number,
     onChange: _imports.PropTypes.func
   }
 });

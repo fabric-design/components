@@ -5,6 +5,7 @@ define(['exports', '../imports'], function (exports, _imports) {
     value: true
   });
   exports.WSWeekPickerCalendar = undefined;
+  exports.getWeekOfYear = getWeekOfYear;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -102,6 +103,17 @@ define(['exports', '../imports'], function (exports, _imports) {
         return this.todayYear === year && this.todayWeek === week;
       }
     }, {
+      key: 'isInTimeframe',
+      value: function isInTimeframe(year, week) {
+        if (this.props.minYear && (this.props.minYear > year || this.props.minYear === year && this.props.minWeek > week)) {
+          return false;
+        }
+        if (this.props.maxYear && (this.props.maxYear < year || this.props.maxYear === year && this.props.maxWeek < week)) {
+          return false;
+        }
+        return true;
+      }
+    }, {
       key: 'buildWeekRows',
       value: function buildWeekRows() {
         var _this2 = this;
@@ -126,7 +138,7 @@ define(['exports', '../imports'], function (exports, _imports) {
               return _imports.React.createElement(
                 'td',
                 {
-                  className: (monthIndex < 2 || monthIndex > 13 ? 'off ' : '') + (_this2.isActive(year, week) ? 'active ' : '') + (_this2.isToday(year, week) ? 'today ' : ''),
+                  className: (monthIndex < 2 || monthIndex > 13 ? 'off ' : '') + (!_this2.isInTimeframe(year, week) ? 'disable ' : '') + (_this2.isActive(year, week) ? 'active ' : '') + (_this2.isToday(year, week) ? 'today ' : ''),
                   key: monthIndex + '_' + weekIndex,
                   onClick: function onClick() {
                     return _this2.props.onChange({ week: week, year: year });
@@ -212,6 +224,10 @@ define(['exports', '../imports'], function (exports, _imports) {
     value: {
       selectedYear: null,
       selectedWeek: null,
+      minYear: null,
+      minWeek: null,
+      maxYear: null,
+      maxWeek: null,
       onChange: function onChange() {}
     }
   });
@@ -221,6 +237,10 @@ define(['exports', '../imports'], function (exports, _imports) {
     value: {
       selectedYear: _imports.PropTypes.number,
       selectedWeek: _imports.PropTypes.number,
+      minYear: _imports.PropTypes.number,
+      minWeek: _imports.PropTypes.number,
+      maxYear: _imports.PropTypes.number,
+      maxWeek: _imports.PropTypes.number,
       onChange: _imports.PropTypes.func
     }
   });

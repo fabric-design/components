@@ -1,3 +1,14 @@
+<a name="1.0.11"></a>
+## [1.0.11](https://github.com/wholesale-design-system/components/compare/1.0.10...v1.0.11) (2017-08-24)
+
+
+### Bug Fixes
+
+* **header:** Fixed wrong key name for local storage ([#111](https://github.com/wholesale-design-system/components/issues/111)) ([c32d20f](https://github.com/wholesale-design-system/components/commit/c32d20f))
+* **header:** UX Improvements of the Header ([#112](https://github.com/wholesale-design-system/components/issues/112)) ([fe701f6](https://github.com/wholesale-design-system/components/commit/fe701f6))
+
+
+
 <a name="1.0.10"></a>
 ## [1.0.10](https://github.com/wholesale-design-system/components/compare/1.0.9...v1.0.10) (2017-07-27)
 

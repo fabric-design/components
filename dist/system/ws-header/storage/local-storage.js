@@ -69,12 +69,12 @@ System.register(['./abstract-storage'], function (_export, _context) {
           key: 'set',
           value: function set(key, value) {
             var encodedValue = encodeURIComponent(JSON.stringify(value));
-            localStorage.setItem('' + name + key, encodedValue);
+            localStorage.setItem('' + this.name + key, encodedValue);
           }
         }, {
           key: 'get',
           value: function get(key) {
-            var encodedValue = localStorage.getItem(key);
+            var encodedValue = localStorage.getItem('' + this.name + key);
 
             if (encodedValue) {
               try {

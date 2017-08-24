@@ -264,7 +264,8 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
                           },
                           ref: function ref(element) {
                             _this5.menuItems[index] = element;
-                          }
+                          },
+                          className: link.isCurrent ? 'is-current' : null
                         },
                         React.createElement(
                           'a',
@@ -332,6 +333,9 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
                   onMouseLeave: function onMouseLeave() {
                     return _this5.leaveLevel2();
                   },
+                  onClick: function onClick() {
+                    return _this5.leaveLevel2();
+                  },
                   ref: function ref(element) {
                     _this5.level2 = element;
                   }
@@ -345,7 +349,7 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
                     parent.children.map(function (child, childIndex) {
                       return React.createElement(
                         'li',
-                        { key: 'sub-link-' + index + '-' + childIndex },
+                        { key: 'sub-link-' + index + '-' + childIndex, className: child.isCurrent ? 'is-current' : null },
                         React.createElement(
                           'a',
                           { href: child.href, onClick: function onClick(event) {

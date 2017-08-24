@@ -1,5 +1,5 @@
 $include-spinner-css: true !default;
-$spinner-color: $primary-color !default;
+$spinner-color: schema-color(4) !default;
 $spinner-size-small: $base-font-size !default;
 $spinner-size-medium: $space-xl !default;
 $spinner-size-large: $space-xxl !default;

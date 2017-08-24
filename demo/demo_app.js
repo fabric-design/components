@@ -12,27 +12,28 @@ render(
       appName="Demo Page"
       clientId="stups_abba-frontend-release_180e00be-2b66-4e44-ac95-37f10068c015"
       links={[
-        {label: 'Link', href: 'LinkValue', onClick: (value) => console.log(value)},
+        {label: 'Link', href: '#LinkValue', onClick: (value) => console.log(value)},
         {
           label: 'Link2',
-          href: '2222',
+          href: '#2222',
+          isCurrent: true,
           children: [
-            {label: 'Sub link 1', href: 'Go go app 1'},
-            {label: 'Sub link 1', href: 'Go go app 1'}
+            {label: 'Sub link 1', href: '#Go go app 1'},
+            {label: 'Sub link 1', href: '#Go go app 1'}
           ]
         },
         {
           label: 'Link3',
-          href: '33333',
+          href: '#33333',
           children: [
-            {label: 'Sub link 1', href: 'Go go app 1'},
-            {label: 'Sub link 1', href: 'Go go app 1'},
-            {label: 'Sub link 1', href: 'Go go app 1'},
-            {label: 'Sub link 1', href: 'Go go app 1'},
-            {label: 'Sub link 1', href: 'Go go app 1'},
-            {label: 'Sub link 1', href: 'Go go app 1'},
-            {label: 'Sub link 1', href: 'Go go app 1'},
-            {label: 'Sub link 2', href: 'Go go app 2'}
+            {label: 'Sub link 1', href: '#Go go app 1'},
+            {label: 'Sub link 1', href: '#Go go app 1'},
+            {label: 'Sub link 1', href: '#Go go app 1'},
+            {label: 'Sub link 1', href: '#Go go app 1'},
+            {label: 'Sub link 1', href: '#Go go app 1'},
+            {label: 'Sub link 1', href: '#Go go app 1'},
+            {label: 'Sub link 1', href: '#Go go app 1'},
+            {label: 'Sub link 2', href: '#Go go app 2'}
           ]
         }
       ]}

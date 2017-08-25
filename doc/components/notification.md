@@ -1,4 +1,42 @@
-# Notification
+# Notifications
+**Remember!** Before you start using notifications, make sure that you [Feedback Principles](../#/general/8-feedback).
+
+![Example](src/style/assets/not-ex1.jpg)
+<p>Use it for general system feedback.</p>
+
+![Example](src/style/assets/not-ex2.jpg)
+<p>When feedback is connected with a specific screen area use contextual feedback instead.</p>
+
+![Example](src/style/assets/not-ex3.jpg)
+<p>For obvious feedback, use contextual feedback or even skip feedback form at all.</p>
+
+## Feedback categories
+Feedback info should be categorized in one of those categories:
+
+### Neutral
+General information
+<p><button class="mod-secondary mod-small" click.delegate="notification({title: 'Version 1.1 available', description: 'Your app will be updated automatically', type: 'info', lifetime: 2000})">Show notification</button></p>
+
+<h3 style="color:#F44F41">Error</h3>
+Information about system problem
+<p><button class="mod-small mod-secondary" click.delegate="notification({title: 'Database not available', description: 'Contact Administrator for more details', type: 'error', lifetime: 2000})">Show notification</button></p>
+
+<h3 style="color:#1EB234">Success</h3>
+Information about successful or finished activity
+<p><button class="mod-small mod-secondary" click.delegate="notification({title: 'Upload successful', type: 'success', lifetime: 2000})">Show notification</button></p>
+
+<h3 style="color:#FF9C0F">Warning</h3>
+Information about action that can be potentially harmful
+<p><button class="mod-small mod-secondary" click.delegate="notification({title: 'Upload server almost full', description: '203MB left. Delete pictures that will not be needed anymore.', type: 'warning', lifetime: 2000})">Show notification</button></p>
+
+## Content
+Feedback content consist main information and (if needed) further description.
+
+![Example](src/style/assets/not-ex2.jpg)
+<p>Use natural, user language, suggest possible solution.</p>
+
+![Example](src/style/assets/not-ex2.jpg)
+<p>Avoid technical jargon and generic error messages.</p>
 
 ## Setup
 Because the notifications are elements which should be displayed on top of everything and relative to the window

@@ -1,3 +1,13 @@
+<a name="1.0.12"></a>
+## [1.0.12](https://github.com/wholesale-design-system/components/compare/1.0.11...v1.0.12) (2017-08-25)
+
+
+### Features
+
+* **spinner:** Created spinner component ([#115](https://github.com/wholesale-design-system/components/issues/115)) ([affe21c](https://github.com/wholesale-design-system/components/commit/affe21c))
+
+
+
 <a name="1.0.11"></a>
 ## [1.0.11](https://github.com/wholesale-design-system/components/compare/1.0.10...v1.0.11) (2017-08-24)
 

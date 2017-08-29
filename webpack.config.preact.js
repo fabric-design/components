@@ -32,9 +32,9 @@ module.exports = {
   },
   resolve: {
     alias: {
-      react: 'preact',
-      'react-dom': 'preact',
-    },
+      react: 'preact-compat',
+      'react-dom': 'preact-compat'
+    }
   },
   devServer: {
     contentBase: path.join(__dirname, 'demo'),

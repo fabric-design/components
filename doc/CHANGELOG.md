@@ -1,3 +1,8 @@
+<a name="1.0.14"></a>
+## [1.0.14](https://github.com/fabric-design/components/compare/1.0.13...1.0.14) (2017-08-30)
+
+
+
 <a name="1.0.13"></a>
 ## [1.0.13](https://github.com/fabric-design/components/compare/1.0.12...1.0.13) (2017-08-30)
 

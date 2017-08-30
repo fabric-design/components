@@ -1,5 +1,5 @@
 {
-  "name": "styleguide-web-components",
+  "name": "fabric-components",
   "version": "1.0.12",
   "description": "",
   "scripts": {
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wholesale-design-system/components"
+    "url": "https://github.com/fabric-design/components"
   },
   "keywords": [
     "styleguide",
@@ -99,13 +99,13 @@
     "webpack": "2.3.3",
     "webpack-dev-server": "2.4.2",
     "webpack-node-externals": "1.5.4",
-    "wholesale-styleguide-scss": "git+https://github.com/wholesale-design-system/scss.git#master",
+    "fabric-scss": "git+https://github.com/fabric-design/scss.git#master",
     "yargs": "7.0.2"
   },
   "peerDependencies": {
     "preact": "^7.1.0",
     "preact-compat": "^3.13.1",
     "prop-types": "^15.5.8",
-    "wholesale-styleguide-scss": "git+https://github.com/wholesale-design-system/scss.git#master"
+    "fabric-scss": "git+https://github.com/fabric-design/scss.git#master"
   }
 }

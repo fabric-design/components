@@ -1,18 +1,10 @@
-define(['exports', 'react', '../imports'], function (exports, _react, _imports) {
+define(['exports', '../imports'], function (exports, _imports) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.Tile = undefined;
-
-  var _react2 = _interopRequireDefault(_react);
-
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      default: obj
-    };
-  }
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -89,7 +81,7 @@ define(['exports', 'react', '../imports'], function (exports, _react, _imports) 
           height: size + 'px'
         };
 
-        return _react2.default.createElement('div', {
+        return _imports.React.createElement('div', {
           className: 'tile ' + groupName + ' ' + className,
           style: style,
           onClick: function onClick() {

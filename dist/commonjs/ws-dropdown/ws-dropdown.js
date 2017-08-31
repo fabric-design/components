@@ -306,7 +306,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
     value: function render() {
       var _this7 = this;
 
-      var isWide = this.props.type === 'select' ? 'mod-wide' : '';
+      var isWide = this.props.type === 'select';
       return _imports.React.createElement(
         'div',
         { className: 'dropdown', ref: function ref(element) {
@@ -318,7 +318,8 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
         _imports.React.createElement(
           'div',
           {
-            className: 'dropdown-container ' + this.props.orientation + ' ' + isWide,
+            className: 'dropdown-container ' + this.props.orientation,
+            style: { width: this.props.width || (isWide ? '100%' : 'auto') },
             ref: function ref(element) {
               if (element) {
                 _this7.dropdownContainer = element;
@@ -350,6 +351,7 @@ Object.defineProperty(WSDropdown, 'defaultProps', {
     limit: 10,
     orientation: 'left',
     placeholder: '',
+    width: '',
     value: null,
     onChange: function onChange() {},
     disabled: false
@@ -370,6 +372,7 @@ Object.defineProperty(WSDropdown, 'propTypes', {
     limit: _imports.PropTypes.number,
     orientation: _imports.PropTypes.oneOf(['left', 'right']),
     placeholder: _imports.PropTypes.string,
+    width: _imports.PropTypes.string,
     value: _imports.PropTypes.oneOfType([_imports.PropTypes.string, _imports.PropTypes.object, _imports.PropTypes.array]),
     onChange: _imports.PropTypes.func,
     disabled: _imports.PropTypes.bool

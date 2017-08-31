@@ -1,4 +1,4 @@
-System.register(['react', '../imports'], function (_export, _context) {
+System.register(['../imports'], function (_export, _context) {
   "use strict";
 
   var React, Component, PropTypes, _createClass, Tile;
@@ -34,9 +34,8 @@ System.register(['react', '../imports'], function (_export, _context) {
   }
 
   return {
-    setters: [function (_react) {
-      React = _react.default;
-    }, function (_imports) {
+    setters: [function (_imports) {
+      React = _imports.React;
       Component = _imports.Component;
       PropTypes = _imports.PropTypes;
     }],

@@ -1,3 +1,20 @@
+<a name="1.0.18"></a>
+## [1.0.18](https://github.com/fabric-design/components/compare/1.0.17...1.0.18) (2017-08-31)
+
+
+### Bug Fixes
+
+* **build:** Fixed build and tests ([38e6962](https://github.com/fabric-design/components/commit/38e6962))
+* **docs:** Remove merge conflict markers from dropdown docs ([#122](https://github.com/fabric-design/components/issues/122)) ([9691a07](https://github.com/fabric-design/components/commit/9691a07))
+* **tile-chart:** Fixed tile chart for preact ([4304d17](https://github.com/fabric-design/components/commit/4304d17))
+
+
+### Features
+
+* **dropdown:** Added width attribute ([424c523](https://github.com/fabric-design/components/commit/424c523))
+
+
+
 <a name="1.0.17"></a>
 ## [1.0.17](https://github.com/fabric-design/components/compare/1.0.16...1.0.17) (2017-08-31)
 

@@ -235,14 +235,17 @@ export class WSHeader extends Component {
     return (
       <header className="ws-header" ref={element => { this.element = element; }}>
         <div className="level-1">
-          <div className="application-name">
+          <a // eslint-disable-line jsx-a11y/href-no-hash
+            className="application-name"
+            href="#"
+          >
             {this.props.appLogo &&
               <figure className="application-logo">
                 <img src={this.props.appLogo} alt="Application logo" />
               </figure>
             }
             {this.props.appName}
-          </div>
+          </a>
           <nav className="main-menu">
             <ul>
               {this.props.links.map((link, index) =>

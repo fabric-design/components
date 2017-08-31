@@ -1,5 +1,4 @@
-import React from 'react';
-import {Component, PropTypes} from '../imports';
+import {React, Component, PropTypes} from '../imports';
 
 /**
  * This class describes a Preact/React component which renders a single tile

@@ -141,3 +141,17 @@ the `value` attribute also the `placeholder` attribute to set the placeholder fo
 </ws-dropdown>
 ```
 
+## Custom width
+Per default the dropdown has a width of 200px when the type is not select. For those select dropdown elements the default
+width is 100%. This means the dropdown is as wide as the select box. To change the width you can add the attribute
+`width` and give it a pixel, percent or any size value.
+
+<ws-dropdown items.bind='["Item 1", "Item 2", "Item 3"]' text="Click me" type="button" width="500px"></ws-dropdown>
+```html
+<ws-dropdown
+  items='["Item 1", "Item 2", "Item 3"]'
+  text="Click me"
+  type="button"
+  width="500px">
+</ws-dropdown>
+```

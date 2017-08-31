@@ -1,5 +1,4 @@
-import React from 'react';
-import {Component, PropTypes} from '../imports';
+import {React, Component, PropTypes} from '../imports';
 import {Tile} from './tile';
 
 /**

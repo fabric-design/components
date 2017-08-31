@@ -46,7 +46,7 @@ render(
       <WSWeekPicker onChange={({year, week}) => console.log('New week selected:', week)}/>
       <br />
       <br />
-      <WSDropdown text="Multiple" type="button" placeholder="Filter values.." filterable multiple items={[
+      <WSDropdown text="Multiple" type="button" width="500px" placeholder="Filter values.." filterable multiple items={[
         'New',
         'New From Template',
         'Open',
@@ -77,7 +77,7 @@ render(
         'Save'
       ]}/>
       <br />
-      <WSDropdown text="Input" type="select" placeholder="tasd" value="222" inputOnly/>
+      <WSDropdown text="Input" type="select" width="50%" placeholder="tasd" value="222" inputOnly/>
       <br />
       <WSNotification />
       <br />

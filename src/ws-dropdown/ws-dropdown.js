@@ -40,6 +40,7 @@ export class WSDropdown extends Component {
     limit: 10,
     orientation: 'left',
     placeholder: '',
+    width: '',
     value: null,
     onChange: () => {},
     disabled: false
@@ -60,6 +61,7 @@ export class WSDropdown extends Component {
     limit: PropTypes.number,
     orientation: PropTypes.oneOf(['left', 'right']),
     placeholder: PropTypes.string,
+    width: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
     onChange: PropTypes.func,
     disabled: PropTypes.bool
@@ -388,12 +390,13 @@ export class WSDropdown extends Component {
    * @returns {Object}
    */
   render() {
-    const isWide = this.props.type === 'select' ? 'mod-wide' : '';
+    const isWide = this.props.type === 'select';
     return (
       <div className="dropdown" ref={element => { if (element) { this.element = element; } }}>
         {this.renderTrigger()}
         <div
-          className={`dropdown-container ${this.props.orientation} ${isWide}`}
+          className={`dropdown-container ${this.props.orientation}`}
+          style={{width: this.props.width || (isWide ? '100%' : 'auto')}}
           ref={element => { if (element) { this.dropdownContainer = element; } }}
         >
           {this.renderContent()}

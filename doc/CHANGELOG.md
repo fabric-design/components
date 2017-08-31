@@ -1,3 +1,13 @@
+<a name="1.0.19"></a>
+## [1.0.19](https://github.com/fabric-design/components/compare/1.0.18...1.0.19) (2017-08-31)
+
+
+### Bug Fixes
+
+* **header:** Added hash link to home page ([#124](https://github.com/fabric-design/components/issues/124)) ([9772d30](https://github.com/fabric-design/components/commit/9772d30))
+
+
+
 <a name="1.0.18"></a>
 ## [1.0.18](https://github.com/fabric-design/components/compare/1.0.17...1.0.18) (2017-08-31)
 

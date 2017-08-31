@@ -193,8 +193,11 @@ var WSHeader = exports.WSHeader = function (_Component) {
           'div',
           { className: 'level-1' },
           _imports.React.createElement(
-            'div',
-            { className: 'application-name' },
+            'a',
+            {
+              className: 'application-name',
+              href: '#'
+            },
             this.props.appLogo && _imports.React.createElement(
               'figure',
               { className: 'application-logo' },

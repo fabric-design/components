@@ -236,8 +236,11 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
                 'div',
                 { className: 'level-1' },
                 React.createElement(
-                  'div',
-                  { className: 'application-name' },
+                  'a',
+                  {
+                    className: 'application-name',
+                    href: '#'
+                  },
                   this.props.appLogo && React.createElement(
                     'figure',
                     { className: 'application-logo' },

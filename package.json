@@ -65,6 +65,7 @@
     "eslint-plugin-jasmine": "2.2.0",
     "eslint-plugin-jsx-a11y": "4.0.0",
     "eslint-plugin-react": "6.10.3",
+    "fabric-scss": "git+https://github.com/fabric-design/scss.git",
     "fs-then-native": "2.0.0",
     "glob": "7.1.1",
     "gulp": "3.9.1",
@@ -99,7 +100,14 @@
     "webpack": "2.3.3",
     "webpack-dev-server": "2.4.2",
     "webpack-node-externals": "1.5.4",
-    "fabric-scss": "git+https://github.com/fabric-design/scss.git#master",
     "yargs": "7.0.2"
+  },
+  "peerDependencies": {
+    "preact": "8.2.5",
+    "preact-compat": "3.17.0",
+    "prop-types": "15.5.8",
+    "react": "15.5.4",
+    "react-dom": "15.5.4",
+    "fabric-scss": "git+https://github.com/fabric-design/scss.git"
   }
 }

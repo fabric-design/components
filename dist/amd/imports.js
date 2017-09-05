@@ -4,7 +4,7 @@ define(['exports', 'react', 'react-dom', 'prop-types'], function (exports, _reac
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.Component = exports.render = exports.PropTypes = exports.PureComponent = exports.React = undefined;
+  exports.Component = exports.render = exports.PropTypes = exports.React = undefined;
 
   var _React_ = _interopRequireWildcard(_react);
 
@@ -80,7 +80,6 @@ define(['exports', 'react', 'react-dom', 'prop-types'], function (exports, _reac
   var React = exports.React = {
     createElement: _React_.createElement || _React_.h
   };
-  var PureComponent = exports.PureComponent = _React_.PureComponent || _React_.Component;
   var PropTypes = exports.PropTypes = types;
   var render = exports.render = ReactDOM.render;
 

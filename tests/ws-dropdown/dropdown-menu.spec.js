@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {React} from 'imports';
 import {DropdownMenu} from '../../src/ws-dropdown/dropdown-menu';
 

@@ -45,6 +45,9 @@ export class DropdownInput extends Component {
    */
   componentDidMount() {
     this.input.addEventListener('change', event => event.stopPropagation());
+    this.input.addEventListener('keydown', this.onKeyDown);
+    this.input.addEventListener('blur', this.onChange);
+    this.button.addEventListener('click', this.onSubmit);
   }
 
   /**
@@ -53,6 +56,9 @@ export class DropdownInput extends Component {
    */
   componentWillUnmount() {
     this.input.removeEventListener('change', event => event.stopPropagation());
+    this.input.removeEventListener('keydown', this.onKeyDown);
+    this.input.removeEventListener('blur', this.onChange);
+    this.button.removeEventListener('click', this.onSubmit);
   }
 
   /**
@@ -60,7 +66,7 @@ export class DropdownInput extends Component {
    * @param {KeyboardEvent} event JavaScript Event object
    * @returns {Boolean}
    */
-  onKeyDown(event) {
+  onKeyDown = event => {
     if (event.which === KEY_ENTER) {
       this.onChange(event);
       this.onSubmit();
@@ -68,23 +74,33 @@ export class DropdownInput extends Component {
       return false;
     }
     return true;
-  }
+  };
 
   /**
    * Set input value to state
    * @param {KeyboardEvent} event JavaScript event object
    * @returns {void}
    */
-  onChange(event) {
+  onChange = event => {
     this.setState({value: event.target.value});
-  }
+  };
 
   /**
    * Called when enter or submit key is pressed
    * @returns {void}
    */
-  onSubmit() {
+  onSubmit = () => {
     this.props.handle('change', this.state.value);
+  };
+
+  /**
+   * Bind keyboard listener and focus input if available when dropdown opens
+   * @returns {void}
+   */
+  onOpen() {
+    if (this.input) {
+      this.input.focus();
+    }
   }
 
   /**
@@ -106,13 +122,11 @@ export class DropdownInput extends Component {
             type="text"
             defaultValue={this.state.value}
             placeholder={this.props.placeholder}
-            onKeyDown={event => this.onKeyDown(event)}
-            onBlur={event => this.onChange(event)}
             ref={element => { this.input = element; }}
           />
         </li>
         <li className="dropdown-submit" key="submit">
-          <button className="mod-small" onClick={() => this.onSubmit()}>OK</button>
+          <button className="mod-small" ref={element => { this.button = element; }}>OK</button>
         </li>
       </ul>
     );

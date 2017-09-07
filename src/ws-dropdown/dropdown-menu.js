@@ -60,6 +60,7 @@ export class DropdownMenu extends Component {
   constructor(props, context) {
     super(props, context);
     this.openSubMenu = null;
+    this.selectedIndex = -1;
     this.state = {
       filter: props.filter,
       items: props.items,
@@ -73,7 +74,12 @@ export class DropdownMenu extends Component {
    */
   componentDidMount() {
     if (this.input) {
+      this.input.addEventListener('keyup', this.onKeyUpUpdateFilter);
       this.input.addEventListener('change', event => event.stopPropagation());
+    }
+    if (this.button) {
+      this.button.addEventListener('click', this.onClickSubmit);
+      this.button.addEventListener('keydown', event => event.stopPropagation());
     }
   }
 
@@ -105,9 +111,84 @@ export class DropdownMenu extends Component {
    */
   componentWillUnmount() {
     if (this.input) {
+      this.input.removeEventListener('keyup', this.onKeyUpUpdateFilter);
       this.input.removeEventListener('change', event => event.stopPropagation());
     }
+    if (this.button) {
+      this.button.removeEventListener('click', this.onClickSubmit);
+      this.button.removeEventListener('keydown', event => event.stopPropagation());
+    }
   }
+
+  /**
+   * Bind keyboard listener and focus input if available when dropdown opens
+   * @returns {void}
+   */
+  onOpen = () => {
+    if (this.input) {
+      this.input.focus();
+    }
+    window.addEventListener('keydown', this.onGlobalKeyDown);
+  };
+
+
+  /**
+   * Unbind keyboard listener when dropdown closes
+   * @returns {void}
+   */
+  onClose = () => {
+    window.removeEventListener('keydown', this.onGlobalKeyDown);
+  };
+
+  /**
+   * Handle global key down events to select items
+   * @param {KeyboardEvent} event JavaScript event object
+   * @returns {void}
+   */
+  onGlobalKeyDown = event => {
+    switch (event.key) {
+      case 'ArrowUp':
+        event.preventDefault();
+        this.focusNextItem(-1);
+        break;
+      case 'ArrowDown':
+        event.preventDefault();
+        this.focusNextItem(1);
+        break;
+      case 'Enter':
+        this.selectCurrentItem();
+        break;
+      default:
+        break;
+    }
+  };
+
+  /**
+   * Setting the input value as filter
+   * @param {KeyboardEvent} event JavaScript event object
+   * @returns {void}
+   */
+  onKeyUpUpdateFilter = event => {
+    event.stopPropagation();
+    this.setState({filter: event.target.value});
+  };
+
+  /**
+   * Handles submit action on multi select drop downs
+   * @param {Event} event JavaScript event object
+   * @returns {void}
+   */
+  onClickSubmit = event => {
+    event.stopPropagation();
+    const value = this.state.items.filter(item => {
+      item.focused = false;
+      item.stored = item.selected;
+      return item.selected;
+    });
+    // Propagate new value
+    this.props.handle('change', value);
+    this.setState({value});
+  };
 
   /**
    * Gets the current height of the menu
@@ -137,13 +218,66 @@ export class DropdownMenu extends Component {
   }
 
   /**
-   * Setting the input value as filter
-   * @param {KeyboardEvent} event JavaScript event object
+   * Get the item for an index which can match the value or items list
+   * @param {number} index Index across value and filtered items
+   * @returns {Object}
+   */
+  getItemAtIndex(index) {
+    const limit = this.props.filterable ? this.props.limit : this.state.items.length;
+    const filteredItems = this.getFilteredItems().slice(0, limit);
+    let valueLength = 0;
+    if (this.context.multiple || this.props.filterable) {
+      if (Array.isArray(this.state.value)) {
+        valueLength = this.state.value.length;
+      } else {
+        valueLength = this.state.value ? 1 : 0;
+      }
+    }
+    const visibleItems = filteredItems.length + valueLength;
+    let correctedIndex = index;
+    // Ensure the index is in boundings of visible items (selected and non selected items)
+    if (index >= visibleItems) {
+      correctedIndex = 0;
+    } else if (index < 0) {
+      correctedIndex = visibleItems - 1;
+    }
+    // Check if the index points to value items when it is in this range
+    if (valueLength && correctedIndex < valueLength && correctedIndex >= 0) {
+      return {
+        item: Array.isArray(this.state.value) ? this.state.value[correctedIndex] : this.state.value,
+        index: correctedIndex
+      };
+    }
+    return {item: filteredItems[correctedIndex - valueLength], index: correctedIndex};
+  }
+
+  /**
+   * Depending on the direction it marks the next dropdown item as focused
+   * @param {number} direction Can be 1 for down or -1 for up direction
    * @returns {void}
    */
-  updateFilter(event) {
-    event.stopPropagation();
-    this.setState({filter: event.target.value});
+  focusNextItem(direction) {
+    // Update focus state of items
+    this.state.items.forEach(item => { item.focused = false; });
+    const result = this.getItemAtIndex(this.selectedIndex + direction);
+    result.item.focused = true;
+
+    this.forceUpdate();
+    this.selectedIndex = result.index;
+  }
+
+  /**
+   * Mark the currently focused item as selected
+   * @returns {void}
+   */
+  selectCurrentItem() {
+    const result = this.getItemAtIndex(this.selectedIndex);
+    result.item.selected = !result.item.selected;
+    if (!this.context.multiple) {
+      result.item.stored = result.item.selected;
+      this.handlePropagation('change', result.item.stored ? result.item : null);
+    }
+    this.forceUpdate();
   }
 
   /**
@@ -158,23 +292,8 @@ export class DropdownMenu extends Component {
           item.selected = false;
         }
       });
+      this.setState({items: this.state.items});
     }
-  }
-
-  /**
-   * Handles submit action on multi select drop downs
-   * @param {Event} event JavaScript event object
-   * @returns {void}
-   */
-  submit(event) {
-    event.stopPropagation();
-    const value = this.state.items.filter(item => {
-      item.stored = item.selected;
-      return item.selected;
-    });
-    // Propagate new value
-    this.props.handle('change', value);
-    this.setState({value});
   }
 
   /**
@@ -326,7 +445,6 @@ export class DropdownMenu extends Component {
               type="text"
               defaultValue={this.state.filter}
               placeholder={this.props.placeholder}
-              onKeyUp={event => this.updateFilter(event)}
               ref={element => { this.input = element; }}
             />
           </li>
@@ -356,7 +474,7 @@ export class DropdownMenu extends Component {
         {this.context.multiple && [
           <li className="dropdown-item-separator" key="submit-separator" />,
           <li className="dropdown-submit" key="submit">
-            <button className="mod-small" onClick={event => this.submit(event)}>OK</button>
+            <button className="mod-small" ref={element => { this.button = element; }}>OK</button>
           </li>
         ]}
       </ul>

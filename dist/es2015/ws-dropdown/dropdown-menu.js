@@ -20,6 +20,67 @@ export var DropdownMenu = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (DropdownMenu.__proto__ || Object.getPrototypeOf(DropdownMenu)).call(this, props, context));
 
+    Object.defineProperty(_this, 'onOpen', {
+      enumerable: true,
+      writable: true,
+      value: function value() {
+        if (_this.input) {
+          _this.input.focus();
+        }
+        window.addEventListener('keydown', _this.onGlobalKeyDown);
+      }
+    });
+    Object.defineProperty(_this, 'onClose', {
+      enumerable: true,
+      writable: true,
+      value: function value() {
+        window.removeEventListener('keydown', _this.onGlobalKeyDown);
+      }
+    });
+    Object.defineProperty(_this, 'onGlobalKeyDown', {
+      enumerable: true,
+      writable: true,
+      value: function value(event) {
+        switch (event.key) {
+          case 'ArrowUp':
+            event.preventDefault();
+            _this.focusNextItem(-1);
+            break;
+          case 'ArrowDown':
+            event.preventDefault();
+            _this.focusNextItem(1);
+            break;
+          case 'Enter':
+            _this.selectCurrentItem();
+            break;
+          default:
+            break;
+        }
+      }
+    });
+    Object.defineProperty(_this, 'onKeyUpUpdateFilter', {
+      enumerable: true,
+      writable: true,
+      value: function value(event) {
+        event.stopPropagation();
+        _this.setState({ filter: event.target.value });
+      }
+    });
+    Object.defineProperty(_this, 'onClickSubmit', {
+      enumerable: true,
+      writable: true,
+      value: function value(event) {
+        event.stopPropagation();
+        var value = _this.state.items.filter(function (item) {
+          item.focused = false;
+          item.stored = item.selected;
+          return item.selected;
+        });
+
+        _this.props.handle('change', value);
+        _this.setState({ value: value });
+      }
+    });
     Object.defineProperty(_this, 'handlePropagation', {
       enumerable: true,
       writable: true,
@@ -58,6 +119,7 @@ export var DropdownMenu = function (_Component) {
     });
 
     _this.openSubMenu = null;
+    _this.selectedIndex = -1;
     _this.state = {
       filter: props.filter,
       items: props.items,
@@ -70,7 +132,14 @@ export var DropdownMenu = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       if (this.input) {
+        this.input.addEventListener('keyup', this.onKeyUpUpdateFilter);
         this.input.addEventListener('change', function (event) {
+          return event.stopPropagation();
+        });
+      }
+      if (this.button) {
+        this.button.addEventListener('click', this.onClickSubmit);
+        this.button.addEventListener('keydown', function (event) {
           return event.stopPropagation();
         });
       }
@@ -93,7 +162,14 @@ export var DropdownMenu = function (_Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       if (this.input) {
+        this.input.removeEventListener('keyup', this.onKeyUpUpdateFilter);
         this.input.removeEventListener('change', function (event) {
+          return event.stopPropagation();
+        });
+      }
+      if (this.button) {
+        this.button.removeEventListener('click', this.onClickSubmit);
+        this.button.removeEventListener('keydown', function (event) {
           return event.stopPropagation();
         });
       }
@@ -121,10 +197,57 @@ export var DropdownMenu = function (_Component) {
       });
     }
   }, {
-    key: 'updateFilter',
-    value: function updateFilter(event) {
-      event.stopPropagation();
-      this.setState({ filter: event.target.value });
+    key: 'getItemAtIndex',
+    value: function getItemAtIndex(index) {
+      var limit = this.props.filterable ? this.props.limit : this.state.items.length;
+      var filteredItems = this.getFilteredItems().slice(0, limit);
+      var valueLength = 0;
+      if (this.context.multiple || this.props.filterable) {
+        if (Array.isArray(this.state.value)) {
+          valueLength = this.state.value.length;
+        } else {
+          valueLength = this.state.value ? 1 : 0;
+        }
+      }
+      var visibleItems = filteredItems.length + valueLength;
+      var correctedIndex = index;
+
+      if (index >= visibleItems) {
+        correctedIndex = 0;
+      } else if (index < 0) {
+        correctedIndex = visibleItems - 1;
+      }
+
+      if (valueLength && correctedIndex < valueLength && correctedIndex >= 0) {
+        return {
+          item: Array.isArray(this.state.value) ? this.state.value[correctedIndex] : this.state.value,
+          index: correctedIndex
+        };
+      }
+      return { item: filteredItems[correctedIndex - valueLength], index: correctedIndex };
+    }
+  }, {
+    key: 'focusNextItem',
+    value: function focusNextItem(direction) {
+      this.state.items.forEach(function (item) {
+        item.focused = false;
+      });
+      var result = this.getItemAtIndex(this.selectedIndex + direction);
+      result.item.focused = true;
+
+      this.forceUpdate();
+      this.selectedIndex = result.index;
+    }
+  }, {
+    key: 'selectCurrentItem',
+    value: function selectCurrentItem() {
+      var result = this.getItemAtIndex(this.selectedIndex);
+      result.item.selected = !result.item.selected;
+      if (!this.context.multiple) {
+        result.item.stored = result.item.selected;
+        this.handlePropagation('change', result.item.stored ? result.item : null);
+      }
+      this.forceUpdate();
     }
   }, {
     key: 'clearSelections',
@@ -135,19 +258,8 @@ export var DropdownMenu = function (_Component) {
             item.selected = false;
           }
         });
+        this.setState({ items: this.state.items });
       }
-    }
-  }, {
-    key: 'submit',
-    value: function submit(event) {
-      event.stopPropagation();
-      var value = this.state.items.filter(function (item) {
-        item.stored = item.selected;
-        return item.selected;
-      });
-
-      this.props.handle('change', value);
-      this.setState({ value: value });
     }
   }, {
     key: 'showChild',
@@ -243,9 +355,6 @@ export var DropdownMenu = function (_Component) {
             type: 'text',
             defaultValue: this.state.filter,
             placeholder: this.props.placeholder,
-            onKeyUp: function onKeyUp(event) {
-              return _this3.updateFilter(event);
-            },
             ref: function ref(element) {
               _this3.input = element;
             }
@@ -272,8 +381,8 @@ export var DropdownMenu = function (_Component) {
           { className: 'dropdown-submit', key: 'submit' },
           React.createElement(
             'button',
-            { className: 'mod-small', onClick: function onClick(event) {
-                return _this3.submit(event);
+            { className: 'mod-small', ref: function ref(element) {
+                _this3.button = element;
               } },
             'OK'
           )

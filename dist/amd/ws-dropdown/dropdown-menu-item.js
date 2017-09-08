@@ -62,6 +62,37 @@ define(['exports', '../imports', './dropdown-menu'], function (exports, _imports
 
       var _this = _possibleConstructorReturn(this, (DropdownMenuItem.__proto__ || Object.getPrototypeOf(DropdownMenuItem)).call(this, props, context));
 
+      Object.defineProperty(_this, 'onClick', {
+        enumerable: true,
+        writable: true,
+        value: function value(event) {
+          event.stopPropagation();
+
+          if (_this.state.disabled) {
+            return;
+          }
+
+          if (_this.props.isParent) {
+            _this.props.handle('go-back');
+          } else if (_this.state.children && _this.state.children.length) {
+            _this.props.handle('show-child', _this.menu);
+          } else {
+            if (!_this.context.multiple) {
+              if (_this.state.selected) {
+                _this.props.handle('change', null);
+              } else {
+                _this.state.selected = true;
+                _this.state.stored = true;
+                _this.props.handle('change', _this.state);
+              }
+            } else {
+              _this.state.selected = !_this.state.selected;
+            }
+
+            _this.setState(_this.state);
+          }
+        }
+      });
       Object.defineProperty(_this, 'handlePropagation', {
         enumerable: true,
         writable: true,
@@ -76,38 +107,19 @@ define(['exports', '../imports', './dropdown-menu'], function (exports, _imports
     }
 
     _createClass(DropdownMenuItem, [{
+      key: 'componentDidMount',
+      value: function componentDidMount() {
+        this.dropdownItem.addEventListener('click', this.onClick);
+      }
+    }, {
       key: 'componentWillReceiveProps',
       value: function componentWillReceiveProps(props) {
         this.state = props.item;
       }
     }, {
-      key: 'onClick',
-      value: function onClick(event) {
-        event.stopPropagation();
-
-        if (this.state.disabled) {
-          return;
-        }
-
-        if (this.props.isParent) {
-          this.props.handle('go-back');
-        } else if (this.state.children && this.state.children.length) {
-          this.props.handle('show-child', this.menu);
-        } else {
-          if (!this.context.multiple) {
-            if (this.state.selected) {
-              this.props.handle('change', null);
-            } else {
-              this.state.selected = true;
-              this.state.stored = true;
-              this.props.handle('change', this.state);
-            }
-          } else {
-            this.state.selected = !this.state.selected;
-          }
-
-          this.setState(this.state);
-        }
+      key: 'componentWillUnmount',
+      value: function componentWillUnmount() {
+        this.dropdownItem.removeEventListener('click', this.onClick);
       }
     }, {
       key: 'render',
@@ -127,8 +139,8 @@ define(['exports', '../imports', './dropdown-menu'], function (exports, _imports
           'li',
           {
             className: itemClass,
-            onClick: function onClick(event) {
-              return _this2.onClick(event);
+            ref: function ref(element) {
+              _this2.dropdownItem = element;
             }
           },
           _imports.React.createElement(

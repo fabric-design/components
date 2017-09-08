@@ -1,3 +1,19 @@
+<a name="1.0.20"></a>
+## [1.0.20](https://github.com/fabric-design/components/compare/1.0.19...1.0.20) (2017-09-08)
+
+
+### Bug Fixes
+
+* **dropdown:** Fixed state creation in dropdown ([d6434f0](https://github.com/fabric-design/components/commit/d6434f0))
+* **header:** Added hash link to home page ([dd39e9c](https://github.com/fabric-design/components/commit/dd39e9c))
+
+
+### Features
+
+* **dropdown:** Made dropdown controllable with keyboard ([6d79e6a](https://github.com/fabric-design/components/commit/6d79e6a))
+
+
+
 <a name="1.0.19"></a>
 ## [1.0.19](https://github.com/fabric-design/components/compare/1.0.18...1.0.19) (2017-08-31)
 

@@ -68,6 +68,34 @@ System.register(['../imports'], function (_export, _context) {
 
           var _this = _possibleConstructorReturn(this, (DropdownInput.__proto__ || Object.getPrototypeOf(DropdownInput)).call(this, props));
 
+          Object.defineProperty(_this, 'onKeyDown', {
+            enumerable: true,
+            writable: true,
+            value: function value(event) {
+              if (event.which === KEY_ENTER) {
+                _this.onChange(event);
+                _this.onSubmit();
+                event.preventDefault();
+                return false;
+              }
+              return true;
+            }
+          });
+          Object.defineProperty(_this, 'onChange', {
+            enumerable: true,
+            writable: true,
+            value: function value(event) {
+              _this.setState({ value: event.target.value });
+            }
+          });
+          Object.defineProperty(_this, 'onSubmit', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+              _this.props.handle('change', _this.state.value);
+            }
+          });
+
           _this.state = {
             value: props.value
           };
@@ -80,6 +108,9 @@ System.register(['../imports'], function (_export, _context) {
             this.input.addEventListener('change', function (event) {
               return event.stopPropagation();
             });
+            this.input.addEventListener('keydown', this.onKeyDown);
+            this.input.addEventListener('blur', this.onChange);
+            this.button.addEventListener('click', this.onSubmit);
           }
         }, {
           key: 'componentWillUnmount',
@@ -87,27 +118,16 @@ System.register(['../imports'], function (_export, _context) {
             this.input.removeEventListener('change', function (event) {
               return event.stopPropagation();
             });
+            this.input.removeEventListener('keydown', this.onKeyDown);
+            this.input.removeEventListener('blur', this.onChange);
+            this.button.removeEventListener('click', this.onSubmit);
           }
         }, {
-          key: 'onKeyDown',
-          value: function onKeyDown(event) {
-            if (event.which === KEY_ENTER) {
-              this.onChange(event);
-              this.onSubmit();
-              event.preventDefault();
-              return false;
+          key: 'onOpen',
+          value: function onOpen() {
+            if (this.input) {
+              this.input.focus();
             }
-            return true;
-          }
-        }, {
-          key: 'onChange',
-          value: function onChange(event) {
-            this.setState({ value: event.target.value });
-          }
-        }, {
-          key: 'onSubmit',
-          value: function onSubmit() {
-            this.props.handle('change', this.state.value);
           }
         }, {
           key: 'getHeight',
@@ -131,12 +151,6 @@ System.register(['../imports'], function (_export, _context) {
                   type: 'text',
                   defaultValue: this.state.value,
                   placeholder: this.props.placeholder,
-                  onKeyDown: function onKeyDown(event) {
-                    return _this2.onKeyDown(event);
-                  },
-                  onBlur: function onBlur(event) {
-                    return _this2.onChange(event);
-                  },
                   ref: function ref(element) {
                     _this2.input = element;
                   }
@@ -147,8 +161,8 @@ System.register(['../imports'], function (_export, _context) {
                 { className: 'dropdown-submit', key: 'submit' },
                 React.createElement(
                   'button',
-                  { className: 'mod-small', onClick: function onClick() {
-                      return _this2.onSubmit();
+                  { className: 'mod-small', ref: function ref(element) {
+                      _this2.button = element;
                     } },
                   'OK'
                 )

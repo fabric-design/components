@@ -31,6 +31,52 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (WSDropdown.__proto__ || Object.getPrototypeOf(WSDropdown)).call(this, props));
 
+    Object.defineProperty(_this, 'onDocumentClick', {
+      enumerable: true,
+      writable: true,
+      value: function value(event) {
+        var element = event.target;
+        while (element && _this.element !== element) {
+          element = element.parentNode;
+        }
+
+        if (!element) {
+          _this.close();
+        }
+      }
+    });
+    Object.defineProperty(_this, 'onTriggerClick', {
+      enumerable: true,
+      writable: true,
+      value: function value(event) {
+        event.stopPropagation();
+        if (WSDropdown.openDropdown !== _this) {
+          _this.open();
+        } else {
+          _this.close();
+        }
+      }
+    });
+    Object.defineProperty(_this, 'onAnyEvent', {
+      enumerable: true,
+      writable: true,
+      value: function value(event) {
+        event.stopPropagation();
+      }
+    });
+    Object.defineProperty(_this, 'onGlobalKeyDown', {
+      enumerable: true,
+      writable: true,
+      value: function value(event) {
+        switch (event.key) {
+          case 'Escape':
+            _this.close();
+            break;
+          default:
+            break;
+        }
+      }
+    });
     Object.defineProperty(_this, 'handlePropagation', {
       enumerable: true,
       writable: true,
@@ -44,7 +90,6 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
       }
     });
 
-    _this.opened = false;
     _this.state = _this.createState(props);
     return _this;
   }
@@ -59,7 +104,9 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      window.addEventListener('click', this.onDocumentClick.bind(this));
+      this.element.addEventListener('click', this.onAnyEvent);
+      this.trigger.addEventListener('click', this.onTriggerClick);
+      window.addEventListener('click', this.onDocumentClick);
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -69,19 +116,9 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      window.removeEventListener('click', this.onDocumentClick.bind(this));
-    }
-  }, {
-    key: 'onDocumentClick',
-    value: function onDocumentClick(event) {
-      var element = event.target;
-      while (element && this.element !== element) {
-        element = element.parentNode;
-      }
-
-      if (!element) {
-        this.close();
-      }
+      this.element.removeEventListener('click', this.onAnyEvent);
+      this.trigger.removeEventListener('click', this.onTriggerClick);
+      window.removeEventListener('click', this.onDocumentClick);
     }
   }, {
     key: 'getTextFromValue',
@@ -95,7 +132,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
             return item.label || item;
           }).join(', ');
         } else if (value) {
-          text = value.label;
+          text = value.label || value;
         }
       }
       return text;
@@ -121,11 +158,17 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
   }, {
     key: 'createState',
     value: function createState(props) {
-      var state = {
-        text: this.getTextFromValue(props.value, props.text),
-        value: this.enrichItems(props.value),
-        items: this.enrichItems(props.items)
-      };
+      var items = this.enrichItems(props.items);
+      var value = props.value;
+
+      if (typeof value === 'string' && props.type !== 'input') {
+        value = items.find(function (item) {
+          return item.value === value;
+        });
+      }
+      value = this.enrichItems(value);
+      var text = this.getTextFromValue(props.value, props.text);
+      var state = { text: text, value: value, items: items };
 
       state.items.forEach(function (item) {
         var isActive = !!state.value.find(function (val) {
@@ -161,30 +204,45 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
   }, {
     key: 'open',
     value: function open() {
-      if (this.opened || this.props.disabled) {
+      if (WSDropdown.openDropdown === this || this.props.disabled) {
         return;
+      } else if (WSDropdown.openDropdown) {
+        WSDropdown.openDropdown.close();
       }
-      this.opened = true;
+
+      WSDropdown.openDropdown = this;
       this.dropdownContainer.style.height = 0;
       this.dropdownContainer.classList.add('mod-open');
       this.adjustSize(this.dropdownMenu.getHeight());
+
+      window.addEventListener('keydown', this.onGlobalKeyDown);
+
+      if (typeof this.dropdownMenu.onOpen === 'function') {
+        this.dropdownMenu.onOpen();
+      }
     }
   }, {
     key: 'close',
     value: function close() {
       var _this4 = this;
 
-      if (!this.opened) {
+      if (WSDropdown.openDropdown !== this) {
         return;
       }
+      WSDropdown.openDropdown = null;
       this.animateElement(this.dropdownContainer, 'animate-close', function (container) {
-        _this4.opened = false;
         container.classList.remove('mod-open');
 
         if (_this4.props.multiple) {
           _this4.dropdownMenu.clearSelections();
         }
       });
+
+      window.addEventListener('keydown', this.onGlobalKeyDown);
+
+      if (typeof this.dropdownMenu.onClose === 'function') {
+        this.dropdownMenu.onClose();
+      }
     }
   }, {
     key: 'adjustSize',
@@ -225,8 +283,8 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
             'a',
             {
               className: 'dropdown-trigger ' + disabledStyle,
-              onClick: function onClick() {
-                return _this5.open();
+              ref: function ref(element) {
+                _this5.trigger = element;
               }
             },
             icon,
@@ -238,8 +296,8 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
             'button',
             {
               className: 'dropdown-trigger ' + disabledStyle,
-              onClick: function onClick() {
-                return _this5.open();
+              ref: function ref(element) {
+                _this5.trigger = element;
               }
             },
             icon,
@@ -251,8 +309,8 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
             'div',
             {
               className: 'dropdown-trigger select-box ' + disabledStyle,
-              onClick: function onClick() {
-                return _this5.open();
+              ref: function ref(element) {
+                _this5.trigger = element;
               }
             },
             icon,
@@ -265,8 +323,8 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
             'a',
             {
               className: 'dropdown-trigger ' + disabledStyle,
-              onClick: function onClick() {
-                return _this5.open();
+              ref: function ref(element) {
+                _this5.trigger = element;
               }
             },
             icon
@@ -319,7 +377,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
           'div',
           {
             className: 'dropdown-container ' + this.props.orientation,
-            style: { width: this.props.width || (isWide ? '100%' : 'auto') },
+            style: { width: this.props.width || (isWide ? '100%' : '') },
             ref: function ref(element) {
               if (element) {
                 _this7.dropdownContainer = element;
@@ -377,6 +435,11 @@ Object.defineProperty(WSDropdown, 'propTypes', {
     onChange: _imports.PropTypes.func,
     disabled: _imports.PropTypes.bool
   }
+});
+Object.defineProperty(WSDropdown, 'openDropdown', {
+  enumerable: true,
+  writable: true,
+  value: null
 });
 Object.defineProperty(WSDropdown, 'childContextTypes', {
   enumerable: true,

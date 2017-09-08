@@ -164,7 +164,7 @@ export class DropdownMenu extends Component {
   };
 
   /**
-   * Setting the input value as filter
+   * Sets the input value as filter
    * @param {KeyboardEvent} event JavaScript event object
    * @returns {void}
    */
@@ -235,7 +235,7 @@ export class DropdownMenu extends Component {
     }
     const visibleItems = filteredItems.length + valueLength;
     let correctedIndex = index;
-    // Ensure the index is in boundings of visible items (selected and non selected items)
+    // Ensure the index is within bounds of visible items (selected and non selected items)
     if (index >= visibleItems) {
       correctedIndex = 0;
     } else if (index < 0) {

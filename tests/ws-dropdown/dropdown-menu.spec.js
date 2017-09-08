@@ -24,7 +24,7 @@ describe('A DropdownMenu', () => {
     expect(dm.getFilteredItems().length).toBe(2);
   });
 
-  it('get\'s the item for a selection index', () => {
+  it('gets the item for a selection index', () => {
     const items = [{label: 'test'}, {label: 'asd'}, {label: 'qwerty'}];
     const dm = new DropdownMenu({value: [], items});
     dm.context = {multiple: false};

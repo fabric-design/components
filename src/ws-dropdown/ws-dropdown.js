@@ -233,7 +233,7 @@ export class WSDropdown extends Component {
   createState(props) {
     const items = this.enrichItems(props.items);
     let value = props.value;
-    // Map value to the item to improve usability
+    // For better usability the value can be a primitive value matching a dropdown item value
     if (typeof value === 'string' && props.type !== 'input') {
       value = items.find(item => item.value === value);
     }
@@ -307,7 +307,7 @@ export class WSDropdown extends Component {
     this.dropdownContainer.style.height = 0;
     this.dropdownContainer.classList.add('mod-open');
     this.adjustSize(this.dropdownMenu.getHeight());
-    // Bind keyboard listener for keyboard navigation
+
     window.addEventListener('keydown', this.onGlobalKeyDown);
     // Forward open action to menu
     if (typeof this.dropdownMenu.onOpen === 'function') {
@@ -331,7 +331,7 @@ export class WSDropdown extends Component {
         this.dropdownMenu.clearSelections();
       }
     });
-    // Unbind keyboard listener
+
     window.addEventListener('keydown', this.onGlobalKeyDown);
     // Forward close action to menu
     if (typeof this.dropdownMenu.onClose === 'function') {

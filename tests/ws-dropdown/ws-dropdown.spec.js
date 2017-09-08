@@ -45,7 +45,7 @@ describe('A WSDropdown', () => {
     expect(dd.close).toHaveBeenCalled();
   });
 
-  it('get\'s text from value for selects', () => {
+  it('gets text from value for selects', () => {
     const dd = new WSDropdown({type: 'select'});
     expect(dd.getTextFromValue('test')).toEqual('test');
     expect(dd.getTextFromValue(['test', 'asd'])).toEqual('test, asd');

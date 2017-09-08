@@ -37,7 +37,7 @@ describe('A DropdownMenu', () => {
     expect(dm.getItemAtIndex(0).item).toBe(items[0]); // index 0 starts in value list
     expect(dm.getItemAtIndex(1).item).toBe(items[1]); // index 1 starts after value list
     expect(dm.getItemAtIndex(5).item).toBe(items[0]); // out of bound leads to index 0 which is in value list
-    expect(dm.getItemAtIndex(-1).item).toBe(items[2]);
+    expect(dm.getItemAtIndex(-1).item).toBe(items[2]); // index lower than 0 leads to the last item
 
     dm.context = {multiple: true};
     dm.state.value = [];
@@ -50,6 +50,6 @@ describe('A DropdownMenu', () => {
     expect(dm.getItemAtIndex(0).item).toBe(items[1]); // index 0 starts in value list
     expect(dm.getItemAtIndex(1).item).toBe(items[0]); // index 1 starts after value list
     expect(dm.getItemAtIndex(5).item).toBe(items[1]); // out of bound leads to index 0 which is in value list
-    expect(dm.getItemAtIndex(-1).item).toBe(items[2]);
+    expect(dm.getItemAtIndex(-1).item).toBe(items[2]); // index lower than 0 leads to the last item
   });
 });

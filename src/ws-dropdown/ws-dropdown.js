@@ -68,6 +68,11 @@ export class WSDropdown extends Component {
   };
 
   /**
+   * @type {WSDropdown}
+   */
+  static openDropdown = null;
+
+  /**
    * @type {Object}
    */
   static childContextTypes = {
@@ -81,7 +86,6 @@ export class WSDropdown extends Component {
   constructor(props) {
     super(props);
     // Enforce value to be an array for consistent usage
-    this.opened = false;
     this.state = this.createState(props);
   }
 
@@ -100,7 +104,9 @@ export class WSDropdown extends Component {
    * @returns {void}
    */
   componentDidMount() {
-    window.addEventListener('click', this.onDocumentClick.bind(this));
+    this.element.addEventListener('click', this.onAnyEvent);
+    this.trigger.addEventListener('click', this.onTriggerClick);
+    window.addEventListener('click', this.onDocumentClick);
   }
 
   /**
@@ -117,7 +123,9 @@ export class WSDropdown extends Component {
    * @returns {void}
    */
   componentWillUnmount() {
-    window.removeEventListener('click', this.onDocumentClick.bind(this));
+    this.element.removeEventListener('click', this.onAnyEvent);
+    this.trigger.removeEventListener('click', this.onTriggerClick);
+    window.removeEventListener('click', this.onDocumentClick);
   }
 
   /**
@@ -125,7 +133,7 @@ export class WSDropdown extends Component {
    * @param {MouseEvent} event JavaScript event object
    * @returns {void}
    */
-  onDocumentClick(event) {
+  onDocumentClick = event => {
     let element = event.target;
     while (element && this.element !== element) {
       element = element.parentNode;
@@ -134,7 +142,45 @@ export class WSDropdown extends Component {
     if (!element) {
       this.close();
     }
-  }
+  };
+
+  /**
+   * Handle clicks on dropdown trigger
+   * @param {MouseEvent} event JavaScript event object
+   * @returns {void}
+   */
+  onTriggerClick = event => {
+    event.stopPropagation();
+    if (WSDropdown.openDropdown !== this) {
+      this.open();
+    } else {
+      this.close();
+    }
+  };
+
+  /**
+   * Prevent event to bubble up and keep it inside drop down
+   * @param {Event} event Event object
+   * @returns {void}
+   */
+  onAnyEvent = event => {
+    event.stopPropagation();
+  };
+
+  /**
+   * Handles global key down events when dropdown was opened
+   * @param {KeyboardEvent} event JavaScript event object
+   * @returns {void}
+   */
+  onGlobalKeyDown = event => {
+    switch (event.key) {
+      case 'Escape':
+        this.close();
+        break;
+      default:
+        break;
+    }
+  };
 
   /**
    * Get text from labels of selected items
@@ -151,7 +197,7 @@ export class WSDropdown extends Component {
         text = value.map(item => item.label || item).join(', ');
       } else if (value) {
         // Value can be object from dropdown item or simple string from input
-        text = value.label;
+        text = value.label || value;
       }
     }
     return text;
@@ -185,11 +231,15 @@ export class WSDropdown extends Component {
    * @returns {Object}
    */
   createState(props) {
-    const state = {
-      text: this.getTextFromValue(props.value, props.text),
-      value: this.enrichItems(props.value),
-      items: this.enrichItems(props.items)
-    };
+    const items = this.enrichItems(props.items);
+    let value = props.value;
+    // For better usability the value can be a primitive value matching a dropdown item value
+    if (typeof value === 'string' && props.type !== 'input') {
+      value = items.find(item => item.value === value);
+    }
+    value = this.enrichItems(value);
+    const text = this.getTextFromValue(props.value, props.text);
+    const state = {text, value, items};
     // Set states to items in item list for passed values
     state.items.forEach(item => {
       // Check if item is is values or set it to false
@@ -246,13 +296,23 @@ export class WSDropdown extends Component {
    * @returns {void}
    */
   open() {
-    if (this.opened || this.props.disabled) {
+    // Stop if this dropdown is already opened or close previous opened dropdown
+    if (WSDropdown.openDropdown === this || this.props.disabled) {
       return;
+    } else if (WSDropdown.openDropdown) {
+      WSDropdown.openDropdown.close();
     }
-    this.opened = true;
+
+    WSDropdown.openDropdown = this;
     this.dropdownContainer.style.height = 0;
     this.dropdownContainer.classList.add('mod-open');
     this.adjustSize(this.dropdownMenu.getHeight());
+
+    window.addEventListener('keydown', this.onGlobalKeyDown);
+    // Forward open action to menu
+    if (typeof this.dropdownMenu.onOpen === 'function') {
+      this.dropdownMenu.onOpen();
+    }
   }
 
   /**
@@ -260,17 +320,23 @@ export class WSDropdown extends Component {
    * @returns {void}
    */
   close() {
-    if (!this.opened) {
+    if (WSDropdown.openDropdown !== this) {
       return;
     }
+    WSDropdown.openDropdown = null;
     this.animateElement(this.dropdownContainer, 'animate-close', container => {
-      this.opened = false;
       container.classList.remove('mod-open');
       // If this a multi select dropdown abort
       if (this.props.multiple) {
         this.dropdownMenu.clearSelections();
       }
     });
+
+    window.addEventListener('keydown', this.onGlobalKeyDown);
+    // Forward close action to menu
+    if (typeof this.dropdownMenu.onClose === 'function') {
+      this.dropdownMenu.onClose();
+    }
   }
 
   /**
@@ -322,7 +388,7 @@ export class WSDropdown extends Component {
         return (
           <a
             className={`dropdown-trigger ${disabledStyle}`}
-            onClick={() => this.open()}
+            ref={element => { this.trigger = element; }}
           >
             {icon} {this.state.text}
           </a>);
@@ -330,7 +396,7 @@ export class WSDropdown extends Component {
         return (
           <button
             className={`dropdown-trigger ${disabledStyle}`}
-            onClick={() => this.open()}
+            ref={element => { this.trigger = element; }}
           >
             {icon} {this.state.text}
           </button>);
@@ -338,7 +404,7 @@ export class WSDropdown extends Component {
         return (
           <div
             className={`dropdown-trigger select-box ${disabledStyle}`}
-            onClick={() => this.open()}
+            ref={element => { this.trigger = element; }}
           >
             {icon} {this.state.text}
           </div>);
@@ -347,7 +413,7 @@ export class WSDropdown extends Component {
         return (
           <a
             className={`dropdown-trigger ${disabledStyle}`}
-            onClick={() => this.open()}
+            ref={element => { this.trigger = element; }}
           >
             {icon}
           </a>);
@@ -396,7 +462,7 @@ export class WSDropdown extends Component {
         {this.renderTrigger()}
         <div
           className={`dropdown-container ${this.props.orientation}`}
-          style={{width: this.props.width || (isWide ? '100%' : 'auto')}}
+          style={{width: this.props.width || (isWide ? '100%' : '')}}
           ref={element => { if (element) { this.dropdownContainer = element; } }}
         >
           {this.renderContent()}

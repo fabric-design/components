@@ -76,6 +76,28 @@ render(
         'Open Recent',
         'Save'
       ]}/>
+      <br/>
+      <WSDropdown text="Simple Wide" type="select" filterable items={[
+        'New',
+        {
+          label: 'New From Template',
+          children: [
+            'item 2.1',
+            {
+              label: 'item 2.2',
+              children: [
+                'item 2.3.1',
+                'item 2.3.2',
+                'item 2.3.3',
+                'item 2.3.4'
+              ]
+            }
+          ]
+        },
+        'Open',
+        'Open Recent',
+        'Save'
+      ]}/>
       <br />
       <WSDropdown text="Input" type="select" width="50%" placeholder="tasd" value="222" inputOnly/>
       <br />

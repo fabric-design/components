@@ -231,15 +231,15 @@ export class WSDropdown extends Component {
    * @returns {Object}
    */
   createState(props) {
+    const items = this.enrichItems(props.items);
+    let value = props.value;
     // Map value to the item to improve usability
-    if (typeof props.value === 'string' && props.type !== 'input') {
-      props.value = props.items.find(item => item.value === props.value);
+    if (typeof value === 'string' && props.type !== 'input') {
+      value = items.find(item => item.value === value);
     }
-    const state = {
-      text: this.getTextFromValue(props.value, props.text),
-      value: this.enrichItems(props.value),
-      items: this.enrichItems(props.items)
-    };
+    value = this.enrichItems(value);
+    const text = this.getTextFromValue(props.value, props.text);
+    const state = {text, value, items};
     // Set states to items in item list for passed values
     state.items.forEach(item => {
       // Check if item is is values or set it to false

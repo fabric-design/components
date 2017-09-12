@@ -1,3 +1,15 @@
+<a name="1.0.22"></a>
+## [1.0.22](https://github.com/fabric-design/components/compare/1.0.21...1.0.22) (2017-09-12)
+
+
+### Bug Fixes
+
+* **build:** Update Preact to make the demo page run again ([3fc81ec](https://github.com/fabric-design/components/commit/3fc81ec))
+* **linting:** Make the demo page dependencies lint ([298be1a](https://github.com/fabric-design/components/commit/298be1a))
+* **preact:** Remove fallback for PureComponent since it's now supported by preact-compat ([ea6e2ff](https://github.com/fabric-design/components/commit/ea6e2ff))
+
+
+
 <a name="1.0.21"></a>
 ## [1.0.21](https://github.com/fabric-design/components/compare/1.0.20...1.0.21) (2017-09-12)
 

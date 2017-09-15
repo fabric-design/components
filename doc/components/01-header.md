@@ -1,14 +1,10 @@
 # Header
-
-## General
-All of our applications in Zalando requires a header, an authorization mechanism based on OAuth2 and most
-likely a localization for German and English users. To reduce the redundancy and effort every team had, 
-we created a header component which ships all necessary features. You can set the application name,
-navigation links, listen on locale and authentication changes.
-
+<!---
+General
+All of our applications in Zalando requires a header, an authorization mechanism based on OAuth2 and most likely a localization for German and English users. To reduce the redundancy and effort every team had, we created a header component which ships all necessary features. You can set the application name, navigation links, listen on locale and authentication changes.
+-->
 ## Usage
-To use hte header simply embed the we-header in your application and import the scss rules.
-PS: The color of the header is influenced by the selected color schema :) 
+To use Header simply embed the ws-header in your application and import the scss rules. The color on theme that you selected for your product.
 <div style="position: relative; overflow: hidden; padding-bottom: 120px">
   <ws-header appName="Demo Page" links.bind="[{label: 'Link', href: 'LinkValue', onClick: log},{label: 'Link2',href: '2222',children: [{label: 'Sub link 1', href: 'Go go app 1'},{label: 'Sub link 1', href: 'Go go app 1'}]}]"></ws-header>
 </div>
@@ -41,8 +37,7 @@ but it can be configured to use the cookies as well. To do so you have to call a
 ```
 
 ## Localization
-The header provides the user the ability to select either German or English as language.
-If the user never selected one the browser language will be used per default. The selected
+The header provides the user the possibility to select a language (browser language is selected by default). The selected
 language will be persisted during reloads in the selected storage. To act on locale changes
 you have to listen for the `ws-locale-changed` event on the window object.
 
@@ -95,7 +90,7 @@ the static function `getAccessToken()` which will return a promise with the acce
 
 ##### Programmatically request login / logout
 If you want to display a login page to the user or manage by yourself when you want to login or logout
-you can do this by publishing `ws-authorize` or `ws-unauthorize` events to the window. The header is 
+you can do this by publishing `ws-authorize` or `ws-unauthorize` events to the window. The header is
 listening for those events and triggers the corresponding action. Afterwards a `ws-auth-changed` event might occur.
 ```html
 <script>
@@ -113,7 +108,7 @@ listening for those events and triggers the corresponding action. Afterwards a `
 Since the refresh token URL of Zalando don't permit cross origin access you have to provide a
 proxy solution by yourself and specify the url as attribute. The proxy url should point to
 `https://identity.zalando.com/oauth2/token`. The header automatically will request a new access token
-once the expiration time of the last one was reached and a `ws-auth-changed` event will be published. 
+once the expiration time of the last one was reached and a `ws-auth-changed` event will be published.
 ```html
 <ws-header app-name="Test app" client-id="yourturn-client-id" refresh-url="/backend/identity/refresh"></ws-header>
 ```

@@ -11,7 +11,6 @@
     "tdd": "gulp tdd",
     "lint": "gulp lint",
     "docs": "gulp generate-docs",
-    "precommit": "npm run lint && npm run test && npm run build",
     "build": "gulp build && gulp generate-docs"
   },
   "repository": {
@@ -84,7 +83,6 @@
     "mocha": "3.2.0",
     "mocha-webpack": "0.7.0",
     "node-sass": "4.5.2",
-    "pre-commit": "1.2.2",
     "preact": "8.2.5",
     "preact-compat": "3.17.0",
     "prop-types": "15.5.8",

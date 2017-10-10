@@ -6,6 +6,9 @@
     right: rem(10px);
     top: rem(10px);
   }
+  .icon-only {
+    vertical-align: baseline;
+  }
 }
 .flatpickr-calendar {
   position: absolute;

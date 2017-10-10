@@ -61,6 +61,14 @@ export class DropdownMenuItem extends Component {
   }
 
   /**
+   * Listen for clicks on dropdown item
+   * @returns {void}
+   */
+  componentDidMount() {
+    this.dropdownItem.addEventListener('click', this.onClick);
+  }
+
+  /**
    * Important to update the state when the items in menu changed.
    * When in the multi select a dropdown item is selected and stored (submitted) it will be filtered out
    * of the item list and shown in a separate value list. React doesn't created new components but reuses them.
@@ -73,12 +81,20 @@ export class DropdownMenuItem extends Component {
   }
 
   /**
+   * Listen for clicks on dropdown item
+   * @returns {void}
+   */
+  componentWillUnmount() {
+    this.dropdownItem.removeEventListener('click', this.onClick);
+  }
+
+  /**
    * Handle clicks on this dropdown item. This can trigger a back navigation, selecting the item on multi selects
    * or change the dropdown value for simple dropdown's
    * @param {MouseEvent} event JavaScript event object
    * @returns {void}
    */
-  onClick(event) {
+  onClick = event => {
     event.stopPropagation();
     // Do nothing if this item is disabled
     if (this.state.disabled) {
@@ -108,7 +124,7 @@ export class DropdownMenuItem extends Component {
       // Use this strategy to keep the reference of this.state (item) into dropdown-menu items[x]
       this.setState(this.state);
     }
-  }
+  };
 
   /**
    * This is required to propagate changes from child menu to parent menu.
@@ -138,7 +154,7 @@ export class DropdownMenuItem extends Component {
     return (
       <li
         className={itemClass}
-        onClick={event => this.onClick(event)}
+        ref={element => { this.dropdownItem = element; }}
       >
         <a className={anchorClass} href={this.state.href} title={this.state.title || this.state.label}>
           {(this.props.icon || this.state.icon) &&

@@ -1,12 +1,7 @@
 $use-embedded-font: true;
 
-@import "~wholesale-styleguide-scss/index";
-@import "../src/ws-header/ws-header";
-@import "../src/ws-date-picker/ws-date-picker";
-@import "../src/ws-inline-edit/ws-inline-edit";
-@import "../src/ws-week-picker/ws-week-picker";
-@import "../src/ws-notification/ws-notification";
-@import "../src/ws-tiles-chart/ws-tiles-chart";
+@import "~fabric-scss/index";
+@import "../src/index";
 
 .container {
   margin: 20px;

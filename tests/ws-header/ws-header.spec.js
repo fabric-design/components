@@ -6,7 +6,6 @@ import {LocalStorage} from '../../src/ws-header/storage/local-storage';
 
 function clearStorage() {
   WSHeader.storage.remove('access_token');
-  WSHeader.storage.remove('refresh_token');
   WSHeader.storage.remove('expires_at');
 }
 
@@ -52,14 +51,12 @@ describe('A WSHeader', () => {
     WSHeader.storage.set('locale', 'de');
     const header = new WSHeader({
       loginUrl: '1111',
-      refreshUrl: 222,
       businessPartnerId: '333',
       clientId: 444
     });
 
     expect(header.authorization).toBeTruthy();
     expect(header.authorization.loginUrl).toBe('1111');
-    expect(header.authorization.refreshUrl).toBe(222);
     expect(header.authorization.businessPartnerId).toBe('333');
     expect(header.authorization.clientId).toBe(444);
     expect(header.state.locale).toBe('de');

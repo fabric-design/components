@@ -13,19 +13,15 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var Authorization = exports.Authorization = function () {
   function Authorization(storage) {
     var loginUrl = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-    var refreshUrl = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-    var clientId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-    var businessPartnerId = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : '';
+    var clientId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+    var businessPartnerId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
 
     _classCallCheck(this, Authorization);
 
     this.storage = storage;
     this.loginUrl = loginUrl;
-    this.refreshUrl = refreshUrl;
     this.clientId = clientId;
     this.businessPartnerId = businessPartnerId;
-
-    this.checkExpiration();
   }
 
   _createClass(Authorization, [{
@@ -39,25 +35,6 @@ var Authorization = exports.Authorization = function () {
       if (typeof this.accessTokenChange === 'function') {
         this.accessTokenChange(accessToken);
       }
-    }
-  }, {
-    key: 'checkExpiration',
-    value: function checkExpiration() {
-      var _this = this;
-
-      var expiresAt = this.storage.get('expires_at') || 0;
-      var refreshToken = this.storage.get('refresh_token');
-      if (!refreshToken) {
-        return;
-      }
-
-      if (new Date().getTime() > expiresAt - 60000) {
-        this.refresh(refreshToken);
-      }
-
-      setTimeout(function () {
-        return _this.checkExpiration();
-      }, 59000);
     }
   }, {
     key: 'tryFetchToken',
@@ -88,7 +65,6 @@ var Authorization = exports.Authorization = function () {
     value: function updateTokens(params) {
       var expires = params.expires_in ? parseInt(params.expires_in, 10) : 3600;
       this.storage.set('access_token', params.access_token);
-      this.storage.set('refresh_token', params.refresh_token);
       this.storage.set('expires_at', new Date().getTime() + expires * 1000);
 
       this.changeAccessToken(params.access_token);
@@ -101,34 +77,9 @@ var Authorization = exports.Authorization = function () {
       location.href = this.loginUrl + '?' + query;
     }
   }, {
-    key: 'refresh',
-    value: function refresh(token) {
-      var _this2 = this;
-
-      if (!this.refreshUrl || !token) {
-        return;
-      }
-      var data = this.buildQuery([['business_partner_id', this.businessPartnerId], ['client_id', this.clientId], ['grant_type', 'refresh_token'], ['refresh_token', token], ['state', this.createAndRememberUUID()], ['response_type', 'token']]);
-
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', this.refreshUrl, true);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-      xhr.addEventListener('load', function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-            _this2.updateTokens(JSON.parse(xhr.responseText));
-          } else {
-            throw new Error('Could not refresh token: ' + xhr.responseText);
-          }
-        }
-      });
-      xhr.send(data);
-    }
-  }, {
     key: 'unauthorize',
     value: function unauthorize() {
       this.storage.remove('access_key');
-      this.storage.remove('refresh_key');
       this.storage.remove('expires_at');
       this.changeAccessToken(null);
     }

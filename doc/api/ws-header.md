@@ -7,7 +7,6 @@ This class implements the OAuth2 authorization via the implicit flow.
 
 -   `storage`  
 -   `loginUrl`   (optional, default `''`)
--   `refreshUrl`   (optional, default `''`)
 -   `clientId`   (optional, default `''`)
 -   `businessPartnerId`   (optional, default `''`)
 
@@ -17,7 +16,6 @@ This class implements the OAuth2 authorization via the implicit flow.
 
 -   `storage` **AbstractStorage** Key value storage
 -   `loginUrl` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Url the user get's redirected to authorize (optional, default `''`)
--   `refreshUrl` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Url the app will send a POST to request a new access token (optional, default `''`)
 -   `clientId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** OAuth2 client id (optional, default `''`)
 -   `businessPartnerId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** OAuth2 business partner id (optional, default `''`)
 
@@ -57,16 +55,6 @@ Redirect the user to the OAuth2 authorization page
 
 Returns **void** 
 
-### refresh
-
-Request a new access token
-
-**Parameters**
-
--   `token` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Refresh token
-
-Returns **void** 
-
 ### unauthorize
 
 Remove authorization
@@ -81,8 +69,6 @@ This component renders a generic header which provides authentication and langua
 Optionally call WSHeader.setStorageType('cookie', 'zalando') If you want a to use cookies instead of localStorage
 to persist the tokens. You can call WSHeader.getAccessToken().then(token => ...) to get the current access token.
 It will resolve null when no access token is present and therefore the user isn't logged in.
-If you configured the header with a refreshUrl you should subscribe the ws-auth-changed event. It will be emitted
-when the access token was refreshed and it will have the access token in the event details.
 
 **Parameters**
 

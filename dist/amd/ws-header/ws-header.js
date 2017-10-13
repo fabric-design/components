@@ -136,7 +136,7 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
       value: function initAuthorization(props) {
         var _this3 = this;
 
-        this.authorization = new _authorization.Authorization(WSHeader.storage, props.loginUrl, props.refreshUrl, props.clientId, props.businessPartnerId);
+        this.authorization = new _authorization.Authorization(WSHeader.storage, props.loginUrl, props.clientId, props.businessPartnerId);
 
         this.authorization.onAccessTokenChange(function (accessToken) {
           if (_this3.mounted) {
@@ -370,7 +370,6 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
     writable: true,
     value: {
       loginUrl: 'https://identity.zalando.com/oauth2/authorize',
-      refreshUrl: null,
       businessPartnerId: '810d1d00-4312-43e5-bd31-d8373fdd24c7',
       clientId: null,
       links: [],
@@ -385,7 +384,6 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
     writable: true,
     value: {
       loginUrl: _imports.PropTypes.string,
-      refreshUrl: _imports.PropTypes.string,
       businessPartnerId: _imports.PropTypes.string,
       clientId: _imports.PropTypes.string,
       links: _imports.PropTypes.array,

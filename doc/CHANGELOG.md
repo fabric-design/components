@@ -1,3 +1,13 @@
+<a name="1.0.24"></a>
+## [1.0.24](https://github.com/fabric-design/components/compare/1.0.23...1.0.24) (2017-10-13)
+
+
+### Bug Fixes
+
+* **header:** Removed refresh token logic ([#134](https://github.com/fabric-design/components/issues/134)) ([a2d3f6d](https://github.com/fabric-design/components/commit/a2d3f6d))
+
+
+
 <a name="1.0.23"></a>
 ## [1.0.23](https://github.com/fabric-design/components/compare/1.0.22...1.0.23) (2017-09-19)
 

@@ -94,7 +94,7 @@ export var WSHeader = function (_Component) {
     value: function initAuthorization(props) {
       var _this3 = this;
 
-      this.authorization = new Authorization(WSHeader.storage, props.loginUrl, props.refreshUrl, props.clientId, props.businessPartnerId);
+      this.authorization = new Authorization(WSHeader.storage, props.loginUrl, props.clientId, props.businessPartnerId);
 
       this.authorization.onAccessTokenChange(function (accessToken) {
         if (_this3.mounted) {
@@ -327,7 +327,6 @@ Object.defineProperty(WSHeader, 'defaultProps', {
   writable: true,
   value: {
     loginUrl: 'https://identity.zalando.com/oauth2/authorize',
-    refreshUrl: null,
     businessPartnerId: '810d1d00-4312-43e5-bd31-d8373fdd24c7',
     clientId: null,
     links: [],
@@ -342,7 +341,6 @@ Object.defineProperty(WSHeader, 'propTypes', {
   writable: true,
   value: {
     loginUrl: PropTypes.string,
-    refreshUrl: PropTypes.string,
     businessPartnerId: PropTypes.string,
     clientId: PropTypes.string,
     links: PropTypes.array,

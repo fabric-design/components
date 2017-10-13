@@ -10,8 +10,6 @@ import {WSDropdown} from '../ws-dropdown/ws-dropdown';
  * Optionally call WSHeader.setStorageType('cookie', 'zalando') If you want a to use cookies instead of localStorage
  * to persist the tokens. You can call WSHeader.getAccessToken().then(token => ...) to get the current access token.
  * It will resolve null when no access token is present and therefore the user isn't logged in.
- * If you configured the header with a refreshUrl you should subscribe the ws-auth-changed event. It will be emitted
- * when the access token was refreshed and it will have the access token in the event details.
  */
 export class WSHeader extends Component {
 
@@ -23,7 +21,6 @@ export class WSHeader extends Component {
 
   static defaultProps = {
     loginUrl: 'https://identity.zalando.com/oauth2/authorize',
-    refreshUrl: null,
     businessPartnerId: '810d1d00-4312-43e5-bd31-d8373fdd24c7',
     clientId: null,
     links: [],
@@ -35,7 +32,6 @@ export class WSHeader extends Component {
 
   static propTypes = {
     loginUrl: PropTypes.string,
-    refreshUrl: PropTypes.string,
     businessPartnerId: PropTypes.string,
     clientId: PropTypes.string,
     links: PropTypes.array,
@@ -146,7 +142,6 @@ export class WSHeader extends Component {
     this.authorization = new Authorization(
       WSHeader.storage,
       props.loginUrl,
-      props.refreshUrl,
       props.clientId,
       props.businessPartnerId
     );

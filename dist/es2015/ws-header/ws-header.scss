@@ -33,9 +33,6 @@ $header-border-color: schema-color(4) !default;
 
 @mixin main-menu() {
   display: inline-block;
-  li {
-    @include list-item;
-  }
 }
 
 @mixin main-sub-menu() {
@@ -48,7 +45,6 @@ $header-border-color: schema-color(4) !default;
     transition: transform .1s linear;
     transform: translate3d(150px, 0, 0);
     color: $ghost;
-    @include list-item;
     &:hover {
       color: $white;
     }
@@ -66,15 +62,6 @@ $header-border-color: schema-color(4) !default;
         transition-delay: $i * .05s + .075s;
       }
     }
-  }
-}
-
-@mixin list-item() {
-  font-weight: bold;
-  color: $miroschka;
-  &.is-current {
-    background-color: $header-accent-background-color;
-    color: $white;
   }
 }
 

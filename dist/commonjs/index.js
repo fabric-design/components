@@ -66,12 +66,3 @@ Object.defineProperty(exports, 'WSTilesChart', {
     return _wsTilesChart.WSTilesChart;
   }
 });
-
-var _wsSpinner = require('./ws-spinner/ws-spinner');
-
-Object.defineProperty(exports, 'WSSpinner', {
-  enumerable: true,
-  get: function get() {
-    return _wsSpinner.WSSpinner;
-  }
-});

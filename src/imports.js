@@ -6,6 +6,7 @@ import * as types from 'prop-types';
 export const React = {
   createElement: _React_.createElement || _React_.h
 };
+export const PureComponent = _React_.PureComponent || _React_.Component;
 export const PropTypes = types;
 export const render = ReactDOM.render;
 

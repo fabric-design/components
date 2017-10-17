@@ -1,7 +1,7 @@
 System.register(['react', 'react-dom', 'prop-types'], function (_export, _context) {
   "use strict";
 
-  var _React_, ReactDOM, types, _createClass, React, PropTypes, render, Component;
+  var _React_, ReactDOM, types, _createClass, React, PureComponent, PropTypes, render, Component;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -65,6 +65,10 @@ System.register(['react', 'react-dom', 'prop-types'], function (_export, _contex
       });
 
       _export('React', React);
+
+      _export('PureComponent', PureComponent = _React_.PureComponent || _React_.Component);
+
+      _export('PureComponent', PureComponent);
 
       _export('PropTypes', PropTypes = types);
 

@@ -7,4 +7,3 @@ export { WSInlineEdit } from './ws-inline-edit/ws-inline-edit';
 export { WSNotification } from './ws-notification/ws-notification';
 export { WSWeekPicker } from './ws-week-picker/ws-week-picker';
 export { WSTilesChart } from './ws-tiles-chart/ws-tiles-chart';
-export { WSSpinner } from './ws-spinner/ws-spinner';

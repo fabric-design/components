@@ -70,52 +70,6 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
 
       var _this = _possibleConstructorReturn(this, (WSDropdown.__proto__ || Object.getPrototypeOf(WSDropdown)).call(this, props));
 
-      Object.defineProperty(_this, 'onDocumentClick', {
-        enumerable: true,
-        writable: true,
-        value: function value(event) {
-          var element = event.target;
-          while (element && _this.element !== element) {
-            element = element.parentNode;
-          }
-
-          if (!element) {
-            _this.close();
-          }
-        }
-      });
-      Object.defineProperty(_this, 'onTriggerClick', {
-        enumerable: true,
-        writable: true,
-        value: function value(event) {
-          event.stopPropagation();
-          if (WSDropdown.openDropdown !== _this) {
-            _this.open();
-          } else {
-            _this.close();
-          }
-        }
-      });
-      Object.defineProperty(_this, 'onAnyEvent', {
-        enumerable: true,
-        writable: true,
-        value: function value(event) {
-          event.stopPropagation();
-        }
-      });
-      Object.defineProperty(_this, 'onGlobalKeyDown', {
-        enumerable: true,
-        writable: true,
-        value: function value(event) {
-          switch (event.key) {
-            case 'Escape':
-              _this.close();
-              break;
-            default:
-              break;
-          }
-        }
-      });
       Object.defineProperty(_this, 'handlePropagation', {
         enumerable: true,
         writable: true,
@@ -129,6 +83,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
         }
       });
 
+      _this.opened = false;
       _this.state = _this.createState(props);
       return _this;
     }
@@ -143,9 +98,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
     }, {
       key: 'componentDidMount',
       value: function componentDidMount() {
-        this.element.addEventListener('click', this.onAnyEvent);
-        this.trigger.addEventListener('click', this.onTriggerClick);
-        window.addEventListener('click', this.onDocumentClick);
+        window.addEventListener('click', this.onDocumentClick.bind(this));
       }
     }, {
       key: 'componentWillReceiveProps',
@@ -155,9 +108,19 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
     }, {
       key: 'componentWillUnmount',
       value: function componentWillUnmount() {
-        this.element.removeEventListener('click', this.onAnyEvent);
-        this.trigger.removeEventListener('click', this.onTriggerClick);
-        window.removeEventListener('click', this.onDocumentClick);
+        window.removeEventListener('click', this.onDocumentClick.bind(this));
+      }
+    }, {
+      key: 'onDocumentClick',
+      value: function onDocumentClick(event) {
+        var element = event.target;
+        while (element && this.element !== element) {
+          element = element.parentNode;
+        }
+
+        if (!element) {
+          this.close();
+        }
       }
     }, {
       key: 'getTextFromValue',
@@ -171,7 +134,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
               return item.label || item;
             }).join(', ');
           } else if (value) {
-            text = value.label || value;
+            text = value.label;
           }
         }
         return text;
@@ -197,17 +160,11 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
     }, {
       key: 'createState',
       value: function createState(props) {
-        var items = this.enrichItems(props.items);
-        var value = props.value;
-
-        if (typeof value === 'string' && props.type !== 'input') {
-          value = items.find(function (item) {
-            return item.value === value;
-          });
-        }
-        value = this.enrichItems(value);
-        var text = this.getTextFromValue(props.value, props.text);
-        var state = { text: text, value: value, items: items };
+        var state = {
+          text: this.getTextFromValue(props.value, props.text),
+          value: this.enrichItems(props.value),
+          items: this.enrichItems(props.items)
+        };
 
         state.items.forEach(function (item) {
           var isActive = !!state.value.find(function (val) {
@@ -243,45 +200,30 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
     }, {
       key: 'open',
       value: function open() {
-        if (WSDropdown.openDropdown === this || this.props.disabled) {
+        if (this.opened || this.props.disabled) {
           return;
-        } else if (WSDropdown.openDropdown) {
-          WSDropdown.openDropdown.close();
         }
-
-        WSDropdown.openDropdown = this;
+        this.opened = true;
         this.dropdownContainer.style.height = 0;
         this.dropdownContainer.classList.add('mod-open');
         this.adjustSize(this.dropdownMenu.getHeight());
-
-        window.addEventListener('keydown', this.onGlobalKeyDown);
-
-        if (typeof this.dropdownMenu.onOpen === 'function') {
-          this.dropdownMenu.onOpen();
-        }
       }
     }, {
       key: 'close',
       value: function close() {
         var _this4 = this;
 
-        if (WSDropdown.openDropdown !== this) {
+        if (!this.opened) {
           return;
         }
-        WSDropdown.openDropdown = null;
         this.animateElement(this.dropdownContainer, 'animate-close', function (container) {
+          _this4.opened = false;
           container.classList.remove('mod-open');
 
           if (_this4.props.multiple) {
             _this4.dropdownMenu.clearSelections();
           }
         });
-
-        window.addEventListener('keydown', this.onGlobalKeyDown);
-
-        if (typeof this.dropdownMenu.onClose === 'function') {
-          this.dropdownMenu.onClose();
-        }
       }
     }, {
       key: 'adjustSize',
@@ -322,8 +264,8 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
               'a',
               {
                 className: 'dropdown-trigger ' + disabledStyle,
-                ref: function ref(element) {
-                  _this5.trigger = element;
+                onClick: function onClick() {
+                  return _this5.open();
                 }
               },
               icon,
@@ -335,8 +277,8 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
               'button',
               {
                 className: 'dropdown-trigger ' + disabledStyle,
-                ref: function ref(element) {
-                  _this5.trigger = element;
+                onClick: function onClick() {
+                  return _this5.open();
                 }
               },
               icon,
@@ -348,8 +290,8 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
               'div',
               {
                 className: 'dropdown-trigger select-box ' + disabledStyle,
-                ref: function ref(element) {
-                  _this5.trigger = element;
+                onClick: function onClick() {
+                  return _this5.open();
                 }
               },
               icon,
@@ -362,8 +304,8 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
               'a',
               {
                 className: 'dropdown-trigger ' + disabledStyle,
-                ref: function ref(element) {
-                  _this5.trigger = element;
+                onClick: function onClick() {
+                  return _this5.open();
                 }
               },
               icon
@@ -403,7 +345,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
       value: function render() {
         var _this7 = this;
 
-        var isWide = this.props.type === 'select';
+        var isWide = this.props.type === 'select' ? 'mod-wide' : '';
         return _imports.React.createElement(
           'div',
           { className: 'dropdown', ref: function ref(element) {
@@ -415,8 +357,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
           _imports.React.createElement(
             'div',
             {
-              className: 'dropdown-container ' + this.props.orientation,
-              style: { width: this.props.width || (isWide ? '100%' : '') },
+              className: 'dropdown-container ' + this.props.orientation + ' ' + isWide,
               ref: function ref(element) {
                 if (element) {
                   _this7.dropdownContainer = element;
@@ -448,7 +389,6 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
       limit: 10,
       orientation: 'left',
       placeholder: '',
-      width: '',
       value: null,
       onChange: function onChange() {},
       disabled: false
@@ -469,16 +409,10 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
       limit: _imports.PropTypes.number,
       orientation: _imports.PropTypes.oneOf(['left', 'right']),
       placeholder: _imports.PropTypes.string,
-      width: _imports.PropTypes.string,
       value: _imports.PropTypes.oneOfType([_imports.PropTypes.string, _imports.PropTypes.object, _imports.PropTypes.array]),
       onChange: _imports.PropTypes.func,
       disabled: _imports.PropTypes.bool
     }
-  });
-  Object.defineProperty(WSDropdown, 'openDropdown', {
-    enumerable: true,
-    writable: true,
-    value: null
   });
   Object.defineProperty(WSDropdown, 'childContextTypes', {
     enumerable: true,

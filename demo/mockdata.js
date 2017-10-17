@@ -6,4 +6,4 @@ export const dashboardMockData = {
       moreThan1Day: ['t', 'r', 'g', 'l', '5', '6']
     }
   }
-};
+}

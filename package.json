@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
+  "name": "styleguide-web-components",
+  "version": "1.0.10",
+=======
   "name": "fabric-components",
   "version": "1.0.24",
+>>>>>>> e3422608e85c4dee5dce88f8948a0bc900799ff4
   "description": "",
   "scripts": {
     "start": "webpack-dev-server --progress --colors --content-base build webpack.config.js",
@@ -11,11 +16,12 @@
     "tdd": "gulp tdd",
     "lint": "gulp lint",
     "docs": "gulp generate-docs",
+    "precommit": "npm run lint && npm run test && npm run build",
     "build": "gulp build && gulp generate-docs"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/fabric-design/components"
+    "url": "https://github.com/wholesale-design-system/components"
   },
   "keywords": [
     "styleguide",
@@ -64,7 +70,6 @@
     "eslint-plugin-jasmine": "2.2.0",
     "eslint-plugin-jsx-a11y": "4.0.0",
     "eslint-plugin-react": "6.10.3",
-    "fabric-scss": "git+https://github.com/fabric-design/scss.git",
     "fs-then-native": "2.0.0",
     "glob": "7.1.1",
     "gulp": "3.9.1",
@@ -83,8 +88,9 @@
     "mocha": "3.2.0",
     "mocha-webpack": "0.7.0",
     "node-sass": "4.5.2",
-    "preact": "8.2.5",
-    "preact-compat": "3.17.0",
+    "pre-commit": "1.2.2",
+    "preact": "7.2.1",
+    "preact-compat": "3.14.3",
     "prop-types": "15.5.8",
     "react": "15.5.4",
     "react-dom": "15.5.4",
@@ -98,14 +104,13 @@
     "webpack": "2.3.3",
     "webpack-dev-server": "2.4.2",
     "webpack-node-externals": "1.5.4",
+    "wholesale-styleguide-scss": "git+https://github.com/wholesale-design-system/scss.git#master",
     "yargs": "7.0.2"
   },
   "peerDependencies": {
-    "preact": "8.2.5",
-    "preact-compat": "3.17.0",
-    "prop-types": "15.5.8",
-    "react": "15.5.4",
-    "react-dom": "15.5.4",
-    "fabric-scss": "git+https://github.com/fabric-design/scss.git"
+    "preact": "^7.1.0",
+    "preact-compat": "^3.13.1",
+    "prop-types": "^15.5.8",
+    "wholesale-styleguide-scss": "git+https://github.com/wholesale-design-system/scss.git#master"
   }
 }

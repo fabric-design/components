@@ -61,12 +61,6 @@ Called when enter or submit key is pressed
 
 Returns **void** 
 
-### onOpen
-
-Bind keyboard listener and focus input if available when dropdown opens
-
-Returns **void** 
-
 ### getHeight
 
 Gets the height of the menu container to scale the outer container up
@@ -117,12 +111,6 @@ The item object can have the following properties
 -   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** React props
 -   `context` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** React context
 
-### componentDidMount
-
-Listen for clicks on dropdown item
-
-Returns **void** 
-
 ### componentWillReceiveProps
 
 Important to update the state when the items in menu changed.
@@ -133,12 +121,6 @@ This leads to property updates and without this function a wrong item will be re
 **Parameters**
 
 -   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** React component props
-
-Returns **void** 
-
-### componentWillUnmount
-
-Listen for clicks on dropdown item
 
 Returns **void** 
 
@@ -236,48 +218,6 @@ Prevent default change event to bubble up
 
 Returns **void** 
 
-### onOpen
-
-Bind keyboard listener and focus input if available when dropdown opens
-
-Returns **void** 
-
-### onClose
-
-Unbind keyboard listener when dropdown closes
-
-Returns **void** 
-
-### onGlobalKeyDown
-
-Handle global key down events to select items
-
-**Parameters**
-
--   `event` **[KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent)** JavaScript event object
-
-Returns **void** 
-
-### onKeyUpUpdateFilter
-
-Sets the input value as filter
-
-**Parameters**
-
--   `event` **[KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent)** JavaScript event object
-
-Returns **void** 
-
-### onClickSubmit
-
-Handles submit action on multi select drop downs
-
-**Parameters**
-
--   `event` **[Event](https://developer.mozilla.org/en-US/docs/Web/API/Event)** JavaScript event object
-
-Returns **void** 
-
 ### getHeight
 
 Gets the current height of the menu
@@ -290,29 +230,13 @@ If there is a filter active it applies it on the available items
 
 Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
 
-### getItemAtIndex
+### updateFilter
 
-Get the item for an index which can match the value or items list
-
-**Parameters**
-
--   `index` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Index across value and filtered items
-
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-
-### focusNextItem
-
-Depending on the direction it marks the next dropdown item as focused
+Setting the input value as filter
 
 **Parameters**
 
--   `direction` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Can be 1 for down or -1 for up direction
-
-Returns **void** 
-
-### selectCurrentItem
-
-Mark the currently focused item as selected
+-   `event` **[KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent)** JavaScript event object
 
 Returns **void** 
 
@@ -320,6 +244,16 @@ Returns **void**
 
 Deselect all items which are not stored as value. Only relevant for multi select dropdown.
 When the dropdown will be closed without pressing submit the state will be restored
+
+Returns **void** 
+
+### submit
+
+Handles submit action on multi select drop downs
+
+**Parameters**
+
+-   `event` **[Event](https://developer.mozilla.org/en-US/docs/Web/API/Event)** JavaScript event object
 
 Returns **void** 
 
@@ -467,36 +401,6 @@ Handles click on document body to close the dropdown if clicked elsewhere
 
 Returns **void** 
 
-### onTriggerClick
-
-Handle clicks on dropdown trigger
-
-**Parameters**
-
--   `event` **[MouseEvent](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent)** JavaScript event object
-
-Returns **void** 
-
-### onAnyEvent
-
-Prevent event to bubble up and keep it inside drop down
-
-**Parameters**
-
--   `event` **[Event](https://developer.mozilla.org/en-US/docs/Web/API/Event)** Event object
-
-Returns **void** 
-
-### onGlobalKeyDown
-
-Handles global key down events when dropdown was opened
-
-**Parameters**
-
--   `event` **[KeyboardEvent](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent)** JavaScript event object
-
-Returns **void** 
-
 ### getTextFromValue
 
 Get text from labels of selected items
@@ -605,7 +509,5 @@ Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 ### defaultProps
 
 ### propTypes
-
-### openDropdown
 
 ### childContextTypes

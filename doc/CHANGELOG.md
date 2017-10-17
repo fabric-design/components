@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 <a name="1.0.24"></a>
 ## [1.0.24](https://github.com/fabric-design/components/compare/1.0.23...1.0.24) (2017-10-13)
 
@@ -119,6 +121,7 @@
 
 
 
+>>>>>>> e3422608e85c4dee5dce88f8948a0bc900799ff4
 <a name="1.0.10"></a>
 ## [1.0.10](https://github.com/wholesale-design-system/components/compare/1.0.9...v1.0.10) (2017-07-27)
 

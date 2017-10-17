@@ -1,8 +1,13 @@
 $use-embedded-font: true;
 $schema: 'water-blue';
 
-@import "~fabric-scss/index";
-@import "../src/index";
+@import "~wholesale-styleguide-scss/index";
+@import "../src/ws-header/ws-header";
+@import "../src/ws-date-picker/ws-date-picker";
+@import "../src/ws-inline-edit/ws-inline-edit";
+@import "../src/ws-week-picker/ws-week-picker";
+@import "../src/ws-notification/ws-notification";
+@import "../src/ws-tiles-chart/ws-tiles-chart";
 
 .container {
   margin: 20px;

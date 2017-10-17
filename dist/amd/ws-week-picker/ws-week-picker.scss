@@ -1,5 +1,6 @@
-$padding: $space-m;
+@import "~wholesale-styleguide-scss/utils/variables";
 
+$padding: $space-m;
 // to allow padding with setting a transparent border
 @mixin table-padding ($top, $right, $bottom, $left) {
   @if $top != 0 {

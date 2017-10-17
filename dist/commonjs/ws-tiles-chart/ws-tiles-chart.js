@@ -7,9 +7,15 @@ exports.WSTilesChart = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
 var _imports = require('../imports');
 
 var _tile = require('./tile');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -92,15 +98,15 @@ var WSTilesChart = exports.WSTilesChart = function (_Component) {
           height = _props.height;
 
       var groups = data.groups || {};
-      return _imports.React.createElement(
+      return _react2.default.createElement(
         'div',
         { className: 'ws-tiles-chart', style: { width: width + 'px', height: height + 'px' } },
-        _imports.React.createElement(
+        _react2.default.createElement(
           'div',
           { className: 'tiles-chart-title' },
           title
         ),
-        _imports.React.createElement(
+        _react2.default.createElement(
           'div',
           {
             className: 'tiles-chart-container',
@@ -110,7 +116,7 @@ var WSTilesChart = exports.WSTilesChart = function (_Component) {
           },
           Object.keys(groups).map(function (groupName) {
             return groups[groupName].map(function (tile) {
-              return _imports.React.createElement(_tile.Tile, {
+              return _react2.default.createElement(_tile.Tile, {
                 identifier: tile,
                 className: _this2.state.groupOver === groupName ? 'group-over' : '',
                 groupName: groupName,

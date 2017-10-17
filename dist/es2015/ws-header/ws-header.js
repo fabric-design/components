@@ -182,11 +182,8 @@ export var WSHeader = function (_Component) {
           'div',
           { className: 'level-1' },
           React.createElement(
-            'a',
-            {
-              className: 'application-name',
-              href: '#'
-            },
+            'div',
+            { className: 'application-name' },
             this.props.appLogo && React.createElement(
               'figure',
               { className: 'application-logo' },
@@ -213,8 +210,7 @@ export var WSHeader = function (_Component) {
                     },
                     ref: function ref(element) {
                       _this5.menuItems[index] = element;
-                    },
-                    className: link.isCurrent ? 'is-current' : null
+                    }
                   },
                   React.createElement(
                     'a',
@@ -282,9 +278,6 @@ export var WSHeader = function (_Component) {
             onMouseLeave: function onMouseLeave() {
               return _this5.leaveLevel2();
             },
-            onClick: function onClick() {
-              return _this5.leaveLevel2();
-            },
             ref: function ref(element) {
               _this5.level2 = element;
             }
@@ -298,7 +291,7 @@ export var WSHeader = function (_Component) {
               parent.children.map(function (child, childIndex) {
                 return React.createElement(
                   'li',
-                  { key: 'sub-link-' + index + '-' + childIndex, className: child.isCurrent ? 'is-current' : null },
+                  { key: 'sub-link-' + index + '-' + childIndex },
                   React.createElement(
                     'a',
                     { href: child.href, onClick: function onClick(event) {

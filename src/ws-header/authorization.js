@@ -6,18 +6,14 @@ export class Authorization {
   /**
    * @param {AbstractStorage} storage Key value storage
    * @param {string} loginUrl Url the user get's redirected to authorize
-   * @param {string} refreshUrl Url the app will send a POST to request a new access token
    * @param {string} clientId OAuth2 client id
    * @param {string} businessPartnerId OAuth2 business partner id
    */
-  constructor(storage, loginUrl = '', refreshUrl = '', clientId = '', businessPartnerId = '') {
+  constructor(storage, loginUrl = '', clientId = '', businessPartnerId = '') {
     this.storage = storage;
     this.loginUrl = loginUrl;
-    this.refreshUrl = refreshUrl;
     this.clientId = clientId;
     this.businessPartnerId = businessPartnerId;
-    // Check if the access token will expire soon and we can refresh it
-    this.checkExpiration();
   }
 
   /**
@@ -38,26 +34,6 @@ export class Authorization {
     if (typeof this.accessTokenChange === 'function') {
       this.accessTokenChange(accessToken);
     }
-  }
-
-  /**
-   * Refresh access token if it is expired and a refresh token is available
-   * @returns {void}
-   * @private
-   */
-  checkExpiration() {
-    const expiresAt = this.storage.get('expires_at') || 0;
-    const refreshToken = this.storage.get('refresh_token');
-    if (!refreshToken) {
-      return;
-    }
-    // Check if expiration date is one minute before expiration
-    if (new Date().getTime() > expiresAt - 60000) {
-      this.refresh(refreshToken);
-    }
-    // Check every 59 seconds if the token expires.
-    // Use 59 seconds to prevent exact overlapping of check and expiration
-    setTimeout(() => this.checkExpiration(), 59000);
   }
 
   /**
@@ -89,14 +65,13 @@ export class Authorization {
 
   /**
    * Update the tokens and notify the header
-   * @param {Object} params Response parameters containing access and refresh token
+   * @param {Object} params Response parameters containing access token
    * @returns {void}
    * @private
    */
   updateTokens(params) {
     const expires = params.expires_in ? parseInt(params.expires_in, 10) : 3600;
     this.storage.set('access_token', params.access_token);
-    this.storage.set('refresh_token', params.refresh_token);
     this.storage.set('expires_at', new Date().getTime() + expires * 1000);
     // Put data into authorized stream
     this.changeAccessToken(params.access_token);
@@ -118,46 +93,11 @@ export class Authorization {
   }
 
   /**
-   * Request a new access token
-   * @param {string} token Refresh token
-   * @returns {void}
-   */
-  refresh(token) {
-    // Abort if we have not enough information to refresh the token
-    if (!this.refreshUrl || !token) {
-      return;
-    }
-    const data = this.buildQuery([
-      ['business_partner_id', this.businessPartnerId],
-      ['client_id', this.clientId],
-      ['grant_type', 'refresh_token'],
-      ['refresh_token', token],
-      ['state', this.createAndRememberUUID()],
-      ['response_type', 'token']
-    ]);
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', this.refreshUrl, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.addEventListener('load', () => {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        if (xhr.status === 200) {
-          this.updateTokens(JSON.parse(xhr.responseText));
-        } else {
-          throw new Error(`Could not refresh token: ${xhr.responseText}`);
-        }
-      }
-    });
-    xhr.send(data);
-  }
-
-  /**
    * Remove authorization
    * @returns {void}
    */
   unauthorize() {
     this.storage.remove('access_key');
-    this.storage.remove('refresh_key');
     this.storage.remove('expires_at');
     this.changeAccessToken(null);
   }

@@ -1,3 +1,127 @@
+<<<<<<< HEAD
+=======
+<a name="1.0.24"></a>
+## [1.0.24](https://github.com/fabric-design/components/compare/1.0.23...1.0.24) (2017-10-13)
+
+
+### Bug Fixes
+
+* **header:** Removed refresh token logic ([#134](https://github.com/fabric-design/components/issues/134)) ([a2d3f6d](https://github.com/fabric-design/components/commit/a2d3f6d))
+
+
+
+<a name="1.0.23"></a>
+## [1.0.23](https://github.com/fabric-design/components/compare/1.0.22...1.0.23) (2017-09-19)
+
+
+
+<a name="1.0.22"></a>
+## [1.0.22](https://github.com/fabric-design/components/compare/1.0.21...1.0.22) (2017-09-12)
+
+
+### Bug Fixes
+
+* **build:** Update Preact to make the demo page run again ([3fc81ec](https://github.com/fabric-design/components/commit/3fc81ec))
+* **linting:** Make the demo page dependencies lint ([298be1a](https://github.com/fabric-design/components/commit/298be1a))
+* **preact:** Remove fallback for PureComponent since it's now supported by preact-compat ([ea6e2ff](https://github.com/fabric-design/components/commit/ea6e2ff))
+
+
+
+<a name="1.0.21"></a>
+## [1.0.21](https://github.com/fabric-design/components/compare/1.0.20...1.0.21) (2017-09-12)
+
+
+
+<a name="1.0.20"></a>
+## [1.0.20](https://github.com/fabric-design/components/compare/1.0.19...1.0.20) (2017-09-08)
+
+
+### Bug Fixes
+
+* **dropdown:** Fixed state creation in dropdown ([d6434f0](https://github.com/fabric-design/components/commit/d6434f0))
+* **header:** Added hash link to home page ([dd39e9c](https://github.com/fabric-design/components/commit/dd39e9c))
+
+
+### Features
+
+* **dropdown:** Made dropdown controllable with keyboard ([6d79e6a](https://github.com/fabric-design/components/commit/6d79e6a))
+
+
+
+<a name="1.0.19"></a>
+## [1.0.19](https://github.com/fabric-design/components/compare/1.0.18...1.0.19) (2017-08-31)
+
+
+### Bug Fixes
+
+* **header:** Added hash link to home page ([#124](https://github.com/fabric-design/components/issues/124)) ([9772d30](https://github.com/fabric-design/components/commit/9772d30))
+
+
+
+<a name="1.0.18"></a>
+## [1.0.18](https://github.com/fabric-design/components/compare/1.0.17...1.0.18) (2017-08-31)
+
+
+### Bug Fixes
+
+* **build:** Fixed build and tests ([38e6962](https://github.com/fabric-design/components/commit/38e6962))
+* **docs:** Remove merge conflict markers from dropdown docs ([#122](https://github.com/fabric-design/components/issues/122)) ([9691a07](https://github.com/fabric-design/components/commit/9691a07))
+* **tile-chart:** Fixed tile chart for preact ([4304d17](https://github.com/fabric-design/components/commit/4304d17))
+
+
+### Features
+
+* **dropdown:** Added width attribute ([424c523](https://github.com/fabric-design/components/commit/424c523))
+
+
+
+<a name="1.0.17"></a>
+## [1.0.17](https://github.com/fabric-design/components/compare/1.0.16...1.0.17) (2017-08-31)
+
+
+
+<a name="1.0.16"></a>
+## [1.0.16](https://github.com/fabric-design/components/compare/1.0.15...1.0.16) (2017-08-31)
+
+
+
+<a name="1.0.15"></a>
+## [1.0.15](https://github.com/fabric-design/components/compare/1.0.14...1.0.15) (2017-08-30)
+
+
+
+<a name="1.0.14"></a>
+## [1.0.14](https://github.com/fabric-design/components/compare/1.0.13...1.0.14) (2017-08-30)
+
+
+
+<a name="1.0.13"></a>
+## [1.0.13](https://github.com/fabric-design/components/compare/1.0.12...1.0.13) (2017-08-30)
+
+
+
+<a name="1.0.12"></a>
+## [1.0.12](https://github.com/wholesale-design-system/components/compare/1.0.11...v1.0.12) (2017-08-25)
+
+
+### Features
+
+* **spinner:** Created spinner component ([#115](https://github.com/wholesale-design-system/components/issues/115)) ([affe21c](https://github.com/wholesale-design-system/components/commit/affe21c))
+
+
+
+<a name="1.0.11"></a>
+## [1.0.11](https://github.com/wholesale-design-system/components/compare/1.0.10...v1.0.11) (2017-08-24)
+
+
+### Bug Fixes
+
+* **header:** Fixed wrong key name for local storage ([#111](https://github.com/wholesale-design-system/components/issues/111)) ([c32d20f](https://github.com/wholesale-design-system/components/commit/c32d20f))
+* **header:** UX Improvements of the Header ([#112](https://github.com/wholesale-design-system/components/issues/112)) ([fe701f6](https://github.com/wholesale-design-system/components/commit/fe701f6))
+
+
+
+>>>>>>> e3422608e85c4dee5dce88f8948a0bc900799ff4
 <a name="1.0.10"></a>
 ## [1.0.10](https://github.com/wholesale-design-system/components/compare/1.0.9...v1.0.10) (2017-07-27)
 

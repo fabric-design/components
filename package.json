@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
   "name": "styleguide-web-components",
   "version": "1.0.10",
+=======
+  "name": "fabric-components",
+  "version": "1.0.24",
+>>>>>>> e3422608e85c4dee5dce88f8948a0bc900799ff4
   "description": "",
   "scripts": {
     "start": "webpack-dev-server --progress --colors --content-base build webpack.config.js",

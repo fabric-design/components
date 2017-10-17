@@ -21,3 +21,4 @@ export {WSNotification} from './ws-notification/ws-notification';
 export {WSWeekPicker} from './ws-week-picker/ws-week-picker';
 export {WSTilesChart} from './ws-tiles-chart/ws-tiles-chart';
 export {WSSpinner} from './ws-spinner/ws-spinner';
+export {WSTabMenu} from './ws-tab-menu/ws-tab-menu';

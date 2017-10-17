@@ -8,14 +8,32 @@ export class TestComponent {
 
   /**
    * Initialize the component and render the jsx as React / Preact component
-   * @param {Object} jsx JSX to render
+   * @param {Object|Function} jsx JSX to render. A callback to retrieve updated jsx can be passed as well
    */
   constructor(jsx) {
+    this.jsx = jsx;
     this.container = document.createElement('div');
+    document.body.appendChild(this.container);
+    this.render();
+  }
+
+  /**
+   * Render the given jsx to DOM
+   * @returns {void}
+   */
+  render() {
     // Preact returns HTMLDomElement with component in ._component variable || React is returning WSHeader Object
-    const result = render(jsx, this.container);
+    const result = render(typeof this.jsx === 'function' ? this.jsx() : this.jsx, this.container);
     // eslint-disable-next-line no-underscore-dangle
     this.component = result._component || result;
+  }
+
+  /**
+   * Remove container form DOM for garbage collection
+   * @returns {void}
+   */
+  dispose() {
+    document.body.removeChild(this.container);
   }
 
   /**

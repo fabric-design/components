@@ -116,9 +116,8 @@ export class WSTabMenu extends Component {
     }
     if (props.value) {
       return {value: props.value};
-    } else {
-      return {value: props.items[0].value};
     }
+    return {value: props.items[0].value};
   }
 
   /**

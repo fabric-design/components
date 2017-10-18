@@ -38,3 +38,5 @@ node_modules
 .idea
 **/*.iml
 styleguide.css
+
+package-lock.json

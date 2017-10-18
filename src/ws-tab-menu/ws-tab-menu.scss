@@ -21,6 +21,9 @@
       }
       .badge {
         margin-left: $space-xxs;
+        vertical-align: text-top;
+        line-height: $space-m;
+        padding-bottom: 0;
       }
     }
   }

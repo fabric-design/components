@@ -51,12 +51,10 @@ export class WSTabMenu extends Component {
    * @returns {void}
    */
   componentWillReceiveProps(props) {
-    // If the value changed we have to move the dash
-    if (this.state.value !== props.value) {
-      const index = this.props.items.findIndex(item => item.value === props.value) || 0;
-      this.animateDash(this.menuItems[index]);
-    }
     this.setState(this.createState(props));
+    // If the value changed we have to move the dash
+    const index = this.props.items.findIndex(item => item.value === this.state.value) || 0;
+    this.animateDash(this.menuItems[index]);
   }
 
   /**
@@ -80,6 +78,9 @@ export class WSTabMenu extends Component {
     const selectedItem = this.props.items[selectedIndex];
 
     if (selectedItem.disabled) {
+      return;
+    }
+    if (selectedItem.value === this.state.value) {
       return;
     }
 
@@ -137,7 +138,7 @@ export class WSTabMenu extends Component {
     return (
       <li className={className} ref={element => { this.menuItems[index] = element; }} key={`item-${index}`}>
         <span className="text">{item.label || item.value}</span>
-        {item.badge &&
+        {item.badge !== undefined &&
           <span className="badge mod-gray">{item.badge}</span>
         }
       </li>

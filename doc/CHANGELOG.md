@@ -1,3 +1,13 @@
+<a name="1.0.25"></a>
+## [1.0.25](https://github.com/fabric-design/components/compare/1.0.24...1.0.25) (2017-10-18)
+
+
+### Features
+
+* **tab-menu:** Created a tab-menu component ([#136](https://github.com/fabric-design/components/issues/136)) ([4ab0155](https://github.com/fabric-design/components/commit/4ab0155))
+
+
+
 <a name="1.0.24"></a>
 ## [1.0.24](https://github.com/fabric-design/components/compare/1.0.23...1.0.24) (2017-10-13)
 

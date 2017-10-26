@@ -6,7 +6,7 @@
 [![CircleCI](https://circleci.com/gh/fabric-design/components/tree/release.svg?style=svg)](https://circleci.com/gh/fabric-design/components/tree/release)
 [![Issues](https://img.shields.io/github/issues/fabric-design/components.svg)](https://github.com/fabric-design/components/issues)
 [![Contributors](https://img.shields.io/github/contributors/fabric-design/components.svg)]()
-
+[![GitHub release](https://img.shields.io/github/release/fabric-design/components.svg)](doc/CHANGELOG.md)
 ## Motivation
 
 At Zalando Retail Operations we develop a lot of web applications of different size and complexity. We want to ensure consistent look and feel in every one of them, regardless which individual team worked on it. For this purpose we created a [styleguide](https://github.com/fabric-design/styleguide) that provides a [SCSS style library](https://github.com/fabric-design/scss) and a set of independent React/Preact components.

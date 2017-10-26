@@ -5,15 +5,10 @@ export class Authorization {
 
   /**
    * @param {AbstractStorage} storage Key value storage
-   * @param {string} loginUrl Url the user get's redirected to authorize
-   * @param {string} clientId OAuth2 client id
-   * @param {string} businessPartnerId OAuth2 business partner id
    */
-  constructor(storage, loginUrl = '', clientId = '', businessPartnerId = '') {
+  constructor(storage) {
     this.storage = storage;
-    this.loginUrl = loginUrl;
-    this.clientId = clientId;
-    this.businessPartnerId = businessPartnerId;
+    this.accessToken = undefined;
   }
 
   /**
@@ -31,8 +26,11 @@ export class Authorization {
    * @returns {void}
    */
   changeAccessToken(accessToken) {
-    if (typeof this.accessTokenChange === 'function') {
-      this.accessTokenChange(accessToken);
+    if (this.accessToken !== accessToken) {
+      this.accessToken = accessToken;
+      if (typeof this.accessTokenChange === 'function') {
+        this.accessTokenChange(accessToken);
+      }
     }
   }
 
@@ -65,7 +63,7 @@ export class Authorization {
 
   /**
    * Update the tokens and notify the header
-   * @param {Object} params Response parameters containing access token
+   * @param {{expires_in: number, access_token: string}} params Response parameters containing access token
    * @returns {void}
    * @private
    */
@@ -79,17 +77,20 @@ export class Authorization {
 
   /**
    * Redirect the user to the OAuth2 authorization page
+   * @param {string} loginUrl Url the user get's redirected to authorize
+   * @param {string} clientId OAuth2 client id
+   * @param {string} businessPartnerId OAuth2 business partner id
    * @returns {void}
    */
-  authorize() {
+  authorize(loginUrl, clientId, businessPartnerId) {
     const query = this.buildQuery([
-      ['business_partner_id', this.businessPartnerId],
-      ['client_id', this.clientId],
+      ['business_partner_id', businessPartnerId],
+      ['client_id', clientId],
       ['state', this.createAndRememberUUID()],
       ['response_type', 'token']
     ]);
 
-    location.href = `${this.loginUrl}?${query}`;
+    location.href = `${loginUrl}?${query}`;
   }
 
   /**

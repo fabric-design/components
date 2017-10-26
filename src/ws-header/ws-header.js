@@ -4,6 +4,8 @@ import {LocalStorage} from './storage/local-storage';
 import {Authorization} from './authorization';
 import {WSDropdown} from '../ws-dropdown/ws-dropdown';
 
+let authorization;
+
 /**
  * This component renders a generic header which provides authentication and language management
  *
@@ -59,14 +61,14 @@ export class WSHeader extends Component {
   /**
    * Tries to get the access token from authorization class
    * @param {string} queryString The current query string to parse the token from
-   * @returns {Promise}
+   * @returns {string|null}
    */
   static getAccessToken(queryString = location.hash.substr(1)) {
-    return new Promise(resolve => {
-      const authorization = new Authorization(this.storage);
-      authorization.onAccessTokenChange(accessToken => resolve(accessToken));
+    authorization = authorization || new Authorization(this.storage);
+    if (!authorization.accessToken) {
       authorization.tryFetchToken(queryString);
-    });
+    }
+    return authorization.accessToken;
   }
 
   /**
@@ -139,14 +141,9 @@ export class WSHeader extends Component {
    */
   initAuthorization(props) {
     // Initialize authorization with implicit flow
-    this.authorization = new Authorization(
-      WSHeader.storage,
-      props.loginUrl,
-      props.clientId,
-      props.businessPartnerId
-    );
+    authorization = authorization || new Authorization(WSHeader.storage);
     // Listen to authorization changes
-    this.authorization.onAccessTokenChange(accessToken => {
+    authorization.onAccessTokenChange(accessToken => {
       if (this.mounted) {
         this.setState({isLoggedIn: !!accessToken});
       } else {
@@ -156,14 +153,14 @@ export class WSHeader extends Component {
       this.dispatchEvent('ws-auth-changed', accessToken);
     });
     // Check if we was redirected from the auth page and an access token is available
-    this.authorization.tryFetchToken(location.hash.substr(1));
+    authorization.tryFetchToken(location.hash.substr(1));
     // Listen for authentication requests
     window.addEventListener('ws-authorize', () => {
-      this.authorization.authorize();
+      authorization.authorize(props.loginUrl, props.clientId, props.businessPartnerId);
     });
     // Listen for authentication removal requests
     window.addEventListener('ws-unauthorize', () => {
-      this.authorization.unauthorize();
+      authorization.unauthorize();
     });
   }
 

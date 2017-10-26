@@ -1,5 +1,5 @@
 # Notifications
-**Remember!** Before you start using notifications, make sure that you [Feedback Principles](../#/general/8-feedback).
+Before you start using notifications, make sure that you [Feedback Principles](../#/general/8-feedback).
 
 ![Example](src/style/assets/not-ex1.jpg)
 <p>Use it for general system feedback.</p>
@@ -8,7 +8,7 @@
 <p>When feedback is connected with a specific screen area use contextual feedback instead.</p>
 
 ![Example](src/style/assets/not-ex3.jpg)
-<p>For obvious feedback, use contextual feedback or even skip feedback form at all.</p>
+<p>Do not use notifications for obvious feedback.</p>
 
 ## Feedback categories
 Feedback info should be categorized in one of those categories:
@@ -32,10 +32,10 @@ Information about action that can be potentially harmful
 ## Content
 Feedback content consist main information and (if needed) further description.
 
-![Example](src/style/assets/not-ex2.jpg)
+![Example](src/style/assets/not-ex4.jpg)
 <p>Use natural, user language, suggest possible solution.</p>
 
-![Example](src/style/assets/not-ex2.jpg)
+![Example](src/style/assets/not-ex5.jpg)
 <p>Avoid technical jargon and generic error messages.</p>
 
 ## Setup

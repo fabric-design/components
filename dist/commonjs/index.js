@@ -75,3 +75,12 @@ Object.defineProperty(exports, 'WSSpinner', {
     return _wsSpinner.WSSpinner;
   }
 });
+
+var _wsTabMenu = require('./ws-tab-menu/ws-tab-menu');
+
+Object.defineProperty(exports, 'WSTabMenu', {
+  enumerable: true,
+  get: function get() {
+    return _wsTabMenu.WSTabMenu;
+  }
+});

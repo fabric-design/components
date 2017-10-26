@@ -98,7 +98,7 @@ export class Authorization {
    * @returns {void}
    */
   unauthorize() {
-    this.storage.remove('access_key');
+    this.storage.remove('access_token');
     this.storage.remove('expires_at');
     this.changeAccessToken(null);
   }

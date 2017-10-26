@@ -4,12 +4,11 @@ import {WSHeader} from '../../src/ws-header/ws-header';
 import {CookieStorage} from '../../src/ws-header/storage/cookie-storage';
 import {LocalStorage} from '../../src/ws-header/storage/local-storage';
 
-function clearStorage() {
-  WSHeader.storage.remove('access_token');
-  WSHeader.storage.remove('expires_at');
-}
-
 describe('A WSHeader', () => {
+
+  afterEach(() => {
+    WSHeader.removeAccessToken();
+  });
 
   it('set\'s the storage type', () => {
     WSHeader.storage = null;
@@ -25,26 +24,17 @@ describe('A WSHeader', () => {
     expect(WSHeader.storage.name).toBe('asd-');
   });
 
-  it('get\'s the access token', done => {
+  it('get\'s the access token', () => {
     const tokenName = 'asd';
     // Only test the basic function, the general authorization ist tested elsewhere
     WSHeader.storage.set('access_token', tokenName);
-    WSHeader.getAccessToken()
-      .then(accessToken => {
-        expect(accessToken).toBe(tokenName);
-        WSHeader.storage.remove('access_token');
-        done();
-      });
+    expect(WSHeader.getAccessToken()).toBe(tokenName);
   });
 
-  it('doesn\'t get an access token', done => {
+  it('doesn\'t get an access token', () => {
     const tokenName = 'asd';
     // Only test the basic function, the general authorization ist tested elsewhere
-    WSHeader.getAccessToken(`test&no_token=${tokenName}&tests`)
-      .then(accessToken => {
-        expect(accessToken).toBeFalsy();
-        done();
-      });
+    expect(WSHeader.getAccessToken(`test&no_token=${tokenName}&tests`)).toBeFalsy();
   });
 
   it('initializes correctly', () => {
@@ -55,10 +45,12 @@ describe('A WSHeader', () => {
       clientId: 444
     });
 
-    expect(header.authorization).toBeTruthy();
-    expect(header.authorization.loginUrl).toBe('1111');
-    expect(header.authorization.businessPartnerId).toBe('333');
-    expect(header.authorization.clientId).toBe(444);
+    spyOn(WSHeader.authorization, 'authorize');
+
+    expect(WSHeader.authorization).toBeTruthy();
+    window.dispatchEvent(new CustomEvent('ws-authorize'));
+
+    expect(WSHeader.authorization.authorize).toHaveBeenCalledWith('1111', 444, '333');
     expect(header.state.locale).toBe('de');
   });
 

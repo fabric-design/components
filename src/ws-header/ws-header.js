@@ -4,8 +4,6 @@ import {LocalStorage} from './storage/local-storage';
 import {Authorization} from './authorization';
 import {WSDropdown} from '../ws-dropdown/ws-dropdown';
 
-let authorization;
-
 /**
  * This component renders a generic header which provides authentication and language management
  *
@@ -14,6 +12,11 @@ let authorization;
  * It will resolve null when no access token is present and therefore the user isn't logged in.
  */
 export class WSHeader extends Component {
+
+  /**
+   * @type {Authorization}
+   */
+  static authorization = undefined;
 
   /**
    * Default storage instance
@@ -64,11 +67,20 @@ export class WSHeader extends Component {
    * @returns {string|null}
    */
   static getAccessToken(queryString = location.hash.substr(1)) {
-    authorization = authorization || new Authorization(this.storage);
-    if (!authorization.accessToken) {
-      authorization.tryFetchToken(queryString);
+    this.authorization = this.authorization || new Authorization(this.storage);
+    if (!this.authorization.accessToken) {
+      this.authorization.tryFetchToken(queryString);
     }
-    return authorization.accessToken;
+    return this.authorization.accessToken;
+  }
+
+  /**
+   * Unauthorize will remove the access token from storage
+   * @returns {void}
+   */
+  static removeAccessToken() {
+    this.authorization = this.authorization || new Authorization(this.storage);
+    this.authorization.unauthorize();
   }
 
   /**
@@ -141,9 +153,9 @@ export class WSHeader extends Component {
    */
   initAuthorization(props) {
     // Initialize authorization with implicit flow
-    authorization = authorization || new Authorization(WSHeader.storage);
+    this.constructor.authorization = this.constructor.authorization || new Authorization(WSHeader.storage);
     // Listen to authorization changes
-    authorization.onAccessTokenChange(accessToken => {
+    this.constructor.authorization.onAccessTokenChange(accessToken => {
       if (this.mounted) {
         this.setState({isLoggedIn: !!accessToken});
       } else {
@@ -153,14 +165,14 @@ export class WSHeader extends Component {
       this.dispatchEvent('ws-auth-changed', accessToken);
     });
     // Check if we was redirected from the auth page and an access token is available
-    authorization.tryFetchToken(location.hash.substr(1));
+    this.constructor.authorization.tryFetchToken(location.hash.substr(1));
     // Listen for authentication requests
     window.addEventListener('ws-authorize', () => {
-      authorization.authorize(props.loginUrl, props.clientId, props.businessPartnerId);
+      this.constructor.authorization.authorize(props.loginUrl, props.clientId, props.businessPartnerId);
     });
     // Listen for authentication removal requests
     window.addEventListener('ws-unauthorize', () => {
-      authorization.unauthorize();
+      this.constructor.authorization.unauthorize();
     });
   }
 

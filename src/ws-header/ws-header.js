@@ -26,7 +26,7 @@ export class WSHeader extends Component {
 
   static defaultProps = {
     loginUrl: 'https://identity.zalando.com/oauth2/authorize',
-    businessPartnerId: '810d1d00-4312-43e5-bd31-d8373fdd24c7',
+    businessPartnerId: null,
     clientId: null,
     links: [],
     appName: 'Zalando',

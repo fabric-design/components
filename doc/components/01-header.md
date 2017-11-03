@@ -11,6 +11,7 @@ To use Header simply embed the ws-header in your application and import the scss
 ```html
 <ws-header
   appName="Demo Page"
+  businessPartnerId="business-partner-id"
   clientId="youturn-client-id"
   links="{[
     {label: 'Link', href: 'LinkValue', onClick: (value) => console.log(value)},
@@ -59,11 +60,9 @@ you have to listen for the `ws-locale-changed` event on the window object.
 ## Authorization
 Every user must retrieve an access token via the OAuth2 Implicit flow to get access to the backend resources.
 The header already implements these implicit flow and a login button. To be able to authenticate with the
-implicit flow you have to specify you're client id. The other required fields are filled with the following defaults.
-- **loginUrl**: https://identity.zalando.com/oauth2/authorize
-- **businessPartnerId**: zalando's business partner id
+implicit flow you have to specify you're client and business partner id. The default login url is: https://identity.zalando.com/oauth2/authorize
 ```html
-<ws-header app-name="Test app" client-id="yourturn-client-id"></ws-header>
+<ws-header app-name="Test app" client-id="yourturn-client-id" business-partner-id="bpid"></ws-header>
 ```
 
 ##### Getting the access token
@@ -79,12 +78,10 @@ if the access_token was successfully parsed from the location.hash. It can be em
 ```
 
 To get the access token for example to validate if the user can access the current route you can call
-the static function `getAccessToken()` which will return a promise with the access token or null.
+the static function `getAccessToken()` which will return the access token or null.
 ```html
 <script>
-  WSHeader.getAccessToken().then(accessToken => {
-      console.log('Current access token is: ', accessToken);
-  })
+  console.log('Current access token is: ', WSHeader.getAccessToken());
 </script>
 ```
 
@@ -102,13 +99,4 @@ listening for those events and triggers the corresponding action. Afterwards a `
   // Request logout will remove the token from the storage and trigger a ws-auth-changed event
   window.dispatchEvent(new CustomEvent('ws-unauthorize'));   
 </script>
-```
-
-##### Refresh tokens (experimental)
-Since the refresh token URL of Zalando don't permit cross origin access you have to provide a
-proxy solution by yourself and specify the url as attribute. The proxy url should point to
-`https://identity.zalando.com/oauth2/token`. The header automatically will request a new access token
-once the expiration time of the last one was reached and a `ws-auth-changed` event will be published.
-```html
-<ws-header app-name="Test app" client-id="yourturn-client-id" refresh-url="/backend/identity/refresh"></ws-header>
 ```

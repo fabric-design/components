@@ -14,6 +14,11 @@ import {WSDropdown} from '../ws-dropdown/ws-dropdown';
 export class WSHeader extends Component {
 
   /**
+   * @type {Authorization}
+   */
+  static authorization = undefined;
+
+  /**
    * Default storage instance
    * @type {AbstractStorage}
    */
@@ -21,7 +26,7 @@ export class WSHeader extends Component {
 
   static defaultProps = {
     loginUrl: 'https://identity.zalando.com/oauth2/authorize',
-    businessPartnerId: '810d1d00-4312-43e5-bd31-d8373fdd24c7',
+    businessPartnerId: null,
     clientId: null,
     links: [],
     appName: 'Zalando',
@@ -59,14 +64,23 @@ export class WSHeader extends Component {
   /**
    * Tries to get the access token from authorization class
    * @param {string} queryString The current query string to parse the token from
-   * @returns {Promise}
+   * @returns {string|null}
    */
   static getAccessToken(queryString = location.hash.substr(1)) {
-    return new Promise(resolve => {
-      const authorization = new Authorization(this.storage);
-      authorization.onAccessTokenChange(accessToken => resolve(accessToken));
-      authorization.tryFetchToken(queryString);
-    });
+    this.authorization = this.authorization || new Authorization(this.storage);
+    if (!this.authorization.accessToken) {
+      this.authorization.tryFetchToken(queryString);
+    }
+    return this.authorization.accessToken;
+  }
+
+  /**
+   * Unauthorize will remove the access token from storage
+   * @returns {void}
+   */
+  static removeAccessToken() {
+    this.authorization = this.authorization || new Authorization(this.storage);
+    this.authorization.unauthorize();
   }
 
   /**
@@ -139,14 +153,9 @@ export class WSHeader extends Component {
    */
   initAuthorization(props) {
     // Initialize authorization with implicit flow
-    this.authorization = new Authorization(
-      WSHeader.storage,
-      props.loginUrl,
-      props.clientId,
-      props.businessPartnerId
-    );
+    this.constructor.authorization = this.constructor.authorization || new Authorization(WSHeader.storage);
     // Listen to authorization changes
-    this.authorization.onAccessTokenChange(accessToken => {
+    this.constructor.authorization.onAccessTokenChange(accessToken => {
       if (this.mounted) {
         this.setState({isLoggedIn: !!accessToken});
       } else {
@@ -156,14 +165,14 @@ export class WSHeader extends Component {
       this.dispatchEvent('ws-auth-changed', accessToken);
     });
     // Check if we was redirected from the auth page and an access token is available
-    this.authorization.tryFetchToken(location.hash.substr(1));
+    this.constructor.authorization.tryFetchToken(location.hash.substr(1));
     // Listen for authentication requests
     window.addEventListener('ws-authorize', () => {
-      this.authorization.authorize();
+      this.constructor.authorization.authorize(props.loginUrl, props.clientId, props.businessPartnerId);
     });
     // Listen for authentication removal requests
     window.addEventListener('ws-unauthorize', () => {
-      this.authorization.unauthorize();
+      this.constructor.authorization.unauthorize();
     });
   }
 

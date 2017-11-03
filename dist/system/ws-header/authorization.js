@@ -70,16 +70,10 @@ System.register([], function (_export, _context) {
 
       _export('Authorization', Authorization = function () {
         function Authorization(storage) {
-          var loginUrl = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-          var clientId = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
-          var businessPartnerId = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
-
           _classCallCheck(this, Authorization);
 
           this.storage = storage;
-          this.loginUrl = loginUrl;
-          this.clientId = clientId;
-          this.businessPartnerId = businessPartnerId;
+          this.accessToken = undefined;
         }
 
         _createClass(Authorization, [{
@@ -90,8 +84,11 @@ System.register([], function (_export, _context) {
         }, {
           key: 'changeAccessToken',
           value: function changeAccessToken(accessToken) {
-            if (typeof this.accessTokenChange === 'function') {
-              this.accessTokenChange(accessToken);
+            if (this.accessToken !== accessToken) {
+              this.accessToken = accessToken;
+              if (typeof this.accessTokenChange === 'function') {
+                this.accessTokenChange(accessToken);
+              }
             }
           }
         }, {
@@ -129,15 +126,15 @@ System.register([], function (_export, _context) {
           }
         }, {
           key: 'authorize',
-          value: function authorize() {
-            var query = this.buildQuery([['business_partner_id', this.businessPartnerId], ['client_id', this.clientId], ['state', this.createAndRememberUUID()], ['response_type', 'token']]);
+          value: function authorize(loginUrl, clientId, businessPartnerId) {
+            var query = this.buildQuery([['business_partner_id', businessPartnerId], ['client_id', clientId], ['state', this.createAndRememberUUID()], ['response_type', 'token']]);
 
-            location.href = this.loginUrl + '?' + query;
+            location.href = loginUrl + '?' + query;
           }
         }, {
           key: 'unauthorize',
           value: function unauthorize() {
-            this.storage.remove('access_key');
+            this.storage.remove('access_token');
             this.storage.remove('expires_at');
             this.changeAccessToken(null);
           }

@@ -6,18 +6,12 @@ This class implements the OAuth2 authorization via the implicit flow.
 **Parameters**
 
 -   `storage`  
--   `loginUrl`   (optional, default `''`)
--   `clientId`   (optional, default `''`)
--   `businessPartnerId`   (optional, default `''`)
 
 ### constructor
 
 **Parameters**
 
 -   `storage` **AbstractStorage** Key value storage
--   `loginUrl` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Url the user get's redirected to authorize (optional, default `''`)
--   `clientId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** OAuth2 client id (optional, default `''`)
--   `businessPartnerId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** OAuth2 business partner id (optional, default `''`)
 
 ### onAccessTokenChange
 
@@ -52,6 +46,12 @@ Returns **void**
 ### authorize
 
 Redirect the user to the OAuth2 authorization page
+
+**Parameters**
+
+-   `loginUrl` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Url the user get's redirected to authorize
+-   `clientId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** OAuth2 client id
+-   `businessPartnerId` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** OAuth2 business partner id
 
 Returns **void** 
 
@@ -148,6 +148,8 @@ Returns **void**
 
 Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
+### authorization
+
 ### storage
 
 Default storage instance
@@ -171,7 +173,13 @@ Tries to get the access token from authorization class
 
 -   `queryString` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The current query string to parse the token from (optional, default `location.hash.substr(1)`)
 
-Returns **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+Returns **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** 
+
+### removeAccessToken
+
+Unauthorize will remove the access token from storage
+
+Returns **void** 
 
 ### getLocale
 

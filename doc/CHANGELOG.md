@@ -1,3 +1,17 @@
+<a name="1.0.28"></a>
+## [1.0.28](https://github.com/fabric-design/components/compare/1.0.27...1.0.28) (2017-11-03)
+
+
+### Bug Fixes
+
+* **header:** Fixed documentation according to changes ([315f982](https://github.com/fabric-design/components/commit/315f982))
+* **header:** Fixed unauthorization and unit tests ([b7f2cd3](https://github.com/fabric-design/components/commit/b7f2cd3))
+* **header:** Fixes multiple token changes [BREAKING CHANGE] ([7973a74](https://github.com/fabric-design/components/commit/7973a74))
+* **header:** Removed business partner id as default value ([b0787e8](https://github.com/fabric-design/components/commit/b0787e8))
+* **header:** Removed refresh token logic ([e16c4f9](https://github.com/fabric-design/components/commit/e16c4f9))
+
+
+
 <a name="1.0.27"></a>
 ## [1.0.27](https://github.com/fabric-design/components/compare/1.0.26...1.0.27) (2017-10-26)
 

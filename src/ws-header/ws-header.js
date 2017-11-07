@@ -141,7 +141,7 @@ export class WSHeader extends Component {
    */
   initState() {
     this.state = {
-      isLoggedIn: false,
+      isLoggedIn: !!(this.constructor.authorization && this.constructor.authorization.accessToken),
       locale: WSHeader.getLocale()
     };
   }
@@ -281,11 +281,11 @@ export class WSHeader extends Component {
                 />
               </li>
               {!this.state.isLoggedIn ?
-                <li onClick={() => this.authorization.authorize()}>
+                <li onClick={() => this.constructor.authorization.authorize()}>
                   <a>Login</a>
                 </li>
               :
-                <li onClick={() => this.authorization.unauthorize()}>
+                <li onClick={() => this.constructor.authorization.unauthorize()}>
                   <a><span className="icon icon24 icon-power" /></a>
                 </li>
               }

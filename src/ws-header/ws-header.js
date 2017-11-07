@@ -167,13 +167,25 @@ export class WSHeader extends Component {
     // Check if we was redirected from the auth page and an access token is available
     this.constructor.authorization.tryFetchToken(location.hash.substr(1));
     // Listen for authentication requests
-    window.addEventListener('ws-authorize', () => {
-      this.constructor.authorization.authorize(props.loginUrl, props.clientId, props.businessPartnerId);
-    });
+    window.addEventListener('ws-authorize', () => this.login());
     // Listen for authentication removal requests
-    window.addEventListener('ws-unauthorize', () => {
-      this.constructor.authorization.unauthorize();
-    });
+    window.addEventListener('ws-unauthorize', () => this.logout());
+  }
+
+  /**
+   * Trigger login process
+   * @returns {void}
+   */
+  login() {
+    this.constructor.authorization.authorize(this.props.loginUrl, this.props.clientId, this.props.businessPartnerId);
+  }
+
+  /**
+   * Delete tokens from storage to logout
+   * @returns {void}
+   */
+  logout() {
+    this.constructor.authorization.unauthorize();
   }
 
   /**
@@ -281,11 +293,11 @@ export class WSHeader extends Component {
                 />
               </li>
               {!this.state.isLoggedIn ?
-                <li onClick={() => this.constructor.authorization.authorize()}>
+                <li onClick={() => this.login()}>
                   <a>Login</a>
                 </li>
               :
-                <li onClick={() => this.constructor.authorization.unauthorize()}>
+                <li onClick={() => this.logout()}>
                   <a><span className="icon icon24 icon-power" /></a>
                 </li>
               }

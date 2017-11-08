@@ -84,6 +84,21 @@ export class WSHeader extends Component {
   }
 
   /**
+   * Get abbreviation for the user the access token is issued for
+   * @returns {string|null}
+   */
+  static getUserAbbreviation() {
+    try {
+      const json = JSON.parse(atob(this.getAccessToken()));
+      // Find key which contains the name
+      const nameKey = Object.keys(json).find(key => key.includes('managed-id'));
+      return json[nameKey];
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
    * Retrieve the persisted locale
    * @returns {string}
    */

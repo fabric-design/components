@@ -148,10 +148,9 @@ export class WSHeader extends Component {
 
   /**
    * Initialize the OAuth2 authorization
-   * @param {Object} props React/Preact props
    * @returns {void}
    */
-  initAuthorization(props) {
+  initAuthorization() {
     // Initialize authorization with implicit flow
     this.constructor.authorization = this.constructor.authorization || new Authorization(WSHeader.storage);
     // Listen to authorization changes

@@ -84,6 +84,21 @@ export class WSHeader extends Component {
   }
 
   /**
+   * Get abbreviation for the user the access token is issued for
+   * @returns {string|null}
+   */
+  static getUserAbbreviation() {
+    try {
+      const json = JSON.parse(atob(this.getAccessToken()));
+      // Find key which contains the name
+      const nameKey = Object.keys(json).find(key => key.includes('managed-id'));
+      return json[nameKey];
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
    * Retrieve the persisted locale
    * @returns {string}
    */
@@ -141,17 +156,16 @@ export class WSHeader extends Component {
    */
   initState() {
     this.state = {
-      isLoggedIn: false,
+      isLoggedIn: !!(this.constructor.authorization && this.constructor.authorization.accessToken),
       locale: WSHeader.getLocale()
     };
   }
 
   /**
    * Initialize the OAuth2 authorization
-   * @param {Object} props React/Preact props
    * @returns {void}
    */
-  initAuthorization(props) {
+  initAuthorization() {
     // Initialize authorization with implicit flow
     this.constructor.authorization = this.constructor.authorization || new Authorization(WSHeader.storage);
     // Listen to authorization changes
@@ -167,13 +181,25 @@ export class WSHeader extends Component {
     // Check if we was redirected from the auth page and an access token is available
     this.constructor.authorization.tryFetchToken(location.hash.substr(1));
     // Listen for authentication requests
-    window.addEventListener('ws-authorize', () => {
-      this.constructor.authorization.authorize(props.loginUrl, props.clientId, props.businessPartnerId);
-    });
+    window.addEventListener('ws-authorize', () => this.login());
     // Listen for authentication removal requests
-    window.addEventListener('ws-unauthorize', () => {
-      this.constructor.authorization.unauthorize();
-    });
+    window.addEventListener('ws-unauthorize', () => this.logout());
+  }
+
+  /**
+   * Trigger login process
+   * @returns {void}
+   */
+  login() {
+    this.constructor.authorization.authorize(this.props.loginUrl, this.props.clientId, this.props.businessPartnerId);
+  }
+
+  /**
+   * Delete tokens from storage to logout
+   * @returns {void}
+   */
+  logout() {
+    this.constructor.authorization.unauthorize();
   }
 
   /**
@@ -281,11 +307,11 @@ export class WSHeader extends Component {
                 />
               </li>
               {!this.state.isLoggedIn ?
-                <li onClick={() => this.authorization.authorize()}>
+                <li onClick={() => this.login()}>
                   <a>Login</a>
                 </li>
               :
-                <li onClick={() => this.authorization.unauthorize()}>
+                <li onClick={() => this.logout()}>
                   <a><span className="icon icon24 icon-power" /></a>
                 </li>
               }

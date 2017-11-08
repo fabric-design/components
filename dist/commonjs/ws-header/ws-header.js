@@ -53,6 +53,20 @@ var WSHeader = exports.WSHeader = function (_Component) {
       this.authorization.unauthorize();
     }
   }, {
+    key: 'getUserAbbreviation',
+    value: function getUserAbbreviation() {
+      try {
+        var json = JSON.parse(atob(this.getAccessToken()));
+
+        var nameKey = Object.keys(json).find(function (key) {
+          return key.includes('managed-id');
+        });
+        return json[nameKey];
+      } catch (e) {
+        return null;
+      }
+    }
+  }, {
     key: 'getLocale',
     value: function getLocale() {
       var locale = WSHeader.storage.get('locale') || window.navigator.language.replace(/([a-z]+)-.*/, '$1');
@@ -98,13 +112,13 @@ var WSHeader = exports.WSHeader = function (_Component) {
     key: 'initState',
     value: function initState() {
       this.state = {
-        isLoggedIn: false,
+        isLoggedIn: !!(this.constructor.authorization && this.constructor.authorization.accessToken),
         locale: WSHeader.getLocale()
       };
     }
   }, {
     key: 'initAuthorization',
-    value: function initAuthorization(props) {
+    value: function initAuthorization() {
       var _this2 = this;
 
       this.constructor.authorization = this.constructor.authorization || new _authorization.Authorization(WSHeader.storage);
@@ -122,12 +136,22 @@ var WSHeader = exports.WSHeader = function (_Component) {
       this.constructor.authorization.tryFetchToken(location.hash.substr(1));
 
       window.addEventListener('ws-authorize', function () {
-        _this2.constructor.authorization.authorize(props.loginUrl, props.clientId, props.businessPartnerId);
+        return _this2.login();
       });
 
       window.addEventListener('ws-unauthorize', function () {
-        _this2.constructor.authorization.unauthorize();
+        return _this2.logout();
       });
+    }
+  }, {
+    key: 'login',
+    value: function login() {
+      this.constructor.authorization.authorize(this.props.loginUrl, this.props.clientId, this.props.businessPartnerId);
+    }
+  }, {
+    key: 'logout',
+    value: function logout() {
+      this.constructor.authorization.unauthorize();
     }
   }, {
     key: 'enterMenuItem',
@@ -264,7 +288,7 @@ var WSHeader = exports.WSHeader = function (_Component) {
               !this.state.isLoggedIn ? _imports.React.createElement(
                 'li',
                 { onClick: function onClick() {
-                    return _this4.authorization.authorize();
+                    return _this4.login();
                   } },
                 _imports.React.createElement(
                   'a',
@@ -274,7 +298,7 @@ var WSHeader = exports.WSHeader = function (_Component) {
               ) : _imports.React.createElement(
                 'li',
                 { onClick: function onClick() {
-                    return _this4.authorization.unauthorize();
+                    return _this4.logout();
                   } },
                 _imports.React.createElement(
                   'a',

@@ -106,9 +106,17 @@ Returns **void**
 
 Initialize the OAuth2 authorization
 
-**Parameters**
+Returns **void** 
 
--   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** React/Preact props
+### login
+
+Trigger login process
+
+Returns **void** 
+
+### logout
+
+Delete tokens from storage to logout
 
 Returns **void** 
 
@@ -180,6 +188,12 @@ Returns **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 Unauthorize will remove the access token from storage
 
 Returns **void** 
+
+### getUserAbbreviation
+
+Get abbreviation for the user the access token is issued for
+
+Returns **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** 
 
 ### getLocale
 

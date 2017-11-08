@@ -1,3 +1,19 @@
+<a name="1.0.29"></a>
+## [1.0.29](https://github.com/fabric-design/components/compare/1.0.28...1.0.29) (2017-11-08)
+
+
+### Bug Fixes
+
+* **header:** Fixed initial login state and login/logout action from header ([6485591](https://github.com/fabric-design/components/commit/6485591))
+* **header:** Fixed login from header ([7141f01](https://github.com/fabric-design/components/commit/7141f01))
+
+
+### Features
+
+* **header:** Added feature to get the user the access token is issued for ([41acf3e](https://github.com/fabric-design/components/commit/41acf3e))
+
+
+
 <a name="1.0.28"></a>
 ## [1.0.28](https://github.com/fabric-design/components/compare/1.0.27...1.0.28) (2017-11-03)
 

@@ -45,7 +45,9 @@ export var WSHeader = function (_Component) {
     key: 'getUserAbbreviation',
     value: function getUserAbbreviation() {
       try {
-        var json = JSON.parse(atob(this.getAccessToken()));
+        var token = this.getAccessToken();
+        var parts = token.split('.');
+        var json = JSON.parse(atob(parts[1]));
 
         var nameKey = Object.keys(json).find(function (key) {
           return key.includes('managed-id');

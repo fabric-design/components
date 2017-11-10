@@ -1,3 +1,13 @@
+<a name="1.0.30"></a>
+## [1.0.30](https://github.com/fabric-design/components/compare/1.0.29...1.0.30) (2017-11-10)
+
+
+### Bug Fixes
+
+* **header:** Fixed parsing name from token ([#143](https://github.com/fabric-design/components/issues/143)) ([d80f710](https://github.com/fabric-design/components/commit/d80f710))
+
+
+
 <a name="1.0.29"></a>
 ## [1.0.29](https://github.com/fabric-design/components/compare/1.0.28...1.0.29) (2017-11-08)
 

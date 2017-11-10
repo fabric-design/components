@@ -89,7 +89,9 @@ export class WSHeader extends Component {
    */
   static getUserAbbreviation() {
     try {
-      const json = JSON.parse(atob(this.getAccessToken()));
+      const token = this.getAccessToken();
+      const parts = token.split('.');
+      const json = JSON.parse(atob(parts[1]));
       // Find key which contains the name
       const nameKey = Object.keys(json).find(key => key.includes('managed-id'));
       return json[nameKey];

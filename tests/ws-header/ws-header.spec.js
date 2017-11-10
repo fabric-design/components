@@ -32,7 +32,7 @@ describe('A WSHeader', () => {
   });
 
   it('get\'s the user abbreviation from access token', () => {
-    const tokenName = btoa('{"test": "asd", "asdasdmanaged-id": "supercooluser"}');
+    const tokenName = 'asd34.' + btoa('{"test": "asd", "asdasdmanaged-id": "supercooluser"}') + '.435dg4';
     // Only test the basic function, the general authorization ist tested elsewhere
     WSHeader.storage.set('access_token', tokenName);
     expect(WSHeader.getUserAbbreviation()).toBe('supercooluser');

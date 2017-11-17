@@ -1,8 +1,10 @@
 import {React, Component, PropTypes} from '../imports';
 import {DropdownMenuItem} from './dropdown-menu-item';
 
-const ANIMATION_START_EVENTS = ['oAnimationStart', 'MSAnimationStart', 'animationstart'];
-const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
+const ANIMATION_START_EVENTS = ['oAnimationStart', 'MSAnimationStart',
+  'animationstart'];
+const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd',
+  'animationend'];
 
 /**
  * This class renders the menu inside a dropdown container. Since the wrapper WSDropdown is missing, which provides
@@ -13,8 +15,9 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * @property {Object|Array<Object>} props.value Selected dropdown item(s)
  * @property {Boolean} props.filterable Flag if the dropdown menu is filterable
  * @property {string} props.filter Default filter value
- * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
  * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
+ * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
+ * @property {Boolean} props.selectAll Show button to select all items
  * @property {Function} props.handle Function used to propagate data
  */
 export class DropdownMenu extends Component {
@@ -30,7 +33,9 @@ export class DropdownMenu extends Component {
     filter: null,
     placeholder: '',
     limit: 10,
-    handle: () => {}
+    selectAll: false,
+    handle: () => {
+    }
   };
 
   /**
@@ -42,7 +47,8 @@ export class DropdownMenu extends Component {
     filterable: PropTypes.bool,
     filter: PropTypes.string,
     placeholder: PropTypes.string,
-    limit: PropTypes.number
+    limit: PropTypes.number,
+    selectAll: PropTypes.bool
   };
 
   /**
@@ -64,7 +70,8 @@ export class DropdownMenu extends Component {
     this.state = {
       filter: props.filter,
       items: props.items,
-      value: props.value
+      value: props.value,
+      selectAllActive: false
     };
   }
 
@@ -81,6 +88,9 @@ export class DropdownMenu extends Component {
       this.button.addEventListener('click', this.onClickSubmit);
       this.button.addEventListener('keydown', event => event.stopPropagation());
     }
+    if (this.selectAllButton) {
+      this.selectAllButton.addEventListener('click', this.onClickSelectAll);
+    }
   }
 
   /**
@@ -92,7 +102,8 @@ export class DropdownMenu extends Component {
     this.setState({
       filter: props.filter,
       items: props.items,
-      value: props.value
+      value: props.value,
+      selectAllActive: props.selectAllActive
     });
   }
 
@@ -112,11 +123,16 @@ export class DropdownMenu extends Component {
   componentWillUnmount() {
     if (this.input) {
       this.input.removeEventListener('keyup', this.onKeyUpUpdateFilter);
-      this.input.removeEventListener('change', event => event.stopPropagation());
+      this.input.removeEventListener('change',
+        event => event.stopPropagation());
     }
     if (this.button) {
       this.button.removeEventListener('click', this.onClickSubmit);
-      this.button.removeEventListener('keydown', event => event.stopPropagation());
+      this.button.removeEventListener('keydown',
+        event => event.stopPropagation());
+    }
+    if (this.selectAllButton) {
+      this.selectAllButton.removeEventListener('click', this.onClickSelectAll);
     }
   }
 
@@ -130,7 +146,6 @@ export class DropdownMenu extends Component {
     }
     window.addEventListener('keydown', this.onGlobalKeyDown);
   };
-
 
   /**
    * Unbind keyboard listener when dropdown closes
@@ -191,6 +206,22 @@ export class DropdownMenu extends Component {
   };
 
   /**
+   * Handles select all action on multi select drop downs
+   * @returns {void}
+   */
+  onClickSelectAll = () => {
+    if (this.state.items) {
+      this.state.items.forEach(item => {
+        item.selected = !this.state.selectAllActive;
+      });
+      this.setState({
+        items: this.state.items,
+        selectAllActive: !this.state.selectAllActive
+      });
+    }
+  };
+
+  /**
    * Gets the current height of the menu
    * @returns {Number}
    */
@@ -206,7 +237,8 @@ export class DropdownMenu extends Component {
     const regex = new RegExp(this.state.filter, 'i');
     return this.state.items.filter(item => {
       // Don't show items which doesn't match the filter
-      if (this.props.filterable && this.state.filter && !regex.test(item.label)) {
+      if (this.props.filterable && this.state.filter && !regex.test(
+          item.label)) {
         return false;
       }
       // When we use a filter or multiple items are selectable we show selected items separately
@@ -223,7 +255,8 @@ export class DropdownMenu extends Component {
    * @returns {Object}
    */
   getItemAtIndex(index) {
-    const limit = this.props.filterable ? this.props.limit : this.state.items.length;
+    const limit = this.props.filterable ? this.props.limit
+      : this.state.items.length;
     const filteredItems = this.getFilteredItems().slice(0, limit);
     let valueLength = 0;
     if (this.context.multiple || this.props.filterable) {
@@ -244,11 +277,15 @@ export class DropdownMenu extends Component {
     // Check if the index points to value items when it is in this range
     if (valueLength && correctedIndex < valueLength && correctedIndex >= 0) {
       return {
-        item: Array.isArray(this.state.value) ? this.state.value[correctedIndex] : this.state.value,
+        item: Array.isArray(this.state.value) ? this.state.value[correctedIndex]
+          : this.state.value,
         index: correctedIndex
       };
     }
-    return {item: filteredItems[correctedIndex - valueLength], index: correctedIndex};
+    return {
+      item: filteredItems[correctedIndex - valueLength],
+      index: correctedIndex
+    };
   }
 
   /**
@@ -258,7 +295,9 @@ export class DropdownMenu extends Component {
    */
   focusNextItem(direction) {
     // Update focus state of items
-    this.state.items.forEach(item => { item.focused = false; });
+    this.state.items.forEach(item => {
+      item.focused = false;
+    });
     const result = this.getItemAtIndex(this.selectedIndex + direction);
     result.item.focused = true;
 
@@ -320,7 +359,8 @@ export class DropdownMenu extends Component {
         this.clearSelections();
         // If we have a single select we want to deselect the previous selected item
         if (!this.context.multiple) {
-          const previous = this.state.items.find(item => item.stored && item !== data);
+          const previous = this.state.items.find(
+            item => item.stored && item !== data);
           if (previous) {
             previous.stored = false;
             previous.selected = false;
@@ -419,7 +459,9 @@ export class DropdownMenu extends Component {
     });
     // Increase started event counter for each animation start event
     ANIMATION_START_EVENTS.forEach(eventName => {
-      item.addEventListener(eventName, () => { eventCounter += 1; });
+      item.addEventListener(eventName, () => {
+        eventCounter += 1;
+      });
     });
     // Add class to start animation
     item.classList.add(animationClass);
@@ -430,9 +472,11 @@ export class DropdownMenu extends Component {
    * @returns {Object}
    */
   render() {
-    const limit = this.props.filterable ? this.props.limit : this.state.items.length;
+    const limit = this.props.filterable ? this.props.limit
+      : this.state.items.length;
     const items = this.getFilteredItems().slice(0, limit);
-    const hasValue = Array.isArray(this.state.value) ? this.state.value.length : this.state.value;
+    const hasValue = Array.isArray(this.state.value) ? this.state.value.length
+      : this.state.value;
 
     return (
       <ul
@@ -440,14 +484,14 @@ export class DropdownMenu extends Component {
         ref={element => { this.menuContainer = element; }}
       >
         {this.props.filterable &&
-          <li className="dropdown-input" key="filter">
-            <input
-              type="text"
-              defaultValue={this.state.filter}
-              placeholder={this.props.placeholder}
-              ref={element => { this.input = element; }}
-            />
-          </li>
+        <li className="dropdown-input" key="filter">
+          <input
+            type="text"
+            defaultValue={this.state.filter}
+            placeholder={this.props.placeholder}
+            ref={element => { this.input = element; }}
+          />
+        </li>
         }
         {this.props.parent && [
           <DropdownMenuItem
@@ -461,20 +505,39 @@ export class DropdownMenu extends Component {
         ]}
         {(hasValue && (this.context.multiple || this.props.filterable)) ? [
           this.state.items.filter(item => item.stored).map((item, index) =>
-            <DropdownMenuItem item={item} handle={this.handlePropagation} key={`value-${index}`} />
+            <DropdownMenuItem
+              item={item}
+              handle={this.handlePropagation}
+              key={`value-${index}`}
+            />
           ),
           <li className="dropdown-item-separator" key="value-separator" />
         ] : null}
         {items.map((item, index) =>
-          <DropdownMenuItem item={item} handle={this.handlePropagation} key={`item-${index}`} />
+          <DropdownMenuItem
+            item={item}
+            handle={this.handlePropagation}
+            key={`item-${index}`}
+          />
         )}
         {(!items || !items.length) &&
-          <DropdownMenuItem item={{label: 'No results found', disabled: true}} key="disabled" />
+        <DropdownMenuItem
+          item={{label: 'No results found', disabled: true}}
+          key="disabled"
+        />
         }
         {this.context.multiple && [
           <li className="dropdown-item-separator" key="submit-separator" />,
           <li className="dropdown-submit" key="submit">
-            <button className="mod-small" ref={element => { this.button = element; }}>OK</button>
+            {this.props.selectAll && [
+              <button
+                key="selectAll"
+                className={`mod-secondary mod-small ${this.state.selectAllActive ? 'mod-toggle is-active' : ''}`}
+                ref={element => { this.selectAllButton = element; }}
+              >ALL
+              </button>
+            ]}
+            <button className="mod-small dropdown-submit-button" ref={element => { this.button = element; }}>OK</button>
           </li>
         ]}
       </ul>

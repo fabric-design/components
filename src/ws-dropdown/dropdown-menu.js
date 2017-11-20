@@ -1,10 +1,8 @@
 import {React, Component, PropTypes} from '../imports';
 import {DropdownMenuItem} from './dropdown-menu-item';
 
-const ANIMATION_START_EVENTS = ['oAnimationStart', 'MSAnimationStart',
-  'animationstart'];
-const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd',
-  'animationend'];
+const ANIMATION_START_EVENTS = ['oAnimationStart', 'MSAnimationStart', 'animationstart'];
+const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
 
 /**
  * This class renders the menu inside a dropdown container. Since the wrapper WSDropdown is missing, which provides
@@ -34,8 +32,7 @@ export class DropdownMenu extends Component {
     placeholder: '',
     limit: 10,
     selectAll: false,
-    handle: () => {
-    }
+    handle: () => {}
   };
 
   /**
@@ -123,13 +120,15 @@ export class DropdownMenu extends Component {
   componentWillUnmount() {
     if (this.input) {
       this.input.removeEventListener('keyup', this.onKeyUpUpdateFilter);
-      this.input.removeEventListener('change',
-        event => event.stopPropagation());
+      this.input.removeEventListener('change', event =>
+        event.stopPropagation()
+      );
     }
     if (this.button) {
       this.button.removeEventListener('click', this.onClickSubmit);
-      this.button.removeEventListener('keydown',
-        event => event.stopPropagation());
+      this.button.removeEventListener('keydown', event =>
+        event.stopPropagation()
+      );
     }
     if (this.selectAllButton) {
       this.selectAllButton.removeEventListener('click', this.onClickSelectAll);
@@ -237,8 +236,7 @@ export class DropdownMenu extends Component {
     const regex = new RegExp(this.state.filter, 'i');
     return this.state.items.filter(item => {
       // Don't show items which doesn't match the filter
-      if (this.props.filterable && this.state.filter && !regex.test(
-          item.label)) {
+      if (this.props.filterable && this.state.filter && !regex.test(item.label)) {
         return false;
       }
       // When we use a filter or multiple items are selectable we show selected items separately
@@ -255,8 +253,7 @@ export class DropdownMenu extends Component {
    * @returns {Object}
    */
   getItemAtIndex(index) {
-    const limit = this.props.filterable ? this.props.limit
-      : this.state.items.length;
+    const limit = this.props.filterable ? this.props.limit : this.state.items.length;
     const filteredItems = this.getFilteredItems().slice(0, limit);
     let valueLength = 0;
     if (this.context.multiple || this.props.filterable) {
@@ -277,8 +274,7 @@ export class DropdownMenu extends Component {
     // Check if the index points to value items when it is in this range
     if (valueLength && correctedIndex < valueLength && correctedIndex >= 0) {
       return {
-        item: Array.isArray(this.state.value) ? this.state.value[correctedIndex]
-          : this.state.value,
+        item: Array.isArray(this.state.value) ? this.state.value[correctedIndex] : this.state.value,
         index: correctedIndex
       };
     }
@@ -459,9 +455,7 @@ export class DropdownMenu extends Component {
     });
     // Increase started event counter for each animation start event
     ANIMATION_START_EVENTS.forEach(eventName => {
-      item.addEventListener(eventName, () => {
-        eventCounter += 1;
-      });
+      item.addEventListener(eventName, () => { eventCounter += 1; });
     });
     // Add class to start animation
     item.classList.add(animationClass);

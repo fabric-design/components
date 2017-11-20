@@ -120,15 +120,11 @@ export class DropdownMenu extends Component {
   componentWillUnmount() {
     if (this.input) {
       this.input.removeEventListener('keyup', this.onKeyUpUpdateFilter);
-      this.input.removeEventListener('change', event =>
-        event.stopPropagation()
-      );
+      this.input.removeEventListener('change', event => event.stopPropagation());
     }
     if (this.button) {
       this.button.removeEventListener('click', this.onClickSubmit);
-      this.button.removeEventListener('keydown', event =>
-        event.stopPropagation()
-      );
+      this.button.removeEventListener('keydown', event => event.stopPropagation());
     }
     if (this.selectAllButton) {
       this.selectAllButton.removeEventListener('click', this.onClickSelectAll);

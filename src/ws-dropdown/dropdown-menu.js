@@ -278,10 +278,7 @@ export class DropdownMenu extends Component {
         index: correctedIndex
       };
     }
-    return {
-      item: filteredItems[correctedIndex - valueLength],
-      index: correctedIndex
-    };
+    return { item: filteredItems[correctedIndex - valueLength], index: correctedIndex };
   }
 
   /**
@@ -526,7 +523,7 @@ export class DropdownMenu extends Component {
             {this.props.selectAll && [
               <button
                 key="selectAll"
-                className={`mod-secondary mod-small ${this.state.selectAllActive ? 'mod-toggle is-active' : ''}`}
+                className={`mod-secondary mr-s mod-small ${this.state.selectAllActive ? 'mod-toggle is-active' : ''}`}
                 ref={element => { this.selectAllButton = element; }}
               >ALL
               </button>

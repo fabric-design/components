@@ -90,7 +90,6 @@
     "react-dom": "15.5.4",
     "run-sequence": "1.2.2",
     "sass-loader": "5.0.1",
-    "sinon": "1.17.7",
     "style-loader": "0.13.2",
     "through2": "2.0.3",
     "url-loader": "0.5.8",

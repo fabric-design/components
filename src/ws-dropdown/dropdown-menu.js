@@ -278,7 +278,7 @@ export class DropdownMenu extends Component {
         index: correctedIndex
       };
     }
-    return { item: filteredItems[correctedIndex - valueLength], index: correctedIndex };
+    return {item: filteredItems[correctedIndex - valueLength], index: correctedIndex};
   }
 
   /**

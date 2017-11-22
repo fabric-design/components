@@ -10,6 +10,18 @@ import {WSDropdown} from '../ws-dropdown/ws-dropdown';
  * Optionally call WSHeader.setStorageType('cookie', 'zalando') If you want a to use cookies instead of localStorage
  * to persist the tokens. You can call WSHeader.getAccessToken().then(token => ...) to get the current access token.
  * It will resolve null when no access token is present and therefore the user isn't logged in.
+ * @property {Object} props React properties object
+ * @property {string} props.loginUrl property used to set the application login url
+ * @property {string} props.businessPartnerId property used to set the application businessPartnerId
+ * @property {string} props.clientId property used to set the application yourturn clientId
+ * @property {Array<Object>} props.links property used to set the list of links with multiple levels
+ * @property {string} props.appName property used to set the application name
+ * @property {string} props.appLogo property used to set the application image logo
+ * @property {string} props.rootUrl property used to set the root application url
+ * @property {Boolean} props.showLocale Flag used to show the locale dropdown
+ * @property {Boolean} props.showAuthorization Flag to show the login area
+ * @property {Function} props.onLocaleChange Function used to propagate data
+ * @property {Function} props.onAuthChange Function used to propagate data
  */
 export class WSHeader extends Component {
 
@@ -31,6 +43,9 @@ export class WSHeader extends Component {
     links: [],
     appName: 'Zalando',
     appLogo: null,
+    rootUrl: '#',
+    showLocale: true,
+    showAuthorization: true,
     onLocaleChange: () => {},
     onAuthChange: () => {}
   };
@@ -43,7 +58,10 @@ export class WSHeader extends Component {
     appName: PropTypes.string,
     appLogo: PropTypes.string,
     onLocaleChange: PropTypes.func,
-    onAuthChange: PropTypes.func
+    onAuthChange: PropTypes.func,
+    rootUrl: PropTypes.string,
+    showLocale: PropTypes.bool,
+    showAuthorization: PropTypes.bool
   };
 
   /**
@@ -269,7 +287,7 @@ export class WSHeader extends Component {
         <div className="level-1">
           <a // eslint-disable-line jsx-a11y/href-no-hash
             className="application-name"
-            href="#"
+            href={this.props.rootUrl}
           >
             {this.props.appLogo &&
               <figure className="application-logo">
@@ -297,18 +315,20 @@ export class WSHeader extends Component {
           </nav>
           <nav className="menu-controls">
             <ul>
-              <li>
-                <WSDropdown
-                  className="locale"
-                  icon="icon24 icon-sort-down"
-                  items={this.locales}
-                  text={this.state.locale}
-                  onChange={item => this.setLocale(item.value)}
-                  orientation="right"
-                  type="anchor"
-                />
-              </li>
-              {!this.state.isLoggedIn ?
+              {this.props.showLocale &&
+                <li>
+                  <WSDropdown
+                    className="locale"
+                    icon="icon24 icon-sort-down"
+                    items={this.locales}
+                    text={this.state.locale}
+                    onChange={item => this.setLocale(item.value)}
+                    orientation="right"
+                    type="anchor"
+                  />
+                </li>
+              }
+              {this.props.showAuthorization && (!this.state.isLoggedIn ?
                 <li onClick={() => this.login()}>
                   <a>Login</a>
                 </li>
@@ -316,7 +336,7 @@ export class WSHeader extends Component {
                 <li onClick={() => this.logout()}>
                   <a><span className="icon icon24 icon-power" /></a>
                 </li>
-              }
+              )}
             </ul>
           </nav>
         </div>

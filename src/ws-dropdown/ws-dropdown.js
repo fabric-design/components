@@ -21,6 +21,7 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
  * @property {string} props.orientation Dropdown orientation. Can be either left or right
  * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
+ * @property {Boolean} props.selectAll Show button to select all items
  * @property {string} props.onChange Callback for react components to propagate value changes
  */
 export class WSDropdown extends Component {
@@ -43,7 +44,8 @@ export class WSDropdown extends Component {
     width: '',
     value: null,
     onChange: () => {},
-    disabled: false
+    disabled: false,
+    selectAll: false
   };
 
   /**
@@ -64,7 +66,8 @@ export class WSDropdown extends Component {
     width: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
     onChange: PropTypes.func,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    selectAll: PropTypes.bool
   };
 
   /**
@@ -445,6 +448,7 @@ export class WSDropdown extends Component {
         filterable={this.props.filterable}
         filter={this.props.filter}
         placeholder={this.props.placeholder}
+        selectAll={this.props.selectAll}
         handle={this.handlePropagation}
         ref={element => { this.dropdownMenu = element; }}
       />

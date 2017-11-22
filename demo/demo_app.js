@@ -49,7 +49,7 @@ render(
       <br />
       <br />
       <WSDropdown
-        text="Multiple" type="button" width="500px" placeholder="Filter values.." filterable multiple items={[
+        text="Multiple" type="button" width="500px" placeholder="Filter values.." selectAll filterable multiple items={[
           'New',
           'New From Template',
           'Open',

@@ -196,8 +196,9 @@ additional wrapping markup and functionality, you SHOULD NOT use this component 
     -   `props.value` **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>)** Selected dropdown item(s)
     -   `props.filterable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Flag if the dropdown menu is filterable
     -   `props.filter` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Default filter value
-    -   `props.limit` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Limit visible dropdown items. Use together with filterable flag.
     -   `props.placeholder` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Placeholder for text inputs (Filter input or Input only version)
+    -   `props.limit` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Limit visible dropdown items. Use together with filterable flag.
+    -   `props.selectAll` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Show button to select all items
     -   `props.handle` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** Function used to propagate data
 
 ### constructor
@@ -275,6 +276,12 @@ Handles submit action on multi select drop downs
 **Parameters**
 
 -   `event` **[Event](https://developer.mozilla.org/en-US/docs/Web/API/Event)** JavaScript event object
+
+Returns **void** 
+
+### onClickSelectAll
+
+Handles select all action on multi select drop downs
 
 Returns **void** 
 
@@ -421,6 +428,7 @@ As trigger type you can choose between an anchor, button or a select like lookin
     -   `props.limit` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Limit visible dropdown items. Use together with filterable flag.
     -   `props.orientation` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Dropdown orientation. Can be either left or right
     -   `props.placeholder` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Placeholder for text inputs (Filter input or Input only version)
+    -   `props.selectAll` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Show button to select all items
     -   `props.onChange` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Callback for react components to propagate value changes
 
 ### constructor

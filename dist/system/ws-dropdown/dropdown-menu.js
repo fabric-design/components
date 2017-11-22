@@ -132,6 +132,21 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
               _this.setState({ value: value });
             }
           });
+          Object.defineProperty(_this, 'onClickSelectAll', {
+            enumerable: true,
+            writable: true,
+            value: function value() {
+              if (_this.state.items) {
+                _this.state.items.forEach(function (item) {
+                  item.selected = !_this.state.selectAllActive;
+                });
+                _this.setState({
+                  items: _this.state.items,
+                  selectAllActive: !_this.state.selectAllActive
+                });
+              }
+            }
+          });
           Object.defineProperty(_this, 'handlePropagation', {
             enumerable: true,
             writable: true,
@@ -174,7 +189,8 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
           _this.state = {
             filter: props.filter,
             items: props.items,
-            value: props.value
+            value: props.value,
+            selectAllActive: false
           };
           return _this;
         }
@@ -194,6 +210,9 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
                 return event.stopPropagation();
               });
             }
+            if (this.selectAllButton) {
+              this.selectAllButton.addEventListener('click', this.onClickSelectAll);
+            }
           }
         }, {
           key: 'componentWillReceiveProps',
@@ -201,7 +220,8 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
             this.setState({
               filter: props.filter,
               items: props.items,
-              value: props.value
+              value: props.value,
+              selectAllActive: props.selectAllActive
             });
           }
         }, {
@@ -223,6 +243,9 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
               this.button.removeEventListener('keydown', function (event) {
                 return event.stopPropagation();
               });
+            }
+            if (this.selectAllButton) {
+              this.selectAllButton.removeEventListener('click', this.onClickSelectAll);
             }
           }
         }, {
@@ -430,9 +453,20 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
               this.context.multiple && [React.createElement('li', { className: 'dropdown-item-separator', key: 'submit-separator' }), React.createElement(
                 'li',
                 { className: 'dropdown-submit', key: 'submit' },
+                this.props.selectAll && [React.createElement(
+                  'button',
+                  {
+                    key: 'selectAll',
+                    className: 'mod-secondary mr-s mod-small ' + (this.state.selectAllActive ? 'mod-toggle is-active' : ''),
+                    ref: function ref(element) {
+                      _this3.selectAllButton = element;
+                    }
+                  },
+                  'ALL'
+                )],
                 React.createElement(
                   'button',
-                  { className: 'mod-small', ref: function ref(element) {
+                  { className: 'mod-small dropdown-submit-button', ref: function ref(element) {
                       _this3.button = element;
                     } },
                   'OK'
@@ -458,6 +492,7 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
           filter: null,
           placeholder: '',
           limit: 10,
+          selectAll: false,
           handle: function handle() {}
         }
       });
@@ -470,7 +505,8 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
           filterable: PropTypes.bool,
           filter: PropTypes.string,
           placeholder: PropTypes.string,
-          limit: PropTypes.number
+          limit: PropTypes.number,
+          selectAll: PropTypes.bool
         }
       });
       Object.defineProperty(DropdownMenu, 'contextTypes', {

@@ -353,6 +353,7 @@ var WSDropdown = exports.WSDropdown = function (_Component) {
         filterable: this.props.filterable,
         filter: this.props.filter,
         placeholder: this.props.placeholder,
+        selectAll: this.props.selectAll,
         handle: this.handlePropagation,
         ref: function ref(element) {
           _this6.dropdownMenu = element;
@@ -412,7 +413,8 @@ Object.defineProperty(WSDropdown, 'defaultProps', {
     width: '',
     value: null,
     onChange: function onChange() {},
-    disabled: false
+    disabled: false,
+    selectAll: false
   }
 });
 Object.defineProperty(WSDropdown, 'propTypes', {
@@ -433,7 +435,8 @@ Object.defineProperty(WSDropdown, 'propTypes', {
     width: _imports.PropTypes.string,
     value: _imports.PropTypes.oneOfType([_imports.PropTypes.string, _imports.PropTypes.object, _imports.PropTypes.array]),
     onChange: _imports.PropTypes.func,
-    disabled: _imports.PropTypes.bool
+    disabled: _imports.PropTypes.bool,
+    selectAll: _imports.PropTypes.bool
   }
 });
 Object.defineProperty(WSDropdown, 'openDropdown', {

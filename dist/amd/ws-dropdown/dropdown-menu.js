@@ -126,6 +126,21 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
           _this.setState({ value: value });
         }
       });
+      Object.defineProperty(_this, 'onClickSelectAll', {
+        enumerable: true,
+        writable: true,
+        value: function value() {
+          if (_this.state.items) {
+            _this.state.items.forEach(function (item) {
+              item.selected = !_this.state.selectAllActive;
+            });
+            _this.setState({
+              items: _this.state.items,
+              selectAllActive: !_this.state.selectAllActive
+            });
+          }
+        }
+      });
       Object.defineProperty(_this, 'handlePropagation', {
         enumerable: true,
         writable: true,
@@ -168,7 +183,8 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
       _this.state = {
         filter: props.filter,
         items: props.items,
-        value: props.value
+        value: props.value,
+        selectAllActive: false
       };
       return _this;
     }
@@ -188,6 +204,9 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
             return event.stopPropagation();
           });
         }
+        if (this.selectAllButton) {
+          this.selectAllButton.addEventListener('click', this.onClickSelectAll);
+        }
       }
     }, {
       key: 'componentWillReceiveProps',
@@ -195,7 +214,8 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
         this.setState({
           filter: props.filter,
           items: props.items,
-          value: props.value
+          value: props.value,
+          selectAllActive: props.selectAllActive
         });
       }
     }, {
@@ -217,6 +237,9 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
           this.button.removeEventListener('keydown', function (event) {
             return event.stopPropagation();
           });
+        }
+        if (this.selectAllButton) {
+          this.selectAllButton.removeEventListener('click', this.onClickSelectAll);
         }
       }
     }, {
@@ -424,9 +447,20 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
           this.context.multiple && [_imports.React.createElement('li', { className: 'dropdown-item-separator', key: 'submit-separator' }), _imports.React.createElement(
             'li',
             { className: 'dropdown-submit', key: 'submit' },
+            this.props.selectAll && [_imports.React.createElement(
+              'button',
+              {
+                key: 'selectAll',
+                className: 'mod-secondary mr-s mod-small ' + (this.state.selectAllActive ? 'mod-toggle is-active' : ''),
+                ref: function ref(element) {
+                  _this3.selectAllButton = element;
+                }
+              },
+              'ALL'
+            )],
             _imports.React.createElement(
               'button',
-              { className: 'mod-small', ref: function ref(element) {
+              { className: 'mod-small dropdown-submit-button', ref: function ref(element) {
                   _this3.button = element;
                 } },
               'OK'
@@ -450,6 +484,7 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
       filter: null,
       placeholder: '',
       limit: 10,
+      selectAll: false,
       handle: function handle() {}
     }
   });
@@ -462,7 +497,8 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
       filterable: _imports.PropTypes.bool,
       filter: _imports.PropTypes.string,
       placeholder: _imports.PropTypes.string,
-      limit: _imports.PropTypes.number
+      limit: _imports.PropTypes.number,
+      selectAll: _imports.PropTypes.bool
     }
   });
   Object.defineProperty(DropdownMenu, 'contextTypes', {

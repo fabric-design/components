@@ -1,3 +1,13 @@
+<a name="1.0.32"></a>
+## [1.0.32](https://github.com/fabric-design/components/compare/1.0.31...1.0.32) (2017-11-22)
+
+
+### Features
+
+* **dropdown:** Add select all button to multiple option ([#144](https://github.com/fabric-design/components/issues/144)) ([8913004](https://github.com/fabric-design/components/commit/8913004))
+
+
+
 <a name="1.0.31"></a>
 ## [1.0.31](https://github.com/fabric-design/components/compare/1.0.30...1.0.31) (2017-11-20)
 

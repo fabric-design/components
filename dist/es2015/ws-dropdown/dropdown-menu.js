@@ -81,6 +81,21 @@ export var DropdownMenu = function (_Component) {
         _this.setState({ value: value });
       }
     });
+    Object.defineProperty(_this, 'onClickSelectAll', {
+      enumerable: true,
+      writable: true,
+      value: function value() {
+        if (_this.state.items) {
+          _this.state.items.forEach(function (item) {
+            item.selected = !_this.state.selectAllActive;
+          });
+          _this.setState({
+            items: _this.state.items,
+            selectAllActive: !_this.state.selectAllActive
+          });
+        }
+      }
+    });
     Object.defineProperty(_this, 'handlePropagation', {
       enumerable: true,
       writable: true,
@@ -123,7 +138,8 @@ export var DropdownMenu = function (_Component) {
     _this.state = {
       filter: props.filter,
       items: props.items,
-      value: props.value
+      value: props.value,
+      selectAllActive: false
     };
     return _this;
   }
@@ -143,6 +159,9 @@ export var DropdownMenu = function (_Component) {
           return event.stopPropagation();
         });
       }
+      if (this.selectAllButton) {
+        this.selectAllButton.addEventListener('click', this.onClickSelectAll);
+      }
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -150,7 +169,8 @@ export var DropdownMenu = function (_Component) {
       this.setState({
         filter: props.filter,
         items: props.items,
-        value: props.value
+        value: props.value,
+        selectAllActive: props.selectAllActive
       });
     }
   }, {
@@ -172,6 +192,9 @@ export var DropdownMenu = function (_Component) {
         this.button.removeEventListener('keydown', function (event) {
           return event.stopPropagation();
         });
+      }
+      if (this.selectAllButton) {
+        this.selectAllButton.removeEventListener('click', this.onClickSelectAll);
       }
     }
   }, {
@@ -379,9 +402,20 @@ export var DropdownMenu = function (_Component) {
         this.context.multiple && [React.createElement('li', { className: 'dropdown-item-separator', key: 'submit-separator' }), React.createElement(
           'li',
           { className: 'dropdown-submit', key: 'submit' },
+          this.props.selectAll && [React.createElement(
+            'button',
+            {
+              key: 'selectAll',
+              className: 'mod-secondary mr-s mod-small ' + (this.state.selectAllActive ? 'mod-toggle is-active' : ''),
+              ref: function ref(element) {
+                _this3.selectAllButton = element;
+              }
+            },
+            'ALL'
+          )],
           React.createElement(
             'button',
-            { className: 'mod-small', ref: function ref(element) {
+            { className: 'mod-small dropdown-submit-button', ref: function ref(element) {
                 _this3.button = element;
               } },
             'OK'
@@ -404,6 +438,7 @@ Object.defineProperty(DropdownMenu, 'defaultProps', {
     filter: null,
     placeholder: '',
     limit: 10,
+    selectAll: false,
     handle: function handle() {}
   }
 });
@@ -416,7 +451,8 @@ Object.defineProperty(DropdownMenu, 'propTypes', {
     filterable: PropTypes.bool,
     filter: PropTypes.string,
     placeholder: PropTypes.string,
-    limit: PropTypes.number
+    limit: PropTypes.number,
+    selectAll: PropTypes.bool
   }
 });
 Object.defineProperty(DropdownMenu, 'contextTypes', {

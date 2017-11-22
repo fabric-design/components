@@ -213,7 +213,7 @@ export var WSHeader = function (_Component) {
             'a',
             {
               className: 'application-name',
-              href: '#'
+              href: this.props.rootUrl
             },
             this.props.appLogo && React.createElement(
               'figure',
@@ -261,7 +261,7 @@ export var WSHeader = function (_Component) {
             React.createElement(
               'ul',
               null,
-              React.createElement(
+              this.props.showLocale && React.createElement(
                 'li',
                 null,
                 React.createElement(WSDropdown, {
@@ -276,7 +276,7 @@ export var WSHeader = function (_Component) {
                   type: 'anchor'
                 })
               ),
-              !this.state.isLoggedIn ? React.createElement(
+              this.props.showAuthorization && (!this.state.isLoggedIn ? React.createElement(
                 'li',
                 { onClick: function onClick() {
                     return _this4.login();
@@ -296,7 +296,7 @@ export var WSHeader = function (_Component) {
                   null,
                   React.createElement('span', { className: 'icon icon24 icon-power' })
                 )
-              )
+              ))
             )
           )
         ),
@@ -365,6 +365,9 @@ Object.defineProperty(WSHeader, 'defaultProps', {
     links: [],
     appName: 'Zalando',
     appLogo: null,
+    rootUrl: '#',
+    showLocale: true,
+    showAuthorization: true,
     onLocaleChange: function onLocaleChange() {},
     onAuthChange: function onAuthChange() {}
   }
@@ -380,6 +383,9 @@ Object.defineProperty(WSHeader, 'propTypes', {
     appName: PropTypes.string,
     appLogo: PropTypes.string,
     onLocaleChange: PropTypes.func,
-    onAuthChange: PropTypes.func
+    onAuthChange: PropTypes.func,
+    rootUrl: PropTypes.string,
+    showLocale: PropTypes.bool,
+    showAuthorization: PropTypes.bool
   }
 });

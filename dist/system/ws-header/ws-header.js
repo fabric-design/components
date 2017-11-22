@@ -267,7 +267,7 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
                   'a',
                   {
                     className: 'application-name',
-                    href: '#'
+                    href: this.props.rootUrl
                   },
                   this.props.appLogo && React.createElement(
                     'figure',
@@ -315,7 +315,7 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
                   React.createElement(
                     'ul',
                     null,
-                    React.createElement(
+                    this.props.showLocale && React.createElement(
                       'li',
                       null,
                       React.createElement(WSDropdown, {
@@ -330,7 +330,7 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
                         type: 'anchor'
                       })
                     ),
-                    !this.state.isLoggedIn ? React.createElement(
+                    this.props.showAuthorization && (!this.state.isLoggedIn ? React.createElement(
                       'li',
                       { onClick: function onClick() {
                           return _this4.login();
@@ -350,7 +350,7 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
                         null,
                         React.createElement('span', { className: 'icon icon24 icon-power' })
                       )
-                    )
+                    ))
                   )
                 )
               ),
@@ -422,6 +422,9 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
           links: [],
           appName: 'Zalando',
           appLogo: null,
+          rootUrl: '#',
+          showLocale: true,
+          showAuthorization: true,
           onLocaleChange: function onLocaleChange() {},
           onAuthChange: function onAuthChange() {}
         }
@@ -437,7 +440,10 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
           appName: PropTypes.string,
           appLogo: PropTypes.string,
           onLocaleChange: PropTypes.func,
-          onAuthChange: PropTypes.func
+          onAuthChange: PropTypes.func,
+          rootUrl: PropTypes.string,
+          showLocale: PropTypes.bool,
+          showAuthorization: PropTypes.bool
         }
       });
     }

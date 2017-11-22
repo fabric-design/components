@@ -224,7 +224,7 @@ var WSHeader = exports.WSHeader = function (_Component) {
             'a',
             {
               className: 'application-name',
-              href: '#'
+              href: this.props.rootUrl
             },
             this.props.appLogo && _imports.React.createElement(
               'figure',
@@ -272,7 +272,7 @@ var WSHeader = exports.WSHeader = function (_Component) {
             _imports.React.createElement(
               'ul',
               null,
-              _imports.React.createElement(
+              this.props.showLocale && _imports.React.createElement(
                 'li',
                 null,
                 _imports.React.createElement(_wsDropdown.WSDropdown, {
@@ -287,7 +287,7 @@ var WSHeader = exports.WSHeader = function (_Component) {
                   type: 'anchor'
                 })
               ),
-              !this.state.isLoggedIn ? _imports.React.createElement(
+              this.props.showAuthorization && (!this.state.isLoggedIn ? _imports.React.createElement(
                 'li',
                 { onClick: function onClick() {
                     return _this4.login();
@@ -307,7 +307,7 @@ var WSHeader = exports.WSHeader = function (_Component) {
                   null,
                   _imports.React.createElement('span', { className: 'icon icon24 icon-power' })
                 )
-              )
+              ))
             )
           )
         ),
@@ -377,6 +377,9 @@ Object.defineProperty(WSHeader, 'defaultProps', {
     links: [],
     appName: 'Zalando',
     appLogo: null,
+    rootUrl: '#',
+    showLocale: true,
+    showAuthorization: true,
     onLocaleChange: function onLocaleChange() {},
     onAuthChange: function onAuthChange() {}
   }
@@ -392,6 +395,9 @@ Object.defineProperty(WSHeader, 'propTypes', {
     appName: _imports.PropTypes.string,
     appLogo: _imports.PropTypes.string,
     onLocaleChange: _imports.PropTypes.func,
-    onAuthChange: _imports.PropTypes.func
+    onAuthChange: _imports.PropTypes.func,
+    rootUrl: _imports.PropTypes.string,
+    showLocale: _imports.PropTypes.bool,
+    showAuthorization: _imports.PropTypes.bool
   }
 });

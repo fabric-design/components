@@ -255,7 +255,7 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
               'a',
               {
                 className: 'application-name',
-                href: '#'
+                href: this.props.rootUrl
               },
               this.props.appLogo && _imports.React.createElement(
                 'figure',
@@ -303,7 +303,7 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
               _imports.React.createElement(
                 'ul',
                 null,
-                _imports.React.createElement(
+                this.props.showLocale && _imports.React.createElement(
                   'li',
                   null,
                   _imports.React.createElement(_wsDropdown.WSDropdown, {
@@ -318,7 +318,7 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
                     type: 'anchor'
                   })
                 ),
-                !this.state.isLoggedIn ? _imports.React.createElement(
+                this.props.showAuthorization && (!this.state.isLoggedIn ? _imports.React.createElement(
                   'li',
                   { onClick: function onClick() {
                       return _this4.login();
@@ -338,7 +338,7 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
                     null,
                     _imports.React.createElement('span', { className: 'icon icon24 icon-power' })
                   )
-                )
+                ))
               )
             )
           ),
@@ -408,6 +408,9 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
       links: [],
       appName: 'Zalando',
       appLogo: null,
+      rootUrl: '#',
+      showLocale: true,
+      showAuthorization: true,
       onLocaleChange: function onLocaleChange() {},
       onAuthChange: function onAuthChange() {}
     }
@@ -423,7 +426,10 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
       appName: _imports.PropTypes.string,
       appLogo: _imports.PropTypes.string,
       onLocaleChange: _imports.PropTypes.func,
-      onAuthChange: _imports.PropTypes.func
+      onAuthChange: _imports.PropTypes.func,
+      rootUrl: _imports.PropTypes.string,
+      showLocale: _imports.PropTypes.bool,
+      showAuthorization: _imports.PropTypes.bool
     }
   });
 });

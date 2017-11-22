@@ -316,17 +316,18 @@ export class WSHeader extends Component {
           <nav className="menu-controls">
             <ul>
               {this.props.showLocale &&
-              <li>
-                <WSDropdown
-                  className="locale"
-                  icon="icon24 icon-sort-down"
-                  items={this.locales}
-                  text={this.state.locale}
-                  onChange={item => this.setLocale(item.value)}
-                  orientation="right"
-                  type="anchor"
-                />
-              </li>}
+                <li>
+                  <WSDropdown
+                    className="locale"
+                    icon="icon24 icon-sort-down"
+                    items={this.locales}
+                    text={this.state.locale}
+                    onChange={item => this.setLocale(item.value)}
+                    orientation="right"
+                    type="anchor"
+                  />
+                </li>
+              }
               {this.props.showAuthorization && (!this.state.isLoggedIn ?
                 <li onClick={() => this.login()}>
                   <a>Login</a>

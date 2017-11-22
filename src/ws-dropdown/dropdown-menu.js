@@ -348,8 +348,7 @@ export class DropdownMenu extends Component {
         this.clearSelections();
         // If we have a single select we want to deselect the previous selected item
         if (!this.context.multiple) {
-          const previous = this.state.items.find(
-            item => item.stored && item !== data);
+          const previous = this.state.items.find(item => item.stored && item !== data);
           if (previous) {
             previous.stored = false;
             previous.selected = false;
@@ -459,11 +458,9 @@ export class DropdownMenu extends Component {
    * @returns {Object}
    */
   render() {
-    const limit = this.props.filterable ? this.props.limit
-      : this.state.items.length;
+    const limit = this.props.filterable ? this.props.limit : this.state.items.length;
     const items = this.getFilteredItems().slice(0, limit);
-    const hasValue = Array.isArray(this.state.value) ? this.state.value.length
-      : this.state.value;
+    const hasValue = Array.isArray(this.state.value) ? this.state.value.length : this.state.value;
 
     return (
       <ul
@@ -471,14 +468,14 @@ export class DropdownMenu extends Component {
         ref={element => { this.menuContainer = element; }}
       >
         {this.props.filterable &&
-        <li className="dropdown-input" key="filter">
-          <input
-            type="text"
-            defaultValue={this.state.filter}
-            placeholder={this.props.placeholder}
-            ref={element => { this.input = element; }}
-          />
-        </li>
+          <li className="dropdown-input" key="filter">
+            <input
+              type="text"
+              defaultValue={this.state.filter}
+              placeholder={this.props.placeholder}
+              ref={element => { this.input = element; }}
+            />
+          </li>
         }
         {this.props.parent && [
           <DropdownMenuItem
@@ -492,26 +489,15 @@ export class DropdownMenu extends Component {
         ]}
         {(hasValue && (this.context.multiple || this.props.filterable)) ? [
           this.state.items.filter(item => item.stored).map((item, index) =>
-            <DropdownMenuItem
-              item={item}
-              handle={this.handlePropagation}
-              key={`value-${index}`}
-            />
+            <DropdownMenuItem item={item} handle={this.handlePropagation} key={`value-${index}`} />
           ),
           <li className="dropdown-item-separator" key="value-separator" />
         ] : null}
         {items.map((item, index) =>
-          <DropdownMenuItem
-            item={item}
-            handle={this.handlePropagation}
-            key={`item-${index}`}
-          />
+          <DropdownMenuItem item={item} handle={this.handlePropagation} key={`item-${index}`} />
         )}
         {(!items || !items.length) &&
-        <DropdownMenuItem
-          item={{label: 'No results found', disabled: true}}
-          key="disabled"
-        />
+          <DropdownMenuItem item={{label: 'No results found', disabled: true}} key="disabled" />
         }
         {this.context.multiple && [
           <li className="dropdown-item-separator" key="submit-separator" />,
@@ -521,7 +507,8 @@ export class DropdownMenu extends Component {
                 key="selectAll"
                 className={`mod-secondary mr-s mod-small ${this.state.selectAllActive ? 'mod-toggle is-active' : ''}`}
                 ref={element => { this.selectAllButton = element; }}
-              >ALL
+              >
+                ALL
               </button>
             ]}
             <button className="mod-small dropdown-submit-button" ref={element => { this.button = element; }}>OK</button>

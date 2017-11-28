@@ -25,17 +25,6 @@ import {WSDropdown} from '../ws-dropdown/ws-dropdown';
  */
 export class WSHeader extends Component {
 
-  /**
-   * @type {Authorization}
-   */
-  static authorization = undefined;
-
-  /**
-   * Default storage instance
-   * @type {AbstractStorage}
-   */
-  static storage = new LocalStorage();
-
   static defaultProps = {
     loginUrl: 'https://identity.zalando.com/oauth2/authorize',
     businessPartnerId: null,
@@ -65,6 +54,17 @@ export class WSHeader extends Component {
   };
 
   /**
+   * @type {Authorization}
+   */
+  static authorization = new Authorization(this.storage);
+
+  /**
+   * Default storage instance
+   * @type {AbstractStorage}
+   */
+  static storage = new LocalStorage('');
+
+  /**
    * Initialize the storage
    * @param {string} type Can be either cookie or local
    * @param {string} name Storage name will be used as key prefix
@@ -77,6 +77,8 @@ export class WSHeader extends Component {
     } else {
       this.storage = new LocalStorage(name);
     }
+    // Create authorization with new storage type
+    this.authorization.storage = this.storage;
   }
 
   /**
@@ -85,7 +87,6 @@ export class WSHeader extends Component {
    * @returns {string|null}
    */
   static getAccessToken(queryString = location.hash.substr(1)) {
-    this.authorization = this.authorization || new Authorization(this.storage);
     if (!this.authorization.accessToken) {
       this.authorization.tryFetchToken(queryString);
     }
@@ -97,7 +98,6 @@ export class WSHeader extends Component {
    * @returns {void}
    */
   static removeAccessToken() {
-    this.authorization = this.authorization || new Authorization(this.storage);
     this.authorization.unauthorize();
   }
 
@@ -176,7 +176,7 @@ export class WSHeader extends Component {
    */
   initState() {
     this.state = {
-      isLoggedIn: !!(this.constructor.authorization && this.constructor.authorization.accessToken),
+      isLoggedIn: !!this.constructor.authorization.accessToken,
       locale: WSHeader.getLocale()
     };
   }
@@ -186,8 +186,6 @@ export class WSHeader extends Component {
    * @returns {void}
    */
   initAuthorization() {
-    // Initialize authorization with implicit flow
-    this.constructor.authorization = this.constructor.authorization || new Authorization(WSHeader.storage);
     // Listen to authorization changes
     this.constructor.authorization.onAccessTokenChange(accessToken => {
       if (this.mounted) {

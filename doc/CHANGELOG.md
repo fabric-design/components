@@ -1,3 +1,13 @@
+<a name="1.0.34"></a>
+## [1.0.34](https://github.com/fabric-design/components/compare/1.0.33...1.0.34) (2017-11-28)
+
+
+### Bug Fixes
+
+* **ws-header:** Ensure Authorization was initialized to fetch access token changes without DOMEvent ([#147](https://github.com/fabric-design/components/issues/147)) ([41ec7b7](https://github.com/fabric-design/components/commit/41ec7b7))
+
+
+
 <a name="1.0.33"></a>
 ## [1.0.33](https://github.com/fabric-design/components/compare/1.0.32...1.0.33) (2017-11-22)
 

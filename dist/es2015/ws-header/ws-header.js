@@ -23,13 +23,14 @@ export var WSHeader = function (_Component) {
       } else {
         this.storage = new LocalStorage(name);
       }
+
+      this.authorization.storage = this.storage;
     }
   }, {
     key: 'getAccessToken',
     value: function getAccessToken() {
       var queryString = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : location.hash.substr(1);
 
-      this.authorization = this.authorization || new Authorization(this.storage);
       if (!this.authorization.accessToken) {
         this.authorization.tryFetchToken(queryString);
       }
@@ -38,7 +39,6 @@ export var WSHeader = function (_Component) {
   }, {
     key: 'removeAccessToken',
     value: function removeAccessToken() {
-      this.authorization = this.authorization || new Authorization(this.storage);
       this.authorization.unauthorize();
     }
   }, {
@@ -103,7 +103,7 @@ export var WSHeader = function (_Component) {
     key: 'initState',
     value: function initState() {
       this.state = {
-        isLoggedIn: !!(this.constructor.authorization && this.constructor.authorization.accessToken),
+        isLoggedIn: !!this.constructor.authorization.accessToken,
         locale: WSHeader.getLocale()
       };
     }
@@ -111,8 +111,6 @@ export var WSHeader = function (_Component) {
     key: 'initAuthorization',
     value: function initAuthorization() {
       var _this2 = this;
-
-      this.constructor.authorization = this.constructor.authorization || new Authorization(WSHeader.storage);
 
       this.constructor.authorization.onAccessTokenChange(function (accessToken) {
         if (_this2.mounted) {
@@ -345,16 +343,6 @@ export var WSHeader = function (_Component) {
 
   return WSHeader;
 }(Component);
-Object.defineProperty(WSHeader, 'authorization', {
-  enumerable: true,
-  writable: true,
-  value: undefined
-});
-Object.defineProperty(WSHeader, 'storage', {
-  enumerable: true,
-  writable: true,
-  value: new LocalStorage()
-});
 Object.defineProperty(WSHeader, 'defaultProps', {
   enumerable: true,
   writable: true,
@@ -388,4 +376,14 @@ Object.defineProperty(WSHeader, 'propTypes', {
     showLocale: PropTypes.bool,
     showAuthorization: PropTypes.bool
   }
+});
+Object.defineProperty(WSHeader, 'authorization', {
+  enumerable: true,
+  writable: true,
+  value: new Authorization(this.storage)
+});
+Object.defineProperty(WSHeader, 'storage', {
+  enumerable: true,
+  writable: true,
+  value: new LocalStorage('')
 });

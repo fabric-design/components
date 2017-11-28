@@ -65,13 +65,14 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
         } else {
           this.storage = new _localStorage.LocalStorage(name);
         }
+
+        this.authorization.storage = this.storage;
       }
     }, {
       key: 'getAccessToken',
       value: function getAccessToken() {
         var queryString = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : location.hash.substr(1);
 
-        this.authorization = this.authorization || new _authorization.Authorization(this.storage);
         if (!this.authorization.accessToken) {
           this.authorization.tryFetchToken(queryString);
         }
@@ -80,7 +81,6 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
     }, {
       key: 'removeAccessToken',
       value: function removeAccessToken() {
-        this.authorization = this.authorization || new _authorization.Authorization(this.storage);
         this.authorization.unauthorize();
       }
     }, {
@@ -145,7 +145,7 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
       key: 'initState',
       value: function initState() {
         this.state = {
-          isLoggedIn: !!(this.constructor.authorization && this.constructor.authorization.accessToken),
+          isLoggedIn: !!this.constructor.authorization.accessToken,
           locale: WSHeader.getLocale()
         };
       }
@@ -153,8 +153,6 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
       key: 'initAuthorization',
       value: function initAuthorization() {
         var _this2 = this;
-
-        this.constructor.authorization = this.constructor.authorization || new _authorization.Authorization(WSHeader.storage);
 
         this.constructor.authorization.onAccessTokenChange(function (accessToken) {
           if (_this2.mounted) {
@@ -388,16 +386,6 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
     return WSHeader;
   }(_imports.Component);
 
-  Object.defineProperty(WSHeader, 'authorization', {
-    enumerable: true,
-    writable: true,
-    value: undefined
-  });
-  Object.defineProperty(WSHeader, 'storage', {
-    enumerable: true,
-    writable: true,
-    value: new _localStorage.LocalStorage()
-  });
   Object.defineProperty(WSHeader, 'defaultProps', {
     enumerable: true,
     writable: true,
@@ -431,5 +419,15 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
       showLocale: _imports.PropTypes.bool,
       showAuthorization: _imports.PropTypes.bool
     }
+  });
+  Object.defineProperty(WSHeader, 'authorization', {
+    enumerable: true,
+    writable: true,
+    value: new _authorization.Authorization(undefined.storage)
+  });
+  Object.defineProperty(WSHeader, 'storage', {
+    enumerable: true,
+    writable: true,
+    value: new _localStorage.LocalStorage('')
   });
 });

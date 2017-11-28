@@ -377,13 +377,13 @@ Object.defineProperty(WSHeader, 'propTypes', {
     showAuthorization: PropTypes.bool
   }
 });
-Object.defineProperty(WSHeader, 'authorization', {
-  enumerable: true,
-  writable: true,
-  value: new Authorization(this.storage)
-});
 Object.defineProperty(WSHeader, 'storage', {
   enumerable: true,
   writable: true,
   value: new LocalStorage('')
+});
+Object.defineProperty(WSHeader, 'authorization', {
+  enumerable: true,
+  writable: true,
+  value: new Authorization(WSHeader.storage)
 });

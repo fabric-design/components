@@ -54,15 +54,15 @@ export class WSHeader extends Component {
   };
 
   /**
-   * @type {Authorization}
-   */
-  static authorization = new Authorization(this.storage);
-
-  /**
    * Default storage instance
    * @type {AbstractStorage}
    */
   static storage = new LocalStorage('');
+
+  /**
+   * @type {Authorization}
+   */
+  static authorization = new Authorization(WSHeader.storage);
 
   /**
    * Initialize the storage

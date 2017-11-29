@@ -1,3 +1,13 @@
+<a name="1.0.35"></a>
+## [1.0.35](https://github.com/fabric-design/components/compare/1.0.34...1.0.35) (2017-11-29)
+
+
+### Bug Fixes
+
+* **header:** With amd build the header authorization initialization threw an error ([#148](https://github.com/fabric-design/components/issues/148)) ([edb4f32](https://github.com/fabric-design/components/commit/edb4f32))
+
+
+
 <a name="1.0.34"></a>
 ## [1.0.34](https://github.com/fabric-design/components/compare/1.0.33...1.0.34) (2017-11-28)
 

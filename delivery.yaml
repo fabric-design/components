@@ -3,6 +3,10 @@ version: "2017-09-20"
 pipeline:
   - id: build
     type: script
+    env:
+      NPM_CONFIG_LOGLEVEL: warn
+      CHROME_BIN: /usr/bin/google-chrome-stable
+      DISPLAY: :99
     commands:
       - desc: Ensure Docker
         cmd: |
@@ -11,7 +15,18 @@ pipeline:
         cmd: |
           curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
           apt-get install -y nodejs
-          # chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
+      - desc: Install chrome headless
+        cmd: |
+          echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | tee -a /etc/apt/sources.list
+          wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+          apt-get update
+          apt-get install libxpm4 libxrender1 libgtk2.0-0 libnss3 libgconf-2-4 -y
+          apt-get install google-chrome-stable -y
+          apt-get install xvfb gtk2-engines-pixbuf -y
+          apt-get install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable -y
+          apt-get install imagemagick x11-apps -y
+          Xvfb -ac :99 -screen 0 1280x1024x16 2>1 &
+          disown $1
       - desc: Install dependencies
         cmd: |
           npm i -g gulp-cli aurelia-cli --unsafe-perm

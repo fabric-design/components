@@ -1,0 +1,33 @@
+version: "2017-09-20"
+
+pipeline:
+  - id: build
+    type: script
+    commands:
+      - desc: Ensure Docker
+        cmd: |
+          curl -fsSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh
+      - desc: Ensure NodeJS
+        cmd: |
+          curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+          sudo apt-get install -y nodejs
+      - desc: Install dependencies
+        cmd: |
+          npm i -g gulp-cli aurelia-cli
+          npm i
+      - desc: Verify built
+        cmd: |
+          gulp lint
+          npm run test
+          gulp build
+      - desc: Create release
+        cmd: |
+          if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
+            # Generate changelog and api doc
+            gulp generate-docs bump-version changelog
+            # Create a new tag and a new github release
+            BRANCH=$(test -z $CDP_SOURCE_BRANCH && echo $CDP_SOURCE_BRANCH || echo $CDP_TARGET_BRANCH)
+            IMAGE=pierone.stups.zalan.do/goodbuy/release-fabric-on-github:201711301636
+            docker run -v $(pwd):/source -e BRANCH=$BRANCH -ti $IMAGE
+          fi
+

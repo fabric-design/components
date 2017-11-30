@@ -1,6 +1,6 @@
 {
   "name": "fabric-components",
-  "version": "1.0.35",
+  "version": "1.0.36",
   "description": "",
   "scripts": {
     "start": "webpack-dev-server --progress --colors --content-base build webpack.config.js",
@@ -108,3 +108,4 @@
     "fabric-scss": "git+https://github.com/fabric-design/scss.git"
   }
 }
+

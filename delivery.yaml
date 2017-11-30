@@ -45,6 +45,7 @@ pipeline:
       - desc: Create release
         cmd: |
           if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
+            git remote set-url origin git@github.bus.zalan.do:fabric-design/components.git
             echo "Creating a new release";
             # Generate changelog and api doc
             gulp generate-docs bump-version changelog

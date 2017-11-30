@@ -11,7 +11,7 @@ pipeline:
         cmd: |
           curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
           apt-get install -y nodejs
-          chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
+          # chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
       - desc: Install dependencies
         cmd: |
           npm i -g gulp-cli aurelia-cli --unsafe-perm

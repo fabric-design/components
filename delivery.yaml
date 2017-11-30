@@ -13,8 +13,8 @@ pipeline:
           sudo apt-get install -y nodejs
       - desc: Install dependencies
         cmd: |
-          npm i -g gulp-cli aurelia-cli
-          npm i
+          npm i -g gulp-cli aurelia-cli --unsafe-perm
+          npm i --unsafe-perm
       - desc: Verify built
         cmd: |
           gulp lint

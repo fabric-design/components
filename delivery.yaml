@@ -8,6 +8,12 @@ pipeline:
       CHROME_BIN: /usr/bin/google-chrome-stable
       DISPLAY: :99
     commands:
+      - desc: Check for skip ci
+        cmd: |
+          if [ $(git log --format=oneline -n 1 HEAD | grep -cP 'skip ci') -ne 0 ]; then
+            echo "Skipping this build"
+            exit 1;
+          fi          
       - desc: Ensure Docker
         cmd: |
           curl -fsSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh

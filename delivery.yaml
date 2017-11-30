@@ -45,11 +45,14 @@ pipeline:
       - desc: Create release
         cmd: |
           if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
+            echo "Creating a new release";
             # Generate changelog and api doc
             gulp generate-docs bump-version changelog
             # Create a new tag and a new github release
             BRANCH=$(test -z $CDP_SOURCE_BRANCH && echo $CDP_SOURCE_BRANCH || echo $CDP_TARGET_BRANCH)
-            IMAGE=pierone.stups.zalan.do/goodbuy/release-fabric-on-github:201711301636
-            docker run -v $(pwd):/source -e BRANCH=$BRANCH -ti $IMAGE
+            IMAGE=pierone.stups.zalan.do/goodbuy/release-fabric-on-github:201711301744
+            docker run -v $(pwd):/source -e BRANCH=$BRANCH -i $IMAGE
+          else
+            echo "No release will be created";
           fi
 

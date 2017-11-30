@@ -10,7 +10,7 @@ pipeline:
       - desc: Ensure NodeJS
         cmd: |
           curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-          apt-get install -y nodejs
+          apt-get install -y nodejs@8.4.0
           # chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
       - desc: Install dependencies
         cmd: |

@@ -49,9 +49,8 @@ pipeline:
             # Generate changelog and api doc
             gulp generate-docs bump-version changelog
             # Create a new tag and a new github release
-            BRANCH=$(test -z $CDP_SOURCE_BRANCH && echo $CDP_SOURCE_BRANCH || echo $CDP_TARGET_BRANCH)
             IMAGE=pierone.stups.zalan.do/goodbuy/release-fabric-on-github:201711301744
-            docker run -v $(pwd):/source -e BRANCH=$BRANCH -i $IMAGE
+            docker run -v $(pwd):/source -e BRANCH=master -i $IMAGE
           else
             echo "No release will be created";
           fi

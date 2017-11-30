@@ -9,8 +9,8 @@ pipeline:
           curl -fsSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh
       - desc: Ensure NodeJS
         cmd: |
-          curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
-          apt-get install -y nodejs@8.4.0
+          curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+          apt-get install -y nodejs
           # chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
       - desc: Install dependencies
         cmd: |

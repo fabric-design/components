@@ -42,22 +42,6 @@ export var WSHeader = function (_Component) {
       this.authorization.unauthorize();
     }
   }, {
-    key: 'getUserAbbreviation',
-    value: function getUserAbbreviation() {
-      try {
-        var token = this.getAccessToken();
-        var parts = token.split('.');
-        var json = JSON.parse(atob(parts[1]));
-
-        var nameKey = Object.keys(json).find(function (key) {
-          return key.includes('managed-id');
-        });
-        return json[nameKey];
-      } catch (e) {
-        return null;
-      }
-    }
-  }, {
     key: 'getLocale',
     value: function getLocale() {
       var locale = WSHeader.storage.get('locale') || window.navigator.language.replace(/([a-z]+)-.*/, '$1');

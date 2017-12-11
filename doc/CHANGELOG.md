@@ -1,3 +1,13 @@
+<a name="1.0.38"></a>
+## [1.0.38](https://github.bus.zalan.do/fabric-design/components/compare/1.0.35...1.0.38) (2017-12-11)
+
+
+### Features
+
+* **header:** Added a wrapper for the access token to check expiration of token ([#149](https://github.bus.zalan.do/fabric-design/components/issues/149)) ([00e6da0](https://github.bus.zalan.do/fabric-design/components/commit/00e6da0))
+
+
+
 <a name="1.0.37"></a>
 ## [1.0.37](https://github.bus.zalan.do/fabric-design/components/compare/1.0.35...1.0.37) (2017-11-30)
 

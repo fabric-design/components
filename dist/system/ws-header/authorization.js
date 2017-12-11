@@ -1,7 +1,7 @@
-System.register([], function (_export, _context) {
+System.register(['./access-token'], function (_export, _context) {
   "use strict";
 
-  var _slicedToArray, _createClass, Authorization;
+  var JsonWebToken, _slicedToArray, _createClass, Authorization;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -10,7 +10,9 @@ System.register([], function (_export, _context) {
   }
 
   return {
-    setters: [],
+    setters: [function (_accessToken) {
+      JsonWebToken = _accessToken.JsonWebToken;
+    }],
     execute: function () {
       _slicedToArray = function () {
         function sliceIterator(arr, i) {
@@ -108,21 +110,15 @@ System.register([], function (_export, _context) {
               if (this.storage.get('state') !== queryParams.state) {
                 throw new Error('Unexpected authorisation response');
               }
-              this.updateTokens(queryParams);
+              var token = new JsonWebToken(queryParams.access_token);
+              this.storage.set('access_token', token);
+              this.changeAccessToken(token);
             } else if (this.storage.get('access_token')) {
-              this.changeAccessToken(this.storage.get('access_token'));
+              var _token = new JsonWebToken(this.storage.get('access_token'));
+              this.changeAccessToken(_token);
             } else {
               this.changeAccessToken(null);
             }
-          }
-        }, {
-          key: 'updateTokens',
-          value: function updateTokens(params) {
-            var expires = params.expires_in ? parseInt(params.expires_in, 10) : 3600;
-            this.storage.set('access_token', params.access_token);
-            this.storage.set('expires_at', new Date().getTime() + expires * 1000);
-
-            this.changeAccessToken(params.access_token);
           }
         }, {
           key: 'authorize',
@@ -135,7 +131,6 @@ System.register([], function (_export, _context) {
           key: 'unauthorize',
           value: function unauthorize() {
             this.storage.remove('access_token');
-            this.storage.remove('expires_at');
             this.changeAccessToken(null);
           }
         }, {

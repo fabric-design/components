@@ -1,9 +1,10 @@
-define(['exports'], function (exports) {
+define(['exports', './access-token'], function (exports, _accessToken) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  exports.Authorization = undefined;
 
   var _slicedToArray = function () {
     function sliceIterator(arr, i) {
@@ -107,21 +108,15 @@ define(['exports'], function (exports) {
           if (this.storage.get('state') !== queryParams.state) {
             throw new Error('Unexpected authorisation response');
           }
-          this.updateTokens(queryParams);
+          var token = new _accessToken.JsonWebToken(queryParams.access_token);
+          this.storage.set('access_token', token);
+          this.changeAccessToken(token);
         } else if (this.storage.get('access_token')) {
-          this.changeAccessToken(this.storage.get('access_token'));
+          var _token = new _accessToken.JsonWebToken(this.storage.get('access_token'));
+          this.changeAccessToken(_token);
         } else {
           this.changeAccessToken(null);
         }
-      }
-    }, {
-      key: 'updateTokens',
-      value: function updateTokens(params) {
-        var expires = params.expires_in ? parseInt(params.expires_in, 10) : 3600;
-        this.storage.set('access_token', params.access_token);
-        this.storage.set('expires_at', new Date().getTime() + expires * 1000);
-
-        this.changeAccessToken(params.access_token);
       }
     }, {
       key: 'authorize',
@@ -134,7 +129,6 @@ define(['exports'], function (exports) {
       key: 'unauthorize',
       value: function unauthorize() {
         this.storage.remove('access_token');
-        this.storage.remove('expires_at');
         this.changeAccessToken(null);
       }
     }, {

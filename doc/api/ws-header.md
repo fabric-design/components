@@ -1,4 +1,43 @@
 # ws-header
+## JsonWebToken
+
+This class represents a JWT token
+
+**Parameters**
+
+-   `token`  
+
+### constructor
+
+Set the token
+
+**Parameters**
+
+-   `token` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Json Web Token
+
+### isValid
+
+Determine if the token is still valid
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### getUserAbbreviation
+
+Get the user abbreviation the token was issued for
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### valueOf
+
+Return the real token
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### toString
+
+Return the real token
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 ## Authorization
 
 This class implements the OAuth2 authorization via the implicit flow.
@@ -196,19 +235,13 @@ Tries to get the access token from authorization class
 
 -   `queryString` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The current query string to parse the token from (optional, default `location.hash.substr(1)`)
 
-Returns **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** 
+Returns **(JsonWebToken | null)** 
 
 ### removeAccessToken
 
 Unauthorize will remove the access token from storage
 
 Returns **void** 
-
-### getUserAbbreviation
-
-Get abbreviation for the user the access token is issued for
-
-Returns **([string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** 
 
 ### getLocale
 

@@ -1,3 +1,5 @@
+import {JsonWebToken} from './access-token';
+
 /**
  * This class implements the OAuth2 authorization via the implicit flow.
  */
@@ -51,28 +53,16 @@ export class Authorization {
       if (this.storage.get('state') !== queryParams.state) {
         throw new Error('Unexpected authorisation response');
       }
-      this.updateTokens(queryParams);
-    // Check if we already have an access token stored
+      const token = new JsonWebToken(queryParams.access_token);
+      this.storage.set('access_token', token);
+      this.changeAccessToken(token);
+    // Load token from storage if available
     } else if (this.storage.get('access_token')) {
-      // Put data into authorized stream
-      this.changeAccessToken(this.storage.get('access_token'));
+      const token = new JsonWebToken(this.storage.get('access_token'));
+      this.changeAccessToken(token);
     } else {
       this.changeAccessToken(null);
     }
-  }
-
-  /**
-   * Update the tokens and notify the header
-   * @param {{expires_in: number, access_token: string}} params Response parameters containing access token
-   * @returns {void}
-   * @private
-   */
-  updateTokens(params) {
-    const expires = params.expires_in ? parseInt(params.expires_in, 10) : 3600;
-    this.storage.set('access_token', params.access_token);
-    this.storage.set('expires_at', new Date().getTime() + expires * 1000);
-    // Put data into authorized stream
-    this.changeAccessToken(params.access_token);
   }
 
   /**
@@ -99,7 +89,6 @@ export class Authorization {
    */
   unauthorize() {
     this.storage.remove('access_token');
-    this.storage.remove('expires_at');
     this.changeAccessToken(null);
   }
 

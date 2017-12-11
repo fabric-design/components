@@ -28,15 +28,15 @@ describe('A WSHeader', () => {
     const tokenName = 'asd';
     // Only test the basic function, the general authorization ist tested elsewhere
     WSHeader.storage.set('access_token', tokenName);
-    expect(WSHeader.getAccessToken()).toBe(tokenName);
+    expect(`${WSHeader.getAccessToken()}`).toBe(tokenName);
   });
 
   it('get\'s the user abbreviation from access token', () => {
     const tokenName = 'asd34.' + btoa('{"test": "asd", "asdasdmanaged-id": "supercooluser"}') + '.435dg4';
     // Only test the basic function, the general authorization ist tested elsewhere
     WSHeader.storage.set('access_token', tokenName);
-    expect(WSHeader.getUserAbbreviation()).toBe('supercooluser');
-    expect(WSHeader.getAccessToken()).toBe(tokenName);
+    expect(WSHeader.getAccessToken().getUserAbbreviation()).toBe('supercooluser');
+    expect(`${WSHeader.getAccessToken()}`).toBe(tokenName);
   });
 
   it('doesn\'t get an access token', () => {

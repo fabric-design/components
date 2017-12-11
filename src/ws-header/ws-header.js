@@ -84,7 +84,7 @@ export class WSHeader extends Component {
   /**
    * Tries to get the access token from authorization class
    * @param {string} queryString The current query string to parse the token from
-   * @returns {string|null}
+   * @returns {JsonWebToken|null}
    */
   static getAccessToken(queryString = location.hash.substr(1)) {
     if (!this.authorization.accessToken) {
@@ -99,23 +99,6 @@ export class WSHeader extends Component {
    */
   static removeAccessToken() {
     this.authorization.unauthorize();
-  }
-
-  /**
-   * Get abbreviation for the user the access token is issued for
-   * @returns {string|null}
-   */
-  static getUserAbbreviation() {
-    try {
-      const token = this.getAccessToken();
-      const parts = token.split('.');
-      const json = JSON.parse(atob(parts[1]));
-      // Find key which contains the name
-      const nameKey = Object.keys(json).find(key => key.includes('managed-id'));
-      return json[nameKey];
-    } catch (e) {
-      return null;
-    }
   }
 
   /**

@@ -30,11 +30,19 @@ export class WSTabMenu extends Component {
     this.menuItems = [];
   }
 
+  componentDidMount() {
+    this.configureMenuItems();
+  }
+
+  componentDidUpdate() {
+    this.configureMenuItems();
+  }
+
   /**
    * Bind listeners and move dash below active item
    * @returns {void}
    */
-  componentDidMount() {
+  configureMenuItems() {
     this.menuItems.forEach((element, index) => {
       const item = this.props.items[index];
       // Move dash below selected item

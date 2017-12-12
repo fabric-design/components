@@ -1,4 +1,4 @@
-import {JsonWebToken} from './access-token';
+import {JsonWebToken} from './json-web-token';
 
 /**
  * This class implements the OAuth2 authorization via the implicit flow.

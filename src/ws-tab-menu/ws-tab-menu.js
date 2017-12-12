@@ -32,31 +32,10 @@ export class WSTabMenu extends Component {
 
   /**
    * Bind listeners after mount
+   * @returns {void}
    */
   componentDidMount() {
     this.configureMenuItems();
-  }
-
-  /**
-   * Bind listeners after update
-   */
-  componentDidUpdate() {
-    this.configureMenuItems();
-  }
-
-  /**
-   * Bind listeners and move dash below active item
-   * @returns {void}
-   */
-  configureMenuItems() {
-    this.menuItems.forEach((element, index) => {
-      const item = this.props.items[index];
-      // Move dash below selected item
-      if (item.value === this.state.value) {
-        this.animateDash(element);
-      }
-      element.addEventListener('click', this.onClick);
-    });
   }
 
   /**
@@ -69,6 +48,14 @@ export class WSTabMenu extends Component {
     // If the value changed we have to move the dash
     const index = this.props.items.findIndex(item => item.value === this.state.value) || 0;
     this.animateDash(this.menuItems[index]);
+  }
+
+  /**
+   * Bind listeners after update
+   * @returns {void}
+   */
+  componentDidUpdate() {
+    this.configureMenuItems();
   }
 
   /**
@@ -107,6 +94,21 @@ export class WSTabMenu extends Component {
       this.props.onChange(selectedItem.value);
     }
   };
+
+  /**
+   * Bind listeners and move dash below active item
+   * @returns {void}
+   */
+  configureMenuItems() {
+    this.menuItems.forEach((element, index) => {
+      const item = this.props.items[index];
+      // Move dash below selected item
+      if (item.value === this.state.value) {
+        this.animateDash(element);
+      }
+      element.addEventListener('click', this.onClick);
+    });
+  }
 
   /**
    * Animate the dash below the new active item

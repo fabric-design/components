@@ -1,6 +1,6 @@
 {
   "name": "fabric-components",
-  "version": "1.0.38",
+  "version": "1.0.39",
   "description": "",
   "scripts": {
     "start": "webpack-dev-server --progress --colors --content-base build webpack.config.js",

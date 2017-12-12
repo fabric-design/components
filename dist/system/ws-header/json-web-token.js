@@ -76,14 +76,19 @@ System.register([], function (_export, _context) {
             return null;
           }
         }, {
-          key: 'valueOf',
-          value: function valueOf() {
-            return this.token;
-          }
-        }, {
           key: 'toString',
           value: function toString() {
             return this.token;
+          }
+        }, {
+          key: 'valueOf',
+          value: function valueOf() {
+            return this.toString();
+          }
+        }, {
+          key: 'toJSON',
+          value: function toJSON() {
+            return this.toString();
           }
         }]);
 

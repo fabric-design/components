@@ -9,7 +9,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _accessToken = require('./access-token');
+var _jsonWebToken = require('./json-web-token');
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -53,11 +53,11 @@ var Authorization = exports.Authorization = function () {
         if (this.storage.get('state') !== queryParams.state) {
           throw new Error('Unexpected authorisation response');
         }
-        var token = new _accessToken.JsonWebToken(queryParams.access_token);
+        var token = new _jsonWebToken.JsonWebToken(queryParams.access_token);
         this.storage.set('access_token', token);
         this.changeAccessToken(token);
       } else if (this.storage.get('access_token')) {
-        var _token = new _accessToken.JsonWebToken(this.storage.get('access_token'));
+        var _token = new _jsonWebToken.JsonWebToken(this.storage.get('access_token'));
         this.changeAccessToken(_token);
       } else {
         this.changeAccessToken(null);

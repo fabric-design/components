@@ -1,4 +1,4 @@
-System.register(['./access-token'], function (_export, _context) {
+System.register(['./json-web-token'], function (_export, _context) {
   "use strict";
 
   var JsonWebToken, _slicedToArray, _createClass, Authorization;
@@ -10,8 +10,8 @@ System.register(['./access-token'], function (_export, _context) {
   }
 
   return {
-    setters: [function (_accessToken) {
-      JsonWebToken = _accessToken.JsonWebToken;
+    setters: [function (_jsonWebToken) {
+      JsonWebToken = _jsonWebToken.JsonWebToken;
     }],
     execute: function () {
       _slicedToArray = function () {

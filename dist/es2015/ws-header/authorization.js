@@ -4,7 +4,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-import { JsonWebToken } from './access-token';
+import { JsonWebToken } from './json-web-token';
 
 export var Authorization = function () {
   function Authorization(storage) {

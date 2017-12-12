@@ -1,43 +1,4 @@
 # ws-header
-## JsonWebToken
-
-This class represents a JWT token
-
-**Parameters**
-
--   `token`  
-
-### constructor
-
-Set the token
-
-**Parameters**
-
--   `token` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Json Web Token
-
-### isValid
-
-Determine if the token is still valid
-
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
-
-### getUserAbbreviation
-
-Get the user abbreviation the token was issued for
-
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-### valueOf
-
-Return the real token
-
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
-
-### toString
-
-Return the real token
-
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 ## Authorization
 
 This class implements the OAuth2 authorization via the implicit flow.
@@ -99,6 +60,51 @@ Returns **void**
 Remove authorization
 
 Returns **void** 
+## JsonWebToken
+
+This class represents a JWT token
+
+**Parameters**
+
+-   `token`  
+
+### constructor
+
+Set the token
+
+**Parameters**
+
+-   `token` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Json Web Token
+
+### isValid
+
+Determine if the token is still valid
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### getUserAbbreviation
+
+Get the user abbreviation the token was issued for
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### toString
+
+Return the real token
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### valueOf
+
+Return the real token
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+
+### toJSON
+
+Return the real token
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 ## WSHeader
 
 **Extends Component**

@@ -1,3 +1,13 @@
+<a name="1.0.39"></a>
+## [1.0.39](https://github.bus.zalan.do/fabric-design/components/compare/1.0.38...1.0.39) (2017-12-12)
+
+
+### Bug Fixes
+
+* **header:** Fixed file name and added JSON serializer function to token class ([#150](https://github.bus.zalan.do/fabric-design/components/issues/150)) ([0bc525e](https://github.bus.zalan.do/fabric-design/components/commit/0bc525e))
+
+
+
 <a name="1.0.38"></a>
 ## [1.0.38](https://github.bus.zalan.do/fabric-design/components/compare/1.0.35...1.0.38) (2017-12-11)
 

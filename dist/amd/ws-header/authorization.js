@@ -1,4 +1,4 @@
-define(['exports', './access-token'], function (exports, _accessToken) {
+define(['exports', './json-web-token'], function (exports, _jsonWebToken) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -108,11 +108,11 @@ define(['exports', './access-token'], function (exports, _accessToken) {
           if (this.storage.get('state') !== queryParams.state) {
             throw new Error('Unexpected authorisation response');
           }
-          var token = new _accessToken.JsonWebToken(queryParams.access_token);
+          var token = new _jsonWebToken.JsonWebToken(queryParams.access_token);
           this.storage.set('access_token', token);
           this.changeAccessToken(token);
         } else if (this.storage.get('access_token')) {
-          var _token = new _accessToken.JsonWebToken(this.storage.get('access_token'));
+          var _token = new _jsonWebToken.JsonWebToken(this.storage.get('access_token'));
           this.changeAccessToken(_token);
         } else {
           this.changeAccessToken(null);

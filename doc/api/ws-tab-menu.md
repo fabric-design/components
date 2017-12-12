@@ -23,7 +23,7 @@ This component renders a tab menu and provides the selected tab via a value prop
 
 ### componentDidMount
 
-Bind listeners and move dash below active item
+Bind listeners after mount
 
 Returns **void** 
 
@@ -34,6 +34,12 @@ Update state from property change
 **Parameters**
 
 -   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties
+
+Returns **void** 
+
+### componentDidUpdate
+
+Bind listeners after update
 
 Returns **void** 
 
@@ -50,6 +56,12 @@ Handles clicks on menu items
 **Parameters**
 
 -   `event` **[Event](https://developer.mozilla.org/en-US/docs/Web/API/Event)** JavaScript event object
+
+Returns **void** 
+
+### configureMenuItems
+
+Bind listeners and move dash below active item
 
 Returns **void** 
 

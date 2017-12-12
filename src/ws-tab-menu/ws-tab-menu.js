@@ -30,10 +30,16 @@ export class WSTabMenu extends Component {
     this.menuItems = [];
   }
 
+  /**
+   * Bind listeners after mount
+   */
   componentDidMount() {
     this.configureMenuItems();
   }
 
+  /**
+   * Bind listeners after update
+   */
   componentDidUpdate() {
     this.configureMenuItems();
   }

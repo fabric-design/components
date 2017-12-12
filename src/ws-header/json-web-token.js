@@ -61,7 +61,7 @@ export class JsonWebToken {
    * Return the real token
    * @returns {string}
    */
-  valueOf() {
+  toString() {
     return this.token;
   }
 
@@ -69,7 +69,15 @@ export class JsonWebToken {
    * Return the real token
    * @returns {string}
    */
-  toString() {
-    return this.token;
+  valueOf() {
+    return this.toString();
+  }
+
+  /**
+   * Return the real token
+   * @returns {string}
+   */
+  toJSON() {
+    return this.toString();
   }
 }

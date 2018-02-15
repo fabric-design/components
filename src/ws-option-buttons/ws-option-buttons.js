@@ -115,9 +115,9 @@ export class WSOptionButtons extends Component {
       if (!Array.isArray(props.value)) {
         props.value = [props.value];
       }
-      props.value.forEach(value =>
-        items.find(item => item.value === value).selected = true
-      );
+      props.value.forEach(value => {
+        items.find(item => item.value === value).selected = true;
+      });
     }
     return {
       items,

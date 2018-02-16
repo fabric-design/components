@@ -1,6 +1,16 @@
 /* eslint no-console: 'off' */
 import {React, render} from '../src/imports';
-import {WSHeader, WSDropdown, WSNotification, WSDatePicker, WSInlineEdit, WSWeekPicker, WSTilesChart, WSTabMenu} from '../src/index';
+import {
+  WSHeader,
+  WSDropdown,
+  WSNotification,
+  WSDatePicker,
+  WSInlineEdit,
+  WSWeekPicker,
+  WSTilesChart,
+  WSTabMenu,
+  WSOptionButtons
+} from '../src/index';
 import {dashboardMockData} from './mockdata';
 import './index.scss';
 
@@ -40,6 +50,8 @@ render(
       ]}
     />
     <div className="container">
+      <WSOptionButtons items={[{value: 'FS17', label: 'FS17'}, 'HW17', {value: 'FS18'}, {value: 'HW18', label: 'Herbst Winter 18'}]} onChange={value => console.log('new value', value)}/>
+      <br />
       <WSTabMenu items={[{label: 'This is the name of a long Tab 1', value: 1}, {label: 'Tab 2', value: 2}, {label: 'Another long Tab 3 name', value: 3}]} onChange={value => console.log(value)} />
       <br />
       <WSDatePicker onChange={date => console.log('New Date:', date)} value={Date.now()} />

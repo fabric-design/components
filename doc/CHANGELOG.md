@@ -1,3 +1,13 @@
+<a name="1.0.41"></a>
+## [1.0.41](https://github.bus.zalan.do/fabric-design/components/compare/1.0.40...1.0.41) (2018-02-16)
+
+
+### Features
+
+* **option-buttons:** Created new component called option buttons ([#153](https://github.bus.zalan.do/fabric-design/components/issues/153)) ([f75c817](https://github.bus.zalan.do/fabric-design/components/commit/f75c817))
+
+
+
 <a name="1.0.40"></a>
 ## [1.0.40](https://github.bus.zalan.do/fabric-design/components/compare/1.0.39...1.0.40) (2017-12-12)
 

@@ -17,7 +17,7 @@ If you only want to display an icon instead of a input set prop iconOnly.
 
 **Parameters**
 
--   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties
+-   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties
 
 ### componentDidMount
 
@@ -31,7 +31,7 @@ Update flatpickr when prop's changed
 
 **Parameters**
 
--   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** React props
+-   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React props
 
 Returns **void** 
 
@@ -47,9 +47,9 @@ Handle date selections and propagate the value via an custom change event and on
 
 **Parameters**
 
--   `selectedDate` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)** The currently selected date
+-   `selectedDate` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** The currently selected date
     -   `selectedDate.0`  
--   `value` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The date as string using the in props specified formatting
+-   `value` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The date as string using the in props specified formatting
 
 Returns **void** 
 
@@ -57,7 +57,7 @@ Returns **void**
 
 Render the component
 
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ### setFormat
 
@@ -65,6 +65,6 @@ Set the format for all date picker instances
 
 **Parameters**
 
--   `format` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Format following flatpickr options
+-   `format` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Format following flatpickr options
 
 Returns **void** 

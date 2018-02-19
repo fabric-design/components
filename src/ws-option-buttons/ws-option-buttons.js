@@ -58,6 +58,17 @@ export class WSOptionButtons extends Component {
   }
 
   /**
+   * Bind to new elements
+   * @returns {void}
+   */
+  componentDidUpdate() {
+    this.buttons.forEach(button => button.addEventListener('click', this.onClickButton));
+    if (this.moreAnchor) {
+      this.moreAnchor.addEventListener('click', this.onClickToggle);
+    }
+  }
+
+  /**
    * Removes event listeners before element is detached from dom
    * @returns {void}
    */
@@ -158,11 +169,12 @@ export class WSOptionButtons extends Component {
             </a>
           </div>
         )}
-        {this.props.initialVisible < this.state.items.length &&
-          <a className="show-more" ref={element => { this.moreAnchor = element; }}>
-            {this.state.visible === this.state.items.length ? 'less' : 'more'}
-          </a>
-        }
+        <a
+          className={`show-more ${this.props.initialVisible < this.state.items.length ? 'is-hidden' : ''}`}
+          ref={element => { this.moreAnchor = element; }}
+        >
+          {this.state.visible === this.state.items.length ? 'less' : 'more'}
+        </a>
       </div>
     );
   }

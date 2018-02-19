@@ -30,14 +30,14 @@ describe('A WSOptionButtons', () => {
     const btns = new TestComponent(<WSOptionButtons items={items} />);
     expect(btns.container.querySelectorAll('.option-button:not(.is-hidden)').length).toBe(3);
     expect(btns.container.querySelectorAll('.option-button.is-hidden').length).toBe(1);
-    expect(btns.container.querySelector('.show-more')).toBeTruthy();
+    expect(btns.container.querySelector('.show-more').classList).toContain('is-hidden');
     const btns2 = new TestComponent(<WSOptionButtons items={items} initialVisible={4} />);
     expect(btns2.container.querySelectorAll('.option-button:not(.is-hidden)').length).toBe(4);
     expect(btns2.container.querySelectorAll('.option-button.is-hidden').length).toBe(0);
-    expect(btns2.container.querySelector('.show-more')).toBeFalsy();
+    expect(btns2.container.querySelector('.show-more').classList).not.toContain('is-hidden');
     const btns3 = new TestComponent(<WSOptionButtons items={items} initialVisible={1} />);
     expect(btns3.container.querySelectorAll('.option-button:not(.is-hidden)').length).toBe(1);
     expect(btns3.container.querySelectorAll('.option-button.is-hidden').length).toBe(3);
-    expect(btns3.container.querySelector('.show-more')).toBeTruthy();
+    expect(btns3.container.querySelector('.show-more').classList).toContain('is-hidden');
   });
 });

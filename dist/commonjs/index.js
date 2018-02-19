@@ -84,3 +84,12 @@ Object.defineProperty(exports, 'WSTabMenu', {
     return _wsTabMenu.WSTabMenu;
   }
 });
+
+var _wsOptionButtons = require('./ws-option-buttons/ws-option-buttons');
+
+Object.defineProperty(exports, 'WSOptionButtons', {
+  enumerable: true,
+  get: function get() {
+    return _wsOptionButtons.WSOptionButtons;
+  }
+});

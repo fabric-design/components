@@ -11,13 +11,13 @@ This class describes the interface of an storage class
 
 **Parameters**
 
--   `name` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The storage name
+-   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The storage name
 
 ### set
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
 -   `value` **any** Value to store
 
 Returns **void** 
@@ -26,7 +26,7 @@ Returns **void**
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
 
 Returns **any** 
 
@@ -34,7 +34,7 @@ Returns **any**
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
 
 Returns **void** 
 ## CookieStorage
@@ -49,7 +49,7 @@ Set value for specific key in cookies
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
 -   `value` **any** Value to store
 
 Returns **void** 
@@ -60,7 +60,7 @@ Get value from cookies by it's storage key
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
 
 Returns **any** 
 
@@ -70,7 +70,7 @@ Removes a stored value by its storage key
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
 
 Returns **void** 
 
@@ -80,9 +80,9 @@ Creates a cookie for the current top level domain
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Cookie name without storage name
+-   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Cookie name without storage name
 -   `value` **any** Cookie value (not serialized)
--   `expires` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)** Cookie expiration date
+-   `expires` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** Cookie expiration date
 
 Returns **void** 
 ## LocalStorage
@@ -97,7 +97,7 @@ Set value for specific key in localStorage
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
 -   `value` **any** Value to store
 
 Returns **void** 
@@ -108,7 +108,7 @@ Get value from localStorage by it's storage key
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
 
 Returns **any** 
 
@@ -118,6 +118,6 @@ Removes a stored value by its storage key
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
 
 Returns **void** 

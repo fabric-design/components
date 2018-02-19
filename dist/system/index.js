@@ -1,4 +1,4 @@
-System.register(['./ws-header/ws-header', './ws-date-picker/ws-date-picker', './ws-dropdown/ws-dropdown', './ws-inline-edit/ws-inline-edit', './ws-notification/ws-notification', './ws-week-picker/ws-week-picker', './ws-tiles-chart/ws-tiles-chart', './ws-spinner/ws-spinner', './ws-tab-menu/ws-tab-menu'], function (_export, _context) {
+System.register(['./ws-header/ws-header', './ws-date-picker/ws-date-picker', './ws-dropdown/ws-dropdown', './ws-inline-edit/ws-inline-edit', './ws-notification/ws-notification', './ws-week-picker/ws-week-picker', './ws-tiles-chart/ws-tiles-chart', './ws-spinner/ws-spinner', './ws-tab-menu/ws-tab-menu', './ws-option-buttons/ws-option-buttons'], function (_export, _context) {
   "use strict";
 
   return {
@@ -47,6 +47,11 @@ System.register(['./ws-header/ws-header', './ws-date-picker/ws-date-picker', './
       _exportObj9.WSTabMenu = _wsTabMenuWsTabMenu.WSTabMenu;
 
       _export(_exportObj9);
+    }, function (_wsOptionButtonsWsOptionButtons) {
+      var _exportObj10 = {};
+      _exportObj10.WSOptionButtons = _wsOptionButtonsWsOptionButtons.WSOptionButtons;
+
+      _export(_exportObj10);
     }],
     execute: function () {}
   };

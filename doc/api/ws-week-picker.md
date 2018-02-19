@@ -17,16 +17,16 @@ Quick array of all month shown. There are two from the last year and two from th
 
 **Properties**
 
--   `props` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** properties
-    -   `props.selectedYear` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a preselected year
-    -   `props.selectedWeek` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a preselected week
-    -   `props.onChange` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** handler which notifies about picked week
+-   `props` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** properties
+    -   `props.selectedYear` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a preselected year
+    -   `props.selectedWeek` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a preselected week
+    -   `props.onChange` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** handler which notifies about picked week
 
 ### constructor
 
 **Parameters**
 
--   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties
+-   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties
 
 ### prevYear
 
@@ -46,10 +46,10 @@ Checks if a week is selected and therefor equals the input properties.
 
 **Parameters**
 
--   `year` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Year of the week
--   `week` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Week
+-   `year` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Year of the week
+-   `week` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Week
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ### isToday
 
@@ -57,22 +57,22 @@ Checks if a week is the current week.
 
 **Parameters**
 
--   `year` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Year of the week
--   `week` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Week
+-   `year` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Year of the week
+-   `week` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Week
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ### buildWeekRows
 
 Builds an array of rows for the calendar. Every row holds one or none week of the month referenced by the column.
 
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ### render
 
 Renders the calendar.
 
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** virtual dom
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** virtual dom
 
 ## getDateOfISOWeek
 
@@ -81,10 +81,10 @@ src: <http://stackoverflow.com/questions/16590500/javascript-calculate-date-from
 
 **Parameters**
 
--   `week` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Week
--   `year` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Year of the week
+-   `week` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Week
+-   `year` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Year of the week
 
-Returns **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)** 
+Returns **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** 
 
 ## getWeekOfYear
 
@@ -93,9 +93,9 @@ src: <https://gist.github.com/dblock/1081513>
 
 **Parameters**
 
--   `date` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)** Date
+-   `date` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** Date
 
-Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
 ## getWeeks
 
@@ -103,10 +103,10 @@ Calculate all weeks that are in a certain month.
 
 **Parameters**
 
--   `month` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Month to get weeks for
--   `year` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Year of the week
+-   `month` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Month to get weeks for
+-   `year` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Year of the week
 
-Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;{week: [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), year: [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)}>** 
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;{week: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number), year: [number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)}>** 
 ## WSWeekPicker
 
 **Extends Component**
@@ -117,16 +117,16 @@ Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refere
 
 **Properties**
 
--   `props` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** properties
-    -   `props.selectedYear` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a preselected year
-    -   `props.selectedWeek` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a preselected week
-    -   `props.onChange` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** handler which notifies about picked week
+-   `props` **[object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** properties
+    -   `props.selectedYear` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a preselected year
+    -   `props.selectedWeek` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** set a preselected week
+    -   `props.onChange` **[function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** handler which notifies about picked week
 
 ### constructor
 
 **Parameters**
 
--   `props` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties
+-   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties
 
 ### componentDidMount
 
@@ -140,7 +140,7 @@ Updates the internal state of the component if properties change.
 
 **Parameters**
 
--   `newProps` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties
+-   `newProps` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties
 
 Returns **void** 
 
@@ -156,11 +156,11 @@ Handler for new selections on the calendar
 
 **Parameters**
 
--   `$0` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `$0` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
     -   `$0.week`  
     -   `$0.year`  
--   `week` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** clicked on week
--   `year` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** clicked on year
+-   `week` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** clicked on week
+-   `year` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** clicked on year
 
 Returns **void** 
 
@@ -174,7 +174,7 @@ Returns **void**
 
 Renders the input and the calendar.
 
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** virtual dom
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** virtual dom
 
 ## isDescendant
 
@@ -182,7 +182,7 @@ Check if a child element is descendant of a parent element
 
 **Parameters**
 
--   `parent` **[Element](https://developer.mozilla.org/en-US/docs/Web/API/Element)** parent element
--   `child` **[Element](https://developer.mozilla.org/en-US/docs/Web/API/Element)** child element
+-   `parent` **[Element](https://developer.mozilla.org/docs/Web/API/Element)** parent element
+-   `child` **[Element](https://developer.mozilla.org/docs/Web/API/Element)** child element
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 

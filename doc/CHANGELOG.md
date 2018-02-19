@@ -1,3 +1,13 @@
+<a name="1.0.42"></a>
+## [1.0.42](https://github.bus.zalan.do/fabric-design/components/compare/1.0.41...1.0.42) (2018-02-19)
+
+
+### Bug Fixes
+
+* **option-buttons:** Fixed missing event handler for new nodes ([#154](https://github.bus.zalan.do/fabric-design/components/issues/154)) ([f1710cb](https://github.bus.zalan.do/fabric-design/components/commit/f1710cb))
+
+
+
 <a name="1.0.41"></a>
 ## [1.0.41](https://github.bus.zalan.do/fabric-design/components/compare/1.0.40...1.0.41) (2018-02-16)
 

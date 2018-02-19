@@ -32,6 +32,12 @@ Updates the state if props changes from outside
 
 Returns **void** 
 
+### componentDidUpdate
+
+Bind to new elements
+
+Returns **void** 
+
 ### componentWillUnmount
 
 Removes event listeners before element is detached from dom

@@ -1,3 +1,14 @@
+<a name="1.0.43"></a>
+## [1.0.43](https://github.bus.zalan.do/fabric-design/components/compare/1.0.42...1.0.43) (2018-02-20)
+
+
+### Bug Fixes
+
+* **option-buttons:** Fixed import naming ([751107a](https://github.bus.zalan.do/fabric-design/components/commit/751107a))
+* **option-buttons:** Fixed scss file naming ([d2dbfa8](https://github.bus.zalan.do/fabric-design/components/commit/d2dbfa8))
+
+
+
 <a name="1.0.42"></a>
 ## [1.0.42](https://github.bus.zalan.do/fabric-design/components/compare/1.0.41...1.0.42) (2018-02-19)
 

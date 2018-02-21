@@ -38,6 +38,7 @@ export class WSDropdown extends Component {
     inputOnly: false,
     filterable: false,
     filter: '',
+    filtered: false,
     limit: 10,
     orientation: 'left',
     placeholder: '',
@@ -57,9 +58,10 @@ export class WSDropdown extends Component {
     icon: PropTypes.string,
     items: PropTypes.array,
     multiple: PropTypes.bool,
-    filterable: PropTypes.bool,
     inputOnly: PropTypes.bool,
+    filterable: PropTypes.bool,
     filter: PropTypes.string,
+    filtered: PropTypes.bool,
     limit: PropTypes.number,
     orientation: PropTypes.oneOf(['left', 'right']),
     placeholder: PropTypes.string,
@@ -242,7 +244,7 @@ export class WSDropdown extends Component {
     }
     value = this.enrichItems(value);
     const text = this.getTextFromValue(props.value, props.text);
-    const state = {text, value, items};
+    const state = {text, value, items, filter: props.filter};
     // Set states to items in item list for passed values
     state.items.forEach(item => {
       // Check if item is is values or set it to false
@@ -262,6 +264,7 @@ export class WSDropdown extends Component {
    */
   handlePropagation = (type, data) => {
     if (type === 'change') {
+      console.log(this.state.items.indexOf(data), data);
       this.close();
       this.setValue(data);
     } else if (type === 'change-size') {
@@ -445,8 +448,9 @@ export class WSDropdown extends Component {
         items={this.state.items}
         value={this.state.value}
         limit={this.props.limit}
+        filter={this.state.filter}
         filterable={this.props.filterable}
-        filter={this.props.filter}
+        filtered={this.props.filtered}
         placeholder={this.props.placeholder}
         selectAll={this.props.selectAll}
         handle={this.handlePropagation}

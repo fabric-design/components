@@ -12,6 +12,7 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * @property {Array<Object>} props.items List of dropdown item configs. Each item can contain label, value, disabled, selected
  * @property {Object|Array<Object>} props.value Selected dropdown item(s)
  * @property {Boolean} props.filterable Flag if the dropdown menu is filterable
+ * @property {Boolean} props.filtered Should be true when items are filtered outside but dropdown has no filter possibility
  * @property {string} props.filter Default filter value
  * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
  * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
@@ -29,6 +30,7 @@ export class DropdownMenu extends Component {
     value: null,
     filterable: false,
     filter: null,
+    filtered: false,
     placeholder: '',
     limit: 10,
     selectAll: false,
@@ -43,6 +45,7 @@ export class DropdownMenu extends Component {
     items: PropTypes.array,
     filterable: PropTypes.bool,
     filter: PropTypes.string,
+    filtered: PropTypes.bool, // Can be required for filtering from outside
     placeholder: PropTypes.string,
     limit: PropTypes.number,
     selectAll: PropTypes.bool
@@ -66,6 +69,7 @@ export class DropdownMenu extends Component {
     this.selectedIndex = -1;
     this.state = {
       filter: props.filter,
+      filtered: props.filtered || props.filterable,
       items: props.items,
       value: props.value,
       selectAllActive: false
@@ -98,6 +102,7 @@ export class DropdownMenu extends Component {
   componentWillReceiveProps(props) {
     this.setState({
       filter: props.filter,
+      filtered: props.filtered || props.filterable,
       items: props.items,
       value: props.value,
       selectAllActive: props.selectAllActive
@@ -137,7 +142,7 @@ export class DropdownMenu extends Component {
    */
   onOpen = () => {
     if (this.input) {
-      this.input.focus();
+      // this.input.focus();
     }
     window.addEventListener('keydown', this.onGlobalKeyDown);
   };
@@ -232,11 +237,11 @@ export class DropdownMenu extends Component {
     const regex = new RegExp(this.state.filter, 'i');
     return this.state.items.filter(item => {
       // Don't show items which doesn't match the filter
-      if (this.props.filterable && this.state.filter && !regex.test(item.label)) {
+      if (this.state.filtered && this.state.filter && !regex.test(item.label)) {
         return false;
       }
       // When we use a filter or multiple items are selectable we show selected items separately
-      if (this.props.filterable || this.context.multiple) {
+      if (this.state.filtered || this.context.multiple) {
         return !item.stored;
       }
       return true;
@@ -249,10 +254,10 @@ export class DropdownMenu extends Component {
    * @returns {Object}
    */
   getItemAtIndex(index) {
-    const limit = this.props.filterable ? this.props.limit : this.state.items.length;
+    const limit = this.state.filtered ? this.props.limit : this.state.items.length;
     const filteredItems = this.getFilteredItems().slice(0, limit);
     let valueLength = 0;
-    if (this.context.multiple || this.props.filterable) {
+    if (this.context.multiple || this.state.filtered) {
       if (Array.isArray(this.state.value)) {
         valueLength = this.state.value.length;
       } else {
@@ -345,9 +350,10 @@ export class DropdownMenu extends Component {
         this.showChild(data);
         break;
       case 'change':
+        console.log(this.state.items.indexOf(data), data);
         this.clearSelections();
         // If we have a single select we want to deselect the previous selected item
-        if (!this.context.multiple) {
+        if (!this.context.multiple && !this.props.filtered) {
           const previous = this.state.items.find(item => item.stored && item !== data);
           if (previous) {
             previous.stored = false;
@@ -458,7 +464,7 @@ export class DropdownMenu extends Component {
    * @returns {Object}
    */
   render() {
-    const limit = this.props.filterable ? this.props.limit : this.state.items.length;
+    const limit = this.state.filtered ? this.props.limit : this.state.items.length;
     const items = this.getFilteredItems().slice(0, limit);
     const hasValue = Array.isArray(this.state.value) ? this.state.value.length : this.state.value;
 

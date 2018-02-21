@@ -1,0 +1,17 @@
+.ws-multi-select {
+  display: block;
+  .selected-items {
+    color: $heron;
+    margin: $space-xs 0;
+    font-size: $font-size-small;
+    .text {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .icon {
+      float: right;
+      cursor: pointer;
+      line-height: $space-l;
+    }
+  }
+}

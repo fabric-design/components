@@ -7,6 +7,10 @@
     .text {
       display: inline-block;
       vertical-align: middle;
+      max-width: 85%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .icon {
       float: right;

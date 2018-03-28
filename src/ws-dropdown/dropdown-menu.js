@@ -350,7 +350,6 @@ export class DropdownMenu extends Component {
         this.showChild(data);
         break;
       case 'change':
-        console.log(this.state.items.indexOf(data), data);
         this.clearSelections();
         // If we have a single select we want to deselect the previous selected item
         if (!this.context.multiple && !this.props.filtered) {

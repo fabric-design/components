@@ -264,7 +264,6 @@ export class WSDropdown extends Component {
    */
   handlePropagation = (type, data) => {
     if (type === 'change') {
-      console.log(this.state.items.indexOf(data), data);
       this.close();
       this.setValue(data);
     } else if (type === 'change-size') {

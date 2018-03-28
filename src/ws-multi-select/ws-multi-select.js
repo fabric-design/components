@@ -26,6 +26,7 @@ export class WSMultiSelect extends WSDropdown {
     this.input.addEventListener('focus', this.onFocus);
     this.input.addEventListener('change', this.onChange);
     this.input.addEventListener('blur', this.onBlur);
+    this.icon.addEventListener('click', this.onClickIcon);
   }
 
   /**
@@ -37,7 +38,18 @@ export class WSMultiSelect extends WSDropdown {
     this.input.removeEventListener('focus', this.onFocus);
     this.input.removeEventListener('change', this.onChange);
     this.input.removeEventListener('blur', this.onBlur);
+    this.icon.removeEventListener('click', this.onClickIcon);
   }
+
+  /**
+   * Focus input on icon click
+   * @param {MouseEvent} event JavaScript event object
+   * @returns {void}
+   */
+  onClickIcon = event => {
+    event.stopPropagation();
+    this.input.focus();
+  };
 
   /**
    * Handle input change
@@ -113,7 +125,7 @@ export class WSMultiSelect extends WSDropdown {
     return (
       <div className="input-wrapper">
         <input type="text" placeholder={this.props.placeholder} ref={element => { this.input = element; }} />
-        <span className="icon icon24 icon-magnifiying-glass" />
+        <span className="icon icon16 icon-magnifiying-glass" ref={element => { this.icon = element; }} />
       </div>
     );
   }

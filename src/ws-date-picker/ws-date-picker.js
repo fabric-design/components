@@ -66,7 +66,8 @@ export class WSDatePicker extends Component {
       onChange: this.onChange.bind(this)
     });
     // Prevent default change event bubbling
-    this.input.addEventListener('change', event => event.stopPropagation(), true);
+    this.input.addEventListener('change', this.stopPropagation);
+    this.element.addEventListener('click', this.stopPropagation);
   }
 
   /**
@@ -90,7 +91,8 @@ export class WSDatePicker extends Component {
    */
   componentWillUnmount() {
     this.flatpickr.destroy();
-    this.input.removeEventListener('change', event => event.stopPropagation(), true);
+    this.input.removeEventListener('change', this.stopPropagation);
+    this.element.removeEventListener('click', this.stopPropagation);
   }
 
   /**
@@ -107,6 +109,15 @@ export class WSDatePicker extends Component {
       this.props.onChange(selectedDate);
     }
   }
+
+  /**
+   * Prevent clicks bubbling out
+   * @param {MouseEvent} event JavaScript event object
+   * @returns {void}
+   */
+  stopPropagation = event => {
+    event.stopPropagation();
+  };
 
   /**
    * Render the component

@@ -121,19 +121,18 @@ export class WSOptionButtons extends Component {
    */
   createState(props) {
     const items = this.enrichItems(props.items);
-    // If value is set mark related item as selected
+    // allow single value and list of values
+    let value = [];
     if (props.value) {
-      if (!Array.isArray(props.value)) {
-        props.value = [props.value];
-      }
-      props.value.forEach(value => {
-        items.find(item => item.value === value).selected = true;
-      });
+      value = Array.isArray(props.value) ? props.value : [props.value];
     }
+    items.forEach(item => {
+      item.selected = value.includes(item.value);
+    });
     return {
       items,
       visible: props.initialVisible,
-      value: props.value
+      value
     };
   }
 

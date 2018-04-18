@@ -237,12 +237,10 @@ export class WSDropdown extends Component {
    */
   createState(props) {
     const items = this.enrichItems(props.items);
-    let value = props.value;
-    // For better usability the value can be a primitive value matching a dropdown item value
-    if (typeof value === 'string' && props.type !== 'input') {
-      value = items.find(item => item.value === value);
-    }
-    value = this.enrichItems(value);
+    const value = this.enrichItems(props.value, val => {
+      const item = items.find(i => i.value === val);
+      return item ? item.label : val;
+    });
     const text = this.getTextFromValue(props.value, props.text);
     const state = {text, value, items, filter: props.filter};
     // Set states to items in item list for passed values
@@ -274,25 +272,24 @@ export class WSDropdown extends Component {
   /**
    * Used to convert the items if they are strings into the required object structure
    * @param {Array<String|Object>} items List of items represented as string or object
+   * @param {Function} resolveLabel Optional callback to resolve the item label
    * @returns {Array<Object>}
    */
-  enrichItems(items) {
+  enrichItems(items, resolveLabel = value => value) {
     let itemsToWrap = items;
     // The dropdown value can be a simple string or object
     if (!Array.isArray(items)) {
-      // If we only show the input the value will be a simple string
-      if (this.props.inputOnly) {
-        return items;
-      }
       // Value can be null or an string or an object
       itemsToWrap = items ? [items] : [];
     }
     return itemsToWrap.map(item => {
-      const enriched = typeof item === 'object' ? item : {label: item, value: item};
-      if (enriched.children) {
-        enriched.children = this.enrichItems(enriched.children);
+      if (typeof item !== 'object') {
+        return {value: item, label: resolveLabel(item)};
       }
-      return enriched;
+      if (item.children) {
+        item.children = this.enrichItems(item.children);
+      }
+      return item;
     });
   }
 

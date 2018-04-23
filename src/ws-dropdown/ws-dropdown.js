@@ -241,7 +241,7 @@ export class WSDropdown extends Component {
       const item = items.find(i => i.value === val);
       return item ? item.label : val;
     });
-    const text = this.getTextFromValue(props.value, props.text);
+    const text = this.getTextFromValue(value, props.text);
     const state = {text, value, items, filter: props.filter};
     // Set states to items in item list for passed values
     state.items.forEach(item => {

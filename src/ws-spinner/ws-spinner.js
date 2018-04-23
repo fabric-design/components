@@ -1,5 +1,7 @@
 import {React, Component, PropTypes} from '../imports';
 
+import './ws-spinner.scss';
+
 /**
  * Renders a simple spinner with the primary color
  * @property {string} size One of small, medium, large. Default to medium

@@ -1,10 +1,17 @@
 const path = require('path');
 
 module.exports = {
-  entry: './demo/demo_app.js',
+  entry: './src/index.webpack.js',
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'demo')
+    filename: 'index.js',
+    path: path.resolve(__dirname, 'dist'),
+
+    library: 'fabric-components',
+    libraryTarget: "umd",
+  },
+  externals: {
+    'react': 'commonjs react',
+    'react-dom' : 'commonjs react-dom'
   },
   module: {
     rules: [{
@@ -22,8 +29,13 @@ module.exports = {
       }, {
         loader: 'css-loader' // translates CSS into CommonJS
       }, {
-        loader: 'sass-loader?sourceMap' // compiles Sass to CSS
-      }]
+        loader: 'sass-loader?sourceMap', // compiles Sass to CSS
+        options: {
+          includePaths: [
+            'node_modules/fabric-scss/'
+          ],
+        },
+      }],
     },
     {
       test: /\.(png|woff|woff2|eot|ttf|svg)$/,

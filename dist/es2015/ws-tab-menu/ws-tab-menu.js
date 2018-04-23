@@ -8,6 +8,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import { React, Component, PropTypes } from '../imports';
 
+import './ws-tab-menu.scss';
+
 export var WSTabMenu = function (_Component) {
   _inherits(WSTabMenu, _Component);
 

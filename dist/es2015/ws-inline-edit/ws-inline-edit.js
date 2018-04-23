@@ -8,6 +8,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import { React, Component, PropTypes } from '../imports';
 
+import './ws-inline-edit.scss';
+
 export var WSInlineEdit = function (_Component) {
   _inherits(WSInlineEdit, _Component);
 

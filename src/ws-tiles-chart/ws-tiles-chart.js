@@ -1,6 +1,8 @@
 import {React, Component, PropTypes} from '../imports';
 import {Tile} from './tile';
 
+import './ws-tiles-chart.scss';
+
 /**
  * This class describes a Preact/React component which renders a tiles chart
  * @class WSTilesChart

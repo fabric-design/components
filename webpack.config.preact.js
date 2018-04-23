@@ -22,7 +22,12 @@ module.exports = {
       }, {
         loader: 'css-loader' // translates CSS into CommonJS
       }, {
-        loader: 'sass-loader' // compiles Sass to CSS
+        loader: 'sass-loader', // compiles Sass to CSS
+        options: {
+          includePaths: [
+            'node_modules/fabric-scss/'
+          ],
+        },
       }]
     },
     {

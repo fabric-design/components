@@ -1,4 +1,4 @@
-define(['exports', '../imports', './flatpickr'], function (exports, _imports, _flatpickr) {
+define(['exports', '../imports', './flatpickr', './ws-date-picker.scss'], function (exports, _imports, _flatpickr) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

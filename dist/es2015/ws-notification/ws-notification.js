@@ -8,6 +8,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import { React, Component } from '../imports';
 
+import './ws-notification.scss';
+
 var DEFAULT_NOTIFICATION_LIFETIME = 5000;
 var DEFAULT_NOTIFICATION_TYPE = 'info';
 

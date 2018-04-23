@@ -1,4 +1,4 @@
-System.register(['../imports', './ws-week-picker-calendar'], function (_export, _context) {
+System.register(['../imports', './ws-week-picker-calendar', './ws-week-picker.scss'], function (_export, _context) {
   "use strict";
 
   var React, Component, PropTypes, WSWeekPickerCalendar, _createClass, WSWeekPicker;
@@ -50,7 +50,7 @@ System.register(['../imports', './ws-week-picker-calendar'], function (_export, 
       PropTypes = _imports.PropTypes;
     }, function (_wsWeekPickerCalendar) {
       WSWeekPickerCalendar = _wsWeekPickerCalendar.WSWeekPickerCalendar;
-    }],
+    }, function (_wsWeekPickerScss) {}],
     execute: function () {
       _createClass = function () {
         function defineProperties(target, props) {

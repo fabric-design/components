@@ -13,6 +13,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import { React, Component, PropTypes } from '../imports';
 import Flatpickr from './flatpickr';
 
+import './ws-date-picker.scss';
+
 export var WSDatePicker = function (_Component) {
   _inherits(WSDatePicker, _Component);
 

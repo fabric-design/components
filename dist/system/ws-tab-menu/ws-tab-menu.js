@@ -1,4 +1,4 @@
-System.register(['../imports'], function (_export, _context) {
+System.register(['../imports', './ws-tab-menu.scss'], function (_export, _context) {
   "use strict";
 
   var React, Component, PropTypes, _createClass, WSTabMenu;
@@ -38,7 +38,7 @@ System.register(['../imports'], function (_export, _context) {
       React = _imports.React;
       Component = _imports.Component;
       PropTypes = _imports.PropTypes;
-    }],
+    }, function (_wsTabMenuScss) {}],
     execute: function () {
       _createClass = function () {
         function defineProperties(target, props) {

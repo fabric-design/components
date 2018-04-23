@@ -11,7 +11,8 @@
     "tdd": "gulp tdd",
     "lint": "gulp lint",
     "docs": "gulp generate-docs",
-    "build": "gulp build && gulp generate-docs"
+    "build": "gulp build && gulp generate-docs && npm run package",
+    "package": "webpack"
   },
   "repository": {
     "type": "git",

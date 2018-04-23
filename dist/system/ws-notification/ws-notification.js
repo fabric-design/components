@@ -1,4 +1,4 @@
-System.register(['../imports'], function (_export, _context) {
+System.register(['../imports', './ws-notification.scss'], function (_export, _context) {
   "use strict";
 
   var React, Component, _createClass, DEFAULT_NOTIFICATION_LIFETIME, DEFAULT_NOTIFICATION_TYPE, WSNotification;
@@ -37,7 +37,7 @@ System.register(['../imports'], function (_export, _context) {
     setters: [function (_imports) {
       React = _imports.React;
       Component = _imports.Component;
-    }],
+    }, function (_wsNotificationScss) {}],
     execute: function () {
       _createClass = function () {
         function defineProperties(target, props) {

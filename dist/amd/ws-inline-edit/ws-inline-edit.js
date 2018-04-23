@@ -1,4 +1,4 @@
-define(['exports', '../imports'], function (exports, _imports) {
+define(['exports', '../imports', './ws-inline-edit.scss'], function (exports, _imports) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

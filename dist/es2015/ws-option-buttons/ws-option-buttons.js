@@ -10,6 +10,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import { React, Component, PropTypes } from '../imports';
 
+import './ws-option-buttons.scss';
+
 export var WSOptionButtons = function (_Component) {
   _inherits(WSOptionButtons, _Component);
 

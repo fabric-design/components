@@ -9,6 +9,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import { React, Component, PropTypes } from '../imports';
 import { Tile } from './tile';
 
+import './ws-tiles-chart.scss';
+
 export var WSTilesChart = function (_Component) {
   _inherits(WSTilesChart, _Component);
 

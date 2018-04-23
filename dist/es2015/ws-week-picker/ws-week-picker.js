@@ -9,6 +9,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import { React, Component, PropTypes } from '../imports';
 import { WSWeekPickerCalendar } from './ws-week-picker-calendar';
 
+import './ws-week-picker.scss';
+
 export var WSWeekPicker = function (_Component) {
   _inherits(WSWeekPicker, _Component);
 

@@ -1,6 +1,8 @@
 import {React, Component, PropTypes} from '../imports';
 import {WSWeekPickerCalendar} from './ws-week-picker-calendar';
 
+import './ws-week-picker.scss';
+
 /**
  * @class WSWeekPicker
  * @property {object} props               - properties

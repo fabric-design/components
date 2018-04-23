@@ -1,4 +1,4 @@
-System.register(['../imports'], function (_export, _context) {
+System.register(['../imports', './ws-option-buttons.scss'], function (_export, _context) {
   "use strict";
 
   var React, Component, PropTypes, _typeof, _createClass, WSOptionButtons;
@@ -38,7 +38,7 @@ System.register(['../imports'], function (_export, _context) {
       React = _imports.React;
       Component = _imports.Component;
       PropTypes = _imports.PropTypes;
-    }],
+    }, function (_wsOptionButtonsScss) {}],
     execute: function () {
       _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
         return typeof obj;

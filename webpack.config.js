@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  entry: './src/index.webpack.js',
+  entry: './webpack-loaders/',
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'dist'),
@@ -28,19 +28,27 @@ module.exports = {
     },
     {
       test: /\.scss$/,
-      use: [{
-        loader: 'style-loader'
-      }, {
-        loader: 'css-loader',
-      }, {
-        loader: 'sass-loader',
-        options: {
-          includePaths: [
-            'node_modules/fabric-scss/'
-          ],
-          outputStyle : 'compressed',
+      use: [
+        {
+          loader: 'style-loader'
         },
-      }],
+        {
+          loader: 'css-loader',
+        },
+        {
+          loader: 'sass-loader',
+          options: {
+            exclude: 'node_modules/',
+            includePaths: [
+              'node_modules/fabric-scss/'
+            ],
+            outputStyle : 'compressed',
+          },
+        },
+        {
+          loader: path.resolve('webpack-loaders/inject-global-scss'),
+        },
+      ],
     },
     {
       test: /\.(png|woff|woff2|eot|ttf|svg)$/,

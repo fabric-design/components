@@ -12,7 +12,8 @@
     "lint": "gulp lint",
     "docs": "gulp generate-docs",
     "build": "gulp build && gulp generate-docs && npm run package",
-    "package": "webpack"
+    "package": "webpack",
+    "package:debug": "webpack --display-modules"
   },
   "repository": {
     "type": "git",

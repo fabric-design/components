@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
@@ -9,9 +10,12 @@ module.exports = {
     library: 'fabric-components',
     libraryTarget: "umd",
   },
+  plugins : [
+    new webpack.optimize.UglifyJsPlugin(),
+  ],
   externals: {
     'react': 'commonjs react',
-    'react-dom' : 'commonjs react-dom'
+    'react-dom' : 'commonjs react-dom',
   },
   module: {
     rules: [{
@@ -25,15 +29,16 @@ module.exports = {
     {
       test: /\.scss$/,
       use: [{
-        loader: 'style-loader' // creates style nodes from JS strings
+        loader: 'style-loader'
       }, {
-        loader: 'css-loader' // translates CSS into CommonJS
+        loader: 'css-loader',
       }, {
-        loader: 'sass-loader?sourceMap', // compiles Sass to CSS
+        loader: 'sass-loader',
         options: {
           includePaths: [
             'node_modules/fabric-scss/'
           ],
+          outputStyle : 'compressed',
         },
       }],
     },

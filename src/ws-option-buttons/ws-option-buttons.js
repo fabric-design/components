@@ -1,7 +1,5 @@
 import {React, Component, PropTypes} from '../imports';
 
-import './ws-option-buttons.scss';
-
 /**
  * Renders a list of clickable buttons. The amount of initial visible buttons can be controlled with
  * the initialVisible property. The user is able to show more than these defined amount by clicking the "more" button.

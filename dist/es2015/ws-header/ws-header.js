@@ -12,8 +12,6 @@ import { LocalStorage } from './storage/local-storage';
 import { Authorization } from './authorization';
 import { WSDropdown } from '../ws-dropdown/ws-dropdown';
 
-import './ws-header.scss';
-
 export var WSHeader = function (_Component) {
   _inherits(WSHeader, _Component);
 

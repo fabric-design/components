@@ -1,8 +1,6 @@
 import {React, Component, PropTypes} from '../imports';
 import Flatpickr from './flatpickr';
 
-import './ws-date-picker.scss';
-
 /**
  * Renders a date picker component which is based on flatpickr.
  * To specify a date format call the setFormat function with the corresponding format.

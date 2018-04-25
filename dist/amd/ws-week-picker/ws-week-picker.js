@@ -1,4 +1,4 @@
-define(['exports', '../imports', './ws-week-picker-calendar', './ws-week-picker.scss'], function (exports, _imports, _wsWeekPickerCalendar) {
+define(['exports', '../imports', './ws-week-picker-calendar'], function (exports, _imports, _wsWeekPickerCalendar) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

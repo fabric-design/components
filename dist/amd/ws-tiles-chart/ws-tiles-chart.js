@@ -1,4 +1,4 @@
-define(['exports', '../imports', './tile', './ws-tiles-chart.scss'], function (exports, _imports, _tile) {
+define(['exports', '../imports', './tile'], function (exports, _imports, _tile) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

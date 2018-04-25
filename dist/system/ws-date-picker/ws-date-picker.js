@@ -1,4 +1,4 @@
-System.register(['../imports', './flatpickr', './ws-date-picker.scss'], function (_export, _context) {
+System.register(['../imports', './flatpickr'], function (_export, _context) {
   "use strict";
 
   var React, Component, PropTypes, Flatpickr, _slicedToArray, _extends, _createClass, WSDatePicker;
@@ -40,7 +40,7 @@ System.register(['../imports', './flatpickr', './ws-date-picker.scss'], function
       PropTypes = _imports.PropTypes;
     }, function (_flatpickr) {
       Flatpickr = _flatpickr.default;
-    }, function (_wsDatePickerScss) {}],
+    }],
     execute: function () {
       _slicedToArray = function () {
         function sliceIterator(arr, i) {

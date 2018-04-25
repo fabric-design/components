@@ -8,8 +8,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import { React, Component, PropTypes } from '../imports';
 
-import './ws-spinner.scss';
-
 export var WSSpinner = function (_Component) {
   _inherits(WSSpinner, _Component);
 

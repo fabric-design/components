@@ -4,8 +4,6 @@ import {LocalStorage} from './storage/local-storage';
 import {Authorization} from './authorization';
 import {WSDropdown} from '../ws-dropdown/ws-dropdown';
 
-import './ws-header.scss';
-
 /**
  * This component renders a generic header which provides authentication and language management
  *

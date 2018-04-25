@@ -1,7 +1,5 @@
 import {React, Component} from '../imports';
 
-import './ws-notification.scss';
-
 // const NOTIFICATIONS_SHOW_LIMIT = 3;
 const DEFAULT_NOTIFICATION_LIFETIME = 5000;
 const DEFAULT_NOTIFICATION_TYPE = 'info';

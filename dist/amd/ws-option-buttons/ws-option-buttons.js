@@ -1,4 +1,4 @@
-define(['exports', '../imports', './ws-option-buttons.scss'], function (exports, _imports) {
+define(['exports', '../imports'], function (exports, _imports) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

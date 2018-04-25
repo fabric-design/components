@@ -1,4 +1,4 @@
-System.register(['../imports', './ws-spinner.scss'], function (_export, _context) {
+System.register(['../imports'], function (_export, _context) {
   "use strict";
 
   var React, Component, PropTypes, _createClass, WSSpinner;
@@ -38,7 +38,7 @@ System.register(['../imports', './ws-spinner.scss'], function (_export, _context
       React = _imports.React;
       Component = _imports.Component;
       PropTypes = _imports.PropTypes;
-    }, function (_wsSpinnerScss) {}],
+    }],
     execute: function () {
       _createClass = function () {
         function defineProperties(target, props) {

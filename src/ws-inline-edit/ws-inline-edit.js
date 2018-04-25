@@ -1,7 +1,5 @@
 import {React, Component, PropTypes} from '../imports';
 
-import './ws-inline-edit.scss';
-
 /**
  * This class describes a Preact/React component which renders a inline-edit element.
  * The inline-edit component can be used everywhere in block where you want to have ability to change value.

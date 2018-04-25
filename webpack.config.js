@@ -18,42 +18,59 @@ module.exports = {
     'react-dom' : 'commonjs react-dom',
   },
   module: {
-    rules: [{
-      test: /\.js$/,
-      use: [{
-        loader: 'babel-loader',
-        options: {babelrc: true}
-      }],
-      exclude: [/node_modules/]
-    },
-    {
-      test: /\.scss$/,
-      use: [
-        {
-          loader: 'style-loader'
-        },
-        {
-          loader: 'css-loader',
-        },
-        {
-          loader: 'sass-loader',
-          options: {
-            exclude: 'node_modules/',
-            includePaths: [
-              'node_modules/fabric-scss/'
+    rules: [
+      {
+        oneOf: [
+          {
+            test: /([\w-]+)\/\1.js$/,
+            use: [
+              {
+                loader: path.resolve('webpack-loaders/scss-importer'),
+              },
+              {
+                loader: 'babel-loader',
+                options: {babelrc: true}
+              },
             ],
-            outputStyle : 'compressed',
+            exclude: [/node_modules/]
           },
-        },
-        {
-          loader: path.resolve('webpack-loaders/inject-global-scss'),
-        },
-      ],
-    },
-    {
-      test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-      loader: 'url-loader?limit=100000'
-    }]
+          {
+            test: /\.js$/,
+            use: [
+              {
+                loader: 'babel-loader',
+                options: {babelrc: true}
+              }
+            ],
+            exclude: [/node_modules/]
+          },
+          {
+            test: /\.scss$/,
+            use: [
+              {
+                loader: 'style-loader'
+              },
+              {
+                loader: 'css-loader',
+              },
+              {
+                loader: 'sass-loader',
+                options: {
+                  exclude: 'node_modules/',
+                  includePaths: [
+                    'node_modules/fabric-scss/'
+                  ],
+                  outputStyle : 'compressed',
+                },
+              },
+              {
+                loader: path.resolve('webpack-loaders/inject-global-scss'),
+              },
+            ],
+          },
+        ]
+      }
+    ]
   },
   devServer: {
     contentBase: path.join(__dirname, 'demo'),

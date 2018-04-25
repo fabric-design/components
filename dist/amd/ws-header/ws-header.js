@@ -1,4 +1,4 @@
-define(['exports', '../imports', './storage/cookie-storage', './storage/local-storage', './authorization', '../ws-dropdown/ws-dropdown', './ws-header.scss'], function (exports, _imports, _cookieStorage, _localStorage, _authorization, _wsDropdown) {
+define(['exports', '../imports', './storage/cookie-storage', './storage/local-storage', './authorization', '../ws-dropdown/ws-dropdown'], function (exports, _imports, _cookieStorage, _localStorage, _authorization, _wsDropdown) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

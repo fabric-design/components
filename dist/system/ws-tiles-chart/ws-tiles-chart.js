@@ -1,4 +1,4 @@
-System.register(['../imports', './tile', './ws-tiles-chart.scss'], function (_export, _context) {
+System.register(['../imports', './tile'], function (_export, _context) {
   "use strict";
 
   var React, Component, PropTypes, Tile, _createClass, WSTilesChart;
@@ -40,7 +40,7 @@ System.register(['../imports', './tile', './ws-tiles-chart.scss'], function (_ex
       PropTypes = _imports.PropTypes;
     }, function (_tile) {
       Tile = _tile.Tile;
-    }, function (_wsTilesChartScss) {}],
+    }],
     execute: function () {
       _createClass = function () {
         function defineProperties(target, props) {

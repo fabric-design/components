@@ -1,4 +1,4 @@
-System.register(['../imports', './storage/cookie-storage', './storage/local-storage', './authorization', '../ws-dropdown/ws-dropdown', './ws-header.scss'], function (_export, _context) {
+System.register(['../imports', './storage/cookie-storage', './storage/local-storage', './authorization', '../ws-dropdown/ws-dropdown'], function (_export, _context) {
   "use strict";
 
   var React, Component, PropTypes, CookieStorage, LocalStorage, Authorization, WSDropdown, _createClass, WSHeader;
@@ -46,7 +46,7 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
       Authorization = _authorization.Authorization;
     }, function (_wsDropdownWsDropdown) {
       WSDropdown = _wsDropdownWsDropdown.WSDropdown;
-    }, function (_wsHeaderScss) {}],
+    }],
     execute: function () {
       _createClass = function () {
         function defineProperties(target, props) {

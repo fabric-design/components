@@ -1,7 +1,5 @@
 import {React, Component, PropTypes} from '../imports';
 
-import './ws-tab-menu.scss';
-
 /**
  * This component renders a tab menu and provides the selected tab via a value property.
  * @property {Array} items List of menu items {value: any & required, label: string, className: string, badge: string}

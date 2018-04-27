@@ -287,9 +287,13 @@ export class WSHeader extends Component {
                   ref={element => { this.menuItems[index] = element; }}
                   className={(link.isCurrent) ? 'is-current' : null}
                 >
+                {link.$$typeof ?
+                  link
+                :
                   <a href={link.href} onClick={event => { if (link.onClick) link.onClick(event); }}>
                     {link.label}
                   </a>
+                }
                 </li>
               )}
             </ul>

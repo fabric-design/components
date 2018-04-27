@@ -3,6 +3,7 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   target: 'web',
+  mode: 'production',
   entry: {
     'ws-header': './components/ws-header/ws-header.js',
   },

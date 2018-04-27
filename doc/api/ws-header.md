@@ -5,12 +5,6 @@ This class implements the OAuth2 authorization via the implicit flow.
 
 **Parameters**
 
--   `storage`  
-
-### constructor
-
-**Parameters**
-
 -   `storage` **AbstractStorage** Key value storage
 
 ### onAccessTokenChange
@@ -19,7 +13,7 @@ Set a listener for access token changes
 
 **Parameters**
 
--   `callback` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Gets called when the access token changes
+-   `callback` **[Function][1]** Gets called when the access token changes
 
 Returns **void** 
 
@@ -29,7 +23,7 @@ Get's called when ever the access token changes
 
 **Parameters**
 
--   `accessToken` **([string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) | null)** New access token
+-   `accessToken` **([string][2] | null)** New access token
 
 Returns **void** 
 
@@ -39,7 +33,7 @@ Tries to parse the access token from the given query string
 
 **Parameters**
 
--   `queryString` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Query string without leading ?
+-   `queryString` **[string][2]** Query string without leading ?
 
 Returns **void** 
 
@@ -49,9 +43,9 @@ Redirect the user to the OAuth2 authorization page
 
 **Parameters**
 
--   `loginUrl` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Url the user get's redirected to authorize
--   `clientId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** OAuth2 client id
--   `businessPartnerId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** OAuth2 business partner id
+-   `loginUrl` **[string][2]** Url the user get's redirected to authorize
+-   `clientId` **[string][2]** OAuth2 client id
+-   `businessPartnerId` **[string][2]** OAuth2 business partner id
 
 Returns **void** 
 
@@ -60,51 +54,51 @@ Returns **void**
 Remove authorization
 
 Returns **void** 
+
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 ## JsonWebToken
 
 This class represents a JWT token
 
 **Parameters**
 
--   `token`  
-
-### constructor
-
-Set the token
-
-**Parameters**
-
--   `token` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Json Web Token
+-   `token` **[string][1]** Json Web Token
 
 ### isValid
 
 Determine if the token is still valid
 
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[boolean][2]** 
 
 ### getUserAbbreviation
 
 Get the user abbreviation the token was issued for
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[string][1]** 
 
 ### toString
 
 Return the real token
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[string][1]** 
 
 ### valueOf
 
 Return the real token
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[string][1]** 
 
 ### toJSON
 
 Return the real token
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[string][1]** 
+
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 ## WSHeader
 
 **Extends Component**
@@ -117,28 +111,22 @@ It will resolve null when no access token is present and therefore the user isn'
 
 **Parameters**
 
--   `props`  
+-   `props` **[Object][1]** React/Preact properties
 
 **Properties**
 
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties object
-    -   `props.loginUrl` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** property used to set the application login url
-    -   `props.businessPartnerId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** property used to set the application businessPartnerId
-    -   `props.clientId` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** property used to set the application yourturn clientId
-    -   `props.links` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** property used to set the list of links with multiple levels
-    -   `props.appName` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** property used to set the application name
-    -   `props.appLogo` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** property used to set the application image logo
-    -   `props.rootUrl` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** property used to set the root application url
-    -   `props.showLocale` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Flag used to show the locale dropdown
-    -   `props.showAuthorization` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Flag to show the login area
-    -   `props.onLocaleChange` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Function used to propagate data
-    -   `props.onAuthChange` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Function used to propagate data
-
-### constructor
-
-**Parameters**
-
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React/Preact properties
+-   `props` **[Object][1]** React properties object
+    -   `props.loginUrl` **[string][2]** property used to set the application login url
+    -   `props.businessPartnerId` **[string][2]** property used to set the application businessPartnerId
+    -   `props.clientId` **[string][2]** property used to set the application yourturn clientId
+    -   `props.links` **[Array][3]&lt;[Object][1]>** property used to set the list of links with multiple levels
+    -   `props.appName` **[string][2]** property used to set the application name
+    -   `props.appLogo` **[string][2]** property used to set the application image logo
+    -   `props.rootUrl` **[string][2]** property used to set the root application url
+    -   `props.showLocale` **[Boolean][4]** Flag used to show the locale dropdown
+    -   `props.showAuthorization` **[Boolean][4]** Flag to show the login area
+    -   `props.onLocaleChange` **[Function][5]** Function used to propagate data
+    -   `props.onAuthChange` **[Function][5]** Function used to propagate data
 
 ### componentDidMount
 
@@ -152,7 +140,7 @@ Changes the locale to the given one
 
 **Parameters**
 
--   `newLocale` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The new locale
+-   `newLocale` **[string][2]** The new locale
 
 Returns **void** 
 
@@ -186,7 +174,7 @@ Get's called when the mouse enters a menu item
 
 **Parameters**
 
--   `index` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The index of the item in the link list
+-   `index` **[number][6]** The index of the item in the link list
 
 Returns **void** 
 
@@ -196,7 +184,7 @@ Get's called when the mouse leaves a menu item
 
 **Parameters**
 
--   `index` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The index of the item in the link list
+-   `index` **[number][6]** The index of the item in the link list
 
 Returns **void** 
 
@@ -214,13 +202,17 @@ Returns **void**
 
 ### render
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### storage
 
 Default storage instance
 
+Type: AbstractStorage
+
 ### authorization
+
+Type: Authorization
 
 ### setStorageType
 
@@ -228,8 +220,8 @@ Initialize the storage
 
 **Parameters**
 
--   `type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Can be either cookie or local
--   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage name will be used as key prefix
+-   `type` **[string][2]** Can be either cookie or local
+-   `name` **[string][2]** Storage name will be used as key prefix
 
 Returns **void** 
 
@@ -239,7 +231,7 @@ Tries to get the access token from authorization class
 
 **Parameters**
 
--   `queryString` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The current query string to parse the token from (optional, default `location.hash.substr(1)`)
+-   `queryString` **[string][2]** The current query string to parse the token from (optional, default `window.location.hash.substr(1)`)
 
 Returns **(JsonWebToken | null)** 
 
@@ -253,4 +245,16 @@ Returns **void**
 
 Retrieve the persisted locale
 
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[string][2]** 
+
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

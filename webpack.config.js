@@ -1,22 +1,37 @@
 const webpack = require('webpack');
 const path = require('path');
 
-module.exports = {
-  entry: './webpack-loaders/',
-  output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, 'dist'),
+const PROD = process.env.PRODUCTION || false;
 
+module.exports = {
+  mode: PROD ? 'production' : 'development',
+
+  entry: './webpack-loaders/index.js',
+
+  output: {
+    chunkFilename: '[id].chunk.js',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
+    filename: PROD ? 'fabricComponents.min.js' : 'fabricComponents.js',
     library: 'fabric-components',
-    libraryTarget: "umd",
+    libraryTarget: 'umd',
   },
-  plugins : [
-    new webpack.optimize.UglifyJsPlugin(),
-  ],
+
   externals: {
-    'react': 'commonjs react',
-    'react-dom' : 'commonjs react-dom',
+    react: {
+      root: 'React',
+      commonjs2: 'react',
+      commonjs: 'react',
+      amd: 'react'
+    },
+    'react-dom': {
+      root: 'ReactDOM',
+      commonjs2: 'react-dom',
+      commonjs: 'react-dom',
+      amd: 'react-dom'
+    }
   },
+
   module: {
     rules: [
       {

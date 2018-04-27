@@ -86,7 +86,7 @@ export class WSHeader extends Component {
    * @param {string} queryString The current query string to parse the token from
    * @returns {JsonWebToken|null}
    */
-  static getAccessToken(queryString = location.hash.substr(1)) {
+  static getAccessToken(queryString = window.location.hash.substr(1)) {
     if (!this.authorization.accessToken) {
       this.authorization.tryFetchToken(queryString);
     }
@@ -180,7 +180,7 @@ export class WSHeader extends Component {
       this.dispatchEvent('ws-auth-changed', accessToken);
     });
     // Check if we was redirected from the auth page and an access token is available
-    this.constructor.authorization.tryFetchToken(location.hash.substr(1));
+    this.constructor.authorization.tryFetchToken(window.location.hash.substr(1));
     // Listen for authentication requests
     window.addEventListener('ws-authorize', () => this.login());
     // Listen for authentication removal requests

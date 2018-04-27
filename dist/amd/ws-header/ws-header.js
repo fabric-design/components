@@ -71,7 +71,7 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
     }, {
       key: 'getAccessToken',
       value: function getAccessToken() {
-        var queryString = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : location.hash.substr(1);
+        var queryString = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.location.hash.substr(1);
 
         if (!this.authorization.accessToken) {
           this.authorization.tryFetchToken(queryString);
@@ -148,7 +148,7 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
           _this2.dispatchEvent('ws-auth-changed', accessToken);
         });
 
-        this.constructor.authorization.tryFetchToken(location.hash.substr(1));
+        this.constructor.authorization.tryFetchToken(window.location.hash.substr(1));
 
         window.addEventListener('ws-authorize', function () {
           return _this2.login();
@@ -268,7 +268,7 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
                       },
                       className: link.isCurrent ? 'is-current' : null
                     },
-                    _imports.React.createElement(
+                    link.$$typeof ? link : _imports.React.createElement(
                       'a',
                       { href: link.href, onClick: function onClick(event) {
                           if (link.onClick) link.onClick(event);

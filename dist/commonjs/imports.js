@@ -47,7 +47,7 @@ var Component = exports.Component = function (_React_$Component) {
     value: function dispatchEvent(name, detail) {
       var bubbles = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
 
-      var event = new CustomEvent(name, { detail: detail, bubbles: bubbles });
+      var event = new window.CustomEvent(name, { detail: detail, bubbles: bubbles });
 
       if (this.element) {
         this.element.dispatchEvent(event);

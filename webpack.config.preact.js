@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
   entry: './demo/demo_app.js',
+  mode: 'production',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'demo')

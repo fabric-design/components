@@ -5,19 +5,13 @@ This class describes the interface of an storage class
 
 **Parameters**
 
--   `name`  
-
-### constructor
-
-**Parameters**
-
--   `name` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The storage name
+-   `name` **[string][1]** The storage name
 
 ### set
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string][1]** Storage key name
 -   `value` **any** Value to store
 
 Returns **void** 
@@ -26,7 +20,7 @@ Returns **void**
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string][1]** Storage key name
 
 Returns **any** 
 
@@ -34,9 +28,11 @@ Returns **any**
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string][1]** Storage key name
 
 Returns **void** 
+
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 ## CookieStorage
 
 **Extends AbstractStorage**
@@ -49,7 +45,7 @@ Set value for specific key in cookies
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string][1]** Storage key name
 -   `value` **any** Value to store
 
 Returns **void** 
@@ -60,7 +56,7 @@ Get value from cookies by it's storage key
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string][1]** Storage key name
 
 Returns **any** 
 
@@ -70,7 +66,7 @@ Removes a stored value by its storage key
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string][1]** Storage key name
 
 Returns **void** 
 
@@ -80,11 +76,15 @@ Creates a cookie for the current top level domain
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Cookie name without storage name
+-   `key` **[string][1]** Cookie name without storage name
 -   `value` **any** Cookie value (not serialized)
--   `expires` **[Date](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)** Cookie expiration date
+-   `expires` **[Date][2]** Cookie expiration date
 
 Returns **void** 
+
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
 ## LocalStorage
 
 **Extends AbstractStorage**
@@ -97,7 +97,7 @@ Set value for specific key in localStorage
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string][1]** Storage key name
 -   `value` **any** Value to store
 
 Returns **void** 
@@ -108,7 +108,7 @@ Get value from localStorage by it's storage key
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string][1]** Storage key name
 
 Returns **any** 
 
@@ -118,6 +118,8 @@ Removes a stored value by its storage key
 
 **Parameters**
 
--   `key` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Storage key name
+-   `key` **[string][1]** Storage key name
 
 Returns **void** 
+
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

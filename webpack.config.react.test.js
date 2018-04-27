@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 module.exports = {
   devtool: 'inline-source-map', //just do inline source maps instead of the default
+  mode: 'development',
   output: {
     filename: 'bundle.test.js',
     path: path.resolve(__dirname, 'tests')

@@ -27,6 +27,24 @@ To use Header simply embed the ws-header in your application and import the scss
 </ws-header>
 ```
 
+## Alternate Link Components
+If you need to use an alternate link component (such as, in this example, a Link component from react router) simply pass it instead of the link config object and it will be rendered in it's place.
+```html
+import { Link } from 'react-router-dom';
+
+<ws-header
+  appName="Demo Page"
+  links={[
+    (<Link to="/nmm">Somewhere</Link>),
+    {
+      label: 'Link',
+      href: 'LinkValue',
+      onClick: (value) => console.log(value)
+    },
+  ]}>
+</ws-header>
+```
+
 ## Persistence
 These header component has to persist several values during page reloads. For instance the selected locale
 or the requested access token and it's expiration time. Per default the header will use the local storage

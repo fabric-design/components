@@ -23,6 +23,16 @@ render(
       appName="Demo Page"
       clientId="stups_abba-frontend-release_180e00be-2b66-4e44-ac95-37f10068c015"
       links={[
+        (<WSDropdown
+          text="Multiple" type="button" width="500px" placeholder="Filter values.." selectAll filterable multiple items={[
+            'New',
+            'New From Template',
+            'Open',
+            'Test value 1',
+            'Open Recent',
+            'Save'
+          ]}
+        />),
         {label: 'Link', href: '#LinkValue', onClick: value => console.log(value)},
         {
           label: 'Link2',

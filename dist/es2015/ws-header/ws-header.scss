@@ -139,5 +139,8 @@ $header-border-color: schema-color(4) !default;
   }
   a {
     color: inherit;
+    &:focus {
+      color: #ffffff;
+    }
   }
 }

@@ -1,5 +1,5 @@
 # Notifications
-Before you start using notifications, make sure that you [Feedback Principles](../#/general/8-feedback).
+Before you start using notifications, make sure that you follow the [Feedback Principles](./#/general/8-feedback).
 
 ![Example](src/style/assets/not-ex1.jpg)
 <p>Use it for general system feedback.</p>
@@ -30,7 +30,7 @@ Information about action that can be potentially harmful
 <p><button class="mod-small mod-secondary" click.delegate="notification({title: 'Upload server almost full', description: '203MB left. Delete pictures that will not be needed anymore.', type: 'warning', lifetime: 2000})">Show notification</button></p>
 
 ## Content
-Feedback content consist main information and (if needed) further description.
+Feedback content consists of main information and (if needed) further description.
 
 ![Example](src/style/assets/not-ex4.jpg)
 <p>Use natural, user language, suggest possible solution.</p>
@@ -39,9 +39,9 @@ Feedback content consist main information and (if needed) further description.
 <p>Avoid technical jargon and generic error messages.</p>
 
 ## Setup
-Because the notifications are elements which should be displayed on top of everything and relative to the window
-you have to add the tag `<ws-notification></ws-notification>` to the most root container you can add.
-So either document body or the application root depending on your setup. This notification element is
+Because the notifications are elements which should be displayed on top of everything and relative to the window,
+you have to add the tag `<ws-notification></ws-notification>` to the most root container you can reach.
+So either document body or the application root, depending on your setup. This notification element is
 just the holder / list of notifications.
 
 ## Creating notifications

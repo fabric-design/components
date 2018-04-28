@@ -19,7 +19,7 @@ a date string which is parsable by `Date.parse()` or which matches the value in 
 
 ### Formatting dates
 You can change the formatting of the date picker component by calling the static method `setFormat` on `WSDatePicker` class.
-The pattern for the format follows the rules oąąf the [flatpickr](https://chmln.github.io/flatpickr/formatting/).
+The pattern for the format follows the rules of the [flatpickr](https://chmln.github.io/flatpickr/formatting/).
 For instance `Y-m-d` will result in the date `2017-06-04` which will be displayed in the input and passed
 through the change event.
 

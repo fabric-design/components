@@ -273,6 +273,19 @@ export class WSHeader extends Component {
   }
 
   /**
+   * codeclimate demands abstraction; this makes links
+   * @param  {Object} link link data, label, href, etc
+   * @return {JSX} a rendered link
+   */
+  renderLink(link) {
+    return (
+      <a href={link.href} onClick={event => { if (link.onClick) link.onClick(event); }}>
+        {link.label}
+      </a>
+    );
+  }
+
+  /**
    * @returns {Object}
    */
   render() {
@@ -280,9 +293,9 @@ export class WSHeader extends Component {
       <header className="ws-header" ref={element => { this.element = element; }}>
         <div className="level-1">
          {
-            rootUrl.$$typeof ? rootUrl : <a // eslint-disable-line jsx-a11y/href-no-hash
+            this.props.rootUrl.$$typeof ? this.props.rootUrl : <a // eslint-disable-line jsx-a11y/href-no-hash
               className="application-name"
-              href={rootUrl}
+              href={this.props.rootUrl}
             >
               {this.props.appLogo &&
                 <figure className="application-logo">
@@ -302,7 +315,7 @@ export class WSHeader extends Component {
                   ref={element => { this.menuItems[index] = element; }}
                   className={(link.isCurrent) ? 'is-current' : null}
                 >
-                  {link.$$typeof ? link: this.renderLink(link)}
+                  {link.$$typeof ? link : this.renderLink(link)}
                 </li>
               )}
             </ul>

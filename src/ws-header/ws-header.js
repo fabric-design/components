@@ -259,6 +259,14 @@ export class WSHeader extends Component {
     this.level2.classList.remove('is-active');
   }
 
+  renderLink(link) {
+    return (
+      <a href={link.href} onClick={event => { if (link.onClick) link.onClick(event); }}>
+        {link.label}
+      </a>
+    );
+  }
+
   /**
    * @returns {Object}
    */
@@ -290,9 +298,7 @@ export class WSHeader extends Component {
                 {link.$$typeof ?
                   link
                 :
-                  <a href={link.href} onClick={event => { if (link.onClick) link.onClick(event); }}>
-                    {link.label}
-                  </a>
+                  this.renderLink(child)
                 }
                 </li>
               )}
@@ -337,9 +343,9 @@ export class WSHeader extends Component {
             <ul className="main-sub-menu" key={`sub-menu${index}`} ref={element => { this.subMenus[index] = element; }}>
               {parent.children.map((child, childIndex) =>
                 <li key={`sub-link-${index}-${childIndex}`} className={(child.isCurrent) ? 'is-current' : null}>
-                  <a href={child.href} onClick={event => { if (child.onClick) child.onClick(event); }}>
-                    {child.label}
-                  </a>
+                {
+                  this.renderLink(child)
+                }
                 </li>
               )}
             </ul>

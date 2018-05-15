@@ -24,7 +24,6 @@ import { WSSpinner } from '../src/ws-spinner/ws-spinner';
 import { WSTabMenu } from '../src/ws-tab-menu/ws-tab-menu';
 import { WSOptionButtons } from '../src/ws-option-buttons/ws-option-buttons';
 
-
 export default {
   WSHeader,
   WSDatePicker,

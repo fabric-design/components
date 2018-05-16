@@ -13,7 +13,7 @@ pipeline:
           if [ $(git log --format=oneline -n 1 HEAD | grep -cP 'skip ci') -ne 0 ]; then
             echo "Skipping this build"
             exit 1;
-          fi          
+          fi
       - desc: Ensure Docker
         cmd: |
           curl -fsSL https://delivery.cloud.zalando.com/utils/ensure-docker | sh
@@ -42,6 +42,7 @@ pipeline:
           gulp lint
           npm run test
           gulp build
+          npm run package
       - desc: Create release
         cmd: |
           if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then

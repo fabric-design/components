@@ -259,6 +259,11 @@ export class WSHeader extends Component {
     this.level2.classList.remove('is-active');
   }
 
+  /**
+   * codeclimate demands abstraction; this makes links
+   * @param  {Object} link link data, label, href, etc
+   * @return {JSX} a rendered link
+   */
   renderLink(link) {
     return (
       <a href={link.href} onClick={event => { if (link.onClick) link.onClick(event); }}>
@@ -295,11 +300,7 @@ export class WSHeader extends Component {
                   ref={element => { this.menuItems[index] = element; }}
                   className={(link.isCurrent) ? 'is-current' : null}
                 >
-                {link.$$typeof ?
-                  link
-                :
-                  this.renderLink(child)
-                }
+                {link.$$typeof ? link: this.renderLink(child)}
                 </li>
               )}
             </ul>
@@ -343,9 +344,7 @@ export class WSHeader extends Component {
             <ul className="main-sub-menu" key={`sub-menu${index}`} ref={element => { this.subMenus[index] = element; }}>
               {parent.children.map((child, childIndex) =>
                 <li key={`sub-link-${index}-${childIndex}`} className={(child.isCurrent) ? 'is-current' : null}>
-                {
-                  this.renderLink(child)
-                }
+                {this.renderLink(child)}
                 </li>
               )}
             </ul>

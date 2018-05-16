@@ -2,7 +2,6 @@ import * as _React_ from 'react';
 import * as ReactDOM from 'react-dom';
 import * as types from 'prop-types';
 
-
 // API shared by Preact and React
 export const React = {
   createElement: _React_.createElement || _React_.h

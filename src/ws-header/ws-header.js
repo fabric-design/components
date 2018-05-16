@@ -300,7 +300,7 @@ export class WSHeader extends Component {
                   ref={element => { this.menuItems[index] = element; }}
                   className={(link.isCurrent) ? 'is-current' : null}
                 >
-                {link.$$typeof ? link: this.renderLink(child)}
+                {link.$$typeof ? link: this.renderLink(link)}
                 </li>
               )}
             </ul>

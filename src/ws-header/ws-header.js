@@ -300,7 +300,7 @@ export class WSHeader extends Component {
                   ref={element => { this.menuItems[index] = element; }}
                   className={(link.isCurrent) ? 'is-current' : null}
                 >
-                {link.$$typeof ? link: this.renderLink(link)}
+                  {link.$$typeof ? link: this.renderLink(link)}
                 </li>
               )}
             </ul>
@@ -344,7 +344,7 @@ export class WSHeader extends Component {
             <ul className="main-sub-menu" key={`sub-menu${index}`} ref={element => { this.subMenus[index] = element; }}>
               {parent.children.map((child, childIndex) =>
                 <li key={`sub-link-${index}-${childIndex}`} className={(child.isCurrent) ? 'is-current' : null}>
-                {this.renderLink(child)}
+                  {this.renderLink(child)}
                 </li>
               )}
             </ul>

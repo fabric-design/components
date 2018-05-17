@@ -1,18 +1,18 @@
 const path = require('path');
 
 module.exports = {
-  devtool: 'inline-source-map', // just do inline source maps instead of the default
-  mode: 'development',
+  entry: '../../demo/demo_app.js',
+  mode: 'production',
   output: {
-    filename: 'bundle.test.js',
-    path: path.resolve(__dirname, 'tests')
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, '../../demo')
   },
   module: {
     rules: [{
       test: /\.js$/,
       use: [{
         loader: 'babel-loader',
-        options: { babelrc: true },
+        options: {babelrc: true}
       }],
       exclude: [/node_modules/]
     },
@@ -35,5 +35,16 @@ module.exports = {
       test: /\.(png|woff|woff2|eot|ttf|svg)$/,
       loader: 'url-loader?limit=100000'
     }]
+  },
+  resolve: {
+    alias: {
+      react: 'preact-compat',
+      'react-dom': 'preact-compat'
+    }
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'demo'),
+    compress: true,
+    port: 8080
   }
 };

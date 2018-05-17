@@ -1,18 +1,18 @@
 const path = require('path');
 
 module.exports = {
-  entry: './demo/demo_app.js',
-  mode: 'production',
+  devtool: 'inline-source-map', // just do inline source maps instead of the default
+  mode: 'development',
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'demo')
+    filename: 'bundle.test.js',
+    path: path.resolve(__dirname, 'tests')
   },
   module: {
     rules: [{
       test: /\.js$/,
       use: [{
         loader: 'babel-loader',
-        options: {babelrc: true}
+        options: { babelrc: true },
       }],
       exclude: [/node_modules/]
     },
@@ -26,7 +26,7 @@ module.exports = {
         loader: 'sass-loader', // compiles Sass to CSS
         options: {
           includePaths: [
-            'node_modules/fabric-scss/'
+            '../node_modules/fabric-scss/'
           ],
         },
       }]
@@ -35,16 +35,5 @@ module.exports = {
       test: /\.(png|woff|woff2|eot|ttf|svg)$/,
       loader: 'url-loader?limit=100000'
     }]
-  },
-  resolve: {
-    alias: {
-      react: 'preact-compat',
-      'react-dom': 'preact-compat'
-    }
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'demo'),
-    compress: true,
-    port: 8080
   }
 };

@@ -5,9 +5,7 @@ module.exports = {
   ...testBase,
   resolve: {
     alias: {
-      imports: path.resolve(__dirname, '../../src/imports.js'),
-      react: 'preact',
-      'react-dom': 'preact-compat'
+      imports: path.resolve(__dirname, 'src/imports.js')
     }
   }
 };

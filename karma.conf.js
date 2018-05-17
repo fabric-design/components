@@ -82,6 +82,6 @@ module.exports = config => {
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity,
-    webpack: require('./webpack/configs/webpack.config.preact.test.js') // eslint-disable-line global-require
+    webpack: require('./webpack.config.preact.test.js') // eslint-disable-line global-require
   });
 };

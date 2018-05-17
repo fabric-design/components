@@ -4,16 +4,17 @@
   "description": "",
   "scripts": {
     "build": "gulp build && npm run package",
-    "start": "webpack-dev-server --progress --colors --content-base build webpack/configs/webpack.config.js",
-    "start:preact": "webpack-dev-server --watch --config ./webpack/configs/webpack.config.preact.js",
+    "start": "npm run start:react",
+    "start:react": "webpack-dev-server --progress --colors --config webpack.config.react.js",
+    "start:preact": "webpack-dev-server --watch --config webpack.config.preact.js",
     "test": "gulp test",
     "test:react": "gulp test:react",
     "test:preact": "gulp test:preact",
     "tdd": "gulp tdd",
     "lint": "gulp lint",
     "docs": "gulp generate-docs",
-    "package": "webpack --config ./webpack/configs/webpack.config.js",
-    "package:debug": "webpack  --config ./webpack/configs/webpack.config.js --display-modules"
+    "package": "PRODUCTION=true webpack --config webpack.config.js",
+    "package:debug": "webpack --config webpack.config.js --display-modules"
   },
   "repository": {
     "type": "git",

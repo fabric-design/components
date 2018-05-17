@@ -20,7 +20,7 @@ gulp.task('test:preact', function(done) {
 gulp.task('test:react', function(done) {
   new Karma({
     configFile: __dirname + '/../../karma.conf.js',
-    webpack: require('../../webpack/configs/webpack.config.react.test.js'),
+    webpack: require('../../webpack.config.react.test.js'),
     singleRun: true
   }, done).start();
 });

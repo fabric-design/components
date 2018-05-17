@@ -1,10 +1,11 @@
 const path = require('path');
 
 module.exports = {
-  entry: './demo/demo_app.js',
+  entry: '../../demo/demo_app.js',
+  mode: 'production',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'demo')
+    path: path.resolve(__dirname, '../../demo')
   },
   module: {
     rules: [{
@@ -22,7 +23,12 @@ module.exports = {
       }, {
         loader: 'css-loader' // translates CSS into CommonJS
       }, {
-        loader: 'sass-loader' // compiles Sass to CSS
+        loader: 'sass-loader', // compiles Sass to CSS
+        options: {
+          includePaths: [
+            'node_modules/fabric-scss/'
+          ],
+        },
       }]
     },
     {

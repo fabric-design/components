@@ -1,12 +1,12 @@
 const path = require('path');
 
 module.exports = {
-  entry: '../../demo/demo_app.js',
-  mode: 'production',
+  entry: './demo/demo_app.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, '../../demo')
+    path: path.resolve(__dirname, 'demo')
   },
+  mode: 'development',
   module: {
     rules: [{
       test: /\.js$/,
@@ -23,24 +23,13 @@ module.exports = {
       }, {
         loader: 'css-loader' // translates CSS into CommonJS
       }, {
-        loader: 'sass-loader', // compiles Sass to CSS
-        options: {
-          includePaths: [
-            'node_modules/fabric-scss/'
-          ],
-        },
+        loader: 'sass-loader' // compiles Sass to CSS
       }]
     },
     {
       test: /\.(png|woff|woff2|eot|ttf|svg)$/,
       loader: 'url-loader?limit=100000'
     }]
-  },
-  resolve: {
-    alias: {
-      react: 'preact-compat',
-      'react-dom': 'preact-compat'
-    }
   },
   devServer: {
     contentBase: path.join(__dirname, 'demo'),

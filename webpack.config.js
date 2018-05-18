@@ -6,13 +6,13 @@ const PROD = process.env.PRODUCTION || false;
 module.exports = {
   mode: PROD ? 'production' : 'development',
 
-  entry: './webpack/loaders/index.js',
+  entry: './webpack-loaders/index.js',
 
   output: {
     chunkFilename: '[id].chunk.js',
-    path: path.resolve(__dirname, '../../dist'),
+    path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    filename: PROD ? 'fabricComponents.min.js' : 'fabricComponents.js',
+    filename: 'fabricComponents.js',
     library: 'fabric-components',
     libraryTarget: 'umd',
   },
@@ -40,7 +40,7 @@ module.exports = {
             test: /([\w-]+)\/\1.js$/,
             use: [
               {
-                loader: path.resolve('../loaders/scss-importer'),
+                loader: path.resolve('webpack-loaders/scss-importer'),
               },
               {
                 loader: 'babel-loader',
@@ -79,7 +79,7 @@ module.exports = {
                 },
               },
               {
-                loader: path.resolve('./webpack/loaders/inject-global-scss'),
+                loader: path.resolve('webpack-loaders/inject-global-scss'),
               },
             ],
           },

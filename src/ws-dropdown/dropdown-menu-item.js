@@ -114,7 +114,6 @@ export class DropdownMenuItem extends Component {
           this.props.handle('change', null);
         } else {
           this.setState({
-            ...this.state,
             selected : true,
             stored : true,
           });
@@ -122,10 +121,7 @@ export class DropdownMenuItem extends Component {
           this.props.handle('change', this.state);
         }
       } else {
-        this.setState({
-          ...this.state,
-          selected : !this.state.selected,
-        });
+        this.setState({selected : !this.state.selected});
       }
     }
   };

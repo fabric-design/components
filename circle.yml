@@ -2,7 +2,7 @@ machine:
   timezone:
     Europe/Berlin
   node:
-    version: 7.8.0
+    version: 8.11.0
   environment:
     TARGET: $(test "${CIRCLE_BRANCH}" == "master" && echo "" || echo ${CIRCLE_PROJECT_REPONAME}/${CIRCLE_BRANCH})
 

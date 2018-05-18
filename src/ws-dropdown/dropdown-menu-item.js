@@ -77,7 +77,7 @@ export class DropdownMenuItem extends Component {
    * @returns {void}
    */
   componentWillReceiveProps(props) {
-    this.state = props.item;
+    this.setState(props.item);
   }
 
   /**
@@ -113,16 +113,20 @@ export class DropdownMenuItem extends Component {
         if (this.state.selected) {
           this.props.handle('change', null);
         } else {
-          this.state.selected = true;
-          this.state.stored = true;
+          this.setState({
+            ...this.state,
+            selected : true,
+            stored : true,
+          });
+
           this.props.handle('change', this.state);
         }
       } else {
-        // Only toggle selection state, change event will be fired on submit (button click)
-        this.state.selected = !this.state.selected;
+        this.setState({
+          ...this.state,
+          selected : !this.state.selected,
+        });
       }
-      // Use this strategy to keep the reference of this.state (item) into dropdown-menu items[x]
-      this.setState(this.state);
     }
   };
 

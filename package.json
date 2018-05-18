@@ -5,8 +5,8 @@
   "scripts": {
     "build": "gulp build && npm run package",
     "start": "npm run start:react",
-    "start:react": "webpack-dev-server --progress --colors --config webpack.config.react.js",
-    "start:preact": "webpack-dev-server --watch --config webpack.config.preact.js",
+    "start:react": "webpack-dev-server --progress --colors --watch --config webpack.config.react.js",
+    "start:preact": "webpack-dev-server --progress --colors --watch --config webpack.config.preact.js",
     "test": "gulp test",
     "test:react": "gulp test:react",
     "test:preact": "gulp test:preact",

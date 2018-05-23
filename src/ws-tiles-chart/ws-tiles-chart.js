@@ -17,7 +17,6 @@ import {Tile} from './tile';
  * @property {func} props.onClick Defines function that is called for onCLick event
  */
 export class WSTilesChart extends Component {
-
   /**
    * @type {Object}
    */
@@ -42,6 +41,7 @@ export class WSTilesChart extends Component {
     config: PropTypes.object,
     title: PropTypes.string,
     maxTileSize: PropTypes.number,
+    minTileSize: PropTypes.number,
     width: PropTypes.number,
     height: PropTypes.number,
     onMouseEnter: PropTypes.func,
@@ -84,7 +84,13 @@ export class WSTilesChart extends Component {
    * @returns {number}
    */
   getTileSize(props) {
-    const {height, width, maxTileSize, minTileSize, data} = props;
+    const {
+      height,
+      width,
+      maxTileSize,
+      minTileSize,
+      data
+    } = props;
     const groups = data.groups || {};
 
     if (maxTileSize === minTileSize || Object.keys(groups).length === 0) {
@@ -94,7 +100,8 @@ export class WSTilesChart extends Component {
     const tilesAmount = Object.keys(groups).map(groupName => groups[groupName].length).reduce((a, b) => a + b);
 
     const tileSize = this.calculateMaximumPossibleTileSize(
-      width, height - this.titleDivSize, tilesAmount
+      width,
+      height - this.titleDivSize, tilesAmount
     );
 
     if (tileSize <= maxTileSize && tileSize >= minTileSize) {
@@ -123,7 +130,14 @@ export class WSTilesChart extends Component {
    * @returns {Object}
    */
   render() {
-    const {data, config, title, width, height} = this.props;
+    const {
+      data,
+      config,
+      title,
+      width,
+      height
+    } = this.props;
+
     const groups = data.groups || {};
     return (
       <div className="ws-tiles-chart" style={{width: `${width}px`, height: `${height}px`}}>
@@ -134,7 +148,7 @@ export class WSTilesChart extends Component {
           onMouseEnter={this.props.onMouseEnter}
           onMouseLeave={this.props.onMouseLeave}
         >
-          {Object.keys(groups).map(groupName => groups[groupName].map(tile =>
+          {Object.keys(groups).map(groupName => groups[groupName].map(tile => (
             <Tile
               identifier={tile}
               className={this.state.groupOver === groupName ? 'group-over' : ''}
@@ -144,8 +158,8 @@ export class WSTilesChart extends Component {
               onClick={this.props.onClick}
               onMouseEnter={() => this.setState({groupOver: groupName})}
               onMouseLeave={() => this.setState({groupOver: ''})}
-            />
-          ))}
+            />)))
+          }
         </div>
       </div>
     );

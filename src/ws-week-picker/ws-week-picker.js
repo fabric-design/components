@@ -3,7 +3,7 @@ import {WSWeekPickerCalendar} from './ws-week-picker-calendar';
 
 /**
  * @class WSWeekPicker
- * @property {object} props               - properties
+ * @property {Object} props               - properties
  * @property {number} props.selectedYear  - set a preselected year
  * @property {number} props.selectedWeek  - set a preselected week
  * @property {function} props.onChange    - handler which notifies about picked week
@@ -72,8 +72,9 @@ export class WSWeekPicker extends Component {
 
   /**
    * Handler for new selections on the calendar
-   * @param {String} week clicked on week
-   * @param {String} year clicked on year
+   * @param {Object} obj - An object.
+   * @param {string} obj.week clicked on week
+   * @param {string} obj.year clicked on year
    * @returns {void}
    */
   onChange({week, year}) {
@@ -107,13 +108,16 @@ export class WSWeekPicker extends Component {
       <div className="ws-week-picker" ref={element => { this.element = element; }}>
         <input
           value={this.state.selectedWeek !== null ? `Week ${this.state.selectedWeek}, ${this.state.selectedYear}` : ''}
-          placeholder={'Please choose a week'}
+          placeholder="Please choose a week"
           onClick={() => this.toggleCalendar()}
           readOnly
         />
         <span
           className={`icon icon16 ${this.state.show ? '' : 'icon-calendar'}`}
           onClick={() => this.toggleCalendar()}
+          onKeypress={e => {
+            if (e.key === 'enter') this.toggleCalendar();
+          }}
         />
         {this.state.show &&
           <WSWeekPickerCalendar

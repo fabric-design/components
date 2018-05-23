@@ -293,7 +293,7 @@ export class WSHeader extends Component {
       <header className="ws-header" ref={element => { this.element = element; }}>
         <div className="level-1">
          {
-            this.props.rootUrl.$$typeof ? this.props.rootUrl : <a // eslint-disable-line jsx-a11y/href-no-hash
+            this.props.rootUrl.$$typeof ? this.props.rootUrl : <a
               className="application-name"
               href={this.props.rootUrl}
             >

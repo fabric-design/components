@@ -1,0 +1,25 @@
+.ws-multi-select {
+  display: block;
+  .input-wrapper .icon {
+    cursor: pointer;
+  }
+  .selected-items {
+    color: $heron;
+    margin: $space-xs 0;
+    font-size: $font-size-small;
+    .text {
+      display: inline-block;
+      vertical-align: middle;
+      max-width: 85%;
+      text-indent: $space-xs;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .icon {
+      float: right;
+      cursor: pointer;
+      line-height: $space-l;
+    }
+  }
+}

@@ -89,7 +89,7 @@ define(['exports', '../imports', './dropdown-menu'], function (exports, _imports
               _this.state.selected = !_this.state.selected;
             }
 
-            _this.setState(_this.state);
+            _this.forceUpdate();
           }
         }
       });

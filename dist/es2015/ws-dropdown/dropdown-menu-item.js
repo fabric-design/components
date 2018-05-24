@@ -44,7 +44,7 @@ export var DropdownMenuItem = function (_Component) {
             _this.state.selected = !_this.state.selected;
           }
 
-          _this.setState(_this.state);
+          _this.forceUpdate();
         }
       }
     });

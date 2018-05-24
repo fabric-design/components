@@ -95,7 +95,7 @@ System.register(['../imports', './dropdown-menu'], function (_export, _context) 
                   _this.state.selected = !_this.state.selected;
                 }
 
-                _this.setState(_this.state);
+                _this.forceUpdate();
               }
             }
           });

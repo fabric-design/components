@@ -27,6 +27,24 @@ To use Header simply embed the ws-header in your application and import the scss
 </ws-header>
 ```
 
+## Alternate Link Components
+If you need to use an alternate link component (such as, in this example, a Link component from react router) simply pass it instead of the link config object and it will be rendered in it's place.
+```html
+import { Link } from 'react-router-dom';
+
+<ws-header
+  appName="Demo Page"
+  links={[
+    (<Link to="/nmm">Somewhere</Link>),
+    {
+      label: 'Link',
+      href: 'LinkValue',
+      onClick: (value) => console.log(value)
+    },
+  ]}>
+</ws-header>
+```
+
 ## Persistence
 These header component has to persist several values during page reloads. For instance the selected locale
 or the requested access token and it's expiration time. Per default the header will use the local storage
@@ -60,7 +78,7 @@ you have to listen for the `ws-locale-changed` event on the window object.
 ## Authorization
 Every user must retrieve an access token via the OAuth2 Implicit flow to get access to the backend resources.
 The header already implements these implicit flow and a login button. To be able to authenticate with the
-implicit flow you have to specify you're client and business partner id. The default login url is: https://identity.zalando.com/oauth2/authorize
+implicit flow you have to specify your client and business partner id. The default login url is: https://identity.zalando.com/oauth2/authorize
 ```html
 <ws-header app-name="Test app" client-id="yourturn-client-id" business-partner-id="bpid"></ws-header>
 ```
@@ -77,7 +95,7 @@ if the access_token was successfully parsed from the location.hash. It can be em
 </script>
 ```
 
-To get the access token for example to validate if the user can access the current route you can call
+To get the access token, for example to validate if the user can access the current route, you can call
 the static function `getAccessToken()` which will return the access token or null.
 ```html
 <script>
@@ -86,7 +104,7 @@ the static function `getAccessToken()` which will return the access token or nul
 ```
 
 ##### Programmatically request login / logout
-If you want to display a login page to the user or manage by yourself when you want to login or logout
+If you want to display a login page to the user or manage by yourself when you want to login or logout,
 you can do this by publishing `ws-authorize` or `ws-unauthorize` events to the window. The header is
 listening for those events and triggers the corresponding action. Afterwards a `ws-auth-changed` event might occur.
 ```html
@@ -97,6 +115,6 @@ listening for those events and triggers the corresponding action. Afterwards a `
   // Request authorization will redirect the user to the OAuth2 authorize page
   window.dispatchEvent(new CustomEvent('ws-authorize'));
   // Request logout will remove the token from the storage and trigger a ws-auth-changed event
-  window.dispatchEvent(new CustomEvent('ws-unauthorize'));   
+  window.dispatchEvent(new CustomEvent('ws-unauthorize'));
 </script>
 ```

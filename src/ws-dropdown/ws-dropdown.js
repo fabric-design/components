@@ -60,6 +60,7 @@ export class WSDropdown extends Component {
     text: '',
     icon: '',
     items: [],
+    className: '',
     multiple: false,
     inputOnly: false,
     filterable: false,
@@ -83,6 +84,7 @@ export class WSDropdown extends Component {
     text: PropTypes.string,
     icon: PropTypes.string,
     items: PropTypes.array,
+    className: PropTypes.string,
     multiple: PropTypes.bool,
     inputOnly: PropTypes.bool,
     filterable: PropTypes.bool,
@@ -497,13 +499,20 @@ export class WSDropdown extends Component {
    * @returns {Object}
    */
   render() {
-    const isWide = this.props.type === 'select';
+    const {
+      type,
+      className,
+      orientation,
+      width,
+    } = this.props;
+
+    const isWide = type === 'select';
     return (
-      <div className="dropdown" ref={element => { if (element) { this.element = element; } }}>
+      <div className={`dropdown  ${className}`} ref={element => { if (element) { this.element = element; } }}>
         {this.renderTrigger()}
         <div
-          className={`dropdown-container ${this.props.orientation}`}
-          style={{width: this.props.width || (isWide ? '100%' : '')}}
+          className={`dropdown-container ${orientation}`}
+          style={{width: width || (isWide ? '100%' : '')}}
           ref={element => { if (element) { this.dropdownContainer = element; } }}
         >
           {this.renderContent()}

@@ -22,7 +22,7 @@ export class Component extends _React_.Component {
    * @returns {void}
    */
   dispatchEvent(name, detail, bubbles = true) {
-    const event = new CustomEvent(name, {detail, bubbles});
+    const event = new window.CustomEvent(name, {detail, bubbles});
     // It's possible that the component is not mounted and there is no element yet
     if (this.element) {
       this.element.dispatchEvent(event);

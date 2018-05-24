@@ -2,7 +2,6 @@
 logs
 *.log
 npm-debug.log*
-
 # Runtime data
 pids
 *.pid
@@ -40,3 +39,4 @@ node_modules
 styleguide.css
 
 package-lock.json
+.DS_Store

@@ -34,6 +34,7 @@ render(
       appName="Demo Page"
       clientId="stups_abba-frontend-release_180e00be-2b66-4e44-ac95-37f10068c015"
       links={[
+        (<WSDropdown text="Multiple" type="button" width="500px" placeholder="placeholder!" items={['Save']}/>),
         {label: 'Link', href: '#LinkValue', onClick: value => console.log(value)},
         {
           label: 'Link2',

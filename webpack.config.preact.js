@@ -6,6 +6,7 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'demo')
   },
+  mode: 'development',
   module: {
     rules: [{
       test: /\.js$/,
@@ -32,7 +33,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      react: 'preact-compat',
+      imports: path.resolve(__dirname, 'src/imports.js'),
+      react: 'preact',
       'react-dom': 'preact-compat'
     }
   },
@@ -42,3 +44,4 @@ module.exports = {
     port: 8080
   }
 };
+

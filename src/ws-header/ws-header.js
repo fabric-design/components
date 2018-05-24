@@ -86,7 +86,7 @@ export class WSHeader extends Component {
    * @param {string} queryString The current query string to parse the token from
    * @returns {JsonWebToken|null}
    */
-  static getAccessToken(queryString = location.hash.substr(1)) {
+  static getAccessToken(queryString = window.location.hash.substr(1)) {
     if (!this.authorization.accessToken) {
       this.authorization.tryFetchToken(queryString);
     }
@@ -180,7 +180,7 @@ export class WSHeader extends Component {
       this.dispatchEvent('ws-auth-changed', accessToken);
     });
     // Check if we was redirected from the auth page and an access token is available
-    this.constructor.authorization.tryFetchToken(location.hash.substr(1));
+    this.constructor.authorization.tryFetchToken(window.location.hash.substr(1));
     // Listen for authentication requests
     window.addEventListener('ws-authorize', () => this.login());
     // Listen for authentication removal requests
@@ -260,23 +260,51 @@ export class WSHeader extends Component {
   }
 
   /**
+   * codeclimate demands abstraction; this makes links
+   * @param  {Object} link link data, label, href, etc
+   * @return {JSX} a rendered link
+   */
+  renderLink(link) {
+    return (
+      <a href={link.href} onClick={event => { if (link.onClick) link.onClick(event); }}>
+        {link.label}
+      </a>
+    );
+  }
+
+  /**
+   * codeclimate demands abstraction; this makes links
+   * @param  {Object} link link data, label, href, etc
+   * @return {JSX} a rendered link
+   */
+  renderLink(link) {
+    return (
+      <a href={link.href} onClick={event => { if (link.onClick) link.onClick(event); }}>
+        {link.label}
+      </a>
+    );
+  }
+
+  /**
    * @returns {Object}
    */
   render() {
     return (
       <header className="ws-header" ref={element => { this.element = element; }}>
         <div className="level-1">
-          <a // eslint-disable-line jsx-a11y/href-no-hash
-            className="application-name"
-            href={this.props.rootUrl}
-          >
-            {this.props.appLogo &&
-              <figure className="application-logo">
-                <img src={this.props.appLogo} alt="Application logo" />
-              </figure>
-            }
-            {this.props.appName}
-          </a>
+         {
+            this.props.rootUrl.$$typeof ? this.props.rootUrl : <a
+              className="application-name"
+              href={this.props.rootUrl}
+            >
+              {this.props.appLogo &&
+                <figure className="application-logo">
+                  <img src={this.props.appLogo} alt="Application logo" />
+                </figure>
+              }
+              {this.props.appName}
+            </a>
+          }
           <nav className="main-menu">
             <ul>
               {this.props.links.map((link, index) =>
@@ -287,9 +315,7 @@ export class WSHeader extends Component {
                   ref={element => { this.menuItems[index] = element; }}
                   className={(link.isCurrent) ? 'is-current' : null}
                 >
-                  <a href={link.href} onClick={event => { if (link.onClick) link.onClick(event); }}>
-                    {link.label}
-                  </a>
+                  {link.$$typeof ? link : this.renderLink(link)}
                 </li>
               )}
             </ul>
@@ -333,9 +359,7 @@ export class WSHeader extends Component {
             <ul className="main-sub-menu" key={`sub-menu${index}`} ref={element => { this.subMenus[index] = element; }}>
               {parent.children.map((child, childIndex) =>
                 <li key={`sub-link-${index}-${childIndex}`} className={(child.isCurrent) ? 'is-current' : null}>
-                  <a href={child.href} onClick={event => { if (child.onClick) child.onClick(event); }}>
-                    {child.label}
-                  </a>
+                  {this.renderLink(child)}
                 </li>
               )}
             </ul>

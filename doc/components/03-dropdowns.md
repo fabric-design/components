@@ -83,10 +83,10 @@ To do so just add the flag `filterable="1"` to enable the feature. Additionally 
 the default filter with the attribute `filter="blue"` and the maximum amount of displayed items via the
 `limit="7"` attribute.
 -->
-<ws-dropdown items.bind='["Car (Blue)", "Car (Red)", "Car (Orange)", "Bus (Blue)", "Bus (Red)", "Bus (Orange)", "Yet (Blue)", "Yet (Red)", "Yet (Orange)"]' filterable="1" filter="blue" limit="7" text="Select a value" type="select" style="display: inline-block; width: 150px"></ws-dropdown>
+<ws-dropdown items.bind='["Car (Blue)", "Car (Red)", "Car (Orange)", "Bus (Blue)", "Bus (Red)", "Bus (Orange)", "Jet (Blue)", "Jet (Red)", "Jet (Orange)"]' filterable="1" filter="blue" limit="7" text="Select a value" type="select" style="display: inline-block; width: 150px"></ws-dropdown>
 ```html
 <ws-dropdown
-  items.bind='["Car (Blue)", "Car (Red)", "Car (Orange)", "Bus (Blue)", "Bus (Red)", "Bus (Orange)", "Yet (Blue)", "Yet (Red)", "Yet (Orange)"]'
+  items.bind='["Car (Blue)", "Car (Red)", "Car (Orange)", "Bus (Blue)", "Bus (Red)", "Bus (Orange)", "Jet (Blue)", "Jet (Red)", "Jet (Orange)"]'
   filterable="1"
   filter="blue"
   limit="7"

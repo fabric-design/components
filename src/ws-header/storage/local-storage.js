@@ -13,7 +13,7 @@ export class LocalStorage extends AbstractStorage {
    */
   set(key, value) {
     const encodedValue = encodeURIComponent(JSON.stringify(value));
-    localStorage.setItem(`${this.name}${key}`, encodedValue);
+    window.localStorage.setItem(`${this.name}${key}`, encodedValue);
   }
 
   /**
@@ -22,7 +22,7 @@ export class LocalStorage extends AbstractStorage {
    * @returns {*}
    */
   get(key) {
-    const encodedValue = localStorage.getItem(`${this.name}${key}`);
+    const encodedValue = window.localStorage.getItem(`${this.name}${key}`);
 
     if (encodedValue) {
       try {
@@ -41,6 +41,6 @@ export class LocalStorage extends AbstractStorage {
    * @returns {void}
    */
   remove(key) {
-    localStorage.removeItem(`${this.name}${key}`);
+    window.localStorage.removeItem(`${this.name}${key}`);
   }
 }

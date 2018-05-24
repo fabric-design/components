@@ -5,6 +5,32 @@ import {DropdownInput} from './dropdown-input';
 const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
 
 /**
+ * Helper function to iterate over all nesting levels without recursion
+ * @param {Array} items List of array items with possible children
+ * @param {Function} getChildren Callback to get the children of the items
+ * @param {Function} callback Will be called with each item. If return value is true the iteration will be aborted
+ * @returns {void}
+ */
+function deep(items, getChildren, callback) {
+  const levels = [items];
+  for (let l = 0; l < levels.length; l++) {
+    // Iterate over items in this nesting level
+    for (let i = 0; i < levels[l].length; i++) {
+      const item = levels[l][i];
+      // Abort iteration if wished
+      if (callback(item)) {
+        return;
+      }
+      // Add children to nesting levels
+      const children = getChildren(item);
+      if (children) {
+        levels.push(children);
+      }
+    }
+  }
+}
+
+/**
  * This class describes a Preact/React component which renders a dropdown.
  * The dropdown can be used as select, multi select, filterable select or as a simple menu.
  * Regarding the flags the changed value will look different. The flag inputOnly results in a string,
@@ -237,14 +263,25 @@ export class WSDropdown extends Component {
    */
   createState(props) {
     const items = this.enrichItems(props.items);
-    const value = this.enrichItems(props.value, val => {
+    let {value} = props;
+    // For better usability the value can be a primitive value matching a dropdown item value
+    if (typeof value === 'string' && props.type !== 'input') {
+      deep(items, item => item.children, item => {
+        if (item.value === value) {
+          value = item;
+          return true;
+        }
+        return false;
+      });
+    }
+    value = this.enrichItems(value, val => {
       const item = items.find(i => i.value === val);
       return item ? item.label : val;
     });
     const text = this.getTextFromValue(value, props.text);
     const state = {text, value, items, filter: props.filter};
     // Set states to items in item list for passed values
-    state.items.forEach(item => {
+    deep(state.items, item => item.children, item => {
       // Check if item is is values or set it to false
       // This also un-sets previous selected items when the value from outside changed
       const isActive = !!state.value.find(val => val.value === item.value);

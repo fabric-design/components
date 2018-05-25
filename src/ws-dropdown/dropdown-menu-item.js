@@ -56,7 +56,7 @@ export class DropdownMenuItem extends Component {
    */
   constructor(props, context) {
     super(props, context);
-    this.state = props.item;
+    this.state = {item: props.item};
     this.menu = null;
   }
 
@@ -77,7 +77,7 @@ export class DropdownMenuItem extends Component {
    * @returns {void}
    */
   componentWillReceiveProps(props) {
-    this.setState(props.item);
+    this.setState({item: props.item});
   }
 
   /**
@@ -96,8 +96,9 @@ export class DropdownMenuItem extends Component {
    */
   onClick = event => {
     event.stopPropagation();
+    const {item} = this.state;
     // Do nothing if this item is disabled
-    if (this.state.disabled) {
+    if (item.disabled) {
       return;
     }
     // Click on parent means back navigation
@@ -105,23 +106,24 @@ export class DropdownMenuItem extends Component {
       // dropdown-item(go-back) -> dropdown-menu(show-parent) -> dropdown-item(show-parent) -> dropdown-menu
       this.props.handle('go-back');
     // Show next menu if item has children
-    } else if (this.state.children && this.state.children.length) {
+    } else if (item.children && item.children.length) {
       this.props.handle('show-child', this.menu);
     } else {
       if (!this.context.multiple) {
         // If it is selected we publish null because it will be deselected in the upper menu
-        if (this.state.selected) {
+        if (item.selected) {
           this.props.handle('change', null);
         } else {
-          this.setState({
-            selected : true,
-            stored : true,
-          });
+          item.selected = true;
+          item.stored = true;
 
-          this.props.handle('change', this.state);
+          this.setState({item});
+
+          this.props.handle('change', item);
         }
       } else {
-        this.setState({selected : !this.state.selected});
+        item.selected = !item.selected;
+        this.setState({item});
       }
     }
   };
@@ -142,30 +144,31 @@ export class DropdownMenuItem extends Component {
    * @returns {Object}
    */
   render() {
+    const {item} = this.state;
     let anchorClass = 'text';
-    anchorClass += this.state.selected ? ' is-active' : '';
-    anchorClass += this.state.focused ? ' is-focused' : '';
-    anchorClass += this.state.disabled ? ' is-disabled' : '';
-    anchorClass += ` ${this.state.className || ''}`;
+    anchorClass += item.selected ? ' is-active' : '';
+    anchorClass += item.focused ? ' is-focused' : '';
+    anchorClass += item.disabled ? ' is-disabled' : '';
+    anchorClass += ` ${item.className || ''}`;
     let itemClass = 'dropdown-item';
     itemClass += this.props.isParent ? ' dropdown-parent-item' : '';
-    itemClass += this.state.children && !this.props.isParent ? ' has-children' : '';
+    itemClass += item.children && !this.props.isParent ? ' has-children' : '';
 
     return (
       <li
         className={itemClass}
         ref={element => { this.dropdownItem = element; }}
       >
-        <a className={anchorClass} href={this.state.href} title={this.state.title || this.state.label}>
-          {(this.props.icon || this.state.icon) &&
-            <i className={`icon ${this.props.icon || this.state.icon}`} />
+        <a className={anchorClass} href={item.href} title={item.title || item.label}>
+          {(this.props.icon || item.icon) &&
+            <i className={`icon ${this.props.icon || item.icon}`} />
           }
-          {this.state.label}
+          {item.label}
         </a>
-        {!this.props.isParent && this.state.children &&
+        {!this.props.isParent && item.children &&
           <DropdownMenu
-            items={this.state.children}
-            parent={this.state}
+            items={item.children}
+            parent={item}
             ref={element => { this.menu = element; }}
             handle={this.handlePropagation}
           />

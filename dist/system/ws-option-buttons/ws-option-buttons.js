@@ -160,20 +160,17 @@ System.register(['../imports'], function (_export, _context) {
           value: function createState(props) {
             var items = this.enrichItems(props.items);
 
+            var value = [];
             if (props.value) {
-              if (!Array.isArray(props.value)) {
-                props.value = [props.value];
-              }
-              props.value.forEach(function (value) {
-                items.find(function (item) {
-                  return item.value === value;
-                }).selected = true;
-              });
+              value = Array.isArray(props.value) ? props.value : [props.value];
             }
+            items.forEach(function (item) {
+              item.selected = value.includes(item.value);
+            });
             return {
               items: items,
               visible: props.initialVisible,
-              value: props.value
+              value: value
             };
           }
         }, {

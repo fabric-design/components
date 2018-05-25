@@ -14,6 +14,24 @@ import { DropdownInput } from './dropdown-input';
 
 var ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
 
+function deep(items, getChildren, callback) {
+  var levels = [items];
+  for (var l = 0; l < levels.length; l++) {
+    for (var i = 0; i < levels[l].length; i++) {
+      var item = levels[l][i];
+
+      if (callback(item)) {
+        return;
+      }
+
+      var children = getChildren(item);
+      if (children) {
+        levels.push(children);
+      }
+    }
+  }
+}
+
 export var WSDropdown = function (_Component) {
   _inherits(WSDropdown, _Component);
 
@@ -153,15 +171,28 @@ export var WSDropdown = function (_Component) {
       var value = props.value;
 
       if (typeof value === 'string' && props.type !== 'input') {
-        value = items.find(function (item) {
-          return item.value === value;
+        deep(items, function (item) {
+          return item.children;
+        }, function (item) {
+          if (item.value === value) {
+            value = item;
+            return true;
+          }
+          return false;
         });
       }
-      value = this.enrichItems(value);
-      var text = this.getTextFromValue(props.value, props.text);
-      var state = { text: text, value: value, items: items };
+      value = this.enrichItems(value, function (val) {
+        var item = items.find(function (i) {
+          return i.value === val;
+        });
+        return item ? item.label : val;
+      });
+      var text = this.getTextFromValue(value, props.text);
+      var state = { text: text, value: value, items: items, filter: props.filter };
 
-      state.items.forEach(function (item) {
+      deep(state.items, function (item) {
+        return item.children;
+      }, function (item) {
         var isActive = !!state.value.find(function (val) {
           return val.value === item.value;
         });
@@ -175,21 +206,23 @@ export var WSDropdown = function (_Component) {
     value: function enrichItems(items) {
       var _this3 = this;
 
+      var resolveLabel = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (value) {
+        return value;
+      };
+
       var itemsToWrap = items;
 
       if (!Array.isArray(items)) {
-        if (this.props.inputOnly) {
-          return items;
-        }
-
         itemsToWrap = items ? [items] : [];
       }
       return itemsToWrap.map(function (item) {
-        var enriched = (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' ? item : { label: item, value: item };
-        if (enriched.children) {
-          enriched.children = _this3.enrichItems(enriched.children);
+        if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) !== 'object') {
+          return { value: item, label: resolveLabel(item) };
         }
-        return enriched;
+        if (item.children) {
+          item.children = _this3.enrichItems(item.children);
+        }
+        return item;
       });
     }
   }, {
@@ -341,8 +374,9 @@ export var WSDropdown = function (_Component) {
         items: this.state.items,
         value: this.state.value,
         limit: this.props.limit,
+        filter: this.state.filter,
         filterable: this.props.filterable,
-        filter: this.props.filter,
+        filtered: this.props.filtered,
         placeholder: this.props.placeholder,
         selectAll: this.props.selectAll,
         handle: this.handlePropagation,
@@ -397,6 +431,7 @@ Object.defineProperty(WSDropdown, 'defaultProps', {
     inputOnly: false,
     filterable: false,
     filter: '',
+    filtered: false,
     limit: 10,
     orientation: 'left',
     placeholder: '',
@@ -416,9 +451,10 @@ Object.defineProperty(WSDropdown, 'propTypes', {
     icon: PropTypes.string,
     items: PropTypes.array,
     multiple: PropTypes.bool,
-    filterable: PropTypes.bool,
     inputOnly: PropTypes.bool,
+    filterable: PropTypes.bool,
     filter: PropTypes.string,
+    filtered: PropTypes.bool,
     limit: PropTypes.number,
     orientation: PropTypes.oneOf(['left', 'right']),
     placeholder: PropTypes.string,

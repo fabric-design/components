@@ -9,16 +9,16 @@
       cursor: pointer;
       display: block;
       background-color: $white;
-      color: $jumbo;
+      color: $santas-gray;
       box-shadow: none;
-      border: 1px solid $french-gray;
+      border: 1px solid $santas-gray;
       border-radius: $base-border-radius;
       padding: 0 $space-xs;
-      font-size: $font-size-small;
+      font-size: $font-size-tiny;
       line-height: $space-l;
       font-weight: 500;
       &.is-active {
-        background-color: $french-gray;
+        background-color: $primary-color;
         color: $white;
       }
     }

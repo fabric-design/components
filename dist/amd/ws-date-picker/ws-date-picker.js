@@ -129,6 +129,14 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
 
       var _this = _possibleConstructorReturn(this, (WSDatePicker.__proto__ || Object.getPrototypeOf(WSDatePicker)).call(this, props));
 
+      Object.defineProperty(_this, 'stopPropagation', {
+        enumerable: true,
+        writable: true,
+        value: function value(event) {
+          event.stopPropagation();
+        }
+      });
+
       _this.element = null;
       _this.input = null;
       _this.flatpickr = null;
@@ -149,9 +157,8 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
           onChange: this.onChange.bind(this)
         }));
 
-        this.input.addEventListener('change', function (event) {
-          return event.stopPropagation();
-        }, true);
+        this.input.addEventListener('change', this.stopPropagation);
+        this.element.addEventListener('click', this.stopPropagation);
       }
     }, {
       key: 'componentWillReceiveProps',
@@ -170,9 +177,8 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
       key: 'componentWillUnmount',
       value: function componentWillUnmount() {
         this.flatpickr.destroy();
-        this.input.removeEventListener('change', function (event) {
-          return event.stopPropagation();
-        }, true);
+        this.input.removeEventListener('change', this.stopPropagation);
+        this.element.removeEventListener('click', this.stopPropagation);
       }
     }, {
       key: 'onChange',

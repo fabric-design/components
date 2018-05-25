@@ -32,9 +32,7 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
       enumerable: true,
       writable: true,
       value: function value() {
-        if (_this.input) {
-          _this.input.focus();
-        }
+        if (_this.input) {}
         window.addEventListener('keydown', _this.onGlobalKeyDown);
       }
     });
@@ -122,7 +120,7 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
           case 'change':
             _this.clearSelections();
 
-            if (!_this.context.multiple) {
+            if (!_this.context.multiple && !_this.state.filtered) {
               var previous = _this.state.items.find(function (item) {
                 return item.stored && item !== data;
               });
@@ -145,6 +143,7 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
     _this.selectedIndex = -1;
     _this.state = {
       filter: props.filter,
+      filtered: props.filtered || props.filterable,
       items: props.items,
       value: props.value,
       selectAllActive: false
@@ -176,6 +175,7 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
     value: function componentWillReceiveProps(props) {
       this.setState({
         filter: props.filter,
+        filtered: props.filtered || props.filterable,
         items: props.items,
         value: props.value,
         selectAllActive: props.selectAllActive
@@ -217,11 +217,11 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
 
       var regex = new RegExp(this.state.filter, 'i');
       return this.state.items.filter(function (item) {
-        if (_this2.props.filterable && _this2.state.filter && !regex.test(item.label)) {
+        if (_this2.state.filtered && _this2.state.filter && !regex.test(item.label)) {
           return false;
         }
 
-        if (_this2.props.filterable || _this2.context.multiple) {
+        if (_this2.state.filtered || _this2.context.multiple) {
           return !item.stored;
         }
         return true;
@@ -230,10 +230,10 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
   }, {
     key: 'getItemAtIndex',
     value: function getItemAtIndex(index) {
-      var limit = this.props.filterable ? this.props.limit : this.state.items.length;
+      var limit = this.state.filtered ? this.props.limit : this.state.items.length;
       var filteredItems = this.getFilteredItems().slice(0, limit);
       var valueLength = 0;
-      if (this.context.multiple || this.props.filterable) {
+      if (this.context.multiple || this.state.filtered) {
         if (Array.isArray(this.state.value)) {
           valueLength = this.state.value.length;
         } else {
@@ -367,7 +367,7 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      var limit = this.props.filterable ? this.props.limit : this.state.items.length;
+      var limit = this.state.filtered ? this.props.limit : this.state.items.length;
       var items = this.getFilteredItems().slice(0, limit);
       var hasValue = Array.isArray(this.state.value) ? this.state.value.length : this.state.value;
 
@@ -445,6 +445,7 @@ Object.defineProperty(DropdownMenu, 'defaultProps', {
     value: null,
     filterable: false,
     filter: null,
+    filtered: false,
     placeholder: '',
     limit: 10,
     selectAll: false,
@@ -459,6 +460,7 @@ Object.defineProperty(DropdownMenu, 'propTypes', {
     items: _imports.PropTypes.array,
     filterable: _imports.PropTypes.bool,
     filter: _imports.PropTypes.string,
+    filtered: _imports.PropTypes.bool,
     placeholder: _imports.PropTypes.string,
     limit: _imports.PropTypes.number,
     selectAll: _imports.PropTypes.bool

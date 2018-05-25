@@ -10,3 +10,4 @@ export { WSTilesChart } from './ws-tiles-chart/ws-tiles-chart';
 export { WSSpinner } from './ws-spinner/ws-spinner';
 export { WSTabMenu } from './ws-tab-menu/ws-tab-menu';
 export { WSOptionButtons } from './ws-option-buttons/ws-option-buttons';
+export { WSMultiSelect } from './ws-multi-select/ws-multi-select';

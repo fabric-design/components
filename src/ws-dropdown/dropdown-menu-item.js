@@ -66,6 +66,7 @@ export class DropdownMenuItem extends Component {
    */
   componentDidMount() {
     this.dropdownItem.addEventListener('click', this.onClick);
+    this.dropdownItem.addEventListener('mousedown', this.onMouseDown);
   }
 
   /**
@@ -86,7 +87,12 @@ export class DropdownMenuItem extends Component {
    */
   componentWillUnmount() {
     this.dropdownItem.removeEventListener('click', this.onClick);
+    this.dropdownItem.removeEventListener('mousedown', this.onMouseDown);
   }
+
+  onMouseDown = event => {
+    event.preventDefault();
+  };
 
   /**
    * Handle clicks on this dropdown item. This can trigger a back navigation, selecting the item on multi selects
@@ -96,6 +102,10 @@ export class DropdownMenuItem extends Component {
    */
   onClick = event => {
     event.stopPropagation();
+    // We prevented blur with mouse down event to ensure the click is captured before the dropdown closed
+    if ('activeElement' in document) {
+      document.activeElement.blur();
+    }
     const {item} = this.state;
     // Do nothing if this item is disabled
     if (item.disabled) {

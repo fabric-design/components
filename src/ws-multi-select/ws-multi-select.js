@@ -80,7 +80,7 @@ export class WSMultiSelect extends WSDropdown {
   onBlur = event => {
     event.stopPropagation();
     // Delay it to make click listener on dropdown item work
-    setTimeout(() => this.close(), 50);
+    this.close();
   };
 
   /**

@@ -147,9 +147,7 @@ define(['exports', '../imports', '../ws-dropdown/ws-dropdown'], function (export
         value: function value(event) {
           event.stopPropagation();
 
-          setTimeout(function () {
-            return _this.close();
-          }, 50);
+          _this.close();
         }
       }), _temp), _possibleConstructorReturn(_this, _ret);
     }

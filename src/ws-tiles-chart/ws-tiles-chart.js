@@ -148,8 +148,9 @@ export class WSTilesChart extends Component {
           onMouseEnter={this.props.onMouseEnter}
           onMouseLeave={this.props.onMouseLeave}
         >
-          {Object.keys(groups).map(groupName => groups[groupName].map(tile => (
+          {Object.keys(groups).map(groupName => groups[groupName].map((tile, index) => (
             <Tile
+              key={index}
               identifier={tile}
               className={this.state.groupOver === groupName ? 'group-over' : ''}
               groupName={groupName}

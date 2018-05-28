@@ -108,20 +108,22 @@ export class WSWeekPickerCalendar extends Component {
           }
           const {week, year} = weekInMonth;
           return (
-            <a // eslint-disable-line jsx-a11y/anchor-is-valid
-              role="button"
-              tabIndex={0}
-              className={(monthIndex < 2 || monthIndex > 13 ? 'off ' : '')
-                        + (this.isActive(year, week) ? 'active ' : '')
-                        + (this.isToday(year, week) ? 'today ' : '')}
-              key={`${monthIndex}_${weekIndex}`}
-              onClick={() => this.props.onChange({week, year})}
-              onKeyPress={e => {
-                if (e.key === 'enter') this.props.onChange({week, year});
-              }}
-            >
-              <td className="week">{week}</td>
-            </a>
+            <td key={`${monthIndex}_${weekIndex}`}>
+              <a // eslint-disable-line jsx-a11y/anchor-is-valid
+                role="button"
+                tabIndex={0}
+                className={'week ' +
+                          (monthIndex < 2 || monthIndex > 13 ? 'off ' : '')
+                          + (this.isActive(year, week) ? 'active ' : '')
+                          + (this.isToday(year, week) ? 'today ' : '')}
+                onClick={() => this.props.onChange({week, year})}
+                onKeyPress={e => {
+                  if (e.key === 'enter') this.props.onChange({week, year});
+                }}
+              >
+              {week}
+              </a>
+            </td>
           );
         })}
       </tr>));

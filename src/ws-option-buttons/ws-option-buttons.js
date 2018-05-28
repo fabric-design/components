@@ -158,7 +158,7 @@ export class WSOptionButtons extends Component {
     return (
       <div className="ws-option-buttons" ref={element => { this.element = element; }}>
         {this.state.items.map((item, index) => (
-          <div className={`option-button ${index < this.state.visible ? '' : 'is-hidden'}`}>
+          <div key={index} className={`option-button ${index < this.state.visible ? '' : 'is-hidden'}`}>
             <a // eslint-disable-line jsx-a11y/anchor-is-valid
               className={`${this.props.buttonClass} ${item.selected ? 'is-active' : ''}`}
               data-index=""

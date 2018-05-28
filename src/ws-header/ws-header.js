@@ -332,27 +332,31 @@ export class WSHeader extends Component {
                 </li>
               }
               {this.props.showAuthorization && (!this.state.isLoggedIn ?
-                <a // eslint-disable-line jsx-a11y/anchor-is-valid
-                  role="button"
-                  onClick={() => this.login()}
-                  onKeyPress={e => {
-                    if (e.key === 'enter') this.login();
-                  }}
-                  tabIndex={0}
-                >
-                  <li>Login</li>
-                </a>
+                <li>
+                  <a // eslint-disable-line jsx-a11y/anchor-is-valid
+                    role="button"
+                    onClick={() => this.login()}
+                    onKeyPress={e => {
+                      if (e.key === 'enter') this.login();
+                    }}
+                    tabIndex={0}
+                  >
+                    Login
+                  </a>
+                </li>
                 :
-                <a // eslint-disable-line jsx-a11y/anchor-is-valid
-                  role="button"
-                  onClick={() => this.logout()}
-                  onKeyPress={e => {
-                    if (e.key === 'enter') this.logout();
-                  }}
-                  tabIndex={0}
-                >
-                  <li><span className="icon icon24 icon-power" /></li>
-                </a>
+                <li>
+                  <a // eslint-disable-line jsx-a11y/anchor-is-valid
+                    role="button"
+                    onClick={() => this.logout()}
+                    onKeyPress={e => {
+                      if (e.key === 'enter') this.logout();
+                    }}
+                    tabIndex={0}
+                  >
+                    <span className="icon icon24 icon-power" />
+                  </a>
+                </li>
               )}
             </ul>
           </nav>

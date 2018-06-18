@@ -22,11 +22,12 @@ export class WSMultiSelect extends WSDropdown {
    */
   componentDidMount() {
     window.select = this;
+    this.icon.addEventListener('click', this.onClickIcon);
     this.input.addEventListener('keyup', this.onKeyUp);
     this.input.addEventListener('focus', this.onFocus);
-    this.input.addEventListener('change', this.onChange);
     this.input.addEventListener('blur', this.onBlur);
-    this.icon.addEventListener('click', this.onClickIcon);
+    this.input.addEventListener('change', this.stopPropagation);
+    this.element.addEventListener('click', this.stopPropagation);
   }
 
   /**
@@ -34,11 +35,12 @@ export class WSMultiSelect extends WSDropdown {
    * @returns {void}
    */
   componentWillUnmount() {
+    this.icon.removeEventListener('click', this.onClickIcon);
     this.input.removeEventListener('keyup', this.onKeyUp);
     this.input.removeEventListener('focus', this.onFocus);
-    this.input.removeEventListener('change', this.onChange);
     this.input.removeEventListener('blur', this.onBlur);
-    this.icon.removeEventListener('click', this.onClickIcon);
+    this.input.removeEventListener('change', this.stopPropagation);
+    this.element.removeEventListener('stopPropagation', this.stopPropagation);
   }
 
   /**
@@ -69,7 +71,7 @@ export class WSMultiSelect extends WSDropdown {
    */
   onFocus = event => {
     event.stopPropagation();
-    this.open();
+    this.overlay.open();
   };
 
   /**
@@ -80,7 +82,7 @@ export class WSMultiSelect extends WSDropdown {
   onBlur = event => {
     event.stopPropagation();
     // Delay it to make click listener on dropdown item work
-    this.close();
+    this.overlay.close();
   };
 
   /**
@@ -88,7 +90,7 @@ export class WSMultiSelect extends WSDropdown {
    * @param {Event} event JavaScript event object
    * @returns {void}
    */
-  onChange(event) {
+  stopPropagation(event) {
     event.stopPropagation();
   }
 
@@ -102,6 +104,8 @@ export class WSMultiSelect extends WSDropdown {
       ...this.state.value,
       item
     ];
+    // Clear input after selecting a item
+    this.setState({filter: ''});
 
     super.setValue(value);
   }
@@ -124,7 +128,12 @@ export class WSMultiSelect extends WSDropdown {
   renderTrigger() {
     return (
       <div className="input-wrapper">
-        <input type="text" placeholder={this.props.placeholder} ref={element => { this.input = element; }} />
+        <input
+          type="text"
+          placeholder={this.props.placeholder}
+          value={this.state.filter}
+          ref={element => { this.input = element; }}
+        />
         <span className="icon icon16 icon-magnifiying-glass" ref={element => { this.icon = element; }} />
       </div>
     );

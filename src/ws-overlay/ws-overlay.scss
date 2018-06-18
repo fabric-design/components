@@ -1,0 +1,100 @@
+$overlay-width: rem(200px) !default;
+$overlay-shadow: map-get($elevation-shadows, raised) !default;
+$overlay-arrow-shadow-color: rgba(0, 0, 0, 0.16) !default; // $elevation2 color 1
+$overlay-font-color: $base-font-color !default;
+$overlay-font-family: $base-font-family !default;
+$overlay-color-active: $heaven !default;
+$overlay-separator-color: $earl-gray !default;
+$overlay-background-color: $white !default;
+$overlay-background-color-accent: $earl-gray !default;
+// Can we refactor this one, with clear direct class names instead of much depth.
+// As stylelint throws an error on different levels, e.g. too much depth in scss or more then 3 compound selectors
+// Maybe it is not possible (optional)
+
+/* stylelint-disable selector-max-compound-selectors, max-nesting-depth */
+@mixin overlay-container($width, $background-color, $shadow) {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: $width;
+  height: 0;
+  margin-top: $space-s;
+  display: none;
+  background-color: $background-color;
+  border-radius: 2px;
+  box-shadow: $shadow;
+  transition: height 0.25s ease;
+  will-change: height;
+  overflow: hidden;
+  z-index: 3;
+
+  &.mod-left {
+    right: auto;
+    left: 0;
+  }
+}
+
+@mixin overlay() {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  margin: 0;
+  padding: $space-m;
+  width: 100%;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+@mixin overlay-arrow($container-background-color, $container-shadow-color) {
+  display: none;
+  position: absolute;
+  width: rem(10px);
+  height: rem(10px);
+  bottom: rem(-17px);
+  left: rem(20px);
+  background: linear-gradient(-45deg, rgba($container-background-color, 0) 50%, $container-background-color 50%);
+  transform: rotate(45deg);
+  z-index: 3;
+  box-shadow: -1px -1px 1px lighten($container-shadow-color, 45%);
+}
+
+.overlay {
+  position: relative;
+  display: block;
+
+  .overlay-container {
+    @include overlay-container($overlay-width, $overlay-background-color, $overlay-shadow);
+
+    &.mod-wide {
+      width: 100%;
+    }
+
+    &.mod-right + .overlay-arrow {
+      right: rem(20px);
+      left: auto;
+    }
+
+    &.mod-open {
+      display: block;
+
+      + .overlay-arrow {
+        display: block;
+      }
+    }
+  }
+
+  .overlay-arrow {
+    @include overlay-arrow($overlay-background-color, $overlay-arrow-shadow-color);
+  }
+
+  .overlay-container.animate-close {
+    animation: closeContainer 0.2s ease-in-out forwards;
+  }
+}
+
+@keyframes closeContainer {
+  100% {
+    height: 0;
+  }
+}

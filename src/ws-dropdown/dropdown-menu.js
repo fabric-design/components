@@ -43,12 +43,14 @@ export class DropdownMenu extends Component {
   static propTypes = {
     parent: PropTypes.object,
     items: PropTypes.array,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
     filterable: PropTypes.bool,
     filter: PropTypes.string,
-    filtered: PropTypes.bool, // Can be required for filtering from outside
+    filtered: PropTypes.bool, // True when filtering from outside e.g. multi-select
     placeholder: PropTypes.string,
     limit: PropTypes.number,
-    selectAll: PropTypes.bool
+    selectAll: PropTypes.bool,
+    handle: PropTypes.func
   };
 
   /**
@@ -110,12 +112,15 @@ export class DropdownMenu extends Component {
   }
 
   /**
-   * Send the new height of this menu after update to the parent.
-   * This will be called when updateFilter did set the new state
+   * Send the new height of this menu after update by the parent.
+   * This will be called when updateFilter did set the new state or outside new dropdown items came in.
+   * Only if the current menu is really active we propagate the new height
    * @returns {void}
    */
   componentDidUpdate() {
-    this.props.handle('change-size', this.getHeight());
+    if (this.isActive) {
+      this.props.handle('change-height', this.getHeight());
+    }
   }
 
   /**
@@ -144,6 +149,7 @@ export class DropdownMenu extends Component {
     if (this.input) {
       // this.input.focus();
     }
+    this.isActive = true;
     window.addEventListener('keydown', this.onGlobalKeyDown);
   };
 
@@ -152,6 +158,7 @@ export class DropdownMenu extends Component {
    * @returns {void}
    */
   onClose = () => {
+    this.isActive = false;
     window.removeEventListener('keydown', this.onGlobalKeyDown);
   };
 
@@ -314,22 +321,6 @@ export class DropdownMenu extends Component {
   }
 
   /**
-   * Deselect all items which are not stored as value. Only relevant for multi select dropdown.
-   * When the dropdown will be closed without pressing submit the state will be restored
-   * @returns {void}
-   */
-  clearSelections() {
-    if (this.state.items) {
-      this.state.items.forEach(item => {
-        if (item.selected && !item.stored) {
-          item.selected = false;
-        }
-      });
-      this.setState({items: this.state.items});
-    }
-  }
-
-  /**
    * Handles data propagation from child menus
    * This function uses arrow function to bind the scope to this instance
    * @param {String} type Should be just show-parent
@@ -350,9 +341,12 @@ export class DropdownMenu extends Component {
         this.showChild(data);
         break;
       case 'change':
-        this.clearSelections();
+        // Clear filter input after selecting item
+        if (this.props.filterable) {
+          this.setState({filter: ''});
+        }
         // If we have a single select we want to deselect the previous selected item
-        if (!this.context.multiple && !this.state.filtered) {
+        if (!this.context.multiple) {
           const previous = this.state.items.find(item => item.stored && item !== data);
           if (previous) {
             previous.stored = false;
@@ -361,7 +355,7 @@ export class DropdownMenu extends Component {
         }
         this.props.handle(type, data);
         break;
-      case 'change-size':
+      case 'change-height':
       default:
         this.props.handle(type, data);
         break;
@@ -370,14 +364,17 @@ export class DropdownMenu extends Component {
 
   /**
    * Shows the child menu and hides the current menu
-   * @param {WSDropdownMenu} subMenu The reference of the child menu to show
+   * @param {DropdownMenu} subMenu The reference of the child menu to show
    * @returns {void}
    */
   showChild(subMenu) {
     this.openSubMenu = subMenu;
-    this.props.handle('change-size', subMenu.getHeight());
+    this.props.handle('change-height', subMenu.getHeight());
     this.animateOut(false);
     subMenu.animateIn(false);
+
+    subMenu.isActive = true;
+    this.isActive = false;
   }
 
   /**
@@ -386,9 +383,11 @@ export class DropdownMenu extends Component {
    */
   showCurrent() {
     if (this.openSubMenu) {
-      this.props.handle('change-size', this.getHeight());
+      this.props.handle('change-height', this.getHeight());
       this.openSubMenu.animateOut(true);
       this.animateIn(true);
+      this.openSubMenu.isActive = false;
+      this.isActive = true;
       this.openSubMenu = null;
     }
   }
@@ -476,7 +475,7 @@ export class DropdownMenu extends Component {
           <li className="dropdown-input" key="filter">
             <input
               type="text"
-              defaultValue={this.state.filter}
+              value={this.state.filter}
               placeholder={this.props.placeholder}
               ref={element => { this.input = element; }}
             />

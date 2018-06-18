@@ -133,7 +133,7 @@ render(
         ]}
       />
       <br />
-      <WSDropdown text="Input" type="select" width="50%" placeholder="tasd" value="222" inputOnly />
+      <WSDropdown text="Input" orientation="right" type="select" width="50%" placeholder="tasd" value="222" inputOnly />
       <br />
       <WSNotification />
       <br />

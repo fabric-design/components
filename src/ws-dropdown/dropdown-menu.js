@@ -146,9 +146,6 @@ export class DropdownMenu extends Component {
    * @returns {void}
    */
   onOpen = () => {
-    if (this.input) {
-      // this.input.focus();
-    }
     this.isActive = true;
     window.addEventListener('keydown', this.onGlobalKeyDown);
   };

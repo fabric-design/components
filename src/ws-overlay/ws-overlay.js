@@ -2,8 +2,22 @@ import {React, PropTypes, Component} from '../imports';
 
 const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
 
+/**
+ * This class provides basic functionality to show content in an absolute positioned overlay. It either detects
+ * the height of it's content automatically by their clientHeight or you can use the setHeight function to
+ * programmatically set the overlay height.
+ *
+ * @property {number} width Width of the overlay in percent
+ * @property {string} orientation Can be either left or right
+ * @property {Function} onOpen Will be called when dialog opened
+ * @property {Function} onClose Will be called when dialog closed
+ */
 export class WSOverlay extends Component {
 
+  /**
+   * React default property values
+   * @type {Object}
+   */
   static defaultProps = {
     width: '',
     orientation: 'left',
@@ -11,6 +25,10 @@ export class WSOverlay extends Component {
     onClose: () => {}
   };
 
+  /**
+   * React property types
+   * @type {Object}
+   */
   static propTypes = {
     width: PropTypes.string,
     orientation: PropTypes.string,
@@ -20,7 +38,7 @@ export class WSOverlay extends Component {
 
   /**
    * Holds the instance of the currently open overlay
-   * @type {Overlay}
+   * @type {WSOverlay}
    */
   static openOverlay = null;
 
@@ -80,13 +98,13 @@ export class WSOverlay extends Component {
    */
   open() {
     // Stop if this dropdown is already opened or close previous opened dropdown
-    if (Overlay.openDropdown === this) {
+    if (WSOverlay.openOverlay === this) {
       return;
-    } else if (Overlay.openDropdown) {
-      Overlay.openDropdown.close();
+    } else if (WSOverlay.openOverlay) {
+      WSOverlay.openOverlay.close();
     }
 
-    Overlay.openDropdown = this;
+    WSOverlay.openOverlay = this;
     this.container.style.height = 0;
     this.container.classList.add('mod-open');
     // Calculate initial height from all children if no content height is set
@@ -114,17 +132,13 @@ export class WSOverlay extends Component {
    * @returns {void}
    */
   close() {
-    if (Overlay.openDropdown !== this) {
+    if (WSOverlay.openOverlay !== this) {
       return;
     }
-    Overlay.openDropdown = null;
+    WSOverlay.openOverlay = null;
     this.animateElement(this.container, 'animate-close', container => {
       container.classList.remove('mod-open');
       container.style.height = 0;
-      // If this a multi select dropdown abort
-      if (this.props.multiple) {
-        this.dropdownMenu.clearSelections();
-      }
     });
 
     window.removeEventListener('keydown', this.onGlobalKeyDown);
@@ -140,7 +154,7 @@ export class WSOverlay extends Component {
    * @returns {void}
    */
   toggle() {
-    if (Overlay.openDropdown !== this) {
+    if (WSOverlay.openOverlay !== this) {
       this.open();
     } else {
       this.close();

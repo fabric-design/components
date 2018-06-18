@@ -8,7 +8,6 @@ import {React, Component, PropTypes} from '../imports';
 export class WSInlineEdit extends Component {
 
   /**
-   * @propTypes
    * Types of properties
    */
   static propTypes = {
@@ -17,7 +16,6 @@ export class WSInlineEdit extends Component {
   };
 
   /**
-   * @defaultProps
    * Create default onUpdate function to prevent errors if user don't use it
    */
   static defaultProps = {

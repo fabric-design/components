@@ -11,12 +11,12 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * @property {Object} props.parent Parent dropdown item. Only set if this is a child menu
  * @property {Array<Object>} props.items List of dropdown item configs. Each item can contain label, value, disabled, selected
  * @property {Object|Array<Object>} props.value Selected dropdown item(s)
- * @property {Boolean} props.filterable Flag if the dropdown menu is filterable
- * @property {Boolean} props.filtered Should be true when items are filtered outside but dropdown has no filter possibility
+ * @property {boolean} props.filterable Flag if the dropdown menu is filterable
+ * @property {boolean} props.filtered Should be true when items are filtered outside but dropdown has no filter possibility
  * @property {string} props.filter Default filter value
  * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
  * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
- * @property {Boolean} props.selectAll Show button to select all items
+ * @property {boolean} props.selectAll Show button to select all items
  * @property {Function} props.handle Function used to propagate data
  */
 export class DropdownMenu extends Component {
@@ -227,7 +227,7 @@ export class DropdownMenu extends Component {
 
   /**
    * Gets the current height of the menu
-   * @returns {Number}
+   * @returns {number}
    */
   getHeight() {
     return this.menuContainer.clientHeight;
@@ -320,7 +320,7 @@ export class DropdownMenu extends Component {
   /**
    * Handles data propagation from child menus
    * This function uses arrow function to bind the scope to this instance
-   * @param {String} type Should be just show-parent
+   * @param {string} type Should be just show-parent
    * @param {*} data Propagated data. Could be for instance a menu reference or the menu height.
    * @returns {void}
    */
@@ -391,7 +391,7 @@ export class DropdownMenu extends Component {
 
   /**
    * Animates a menu or sub menu into the view
-   * @param {Boolean} goBack True if a menu should be shown and a sub menu be hidden
+   * @param {boolean} goBack True if a menu should be shown and a sub menu be hidden
    * @returns {void}
    */
   animateIn(goBack) {
@@ -405,7 +405,7 @@ export class DropdownMenu extends Component {
 
   /**
    * Animates a menu or sub menu out of the view
-   * @param {Boolean} goBack True if a menu should be hidden and a sub menu be shown
+   * @param {boolean} goBack True if a menu should be hidden and a sub menu be shown
    * @returns {void}
    */
   animateOut(goBack) {
@@ -422,7 +422,7 @@ export class DropdownMenu extends Component {
   /**
    * Animates an element by adding a class with an css animation and executes a callback when the animation ends
    * @param {Element} item The dom node to animate
-   * @param {String} animationClass The css class which holds the animation definition
+   * @param {string} animationClass The css class which holds the animation definition
    * @param {Function} callback Callback which will be executed at the end of the animation
    * @returns {void}
    */
@@ -489,14 +489,14 @@ export class DropdownMenu extends Component {
           <li className="dropdown-item-separator" key="parent-separator" />
         ]}
         {(hasValue && (this.context.multiple || this.props.filterable)) ? [
-          this.state.items.filter(item => item.stored).map((item, index) =>
+          this.state.items.filter(item => item.stored).map((item, index) => (
             <DropdownMenuItem item={item} handle={this.handlePropagation} key={`value-${index}`} />
-          ),
+          )),
           <li className="dropdown-item-separator" key="value-separator" />
         ] : null}
-        {items.map((item, index) =>
+        {items.map((item, index) => (
           <DropdownMenuItem item={item} handle={this.handlePropagation} key={`item-${index}`} />
-        )}
+        ))}
         {(!items || !items.length) &&
           <DropdownMenuItem item={{label: 'No results found', disabled: true}} key="disabled" />
         }

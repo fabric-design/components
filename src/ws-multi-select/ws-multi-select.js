@@ -106,6 +106,8 @@ export class WSMultiSelect extends WSDropdown {
     ];
     // Clear input after selecting a item
     this.setState({filter: ''});
+    // Un-setting the overlay height results in reevaluation when opening
+    this.overlay.contentHeight = null;
 
     super.setValue(value);
   }
@@ -148,12 +150,12 @@ export class WSMultiSelect extends WSDropdown {
       <div className="ws-multi-select">
         {jsx}
         <ul className="selected-items">
-          {this.state.value.map((item, index) =>
+          {this.state.value.map((item, index) => (
             <li key={`selected-item-${index}`} title={item.label}>
               <span className="text">{item.label}</span>
               <span className="icon icon16 icon-cross" onClick={() => this.removeItem(item)} />
             </li>
-          )}
+          ))}
         </ul>
       </div>
     );

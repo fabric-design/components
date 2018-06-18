@@ -32,7 +32,10 @@ module.exports = {
       "allowForLoopAfterthoughts": true,
     }],
     "no-unused-expressions": 1,
+    "padded-blocks": ["error", {"blocks": "never"}],
     "object-curly-spacing": [2, "never"],
+    "object-curly-newline": [2, {"multiline": true, "consistent": true}],
+    "function-paren-newline": [2, "multiline"],
     // Since for in/of loops are not permitted we have to loop with forEach and
     // therefore it's required to be able to assign to param properties
     "no-param-reassign": [2, {"props": false}],
@@ -48,8 +51,8 @@ module.exports = {
     }],
     "jsx-a11y/aria-props": 2,
     "jsx-a11y/heading-has-content": 0,
-    "jsx-a11y/anchor-is-valid": 2,
-    "jsx-a11y/mouse-events-have-key-events": 2,
+    "jsx-a11y/anchor-is-valid": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
     "jsx-a11y/role-has-required-aria-props": 2,
     "jsx-a11y/role-supports-aria-props": 2,
     "jsx-a11y/no-static-element-interactions": 0,
@@ -69,7 +72,7 @@ module.exports = {
     "react/self-closing-comp": 0,
     "react/prop-types": 0,
     "react/no-string-refs": 0,
-    "react/prefer-stateless-function": 1,
+    "react/prefer-stateless-function": 0,
     "require-yield": 0,
     "require-jsdoc": ["error", {
       "require": {

@@ -8,7 +8,7 @@ import Flatpickr from './flatpickr';
  * You can set additional options to the flatpickr by passing the options property.
  * If you only want to display an icon instead of a input set prop iconOnly.
  *
- * @link https://chmln.github.io/flatpickr/
+ * @see https://chmln.github.io/flatpickr/
  */
 export class WSDatePicker extends Component {
 
@@ -98,7 +98,7 @@ export class WSDatePicker extends Component {
   /**
    * Handle date selections and propagate the value via an custom change event and onChange callback
    * @param {Date} selectedDate The currently selected date
-   * @param {String} value The date as string using the in props specified formatting
+   * @param {string} value The date as string using the in props specified formatting
    * @returns {void}
    */
   onChange([selectedDate], value) {

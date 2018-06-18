@@ -84,7 +84,7 @@ export class WSOverlay extends Component {
 
   /**
    * Set's the size on an element
-   * @param {Number} newHeight The new size of the active menu will become the new dropdown container size
+   * @param {number} newHeight The new size of the active menu will become the new dropdown container size
    * @returns {void}
    */
   setHeight(newHeight) {
@@ -164,7 +164,7 @@ export class WSOverlay extends Component {
   /**
    * Animates an element by adding a class with an css animation and executes a callback when the animation ends
    * @param {Element} item The dom node to animate
-   * @param {String} animationClass The css class which holds the animation definition
+   * @param {string} animationClass The css class which holds the animation definition
    * @param {Function} callback Callback which will be executed at the end of the animation
    * @returns {void}
    */

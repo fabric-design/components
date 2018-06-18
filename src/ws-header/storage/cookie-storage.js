@@ -59,7 +59,7 @@ export class CookieStorage extends AbstractStorage {
    */
   createCookie(key, value, expires) {
     const encodedValue = encodeURIComponent(JSON.stringify(value));
-    const domain = location.hostname.replace(EXTRACT_TOP_LEVEL_DOMAIN, '$1');
+    const domain = window.location.hostname.replace(EXTRACT_TOP_LEVEL_DOMAIN, '$1');
     // Create cookie which is one day valid for the top level domain scope
     document.cookie = `${this.name}${key}=${encodedValue};expires=${expires};domain=${domain}`;
   }

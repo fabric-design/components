@@ -80,7 +80,7 @@ export class Authorization {
       ['response_type', 'token']
     ]);
 
-    location.href = `${loginUrl}?${query}`;
+    window.location.href = `${loginUrl}?${query}`;
   }
 
   /**
@@ -106,7 +106,7 @@ export class Authorization {
 
   /**
    * Creates a query string from given parameters
-   * @param {Array<Array<String>>} params List of key value pairs
+   * @param {Array<Array<string>>} params List of key value pairs
    * @returns {string}
    * @private
    */

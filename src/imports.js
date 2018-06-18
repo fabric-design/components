@@ -9,7 +9,7 @@ export const React = {
   Children: _React_.Children
 };
 export const PropTypes = types;
-export const render = ReactDOM.render;
+export const {render} = ReactDOM;
 
 /**
  * This is a abstract React/Preact component class

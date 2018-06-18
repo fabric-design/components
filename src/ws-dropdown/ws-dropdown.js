@@ -39,14 +39,14 @@ function deep(items, getChildren, callback) {
  * @property {string} props.type Type of trigger. Can be anchor, button, select or icon
  * @property {string} props.text Text of trigger
  * @property {string} props.icon Class name of icon in trigger
- * @property {Boolean} props.multiple Flag if the dropdown is a multi select menu
- * @property {Boolean} props.filterable Flag if the dropdown menu is filterable
- * @property {Boolean} props.inputOnly Flag if the dropdown only contains a text input and a button
+ * @property {boolean} props.multiple Flag if the dropdown is a multi select menu
+ * @property {boolean} props.filterable Flag if the dropdown menu is filterable
+ * @property {boolean} props.inputOnly Flag if the dropdown only contains a text input and a button
  * @property {string} props.filter Default filter value
  * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
  * @property {string} props.orientation Dropdown orientation. Can be either left or right
  * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
- * @property {Boolean} props.selectAll Show button to select all items
+ * @property {boolean} props.selectAll Show button to select all items
  * @property {string} props.onChange Callback for react components to propagate value changes
  */
 export class WSDropdown extends Component {
@@ -196,9 +196,9 @@ export class WSDropdown extends Component {
 
   /**
    * Get text from labels of selected items
-   * @param {String|Object|Array<Object>} value Selected items
+   * @param {string|Object|Array<Object>} value Selected items
    * @param {Array<*>} args Optionally a default text can be passed
-   * @returns {String}
+   * @returns {string}
    */
   getTextFromValue(value, ...args) {
     const propsText = args.length > 0 ? args[0] : '';
@@ -274,13 +274,14 @@ export class WSDropdown extends Component {
 
   /**
    * Handles data propagation from child elements
-   * @param {String} type Either change for value changes or change-height which will be emitted on menu changes
-   * @param {Object|Number} data Either new value or height of new menu
+   * @param {string} type Either change for value changes or change-height which will be emitted on menu changes
+   * @param {Object|number} data Either new value or height of new menu
    * @returns {void}
    */
   handlePropagation = (type, data) => {
     if (type === 'change') {
       this.overlay.close();
+      // Un-setting the overlay height results in reevaluation when opening
       this.overlay.contentHeight = null;
       this.setValue(data);
     } else if (type === 'change-height') {
@@ -290,7 +291,7 @@ export class WSDropdown extends Component {
 
   /**
    * Used to convert the items if they are strings into the required object structure
-   * @param {String|Array<String|Object>} items List of items represented as string or object
+   * @param {string|Array<string|Object>} items List of items represented as string or object
    * @param {Function} resolveLabel Optional callback to resolve the item label
    * @returns {Array<Object>}
    */

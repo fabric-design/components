@@ -63,9 +63,7 @@ export class WSTabMenu extends Component {
    * @returns {void}
    */
   componentWillUnmount() {
-    this.menuItems.forEach(element =>
-      element.removeEventListener('click', this.onClick)
-    );
+    this.menuItems.forEach(element => element.removeEventListener('click', this.onClick));
   }
 
   /**
@@ -112,7 +110,7 @@ export class WSTabMenu extends Component {
 
   /**
    * Animate the dash below the new active item
-   * @param {Element} newMenuItem HTMLElement of new active menu item
+   * @param {HTMLElement} newMenuItem HTMLElement of new active menu item
    * @returns {void}
    */
   animateDash(newMenuItem) {
@@ -140,7 +138,7 @@ export class WSTabMenu extends Component {
    * Render a single menu item
    * @param {Object} item Menu item object
    * @param {number} index Index of item in item list
-   * @returns {XML}
+   * @returns {JSX}
    */
   renderMenuItem(item, index) {
     let className = `tab-item ${item.className || ''}`;
@@ -162,15 +160,15 @@ export class WSTabMenu extends Component {
 
   /**
    * Render the component markup
-   * @returns {XML}
+   * @returns {JSX}
    */
   render() {
     return (
       <div className="tab-menu-container" ref={element => { this.element = element; }}>
         <ul className="tab-menu">
-          {this.props.items.map((item, index) =>
+          {this.props.items.map((item, index) => (
             this.renderMenuItem(item, index)
-          )}
+          ))}
         </ul>
         <div className="dash-bar">
           <div className="dash" ref={element => { this.dash = element; }} />

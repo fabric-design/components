@@ -4,7 +4,9 @@ import * as types from 'prop-types';
 
 // API shared by Preact and React
 export const React = {
-  createElement: _React_.createElement || _React_.h
+  createElement: _React_.createElement || _React_.h,
+  cloneElement: _React_.cloneElement,
+  Children: _React_.Children
 };
 export const PropTypes = types;
 export const render = ReactDOM.render;

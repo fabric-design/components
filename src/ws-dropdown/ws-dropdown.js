@@ -1,8 +1,7 @@
 import {React, Component, PropTypes} from '../imports';
 import {DropdownMenu} from './dropdown-menu';
 import {DropdownInput} from './dropdown-input';
-
-const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
+import {WSOverlay} from '../ws-overlay/ws-overlay';
 
 /**
  * Helper function to iterate over all nesting levels without recursion
@@ -101,11 +100,6 @@ export class WSDropdown extends Component {
   };
 
   /**
-   * @type {WSDropdown}
-   */
-  static openDropdown = null;
-
-  /**
    * @type {Object}
    */
   static childContextTypes = {
@@ -139,7 +133,6 @@ export class WSDropdown extends Component {
   componentDidMount() {
     this.element.addEventListener('click', this.onAnyEvent);
     this.trigger.addEventListener('click', this.onTriggerClick);
-    window.addEventListener('click', this.onDocumentClick);
   }
 
   /**
@@ -158,38 +151,7 @@ export class WSDropdown extends Component {
   componentWillUnmount() {
     this.element.removeEventListener('click', this.onAnyEvent);
     this.trigger.removeEventListener('click', this.onTriggerClick);
-    window.removeEventListener('click', this.onDocumentClick);
   }
-
-  /**
-   * Handles click on document body to close the dropdown if clicked elsewhere
-   * @param {MouseEvent} event JavaScript event object
-   * @returns {void}
-   */
-  onDocumentClick = event => {
-    let element = event.target;
-    while (element && this.element !== element) {
-      element = element.parentNode;
-    }
-    // Element will be empty if not clicked into the current filter dialog
-    if (!element) {
-      this.close();
-    }
-  };
-
-  /**
-   * Handle clicks on dropdown trigger
-   * @param {MouseEvent} event JavaScript event object
-   * @returns {void}
-   */
-  onTriggerClick = event => {
-    event.stopPropagation();
-    if (WSDropdown.openDropdown !== this) {
-      this.open();
-    } else {
-      this.close();
-    }
-  };
 
   /**
    * Prevent event to bubble up and keep it inside drop down
@@ -201,19 +163,36 @@ export class WSDropdown extends Component {
   };
 
   /**
-   * Handles global key down events when dropdown was opened
-   * @param {KeyboardEvent} event JavaScript event object
+   * Handle clicks on dropdown trigger
+   * @param {MouseEvent} event JavaScript event object
    * @returns {void}
    */
-  onGlobalKeyDown = event => {
-    switch (event.key) {
-      case 'Escape':
-        this.close();
-        break;
-      default:
-        break;
+  onTriggerClick = event => {
+    event.stopPropagation();
+    if (!this.props.disabled) {
+      this.overlay.toggle();
     }
   };
+
+  /**
+   * Call child onOpen function if available
+   * @returns {void}
+   */
+  onOpen() {
+    if (typeof this.dropdownMenu.onOpen === 'function') {
+      this.dropdownMenu.onOpen();
+    }
+  }
+
+  /**
+   * Call child onOpen function if available
+   * @returns {void}
+   */
+  onClose() {
+    if (typeof this.dropdownMenu.onClose === 'function') {
+      this.dropdownMenu.onClose();
+    }
+  }
 
   /**
    * Get text from labels of selected items
@@ -295,22 +274,23 @@ export class WSDropdown extends Component {
 
   /**
    * Handles data propagation from child elements
-   * @param {String} type Either change for value changes or change-size which will be emitted on menu changes
+   * @param {String} type Either change for value changes or change-height which will be emitted on menu changes
    * @param {Object|Number} data Either new value or height of new menu
    * @returns {void}
    */
   handlePropagation = (type, data) => {
     if (type === 'change') {
-      this.close();
+      this.overlay.close();
+      this.overlay.contentHeight = null;
       this.setValue(data);
-    } else if (type === 'change-size') {
-      this.adjustSize(data);
+    } else if (type === 'change-height') {
+      this.overlay.setHeight(data);
     }
   };
 
   /**
    * Used to convert the items if they are strings into the required object structure
-   * @param {Array<String|Object>} items List of items represented as string or object
+   * @param {String|Array<String|Object>} items List of items represented as string or object
    * @param {Function} resolveLabel Optional callback to resolve the item label
    * @returns {Array<Object>}
    */
@@ -330,88 +310,6 @@ export class WSDropdown extends Component {
       }
       return item;
     });
-  }
-
-  /**
-   * Opens the dropdown
-   * @returns {void}
-   */
-  open() {
-    // Stop if this dropdown is already opened or close previous opened dropdown
-    if (WSDropdown.openDropdown === this || this.props.disabled) {
-      return;
-    } else if (WSDropdown.openDropdown) {
-      WSDropdown.openDropdown.close();
-    }
-
-    WSDropdown.openDropdown = this;
-    this.dropdownContainer.style.height = 0;
-    this.dropdownContainer.classList.add('mod-open');
-    this.adjustSize(this.dropdownMenu.getHeight());
-
-    window.addEventListener('keydown', this.onGlobalKeyDown);
-    // Forward open action to menu
-    if (typeof this.dropdownMenu.onOpen === 'function') {
-      this.dropdownMenu.onOpen();
-    }
-  }
-
-  /**
-   * Closes the dropdown and clears the selection if needed
-   * @returns {void}
-   */
-  close() {
-    if (WSDropdown.openDropdown !== this) {
-      return;
-    }
-    WSDropdown.openDropdown = null;
-    this.animateElement(this.dropdownContainer, 'animate-close', container => {
-      container.classList.remove('mod-open');
-      // If this a multi select dropdown abort
-      if (this.props.multiple) {
-        this.dropdownMenu.clearSelections();
-      }
-    });
-
-    window.addEventListener('keydown', this.onGlobalKeyDown);
-    // Forward close action to menu
-    if (typeof this.dropdownMenu.onClose === 'function') {
-      this.dropdownMenu.onClose();
-    }
-  }
-
-  /**
-   * Set's the size on an element
-   * @param {Number} newSize The new size of the active menu will become the new dropdown container size
-   * @returns {void}
-   */
-  adjustSize(newSize) {
-    this.dropdownContainer.style.height = `${newSize}px`;
-  }
-
-  /**
-   * Animates an element by adding a class with an css animation and executes a callback when the animation ends
-   * @param {Element} item The dom node to animate
-   * @param {String} animationClass The css class which holds the animation definition
-   * @param {Function} callback Callback which will be executed at the end of the animation
-   * @returns {void}
-   */
-  animateElement(item, animationClass, callback) {
-    // Define callback for animation end events
-    const getEventHandler = eventName => {
-      const eventHandler = () => {
-        item.classList.remove(animationClass);
-        item.removeEventListener(eventName, eventHandler);
-        callback(item);
-      };
-      return eventHandler;
-    };
-    // Listen for all possible animation end events
-    ANIMATION_END_EVENTS.forEach(eventName => {
-      item.addEventListener(eventName, getEventHandler(eventName));
-    });
-    // Add class to start animation
-    item.classList.add(animationClass);
   }
 
   /**
@@ -447,7 +345,7 @@ export class WSDropdown extends Component {
             className={`dropdown-trigger select-box ${disabledStyle}`}
             ref={element => { this.trigger = element; }}
           >
-            {icon} {this.state.text}
+            {icon} {this.state.text || this.props.placeholder}
           </div>);
       case 'icon':
       default:
@@ -471,7 +369,7 @@ export class WSDropdown extends Component {
     if (this.props.inputOnly) {
       return (
         <DropdownInput
-          value={this.state.value}
+          value={this.state.value[0]}
           placeholder={this.props.placeholder}
           handle={this.handlePropagation}
           ref={element => { this.dropdownMenu = element; }}
@@ -503,21 +401,22 @@ export class WSDropdown extends Component {
       type,
       className,
       orientation,
-      width,
+      width
     } = this.props;
 
     const isWide = type === 'select';
     return (
       <div className={`dropdown  ${className}`} ref={element => { if (element) { this.element = element; } }}>
         {this.renderTrigger()}
-        <div
-          className={`dropdown-container ${orientation}`}
-          style={{width: width || (isWide ? '100%' : '')}}
-          ref={element => { if (element) { this.dropdownContainer = element; } }}
+        <WSOverlay
+          width={width || (isWide ? '100%' : '')}
+          orientation={orientation}
+          onOpen={() => this.onOpen()}
+          onClose={() => this.onClose()}
+          ref={element => { if (element) { this.overlay = element; } }}
         >
           {this.renderContent()}
-        </div>
-        <div className="dropdown-arrow" />
+        </WSOverlay>
       </div>
     );
   }

@@ -90,6 +90,12 @@ export class DropdownMenuItem extends Component {
     this.dropdownItem.removeEventListener('mousedown', this.onMouseDown);
   }
 
+  /**
+   * Prevent mouse down to prevent following blur event
+   * The blur event triggers overlay close which leads to the click is not captured (invisible element)
+   * @param {MouseEvent} event JavaScript event object
+   * @returns{void}
+   */
   onMouseDown = event => {
     event.preventDefault();
   };
@@ -165,11 +171,13 @@ export class DropdownMenuItem extends Component {
     itemClass += item.children && !this.props.isParent ? ' has-children' : '';
 
     return (
-      <li
-        className={itemClass}
-        ref={element => { this.dropdownItem = element; }}
-      >
-        <a className={anchorClass} href={item.href} title={item.title || item.label}>
+      <li className={itemClass}>
+        <a
+          className={anchorClass}
+          href={item.href}
+          title={item.title || item.label}
+          ref={element => { this.dropdownItem = element; }}
+        >
           {(this.props.icon || item.icon) &&
             <i className={`icon ${this.props.icon || item.icon}`} />
           }

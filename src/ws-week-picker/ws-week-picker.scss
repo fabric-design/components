@@ -36,6 +36,9 @@ $padding: $space-m;
     cursor: pointer;
     display: inline-block;
     padding-right: 2.25rem;
+    &:hover {
+      border-color: $input-focused-border-color;
+    }
   }
 
   // icon

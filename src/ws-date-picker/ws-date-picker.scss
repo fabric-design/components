@@ -411,6 +411,9 @@
 .flatpickr-input {
   cursor: pointer;
   vertical-align: top;
+  &:hover {
+    border-color: $input-focused-border-color;
+  }
 }
 input.flatpickr-input.active {
   border-color: $input-focused-border-color;

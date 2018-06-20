@@ -2,6 +2,7 @@
   position: relative;
   display: inline-block;
   &.with-input .icon {
+    pointer-events: none;
     position: absolute;
     right: rem(10px);
     top: rem(10px);

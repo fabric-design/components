@@ -14,18 +14,17 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * @property {string} props.type Type of trigger. Can be anchor, button, select or icon
  * @property {string} props.text Text of trigger
  * @property {string} props.icon Class name of icon in trigger
- * @property {Boolean} props.multiple Flag if the dropdown is a multi select menu
- * @property {Boolean} props.filterable Flag if the dropdown menu is filterable
- * @property {Boolean} props.inputOnly Flag if the dropdown only contains a text input and a button
+ * @property {boolean} props.multiple Flag if the dropdown is a multi select menu
+ * @property {boolean} props.filterable Flag if the dropdown menu is filterable
+ * @property {boolean} props.inputOnly Flag if the dropdown only contains a text input and a button
  * @property {string} props.filter Default filter value
  * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
  * @property {string} props.orientation Dropdown orientation. Can be either left or right
  * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
- * @property {Boolean} props.selectAll Show button to select all items
+ * @property {boolean} props.selectAll Show button to select all items
  * @property {string} props.onChange Callback for react components to propagate value changes
  */
 export class WSDropdown extends Component {
-
   /**
    * @type {Object}
    */
@@ -189,9 +188,9 @@ export class WSDropdown extends Component {
 
   /**
    * Get text from labels of selected items
-   * @param {String|Object|Array<Object>} value Selected items
+   * @param {string|Object|Array<Object>} value Selected items
    * @param {Array<*>} args Optionally a default text can be passed
-   * @returns {String}
+   * @returns {string}
    */
   getTextFromValue(value, ...args) {
     const propsText = args.length > 0 ? args[0] : '';
@@ -237,7 +236,7 @@ export class WSDropdown extends Component {
    */
   createState(props) {
     const items = this.enrichItems(props.items);
-    let value = props.value;
+    let {value} = props;
     // For better usability the value can be a primitive value matching a dropdown item value
     if (typeof value === 'string' && props.type !== 'input') {
       value = items.find(item => item.value === value);
@@ -258,8 +257,8 @@ export class WSDropdown extends Component {
 
   /**
    * Handles data propagation from child elements
-   * @param {String} type Either change for value changes or change-size which will be emitted on menu changes
-   * @param {Object|Number} data Either new value or height of new menu
+   * @param {string} type Either change for value changes or change-size which will be emitted on menu changes
+   * @param {Object|number} data Either new value or height of new menu
    * @returns {void}
    */
   handlePropagation = (type, data) => {
@@ -273,7 +272,7 @@ export class WSDropdown extends Component {
 
   /**
    * Used to convert the items if they are strings into the required object structure
-   * @param {Array<String|Object>} items List of items represented as string or object
+   * @param {Array<string|Object>} items List of items represented as string or object
    * @returns {Array<Object>}
    */
   enrichItems(items) {
@@ -346,7 +345,7 @@ export class WSDropdown extends Component {
 
   /**
    * Set's the size on an element
-   * @param {Number} newSize The new size of the active menu will become the new dropdown container size
+   * @param {number} newSize The new size of the active menu will become the new dropdown container size
    * @returns {void}
    */
   adjustSize(newSize) {
@@ -356,7 +355,7 @@ export class WSDropdown extends Component {
   /**
    * Animates an element by adding a class with an css animation and executes a callback when the animation ends
    * @param {Element} item The dom node to animate
-   * @param {String} animationClass The css class which holds the animation definition
+   * @param {string} animationClass The css class which holds the animation definition
    * @param {Function} callback Callback which will be executed at the end of the animation
    * @returns {void}
    */
@@ -378,6 +377,7 @@ export class WSDropdown extends Component {
     item.classList.add(animationClass);
   }
 
+  /* eslint-disable jsx-a11y/anchor-is-valid */
   /**
    * Renders the dropdown trigger element
    * @returns {Object}
@@ -424,6 +424,7 @@ export class WSDropdown extends Component {
           </a>);
     }
   }
+  /* eslint-enable jsx-a11y/anchor-is-valid */
 
   /**
    * Render the content of the dropdown which can be a menu with only input and submit button
@@ -466,7 +467,7 @@ export class WSDropdown extends Component {
       type,
       className,
       orientation,
-      width,
+      width
     } = this.props;
 
     const isWide = type === 'select';

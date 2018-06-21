@@ -6,20 +6,11 @@ import {React, Component, PropTypes} from '../imports';
  * As an example you can use it in div blocks, rows, tables.
  */
 export class WSInlineEdit extends Component {
-
-  /**
-   * @propTypes
-   * Types of properties
-   */
   static propTypes = {
     text: PropTypes.string,
     onUpdate: PropTypes.func
   };
 
-  /**
-   * @defaultProps
-   * Create default onUpdate function to prevent errors if user don't use it
-   */
   static defaultProps = {
     text: '',
     onUpdate: () => {}
@@ -100,7 +91,13 @@ export class WSInlineEdit extends Component {
    */
   render() {
     return (
-      <div className="ws-inline-edit" onClick={() => this.editElement()}>
+      <div
+        className="ws-inline-edit"
+        onClick={() => this.editElement()}
+        onKeyPress={e => {
+          if (e.key === 'enter') this.editElement();
+        }}
+      >
         <input
           type="text"
           className="inlineInput"

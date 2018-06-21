@@ -18,7 +18,6 @@ const DEFAULT_NOTIFICATION_TYPE = 'info';
  * }});
  */
 export class WSNotification extends Component {
-
   /**
    * @constructor
    */
@@ -82,19 +81,25 @@ export class WSNotification extends Component {
     if (!type) {
       type = DEFAULT_NOTIFICATION_TYPE;
     }
+
     this.setState({
-      notifications: this.state.notifications.concat([{title, description, type, lifetime}])
+      notifications: this.state.notifications.concat([{
+        title,
+        description,
+        type,
+        lifetime
+      }])
     });
   }
 
   /**
    * Start to animate in a notification
    * @param {Object} notification The notification to animate in
-   * @param {Number} index Index of notification in the list
+   * @param {number} index Index of notification in the list
    * @returns {void}
    */
   animateIn(notification, index) {
-    const list = this.list;
+    const {list} = this;
     list.style.transition = 'none';
     list.style.transform = 'translate3d(0, 80px, 0)';
     setTimeout(() => {
@@ -117,7 +122,7 @@ export class WSNotification extends Component {
 
   /**
    * Close a specific notification
-   * @param {Number} index The index of the notification in the list
+   * @param {number} index The index of the notification in the list
    * @returns {void}
    */
   close(index) {
@@ -136,28 +141,32 @@ export class WSNotification extends Component {
    * @returns {Object}
    */
   render() {
-    return (<div className="ws-notification-wrapper">
-      <div className="ws-notification-list" ref={element => { this.list = element; }}>
-        {this.state.notifications.map((notification, i) =>
-          <div
-            className={`notification ${notification.type}`}
-            key={`notification-${i}`}
-            ref={element => { this[`notification-${i}`] = element; }}
-            onClick={() => this.close(i)}
-          >
-            <div className="icons">
-              <i className="icon icon-info" />
-              <i className="icon icon-warning" />
-              <i className="icon icon-success" />
-              <i className="icon icon-error" />
-            </div>
-            <div className="content">
-              <div className={(notification.description) ? 'title' : 'title is-standalone'}>{notification.title}</div>
-              {(notification.description) ? <p className="description">{notification.description}</p> : null}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>);
+    return (
+      <div className="ws-notification-wrapper">
+        <div className="ws-notification-list" ref={element => { this.list = element; }}>
+          {this.state.notifications.map((notification, i) => (
+            <div
+              className={`notification ${notification.type}`}
+              key={`notification-${i}`}
+              ref={element => { this[`notification-${i}`] = element; }}
+              onClick={() => this.close(i)}
+              onKeyPress={e => {
+                if (e.key === 'enter') this.close(i);
+              }}
+            >
+              <div className="icons">
+                <i className="icon icon-info" />
+                <i className="icon icon-warning" />
+                <i className="icon icon-success" />
+                <i className="icon icon-error" />
+              </div>
+              <div className="content">
+                <div className={(notification.description) ? 'title' : 'title is-standalone'}>{notification.title}</div>
+                {(notification.description) ? <p className="description">{notification.description}</p> : null}
+              </div>
+            </div>))
+          }
+        </div>
+      </div>);
   }
 }

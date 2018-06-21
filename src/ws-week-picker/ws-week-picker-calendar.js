@@ -11,7 +11,7 @@ const allMonths = [months[10], months[11]].concat(months).concat([months[0], mon
 
 /**
  * @class WSWeekPickerCalendar
- * @property {object} props               - properties
+ * @property {Object} props               - properties
  * @property {number} props.selectedYear  - set a preselected year
  * @property {number} props.selectedWeek  - set a preselected week
  * @property {function} props.onChange    - handler which notifies about picked week
@@ -99,7 +99,7 @@ export class WSWeekPickerCalendar extends Component {
       weeksPerMonth.push(getWeeks(i, this.state.showingYear));
     }
     // there are up to 5 weeks per month
-    return [0, 1, 2, 3, 4].map(weekIndex =>
+    return [0, 1, 2, 3, 4].map(weekIndex => (
       <tr key={weekIndex}>
         {allMonths.map((month, monthIndex) => {
           const weekInMonth = weeksPerMonth[monthIndex][weekIndex];
@@ -108,18 +108,25 @@ export class WSWeekPickerCalendar extends Component {
           }
           const {week, year} = weekInMonth;
           return (
-            <td
-              className={(monthIndex < 2 || monthIndex > 13 ? 'off ' : '')
-                        + (this.isActive(year, week) ? 'active ' : '')
-                        + (this.isToday(year, week) ? 'today ' : '')}
-              key={`${monthIndex}_${weekIndex}`}
-              onClick={() => this.props.onChange({week, year})}
-            >
-              <a className="week">{week}</a>
+            <td key={`${monthIndex}_${weekIndex}`}>
+              <a // eslint-disable-line jsx-a11y/anchor-is-valid
+                role="button"
+                tabIndex={0}
+                className={'week ' +
+                          (monthIndex < 2 || monthIndex > 13 ? 'off ' : '')
+                          + (this.isActive(year, week) ? 'active ' : '')
+                          + (this.isToday(year, week) ? 'today ' : '')}
+                onClick={() => this.props.onChange({week, year})}
+                onKeyPress={e => {
+                  if (e.key === 'enter') this.props.onChange({week, year});
+                }}
+              >
+              {week}
+              </a>
             </td>
           );
         })}
-      </tr>);
+      </tr>));
   }
 
   /**
@@ -131,12 +138,24 @@ export class WSWeekPickerCalendar extends Component {
       <div className="ws-date-picker-calendar">
         <table>
           <caption>
-            <span className="prev" onClick={() => this.prevYear()}>
+            <span
+              className="prev"
+              onClick={() => this.prevYear()}
+              onKeyPress={e => {
+                if (e.key === 'enter') this.prevYear();
+              }}
+            >
               <span className="icon icon32 icon-left" />
               {this.state.showingYear - 1}
             </span>
             <span className="current_year">{this.state.showingYear}</span>
-            <span className="next" onClick={() => this.nextYear()}>
+            <span
+              className="next"
+              onClick={() => this.nextYear()}
+              onKeyPress={e => {
+                if (e.key === 'enter') this.nextYear();
+              }}
+            >
               {this.state.showingYear + 1}
               <span className="icon icon32 icon-right" />
             </span>
@@ -178,7 +197,7 @@ function getDateOfISOWeek(week, year) {
  * Calculate a week number from a date. Weeks are starting on Monday.
  * src: https://gist.github.com/dblock/1081513
  * @param {Date} date Date
- * @returns {Number}
+ * @returns {number}
  */
 function getWeekOfYear(date) {
   // Create a copy of this date object

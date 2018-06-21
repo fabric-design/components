@@ -8,10 +8,9 @@ import Flatpickr from './flatpickr';
  * You can set additional options to the flatpickr by passing the options property.
  * If you only want to display an icon instead of a input set prop iconOnly.
  *
- * @link https://chmln.github.io/flatpickr/
+ * https://chmln.github.io/flatpickr/
  */
 export class WSDatePicker extends Component {
-
   static defaultProps = {
     value: null,
     placeholder: '',
@@ -96,7 +95,7 @@ export class WSDatePicker extends Component {
   /**
    * Handle date selections and propagate the value via an custom change event and onChange callback
    * @param {Date} selectedDate The currently selected date
-   * @param {String} value The date as string using the in props specified formatting
+   * @param {string} value The date as string using the in props specified formatting
    * @returns {void}
    */
   onChange([selectedDate], value) {
@@ -132,6 +131,9 @@ export class WSDatePicker extends Component {
             className="icon icon-calendar icon16"
             ref={element => { this.input = element; }}
             onClick={event => this.flatpickr.open(event)}
+            onKeyPress={event => {
+              if (event.detail.key === 'enter') this.flatpickr.open(event);
+            }}
           />
         }
       </div>

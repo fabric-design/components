@@ -6,14 +6,14 @@ import * as types from 'prop-types';
 export const React = {
   createElement: _React_.createElement || _React_.h
 };
-export const PropTypes = types;
-export const render = ReactDOM.render;
-
 /**
- * This is a abstract React/Preact component class
+ * Dispatches a native event
+ * @param {string} name Event name
+ * @param {*} detail Event detail data
+ * @param {boolean} bubbles True if the event bubbles up the dom tree
+ * @returns {void}
  */
 export class Component extends _React_.Component {
-
   /**
    * Dispatches a native event
    * @param {string} name Event name
@@ -29,3 +29,6 @@ export class Component extends _React_.Component {
     }
   }
 }
+
+export const PropTypes = types;
+export const {render} = ReactDOM;

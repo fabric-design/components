@@ -88,7 +88,7 @@ $dropdown-background-color-accent: $earl-gray !default;
     }
 
     .dropdown-menu {
-      @include dropdown();
+      @include dropdown-menu();
 
       &.dropdown-root-menu {
         right: 0;

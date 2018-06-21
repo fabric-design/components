@@ -13,9 +13,9 @@
  * @module WHStyleguide
  */
 
+import { WSDropdown } from '../src/ws-dropdown/ws-dropdown';
 import { WSHeader } from '../src/ws-header/ws-header';
 import { WSDatePicker } from '../src/ws-date-picker/ws-date-picker';
-import { WSDropdown } from '../src/ws-dropdown/ws-dropdown';
 import { WSInlineEdit } from '../src/ws-inline-edit/ws-inline-edit';
 import { WSNotification } from '../src/ws-notification/ws-notification';
 import { WSWeekPicker } from '../src/ws-week-picker/ws-week-picker';

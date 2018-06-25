@@ -10,7 +10,6 @@ import {React, Component, PropTypes} from '../imports';
  * @property {func} props.onClick function(groupName,identifier,element) that is called when a tile is clicked
  */
 export class Tile extends Component {
-
   /**
    * @type {Object}
    */
@@ -41,7 +40,14 @@ export class Tile extends Component {
    * @returns {Object}
    */
   render() {
-    const {identifier, config, size, groupName, className} = this.props;
+    const {
+      identifier,
+      config,
+      size,
+      groupName,
+      className
+    } = this.props;
+
     const style = {
       backgroundColor: config,
       width: `${size}px`,
@@ -53,6 +59,9 @@ export class Tile extends Component {
         className={`tile ${groupName} ${className}`}
         style={style}
         onClick={() => this.props.onClick(groupName, identifier)}
+        onKeypress={e => {
+          if (e.key === 'enter') this.props.onClick(groupName, identifier);
+        }}
         onMouseEnter={this.props.onMouseEnter}
         onMouseLeave={this.props.onMouseLeave}
       />

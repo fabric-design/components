@@ -6,7 +6,6 @@ const EXTRACT_TOP_LEVEL_DOMAIN = /.*?([a-zA-Z0-9-]{3,}\.[a-zA-Z0-9]{2,})$/;
  * This class implements a key value storage based on top level domain cookies
  */
 export class CookieStorage extends AbstractStorage {
-
   /**
    * Set value for specific key in cookies
    * @param {string} key Storage key name
@@ -59,7 +58,7 @@ export class CookieStorage extends AbstractStorage {
    */
   createCookie(key, value, expires) {
     const encodedValue = encodeURIComponent(JSON.stringify(value));
-    const domain = location.hostname.replace(EXTRACT_TOP_LEVEL_DOMAIN, '$1');
+    const domain = window.location.hostname.replace(EXTRACT_TOP_LEVEL_DOMAIN, '$1');
     // Create cookie which is one day valid for the top level domain scope
     document.cookie = `${this.name}${key}=${encodedValue};expires=${expires};domain=${domain}`;
   }

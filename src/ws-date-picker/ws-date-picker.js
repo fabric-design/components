@@ -8,10 +8,9 @@ import Flatpickr from './flatpickr';
  * You can set additional options to the flatpickr by passing the options property.
  * If you only want to display an icon instead of a input set prop iconOnly.
  *
- * @link https://chmln.github.io/flatpickr/
+ * https://chmln.github.io/flatpickr/
  */
 export class WSDatePicker extends Component {
-
   static defaultProps = {
     value: null,
     placeholder: '',
@@ -25,7 +24,8 @@ export class WSDatePicker extends Component {
     placeholder: PropTypes.string,
     iconOnly: PropTypes.bool,
     options: PropTypes.object,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    className: PropTypes.string
   };
 
   static format = 'd.m.Y';
@@ -96,7 +96,7 @@ export class WSDatePicker extends Component {
   /**
    * Handle date selections and propagate the value via an custom change event and onChange callback
    * @param {Date} selectedDate The currently selected date
-   * @param {String} value The date as string using the in props specified formatting
+   * @param {string} value The date as string using the in props specified formatting
    * @returns {void}
    */
   onChange([selectedDate], value) {
@@ -113,25 +113,35 @@ export class WSDatePicker extends Component {
    * @returns {Object}
    */
   render() {
+    const {
+      className,
+      iconOnly,
+      placeholder,
+    } = this.props;
+
     return (
       <div
-        className={`ws-date-picker ${this.props.iconOnly ? 'icon-only' : 'with-input'}`}
+        className={`ws-date-picker ${iconOnly ? 'icon-only' : 'with-input'}`}
         ref={element => { this.element = element; }}
       >
-        {!this.props.iconOnly && [
+        {!iconOnly && [
           <input
+            className={className ? className : ''}
             defaultValue={this.state.value}
-            placeholder={this.props.placeholder}
+            placeholder={placeholder}
             ref={element => { this.input = element; }}
             key="input"
           />,
           <span className="icon icon-calendar icon16" key="icon" />
         ]}
-        {this.props.iconOnly &&
+        {iconOnly &&
           <span
-            className="icon icon-calendar icon16"
+            className={`icon icon-calendar icon16 ${className ? className : ''}`}
             ref={element => { this.input = element; }}
             onClick={event => this.flatpickr.open(event)}
+            onKeyPress={event => {
+              if (event.detail.key === 'enter') this.flatpickr.open(event);
+            }}
           />
         }
       </div>

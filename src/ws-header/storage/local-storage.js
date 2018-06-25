@@ -4,7 +4,6 @@ import {AbstractStorage} from './abstract-storage';
  * This class implements a key value storage based on top level domain cookies
  */
 export class LocalStorage extends AbstractStorage {
-
   /**
    * Set value for specific key in localStorage
    * @param {string} key Storage key name

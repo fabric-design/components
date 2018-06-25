@@ -4,13 +4,12 @@ import {React, Component, PropTypes} from '../imports';
  * Renders a list of clickable buttons. The amount of initial visible buttons can be controlled with
  * the initialVisible property. The user is able to show more than these defined amount by clicking the "more" button.
  *
- * @props {Array} items List of items like {label: "Button 1", value: 1}
- * @props {number} initialVisible Number of items visible without expanding the list
- * @props {number} maxSelected Amount of maximum selectable buttons at once
- * @props {string} buttonClass Additional css classes for each button
+ * @property {Array} items List of items like {label: "Button 1", value: 1}
+ * @property {number} initialVisible Number of items visible without expanding the list
+ * @property {number} maxSelected Amount of maximum selectable buttons at once
+ * @property {string} buttonClass Additional css classes for each button
  */
 export class WSOptionButtons extends Component {
-
   static propTypes = {
     items: PropTypes.array,
     initialVisible: PropTypes.number,
@@ -105,7 +104,7 @@ export class WSOptionButtons extends Component {
     // Mark other items as de-selected and toggle selection of clicked one
     this.state.items[clickedIndex].selected = !this.state.items[clickedIndex].selected;
     const value = this.state.items.filter(item => item.selected).map(item => item.value);
-    this.setState({items: this.state.items, value});
+    this.setState({items: this.state.items});
     // Notify html parents
     this.dispatchEvent('change', value);
     // Notify react and preact parents
@@ -139,7 +138,7 @@ export class WSOptionButtons extends Component {
 
   /**
    * Used to convert the items if they are strings into the required object structure
-   * @param {Array<String|Object>} items List of items represented as string or object
+   * @param {Array<string|Object>} items List of items represented as string or object
    * @returns {Array<Object>}
    */
   enrichItems(items) {
@@ -158,18 +157,18 @@ export class WSOptionButtons extends Component {
   render() {
     return (
       <div className="ws-option-buttons" ref={element => { this.element = element; }}>
-        {this.state.items.map((item, index) =>
+        {this.state.items.map((item, index) => (
           <div className={`option-button ${index < this.state.visible ? '' : 'is-hidden'}`}>
-            <a
+            <a // eslint-disable-line jsx-a11y/anchor-is-valid
               className={`${this.props.buttonClass} ${item.selected ? 'is-active' : ''}`}
               data-index=""
               ref={element => { this.buttons[index] = element; }}
             >
               {item.label || item.value}
             </a>
-          </div>
-        )}
-        <a
+          </div>))
+        }
+        <a // eslint-disable-line jsx-a11y/anchor-is-valid
           className={`show-more ${this.props.initialVisible < this.state.items.length ? 'is-hidden' : ''}`}
           ref={element => { this.moreAnchor = element; }}
         >

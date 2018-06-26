@@ -17,7 +17,8 @@ export class WSDatePicker extends Component {
     placeholder: '',
     iconOnly: false,
     options: {},
-    onChange: () => {}
+    onChange: () => {},
+    onClick: () => {}
   };
 
   static propTypes = {
@@ -26,7 +27,8 @@ export class WSDatePicker extends Component {
     iconOnly: PropTypes.bool,
     options: PropTypes.object,
     onChange: PropTypes.func,
-    className: PropTypes.string
+    className: PropTypes.string,
+    onClick: PropTypes.func
   };
 
   static format = 'd.m.Y';
@@ -128,6 +130,7 @@ export class WSDatePicker extends Component {
         {!iconOnly && [
           <input
             className={className ? className : ''}
+            onClick={onClick}
             defaultValue={this.state.value}
             placeholder={placeholder}
             ref={element => { this.input = element; }}
@@ -139,7 +142,10 @@ export class WSDatePicker extends Component {
           <span
             className={`icon icon-calendar icon16 ${className ? className : ''}`}
             ref={element => { this.input = element; }}
-            onClick={event => this.flatpickr.open(event)}
+            onClick={event => {
+              onClick(event);
+              this.flatpickr.open(event);
+            }}
           />
         }
       </div>

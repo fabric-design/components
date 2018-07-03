@@ -25,7 +25,8 @@ export class WSDatePicker extends Component {
     placeholder: PropTypes.string,
     iconOnly: PropTypes.bool,
     options: PropTypes.object,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    className: PropTypes.string
   };
 
   static format = 'd.m.Y';
@@ -124,23 +125,30 @@ export class WSDatePicker extends Component {
    * @returns {Object}
    */
   render() {
+    const {
+      className,
+      iconOnly,
+      placeholder,
+    } = this.props;
+
     return (
       <div
-        className={`ws-date-picker ${this.props.iconOnly ? 'icon-only' : 'with-input'}`}
+        className={`ws-date-picker ${iconOnly ? 'icon-only' : 'with-input'}`}
         ref={element => { this.element = element; }}
       >
-        {!this.props.iconOnly && [
+        {!iconOnly && [
           <input
+            className={className ? className : ''}
             defaultValue={this.state.value}
-            placeholder={this.props.placeholder}
+            placeholder={placeholder}
             ref={element => { this.input = element; }}
             key="input"
           />,
           <span className="icon icon-calendar icon16" key="icon" />
         ]}
-        {this.props.iconOnly &&
+        {iconOnly &&
           <span
-            className="icon icon-calendar icon16"
+            className={`icon icon-calendar icon16 ${className ? className : ''}`}
             ref={element => { this.input = element; }}
             onClick={event => this.flatpickr.open(event)}
           />

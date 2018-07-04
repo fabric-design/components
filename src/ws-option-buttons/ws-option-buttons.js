@@ -10,7 +10,6 @@ import {React, Component, PropTypes} from '../imports';
  * @props {string} buttonClass Additional css classes for each button
  */
 export class WSOptionButtons extends Component {
-
   static propTypes = {
     items: PropTypes.array,
     initialVisible: PropTypes.number,
@@ -33,7 +32,6 @@ export class WSOptionButtons extends Component {
   constructor(props) {
     super(props);
     this.buttons = [];
-
     this.state = this.createState(props);
   }
 
@@ -105,6 +103,8 @@ export class WSOptionButtons extends Component {
     // Mark other items as de-selected and toggle selection of clicked one
     this.state.items[clickedIndex].selected = !this.state.items[clickedIndex].selected;
     const value = this.state.items.filter(item => item.selected).map(item => item.value);
+    // disabling no-unused-state as due to our createState method it seems that eslint can't recognize initial state
+    // eslint-disable-next-line
     this.setState({items: this.state.items, value});
     // Notify html parents
     this.dispatchEvent('change', value);
@@ -159,17 +159,19 @@ export class WSOptionButtons extends Component {
     return (
       <div className="ws-option-buttons" ref={element => { this.element = element; }}>
         {this.state.items.map((item, index) =>
-          <div className={`option-button ${index < this.state.visible ? '' : 'is-hidden'}`}>
-            <a
-              className={`${this.props.buttonClass} ${item.selected ? 'is-active' : ''}`}
-              data-index=""
-              ref={element => { this.buttons[index] = element; }}
-            >
-              {item.label || item.value}
-            </a>
-          </div>
-        )}
+          (
+            <div className={`option-button ${index < this.state.visible ? '' : 'is-hidden'}`}>
+              <a
+                href="#void"
+                className={`${this.props.buttonClass} ${item.selected ? 'is-active' : ''}`}
+                data-index=""
+                ref={element => { this.buttons[index] = element; }}
+              >
+                {item.label || item.value}
+              </a>
+            </div>))}
         <a
+          href="#void"
           className={`show-more ${this.props.initialVisible < this.state.items.length ? 'is-hidden' : ''}`}
           ref={element => { this.moreAnchor = element; }}
         >

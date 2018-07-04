@@ -11,13 +11,13 @@ import Flatpickr from './flatpickr';
  * @link https://chmln.github.io/flatpickr/
  */
 export class WSDatePicker extends Component {
-
   static defaultProps = {
     value: null,
     placeholder: '',
     iconOnly: false,
     options: {},
-    onChange: () => {}
+    onChange: () => {},
+    className: ''
   };
 
   static propTypes = {
@@ -117,7 +117,7 @@ export class WSDatePicker extends Component {
     const {
       className,
       iconOnly,
-      placeholder,
+      placeholder
     } = this.props;
 
     return (
@@ -127,7 +127,7 @@ export class WSDatePicker extends Component {
       >
         {!iconOnly && [
           <input
-            className={className ? className : ''}
+            className={className || ''}
             defaultValue={this.state.value}
             placeholder={placeholder}
             ref={element => { this.input = element; }}
@@ -137,9 +137,10 @@ export class WSDatePicker extends Component {
         ]}
         {iconOnly &&
           <span
-            className={`icon icon-calendar icon16 ${className ? className : ''}`}
+            className={`icon icon-calendar icon16 ${className || ''}`}
             ref={element => { this.input = element; }}
             onClick={event => this.flatpickr.open(event)}
+            onKeyDown={event => this.flatpickr.open(event)}
           />
         }
       </div>

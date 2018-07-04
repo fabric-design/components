@@ -100,26 +100,30 @@ export class WSWeekPickerCalendar extends Component {
     }
     // there are up to 5 weeks per month
     return [0, 1, 2, 3, 4].map(weekIndex =>
-      <tr key={weekIndex}>
-        {allMonths.map((month, monthIndex) => {
-          const weekInMonth = weeksPerMonth[monthIndex][weekIndex];
-          if (weekInMonth === null || weekInMonth === undefined) {
-            return <td key={`${monthIndex}_${weekIndex}`} />;
-          }
-          const {week, year} = weekInMonth;
-          return (
-            <td
-              className={(monthIndex < 2 || monthIndex > 13 ? 'off ' : '')
-                        + (this.isActive(year, week) ? 'active ' : '')
-                        + (this.isToday(year, week) ? 'today ' : '')}
-              key={`${monthIndex}_${weekIndex}`}
-              onClick={() => this.props.onChange({week, year})}
-            >
-              <a className="week">{week}</a>
-            </td>
-          );
-        })}
-      </tr>);
+      (
+        <tr key={weekIndex}>
+          {allMonths.map((month, monthIndex) => {
+            const weekInMonth = weeksPerMonth[monthIndex][weekIndex];
+            if (weekInMonth === null || weekInMonth === undefined) {
+              return <td key={`${monthIndex}_${weekIndex}`} />;
+            }
+            const {week, year} = weekInMonth;
+            return (
+              /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+              <td
+                className={(monthIndex < 2 || monthIndex > 13 ? 'off ' : '')
+                          + (this.isActive(year, week) ? 'active ' : '')
+                          + (this.isToday(year, week) ? 'today ' : '')}
+                key={`${monthIndex}_${weekIndex}`}
+                onClick={() => this.props.onChange({week, year})}
+                onKeyPress={() => this.props.onChange({week, year})}
+              >
+                <a href="#voidWeek" className="week">{week}</a>
+              </td>
+              /* eslint-enable jsx-a11y/no-noninteractive-element-interactions */
+            );
+          })}
+        </tr>));
   }
 
   /**
@@ -131,12 +135,20 @@ export class WSWeekPickerCalendar extends Component {
       <div className="ws-date-picker-calendar">
         <table>
           <caption>
-            <span className="prev" onClick={() => this.prevYear()}>
+            <span
+              className="prev"
+              onClick={() => this.prevYear()}
+              onKeyPress={() => this.prevYear()}
+            >
               <span className="icon icon32 icon-left" />
               {this.state.showingYear - 1}
             </span>
             <span className="current_year">{this.state.showingYear}</span>
-            <span className="next" onClick={() => this.nextYear()}>
+            <span
+              className="next"
+              onClick={() => this.nextYear()}
+              onKeyPress={() => this.nextYear()}
+            >
               {this.state.showingYear + 1}
               <span className="icon icon32 icon-right" />
             </span>

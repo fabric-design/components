@@ -7,7 +7,6 @@ import {React, Component, PropTypes} from '../imports';
  * @property {Function} onChange Callback function for React/Preact applications
  */
 export class WSTabMenu extends Component {
-
   static propTypes = {
     items: PropTypes.array,
     value: PropTypes.any,
@@ -64,8 +63,7 @@ export class WSTabMenu extends Component {
    */
   componentWillUnmount() {
     this.menuItems.forEach(element =>
-      element.removeEventListener('click', this.onClick)
-    );
+      element.removeEventListener('click', this.onClick));
   }
 
   /**
@@ -169,8 +167,7 @@ export class WSTabMenu extends Component {
       <div className="tab-menu-container" ref={element => { this.element = element; }}>
         <ul className="tab-menu">
           {this.props.items.map((item, index) =>
-            this.renderMenuItem(item, index)
-          )}
+            this.renderMenuItem(item, index))}
         </ul>
         <div className="dash-bar">
           <div className="dash" ref={element => { this.dash = element; }} />

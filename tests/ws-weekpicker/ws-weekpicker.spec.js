@@ -20,6 +20,7 @@ describe('Test: <WSWeekPicker />', () => {
 
   it('should render', () => {
     render(<WSWeekPicker />, container);
+
     expect(container.querySelector('.ws-week-picker')).not.toBe(null);
   });
 
@@ -28,6 +29,7 @@ describe('Test: <WSWeekPicker />', () => {
     const element = container.querySelector('.ws-week-picker');
     element.querySelector('input').click();
     await wait();
+
     expect(element.querySelector('.ws-date-picker-calendar')).not.toBe(null);
     done();
   });
@@ -39,6 +41,7 @@ describe('Test: <WSWeekPicker />', () => {
     await wait();
     element.querySelector('input').click();
     await wait();
+
     expect(element.querySelector('.ws-date-picker-calendar')).toBe(null);
     done();
   });
@@ -46,6 +49,7 @@ describe('Test: <WSWeekPicker />', () => {
   it('should show initial value', () => {
     render(<WSWeekPicker selectedYear="2017" selectedWeek="42" />, container);
     const element = container.querySelector('.ws-week-picker');
+
     expect(element.querySelector('input').value).toBe('Week 42, 2017');
   });
 
@@ -58,6 +62,7 @@ describe('Test: <WSWeekPicker />', () => {
     const weeks = calendar.querySelectorAll('tbody td');
     weeks[20].click();
     await wait();
+
     expect(element.querySelector('input').value).toBe('Week 11, 2017');
     done();
   });
@@ -70,9 +75,11 @@ describe('Test: <WSWeekPicker />', () => {
     const calendar = element.querySelector('.ws-date-picker-calendar');
     calendar.querySelector('.prev').click();
     await wait();
+
     expect(calendar.querySelector('.current_year').textContent).toBe('2016');
     calendar.querySelector('.next').click();
     await wait();
+
     expect(calendar.querySelector('.current_year').textContent).toBe('2017');
     done();
   });

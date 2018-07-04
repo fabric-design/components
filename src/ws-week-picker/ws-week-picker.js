@@ -107,13 +107,14 @@ export class WSWeekPicker extends Component {
       <div className="ws-week-picker" ref={element => { this.element = element; }}>
         <input
           value={this.state.selectedWeek !== null ? `Week ${this.state.selectedWeek}, ${this.state.selectedYear}` : ''}
-          placeholder={'Please choose a week'}
+          placeholder="Please choose a week"
           onClick={() => this.toggleCalendar()}
           readOnly
         />
         <span
           className={`icon icon16 ${this.state.show ? '' : 'icon-calendar'}`}
           onClick={() => this.toggleCalendar()}
+          onKeyPress={() => this.toggleCalendar()}
         />
         {this.state.show &&
           <WSWeekPickerCalendar

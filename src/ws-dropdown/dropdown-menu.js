@@ -19,7 +19,6 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * @property {Function} props.handle Function used to propagate data
  */
 export class DropdownMenu extends Component {
-
   /**
    * @type {Object}
    */
@@ -45,7 +44,9 @@ export class DropdownMenu extends Component {
     filter: PropTypes.string,
     placeholder: PropTypes.string,
     limit: PropTypes.number,
-    selectAll: PropTypes.bool
+    selectAll: PropTypes.bool,
+    value: PropTypes.object,
+    handle: PropTypes.fn
   };
 
   /**
@@ -489,13 +490,11 @@ export class DropdownMenu extends Component {
         ]}
         {(hasValue && (this.context.multiple || this.props.filterable)) ? [
           this.state.items.filter(item => item.stored).map((item, index) =>
-            <DropdownMenuItem item={item} handle={this.handlePropagation} key={`value-${index}`} />
-          ),
+            <DropdownMenuItem item={item} handle={this.handlePropagation} key={`value-${index}`} />),
           <li className="dropdown-item-separator" key="value-separator" />
         ] : null}
         {items.map((item, index) =>
-          <DropdownMenuItem item={item} handle={this.handlePropagation} key={`item-${index}`} />
-        )}
+          <DropdownMenuItem item={item} handle={this.handlePropagation} key={`item-${index}`} />)}
         {(!items || !items.length) &&
           <DropdownMenuItem item={{label: 'No results found', disabled: true}} key="disabled" />
         }

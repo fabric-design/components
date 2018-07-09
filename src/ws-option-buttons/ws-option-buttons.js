@@ -103,8 +103,7 @@ export class WSOptionButtons extends Component {
     // Mark other items as de-selected and toggle selection of clicked one
     this.state.items[clickedIndex].selected = !this.state.items[clickedIndex].selected;
     const value = this.state.items.filter(item => item.selected).map(item => item.value);
-    // disabling no-unused-state as due to our createState method it seems that eslint can't recognize initial state
-    // eslint-disable-next-line
+    // eslint-disable-next-line react/no-unused-state
     this.setState({items: this.state.items, value});
     // Notify html parents
     this.dispatchEvent('change', value);

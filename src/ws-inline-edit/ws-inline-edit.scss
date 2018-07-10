@@ -1,20 +1,22 @@
 .ws-inline-edit {
-  @include inset-spacing-squish("xs");
   display: inline-block;
-  line-height: $base-line-height;
-  .inlineValue {
-    display: inline-block;
-    font-weight: normal;
-    line-height: $base-line-height;
-    padding: 0 $space-xs;
+  .input-wrapper input {
+    color: inherit;
   }
-  .inlineInput {
-    transition: all 0.5s ease;
-    &[disabled] {
-      cursor: text;
-      background-color: transparent;
-      border-color: transparent;
-      box-shadow: 0 0 0;
-    }
+  &:not(.is-editing) .input-wrapper input {
+    border-color: transparent;
+    box-shadow: none;
+    background: transparent;
+    color: inherit;
   }
+  &.number input,
+  &.price input {
+    text-align: right;
+  }
+}
+table td .ws-inline-edit input {
+  line-height: inherit;
+  // Correct table td padding
+  margin: 0 -$space-m;
+  padding: 0 $space-m;
 }

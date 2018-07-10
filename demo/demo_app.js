@@ -138,25 +138,26 @@ render(
       <WSNotification />
       <br />
       <div style={{width: '60%'}}>
-        <WSInlineEdit text="Some text to check" />
+        <WSInlineEdit value="Some text to check" />
+        <WSInlineEdit value="123.456,45" options={{locale: 'en'}} type="price" onChange={data => console.log(data)} />
       </div>
       <br />
       <table style={{width: '50%'}}>
         <tbody>
           <tr>
-            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
-            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
-            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
-            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+            <td><WSInlineEdit value="Some text to check" onChange={text => console.log(text)} /></td>
+            <td><WSInlineEdit value="Some text to check" onChange={text => console.log(text)} /></td>
+            <td><WSInlineEdit value="Some text to check" onChange={text => console.log(text)} /></td>
+            <td><WSInlineEdit value="Some text to check" onChange={text => console.log(text)} /></td>
           </tr>
           <tr>
-            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
-            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
-            <td colSpan="2"><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+            <td><WSInlineEdit value="Some text to check" onChange={text => console.log(text)} /></td>
+            <td><WSInlineEdit value="Some text to check" onChange={text => console.log(text)} /></td>
+            <td colSpan="2"><WSInlineEdit value="Some text to check" onChange={text => console.log(text)} /></td>
           </tr>
           <tr>
-            <td><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
-            <td colSpan="3"><WSInlineEdit text="Some text to check" onUpdate={text => console.log(text)} /></td>
+            <td><WSInlineEdit value="Some text to check" onChange={text => console.log(text)} /></td>
+            <td colSpan="3"><WSInlineEdit value="Some text to check" onChange={text => console.log(text)} /></td>
           </tr>
         </tbody>
       </table>

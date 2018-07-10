@@ -121,6 +121,8 @@ System.register(['../imports'], function (_export, _context) {
               'div',
               { className: 'ws-inline-edit', onClick: function onClick() {
                   return _this3.editElement();
+                }, onKeyPress: function onKeyPress() {
+                  return _this3.editElement();
                 } },
               React.createElement('input', {
                 type: 'text',

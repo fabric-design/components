@@ -78,6 +78,8 @@ var WSInlineEdit = exports.WSInlineEdit = function (_Component) {
         'div',
         { className: 'ws-inline-edit', onClick: function onClick() {
             return _this3.editElement();
+          }, onKeyPress: function onKeyPress() {
+            return _this3.editElement();
           } },
         _imports.React.createElement('input', {
           type: 'text',

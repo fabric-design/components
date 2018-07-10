@@ -28,12 +28,12 @@ var LocalStorage = exports.LocalStorage = function (_AbstractStorage) {
     key: 'set',
     value: function set(key, value) {
       var encodedValue = encodeURIComponent(JSON.stringify(value));
-      localStorage.setItem('' + this.name + key, encodedValue);
+      window.localStorage.setItem('' + this.name + key, encodedValue);
     }
   }, {
     key: 'get',
     value: function get(key) {
-      var encodedValue = localStorage.getItem('' + this.name + key);
+      var encodedValue = window.localStorage.getItem('' + this.name + key);
 
       if (encodedValue) {
         try {
@@ -47,7 +47,7 @@ var LocalStorage = exports.LocalStorage = function (_AbstractStorage) {
   }, {
     key: 'remove',
     value: function remove(key) {
-      localStorage.removeItem('' + this.name + key);
+      window.localStorage.removeItem('' + this.name + key);
     }
   }]);
 

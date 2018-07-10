@@ -48,6 +48,9 @@ var Tile = exports.Tile = function (_Component) {
         onClick: function onClick() {
           return _this2.props.onClick(groupName, identifier);
         },
+        onKeyPress: function onKeyPress() {
+          return _this2.props.onClick(groupName, identifier);
+        },
         onMouseEnter: this.props.onMouseEnter,
         onMouseLeave: this.props.onMouseLeave
       });

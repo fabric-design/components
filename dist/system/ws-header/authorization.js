@@ -125,7 +125,7 @@ System.register(['./json-web-token'], function (_export, _context) {
           value: function authorize(loginUrl, clientId, businessPartnerId) {
             var query = this.buildQuery([['business_partner_id', businessPartnerId], ['client_id', clientId], ['state', this.createAndRememberUUID()], ['response_type', 'token']]);
 
-            location.href = loginUrl + '?' + query;
+            window.location.href = loginUrl + '?' + query;
           }
         }, {
           key: 'unauthorize',

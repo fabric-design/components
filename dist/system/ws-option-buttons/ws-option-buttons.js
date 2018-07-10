@@ -98,6 +98,7 @@ System.register(['../imports'], function (_export, _context) {
               }).map(function (item) {
                 return item.value;
               });
+
               _this.setState({ items: _this.state.items, value: value });
 
               _this.dispatchEvent('change', value);
@@ -109,7 +110,6 @@ System.register(['../imports'], function (_export, _context) {
           });
 
           _this.buttons = [];
-
           _this.state = _this.createState(props);
           return _this;
         }
@@ -203,6 +203,7 @@ System.register(['../imports'], function (_export, _context) {
                   React.createElement(
                     'a',
                     {
+                      href: '#void',
                       className: _this5.props.buttonClass + ' ' + (item.selected ? 'is-active' : ''),
                       'data-index': '',
                       ref: function ref(element) {
@@ -216,6 +217,7 @@ System.register(['../imports'], function (_export, _context) {
               React.createElement(
                 'a',
                 {
+                  href: '#void',
                   className: 'show-more ' + (this.props.initialVisible < this.state.items.length ? 'is-hidden' : ''),
                   ref: function ref(element) {
                     _this5.moreAnchor = element;

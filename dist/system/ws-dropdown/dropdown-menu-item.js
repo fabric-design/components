@@ -82,20 +82,19 @@ System.register(['../imports', './dropdown-menu'], function (_export, _context) 
                 _this.props.handle('go-back');
               } else if (_this.state.children && _this.state.children.length) {
                 _this.props.handle('show-child', _this.menu);
-              } else {
-                if (!_this.context.multiple) {
-                  if (_this.state.selected) {
-                    _this.props.handle('change', null);
-                  } else {
-                    _this.state.selected = true;
-                    _this.state.stored = true;
-                    _this.props.handle('change', _this.state);
-                  }
+              } else if (!_this.context.multiple) {
+                if (_this.state.selected) {
+                  _this.props.handle('change', null);
                 } else {
-                  _this.state.selected = !_this.state.selected;
-                }
+                  _this.setState({
+                    selected: true,
+                    stored: true
+                  });
 
-                _this.setState(_this.state);
+                  _this.props.handle('change', _this.state);
+                }
+              } else {
+                _this.setState({ selected: !_this.state.selected });
               }
             }
           });
@@ -120,7 +119,7 @@ System.register(['../imports', './dropdown-menu'], function (_export, _context) 
         }, {
           key: 'componentWillReceiveProps',
           value: function componentWillReceiveProps(props) {
-            this.state = props.item;
+            this.setState(props.item);
           }
         }, {
           key: 'componentWillUnmount',

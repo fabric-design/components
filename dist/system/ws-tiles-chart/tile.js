@@ -91,6 +91,9 @@ System.register(['../imports'], function (_export, _context) {
               onClick: function onClick() {
                 return _this2.props.onClick(groupName, identifier);
               },
+              onKeyPress: function onKeyPress() {
+                return _this2.props.onClick(groupName, identifier);
+              },
               onMouseEnter: this.props.onMouseEnter,
               onMouseLeave: this.props.onMouseLeave
             });

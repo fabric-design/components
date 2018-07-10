@@ -130,11 +130,14 @@ define(['exports', '../imports'], function (exports, _imports) {
                   key: monthIndex + '_' + weekIndex,
                   onClick: function onClick() {
                     return _this2.props.onChange({ week: week, year: year });
+                  },
+                  onKeyPress: function onKeyPress() {
+                    return _this2.props.onChange({ week: week, year: year });
                   }
                 },
                 _imports.React.createElement(
                   'a',
-                  { className: 'week' },
+                  { href: '#voidWeek', className: 'week' },
                   week
                 )
               );
@@ -158,9 +161,15 @@ define(['exports', '../imports'], function (exports, _imports) {
               null,
               _imports.React.createElement(
                 'span',
-                { className: 'prev', onClick: function onClick() {
+                {
+                  className: 'prev',
+                  onClick: function onClick() {
                     return _this3.prevYear();
-                  } },
+                  },
+                  onKeyPress: function onKeyPress() {
+                    return _this3.prevYear();
+                  }
+                },
                 _imports.React.createElement('span', { className: 'icon icon32 icon-left' }),
                 this.state.showingYear - 1
               ),
@@ -171,9 +180,15 @@ define(['exports', '../imports'], function (exports, _imports) {
               ),
               _imports.React.createElement(
                 'span',
-                { className: 'next', onClick: function onClick() {
+                {
+                  className: 'next',
+                  onClick: function onClick() {
                     return _this3.nextYear();
-                  } },
+                  },
+                  onKeyPress: function onKeyPress() {
+                    return _this3.nextYear();
+                  }
+                },
                 this.state.showingYear + 1,
                 _imports.React.createElement('span', { className: 'icon icon32 icon-right' })
               )

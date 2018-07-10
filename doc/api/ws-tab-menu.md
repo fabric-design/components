@@ -7,19 +7,13 @@ This component renders a tab menu and provides the selected tab via a value prop
 
 **Parameters**
 
--   `props`  
+-   `props` **[Object][1]** React component properties
 
 **Properties**
 
--   `items` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of menu items {value: any & required, label: string, className: string, badge: string}
+-   `items` **[Array][2]** List of menu items {value: any & required, label: string, className: string, badge: string}
 -   `value` **any** Matching a value of an item
--   `onChange` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback function for React/Preact applications
-
-### constructor
-
-**Parameters**
-
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React component properties
+-   `onChange` **[Function][3]** Callback function for React/Preact applications
 
 ### componentDidMount
 
@@ -33,7 +27,7 @@ Update state from property change
 
 **Parameters**
 
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties
+-   `props` **[Object][1]** React properties
 
 Returns **void** 
 
@@ -55,7 +49,7 @@ Handles clicks on menu items
 
 **Parameters**
 
--   `event` **[Event](https://developer.mozilla.org/docs/Web/API/Event)** JavaScript event object
+-   `event` **[Event][4]** JavaScript event object
 
 Returns **void** 
 
@@ -71,7 +65,7 @@ Animate the dash below the new active item
 
 **Parameters**
 
--   `newMenuItem` **[Element](https://developer.mozilla.org/docs/Web/API/Element)** HTMLElement of new active menu item
+-   `newMenuItem` **[Element][5]** HTMLElement of new active menu item
 
 Returns **void** 
 
@@ -81,12 +75,12 @@ Create a state object from the properties
 
 **Parameters**
 
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties
+-   `props` **[Object][1]** React properties
 
 
 -   Throws **any** Error when no items are passed
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### renderMenuItem
 
@@ -94,8 +88,8 @@ Render a single menu item
 
 **Parameters**
 
--   `item` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Menu item object
--   `index` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Index of item in item list
+-   `item` **[Object][1]** Menu item object
+-   `index` **[number][6]** Index of item in item list
 
 Returns **XML** 
 
@@ -104,3 +98,15 @@ Returns **XML**
 Render the component markup
 
 Returns **XML** 
+
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[4]: https://developer.mozilla.org/docs/Web/API/Event
+
+[5]: https://developer.mozilla.org/docs/Web/API/Element
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

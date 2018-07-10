@@ -24,7 +24,6 @@ import {WSDropdown} from '../ws-dropdown/ws-dropdown';
  * @property {Function} props.onAuthChange Function used to propagate data
  */
 export class WSHeader extends Component {
-
   static defaultProps = {
     loginUrl: 'https://identity.zalando.com/oauth2/authorize',
     businessPartnerId: null,
@@ -273,13 +272,31 @@ export class WSHeader extends Component {
   }
 
   /**
+   * Renders header commons (logo and App Name)
+   * @param {Object} props Component props
+   * @returns {JSX}
+   */
+  renderMenuCommons(props) {
+    if (props.rootUrl.$$typeof) {
+      return props.rootUrl;
+    }
+    return (
+      <a className="application-name" href={props.rootUrl}>
+        {props.appLogo &&
+          <figure className="application-logo">
+            <img src={props.appLogo} alt="Application logo" />
+          </figure>
+        }
+        {props.appName}
+      </a>
+    );
+  }
+
+  /**
    * @returns {Object}
    */
   render() {
     const {
-      rootUrl,
-      appLogo,
-      appName,
       links,
       showLocale,
       showAuthorization
@@ -288,21 +305,10 @@ export class WSHeader extends Component {
     return (
       <header className="ws-header" ref={element => { this.element = element; }}>
         <div className="level-1">
-          {rootUrl.$$typeof ?
-            rootUrl
-            :
-            <a className="application-name" href={rootUrl}>
-              {appLogo &&
-                <figure className="application-logo">
-                  <img src={appLogo} alt="Application logo" />
-                </figure>
-              }
-              {appName}
-            </a>
-          }
+          {this.renderMenuCommons(this.props)}
           <nav className="main-menu">
             <ul>
-              {links.map((link, index) => (
+              {this.props.links.map((link, index) => (
                 <li
                   key={`header-link${index}`}
                   onMouseEnter={() => this.enterMenuItem(index)}
@@ -332,11 +338,15 @@ export class WSHeader extends Component {
               }
               {showAuthorization && (!this.state.isLoggedIn ?
                 <li>
-                  <a onClick={() => this.login()}>Login</a>
+                  <a onClick={() => this.login()} onKeyPress={() => this.login()}>
+                    Login
+                  </a>
                 </li>
                 :
                 <li>
-                  <a onClick={() => this.logout()}><span className="icon icon24 icon-power" /></a>
+                  <a onClick={() => this.logout()} onKeyPress={() => this.logout()}>
+                    <span className="icon icon24 icon-power" />
+                  </a>
                 </li>
               )}
             </ul>
@@ -347,6 +357,7 @@ export class WSHeader extends Component {
           onMouseEnter={() => this.enterLevel2()}
           onMouseLeave={() => this.leaveLevel2()}
           onClick={() => this.leaveLevel2()}
+          onKeyPress={() => this.leaveLevel2()}
           ref={element => { this.level2 = element; }}
         >
           {links.map((parent, index) => (

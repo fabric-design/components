@@ -1,3 +1,23 @@
+<a name="1.0.44"></a>
+## [1.0.44](https://github.bus.zalan.do/fabric-design/components/compare/1.0.43...1.0.44) (2018-07-10)
+
+
+### Bug Fixes
+
+* **datepicker:** diasabled pointer events on the icon so you can click through to the input ([#180](https://github.bus.zalan.do/fabric-design/components/issues/180)) ([c75b7e6](https://github.bus.zalan.do/fabric-design/components/commit/c75b7e6))
+* **dropdown:** no longer directly accesses the state ([#170](https://github.bus.zalan.do/fabric-design/components/issues/170)) ([4ab4cb2](https://github.bus.zalan.do/fabric-design/components/commit/4ab4cb2))
+* **lint:** fixing master branch ([36c3adb](https://github.bus.zalan.do/fabric-design/components/commit/36c3adb))
+* **lint:** wrong proptypes for function ([43c691d](https://github.bus.zalan.do/fabric-design/components/commit/43c691d))
+
+
+### Features
+
+* **bundle:** Created a bundle including fabric-scss, some dependencies and all components ([#158](https://github.bus.zalan.do/fabric-design/components/issues/158)) ([4765081](https://github.bus.zalan.do/fabric-design/components/commit/4765081))
+* **dropdown:** accept custom class ([42f6493](https://github.bus.zalan.do/fabric-design/components/commit/42f6493))
+* **header:** Accept custom link elements ([#160](https://github.bus.zalan.do/fabric-design/components/issues/160)) ([2c45eaa](https://github.bus.zalan.do/fabric-design/components/commit/2c45eaa))
+
+
+
 <a name="1.0.43"></a>
 ## [1.0.43](https://github.bus.zalan.do/fabric-design/components/compare/1.0.42...1.0.43) (2018-02-20)
 

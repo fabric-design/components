@@ -193,11 +193,14 @@ System.register(['../imports'], function (_export, _context) {
                       key: monthIndex + '_' + weekIndex,
                       onClick: function onClick() {
                         return _this2.props.onChange({ week: week, year: year });
+                      },
+                      onKeyPress: function onKeyPress() {
+                        return _this2.props.onChange({ week: week, year: year });
                       }
                     },
                     React.createElement(
                       'a',
-                      { className: 'week' },
+                      { href: '#voidWeek', className: 'week' },
                       week
                     )
                   );
@@ -221,9 +224,15 @@ System.register(['../imports'], function (_export, _context) {
                   null,
                   React.createElement(
                     'span',
-                    { className: 'prev', onClick: function onClick() {
+                    {
+                      className: 'prev',
+                      onClick: function onClick() {
                         return _this3.prevYear();
-                      } },
+                      },
+                      onKeyPress: function onKeyPress() {
+                        return _this3.prevYear();
+                      }
+                    },
                     React.createElement('span', { className: 'icon icon32 icon-left' }),
                     this.state.showingYear - 1
                   ),
@@ -234,9 +243,15 @@ System.register(['../imports'], function (_export, _context) {
                   ),
                   React.createElement(
                     'span',
-                    { className: 'next', onClick: function onClick() {
+                    {
+                      className: 'next',
+                      onClick: function onClick() {
                         return _this3.nextYear();
-                      } },
+                      },
+                      onKeyPress: function onKeyPress() {
+                        return _this3.nextYear();
+                      }
+                    },
                     this.state.showingYear + 1,
                     React.createElement('span', { className: 'icon icon32 icon-right' })
                   )

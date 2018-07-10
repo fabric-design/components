@@ -8,13 +8,7 @@ the initialVisible property. The user is able to show more than these defined am
 
 **Parameters**
 
--   `props`  
-
-### constructor
-
-**Parameters**
-
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React props
+-   `props` **[Object][1]** React props
 
 ### componentDidMount
 
@@ -28,7 +22,7 @@ Updates the state if props changes from outside
 
 **Parameters**
 
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React props
+-   `props` **[Object][1]** React props
 
 Returns **void** 
 
@@ -50,7 +44,7 @@ Handles toggling visible amount
 
 **Parameters**
 
--   `event` **[MouseEvent](https://developer.mozilla.org/docs/Web/API/MouseEvent)** JavaScript event object
+-   `event` **[MouseEvent][2]** JavaScript event object
 
 Returns **void** 
 
@@ -60,7 +54,7 @@ Handles button selection
 
 **Parameters**
 
--   `event` **[MouseEvent](https://developer.mozilla.org/docs/Web/API/MouseEvent)** JavaScript event object
+-   `event` **[MouseEvent][2]** JavaScript event object
 
 Returns **void** 
 
@@ -70,9 +64,9 @@ Creates a state object from React props
 
 **Parameters**
 
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React props
+-   `props` **[Object][1]** React props
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### enrichItems
 
@@ -80,12 +74,20 @@ Used to convert the items if they are strings into the required object structure
 
 **Parameters**
 
--   `items` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;([String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object))>** List of items represented as string or object
+-   `items` **[Array][3]&lt;([String][4] \| [Object][1])>** List of items represented as string or object
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
+Returns **[Array][3]&lt;[Object][1]>** 
 
 ### render
 
 Renders the component
 
 Returns **JSX** 
+
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[2]: https://developer.mozilla.org/docs/Web/API/MouseEvent
+
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String

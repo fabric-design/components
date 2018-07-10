@@ -74,7 +74,9 @@ var WSNotification = exports.WSNotification = function (_Component) {
         type = DEFAULT_NOTIFICATION_TYPE;
       }
       this.setState({
-        notifications: this.state.notifications.concat([{ title: title, description: description, type: type, lifetime: lifetime }])
+        notifications: this.state.notifications.concat([{
+          title: title, description: description, type: type, lifetime: lifetime
+        }])
       });
     }
   }, {
@@ -82,7 +84,8 @@ var WSNotification = exports.WSNotification = function (_Component) {
     value: function animateIn(notification, index) {
       var _this2 = this;
 
-      var list = this.list;
+      var list = this.list.list;
+
       list.style.transition = 'none';
       list.style.transform = 'translate3d(0, 80px, 0)';
       setTimeout(function () {
@@ -136,6 +139,9 @@ var WSNotification = exports.WSNotification = function (_Component) {
                   _this3['notification-' + i] = element;
                 },
                 onClick: function onClick() {
+                  return _this3.close(i);
+                },
+                onKeyPress: function onKeyPress() {
                   return _this3.close(i);
                 }
               },

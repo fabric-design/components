@@ -21,7 +21,6 @@ import {DropdownMenu} from './dropdown-menu';
  * @property {Function} props.handle Function used to propagate data
  */
 export class DropdownMenuItem extends Component {
-
   /**
    * @type {Object}
    */

@@ -203,6 +203,7 @@ System.register(['../imports', './tile'], function (_export, _context) {
           config: PropTypes.object,
           title: PropTypes.string,
           maxTileSize: PropTypes.number,
+          minTileSize: PropTypes.number,
           width: PropTypes.number,
           height: PropTypes.number,
           onMouseEnter: PropTypes.func,

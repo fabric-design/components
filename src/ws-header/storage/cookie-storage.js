@@ -6,7 +6,6 @@ const EXTRACT_TOP_LEVEL_DOMAIN = /.*?([a-zA-Z0-9-]{3,}\.[a-zA-Z0-9]{2,})$/;
  * This class implements a key value storage based on top level domain cookies
  */
 export class CookieStorage extends AbstractStorage {
-
   /**
    * Set value for specific key in cookies
    * @param {string} key Storage key name

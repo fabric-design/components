@@ -59,7 +59,7 @@ var CookieStorage = exports.CookieStorage = function (_AbstractStorage) {
     key: 'createCookie',
     value: function createCookie(key, value, expires) {
       var encodedValue = encodeURIComponent(JSON.stringify(value));
-      var domain = location.hostname.replace(EXTRACT_TOP_LEVEL_DOMAIN, '$1');
+      var domain = window.location.hostname.replace(EXTRACT_TOP_LEVEL_DOMAIN, '$1');
 
       document.cookie = '' + this.name + key + '=' + encodedValue + ';expires=' + expires + ';domain=' + domain;
     }

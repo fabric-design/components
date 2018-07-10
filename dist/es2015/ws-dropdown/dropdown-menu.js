@@ -452,7 +452,9 @@ Object.defineProperty(DropdownMenu, 'propTypes', {
     filter: PropTypes.string,
     placeholder: PropTypes.string,
     limit: PropTypes.number,
-    selectAll: PropTypes.bool
+    selectAll: PropTypes.bool,
+    value: PropTypes.object,
+    handle: PropTypes.func
   }
 });
 Object.defineProperty(DropdownMenu, 'contextTypes', {

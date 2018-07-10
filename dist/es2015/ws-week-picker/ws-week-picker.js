@@ -96,6 +96,9 @@ export var WSWeekPicker = function (_Component) {
           className: 'icon icon16 ' + (this.state.show ? '' : 'icon-calendar'),
           onClick: function onClick() {
             return _this3.toggleCalendar();
+          },
+          onKeyPress: function onKeyPress() {
+            return _this3.toggleCalendar();
           }
         }),
         this.state.show && React.createElement(WSWeekPickerCalendar, {

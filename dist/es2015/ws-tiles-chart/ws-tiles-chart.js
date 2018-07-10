@@ -149,6 +149,7 @@ Object.defineProperty(WSTilesChart, 'propTypes', {
     config: PropTypes.object,
     title: PropTypes.string,
     maxTileSize: PropTypes.number,
+    minTileSize: PropTypes.number,
     width: PropTypes.number,
     height: PropTypes.number,
     onMouseEnter: PropTypes.func,

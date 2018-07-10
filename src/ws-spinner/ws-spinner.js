@@ -6,7 +6,6 @@ import {React, Component, PropTypes} from '../imports';
  * @property {boolean} isWhite True if the spinner color should be white
  */
 export class WSSpinner extends Component {
-
   /**
    * @type {Object}
    */

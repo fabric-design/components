@@ -18,7 +18,6 @@ const DEFAULT_NOTIFICATION_TYPE = 'info';
  * }});
  */
 export class WSNotification extends Component {
-
   /**
    * @constructor
    */
@@ -83,7 +82,9 @@ export class WSNotification extends Component {
       type = DEFAULT_NOTIFICATION_TYPE;
     }
     this.setState({
-      notifications: this.state.notifications.concat([{title, description, type, lifetime}])
+      notifications: this.state.notifications.concat([{
+        title, description, type, lifetime
+      }])
     });
   }
 

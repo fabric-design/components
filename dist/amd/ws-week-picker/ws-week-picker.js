@@ -141,6 +141,9 @@ define(['exports', '../imports', './ws-week-picker-calendar'], function (exports
             className: 'icon icon16 ' + (this.state.show ? '' : 'icon-calendar'),
             onClick: function onClick() {
               return _this3.toggleCalendar();
+            },
+            onKeyPress: function onKeyPress() {
+              return _this3.toggleCalendar();
             }
           }),
           this.state.show && _imports.React.createElement(_wsWeekPickerCalendar.WSWeekPickerCalendar, {

@@ -10,7 +10,6 @@ import {React, Component, PropTypes} from '../imports';
  * @property {string} buttonClass Additional css classes for each button
  */
 export class WSOptionButtons extends Component {
-
   static propTypes = {
     items: PropTypes.array,
     initialVisible: PropTypes.number,
@@ -33,7 +32,6 @@ export class WSOptionButtons extends Component {
   constructor(props) {
     super(props);
     this.buttons = [];
-
     this.state = this.createState(props);
   }
 
@@ -170,6 +168,7 @@ export class WSOptionButtons extends Component {
           </div>
         ))}
         <a
+          href="#void"
           className={`show-more ${this.props.initialVisible < this.state.items.length ? 'is-hidden' : ''}`}
           ref={element => { this.moreAnchor = element; }}
         >

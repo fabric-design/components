@@ -94,6 +94,7 @@ define(['exports', '../imports'], function (exports, _imports) {
           }).map(function (item) {
             return item.value;
           });
+
           _this.setState({ items: _this.state.items, value: value });
 
           _this.dispatchEvent('change', value);
@@ -105,7 +106,6 @@ define(['exports', '../imports'], function (exports, _imports) {
       });
 
       _this.buttons = [];
-
       _this.state = _this.createState(props);
       return _this;
     }
@@ -199,6 +199,7 @@ define(['exports', '../imports'], function (exports, _imports) {
               _imports.React.createElement(
                 'a',
                 {
+                  href: '#void',
                   className: _this5.props.buttonClass + ' ' + (item.selected ? 'is-active' : ''),
                   'data-index': '',
                   ref: function ref(element) {
@@ -212,6 +213,7 @@ define(['exports', '../imports'], function (exports, _imports) {
           _imports.React.createElement(
             'a',
             {
+              href: '#void',
               className: 'show-more ' + (this.props.initialVisible < this.state.items.length ? 'is-hidden' : ''),
               ref: function ref(element) {
                 _this5.moreAnchor = element;

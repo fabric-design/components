@@ -17,7 +17,6 @@ import {Tile} from './tile';
  * @property {func} props.onClick Defines function that is called for onCLick event
  */
 export class WSTilesChart extends Component {
-
   /**
    * @type {Object}
    */
@@ -85,7 +84,9 @@ export class WSTilesChart extends Component {
    * @returns {number}
    */
   getTileSize(props) {
-    const {height, width, maxTileSize, minTileSize, data} = props;
+    const {
+      height, width, maxTileSize, minTileSize, data
+    } = props;
     const groups = data.groups || {};
 
     if (maxTileSize === minTileSize || Object.keys(groups).length === 0) {
@@ -121,7 +122,9 @@ export class WSTilesChart extends Component {
    * @returns {Object}
    */
   render() {
-    const {data, config, title, width, height} = this.props;
+    const {
+      data, config, title, width, height
+    } = this.props;
     const groups = data.groups || {};
     return (
       <div className="ws-tiles-chart" style={{width: `${width}px`, height: `${height}px`}}>

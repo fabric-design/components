@@ -15,7 +15,6 @@ export const {render} = ReactDOM;
  * This is a abstract React/Preact component class
  */
 export class Component extends _React_.Component {
-
   /**
    * Dispatches a native event
    * @param {string} name Event name

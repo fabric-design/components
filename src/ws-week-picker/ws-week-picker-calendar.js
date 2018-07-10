@@ -114,7 +114,13 @@ export class WSWeekPickerCalendar extends Component {
                         + (this.isToday(year, week) ? 'today ' : '')}
               key={`${monthIndex}_${weekIndex}`}
             >
-              <a className="week" onClick={() => this.props.onChange({week, year})}>{week}</a>
+              <a
+                className="week"
+                onClick={() => this.props.onChange({week, year})}
+                onKeyPress={() => this.props.onChange({week, year})}
+              >
+                {week}
+              </a>
             </td>
           );
         })}
@@ -131,12 +137,20 @@ export class WSWeekPickerCalendar extends Component {
       <div className="ws-date-picker-calendar">
         <table>
           <caption>
-            <span className="prev" onClick={() => this.prevYear()}>
+            <span
+              className="prev"
+              onClick={() => this.prevYear()}
+              onKeyPress={() => this.prevYear()}
+            >
               <span className="icon icon32 icon-left" />
               {this.state.showingYear - 1}
             </span>
             <span className="current_year">{this.state.showingYear}</span>
-            <span className="next" onClick={() => this.nextYear()}>
+            <span
+              className="next"
+              onClick={() => this.nextYear()}
+              onKeyPress={() => this.nextYear()}
+            >
               {this.state.showingYear + 1}
               <span className="icon icon32 icon-right" />
             </span>

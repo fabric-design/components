@@ -4,7 +4,6 @@ import {JsonWebToken} from './json-web-token';
  * This class implements the OAuth2 authorization via the implicit flow.
  */
 export class Authorization {
-
   /**
    * @param {AbstractStorage} storage Key value storage
    */

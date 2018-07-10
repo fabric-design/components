@@ -8,20 +8,14 @@ Possible options are value and placeholder which are both strings.
 
 **Parameters**
 
--   `props`  
+-   `props` **[Object][1]** React props
 
 **Properties**
 
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties object
-    -   `props.value` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Value of text input
-    -   `props.placeholder` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Placeholder for text inputs (Filter input or Input only version)
-    -   `props.handle` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Function used to propagate data
-
-### constructor
-
-**Parameters**
-
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React props
+-   `props` **[Object][1]** React properties object
+    -   `props.value` **[string][2]** Value of text input
+    -   `props.placeholder` **[string][2]** Placeholder for text inputs (Filter input or Input only version)
+    -   `props.handle` **[Function][3]** Function used to propagate data
 
 ### componentDidMount
 
@@ -41,9 +35,9 @@ Call submit on enter key
 
 **Parameters**
 
--   `event` **[KeyboardEvent](https://developer.mozilla.org/docs/Web/API/KeyboardEvent)** JavaScript Event object
+-   `event` **[KeyboardEvent][4]** JavaScript Event object
 
-Returns **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+Returns **[Boolean][5]** 
 
 ### onChange
 
@@ -51,7 +45,7 @@ Set input value to state
 
 **Parameters**
 
--   `event` **[KeyboardEvent](https://developer.mozilla.org/docs/Web/API/KeyboardEvent)** JavaScript event object
+-   `event` **[KeyboardEvent][4]** JavaScript event object
 
 Returns **void** 
 
@@ -71,15 +65,31 @@ Returns **void**
 
 Gets the height of the menu container to scale the outer container up
 
-Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[Number][6]** 
 
 ### render
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### defaultProps
 
+Type: [Object][1]
+
 ### propTypes
+
+Type: [Object][1]
+
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[4]: https://developer.mozilla.org/docs/Web/API/KeyboardEvent
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 ## DropdownMenuItem
 
 **Extends Component**
@@ -99,23 +109,16 @@ The item object can have the following properties
 
 **Parameters**
 
--   `props`  
--   `context`  
+-   `props` **[Object][1]** React props
+-   `context` **[Object][1]** React context
 
 **Properties**
 
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties object
-    -   `props.item` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Dropdown item configuration
-    -   `props.icon` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Class name of icon in trigger
-    -   `props.isParent` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Flag to identify if this item renders the parent dropdown item
-    -   `props.handle` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Function used to propagate data
-
-### constructor
-
-**Parameters**
-
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React props
--   `context` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React context
+-   `props` **[Object][1]** React properties object
+    -   `props.item` **[Object][1]** Dropdown item configuration
+    -   `props.icon` **[string][2]** Class name of icon in trigger
+    -   `props.isParent` **[Boolean][3]** Flag to identify if this item renders the parent dropdown item
+    -   `props.handle` **[Function][4]** Function used to propagate data
 
 ### componentDidMount
 
@@ -132,7 +135,7 @@ This leads to property updates and without this function a wrong item will be re
 
 **Parameters**
 
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React component props
+-   `props` **[Object][1]** React component props
 
 Returns **void** 
 
@@ -149,7 +152,7 @@ or change the dropdown value for simple dropdown's
 
 **Parameters**
 
--   `event` **[MouseEvent](https://developer.mozilla.org/docs/Web/API/MouseEvent)** JavaScript event object
+-   `event` **[MouseEvent][5]** JavaScript event object
 
 Returns **void** 
 
@@ -160,7 +163,7 @@ For instance if the menu size, it's value changed or the parent or child menu sh
 
 **Parameters**
 
--   `type` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Type of propagated data
+-   `type` **[String][2]** Type of propagated data
 -   `data` **any** Data which was propagated. Can be height of child menu or reference of child
 
 Returns **void** 
@@ -169,13 +172,29 @@ Returns **void**
 
 Renders the dropdown item
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### defaultProps
 
+Type: [Object][1]
+
 ### propTypes
 
+Type: [Object][1]
+
 ### contextTypes
+
+Type: [Object][1]
+
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[5]: https://developer.mozilla.org/docs/Web/API/MouseEvent
 ## DropdownMenu
 
 **Extends Component**
@@ -185,28 +204,21 @@ additional wrapping markup and functionality, you SHOULD NOT use this component 
 
 **Parameters**
 
--   `props`  
--   `context`  
+-   `props` **[Object][1]** React props
+-   `context` **[Object][1]** React context
 
 **Properties**
 
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties object
-    -   `props.parent` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Parent dropdown item. Only set if this is a child menu
-    -   `props.items` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** List of dropdown item configs. Each item can contain label, value, disabled, selected
-    -   `props.value` **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>)** Selected dropdown item(s)
-    -   `props.filterable` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Flag if the dropdown menu is filterable
-    -   `props.filter` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Default filter value
-    -   `props.placeholder` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Placeholder for text inputs (Filter input or Input only version)
-    -   `props.limit` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Limit visible dropdown items. Use together with filterable flag.
-    -   `props.selectAll` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Show button to select all items
-    -   `props.handle` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Function used to propagate data
-
-### constructor
-
-**Parameters**
-
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React props
--   `context` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React context
+-   `props` **[Object][1]** React properties object
+    -   `props.parent` **[Object][1]** Parent dropdown item. Only set if this is a child menu
+    -   `props.items` **[Array][2]&lt;[Object][1]>** List of dropdown item configs. Each item can contain label, value, disabled, selected
+    -   `props.value` **([Object][1] \| [Array][2]&lt;[Object][1]>)** Selected dropdown item(s)
+    -   `props.filterable` **[Boolean][3]** Flag if the dropdown menu is filterable
+    -   `props.filter` **[string][4]** Default filter value
+    -   `props.placeholder` **[string][4]** Placeholder for text inputs (Filter input or Input only version)
+    -   `props.limit` **[number][5]** Limit visible dropdown items. Use together with filterable flag.
+    -   `props.selectAll` **[Boolean][3]** Show button to select all items
+    -   `props.handle` **[Function][6]** Function used to propagate data
 
 ### componentDidMount
 
@@ -220,7 +232,7 @@ Handle changes of passed properties
 
 **Parameters**
 
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React props
+-   `props` **[Object][1]** React props
 
 Returns **void** 
 
@@ -255,7 +267,7 @@ Handle global key down events to select items
 
 **Parameters**
 
--   `event` **[KeyboardEvent](https://developer.mozilla.org/docs/Web/API/KeyboardEvent)** JavaScript event object
+-   `event` **[KeyboardEvent][7]** JavaScript event object
 
 Returns **void** 
 
@@ -265,7 +277,7 @@ Sets the input value as filter
 
 **Parameters**
 
--   `event` **[KeyboardEvent](https://developer.mozilla.org/docs/Web/API/KeyboardEvent)** JavaScript event object
+-   `event` **[KeyboardEvent][7]** JavaScript event object
 
 Returns **void** 
 
@@ -275,7 +287,7 @@ Handles submit action on multi select drop downs
 
 **Parameters**
 
--   `event` **[Event](https://developer.mozilla.org/docs/Web/API/Event)** JavaScript event object
+-   `event` **[Event][8]** JavaScript event object
 
 Returns **void** 
 
@@ -289,13 +301,13 @@ Returns **void**
 
 Gets the current height of the menu
 
-Returns **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+Returns **[Number][5]** 
 
 ### getFilteredItems
 
 If there is a filter active it applies it on the available items
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
+Returns **[Array][2]&lt;[Object][1]>** 
 
 ### getItemAtIndex
 
@@ -303,9 +315,9 @@ Get the item for an index which can match the value or items list
 
 **Parameters**
 
--   `index` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Index across value and filtered items
+-   `index` **[number][5]** Index across value and filtered items
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### focusNextItem
 
@@ -313,7 +325,7 @@ Depending on the direction it marks the next dropdown item as focused
 
 **Parameters**
 
--   `direction` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Can be 1 for down or -1 for up direction
+-   `direction` **[number][5]** Can be 1 for down or -1 for up direction
 
 Returns **void** 
 
@@ -337,7 +349,7 @@ This function uses arrow function to bind the scope to this instance
 
 **Parameters**
 
--   `type` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Should be just show-parent
+-   `type` **[String][4]** Should be just show-parent
 -   `data` **any** Propagated data. Could be for instance a menu reference or the menu height.
 
 Returns **void** 
@@ -364,7 +376,7 @@ Animates a menu or sub menu into the view
 
 **Parameters**
 
--   `goBack` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** True if a menu should be shown and a sub menu be hidden
+-   `goBack` **[Boolean][3]** True if a menu should be shown and a sub menu be hidden
 
 Returns **void** 
 
@@ -374,7 +386,7 @@ Animates a menu or sub menu out of the view
 
 **Parameters**
 
--   `goBack` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** True if a menu should be hidden and a sub menu be shown
+-   `goBack` **[Boolean][3]** True if a menu should be hidden and a sub menu be shown
 
 Returns **void** 
 
@@ -384,9 +396,9 @@ Animates an element by adding a class with an css animation and executes a callb
 
 **Parameters**
 
--   `item` **[Element](https://developer.mozilla.org/docs/Web/API/Element)** The dom node to animate
--   `animationClass` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The css class which holds the animation definition
--   `callback` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback which will be executed at the end of the animation
+-   `item` **[Element][9]** The dom node to animate
+-   `animationClass` **[String][4]** The css class which holds the animation definition
+-   `callback` **[Function][6]** Callback which will be executed at the end of the animation
 
 Returns **void** 
 
@@ -394,13 +406,37 @@ Returns **void**
 
 Renders the dropdown menu
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### defaultProps
 
+Type: [Object][1]
+
 ### propTypes
 
+Type: [Object][1]
+
 ### contextTypes
+
+Type: [Object][1]
+
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[7]: https://developer.mozilla.org/docs/Web/API/KeyboardEvent
+
+[8]: https://developer.mozilla.org/docs/Web/API/Event
+
+[9]: https://developer.mozilla.org/docs/Web/API/Element
 ## WSDropdown
 
 **Extends Component**
@@ -413,35 +449,29 @@ As trigger type you can choose between an anchor, button or a select like lookin
 
 **Parameters**
 
--   `props`  
+-   `props` **[Object][1]** React props
 
 **Properties**
 
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React properties object
-    -   `props.type` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Type of trigger. Can be anchor, button, select or icon
-    -   `props.text` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Text of trigger
-    -   `props.icon` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Class name of icon in trigger
-    -   `props.multiple` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Flag if the dropdown is a multi select menu
-    -   `props.filterable` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Flag if the dropdown menu is filterable
-    -   `props.inputOnly` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Flag if the dropdown only contains a text input and a button
-    -   `props.filter` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Default filter value
-    -   `props.limit` **[number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Limit visible dropdown items. Use together with filterable flag.
-    -   `props.orientation` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Dropdown orientation. Can be either left or right
-    -   `props.placeholder` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Placeholder for text inputs (Filter input or Input only version)
-    -   `props.selectAll` **[Boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Show button to select all items
-    -   `props.onChange` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Callback for react components to propagate value changes
-
-### constructor
-
-**Parameters**
-
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React props
+-   `props` **[Object][1]** React properties object
+    -   `props.type` **[string][2]** Type of trigger. Can be anchor, button, select or icon
+    -   `props.text` **[string][2]** Text of trigger
+    -   `props.icon` **[string][2]** Class name of icon in trigger
+    -   `props.multiple` **[Boolean][3]** Flag if the dropdown is a multi select menu
+    -   `props.filterable` **[Boolean][3]** Flag if the dropdown menu is filterable
+    -   `props.inputOnly` **[Boolean][3]** Flag if the dropdown only contains a text input and a button
+    -   `props.filter` **[string][2]** Default filter value
+    -   `props.limit` **[number][4]** Limit visible dropdown items. Use together with filterable flag.
+    -   `props.orientation` **[string][2]** Dropdown orientation. Can be either left or right
+    -   `props.placeholder` **[string][2]** Placeholder for text inputs (Filter input or Input only version)
+    -   `props.selectAll` **[Boolean][3]** Show button to select all items
+    -   `props.onChange` **[string][2]** Callback for react components to propagate value changes
 
 ### getChildContext
 
 Called by React to get the types of the child context values
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### componentDidMount
 
@@ -455,7 +485,7 @@ Handle changes of passed properties
 
 **Parameters**
 
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React props
+-   `props` **[Object][1]** React props
 
 Returns **void** 
 
@@ -471,7 +501,7 @@ Handles click on document body to close the dropdown if clicked elsewhere
 
 **Parameters**
 
--   `event` **[MouseEvent](https://developer.mozilla.org/docs/Web/API/MouseEvent)** JavaScript event object
+-   `event` **[MouseEvent][5]** JavaScript event object
 
 Returns **void** 
 
@@ -481,7 +511,7 @@ Handle clicks on dropdown trigger
 
 **Parameters**
 
--   `event` **[MouseEvent](https://developer.mozilla.org/docs/Web/API/MouseEvent)** JavaScript event object
+-   `event` **[MouseEvent][5]** JavaScript event object
 
 Returns **void** 
 
@@ -491,7 +521,7 @@ Prevent event to bubble up and keep it inside drop down
 
 **Parameters**
 
--   `event` **[Event](https://developer.mozilla.org/docs/Web/API/Event)** Event object
+-   `event` **[Event][6]** Event object
 
 Returns **void** 
 
@@ -501,7 +531,7 @@ Handles global key down events when dropdown was opened
 
 **Parameters**
 
--   `event` **[KeyboardEvent](https://developer.mozilla.org/docs/Web/API/KeyboardEvent)** JavaScript event object
+-   `event` **[KeyboardEvent][7]** JavaScript event object
 
 Returns **void** 
 
@@ -511,10 +541,10 @@ Get text from labels of selected items
 
 **Parameters**
 
--   `value` **([String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>)** Selected items
--   `args` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;any>** Optionally a default text can be passed
+-   `value` **([String][2] \| [Object][1] \| [Array][8]&lt;[Object][1]>)** Selected items
+-   `args` **[Array][8]&lt;any>** Optionally a default text can be passed
 
-Returns **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+Returns **[String][2]** 
 
 ### setValue
 
@@ -522,7 +552,7 @@ Set the value of the dropdown and update the display text if the trigger element
 
 **Parameters**
 
--   `value` **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>)** The new dropdown value
+-   `value` **([Object][1] \| [Array][8]&lt;[Object][1]>)** The new dropdown value
 
 Returns **void** 
 
@@ -532,9 +562,9 @@ Create state object from properties
 
 **Parameters**
 
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** React props
+-   `props` **[Object][1]** React props
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### handlePropagation
 
@@ -542,8 +572,8 @@ Handles data propagation from child elements
 
 **Parameters**
 
--   `type` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** Either change for value changes or change-size which will be emitted on menu changes
--   `data` **([Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number))** Either new value or height of new menu
+-   `type` **[String][2]** Either change for value changes or change-size which will be emitted on menu changes
+-   `data` **([Object][1] \| [Number][4])** Either new value or height of new menu
 
 Returns **void** 
 
@@ -553,9 +583,9 @@ Used to convert the items if they are strings into the required object structure
 
 **Parameters**
 
--   `items` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;([String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object))>** List of items represented as string or object
+-   `items` **[Array][8]&lt;([String][2] \| [Object][1])>** List of items represented as string or object
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
+Returns **[Array][8]&lt;[Object][1]>** 
 
 ### open
 
@@ -575,7 +605,7 @@ Set's the size on an element
 
 **Parameters**
 
--   `newSize` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The new size of the active menu will become the new dropdown container size
+-   `newSize` **[Number][4]** The new size of the active menu will become the new dropdown container size
 
 Returns **void** 
 
@@ -585,9 +615,9 @@ Animates an element by adding a class with an css animation and executes a callb
 
 **Parameters**
 
--   `item` **[Element](https://developer.mozilla.org/docs/Web/API/Element)** The dom node to animate
--   `animationClass` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** The css class which holds the animation definition
--   `callback` **[Function](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function)** Callback which will be executed at the end of the animation
+-   `item` **[Element][9]** The dom node to animate
+-   `animationClass` **[String][2]** The css class which holds the animation definition
+-   `callback` **[Function][10]** Callback which will be executed at the end of the animation
 
 Returns **void** 
 
@@ -595,25 +625,55 @@ Returns **void**
 
 Renders the dropdown trigger element
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### renderContent
 
 Render the content of the dropdown which can be a menu with only input and submit button
 or a common menu with list items
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### render
 
 Render the complete dropdown
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### defaultProps
 
+Type: [Object][1]
+
 ### propTypes
+
+Type: [Object][1]
 
 ### openDropdown
 
+Type: [WSDropdown][11]
+
 ### childContextTypes
+
+Type: [Object][1]
+
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+
+[5]: https://developer.mozilla.org/docs/Web/API/MouseEvent
+
+[6]: https://developer.mozilla.org/docs/Web/API/Event
+
+[7]: https://developer.mozilla.org/docs/Web/API/KeyboardEvent
+
+[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
+
+[9]: https://developer.mozilla.org/docs/Web/API/Element
+
+[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
+
+[11]: #wsdropdown

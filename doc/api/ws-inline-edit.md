@@ -9,15 +9,11 @@ As an example you can use it in div blocks, rows, tables.
 
 **Parameters**
 
--   `props`  
-
-### constructor
-
-**Parameters**
-
--   `props` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Preact props
+-   `props` **[Object][1]** Preact props
 
 ### state
+
+Type: [Object][1]
 
 ### editElement
 
@@ -31,9 +27,9 @@ Function that save text when click 'Enter' or cancel when click 'Escape' button
 
 **Parameters**
 
--   `e` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** click event
+-   `e` **[Object][1]** click event
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### blurAction
 
@@ -41,9 +37,9 @@ Function that save text when input on blur and send text value to updating funct
 
 **Parameters**
 
--   `e` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** click event
+-   `e` **[Object][1]** click event
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### updating
 
@@ -51,16 +47,18 @@ Function that return value for outside use if text is not the same
 
 **Parameters**
 
--   `text` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** text to show
+-   `text` **[Object][1]** text to show
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### render
 
 Render the complete inline-edit component
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
 
 ### propTypes
 
 ### defaultProps
+
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

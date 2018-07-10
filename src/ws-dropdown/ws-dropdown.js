@@ -50,7 +50,6 @@ function deep(items, getChildren, callback) {
  * @property {string} props.onChange Callback for react components to propagate value changes
  */
 export class WSDropdown extends Component {
-
   /**
    * @type {Object}
    */
@@ -327,6 +326,7 @@ export class WSDropdown extends Component {
       case 'anchor':
         return (
           <a
+            href="#void"
             className={`dropdown-trigger ${disabledStyle}`}
             ref={element => { this.trigger = element; }}
           >
@@ -352,6 +352,7 @@ export class WSDropdown extends Component {
       default:
         return (
           <a
+            href="#void"
             className={`dropdown-trigger ${disabledStyle}`}
             ref={element => { this.trigger = element; }}
           >

@@ -192,28 +192,38 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
       value: function render() {
         var _this3 = this;
 
+        var _props = this.props,
+            className = _props.className,
+            iconOnly = _props.iconOnly,
+            placeholder = _props.placeholder;
+
+
         return _imports.React.createElement(
           'div',
           {
-            className: 'ws-date-picker ' + (this.props.iconOnly ? 'icon-only' : 'with-input'),
+            className: 'ws-date-picker ' + (iconOnly ? 'icon-only' : 'with-input'),
             ref: function ref(element) {
               _this3.element = element;
             }
           },
-          !this.props.iconOnly && [_imports.React.createElement('input', {
+          !iconOnly && [_imports.React.createElement('input', {
+            className: className || '',
             defaultValue: this.state.value,
-            placeholder: this.props.placeholder,
+            placeholder: placeholder,
             ref: function ref(element) {
               _this3.input = element;
             },
             key: 'input'
           }), _imports.React.createElement('span', { className: 'icon icon-calendar icon16', key: 'icon' })],
-          this.props.iconOnly && _imports.React.createElement('span', {
-            className: 'icon icon-calendar icon16',
+          iconOnly && _imports.React.createElement('span', {
+            className: 'icon icon-calendar icon16 ' + (className || ''),
             ref: function ref(element) {
               _this3.input = element;
             },
             onClick: function onClick(event) {
+              return _this3.flatpickr.open(event);
+            },
+            onKeyDown: function onKeyDown(event) {
               return _this3.flatpickr.open(event);
             }
           })
@@ -232,7 +242,8 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
       placeholder: '',
       iconOnly: false,
       options: {},
-      onChange: function onChange() {}
+      onChange: function onChange() {},
+      className: ''
     }
   });
   Object.defineProperty(WSDatePicker, 'propTypes', {
@@ -243,7 +254,8 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
       placeholder: _imports.PropTypes.string,
       iconOnly: _imports.PropTypes.bool,
       options: _imports.PropTypes.object,
-      onChange: _imports.PropTypes.func
+      onChange: _imports.PropTypes.func,
+      className: _imports.PropTypes.string
     }
   });
   Object.defineProperty(WSDatePicker, 'format', {

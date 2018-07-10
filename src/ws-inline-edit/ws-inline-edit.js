@@ -6,7 +6,6 @@ import {React, Component, PropTypes} from '../imports';
  * As an example you can use it in div blocks, rows, tables.
  */
 export class WSInlineEdit extends Component {
-
   /**
    * Types of properties
    */
@@ -98,7 +97,7 @@ export class WSInlineEdit extends Component {
    */
   render() {
     return (
-      <div className="ws-inline-edit" onClick={() => this.editElement()}>
+      <div className="ws-inline-edit" onClick={() => this.editElement()} onKeyPress={() => this.editElement()}>
         <input
           type="text"
           className="inlineInput"

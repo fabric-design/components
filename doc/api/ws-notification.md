@@ -20,8 +20,6 @@ window.dispatchEvent(new CustomEvent('ws-notification-open', {detail: {
 }});
 ```
 
-### constructor
-
 ### componentDidMount
 
 Listen to events on window object
@@ -34,8 +32,8 @@ Trigger animation of new notification if needed
 
 **Parameters**
 
--   `prevProps` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Previous react component properties
--   `prevState` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** Previous react component state
+-   `prevProps` **[Object][1]** Previous react component properties
+-   `prevState` **[Object][1]** Previous react component state
 
 Returns **void** 
 
@@ -51,7 +49,7 @@ Callback of event to add new notification to the list
 
 **Parameters**
 
--   `event` **[CustomEvent](https://developer.mozilla.org/docs/Web/API/CustomEvent/CustomEvent)** JavaScript event object
+-   `event` **[CustomEvent][2]** JavaScript event object
 
 Returns **void** 
 
@@ -61,8 +59,8 @@ Start to animate in a notification
 
 **Parameters**
 
--   `notification` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** The notification to animate in
--   `index` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** Index of notification in the list
+-   `notification` **[Object][1]** The notification to animate in
+-   `index` **[Number][3]** Index of notification in the list
 
 Returns **void** 
 
@@ -78,7 +76,7 @@ Close a specific notification
 
 **Parameters**
 
--   `index` **[Number](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number)** The index of the notification in the list
+-   `index` **[Number][3]** The index of the notification in the list
 
 Returns **void** 
 
@@ -86,4 +84,10 @@ Returns **void**
 
 Render the notification list
 
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+Returns **[Object][1]** 
+
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+
+[2]: https://developer.mozilla.org/docs/Web/API/CustomEvent/CustomEvent
+
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

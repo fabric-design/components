@@ -20,7 +20,6 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * @property {Function} props.handle Function used to propagate data
  */
 export class DropdownMenu extends Component {
-
   /**
    * @type {Object}
    */
@@ -488,12 +487,12 @@ export class DropdownMenu extends Component {
           />,
           <li className="dropdown-item-separator" key="parent-separator" />
         ]}
-        {(hasValue && (this.context.multiple || this.props.filterable)) ? [
+        {(hasValue && (this.context.multiple || this.props.filterable)) && [
           this.state.items.filter(item => item.stored).map((item, index) => (
             <DropdownMenuItem item={item} handle={this.handlePropagation} key={`value-${index}`} />
           )),
           <li className="dropdown-item-separator" key="value-separator" />
-        ] : null}
+        ]}
         {items.map((item, index) => (
           <DropdownMenuItem item={item} handle={this.handlePropagation} key={`item-${index}`} />
         ))}

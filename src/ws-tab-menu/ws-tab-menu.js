@@ -7,7 +7,6 @@ import {React, Component, PropTypes} from '../imports';
  * @property {Function} onChange Callback function for React/Preact applications
  */
 export class WSTabMenu extends Component {
-
   static propTypes = {
     items: PropTypes.array,
     value: PropTypes.any,

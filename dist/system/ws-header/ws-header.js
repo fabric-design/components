@@ -83,7 +83,7 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
         }, {
           key: 'getAccessToken',
           value: function getAccessToken() {
-            var queryString = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : location.hash.substr(1);
+            var queryString = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : window.location.hash.substr(1);
 
             if (!this.authorization.accessToken) {
               this.authorization.tryFetchToken(queryString);
@@ -160,7 +160,7 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
               _this2.dispatchEvent('ws-auth-changed', accessToken);
             });
 
-            this.constructor.authorization.tryFetchToken(location.hash.substr(1));
+            this.constructor.authorization.tryFetchToken(window.location.hash.substr(1));
 
             window.addEventListener('ws-authorize', function () {
               return _this2.login();
@@ -233,6 +233,34 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
             this.level2.classList.remove('is-active');
           }
         }, {
+          key: 'renderLink',
+          value: function renderLink(link) {
+            return React.createElement(
+              'a',
+              { href: link.href, onClick: function onClick(event) {
+                  if (link.onClick) link.onClick(event);
+                } },
+              link.label
+            );
+          }
+        }, {
+          key: 'renderMenuCommons',
+          value: function renderMenuCommons(props) {
+            return React.createElement(
+              'a',
+              {
+                className: 'application-name',
+                href: props.rootUrl
+              },
+              props.appLogo && React.createElement(
+                'figure',
+                { className: 'application-logo' },
+                React.createElement('img', { src: props.appLogo, alt: 'Application logo' })
+              ),
+              props.appName
+            );
+          }
+        }, {
           key: 'render',
           value: function render() {
             var _this4 = this;
@@ -245,19 +273,7 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
               React.createElement(
                 'div',
                 { className: 'level-1' },
-                React.createElement(
-                  'a',
-                  {
-                    className: 'application-name',
-                    href: this.props.rootUrl
-                  },
-                  this.props.appLogo && React.createElement(
-                    'figure',
-                    { className: 'application-logo' },
-                    React.createElement('img', { src: this.props.appLogo, alt: 'Application logo' })
-                  ),
-                  this.props.appName
-                ),
+                this.props.rootUrl.$$typeof ? this.props.rootUrl : this.renderMenuCommons(this.props),
                 React.createElement(
                   'nav',
                   { className: 'main-menu' },
@@ -280,13 +296,7 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
                           },
                           className: link.isCurrent ? 'is-current' : null
                         },
-                        React.createElement(
-                          'a',
-                          { href: link.href, onClick: function onClick(event) {
-                              if (link.onClick) link.onClick(event);
-                            } },
-                          link.label
-                        )
+                        link.$$typeof ? link : _this4.renderLink(link)
                       );
                     })
                   )
@@ -314,23 +324,41 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
                     ),
                     this.props.showAuthorization && (!this.state.isLoggedIn ? React.createElement(
                       'li',
-                      { onClick: function onClick() {
-                          return _this4.login();
-                        } },
+                      null,
                       React.createElement(
-                        'a',
-                        null,
-                        'Login'
+                        'div',
+                        {
+                          onClick: function onClick() {
+                            return _this4.login();
+                          },
+                          onKeyPress: function onKeyPress() {
+                            return _this4.login();
+                          }
+                        },
+                        React.createElement(
+                          'a',
+                          { href: '#voidLogin' },
+                          'Login'
+                        )
                       )
                     ) : React.createElement(
                       'li',
-                      { onClick: function onClick() {
-                          return _this4.logout();
-                        } },
+                      null,
                       React.createElement(
-                        'a',
-                        null,
-                        React.createElement('span', { className: 'icon icon24 icon-power' })
+                        'div',
+                        {
+                          onClick: function onClick() {
+                            return _this4.logout();
+                          },
+                          onKeyPress: function onKeyPress() {
+                            return _this4.logout();
+                          }
+                        },
+                        React.createElement(
+                          'a',
+                          { href: '#voidLogout' },
+                          React.createElement('span', { className: 'icon icon24 icon-power' })
+                        )
                       )
                     ))
                   )
@@ -349,6 +377,9 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
                   onClick: function onClick() {
                     return _this4.leaveLevel2();
                   },
+                  onKeyPress: function onKeyPress() {
+                    return _this4.leaveLevel2();
+                  },
                   ref: function ref(element) {
                     _this4.level2 = element;
                   }
@@ -363,13 +394,7 @@ System.register(['../imports', './storage/cookie-storage', './storage/local-stor
                       return React.createElement(
                         'li',
                         { key: 'sub-link-' + index + '-' + childIndex, className: child.isCurrent ? 'is-current' : null },
-                        React.createElement(
-                          'a',
-                          { href: child.href, onClick: function onClick(event) {
-                              if (child.onClick) child.onClick(event);
-                            } },
-                          child.label
-                        )
+                        _this4.renderLink(child)
                       );
                     })
                   );

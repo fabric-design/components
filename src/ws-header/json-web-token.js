@@ -4,7 +4,6 @@ const log = console;
  * This class represents a JWT token
  */
 export class JsonWebToken {
-
   /**
    * Set the token
    * @param {string} token Json Web Token

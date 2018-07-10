@@ -273,6 +273,7 @@ export var WSDropdown = function (_Component) {
           return React.createElement(
             'a',
             {
+              href: '#void',
               className: 'dropdown-trigger ' + disabledStyle,
               ref: function ref(element) {
                 _this5.trigger = element;
@@ -313,6 +314,7 @@ export var WSDropdown = function (_Component) {
           return React.createElement(
             'a',
             {
+              href: '#void',
               className: 'dropdown-trigger ' + disabledStyle,
               ref: function ref(element) {
                 _this5.trigger = element;
@@ -356,10 +358,17 @@ export var WSDropdown = function (_Component) {
     value: function render() {
       var _this7 = this;
 
-      var isWide = this.props.type === 'select';
+      var _props = this.props,
+          type = _props.type,
+          className = _props.className,
+          orientation = _props.orientation,
+          width = _props.width;
+
+
+      var isWide = type === 'select';
       return React.createElement(
         'div',
-        { className: 'dropdown', ref: function ref(element) {
+        { className: 'dropdown  ' + className, ref: function ref(element) {
             if (element) {
               _this7.element = element;
             }
@@ -368,8 +377,8 @@ export var WSDropdown = function (_Component) {
         React.createElement(
           'div',
           {
-            className: 'dropdown-container ' + this.props.orientation,
-            style: { width: this.props.width || (isWide ? '100%' : '') },
+            className: 'dropdown-container ' + orientation,
+            style: { width: width || (isWide ? '100%' : '') },
             ref: function ref(element) {
               if (element) {
                 _this7.dropdownContainer = element;
@@ -393,6 +402,7 @@ Object.defineProperty(WSDropdown, 'defaultProps', {
     text: '',
     icon: '',
     items: [],
+    className: '',
     multiple: false,
     inputOnly: false,
     filterable: false,
@@ -415,6 +425,7 @@ Object.defineProperty(WSDropdown, 'propTypes', {
     text: PropTypes.string,
     icon: PropTypes.string,
     items: PropTypes.array,
+    className: PropTypes.string,
     multiple: PropTypes.bool,
     filterable: PropTypes.bool,
     inputOnly: PropTypes.bool,

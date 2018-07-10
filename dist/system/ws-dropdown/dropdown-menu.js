@@ -506,7 +506,9 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
           filter: PropTypes.string,
           placeholder: PropTypes.string,
           limit: PropTypes.number,
-          selectAll: PropTypes.bool
+          selectAll: PropTypes.bool,
+          value: PropTypes.object,
+          handle: PropTypes.func
         }
       });
       Object.defineProperty(DropdownMenu, 'contextTypes', {

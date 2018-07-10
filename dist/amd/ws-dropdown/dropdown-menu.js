@@ -498,7 +498,9 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
       filter: _imports.PropTypes.string,
       placeholder: _imports.PropTypes.string,
       limit: _imports.PropTypes.number,
-      selectAll: _imports.PropTypes.bool
+      selectAll: _imports.PropTypes.bool,
+      value: _imports.PropTypes.object,
+      handle: _imports.PropTypes.func
     }
   });
   Object.defineProperty(DropdownMenu, 'contextTypes', {

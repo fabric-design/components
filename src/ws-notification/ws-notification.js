@@ -18,7 +18,6 @@ const DEFAULT_NOTIFICATION_TYPE = 'info';
  * }});
  */
 export class WSNotification extends Component {
-
   /**
    * @constructor
    */
@@ -83,7 +82,9 @@ export class WSNotification extends Component {
       type = DEFAULT_NOTIFICATION_TYPE;
     }
     this.setState({
-      notifications: this.state.notifications.concat([{title, description, type, lifetime}])
+      notifications: this.state.notifications.concat([{
+        title, description, type, lifetime
+      }])
     });
   }
 
@@ -94,7 +95,7 @@ export class WSNotification extends Component {
    * @returns {void}
    */
   animateIn(notification, index) {
-    const list = this.list;
+    const {list} = this.list;
     list.style.transition = 'none';
     list.style.transform = 'translate3d(0, 80px, 0)';
     setTimeout(() => {
@@ -136,28 +137,31 @@ export class WSNotification extends Component {
    * @returns {Object}
    */
   render() {
-    return (<div className="ws-notification-wrapper">
-      <div className="ws-notification-list" ref={element => { this.list = element; }}>
-        {this.state.notifications.map((notification, i) =>
-          <div
-            className={`notification ${notification.type}`}
-            key={`notification-${i}`}
-            ref={element => { this[`notification-${i}`] = element; }}
-            onClick={() => this.close(i)}
-          >
-            <div className="icons">
-              <i className="icon icon-info" />
-              <i className="icon icon-warning" />
-              <i className="icon icon-success" />
-              <i className="icon icon-error" />
-            </div>
-            <div className="content">
-              <div className={(notification.description) ? 'title' : 'title is-standalone'}>{notification.title}</div>
-              {(notification.description) ? <p className="description">{notification.description}</p> : null}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>);
+    return (
+      <div className="ws-notification-wrapper">
+        <div className="ws-notification-list" ref={element => { this.list = element; }}>
+          {this.state.notifications.map((notification, i) =>
+            (
+              <div
+                className={`notification ${notification.type}`}
+                key={`notification-${i}`}
+                ref={element => { this[`notification-${i}`] = element; }}
+                onClick={() => this.close(i)}
+                onKeyPress={() => this.close(i)}
+              >
+                <div className="icons">
+                  <i className="icon icon-info" />
+                  <i className="icon icon-warning" />
+                  <i className="icon icon-success" />
+                  <i className="icon icon-error" />
+                </div>
+                <div className="content">
+                  <div className={(notification.description) ? 'title' : 'title is-standalone'}>{notification.title}</div>
+                  {(notification.description) ? <p className="description">{notification.description}</p> : null}
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>);
   }
 }

@@ -21,7 +21,6 @@ import {DropdownMenu} from './dropdown-menu';
  * @property {Function} props.handle Function used to propagate data
  */
 export class DropdownMenuItem extends Component {
-
   /**
    * @type {Object}
    */
@@ -107,22 +106,20 @@ export class DropdownMenuItem extends Component {
     // Show next menu if item has children
     } else if (this.state.children && this.state.children.length) {
       this.props.handle('show-child', this.menu);
-    } else {
-      if (!this.context.multiple) {
-        // If it is selected we publish null because it will be deselected in the upper menu
-        if (this.state.selected) {
-          this.props.handle('change', null);
-        } else {
-          this.setState({
-            selected : true,
-            stored : true,
-          });
-
-          this.props.handle('change', this.state);
-        }
+    } else if (!this.context.multiple) {
+      // If it is selected we publish null because it will be deselected in the upper menu
+      if (this.state.selected) {
+        this.props.handle('change', null);
       } else {
-        this.setState({selected : !this.state.selected});
+        this.setState({
+          selected: true,
+          stored: true
+        });
+
+        this.props.handle('change', this.state);
       }
+    } else {
+      this.setState({selected: !this.state.selected});
     }
   };
 

@@ -25,7 +25,6 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * @property {string} props.onChange Callback for react components to propagate value changes
  */
 export class WSDropdown extends Component {
-
   /**
    * @type {Object}
    */
@@ -237,7 +236,7 @@ export class WSDropdown extends Component {
    */
   createState(props) {
     const items = this.enrichItems(props.items);
-    let value = props.value;
+    let {value} = props;
     // For better usability the value can be a primitive value matching a dropdown item value
     if (typeof value === 'string' && props.type !== 'input') {
       value = items.find(item => item.value === value);
@@ -392,6 +391,7 @@ export class WSDropdown extends Component {
       case 'anchor':
         return (
           <a
+            href="#void"
             className={`dropdown-trigger ${disabledStyle}`}
             ref={element => { this.trigger = element; }}
           >
@@ -417,6 +417,7 @@ export class WSDropdown extends Component {
       default:
         return (
           <a
+            href="#void"
             className={`dropdown-trigger ${disabledStyle}`}
             ref={element => { this.trigger = element; }}
           >
@@ -466,7 +467,7 @@ export class WSDropdown extends Component {
       type,
       className,
       orientation,
-      width,
+      width
     } = this.props;
 
     const isWide = type === 'select';

@@ -7,13 +7,12 @@ export const React = {
   createElement: _React_.createElement || _React_.h
 };
 export const PropTypes = types;
-export const render = ReactDOM.render;
+export const {render} = ReactDOM;
 
 /**
  * This is a abstract React/Preact component class
  */
 export class Component extends _React_.Component {
-
   /**
    * Dispatches a native event
    * @param {string} name Event name

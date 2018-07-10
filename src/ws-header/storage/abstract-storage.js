@@ -4,7 +4,6 @@
  *
  */
 export class AbstractStorage {
-
   /**
    * @param {string} name The storage name
    * @constructor

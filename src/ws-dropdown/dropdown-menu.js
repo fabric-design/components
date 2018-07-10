@@ -337,7 +337,8 @@ export class DropdownMenu extends Component {
         this.showChild(data);
         break;
       case 'change':
-        // Clear filter input after selecting item
+        // Filterable is used here as it indicates that the dropdown shows and manages the filter value.
+        // Therefore the dropdown has to take care about clearing after submission.
         if (this.props.filterable) {
           this.setState({filter: ''});
         }

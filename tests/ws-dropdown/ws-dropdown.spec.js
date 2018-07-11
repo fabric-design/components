@@ -5,44 +5,24 @@ import {WSDropdown} from '../../src/ws-dropdown/ws-dropdown';
 
 describe('A WSDropdown', () => {
 
-  it('tracks clicks outside of dropdown', () => {
-    const dd = new TestComponent(<WSDropdown type="select"/>);
-    spyOn(dd.component, 'close');
-
-    expect(dd.component.close).not.toHaveBeenCalled();
-
-    dd.component.onDocumentClick({target: dd.component.trigger});
-    expect(dd.component.close).not.toHaveBeenCalled();
-
-    dd.component.onDocumentClick({target: document.body});
-    expect(dd.component.close).toHaveBeenCalled();
-  });
-
   it('toggles dropdown when clicking the trigger', () => {
     const dd = new TestComponent(<WSDropdown type="select"/>);
-    spyOn(dd.component, 'open').and.callThrough();
-    spyOn(dd.component, 'close').and.callThrough();
+    spyOn(dd.component.overlay, 'open').and.callThrough();
+    spyOn(dd.component.overlay, 'close').and.callThrough();
+    spyOn(dd.component.overlay, 'toggle').and.callThrough();
 
     // Open
     dd.component.onTriggerClick(new Event('click'));
-    expect(dd.component.open).toHaveBeenCalledTimes(1);
+    expect(dd.component.overlay.toggle).toHaveBeenCalledTimes(1);
+    expect(dd.component.overlay.open).toHaveBeenCalledTimes(1);
     // Close
     dd.component.onTriggerClick(new Event('click'));
-    expect(dd.component.open).toHaveBeenCalledTimes(1);
-    expect(dd.component.close).toHaveBeenCalledTimes(1);
+    expect(dd.component.overlay.toggle).toHaveBeenCalledTimes(2);
+    expect(dd.component.overlay.close).toHaveBeenCalledTimes(1);
     // Open
     dd.component.onTriggerClick(new Event('click'));
-    expect(dd.component.open).toHaveBeenCalledTimes(2);
-  });
-
-  it('closes dropdown on escape key', () => {
-    const dd = new WSDropdown({type: 'button'});
-    spyOn(dd, 'close');
-
-    dd.onGlobalKeyDown({key: 'ArrowUp'});
-    expect(dd.close).not.toHaveBeenCalled();
-    dd.onGlobalKeyDown({key: 'Escape'});
-    expect(dd.close).toHaveBeenCalled();
+    expect(dd.component.overlay.toggle).toHaveBeenCalledTimes(3);
+    expect(dd.component.overlay.open).toHaveBeenCalledTimes(2);
   });
 
   it('gets text from value for selects', () => {

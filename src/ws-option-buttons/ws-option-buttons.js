@@ -4,10 +4,10 @@ import {React, Component, PropTypes} from '../imports';
  * Renders a list of clickable buttons. The amount of initial visible buttons can be controlled with
  * the initialVisible property. The user is able to show more than these defined amount by clicking the "more" button.
  *
- * @props {Array} items List of items like {label: "Button 1", value: 1}
- * @props {number} initialVisible Number of items visible without expanding the list
- * @props {number} maxSelected Amount of maximum selectable buttons at once
- * @props {string} buttonClass Additional css classes for each button
+ * @property {Array} items List of items like {label: "Button 1", value: 1}
+ * @property {number} initialVisible Number of items visible without expanding the list
+ * @property {number} maxSelected Amount of maximum selectable buttons at once
+ * @property {string} buttonClass Additional css classes for each button
  */
 export class WSOptionButtons extends Component {
   static propTypes = {
@@ -99,13 +99,13 @@ export class WSOptionButtons extends Component {
    */
   onClickButton = event => {
     event.stopPropagation();
+    const {items} = this.state;
     const clickedIndex = this.buttons.indexOf(event.currentTarget);
     // Mark other items as de-selected and toggle selection of clicked one
-    this.state.items[clickedIndex].selected = !this.state.items[clickedIndex].selected;
-    const value = this.state.items.filter(item => item.selected).map(item => item.value);
-    // eslint-disable-next-line react/no-unused-state
-    this.setState({items: this.state.items, value});
-    // Notify html parents
+    items[clickedIndex].selected = !items[clickedIndex].selected;
+    this.setState({items});
+
+    const value = items.filter(item => item.selected).map(item => item.value);
     this.dispatchEvent('change', value);
     // Notify react and preact parents
     if (typeof this.props.onChange === 'function') {
@@ -120,25 +120,24 @@ export class WSOptionButtons extends Component {
    */
   createState(props) {
     const items = this.enrichItems(props.items);
-    // If value is set mark related item as selected
+    // allow single value and list of values
+    let value = [];
     if (props.value) {
-      if (!Array.isArray(props.value)) {
-        props.value = [props.value];
-      }
-      props.value.forEach(value => {
-        items.find(item => item.value === value).selected = true;
-      });
+      value = Array.isArray(props.value) ? props.value : [props.value];
     }
+    items.forEach(item => {
+      item.selected = value.includes(item.value);
+    });
     return {
       items,
       visible: props.initialVisible,
-      value: props.value
+      value
     };
   }
 
   /**
    * Used to convert the items if they are strings into the required object structure
-   * @param {Array<String|Object>} items List of items represented as string or object
+   * @param {Array<string|Object>} items List of items represented as string or object
    * @returns {Array<Object>}
    */
   enrichItems(items) {
@@ -157,18 +156,17 @@ export class WSOptionButtons extends Component {
   render() {
     return (
       <div className="ws-option-buttons" ref={element => { this.element = element; }}>
-        {this.state.items.map((item, index) =>
-          (
-            <div className={`option-button ${index < this.state.visible ? '' : 'is-hidden'}`}>
-              <a
-                href="#void"
-                className={`${this.props.buttonClass} ${item.selected ? 'is-active' : ''}`}
-                data-index=""
-                ref={element => { this.buttons[index] = element; }}
-              >
-                {item.label || item.value}
-              </a>
-            </div>))}
+        {this.state.items.map((item, index) => (
+          <div className={`option-button ${index < this.state.visible ? '' : 'is-hidden'}`}>
+            <a
+              className={`${this.props.buttonClass} ${item.selected ? 'is-active' : ''}`}
+              data-index=""
+              ref={element => { this.buttons[index] = element; }}
+            >
+              {item.label || item.value}
+            </a>
+          </div>
+        ))}
         <a
           href="#void"
           className={`show-more ${this.props.initialVisible < this.state.items.length ? 'is-hidden' : ''}`}

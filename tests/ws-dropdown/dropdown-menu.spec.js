@@ -12,6 +12,7 @@ describe('A DropdownMenu', () => {
     dm.state.filter = 'irrelevant';
     expect(dm.getFilteredItems().length).toBe(3);
     // Get all items with filter string in label and not stored
+    dm.state.filtered = true;
     dm.props.filterable = true;
     dm.state.filter = '1';
     expect(dm.getFilteredItems().length).toBe(1);
@@ -19,6 +20,7 @@ describe('A DropdownMenu', () => {
     expect(dm.getFilteredItems().length).toBe(2);
     // Get all not stored items
     dm.context.multiple = true;
+    dm.state.filtered = false;
     dm.props.filterable = false;
     dm.state.filter = 'anything';
     expect(dm.getFilteredItems().length).toBe(2);

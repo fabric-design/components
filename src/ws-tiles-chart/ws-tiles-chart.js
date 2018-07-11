@@ -94,7 +94,6 @@ export class WSTilesChart extends Component {
     }
 
     const tilesAmount = Object.keys(groups).map(groupName => groups[groupName].length).reduce((a, b) => a + b);
-
     const tileSize = this.calculateMaximumPossibleTileSize(width, height - this.titleDivSize, tilesAmount);
 
     if (tileSize <= maxTileSize && tileSize >= minTileSize) {
@@ -136,8 +135,8 @@ export class WSTilesChart extends Component {
           onMouseEnter={this.props.onMouseEnter}
           onMouseLeave={this.props.onMouseLeave}
         >
-          {Object.keys(groups).map(groupName => groups[groupName].map(tile =>
-            (<Tile
+          {Object.keys(groups).map(groupName => groups[groupName].map(tile => (
+            <Tile
               identifier={tile}
               className={this.state.groupOver === groupName ? 'group-over' : ''}
               groupName={groupName}
@@ -146,7 +145,8 @@ export class WSTilesChart extends Component {
               onClick={this.props.onClick}
               onMouseEnter={() => this.setState({groupOver: groupName})}
               onMouseLeave={() => this.setState({groupOver: ''})}
-            />)))}
+            />
+          )))}
         </div>
       </div>
     );

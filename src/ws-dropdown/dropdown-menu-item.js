@@ -17,7 +17,7 @@ import {DropdownMenu} from './dropdown-menu';
  * @property {Object} props React properties object
  * @property {Object} props.item Dropdown item configuration
  * @property {string} props.icon Class name of icon in trigger
- * @property {Boolean} props.isParent Flag to identify if this item renders the parent dropdown item
+ * @property {boolean} props.isParent Flag to identify if this item renders the parent dropdown item
  * @property {Function} props.handle Function used to propagate data
  */
 export class DropdownMenuItem extends Component {
@@ -55,7 +55,7 @@ export class DropdownMenuItem extends Component {
    */
   constructor(props, context) {
     super(props, context);
-    this.state = props.item;
+    this.state = {item: props.item};
     this.menu = null;
   }
 
@@ -65,6 +65,7 @@ export class DropdownMenuItem extends Component {
    */
   componentDidMount() {
     this.dropdownItem.addEventListener('click', this.onClick);
+    this.dropdownItem.addEventListener('mousedown', this.onMouseDown);
   }
 
   /**
@@ -76,7 +77,7 @@ export class DropdownMenuItem extends Component {
    * @returns {void}
    */
   componentWillReceiveProps(props) {
-    this.setState(props.item);
+    this.setState({item: props.item});
   }
 
   /**
@@ -85,7 +86,18 @@ export class DropdownMenuItem extends Component {
    */
   componentWillUnmount() {
     this.dropdownItem.removeEventListener('click', this.onClick);
+    this.dropdownItem.removeEventListener('mousedown', this.onMouseDown);
   }
+
+  /**
+   * Prevent mouse down to prevent following blur event
+   * The blur event triggers overlay close which leads to the click is not captured (invisible element)
+   * @param {MouseEvent} event JavaScript event object
+   * @returns{void}
+   */
+  onMouseDown = event => {
+    event.preventDefault();
+  };
 
   /**
    * Handle clicks on this dropdown item. This can trigger a back navigation, selecting the item on multi selects
@@ -95,8 +107,13 @@ export class DropdownMenuItem extends Component {
    */
   onClick = event => {
     event.stopPropagation();
+    // We prevented blur with mouse down event to ensure the click is captured before the dropdown closed
+    if ('activeElement' in document) {
+      document.activeElement.blur();
+    }
+    const {item} = this.state;
     // Do nothing if this item is disabled
-    if (this.state.disabled) {
+    if (item.disabled) {
       return;
     }
     // Click on parent means back navigation
@@ -104,29 +121,30 @@ export class DropdownMenuItem extends Component {
       // dropdown-item(go-back) -> dropdown-menu(show-parent) -> dropdown-item(show-parent) -> dropdown-menu
       this.props.handle('go-back');
     // Show next menu if item has children
-    } else if (this.state.children && this.state.children.length) {
+    } else if (item.children && item.children.length) {
       this.props.handle('show-child', this.menu);
     } else if (!this.context.multiple) {
       // If it is selected we publish null because it will be deselected in the upper menu
-      if (this.state.selected) {
+      if (item.selected) {
         this.props.handle('change', null);
       } else {
-        this.setState({
-          selected: true,
-          stored: true
-        });
+        item.selected = true;
+        item.stored = true;
 
-        this.props.handle('change', this.state);
+        this.setState({item});
+
+        this.props.handle('change', item);
       }
     } else {
-      this.setState({selected: !this.state.selected});
+      item.selected = !item.selected;
+      this.setState({item});
     }
   };
 
   /**
    * This is required to propagate changes from child menu to parent menu.
    * For instance if the menu size, it's value changed or the parent or child menu should be shown.
-   * @param {String} type Type of propagated data
+   * @param {string} type Type of propagated data
    * @param {*} data Data which was propagated. Can be height of child menu or reference of child
    * @returns {void}
    */
@@ -139,30 +157,33 @@ export class DropdownMenuItem extends Component {
    * @returns {Object}
    */
   render() {
+    const {item} = this.state;
     let anchorClass = 'text';
-    anchorClass += this.state.selected ? ' is-active' : '';
-    anchorClass += this.state.focused ? ' is-focused' : '';
-    anchorClass += this.state.disabled ? ' is-disabled' : '';
-    anchorClass += ` ${this.state.className || ''}`;
+    anchorClass += item.selected ? ' is-active' : '';
+    anchorClass += item.focused ? ' is-focused' : '';
+    anchorClass += item.disabled ? ' is-disabled' : '';
+    anchorClass += ` ${item.className || ''}`;
     let itemClass = 'dropdown-item';
     itemClass += this.props.isParent ? ' dropdown-parent-item' : '';
-    itemClass += this.state.children && !this.props.isParent ? ' has-children' : '';
+    itemClass += item.children && !this.props.isParent ? ' has-children' : '';
 
     return (
-      <li
-        className={itemClass}
-        ref={element => { this.dropdownItem = element; }}
-      >
-        <a className={anchorClass} href={this.state.href} title={this.state.title || this.state.label}>
-          {(this.props.icon || this.state.icon) &&
-            <i className={`icon ${this.props.icon || this.state.icon}`} />
+      <li className={itemClass}>
+        <a
+          className={anchorClass}
+          href={item.href}
+          title={item.title || item.label}
+          ref={element => { this.dropdownItem = element; }}
+        >
+          {(this.props.icon || item.icon) &&
+            <i className={`icon ${this.props.icon || item.icon}`} />
           }
-          {this.state.label}
+          {item.label}
         </a>
-        {!this.props.isParent && this.state.children &&
+        {!this.props.isParent && item.children &&
           <DropdownMenu
-            items={this.state.children}
-            parent={this.state}
+            items={item.children}
+            parent={item}
             ref={element => { this.menu = element; }}
             handle={this.handlePropagation}
           />

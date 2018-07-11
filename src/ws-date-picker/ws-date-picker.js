@@ -8,25 +8,25 @@ import Flatpickr from './flatpickr';
  * You can set additional options to the flatpickr by passing the options property.
  * If you only want to display an icon instead of a input set prop iconOnly.
  *
- * @link https://chmln.github.io/flatpickr/
+ * @see https://chmln.github.io/flatpickr/
  */
 export class WSDatePicker extends Component {
   static defaultProps = {
     value: null,
     placeholder: '',
+    className: '',
     iconOnly: false,
     options: {},
-    onChange: () => {},
-    className: ''
+    onChange: () => {}
   };
 
   static propTypes = {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     placeholder: PropTypes.string,
+    className: PropTypes.string,
     iconOnly: PropTypes.bool,
     options: PropTypes.object,
-    onChange: PropTypes.func,
-    className: PropTypes.string
+    onChange: PropTypes.func
   };
 
   static format = 'd.m.Y';
@@ -67,7 +67,8 @@ export class WSDatePicker extends Component {
       onChange: this.onChange.bind(this)
     });
     // Prevent default change event bubbling
-    this.input.addEventListener('change', event => event.stopPropagation(), true);
+    this.input.addEventListener('change', this.stopPropagation);
+    this.element.addEventListener('click', this.stopPropagation);
   }
 
   /**
@@ -91,13 +92,14 @@ export class WSDatePicker extends Component {
    */
   componentWillUnmount() {
     this.flatpickr.destroy();
-    this.input.removeEventListener('change', event => event.stopPropagation(), true);
+    this.input.removeEventListener('change', this.stopPropagation);
+    this.element.removeEventListener('click', this.stopPropagation);
   }
 
   /**
    * Handle date selections and propagate the value via an custom change event and onChange callback
    * @param {Date} selectedDate The currently selected date
-   * @param {String} value The date as string using the in props specified formatting
+   * @param {string} value The date as string using the in props specified formatting
    * @returns {void}
    */
   onChange([selectedDate], value) {
@@ -108,6 +110,15 @@ export class WSDatePicker extends Component {
       this.props.onChange(selectedDate);
     }
   }
+
+  /**
+   * Prevent clicks bubbling out
+   * @param {MouseEvent} event JavaScript event object
+   * @returns {void}
+   */
+  stopPropagation = event => {
+    event.stopPropagation();
+  };
 
   /**
    * Render the component
@@ -127,7 +138,7 @@ export class WSDatePicker extends Component {
       >
         {!iconOnly && [
           <input
-            className={className || ''}
+            className={className}
             defaultValue={this.state.value}
             placeholder={placeholder}
             ref={element => { this.input = element; }}
@@ -137,7 +148,7 @@ export class WSDatePicker extends Component {
         ]}
         {iconOnly &&
           <span
-            className={`icon icon-calendar icon16 ${className || ''}`}
+            className={`icon icon-calendar icon16 ${className}`}
             ref={element => { this.input = element; }}
             onClick={event => this.flatpickr.open(event)}
             onKeyDown={event => this.flatpickr.open(event)}

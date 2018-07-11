@@ -18,8 +18,8 @@ import {WSDropdown} from '../ws-dropdown/ws-dropdown';
  * @property {string} props.appName property used to set the application name
  * @property {string} props.appLogo property used to set the application image logo
  * @property {string} props.rootUrl property used to set the root application url
- * @property {Boolean} props.showLocale Flag used to show the locale dropdown
- * @property {Boolean} props.showAuthorization Flag to show the login area
+ * @property {boolean} props.showLocale Flag used to show the locale dropdown
+ * @property {boolean} props.showAuthorization Flag to show the login area
  * @property {Function} props.onLocaleChange Function used to propagate data
  * @property {Function} props.onAuthChange Function used to propagate data
  */
@@ -259,7 +259,7 @@ export class WSHeader extends Component {
   }
 
   /**
-   * codeclimate demands abstraction; this makes links
+   * code climate demands abstraction; this makes links
    * @param  {Object} link link data, label, href, etc
    * @returns {JSX} a rendered link
    */
@@ -277,15 +277,15 @@ export class WSHeader extends Component {
    * @returns {JSX}
    */
   renderMenuCommons(props) {
+    if (props.rootUrl.$$typeof) {
+      return props.rootUrl;
+    }
     return (
-      <a
-        className="application-name"
-        href={props.rootUrl}
-      >
+      <a className="application-name" href={props.rootUrl}>
         {props.appLogo &&
-        <figure className="application-logo">
-          <img src={props.appLogo} alt="Application logo" />
-        </figure>
+          <figure className="application-logo">
+            <img src={props.appLogo} alt="Application logo" />
+          </figure>
         }
         {props.appName}
       </a>
@@ -296,31 +296,34 @@ export class WSHeader extends Component {
    * @returns {Object}
    */
   render() {
+    const {
+      links,
+      showLocale,
+      showAuthorization
+    } = this.props;
+
     return (
       <header className="ws-header" ref={element => { this.element = element; }}>
         <div className="level-1">
-          {
-            this.props.rootUrl.$$typeof ? this.props.rootUrl : this.renderMenuCommons(this.props)
-          }
+          {this.renderMenuCommons(this.props)}
           <nav className="main-menu">
             <ul>
-              {this.props.links.map((link, index) =>
-                (
-                  <li
-                    key={`header-link${index}`}
-                    onMouseEnter={() => this.enterMenuItem(index)}
-                    onMouseLeave={() => this.leaveMenuItem(index)}
-                    ref={element => { this.menuItems[index] = element; }}
-                    className={(link.isCurrent) ? 'is-current' : null}
-                  >
-                    {link.$$typeof ? link : this.renderLink(link)}
-                  </li>
-                ))}
+              {this.props.links.map((link, index) => (
+                <li
+                  key={`header-link${index}`}
+                  onMouseEnter={() => this.enterMenuItem(index)}
+                  onMouseLeave={() => this.leaveMenuItem(index)}
+                  ref={element => { this.menuItems[index] = element; }}
+                  className={(link.isCurrent) ? 'is-current' : null}
+                >
+                  {link.$$typeof ? link : this.renderLink(link)}
+                </li>
+              ))}
             </ul>
           </nav>
           <nav className="menu-controls">
             <ul>
-              {this.props.showLocale &&
+              {showLocale &&
                 <li>
                   <WSDropdown
                     className="locale"
@@ -333,23 +336,17 @@ export class WSHeader extends Component {
                   />
                 </li>
               }
-              {this.props.showAuthorization && (!this.state.isLoggedIn ?
+              {showAuthorization && (!this.state.isLoggedIn ?
                 <li>
-                  <div
-                    onClick={() => this.login()}
-                    onKeyPress={() => this.login()}
-                  >
-                    <a href="#voidLogin">Login</a>
-                  </div>
+                  <a onClick={() => this.login()} onKeyPress={() => this.login()}>
+                    Login
+                  </a>
                 </li>
                 :
                 <li>
-                  <div
-                    onClick={() => this.logout()}
-                    onKeyPress={() => this.logout()}
-                  >
-                    <a href="#voidLogout"><span className="icon icon24 icon-power" /></a>
-                  </div>
+                  <a onClick={() => this.logout()} onKeyPress={() => this.logout()}>
+                    <span className="icon icon24 icon-power" />
+                  </a>
                 </li>
               )}
             </ul>
@@ -363,16 +360,21 @@ export class WSHeader extends Component {
           onKeyPress={() => this.leaveLevel2()}
           ref={element => { this.level2 = element; }}
         >
-          {this.props.links.map((parent, index) =>
-            parent.children && parent.children.length &&
-            <ul className="main-sub-menu" key={`sub-menu${index}`} ref={element => { this.subMenus[index] = element; }}>
-              {parent.children.map((child, childIndex) =>
-                (
+          {links.map((parent, index) => (
+            parent.children && parent.children.length && (
+              <ul
+                className="main-sub-menu"
+                key={`sub-menu${index}`}
+                ref={element => { this.subMenus[index] = element; }}
+              >
+                {parent.children.map((child, childIndex) => (
                   <li key={`sub-link-${index}-${childIndex}`} className={(child.isCurrent) ? 'is-current' : null}>
                     {this.renderLink(child)}
                   </li>
                 ))}
-            </ul>)}
+              </ul>
+            )
+          ))}
         </div>
       </header>
     );

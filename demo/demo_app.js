@@ -9,13 +9,24 @@ import {
   WSWeekPicker,
   WSTilesChart,
   WSTabMenu,
-  WSOptionButtons
+  WSOptionButtons,
+  WSMultiSelect
 } from '../src/index';
 import {dashboardMockData} from './mockdata';
 import './index.scss';
 
 // Used to enable React Developer Tools
 window.React = React;
+
+const items = [
+  {label: 'W T Denim (SUNIT1)', value: 'SUNIT1'},
+  {label: 'W R Denim (SUNIT2)', value: 'SUNIT2'},
+  {label: 'W W Asics (SUNIT3)', value: 'SUNIT3'},
+  {label: 'W T Shows (SUNIT4)', value: 'SUNIT4'},
+  {label: 'W T Textile (SUNIT5)', value: 'SUNIT5'},
+  {label: 'W T Nothing (SUNIT6)', value: 'SUNIT6'},
+  {label: 'W T Something (SUNIT7)', value: 'SUNIT7'},
+]
 
 render(
   <div>
@@ -51,7 +62,9 @@ render(
       ]}
     />
     <div className="container">
-      <WSOptionButtons items={[{value: 'FS17', label: 'FS17'}, 'HW17', {value: 'FS18'}, {value: 'HW18', label: 'Herbst Winter 18'}]} onChange={value => console.log('new value', value)}/>
+      <WSMultiSelect placeholder="Search Sub-Unit" items={items} onChange={value => console.log('new value', value)}/>
+      <br />
+      <WSOptionButtons items={items} onChange={value => console.log('new value', value)}/>
       <br />
       <WSTabMenu items={[{label: 'This is the name of a long Tab 1', value: 1}, {label: 'Tab 2', value: 2}, {label: 'Another long Tab 3 name', value: 3}]} onChange={value => console.log(value)} />
       <br />
@@ -120,7 +133,7 @@ render(
         ]}
       />
       <br />
-      <WSDropdown text="Input" type="select" width="50%" placeholder="tasd" value="222" inputOnly />
+      <WSDropdown text="Input" orientation="right" type="select" width="50%" placeholder="tasd" value="222" inputOnly />
       <br />
       <WSNotification />
       <br />

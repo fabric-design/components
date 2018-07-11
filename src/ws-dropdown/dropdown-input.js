@@ -35,7 +35,7 @@ export class DropdownInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: props.value
+      value: props.value && props.value.value
     };
   }
 
@@ -64,7 +64,7 @@ export class DropdownInput extends Component {
   /**
    * Call submit on enter key
    * @param {KeyboardEvent} event JavaScript Event object
-   * @returns {Boolean}
+   * @returns {boolean}
    */
   onKeyDown = event => {
     if (event.which === KEY_ENTER) {
@@ -105,7 +105,7 @@ export class DropdownInput extends Component {
 
   /**
    * Gets the height of the menu container to scale the outer container up
-   * @returns {Number}
+   * @returns {number}
    */
   getHeight() {
     return this.menuContainer.clientHeight;

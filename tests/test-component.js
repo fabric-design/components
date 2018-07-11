@@ -37,7 +37,7 @@ export class TestComponent {
 
   /**
    * Helper function for querySelector and querySelectorAll
-   * @param {String} selector CSS Selector string
+   * @param {string} selector CSS Selector string
    * @returns {null|Element|Array<Element>} Returns null if nothing found, Element if one was found and otherwise an Array
    */
   q(selector) {

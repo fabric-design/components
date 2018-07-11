@@ -23,7 +23,7 @@ export class WSSpinner extends Component {
   };
 
   /**
-   * @returns {XML}
+   * @returns {JSX}
    */
   render() {
     return (

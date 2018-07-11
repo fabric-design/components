@@ -5,7 +5,7 @@ import {WSWeekPicker} from '../../src/index';
 import {wait} from '../async';
 
 /**
- * Tests for WS-WeekPickerd
+ * Tests for WS-WeekPicker
  */
 describe('Test: <WSWeekPicker />', () => {
   let container;
@@ -59,7 +59,7 @@ describe('Test: <WSWeekPicker />', () => {
     element.querySelector('input').click();
     await wait();
     const calendar = element.querySelector('.ws-date-picker-calendar');
-    const weeks = calendar.querySelectorAll('tbody td');
+    const weeks = calendar.querySelectorAll('tbody td a');
     weeks[20].click();
     await wait();
 

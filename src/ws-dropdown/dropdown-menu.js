@@ -11,11 +11,12 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * @property {Object} props.parent Parent dropdown item. Only set if this is a child menu
  * @property {Array<Object>} props.items List of dropdown item configs. Each item can contain label, value, disabled, selected
  * @property {Object|Array<Object>} props.value Selected dropdown item(s)
- * @property {Boolean} props.filterable Flag if the dropdown menu is filterable
+ * @property {boolean} props.filterable Flag if the dropdown menu is filterable
+ * @property {boolean} props.filtered Should be true when items are filtered outside but dropdown has no filter possibility
  * @property {string} props.filter Default filter value
  * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
  * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
- * @property {Boolean} props.selectAll Show button to select all items
+ * @property {boolean} props.selectAll Show button to select all items
  * @property {Function} props.handle Function used to propagate data
  */
 export class DropdownMenu extends Component {
@@ -28,6 +29,7 @@ export class DropdownMenu extends Component {
     value: null,
     filterable: false,
     filter: null,
+    filtered: false,
     placeholder: '',
     limit: 10,
     selectAll: false,
@@ -40,12 +42,13 @@ export class DropdownMenu extends Component {
   static propTypes = {
     parent: PropTypes.object,
     items: PropTypes.array,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
     filterable: PropTypes.bool,
     filter: PropTypes.string,
+    filtered: PropTypes.bool, // True when filtering from outside e.g. multi-select
     placeholder: PropTypes.string,
     limit: PropTypes.number,
     selectAll: PropTypes.bool,
-    value: PropTypes.object,
     handle: PropTypes.func
   };
 
@@ -67,6 +70,7 @@ export class DropdownMenu extends Component {
     this.selectedIndex = -1;
     this.state = {
       filter: props.filter,
+      filtered: props.filtered || props.filterable,
       items: props.items,
       value: props.value,
       selectAllActive: false
@@ -99,6 +103,7 @@ export class DropdownMenu extends Component {
   componentWillReceiveProps(props) {
     this.setState({
       filter: props.filter,
+      filtered: props.filtered || props.filterable,
       items: props.items,
       value: props.value,
       selectAllActive: props.selectAllActive
@@ -106,12 +111,15 @@ export class DropdownMenu extends Component {
   }
 
   /**
-   * Send the new height of this menu after update to the parent.
-   * This will be called when updateFilter did set the new state
+   * Send the new height of this menu after update by the parent.
+   * This will be called when updateFilter did set the new state or outside new dropdown items came in.
+   * Only if the current menu is really active we propagate the new height
    * @returns {void}
    */
   componentDidUpdate() {
-    this.props.handle('change-size', this.getHeight());
+    if (this.isActive) {
+      this.props.handle('change-height', this.getHeight());
+    }
   }
 
   /**
@@ -137,9 +145,7 @@ export class DropdownMenu extends Component {
    * @returns {void}
    */
   onOpen = () => {
-    if (this.input) {
-      this.input.focus();
-    }
+    this.isActive = true;
     window.addEventListener('keydown', this.onGlobalKeyDown);
   };
 
@@ -148,6 +154,7 @@ export class DropdownMenu extends Component {
    * @returns {void}
    */
   onClose = () => {
+    this.isActive = false;
     window.removeEventListener('keydown', this.onGlobalKeyDown);
   };
 
@@ -219,7 +226,7 @@ export class DropdownMenu extends Component {
 
   /**
    * Gets the current height of the menu
-   * @returns {Number}
+   * @returns {number}
    */
   getHeight() {
     return this.menuContainer.clientHeight;
@@ -233,11 +240,11 @@ export class DropdownMenu extends Component {
     const regex = new RegExp(this.state.filter, 'i');
     return this.state.items.filter(item => {
       // Don't show items which doesn't match the filter
-      if (this.props.filterable && this.state.filter && !regex.test(item.label)) {
+      if (this.state.filtered && this.state.filter && !regex.test(item.label)) {
         return false;
       }
       // When we use a filter or multiple items are selectable we show selected items separately
-      if (this.props.filterable || this.context.multiple) {
+      if (this.state.filtered || this.context.multiple) {
         return !item.stored;
       }
       return true;
@@ -250,10 +257,10 @@ export class DropdownMenu extends Component {
    * @returns {Object}
    */
   getItemAtIndex(index) {
-    const limit = this.props.filterable ? this.props.limit : this.state.items.length;
+    const limit = this.state.filtered ? this.props.limit : this.state.items.length;
     const filteredItems = this.getFilteredItems().slice(0, limit);
     let valueLength = 0;
-    if (this.context.multiple || this.props.filterable) {
+    if (this.context.multiple || this.state.filtered) {
       if (Array.isArray(this.state.value)) {
         valueLength = this.state.value.length;
       } else {
@@ -310,25 +317,9 @@ export class DropdownMenu extends Component {
   }
 
   /**
-   * Deselect all items which are not stored as value. Only relevant for multi select dropdown.
-   * When the dropdown will be closed without pressing submit the state will be restored
-   * @returns {void}
-   */
-  clearSelections() {
-    if (this.state.items) {
-      this.state.items.forEach(item => {
-        if (item.selected && !item.stored) {
-          item.selected = false;
-        }
-      });
-      this.setState({items: this.state.items});
-    }
-  }
-
-  /**
    * Handles data propagation from child menus
    * This function uses arrow function to bind the scope to this instance
-   * @param {String} type Should be just show-parent
+   * @param {string} type Should be just show-parent
    * @param {*} data Propagated data. Could be for instance a menu reference or the menu height.
    * @returns {void}
    */
@@ -346,7 +337,11 @@ export class DropdownMenu extends Component {
         this.showChild(data);
         break;
       case 'change':
-        this.clearSelections();
+        // Filterable is used here as it indicates that the dropdown shows and manages the filter value.
+        // Therefore the dropdown has to take care about clearing after submission.
+        if (this.props.filterable) {
+          this.setState({filter: ''});
+        }
         // If we have a single select we want to deselect the previous selected item
         if (!this.context.multiple) {
           const previous = this.state.items.find(item => item.stored && item !== data);
@@ -357,7 +352,7 @@ export class DropdownMenu extends Component {
         }
         this.props.handle(type, data);
         break;
-      case 'change-size':
+      case 'change-height':
       default:
         this.props.handle(type, data);
         break;
@@ -366,14 +361,17 @@ export class DropdownMenu extends Component {
 
   /**
    * Shows the child menu and hides the current menu
-   * @param {WSDropdownMenu} subMenu The reference of the child menu to show
+   * @param {DropdownMenu} subMenu The reference of the child menu to show
    * @returns {void}
    */
   showChild(subMenu) {
     this.openSubMenu = subMenu;
-    this.props.handle('change-size', subMenu.getHeight());
+    this.props.handle('change-height', subMenu.getHeight());
     this.animateOut(false);
     subMenu.animateIn(false);
+
+    subMenu.isActive = true;
+    this.isActive = false;
   }
 
   /**
@@ -382,16 +380,18 @@ export class DropdownMenu extends Component {
    */
   showCurrent() {
     if (this.openSubMenu) {
-      this.props.handle('change-size', this.getHeight());
+      this.props.handle('change-height', this.getHeight());
       this.openSubMenu.animateOut(true);
       this.animateIn(true);
+      this.openSubMenu.isActive = false;
+      this.isActive = true;
       this.openSubMenu = null;
     }
   }
 
   /**
    * Animates a menu or sub menu into the view
-   * @param {Boolean} goBack True if a menu should be shown and a sub menu be hidden
+   * @param {boolean} goBack True if a menu should be shown and a sub menu be hidden
    * @returns {void}
    */
   animateIn(goBack) {
@@ -405,7 +405,7 @@ export class DropdownMenu extends Component {
 
   /**
    * Animates a menu or sub menu out of the view
-   * @param {Boolean} goBack True if a menu should be hidden and a sub menu be shown
+   * @param {boolean} goBack True if a menu should be hidden and a sub menu be shown
    * @returns {void}
    */
   animateOut(goBack) {
@@ -422,7 +422,7 @@ export class DropdownMenu extends Component {
   /**
    * Animates an element by adding a class with an css animation and executes a callback when the animation ends
    * @param {Element} item The dom node to animate
-   * @param {String} animationClass The css class which holds the animation definition
+   * @param {string} animationClass The css class which holds the animation definition
    * @param {Function} callback Callback which will be executed at the end of the animation
    * @returns {void}
    */
@@ -459,7 +459,7 @@ export class DropdownMenu extends Component {
    * @returns {Object}
    */
   render() {
-    const limit = this.props.filterable ? this.props.limit : this.state.items.length;
+    const limit = this.state.filtered ? this.props.limit : this.state.items.length;
     const items = this.getFilteredItems().slice(0, limit);
     const hasValue = Array.isArray(this.state.value) ? this.state.value.length : this.state.value;
 
@@ -472,7 +472,7 @@ export class DropdownMenu extends Component {
           <li className="dropdown-input" key="filter">
             <input
               type="text"
-              defaultValue={this.state.filter}
+              value={this.state.filter}
               placeholder={this.props.placeholder}
               ref={element => { this.input = element; }}
             />
@@ -489,12 +489,14 @@ export class DropdownMenu extends Component {
           <li className="dropdown-item-separator" key="parent-separator" />
         ]}
         {(hasValue && (this.context.multiple || this.props.filterable)) ? [
-          this.state.items.filter(item => item.stored).map((item, index) =>
-            <DropdownMenuItem item={item} handle={this.handlePropagation} key={`value-${index}`} />),
+          this.state.items.filter(item => item.stored).map((item, index) => (
+            <DropdownMenuItem item={item} handle={this.handlePropagation} key={`value-${index}`} />
+          )),
           <li className="dropdown-item-separator" key="value-separator" />
         ] : null}
-        {items.map((item, index) =>
-          <DropdownMenuItem item={item} handle={this.handlePropagation} key={`item-${index}`} />)}
+        {items.map((item, index) => (
+          <DropdownMenuItem item={item} handle={this.handlePropagation} key={`item-${index}`} />
+        ))}
         {(!items || !items.length) &&
           <DropdownMenuItem item={{label: 'No results found', disabled: true}} key="disabled" />
         }

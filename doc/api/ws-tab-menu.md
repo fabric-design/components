@@ -65,7 +65,7 @@ Animate the dash below the new active item
 
 **Parameters**
 
--   `newMenuItem` **[Element][5]** HTMLElement of new active menu item
+-   `newMenuItem` **[HTMLElement][5]** HTMLElement of new active menu item
 
 Returns **void** 
 
@@ -91,13 +91,13 @@ Render a single menu item
 -   `item` **[Object][1]** Menu item object
 -   `index` **[number][6]** Index of item in item list
 
-Returns **XML** 
+Returns **JSX** 
 
 ### render
 
 Render the component markup
 
-Returns **XML** 
+Returns **JSX** 
 
 [1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
@@ -107,6 +107,6 @@ Returns **XML**
 
 [4]: https://developer.mozilla.org/docs/Web/API/Event
 
-[5]: https://developer.mozilla.org/docs/Web/API/Element
+[5]: https://developer.mozilla.org/docs/Web/HTML/Element
 
 [6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number

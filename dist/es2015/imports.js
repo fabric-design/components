@@ -11,7 +11,9 @@ import * as ReactDOM from 'react-dom';
 import * as types from 'prop-types';
 
 export var React = {
-  createElement: _React_.createElement || _React_.h
+  createElement: _React_.createElement || _React_.h,
+  cloneElement: _React_.cloneElement,
+  Children: _React_.Children
 };
 export var PropTypes = types;
 var render = ReactDOM.render;

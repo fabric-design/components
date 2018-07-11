@@ -86,17 +86,18 @@ define(['exports', '../imports'], function (exports, _imports) {
         writable: true,
         value: function value(event) {
           event.stopPropagation();
+          var items = _this.state.items;
+
           var clickedIndex = _this.buttons.indexOf(event.currentTarget);
 
-          _this.state.items[clickedIndex].selected = !_this.state.items[clickedIndex].selected;
-          var value = _this.state.items.filter(function (item) {
+          items[clickedIndex].selected = !items[clickedIndex].selected;
+          _this.setState({ items: items });
+
+          var value = items.filter(function (item) {
             return item.selected;
           }).map(function (item) {
             return item.value;
           });
-
-          _this.setState({ items: _this.state.items, value: value });
-
           _this.dispatchEvent('change', value);
 
           if (typeof _this.props.onChange === 'function') {
@@ -156,20 +157,17 @@ define(['exports', '../imports'], function (exports, _imports) {
       value: function createState(props) {
         var items = this.enrichItems(props.items);
 
+        var value = [];
         if (props.value) {
-          if (!Array.isArray(props.value)) {
-            props.value = [props.value];
-          }
-          props.value.forEach(function (value) {
-            items.find(function (item) {
-              return item.value === value;
-            }).selected = true;
-          });
+          value = Array.isArray(props.value) ? props.value : [props.value];
         }
+        items.forEach(function (item) {
+          item.selected = value.includes(item.value);
+        });
         return {
           items: items,
           visible: props.initialVisible,
-          value: props.value
+          value: value
         };
       }
     }, {
@@ -199,7 +197,6 @@ define(['exports', '../imports'], function (exports, _imports) {
               _imports.React.createElement(
                 'a',
                 {
-                  href: '#void',
                   className: _this5.props.buttonClass + ' ' + (item.selected ? 'is-active' : ''),
                   'data-index': '',
                   ref: function ref(element) {

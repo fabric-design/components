@@ -59,6 +59,10 @@ Returns **[Object][1]**
 
 ### propTypes
 
+Types of properties
+
 ### defaultProps
+
+Create default onUpdate function to prevent errors if user don't use it
 
 [1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object

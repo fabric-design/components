@@ -1,4 +1,4 @@
-define(['exports', '../imports', './dropdown-menu', './dropdown-input'], function (exports, _imports, _dropdownMenu, _dropdownInput) {
+define(['exports', '../imports', './dropdown-menu', './dropdown-input', '../ws-overlay/ws-overlay'], function (exports, _imports, _dropdownMenu, _dropdownInput, _wsOverlay) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -60,7 +60,23 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
+  function deep(items, getChildren, callback) {
+    var levels = [items];
+    for (var l = 0; l < levels.length; l++) {
+      for (var i = 0; i < levels[l].length; i++) {
+        var item = levels[l][i];
+
+        if (callback(item)) {
+          return;
+        }
+
+        var children = getChildren(item);
+        if (children) {
+          levels.push(children);
+        }
+      }
+    }
+  }
 
   var WSDropdown = exports.WSDropdown = function (_Component) {
     _inherits(WSDropdown, _Component);
@@ -70,32 +86,6 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
 
       var _this = _possibleConstructorReturn(this, (WSDropdown.__proto__ || Object.getPrototypeOf(WSDropdown)).call(this, props));
 
-      Object.defineProperty(_this, 'onDocumentClick', {
-        enumerable: true,
-        writable: true,
-        value: function value(event) {
-          var element = event.target;
-          while (element && _this.element !== element) {
-            element = element.parentNode;
-          }
-
-          if (!element) {
-            _this.close();
-          }
-        }
-      });
-      Object.defineProperty(_this, 'onTriggerClick', {
-        enumerable: true,
-        writable: true,
-        value: function value(event) {
-          event.stopPropagation();
-          if (WSDropdown.openDropdown !== _this) {
-            _this.open();
-          } else {
-            _this.close();
-          }
-        }
-      });
       Object.defineProperty(_this, 'onAnyEvent', {
         enumerable: true,
         writable: true,
@@ -103,16 +93,13 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
           event.stopPropagation();
         }
       });
-      Object.defineProperty(_this, 'onGlobalKeyDown', {
+      Object.defineProperty(_this, 'onTriggerClick', {
         enumerable: true,
         writable: true,
         value: function value(event) {
-          switch (event.key) {
-            case 'Escape':
-              _this.close();
-              break;
-            default:
-              break;
+          event.stopPropagation();
+          if (!_this.props.disabled) {
+            _this.overlay.toggle();
           }
         }
       });
@@ -121,10 +108,12 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
         writable: true,
         value: function value(type, data) {
           if (type === 'change') {
-            _this.close();
+            _this.overlay.close();
+
+            _this.overlay.contentHeight = null;
             _this.setValue(data);
-          } else if (type === 'change-size') {
-            _this.adjustSize(data);
+          } else if (type === 'change-height') {
+            _this.overlay.setHeight(data);
           }
         }
       });
@@ -145,7 +134,6 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
       value: function componentDidMount() {
         this.element.addEventListener('click', this.onAnyEvent);
         this.trigger.addEventListener('click', this.onTriggerClick);
-        window.addEventListener('click', this.onDocumentClick);
       }
     }, {
       key: 'componentWillReceiveProps',
@@ -157,7 +145,20 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
       value: function componentWillUnmount() {
         this.element.removeEventListener('click', this.onAnyEvent);
         this.trigger.removeEventListener('click', this.onTriggerClick);
-        window.removeEventListener('click', this.onDocumentClick);
+      }
+    }, {
+      key: 'onOpen',
+      value: function onOpen() {
+        if (typeof this.dropdownMenu.onOpen === 'function') {
+          this.dropdownMenu.onOpen();
+        }
+      }
+    }, {
+      key: 'onClose',
+      value: function onClose() {
+        if (typeof this.dropdownMenu.onClose === 'function') {
+          this.dropdownMenu.onClose();
+        }
       }
     }, {
       key: 'getTextFromValue',
@@ -201,15 +202,28 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
         var value = props.value;
 
         if (typeof value === 'string' && props.type !== 'input') {
-          value = items.find(function (item) {
-            return item.value === value;
+          deep(items, function (item) {
+            return item.children;
+          }, function (item) {
+            if (item.value === value) {
+              value = item;
+              return true;
+            }
+            return false;
           });
         }
-        value = this.enrichItems(value);
-        var text = this.getTextFromValue(props.value, props.text);
-        var state = { text: text, value: value, items: items };
+        value = this.enrichItems(value, function (val) {
+          var item = items.find(function (i) {
+            return i.value === val;
+          });
+          return item ? item.label : val;
+        });
+        var text = this.getTextFromValue(value, props.text);
+        var state = { text: text, value: value, items: items, filter: props.filter };
 
-        state.items.forEach(function (item) {
+        deep(state.items, function (item) {
+          return item.children;
+        }, function (item) {
           var isActive = !!state.value.find(function (val) {
             return val.value === item.value;
           });
@@ -223,93 +237,29 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
       value: function enrichItems(items) {
         var _this3 = this;
 
+        var resolveLabel = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (value) {
+          return value;
+        };
+
         var itemsToWrap = items;
 
         if (!Array.isArray(items)) {
-          if (this.props.inputOnly) {
-            return items;
-          }
-
           itemsToWrap = items ? [items] : [];
         }
         return itemsToWrap.map(function (item) {
-          var enriched = (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' ? item : { label: item, value: item };
-          if (enriched.children) {
-            enriched.children = _this3.enrichItems(enriched.children);
+          if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) !== 'object') {
+            return { value: item, label: resolveLabel(item) };
           }
-          return enriched;
-        });
-      }
-    }, {
-      key: 'open',
-      value: function open() {
-        if (WSDropdown.openDropdown === this || this.props.disabled) {
-          return;
-        } else if (WSDropdown.openDropdown) {
-          WSDropdown.openDropdown.close();
-        }
-
-        WSDropdown.openDropdown = this;
-        this.dropdownContainer.style.height = 0;
-        this.dropdownContainer.classList.add('mod-open');
-        this.adjustSize(this.dropdownMenu.getHeight());
-
-        window.addEventListener('keydown', this.onGlobalKeyDown);
-
-        if (typeof this.dropdownMenu.onOpen === 'function') {
-          this.dropdownMenu.onOpen();
-        }
-      }
-    }, {
-      key: 'close',
-      value: function close() {
-        var _this4 = this;
-
-        if (WSDropdown.openDropdown !== this) {
-          return;
-        }
-        WSDropdown.openDropdown = null;
-        this.animateElement(this.dropdownContainer, 'animate-close', function (container) {
-          container.classList.remove('mod-open');
-
-          if (_this4.props.multiple) {
-            _this4.dropdownMenu.clearSelections();
+          if (item.children) {
+            item.children = _this3.enrichItems(item.children);
           }
+          return item;
         });
-
-        window.addEventListener('keydown', this.onGlobalKeyDown);
-
-        if (typeof this.dropdownMenu.onClose === 'function') {
-          this.dropdownMenu.onClose();
-        }
-      }
-    }, {
-      key: 'adjustSize',
-      value: function adjustSize(newSize) {
-        this.dropdownContainer.style.height = newSize + 'px';
-      }
-    }, {
-      key: 'animateElement',
-      value: function animateElement(item, animationClass, callback) {
-        var getEventHandler = function getEventHandler(eventName) {
-          var eventHandler = function eventHandler() {
-            item.classList.remove(animationClass);
-            item.removeEventListener(eventName, eventHandler);
-            callback(item);
-          };
-          return eventHandler;
-        };
-
-        ANIMATION_END_EVENTS.forEach(function (eventName) {
-          item.addEventListener(eventName, getEventHandler(eventName));
-        });
-
-        item.classList.add(animationClass);
       }
     }, {
       key: 'renderTrigger',
       value: function renderTrigger() {
-        var _this5 = this;
+        var _this4 = this;
 
         var icon = void 0;
         if (this.props.icon) {
@@ -324,7 +274,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
                 href: '#void',
                 className: 'dropdown-trigger ' + disabledStyle,
                 ref: function ref(element) {
-                  _this5.trigger = element;
+                  _this4.trigger = element;
                 }
               },
               icon,
@@ -337,7 +287,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
               {
                 className: 'dropdown-trigger ' + disabledStyle,
                 ref: function ref(element) {
-                  _this5.trigger = element;
+                  _this4.trigger = element;
                 }
               },
               icon,
@@ -350,12 +300,12 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
               {
                 className: 'dropdown-trigger select-box ' + disabledStyle,
                 ref: function ref(element) {
-                  _this5.trigger = element;
+                  _this4.trigger = element;
                 }
               },
               icon,
               ' ',
-              this.state.text
+              this.state.text || this.props.placeholder
             );
           case 'icon':
           default:
@@ -365,7 +315,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
                 href: '#void',
                 className: 'dropdown-trigger ' + disabledStyle,
                 ref: function ref(element) {
-                  _this5.trigger = element;
+                  _this4.trigger = element;
                 }
               },
               icon
@@ -375,15 +325,15 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
     }, {
       key: 'renderContent',
       value: function renderContent() {
-        var _this6 = this;
+        var _this5 = this;
 
         if (this.props.inputOnly) {
           return _imports.React.createElement(_dropdownInput.DropdownInput, {
-            value: this.state.value,
+            value: this.state.value[0],
             placeholder: this.props.placeholder,
             handle: this.handlePropagation,
             ref: function ref(element) {
-              _this6.dropdownMenu = element;
+              _this5.dropdownMenu = element;
             }
           });
         }
@@ -391,20 +341,21 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
           items: this.state.items,
           value: this.state.value,
           limit: this.props.limit,
+          filter: this.state.filter,
           filterable: this.props.filterable,
-          filter: this.props.filter,
+          filtered: this.props.filtered,
           placeholder: this.props.placeholder,
           selectAll: this.props.selectAll,
           handle: this.handlePropagation,
           ref: function ref(element) {
-            _this6.dropdownMenu = element;
+            _this5.dropdownMenu = element;
           }
         });
       }
     }, {
       key: 'render',
       value: function render() {
-        var _this7 = this;
+        var _this6 = this;
 
         var _props = this.props,
             type = _props.type,
@@ -418,24 +369,29 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
           'div',
           { className: 'dropdown  ' + className, ref: function ref(element) {
               if (element) {
-                _this7.element = element;
+                _this6.element = element;
               }
             } },
           this.renderTrigger(),
           _imports.React.createElement(
-            'div',
+            _wsOverlay.WSOverlay,
             {
-              className: 'dropdown-container ' + orientation,
-              style: { width: width || (isWide ? '100%' : '') },
+              width: width || (isWide ? '100%' : ''),
+              orientation: orientation,
+              onOpen: function onOpen() {
+                return _this6.onOpen();
+              },
+              onClose: function onClose() {
+                return _this6.onClose();
+              },
               ref: function ref(element) {
                 if (element) {
-                  _this7.dropdownContainer = element;
+                  _this6.overlay = element;
                 }
               }
             },
             this.renderContent()
-          ),
-          _imports.React.createElement('div', { className: 'dropdown-arrow' })
+          )
         );
       }
     }]);
@@ -456,6 +412,7 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
       inputOnly: false,
       filterable: false,
       filter: '',
+      filtered: false,
       limit: 10,
       orientation: 'left',
       placeholder: '',
@@ -476,9 +433,10 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
       items: _imports.PropTypes.array,
       className: _imports.PropTypes.string,
       multiple: _imports.PropTypes.bool,
-      filterable: _imports.PropTypes.bool,
       inputOnly: _imports.PropTypes.bool,
+      filterable: _imports.PropTypes.bool,
       filter: _imports.PropTypes.string,
+      filtered: _imports.PropTypes.bool,
       limit: _imports.PropTypes.number,
       orientation: _imports.PropTypes.oneOf(['left', 'right']),
       placeholder: _imports.PropTypes.string,
@@ -488,11 +446,6 @@ define(['exports', '../imports', './dropdown-menu', './dropdown-input'], functio
       disabled: _imports.PropTypes.bool,
       selectAll: _imports.PropTypes.bool
     }
-  });
-  Object.defineProperty(WSDropdown, 'openDropdown', {
-    enumerable: true,
-    writable: true,
-    value: null
   });
   Object.defineProperty(WSDropdown, 'childContextTypes', {
     enumerable: true,

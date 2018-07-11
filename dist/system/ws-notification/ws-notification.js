@@ -126,13 +126,11 @@ System.register(['../imports'], function (_export, _context) {
           value: function animateIn(notification, index) {
             var _this2 = this;
 
-            var list = this.list.list;
-
-            list.style.transition = 'none';
-            list.style.transform = 'translate3d(0, 80px, 0)';
+            this.list.style.transition = 'none';
+            this.list.style.transform = 'translate3d(0, 80px, 0)';
             setTimeout(function () {
-              list.style.transition = 'transform .35s cubic-bezier(.35, 1, .69, .98) .1s';
-              list.style.transform = 'translate3d(0, 0, 0)';
+              _this2.list.style.transition = 'transform .35s cubic-bezier(.35, 1, .69, .98) .1s';
+              _this2.list.style.transform = 'translate3d(0, 0, 0)';
             }, 0);
             clearTimeout(this.state.timeoutId);
             this.setState({ timeoutId: setTimeout(function () {
@@ -181,9 +179,6 @@ System.register(['../imports'], function (_export, _context) {
                         _this3['notification-' + i] = element;
                       },
                       onClick: function onClick() {
-                        return _this3.close(i);
-                      },
-                      onKeyPress: function onKeyPress() {
                         return _this3.close(i);
                       }
                     },

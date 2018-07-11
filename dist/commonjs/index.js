@@ -93,3 +93,12 @@ Object.defineProperty(exports, 'WSOptionButtons', {
     return _wsOptionButtons.WSOptionButtons;
   }
 });
+
+var _wsMultiSelect = require('./ws-multi-select/ws-multi-select');
+
+Object.defineProperty(exports, 'WSMultiSelect', {
+  enumerable: true,
+  get: function get() {
+    return _wsMultiSelect.WSMultiSelect;
+  }
+});

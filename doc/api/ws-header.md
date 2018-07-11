@@ -123,8 +123,8 @@ It will resolve null when no access token is present and therefore the user isn'
     -   `props.appName` **[string][2]** property used to set the application name
     -   `props.appLogo` **[string][2]** property used to set the application image logo
     -   `props.rootUrl` **[string][2]** property used to set the root application url
-    -   `props.showLocale` **[Boolean][4]** Flag used to show the locale dropdown
-    -   `props.showAuthorization` **[Boolean][4]** Flag to show the login area
+    -   `props.showLocale` **[boolean][4]** Flag used to show the locale dropdown
+    -   `props.showAuthorization` **[boolean][4]** Flag to show the login area
     -   `props.onLocaleChange` **[Function][5]** Function used to propagate data
     -   `props.onAuthChange` **[Function][5]** Function used to propagate data
 
@@ -202,7 +202,7 @@ Returns **void**
 
 ### renderLink
 
-codeclimate demands abstraction; this makes links
+code climate demands abstraction; this makes links
 
 **Parameters**
 

@@ -32,9 +32,7 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
       enumerable: true,
       writable: true,
       value: function value() {
-        if (_this.input) {
-          _this.input.focus();
-        }
+        _this.isActive = true;
         window.addEventListener('keydown', _this.onGlobalKeyDown);
       }
     });
@@ -42,6 +40,7 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
       enumerable: true,
       writable: true,
       value: function value() {
+        _this.isActive = false;
         window.removeEventListener('keydown', _this.onGlobalKeyDown);
       }
     });
@@ -120,7 +119,9 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
             _this.showChild(data);
             break;
           case 'change':
-            _this.clearSelections();
+            if (_this.props.filterable) {
+              _this.setState({ filter: '' });
+            }
 
             if (!_this.context.multiple) {
               var previous = _this.state.items.find(function (item) {
@@ -133,7 +134,7 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
             }
             _this.props.handle(type, data);
             break;
-          case 'change-size':
+          case 'change-height':
           default:
             _this.props.handle(type, data);
             break;
@@ -145,6 +146,7 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
     _this.selectedIndex = -1;
     _this.state = {
       filter: props.filter,
+      filtered: props.filtered || props.filterable,
       items: props.items,
       value: props.value,
       selectAllActive: false
@@ -176,6 +178,7 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
     value: function componentWillReceiveProps(props) {
       this.setState({
         filter: props.filter,
+        filtered: props.filtered || props.filterable,
         items: props.items,
         value: props.value,
         selectAllActive: props.selectAllActive
@@ -184,7 +187,9 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
-      this.props.handle('change-size', this.getHeight());
+      if (this.isActive) {
+        this.props.handle('change-height', this.getHeight());
+      }
     }
   }, {
     key: 'componentWillUnmount',
@@ -217,11 +222,11 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
 
       var regex = new RegExp(this.state.filter, 'i');
       return this.state.items.filter(function (item) {
-        if (_this2.props.filterable && _this2.state.filter && !regex.test(item.label)) {
+        if (_this2.state.filtered && _this2.state.filter && !regex.test(item.label)) {
           return false;
         }
 
-        if (_this2.props.filterable || _this2.context.multiple) {
+        if (_this2.state.filtered || _this2.context.multiple) {
           return !item.stored;
         }
         return true;
@@ -230,10 +235,10 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
   }, {
     key: 'getItemAtIndex',
     value: function getItemAtIndex(index) {
-      var limit = this.props.filterable ? this.props.limit : this.state.items.length;
+      var limit = this.state.filtered ? this.props.limit : this.state.items.length;
       var filteredItems = this.getFilteredItems().slice(0, limit);
       var valueLength = 0;
-      if (this.context.multiple || this.props.filterable) {
+      if (this.context.multiple || this.state.filtered) {
         if (Array.isArray(this.state.value)) {
           valueLength = this.state.value.length;
         } else {
@@ -281,32 +286,25 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
       this.forceUpdate();
     }
   }, {
-    key: 'clearSelections',
-    value: function clearSelections() {
-      if (this.state.items) {
-        this.state.items.forEach(function (item) {
-          if (item.selected && !item.stored) {
-            item.selected = false;
-          }
-        });
-        this.setState({ items: this.state.items });
-      }
-    }
-  }, {
     key: 'showChild',
     value: function showChild(subMenu) {
       this.openSubMenu = subMenu;
-      this.props.handle('change-size', subMenu.getHeight());
+      this.props.handle('change-height', subMenu.getHeight());
       this.animateOut(false);
       subMenu.animateIn(false);
+
+      subMenu.isActive = true;
+      this.isActive = false;
     }
   }, {
     key: 'showCurrent',
     value: function showCurrent() {
       if (this.openSubMenu) {
-        this.props.handle('change-size', this.getHeight());
+        this.props.handle('change-height', this.getHeight());
         this.openSubMenu.animateOut(true);
         this.animateIn(true);
+        this.openSubMenu.isActive = false;
+        this.isActive = true;
         this.openSubMenu = null;
       }
     }
@@ -367,7 +365,7 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      var limit = this.props.filterable ? this.props.limit : this.state.items.length;
+      var limit = this.state.filtered ? this.props.limit : this.state.items.length;
       var items = this.getFilteredItems().slice(0, limit);
       var hasValue = Array.isArray(this.state.value) ? this.state.value.length : this.state.value;
 
@@ -384,7 +382,7 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
           { className: 'dropdown-input', key: 'filter' },
           _imports.React.createElement('input', {
             type: 'text',
-            defaultValue: this.state.filter,
+            value: this.state.filter,
             placeholder: this.props.placeholder,
             ref: function ref(element) {
               _this3.input = element;
@@ -445,6 +443,7 @@ Object.defineProperty(DropdownMenu, 'defaultProps', {
     value: null,
     filterable: false,
     filter: null,
+    filtered: false,
     placeholder: '',
     limit: 10,
     selectAll: false,
@@ -457,12 +456,13 @@ Object.defineProperty(DropdownMenu, 'propTypes', {
   value: {
     parent: _imports.PropTypes.object,
     items: _imports.PropTypes.array,
+    value: _imports.PropTypes.oneOfType([_imports.PropTypes.string, _imports.PropTypes.array, _imports.PropTypes.object]),
     filterable: _imports.PropTypes.bool,
     filter: _imports.PropTypes.string,
+    filtered: _imports.PropTypes.bool,
     placeholder: _imports.PropTypes.string,
     limit: _imports.PropTypes.number,
     selectAll: _imports.PropTypes.bool,
-    value: _imports.PropTypes.object,
     handle: _imports.PropTypes.func
   }
 });

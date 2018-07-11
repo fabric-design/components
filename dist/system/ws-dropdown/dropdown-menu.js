@@ -75,9 +75,7 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
             enumerable: true,
             writable: true,
             value: function value() {
-              if (_this.input) {
-                _this.input.focus();
-              }
+              _this.isActive = true;
               window.addEventListener('keydown', _this.onGlobalKeyDown);
             }
           });
@@ -85,6 +83,7 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
             enumerable: true,
             writable: true,
             value: function value() {
+              _this.isActive = false;
               window.removeEventListener('keydown', _this.onGlobalKeyDown);
             }
           });
@@ -163,7 +162,9 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
                   _this.showChild(data);
                   break;
                 case 'change':
-                  _this.clearSelections();
+                  if (_this.props.filterable) {
+                    _this.setState({ filter: '' });
+                  }
 
                   if (!_this.context.multiple) {
                     var previous = _this.state.items.find(function (item) {
@@ -176,7 +177,7 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
                   }
                   _this.props.handle(type, data);
                   break;
-                case 'change-size':
+                case 'change-height':
                 default:
                   _this.props.handle(type, data);
                   break;
@@ -188,6 +189,7 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
           _this.selectedIndex = -1;
           _this.state = {
             filter: props.filter,
+            filtered: props.filtered || props.filterable,
             items: props.items,
             value: props.value,
             selectAllActive: false
@@ -219,6 +221,7 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
           value: function componentWillReceiveProps(props) {
             this.setState({
               filter: props.filter,
+              filtered: props.filtered || props.filterable,
               items: props.items,
               value: props.value,
               selectAllActive: props.selectAllActive
@@ -227,7 +230,9 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
         }, {
           key: 'componentDidUpdate',
           value: function componentDidUpdate() {
-            this.props.handle('change-size', this.getHeight());
+            if (this.isActive) {
+              this.props.handle('change-height', this.getHeight());
+            }
           }
         }, {
           key: 'componentWillUnmount',
@@ -260,11 +265,11 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
 
             var regex = new RegExp(this.state.filter, 'i');
             return this.state.items.filter(function (item) {
-              if (_this2.props.filterable && _this2.state.filter && !regex.test(item.label)) {
+              if (_this2.state.filtered && _this2.state.filter && !regex.test(item.label)) {
                 return false;
               }
 
-              if (_this2.props.filterable || _this2.context.multiple) {
+              if (_this2.state.filtered || _this2.context.multiple) {
                 return !item.stored;
               }
               return true;
@@ -273,10 +278,10 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
         }, {
           key: 'getItemAtIndex',
           value: function getItemAtIndex(index) {
-            var limit = this.props.filterable ? this.props.limit : this.state.items.length;
+            var limit = this.state.filtered ? this.props.limit : this.state.items.length;
             var filteredItems = this.getFilteredItems().slice(0, limit);
             var valueLength = 0;
-            if (this.context.multiple || this.props.filterable) {
+            if (this.context.multiple || this.state.filtered) {
               if (Array.isArray(this.state.value)) {
                 valueLength = this.state.value.length;
               } else {
@@ -324,32 +329,25 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
             this.forceUpdate();
           }
         }, {
-          key: 'clearSelections',
-          value: function clearSelections() {
-            if (this.state.items) {
-              this.state.items.forEach(function (item) {
-                if (item.selected && !item.stored) {
-                  item.selected = false;
-                }
-              });
-              this.setState({ items: this.state.items });
-            }
-          }
-        }, {
           key: 'showChild',
           value: function showChild(subMenu) {
             this.openSubMenu = subMenu;
-            this.props.handle('change-size', subMenu.getHeight());
+            this.props.handle('change-height', subMenu.getHeight());
             this.animateOut(false);
             subMenu.animateIn(false);
+
+            subMenu.isActive = true;
+            this.isActive = false;
           }
         }, {
           key: 'showCurrent',
           value: function showCurrent() {
             if (this.openSubMenu) {
-              this.props.handle('change-size', this.getHeight());
+              this.props.handle('change-height', this.getHeight());
               this.openSubMenu.animateOut(true);
               this.animateIn(true);
+              this.openSubMenu.isActive = false;
+              this.isActive = true;
               this.openSubMenu = null;
             }
           }
@@ -410,7 +408,7 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
           value: function render() {
             var _this3 = this;
 
-            var limit = this.props.filterable ? this.props.limit : this.state.items.length;
+            var limit = this.state.filtered ? this.props.limit : this.state.items.length;
             var items = this.getFilteredItems().slice(0, limit);
             var hasValue = Array.isArray(this.state.value) ? this.state.value.length : this.state.value;
 
@@ -427,7 +425,7 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
                 { className: 'dropdown-input', key: 'filter' },
                 React.createElement('input', {
                   type: 'text',
-                  defaultValue: this.state.filter,
+                  value: this.state.filter,
                   placeholder: this.props.placeholder,
                   ref: function ref(element) {
                     _this3.input = element;
@@ -490,6 +488,7 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
           value: null,
           filterable: false,
           filter: null,
+          filtered: false,
           placeholder: '',
           limit: 10,
           selectAll: false,
@@ -502,12 +501,13 @@ System.register(['../imports', './dropdown-menu-item'], function (_export, _cont
         value: {
           parent: PropTypes.object,
           items: PropTypes.array,
+          value: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
           filterable: PropTypes.bool,
           filter: PropTypes.string,
+          filtered: PropTypes.bool,
           placeholder: PropTypes.string,
           limit: PropTypes.number,
           selectAll: PropTypes.bool,
-          value: PropTypes.object,
           handle: PropTypes.func
         }
       });

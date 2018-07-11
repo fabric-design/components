@@ -61,7 +61,9 @@ System.register(['react', 'react-dom', 'prop-types'], function (_export, _contex
       }();
 
       _export('React', React = {
-        createElement: _React_.createElement || _React_.h
+        createElement: _React_.createElement || _React_.h,
+        cloneElement: _React_.cloneElement,
+        Children: _React_.Children
       });
 
       _export('React', React);

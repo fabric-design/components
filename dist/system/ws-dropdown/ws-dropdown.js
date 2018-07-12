@@ -177,10 +177,12 @@ System.register(['../imports', './dropdown-menu', './dropdown-input', '../ws-ove
             var text = propsText || (this.state && this.state.text ? this.state.text : '');
 
             if (this.props.type === 'select') {
-              if (Array.isArray(value) && value.length) {
-                text = value.map(function (item) {
-                  return item.label || item;
-                }).join(', ');
+              if (Array.isArray(value)) {
+                if (value.length) {
+                  text = value.map(function (item) {
+                    return item.label || item;
+                  }).join(', ');
+                }
               } else if (value) {
                 text = value.label || value;
               }

@@ -1,3 +1,13 @@
+<a name="1.0.46"></a>
+## [1.0.46](https://github.bus.zalan.do/fabric-design/components/compare/1.0.45...1.0.46) (2018-07-12)
+
+
+### Bug Fixes
+
+* **dropdown:** Fixed initial text for select dropdowns ([#188](https://github.bus.zalan.do/fabric-design/components/issues/188)) ([7cc1213](https://github.bus.zalan.do/fabric-design/components/commit/7cc1213))
+
+
+
 <a name="1.0.45"></a>
 ## [1.0.45](https://github.bus.zalan.do/fabric-design/components/compare/1.0.44...1.0.45) (2018-07-11)
 

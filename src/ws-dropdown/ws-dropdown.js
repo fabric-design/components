@@ -204,8 +204,10 @@ export class WSDropdown extends Component {
     let text = propsText || (this.state && this.state.text ? this.state.text : '');
     // Check if we have to update the text value
     if (this.props.type === 'select') {
-      if (Array.isArray(value) && value.length) {
-        text = value.map(item => item.label || item).join(', ');
+      if (Array.isArray(value)) {
+        if (value.length) {
+          text = value.map(item => item.label || item).join(', ');
+        }
       } else if (value) {
         // Value can be object from dropdown item or simple string from input
         text = value.label || value;

@@ -97,7 +97,7 @@ System.register(['../imports'], function (_export, _context) {
           });
 
           _this.state = {
-            value: props.value
+            value: props.value && props.value.value
           };
           return _this;
         }

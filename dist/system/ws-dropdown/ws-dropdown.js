@@ -1,7 +1,7 @@
-System.register(['../imports', './dropdown-menu', './dropdown-input'], function (_export, _context) {
+System.register(['../imports', './dropdown-menu', './dropdown-input', '../ws-overlay/ws-overlay'], function (_export, _context) {
   "use strict";
 
-  var React, Component, PropTypes, DropdownMenu, DropdownInput, _typeof, _createClass, ANIMATION_END_EVENTS, WSDropdown;
+  var React, Component, PropTypes, DropdownMenu, DropdownInput, WSOverlay, _typeof, _createClass, WSDropdown;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -33,6 +33,24 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
+  function deep(items, getChildren, callback) {
+    var levels = [items];
+    for (var l = 0; l < levels.length; l++) {
+      for (var i = 0; i < levels[l].length; i++) {
+        var item = levels[l][i];
+
+        if (callback(item)) {
+          return;
+        }
+
+        var children = getChildren(item);
+        if (children) {
+          levels.push(children);
+        }
+      }
+    }
+  }
+
   return {
     setters: [function (_imports) {
       React = _imports.React;
@@ -42,6 +60,8 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
       DropdownMenu = _dropdownMenu.DropdownMenu;
     }, function (_dropdownInput) {
       DropdownInput = _dropdownInput.DropdownInput;
+    }, function (_wsOverlayWsOverlay) {
+      WSOverlay = _wsOverlayWsOverlay.WSOverlay;
     }],
     execute: function () {
       _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
@@ -68,8 +88,6 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
         };
       }();
 
-      ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend'];
-
       _export('WSDropdown', WSDropdown = function (_Component) {
         _inherits(WSDropdown, _Component);
 
@@ -78,32 +96,6 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
 
           var _this = _possibleConstructorReturn(this, (WSDropdown.__proto__ || Object.getPrototypeOf(WSDropdown)).call(this, props));
 
-          Object.defineProperty(_this, 'onDocumentClick', {
-            enumerable: true,
-            writable: true,
-            value: function value(event) {
-              var element = event.target;
-              while (element && _this.element !== element) {
-                element = element.parentNode;
-              }
-
-              if (!element) {
-                _this.close();
-              }
-            }
-          });
-          Object.defineProperty(_this, 'onTriggerClick', {
-            enumerable: true,
-            writable: true,
-            value: function value(event) {
-              event.stopPropagation();
-              if (WSDropdown.openDropdown !== _this) {
-                _this.open();
-              } else {
-                _this.close();
-              }
-            }
-          });
           Object.defineProperty(_this, 'onAnyEvent', {
             enumerable: true,
             writable: true,
@@ -111,16 +103,13 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
               event.stopPropagation();
             }
           });
-          Object.defineProperty(_this, 'onGlobalKeyDown', {
+          Object.defineProperty(_this, 'onTriggerClick', {
             enumerable: true,
             writable: true,
             value: function value(event) {
-              switch (event.key) {
-                case 'Escape':
-                  _this.close();
-                  break;
-                default:
-                  break;
+              event.stopPropagation();
+              if (!_this.props.disabled) {
+                _this.overlay.toggle();
               }
             }
           });
@@ -129,10 +118,12 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
             writable: true,
             value: function value(type, data) {
               if (type === 'change') {
-                _this.close();
+                _this.overlay.close();
+
+                _this.overlay.contentHeight = null;
                 _this.setValue(data);
-              } else if (type === 'change-size') {
-                _this.adjustSize(data);
+              } else if (type === 'change-height') {
+                _this.overlay.setHeight(data);
               }
             }
           });
@@ -153,7 +144,6 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
           value: function componentDidMount() {
             this.element.addEventListener('click', this.onAnyEvent);
             this.trigger.addEventListener('click', this.onTriggerClick);
-            window.addEventListener('click', this.onDocumentClick);
           }
         }, {
           key: 'componentWillReceiveProps',
@@ -165,7 +155,20 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
           value: function componentWillUnmount() {
             this.element.removeEventListener('click', this.onAnyEvent);
             this.trigger.removeEventListener('click', this.onTriggerClick);
-            window.removeEventListener('click', this.onDocumentClick);
+          }
+        }, {
+          key: 'onOpen',
+          value: function onOpen() {
+            if (typeof this.dropdownMenu.onOpen === 'function') {
+              this.dropdownMenu.onOpen();
+            }
+          }
+        }, {
+          key: 'onClose',
+          value: function onClose() {
+            if (typeof this.dropdownMenu.onClose === 'function') {
+              this.dropdownMenu.onClose();
+            }
           }
         }, {
           key: 'getTextFromValue',
@@ -209,15 +212,28 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
             var value = props.value;
 
             if (typeof value === 'string' && props.type !== 'input') {
-              value = items.find(function (item) {
-                return item.value === value;
+              deep(items, function (item) {
+                return item.children;
+              }, function (item) {
+                if (item.value === value) {
+                  value = item;
+                  return true;
+                }
+                return false;
               });
             }
-            value = this.enrichItems(value);
-            var text = this.getTextFromValue(props.value, props.text);
-            var state = { text: text, value: value, items: items };
+            value = this.enrichItems(value, function (val) {
+              var item = items.find(function (i) {
+                return i.value === val;
+              });
+              return item ? item.label : val;
+            });
+            var text = this.getTextFromValue(value, props.text);
+            var state = { text: text, value: value, items: items, filter: props.filter };
 
-            state.items.forEach(function (item) {
+            deep(state.items, function (item) {
+              return item.children;
+            }, function (item) {
               var isActive = !!state.value.find(function (val) {
                 return val.value === item.value;
               });
@@ -231,93 +247,29 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
           value: function enrichItems(items) {
             var _this3 = this;
 
+            var resolveLabel = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function (value) {
+              return value;
+            };
+
             var itemsToWrap = items;
 
             if (!Array.isArray(items)) {
-              if (this.props.inputOnly) {
-                return items;
-              }
-
               itemsToWrap = items ? [items] : [];
             }
             return itemsToWrap.map(function (item) {
-              var enriched = (typeof item === 'undefined' ? 'undefined' : _typeof(item)) === 'object' ? item : { label: item, value: item };
-              if (enriched.children) {
-                enriched.children = _this3.enrichItems(enriched.children);
+              if ((typeof item === 'undefined' ? 'undefined' : _typeof(item)) !== 'object') {
+                return { value: item, label: resolveLabel(item) };
               }
-              return enriched;
-            });
-          }
-        }, {
-          key: 'open',
-          value: function open() {
-            if (WSDropdown.openDropdown === this || this.props.disabled) {
-              return;
-            } else if (WSDropdown.openDropdown) {
-              WSDropdown.openDropdown.close();
-            }
-
-            WSDropdown.openDropdown = this;
-            this.dropdownContainer.style.height = 0;
-            this.dropdownContainer.classList.add('mod-open');
-            this.adjustSize(this.dropdownMenu.getHeight());
-
-            window.addEventListener('keydown', this.onGlobalKeyDown);
-
-            if (typeof this.dropdownMenu.onOpen === 'function') {
-              this.dropdownMenu.onOpen();
-            }
-          }
-        }, {
-          key: 'close',
-          value: function close() {
-            var _this4 = this;
-
-            if (WSDropdown.openDropdown !== this) {
-              return;
-            }
-            WSDropdown.openDropdown = null;
-            this.animateElement(this.dropdownContainer, 'animate-close', function (container) {
-              container.classList.remove('mod-open');
-
-              if (_this4.props.multiple) {
-                _this4.dropdownMenu.clearSelections();
+              if (item.children) {
+                item.children = _this3.enrichItems(item.children);
               }
+              return item;
             });
-
-            window.addEventListener('keydown', this.onGlobalKeyDown);
-
-            if (typeof this.dropdownMenu.onClose === 'function') {
-              this.dropdownMenu.onClose();
-            }
-          }
-        }, {
-          key: 'adjustSize',
-          value: function adjustSize(newSize) {
-            this.dropdownContainer.style.height = newSize + 'px';
-          }
-        }, {
-          key: 'animateElement',
-          value: function animateElement(item, animationClass, callback) {
-            var getEventHandler = function getEventHandler(eventName) {
-              var eventHandler = function eventHandler() {
-                item.classList.remove(animationClass);
-                item.removeEventListener(eventName, eventHandler);
-                callback(item);
-              };
-              return eventHandler;
-            };
-
-            ANIMATION_END_EVENTS.forEach(function (eventName) {
-              item.addEventListener(eventName, getEventHandler(eventName));
-            });
-
-            item.classList.add(animationClass);
           }
         }, {
           key: 'renderTrigger',
           value: function renderTrigger() {
-            var _this5 = this;
+            var _this4 = this;
 
             var icon = void 0;
             if (this.props.icon) {
@@ -332,7 +284,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
                     href: '#void',
                     className: 'dropdown-trigger ' + disabledStyle,
                     ref: function ref(element) {
-                      _this5.trigger = element;
+                      _this4.trigger = element;
                     }
                   },
                   icon,
@@ -345,7 +297,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
                   {
                     className: 'dropdown-trigger ' + disabledStyle,
                     ref: function ref(element) {
-                      _this5.trigger = element;
+                      _this4.trigger = element;
                     }
                   },
                   icon,
@@ -358,12 +310,12 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
                   {
                     className: 'dropdown-trigger select-box ' + disabledStyle,
                     ref: function ref(element) {
-                      _this5.trigger = element;
+                      _this4.trigger = element;
                     }
                   },
                   icon,
                   ' ',
-                  this.state.text
+                  this.state.text || this.props.placeholder
                 );
               case 'icon':
               default:
@@ -373,7 +325,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
                     href: '#void',
                     className: 'dropdown-trigger ' + disabledStyle,
                     ref: function ref(element) {
-                      _this5.trigger = element;
+                      _this4.trigger = element;
                     }
                   },
                   icon
@@ -383,15 +335,15 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
         }, {
           key: 'renderContent',
           value: function renderContent() {
-            var _this6 = this;
+            var _this5 = this;
 
             if (this.props.inputOnly) {
               return React.createElement(DropdownInput, {
-                value: this.state.value,
+                value: this.state.value[0],
                 placeholder: this.props.placeholder,
                 handle: this.handlePropagation,
                 ref: function ref(element) {
-                  _this6.dropdownMenu = element;
+                  _this5.dropdownMenu = element;
                 }
               });
             }
@@ -399,20 +351,21 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
               items: this.state.items,
               value: this.state.value,
               limit: this.props.limit,
+              filter: this.state.filter,
               filterable: this.props.filterable,
-              filter: this.props.filter,
+              filtered: this.props.filtered,
               placeholder: this.props.placeholder,
               selectAll: this.props.selectAll,
               handle: this.handlePropagation,
               ref: function ref(element) {
-                _this6.dropdownMenu = element;
+                _this5.dropdownMenu = element;
               }
             });
           }
         }, {
           key: 'render',
           value: function render() {
-            var _this7 = this;
+            var _this6 = this;
 
             var _props = this.props,
                 type = _props.type,
@@ -426,24 +379,29 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
               'div',
               { className: 'dropdown  ' + className, ref: function ref(element) {
                   if (element) {
-                    _this7.element = element;
+                    _this6.element = element;
                   }
                 } },
               this.renderTrigger(),
               React.createElement(
-                'div',
+                WSOverlay,
                 {
-                  className: 'dropdown-container ' + orientation,
-                  style: { width: width || (isWide ? '100%' : '') },
+                  width: width || (isWide ? '100%' : ''),
+                  orientation: orientation,
+                  onOpen: function onOpen() {
+                    return _this6.onOpen();
+                  },
+                  onClose: function onClose() {
+                    return _this6.onClose();
+                  },
                   ref: function ref(element) {
                     if (element) {
-                      _this7.dropdownContainer = element;
+                      _this6.overlay = element;
                     }
                   }
                 },
                 this.renderContent()
-              ),
-              React.createElement('div', { className: 'dropdown-arrow' })
+              )
             );
           }
         }]);
@@ -466,6 +424,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
           inputOnly: false,
           filterable: false,
           filter: '',
+          filtered: false,
           limit: 10,
           orientation: 'left',
           placeholder: '',
@@ -486,9 +445,10 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
           items: PropTypes.array,
           className: PropTypes.string,
           multiple: PropTypes.bool,
-          filterable: PropTypes.bool,
           inputOnly: PropTypes.bool,
+          filterable: PropTypes.bool,
           filter: PropTypes.string,
+          filtered: PropTypes.bool,
           limit: PropTypes.number,
           orientation: PropTypes.oneOf(['left', 'right']),
           placeholder: PropTypes.string,
@@ -498,11 +458,6 @@ System.register(['../imports', './dropdown-menu', './dropdown-input'], function 
           disabled: PropTypes.bool,
           selectAll: PropTypes.bool
         }
-      });
-      Object.defineProperty(WSDropdown, 'openDropdown', {
-        enumerable: true,
-        writable: true,
-        value: null
       });
       Object.defineProperty(WSDropdown, 'childContextTypes', {
         enumerable: true,

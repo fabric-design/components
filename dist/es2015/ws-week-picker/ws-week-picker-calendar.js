@@ -81,17 +81,19 @@ export var WSWeekPickerCalendar = function (_Component) {
               'td',
               {
                 className: (monthIndex < 2 || monthIndex > 13 ? 'off ' : '') + (_this2.isActive(year, week) ? 'active ' : '') + (_this2.isToday(year, week) ? 'today ' : ''),
-                key: monthIndex + '_' + weekIndex,
-                onClick: function onClick() {
-                  return _this2.props.onChange({ week: week, year: year });
-                },
-                onKeyPress: function onKeyPress() {
-                  return _this2.props.onChange({ week: week, year: year });
-                }
+                key: monthIndex + '_' + weekIndex
               },
               React.createElement(
                 'a',
-                { href: '#voidWeek', className: 'week' },
+                {
+                  className: 'week',
+                  onClick: function onClick() {
+                    return _this2.props.onChange({ week: week, year: year });
+                  },
+                  onKeyPress: function onKeyPress() {
+                    return _this2.props.onChange({ week: week, year: year });
+                  }
+                },
                 week
               )
             );

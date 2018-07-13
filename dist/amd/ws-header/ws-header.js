@@ -234,12 +234,12 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
     }, {
       key: 'renderMenuCommons',
       value: function renderMenuCommons(props) {
+        if (props.rootUrl.$$typeof) {
+          return props.rootUrl;
+        }
         return _imports.React.createElement(
           'a',
-          {
-            className: 'application-name',
-            href: props.rootUrl
-          },
+          { className: 'application-name', href: props.rootUrl },
           props.appLogo && _imports.React.createElement(
             'figure',
             { className: 'application-logo' },
@@ -253,6 +253,12 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
       value: function render() {
         var _this4 = this;
 
+        var _props = this.props,
+            links = _props.links,
+            showLocale = _props.showLocale,
+            showAuthorization = _props.showAuthorization;
+
+
         return _imports.React.createElement(
           'header',
           { className: 'ws-header', ref: function ref(element) {
@@ -261,7 +267,7 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
           _imports.React.createElement(
             'div',
             { className: 'level-1' },
-            this.props.rootUrl.$$typeof ? this.props.rootUrl : this.renderMenuCommons(this.props),
+            this.renderMenuCommons(this.props),
             _imports.React.createElement(
               'nav',
               { className: 'main-menu' },
@@ -295,7 +301,7 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
               _imports.React.createElement(
                 'ul',
                 null,
-                this.props.showLocale && _imports.React.createElement(
+                showLocale && _imports.React.createElement(
                   'li',
                   null,
                   _imports.React.createElement(_wsDropdown.WSDropdown, {
@@ -310,43 +316,29 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
                     type: 'anchor'
                   })
                 ),
-                this.props.showAuthorization && (!this.state.isLoggedIn ? _imports.React.createElement(
+                showAuthorization && (!this.state.isLoggedIn ? _imports.React.createElement(
                   'li',
                   null,
                   _imports.React.createElement(
-                    'div',
-                    {
-                      onClick: function onClick() {
+                    'a',
+                    { onClick: function onClick() {
                         return _this4.login();
-                      },
-                      onKeyPress: function onKeyPress() {
+                      }, onKeyPress: function onKeyPress() {
                         return _this4.login();
-                      }
-                    },
-                    _imports.React.createElement(
-                      'a',
-                      { href: '#voidLogin' },
-                      'Login'
-                    )
+                      } },
+                    'Login'
                   )
                 ) : _imports.React.createElement(
                   'li',
                   null,
                   _imports.React.createElement(
-                    'div',
-                    {
-                      onClick: function onClick() {
+                    'a',
+                    { onClick: function onClick() {
                         return _this4.logout();
-                      },
-                      onKeyPress: function onKeyPress() {
+                      }, onKeyPress: function onKeyPress() {
                         return _this4.logout();
-                      }
-                    },
-                    _imports.React.createElement(
-                      'a',
-                      { href: '#voidLogout' },
-                      _imports.React.createElement('span', { className: 'icon icon24 icon-power' })
-                    )
+                      } },
+                    _imports.React.createElement('span', { className: 'icon icon24 icon-power' })
                   )
                 ))
               )
@@ -372,12 +364,16 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
                 _this4.level2 = element;
               }
             },
-            this.props.links.map(function (parent, index) {
+            links.map(function (parent, index) {
               return parent.children && parent.children.length && _imports.React.createElement(
                 'ul',
-                { className: 'main-sub-menu', key: 'sub-menu' + index, ref: function ref(element) {
+                {
+                  className: 'main-sub-menu',
+                  key: 'sub-menu' + index,
+                  ref: function ref(element) {
                     _this4.subMenus[index] = element;
-                  } },
+                  }
+                },
                 parent.children.map(function (child, childIndex) {
                   return _imports.React.createElement(
                     'li',

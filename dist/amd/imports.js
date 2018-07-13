@@ -78,7 +78,9 @@ define(['exports', 'react', 'react-dom', 'prop-types'], function (exports, _reac
   }
 
   var React = exports.React = {
-    createElement: _React_.createElement || _React_.h
+    createElement: _React_.createElement || _React_.h,
+    cloneElement: _React_.cloneElement,
+    Children: _React_.Children
   };
   var PropTypes = exports.PropTypes = types;
   var render = ReactDOM.render;

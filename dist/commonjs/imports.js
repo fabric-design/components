@@ -28,7 +28,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var React = exports.React = {
-  createElement: _React_.createElement || _React_.h
+  createElement: _React_.createElement || _React_.h,
+  cloneElement: _React_.cloneElement,
+  Children: _React_.Children
 };
 var PropTypes = exports.PropTypes = types;
 var render = ReactDOM.render;

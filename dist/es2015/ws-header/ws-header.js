@@ -192,12 +192,12 @@ export var WSHeader = function (_Component) {
   }, {
     key: 'renderMenuCommons',
     value: function renderMenuCommons(props) {
+      if (props.rootUrl.$$typeof) {
+        return props.rootUrl;
+      }
       return React.createElement(
         'a',
-        {
-          className: 'application-name',
-          href: props.rootUrl
-        },
+        { className: 'application-name', href: props.rootUrl },
         props.appLogo && React.createElement(
           'figure',
           { className: 'application-logo' },
@@ -211,6 +211,12 @@ export var WSHeader = function (_Component) {
     value: function render() {
       var _this4 = this;
 
+      var _props = this.props,
+          links = _props.links,
+          showLocale = _props.showLocale,
+          showAuthorization = _props.showAuthorization;
+
+
       return React.createElement(
         'header',
         { className: 'ws-header', ref: function ref(element) {
@@ -219,7 +225,7 @@ export var WSHeader = function (_Component) {
         React.createElement(
           'div',
           { className: 'level-1' },
-          this.props.rootUrl.$$typeof ? this.props.rootUrl : this.renderMenuCommons(this.props),
+          this.renderMenuCommons(this.props),
           React.createElement(
             'nav',
             { className: 'main-menu' },
@@ -253,7 +259,7 @@ export var WSHeader = function (_Component) {
             React.createElement(
               'ul',
               null,
-              this.props.showLocale && React.createElement(
+              showLocale && React.createElement(
                 'li',
                 null,
                 React.createElement(WSDropdown, {
@@ -268,43 +274,29 @@ export var WSHeader = function (_Component) {
                   type: 'anchor'
                 })
               ),
-              this.props.showAuthorization && (!this.state.isLoggedIn ? React.createElement(
+              showAuthorization && (!this.state.isLoggedIn ? React.createElement(
                 'li',
                 null,
                 React.createElement(
-                  'div',
-                  {
-                    onClick: function onClick() {
+                  'a',
+                  { onClick: function onClick() {
                       return _this4.login();
-                    },
-                    onKeyPress: function onKeyPress() {
+                    }, onKeyPress: function onKeyPress() {
                       return _this4.login();
-                    }
-                  },
-                  React.createElement(
-                    'a',
-                    { href: '#voidLogin' },
-                    'Login'
-                  )
+                    } },
+                  'Login'
                 )
               ) : React.createElement(
                 'li',
                 null,
                 React.createElement(
-                  'div',
-                  {
-                    onClick: function onClick() {
+                  'a',
+                  { onClick: function onClick() {
                       return _this4.logout();
-                    },
-                    onKeyPress: function onKeyPress() {
+                    }, onKeyPress: function onKeyPress() {
                       return _this4.logout();
-                    }
-                  },
-                  React.createElement(
-                    'a',
-                    { href: '#voidLogout' },
-                    React.createElement('span', { className: 'icon icon24 icon-power' })
-                  )
+                    } },
+                  React.createElement('span', { className: 'icon icon24 icon-power' })
                 )
               ))
             )
@@ -330,12 +322,16 @@ export var WSHeader = function (_Component) {
               _this4.level2 = element;
             }
           },
-          this.props.links.map(function (parent, index) {
+          links.map(function (parent, index) {
             return parent.children && parent.children.length && React.createElement(
               'ul',
-              { className: 'main-sub-menu', key: 'sub-menu' + index, ref: function ref(element) {
+              {
+                className: 'main-sub-menu',
+                key: 'sub-menu' + index,
+                ref: function ref(element) {
                   _this4.subMenus[index] = element;
-                } },
+                }
+              },
               parent.children.map(function (child, childIndex) {
                 return React.createElement(
                   'li',

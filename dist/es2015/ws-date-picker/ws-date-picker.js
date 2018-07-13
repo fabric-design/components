@@ -28,6 +28,14 @@ export var WSDatePicker = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (WSDatePicker.__proto__ || Object.getPrototypeOf(WSDatePicker)).call(this, props));
 
+    Object.defineProperty(_this, 'stopPropagation', {
+      enumerable: true,
+      writable: true,
+      value: function value(event) {
+        event.stopPropagation();
+      }
+    });
+
     _this.element = null;
     _this.input = null;
     _this.flatpickr = null;
@@ -48,9 +56,8 @@ export var WSDatePicker = function (_Component) {
         onChange: this.onChange.bind(this)
       }));
 
-      this.input.addEventListener('change', function (event) {
-        return event.stopPropagation();
-      }, true);
+      this.input.addEventListener('change', this.stopPropagation);
+      this.element.addEventListener('click', this.stopPropagation);
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -69,9 +76,8 @@ export var WSDatePicker = function (_Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       this.flatpickr.destroy();
-      this.input.removeEventListener('change', function (event) {
-        return event.stopPropagation();
-      }, true);
+      this.input.removeEventListener('change', this.stopPropagation);
+      this.element.removeEventListener('click', this.stopPropagation);
     }
   }, {
     key: 'onChange',
@@ -106,7 +112,7 @@ export var WSDatePicker = function (_Component) {
           }
         },
         !iconOnly && [React.createElement('input', {
-          className: className || '',
+          className: className,
           defaultValue: this.state.value,
           placeholder: placeholder,
           ref: function ref(element) {
@@ -115,7 +121,7 @@ export var WSDatePicker = function (_Component) {
           key: 'input'
         }), React.createElement('span', { className: 'icon icon-calendar icon16', key: 'icon' })],
         iconOnly && React.createElement('span', {
-          className: 'icon icon-calendar icon16 ' + (className || ''),
+          className: 'icon icon-calendar icon16 ' + className,
           ref: function ref(element) {
             _this3.input = element;
           },
@@ -138,10 +144,10 @@ Object.defineProperty(WSDatePicker, 'defaultProps', {
   value: {
     value: null,
     placeholder: '',
+    className: '',
     iconOnly: false,
     options: {},
-    onChange: function onChange() {},
-    className: ''
+    onChange: function onChange() {}
   }
 });
 Object.defineProperty(WSDatePicker, 'propTypes', {
@@ -150,10 +156,10 @@ Object.defineProperty(WSDatePicker, 'propTypes', {
   value: {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     placeholder: PropTypes.string,
+    className: PropTypes.string,
     iconOnly: PropTypes.bool,
     options: PropTypes.object,
-    onChange: PropTypes.func,
-    className: PropTypes.string
+    onChange: PropTypes.func
   }
 });
 Object.defineProperty(WSDatePicker, 'format', {

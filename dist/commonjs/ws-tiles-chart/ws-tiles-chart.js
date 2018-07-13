@@ -62,7 +62,6 @@ var WSTilesChart = exports.WSTilesChart = function (_Component) {
       }).reduce(function (a, b) {
         return a + b;
       });
-
       var tileSize = this.calculateMaximumPossibleTileSize(width, height - this.titleDivSize, tilesAmount);
 
       if (tileSize <= maxTileSize && tileSize >= minTileSize) {

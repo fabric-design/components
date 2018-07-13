@@ -17,33 +17,46 @@ export var DropdownMenuItem = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (DropdownMenuItem.__proto__ || Object.getPrototypeOf(DropdownMenuItem)).call(this, props, context));
 
+    Object.defineProperty(_this, 'onMouseDown', {
+      enumerable: true,
+      writable: true,
+      value: function value(event) {
+        event.preventDefault();
+      }
+    });
     Object.defineProperty(_this, 'onClick', {
       enumerable: true,
       writable: true,
       value: function value(event) {
         event.stopPropagation();
 
-        if (_this.state.disabled) {
+        if ('activeElement' in document) {
+          document.activeElement.blur();
+        }
+        var item = _this.state.item;
+
+        if (item.disabled) {
           return;
         }
 
         if (_this.props.isParent) {
           _this.props.handle('go-back');
-        } else if (_this.state.children && _this.state.children.length) {
+        } else if (item.children && item.children.length) {
           _this.props.handle('show-child', _this.menu);
         } else if (!_this.context.multiple) {
-          if (_this.state.selected) {
+          if (item.selected) {
             _this.props.handle('change', null);
           } else {
-            _this.setState({
-              selected: true,
-              stored: true
-            });
+            item.selected = true;
+            item.stored = true;
 
-            _this.props.handle('change', _this.state);
+            _this.setState({ item: item });
+
+            _this.props.handle('change', item);
           }
         } else {
-          _this.setState({ selected: !_this.state.selected });
+          item.selected = !item.selected;
+          _this.setState({ item: item });
         }
       }
     });
@@ -55,7 +68,7 @@ export var DropdownMenuItem = function (_Component) {
       }
     });
 
-    _this.state = props.item;
+    _this.state = { item: props.item };
     _this.menu = null;
     return _this;
   }
@@ -64,48 +77,54 @@ export var DropdownMenuItem = function (_Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.dropdownItem.addEventListener('click', this.onClick);
+      this.dropdownItem.addEventListener('mousedown', this.onMouseDown);
     }
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(props) {
-      this.setState(props.item);
+      this.setState({ item: props.item });
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       this.dropdownItem.removeEventListener('click', this.onClick);
+      this.dropdownItem.removeEventListener('mousedown', this.onMouseDown);
     }
   }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
+      var item = this.state.item;
+
       var anchorClass = 'text';
-      anchorClass += this.state.selected ? ' is-active' : '';
-      anchorClass += this.state.focused ? ' is-focused' : '';
-      anchorClass += this.state.disabled ? ' is-disabled' : '';
-      anchorClass += ' ' + (this.state.className || '');
+      anchorClass += item.selected ? ' is-active' : '';
+      anchorClass += item.focused ? ' is-focused' : '';
+      anchorClass += item.disabled ? ' is-disabled' : '';
+      anchorClass += ' ' + (item.className || '');
       var itemClass = 'dropdown-item';
       itemClass += this.props.isParent ? ' dropdown-parent-item' : '';
-      itemClass += this.state.children && !this.props.isParent ? ' has-children' : '';
+      itemClass += item.children && !this.props.isParent ? ' has-children' : '';
 
       return React.createElement(
         'li',
-        {
-          className: itemClass,
-          ref: function ref(element) {
-            _this2.dropdownItem = element;
-          }
-        },
+        { className: itemClass },
         React.createElement(
           'a',
-          { className: anchorClass, href: this.state.href, title: this.state.title || this.state.label },
-          (this.props.icon || this.state.icon) && React.createElement('i', { className: 'icon ' + (this.props.icon || this.state.icon) }),
-          this.state.label
+          {
+            className: anchorClass,
+            href: item.href,
+            title: item.title || item.label,
+            ref: function ref(element) {
+              _this2.dropdownItem = element;
+            }
+          },
+          (this.props.icon || item.icon) && React.createElement('i', { className: 'icon ' + (this.props.icon || item.icon) }),
+          item.label
         ),
-        !this.props.isParent && this.state.children && React.createElement(DropdownMenu, {
-          items: this.state.children,
-          parent: this.state,
+        !this.props.isParent && item.children && React.createElement(DropdownMenu, {
+          items: item.children,
+          parent: item,
           ref: function ref(element) {
             _this2.menu = element;
           },

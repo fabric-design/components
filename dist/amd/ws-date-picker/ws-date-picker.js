@@ -129,6 +129,14 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
 
       var _this = _possibleConstructorReturn(this, (WSDatePicker.__proto__ || Object.getPrototypeOf(WSDatePicker)).call(this, props));
 
+      Object.defineProperty(_this, 'stopPropagation', {
+        enumerable: true,
+        writable: true,
+        value: function value(event) {
+          event.stopPropagation();
+        }
+      });
+
       _this.element = null;
       _this.input = null;
       _this.flatpickr = null;
@@ -149,9 +157,8 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
           onChange: this.onChange.bind(this)
         }));
 
-        this.input.addEventListener('change', function (event) {
-          return event.stopPropagation();
-        }, true);
+        this.input.addEventListener('change', this.stopPropagation);
+        this.element.addEventListener('click', this.stopPropagation);
       }
     }, {
       key: 'componentWillReceiveProps',
@@ -170,9 +177,8 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
       key: 'componentWillUnmount',
       value: function componentWillUnmount() {
         this.flatpickr.destroy();
-        this.input.removeEventListener('change', function (event) {
-          return event.stopPropagation();
-        }, true);
+        this.input.removeEventListener('change', this.stopPropagation);
+        this.element.removeEventListener('click', this.stopPropagation);
       }
     }, {
       key: 'onChange',
@@ -207,7 +213,7 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
             }
           },
           !iconOnly && [_imports.React.createElement('input', {
-            className: className || '',
+            className: className,
             defaultValue: this.state.value,
             placeholder: placeholder,
             ref: function ref(element) {
@@ -216,7 +222,7 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
             key: 'input'
           }), _imports.React.createElement('span', { className: 'icon icon-calendar icon16', key: 'icon' })],
           iconOnly && _imports.React.createElement('span', {
-            className: 'icon icon-calendar icon16 ' + (className || ''),
+            className: 'icon icon-calendar icon16 ' + className,
             ref: function ref(element) {
               _this3.input = element;
             },
@@ -240,10 +246,10 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
     value: {
       value: null,
       placeholder: '',
+      className: '',
       iconOnly: false,
       options: {},
-      onChange: function onChange() {},
-      className: ''
+      onChange: function onChange() {}
     }
   });
   Object.defineProperty(WSDatePicker, 'propTypes', {
@@ -252,10 +258,10 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
     value: {
       value: _imports.PropTypes.oneOfType([_imports.PropTypes.string, _imports.PropTypes.number]),
       placeholder: _imports.PropTypes.string,
+      className: _imports.PropTypes.string,
       iconOnly: _imports.PropTypes.bool,
       options: _imports.PropTypes.object,
-      onChange: _imports.PropTypes.func,
-      className: _imports.PropTypes.string
+      onChange: _imports.PropTypes.func
     }
   });
   Object.defineProperty(WSDatePicker, 'format', {

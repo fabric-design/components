@@ -99,7 +99,6 @@ define(['exports', '../imports', './tile'], function (exports, _imports, _tile) 
         }).reduce(function (a, b) {
           return a + b;
         });
-
         var tileSize = this.calculateMaximumPossibleTileSize(width, height - this.titleDivSize, tilesAmount);
 
         if (tileSize <= maxTileSize && tileSize >= minTileSize) {

@@ -47,7 +47,7 @@ export var DropdownInput = function (_Component) {
     });
 
     _this.state = {
-      value: props.value
+      value: props.value && props.value.value
     };
     return _this;
   }

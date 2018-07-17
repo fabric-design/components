@@ -1,3 +1,36 @@
+<a name="1.0.46"></a>
+## [1.0.46](https://github.bus.zalan.do/fabric-design/components/compare/1.0.45...1.0.46) (2018-07-12)
+
+
+### Bug Fixes
+
+* **dropdown:** Fixed initial text for select dropdowns ([#188](https://github.bus.zalan.do/fabric-design/components/issues/188)) ([7cc1213](https://github.bus.zalan.do/fabric-design/components/commit/7cc1213))
+
+
+
+<a name="1.0.45"></a>
+## [1.0.45](https://github.bus.zalan.do/fabric-design/components/compare/1.0.44...1.0.45) (2018-07-11)
+
+
+### Bug Fixes
+
+* **date-picker:** Fixed linter errors after master merge ([bea4132](https://github.bus.zalan.do/fabric-design/components/commit/bea4132))
+* **date-picker:** Prevent click event propagation ([d09b36e](https://github.bus.zalan.do/fabric-design/components/commit/d09b36e))
+* **dropdown:** Fixed corrupted ref to dropdown item ([82efeb1](https://github.bus.zalan.do/fabric-design/components/commit/82efeb1))
+* **dropdown:** Fixed renamed mixing ([81e5d65](https://github.bus.zalan.do/fabric-design/components/commit/81e5d65))
+* **dropdown:** Fixed unit tests ([7aedda1](https://github.bus.zalan.do/fabric-design/components/commit/7aedda1))
+* **dropdown:** Fixed value handling on multi level dropdowns ([145279b](https://github.bus.zalan.do/fabric-design/components/commit/145279b))
+* **dropdown:** Fixed weired jsx behavior ([010290e](https://github.bus.zalan.do/fabric-design/components/commit/010290e))
+* **dropdown:** Improved comment ([09af07e](https://github.bus.zalan.do/fabric-design/components/commit/09af07e))
+* **multi-select:** Fixed click not tracked on slower pc's ([e444409](https://github.bus.zalan.do/fabric-design/components/commit/e444409))
+* **multi-select:** Fixed linter errrors ([5b52ac4](https://github.bus.zalan.do/fabric-design/components/commit/5b52ac4))
+* **multi-select:** Improved colors and fixed small issues ([a6fb3dc](https://github.bus.zalan.do/fabric-design/components/commit/a6fb3dc))
+* **option-buttons:** Fixed handling of value and marking items as selected ([9ba8fe9](https://github.bus.zalan.do/fabric-design/components/commit/9ba8fe9))
+* **overlay:** Cleanup ([d356f3a](https://github.bus.zalan.do/fabric-design/components/commit/d356f3a))
+* **overlay:** Fixed tests and linter ([27ea41d](https://github.bus.zalan.do/fabric-design/components/commit/27ea41d))
+
+
+
 <a name="1.0.44"></a>
 ## [1.0.44](https://github.bus.zalan.do/fabric-design/components/compare/1.0.43...1.0.44) (2018-07-10)
 

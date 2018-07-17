@@ -37,7 +37,7 @@ Call submit on enter key
 
 -   `event` **[KeyboardEvent][4]** JavaScript Event object
 
-Returns **[Boolean][5]** 
+Returns **[boolean][5]** 
 
 ### onChange
 
@@ -65,7 +65,7 @@ Returns **void**
 
 Gets the height of the menu container to scale the outer container up
 
-Returns **[Number][6]** 
+Returns **[number][6]** 
 
 ### render
 
@@ -117,7 +117,7 @@ The item object can have the following properties
 -   `props` **[Object][1]** React properties object
     -   `props.item` **[Object][1]** Dropdown item configuration
     -   `props.icon` **[string][2]** Class name of icon in trigger
-    -   `props.isParent` **[Boolean][3]** Flag to identify if this item renders the parent dropdown item
+    -   `props.isParent` **[boolean][3]** Flag to identify if this item renders the parent dropdown item
     -   `props.handle` **[Function][4]** Function used to propagate data
 
 ### componentDidMount
@@ -145,6 +145,17 @@ Listen for clicks on dropdown item
 
 Returns **void** 
 
+### onMouseDown
+
+Prevent mouse down to prevent following blur event
+The blur event triggers overlay close which leads to the click is not captured (invisible element)
+
+**Parameters**
+
+-   `event` **[MouseEvent][5]** JavaScript event object
+
+Returns **void** 
+
 ### onClick
 
 Handle clicks on this dropdown item. This can trigger a back navigation, selecting the item on multi selects
@@ -163,7 +174,7 @@ For instance if the menu size, it's value changed or the parent or child menu sh
 
 **Parameters**
 
--   `type` **[String][2]** Type of propagated data
+-   `type` **[string][2]** Type of propagated data
 -   `data` **any** Data which was propagated. Can be height of child menu or reference of child
 
 Returns **void** 
@@ -213,11 +224,12 @@ additional wrapping markup and functionality, you SHOULD NOT use this component 
     -   `props.parent` **[Object][1]** Parent dropdown item. Only set if this is a child menu
     -   `props.items` **[Array][2]&lt;[Object][1]>** List of dropdown item configs. Each item can contain label, value, disabled, selected
     -   `props.value` **([Object][1] \| [Array][2]&lt;[Object][1]>)** Selected dropdown item(s)
-    -   `props.filterable` **[Boolean][3]** Flag if the dropdown menu is filterable
+    -   `props.filterable` **[boolean][3]** Flag if the dropdown menu is filterable
+    -   `props.filtered` **[boolean][3]** Should be true when items are filtered outside but dropdown has no filter possibility
     -   `props.filter` **[string][4]** Default filter value
     -   `props.placeholder` **[string][4]** Placeholder for text inputs (Filter input or Input only version)
     -   `props.limit` **[number][5]** Limit visible dropdown items. Use together with filterable flag.
-    -   `props.selectAll` **[Boolean][3]** Show button to select all items
+    -   `props.selectAll` **[boolean][3]** Show button to select all items
     -   `props.handle` **[Function][6]** Function used to propagate data
 
 ### componentDidMount
@@ -238,8 +250,9 @@ Returns **void**
 
 ### componentDidUpdate
 
-Send the new height of this menu after update to the parent.
-This will be called when updateFilter did set the new state
+Send the new height of this menu after update by the parent.
+This will be called when updateFilter did set the new state or outside new dropdown items came in.
+Only if the current menu is really active we propagate the new height
 
 Returns **void** 
 
@@ -301,7 +314,7 @@ Returns **void**
 
 Gets the current height of the menu
 
-Returns **[Number][5]** 
+Returns **[number][5]** 
 
 ### getFilteredItems
 
@@ -335,13 +348,6 @@ Mark the currently focused item as selected
 
 Returns **void** 
 
-### clearSelections
-
-Deselect all items which are not stored as value. Only relevant for multi select dropdown.
-When the dropdown will be closed without pressing submit the state will be restored
-
-Returns **void** 
-
 ### handlePropagation
 
 Handles data propagation from child menus
@@ -349,7 +355,7 @@ This function uses arrow function to bind the scope to this instance
 
 **Parameters**
 
--   `type` **[String][4]** Should be just show-parent
+-   `type` **[string][4]** Should be just show-parent
 -   `data` **any** Propagated data. Could be for instance a menu reference or the menu height.
 
 Returns **void** 
@@ -360,7 +366,7 @@ Shows the child menu and hides the current menu
 
 **Parameters**
 
--   `subMenu` **WSDropdownMenu** The reference of the child menu to show
+-   `subMenu` **[DropdownMenu][9]** The reference of the child menu to show
 
 Returns **void** 
 
@@ -376,7 +382,7 @@ Animates a menu or sub menu into the view
 
 **Parameters**
 
--   `goBack` **[Boolean][3]** True if a menu should be shown and a sub menu be hidden
+-   `goBack` **[boolean][3]** True if a menu should be shown and a sub menu be hidden
 
 Returns **void** 
 
@@ -386,7 +392,7 @@ Animates a menu or sub menu out of the view
 
 **Parameters**
 
--   `goBack` **[Boolean][3]** True if a menu should be hidden and a sub menu be shown
+-   `goBack` **[boolean][3]** True if a menu should be hidden and a sub menu be shown
 
 Returns **void** 
 
@@ -396,8 +402,8 @@ Animates an element by adding a class with an css animation and executes a callb
 
 **Parameters**
 
--   `item` **[Element][9]** The dom node to animate
--   `animationClass` **[String][4]** The css class which holds the animation definition
+-   `item` **[Element][10]** The dom node to animate
+-   `animationClass` **[string][4]** The css class which holds the animation definition
 -   `callback` **[Function][6]** Callback which will be executed at the end of the animation
 
 Returns **void** 
@@ -436,7 +442,21 @@ Type: [Object][1]
 
 [8]: https://developer.mozilla.org/docs/Web/API/Event
 
-[9]: https://developer.mozilla.org/docs/Web/API/Element
+[9]: #dropdownmenu
+
+[10]: https://developer.mozilla.org/docs/Web/API/Element
+## deep
+
+Helper function to iterate over all nesting levels without recursion
+
+**Parameters**
+
+-   `items` **[Array][1]** List of array items with possible children
+-   `getChildren` **[Function][2]** Callback to get the children of the items
+-   `callback` **[Function][2]** Will be called with each item. If return value is true the iteration will be aborted
+
+Returns **void** 
+
 ## WSDropdown
 
 **Extends Component**
@@ -449,29 +469,29 @@ As trigger type you can choose between an anchor, button or a select like lookin
 
 **Parameters**
 
--   `props` **[Object][1]** React props
+-   `props` **[Object][3]** React props
 
 **Properties**
 
--   `props` **[Object][1]** React properties object
-    -   `props.type` **[string][2]** Type of trigger. Can be anchor, button, select or icon
-    -   `props.text` **[string][2]** Text of trigger
-    -   `props.icon` **[string][2]** Class name of icon in trigger
-    -   `props.multiple` **[Boolean][3]** Flag if the dropdown is a multi select menu
-    -   `props.filterable` **[Boolean][3]** Flag if the dropdown menu is filterable
-    -   `props.inputOnly` **[Boolean][3]** Flag if the dropdown only contains a text input and a button
-    -   `props.filter` **[string][2]** Default filter value
-    -   `props.limit` **[number][4]** Limit visible dropdown items. Use together with filterable flag.
-    -   `props.orientation` **[string][2]** Dropdown orientation. Can be either left or right
-    -   `props.placeholder` **[string][2]** Placeholder for text inputs (Filter input or Input only version)
-    -   `props.selectAll` **[Boolean][3]** Show button to select all items
-    -   `props.onChange` **[string][2]** Callback for react components to propagate value changes
+-   `props` **[Object][3]** React properties object
+    -   `props.type` **[string][4]** Type of trigger. Can be anchor, button, select or icon
+    -   `props.text` **[string][4]** Text of trigger
+    -   `props.icon` **[string][4]** Class name of icon in trigger
+    -   `props.multiple` **[boolean][5]** Flag if the dropdown is a multi select menu
+    -   `props.filterable` **[boolean][5]** Flag if the dropdown menu is filterable
+    -   `props.inputOnly` **[boolean][5]** Flag if the dropdown only contains a text input and a button
+    -   `props.filter` **[string][4]** Default filter value
+    -   `props.limit` **[number][6]** Limit visible dropdown items. Use together with filterable flag.
+    -   `props.orientation` **[string][4]** Dropdown orientation. Can be either left or right
+    -   `props.placeholder` **[string][4]** Placeholder for text inputs (Filter input or Input only version)
+    -   `props.selectAll` **[boolean][5]** Show button to select all items
+    -   `props.onChange` **[string][4]** Callback for react components to propagate value changes
 
 ### getChildContext
 
 Called by React to get the types of the child context values
 
-Returns **[Object][1]** 
+Returns **[Object][3]** 
 
 ### componentDidMount
 
@@ -485,7 +505,7 @@ Handle changes of passed properties
 
 **Parameters**
 
--   `props` **[Object][1]** React props
+-   `props` **[Object][3]** React props
 
 Returns **void** 
 
@@ -495,13 +515,13 @@ Stop listening for clicks in window
 
 Returns **void** 
 
-### onDocumentClick
+### onAnyEvent
 
-Handles click on document body to close the dropdown if clicked elsewhere
+Prevent event to bubble up and keep it inside drop down
 
 **Parameters**
 
--   `event` **[MouseEvent][5]** JavaScript event object
+-   `event` **[Event][7]** Event object
 
 Returns **void** 
 
@@ -511,27 +531,19 @@ Handle clicks on dropdown trigger
 
 **Parameters**
 
--   `event` **[MouseEvent][5]** JavaScript event object
+-   `event` **[MouseEvent][8]** JavaScript event object
 
 Returns **void** 
 
-### onAnyEvent
+### onOpen
 
-Prevent event to bubble up and keep it inside drop down
-
-**Parameters**
-
--   `event` **[Event][6]** Event object
+Call child onOpen function if available
 
 Returns **void** 
 
-### onGlobalKeyDown
+### onClose
 
-Handles global key down events when dropdown was opened
-
-**Parameters**
-
--   `event` **[KeyboardEvent][7]** JavaScript event object
+Call child onOpen function if available
 
 Returns **void** 
 
@@ -541,10 +553,10 @@ Get text from labels of selected items
 
 **Parameters**
 
--   `value` **([String][2] \| [Object][1] \| [Array][8]&lt;[Object][1]>)** Selected items
--   `args` **[Array][8]&lt;any>** Optionally a default text can be passed
+-   `value` **([string][4] \| [Object][3] \| [Array][1]&lt;[Object][3]>)** Selected items
+-   `args` **[Array][1]&lt;any>** Optionally a default text can be passed
 
-Returns **[String][2]** 
+Returns **[string][4]** 
 
 ### setValue
 
@@ -552,7 +564,7 @@ Set the value of the dropdown and update the display text if the trigger element
 
 **Parameters**
 
--   `value` **([Object][1] \| [Array][8]&lt;[Object][1]>)** The new dropdown value
+-   `value` **([Object][3] \| [Array][1]&lt;[Object][3]>)** The new dropdown value
 
 Returns **void** 
 
@@ -562,9 +574,9 @@ Create state object from properties
 
 **Parameters**
 
--   `props` **[Object][1]** React props
+-   `props` **[Object][3]** React props
 
-Returns **[Object][1]** 
+Returns **[Object][3]** 
 
 ### handlePropagation
 
@@ -572,8 +584,8 @@ Handles data propagation from child elements
 
 **Parameters**
 
--   `type` **[String][2]** Either change for value changes or change-size which will be emitted on menu changes
--   `data` **([Object][1] \| [Number][4])** Either new value or height of new menu
+-   `type` **[string][4]** Either change for value changes or change-height which will be emitted on menu changes
+-   `data` **([Object][3] \| [number][6])** Either new value or height of new menu
 
 Returns **void** 
 
@@ -583,97 +595,54 @@ Used to convert the items if they are strings into the required object structure
 
 **Parameters**
 
--   `items` **[Array][8]&lt;([String][2] \| [Object][1])>** List of items represented as string or object
+-   `items` **([string][4] \| [Array][1]&lt;([string][4] \| [Object][3])>)** List of items represented as string or object
+-   `resolveLabel` **[Function][2]** Optional callback to resolve the item label (optional, default `value=>value`)
 
-Returns **[Array][8]&lt;[Object][1]>** 
-
-### open
-
-Opens the dropdown
-
-Returns **void** 
-
-### close
-
-Closes the dropdown and clears the selection if needed
-
-Returns **void** 
-
-### adjustSize
-
-Set's the size on an element
-
-**Parameters**
-
--   `newSize` **[Number][4]** The new size of the active menu will become the new dropdown container size
-
-Returns **void** 
-
-### animateElement
-
-Animates an element by adding a class with an css animation and executes a callback when the animation ends
-
-**Parameters**
-
--   `item` **[Element][9]** The dom node to animate
--   `animationClass` **[String][2]** The css class which holds the animation definition
--   `callback` **[Function][10]** Callback which will be executed at the end of the animation
-
-Returns **void** 
+Returns **[Array][1]&lt;[Object][3]>** 
 
 ### renderTrigger
 
 Renders the dropdown trigger element
 
-Returns **[Object][1]** 
+Returns **[Object][3]** 
 
 ### renderContent
 
 Render the content of the dropdown which can be a menu with only input and submit button
 or a common menu with list items
 
-Returns **[Object][1]** 
+Returns **[Object][3]** 
 
 ### render
 
 Render the complete dropdown
 
-Returns **[Object][1]** 
+Returns **[Object][3]** 
 
 ### defaultProps
 
-Type: [Object][1]
+Type: [Object][3]
 
 ### propTypes
 
-Type: [Object][1]
-
-### openDropdown
-
-Type: [WSDropdown][11]
+Type: [Object][3]
 
 ### childContextTypes
 
-Type: [Object][1]
+Type: [Object][3]
 
-[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
 
-[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
 
-[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[5]: https://developer.mozilla.org/docs/Web/API/MouseEvent
+[5]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean
 
-[6]: https://developer.mozilla.org/docs/Web/API/Event
+[6]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number
 
-[7]: https://developer.mozilla.org/docs/Web/API/KeyboardEvent
+[7]: https://developer.mozilla.org/docs/Web/API/Event
 
-[8]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array
-
-[9]: https://developer.mozilla.org/docs/Web/API/Element
-
-[10]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function
-
-[11]: #wsdropdown
+[8]: https://developer.mozilla.org/docs/Web/API/MouseEvent

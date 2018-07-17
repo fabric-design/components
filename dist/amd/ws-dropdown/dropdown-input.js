@@ -93,7 +93,7 @@ define(['exports', '../imports'], function (exports, _imports) {
       });
 
       _this.state = {
-        value: props.value
+        value: props.value && props.value.value
       };
       return _this;
     }

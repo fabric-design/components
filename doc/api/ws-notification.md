@@ -60,7 +60,7 @@ Start to animate in a notification
 **Parameters**
 
 -   `notification` **[Object][1]** The notification to animate in
--   `index` **[Number][3]** Index of notification in the list
+-   `index` **[number][3]** Index of notification in the list
 
 Returns **void** 
 
@@ -76,7 +76,7 @@ Close a specific notification
 
 **Parameters**
 
--   `index` **[Number][3]** The index of the notification in the list
+-   `index` **[number][3]** The index of the notification in the list
 
 Returns **void** 
 

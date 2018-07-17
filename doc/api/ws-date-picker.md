@@ -3,6 +3,8 @@
 
 **Extends Component**
 
+-   **See: [https://chmln.github.io/flatpickr/][1]**
+
 Renders a date picker component which is based on flatpickr.
 To specify a date format call the setFormat function with the corresponding format.
 Pls have a look at the flatpickr formatting rules.
@@ -11,7 +13,7 @@ If you only want to display an icon instead of a input set prop iconOnly.
 
 **Parameters**
 
--   `props` **[Object][1]** React properties
+-   `props` **[Object][2]** React properties
 
 ### componentDidMount
 
@@ -25,7 +27,7 @@ Update flatpickr when prop's changed
 
 **Parameters**
 
--   `props` **[Object][1]** React props
+-   `props` **[Object][2]** React props
 
 Returns **void** 
 
@@ -41,9 +43,19 @@ Handle date selections and propagate the value via an custom change event and on
 
 **Parameters**
 
--   `selectedDate` **[Date][2]** The currently selected date
+-   `selectedDate` **[Date][3]** The currently selected date
     -   `selectedDate.0`  
--   `value` **[String][3]** The date as string using the in props specified formatting
+-   `value` **[string][4]** The date as string using the in props specified formatting
+
+Returns **void** 
+
+### stopPropagation
+
+Prevent clicks bubbling out
+
+**Parameters**
+
+-   `event` **[MouseEvent][5]** JavaScript event object
 
 Returns **void** 
 
@@ -51,7 +63,7 @@ Returns **void**
 
 Render the component
 
-Returns **[Object][1]** 
+Returns **[Object][2]** 
 
 ### setFormat
 
@@ -59,12 +71,16 @@ Set the format for all date picker instances
 
 **Parameters**
 
--   `format` **[string][3]** Format following flatpickr options
+-   `format` **[string][4]** Format following flatpickr options
 
 Returns **void** 
 
-[1]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
+[1]: https://chmln.github.io/flatpickr/
 
-[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
+[2]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+[3]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date
+
+[4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
+
+[5]: https://developer.mozilla.org/docs/Web/API/MouseEvent

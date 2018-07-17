@@ -12,7 +12,7 @@ Renders a simple spinner with the primary color
 
 ### render
 
-Returns **XML** 
+Returns **JSX** 
 
 ### propTypes
 

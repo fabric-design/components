@@ -11,7 +11,7 @@ Quick array of all month shown. There are two from the last year and two from th
 
 **Properties**
 
--   `props` **[object][1]** properties
+-   `props` **[Object][1]** properties
     -   `props.selectedYear` **[number][2]** set a preselected year
     -   `props.selectedWeek` **[number][2]** set a preselected week
     -   `props.onChange` **[function][3]** handler which notifies about picked week
@@ -83,7 +83,7 @@ src: [https://gist.github.com/dblock/1081513][7]
 
 -   `date` **[Date][6]** Date
 
-Returns **[Number][2]** 
+Returns **[number][2]** 
 
 ## getWeeks
 
@@ -115,7 +115,7 @@ Returns **[Array][8]&lt;{week: [number][2], year: [number][2]}>**
 
 **Properties**
 
--   `props` **[object][1]** properties
+-   `props` **[Object][1]** properties
     -   `props.selectedYear` **[number][2]** set a preselected year
     -   `props.selectedWeek` **[number][2]** set a preselected week
     -   `props.onChange` **[function][3]** handler which notifies about picked week
@@ -148,11 +148,9 @@ Handler for new selections on the calendar
 
 **Parameters**
 
--   `$0` **[Object][1]** 
-    -   `$0.week`  
-    -   `$0.year`  
--   `week` **[String][4]** clicked on week
--   `year` **[String][4]** clicked on year
+-   `selection` **[Object][1]** Selected week
+    -   `selection.week` **[string][4]** clicked on week
+    -   `selection.year` **[string][4]** clicked on year
 
 Returns **void** 
 

@@ -110,7 +110,7 @@ render(
       />
       <br />
       <WSDropdown
-        text="Simple Wide" type="select" filterable items={[
+        text="Simple Wide 2" type="select" filterable items={[
           'New',
           {
             label: 'New From Template',

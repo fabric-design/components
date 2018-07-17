@@ -23,10 +23,10 @@ describe('A WSInlineEdit.PriceStrategy', () => {
       validate(type, '123.456,78', true);
       validate(type, '12,345.67', true);
       validate(type, '123456789', true);
-      validate(type, '123,456', false);
-      validate(type, '123.456', false);
-      validate(type, '12345.6', false);
-      validate(type, '12345,6', false);
+      validate(type, '123,456', true);
+      validate(type, '123.456', true);
+      validate(type, '12345.6', true);
+      validate(type, '12345,6', true);
     });
 
     it('german only', () => {
@@ -38,7 +38,7 @@ describe('A WSInlineEdit.PriceStrategy', () => {
       validate(type, '12,345.67', false);
       validate(type, '123456789', true);
       validate(type, '123,456', false);
-      validate(type, '123.456', false);
+      validate(type, '123.456', true);
       validate(type, '12345.6', false);
       validate(type, '12345,6', false);
     });
@@ -51,7 +51,7 @@ describe('A WSInlineEdit.PriceStrategy', () => {
       validate(type, '123.456,78', false);
       validate(type, '12,345.67', true);
       validate(type, '123456789', true);
-      validate(type, '123,456', false);
+      validate(type, '123,456', true);
       validate(type, '123.456', false);
       validate(type, '12345.6', false);
       validate(type, '12345,6', false);
@@ -63,8 +63,6 @@ describe('A WSInlineEdit.PriceStrategy', () => {
       const type = new PriceStrategy({});
 
       convert(type, '123.45', 123.45);
-      convert(type, '123,45', 123.45);
-      convert(type, '123.456,78', 123546.78);
       convert(type, '12,345.67', 12345.67);
       convert(type, '123456789', 123456789);
     });
@@ -73,7 +71,7 @@ describe('A WSInlineEdit.PriceStrategy', () => {
       const type = new PriceStrategy({locale: 'de'});
 
       convert(type, '123,45', 123.45);
-      convert(type, '123.456,78', 123546.78);
+      convert(type, '123.456,78', 123456.78);
       convert(type, '123456789', 123456789);
     });
 

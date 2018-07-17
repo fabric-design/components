@@ -1,5 +1,4 @@
 import {NumberStrategy} from './number-strategy';
-import {DateStrategy} from './date-strategy';
 import {PriceStrategy} from './price-strategy';
 import {TextStrategy} from './text-strategy';
 
@@ -11,8 +10,7 @@ export class TypeHandler {
   static TYPES = {
     text: TextStrategy,
     number: NumberStrategy,
-    price: PriceStrategy,
-    date: DateStrategy
+    price: PriceStrategy
   };
 
   /**

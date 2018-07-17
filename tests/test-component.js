@@ -5,6 +5,17 @@ import {render} from 'imports';
  * Creates and wraps React / Preact components for easier testing
  */
 export class TestComponent {
+
+  /**
+   * @type {HTMLElement}
+   */
+  container;
+
+  /**
+   * @type {Component}
+   */
+  component;
+
   /**
    * Initialize the component and render the jsx as React / Preact component
    * @param {Object|Function} jsx JSX to render. A callback to retrieve updated jsx can be passed as well

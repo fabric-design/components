@@ -14,9 +14,11 @@
     text-align: right;
   }
 }
-table td .ws-inline-edit input {
-  line-height: inherit;
+table td .ws-inline-edit {
   // Correct table td padding
   margin: 0 -$space-m;
-  padding: 0 $space-m;
+  input {
+    padding: 0 $space-m;
+    line-height: inherit;
+  }
 }

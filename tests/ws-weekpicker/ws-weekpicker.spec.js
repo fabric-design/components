@@ -7,7 +7,7 @@ import {wait} from '../async';
 /**
  * Tests for WS-WeekPicker
  */
-describe('Test: <WSWeekPicker />', () => {
+describe('A WSWeekPicker', () => {
   let container;
 
   beforeEach(() => {

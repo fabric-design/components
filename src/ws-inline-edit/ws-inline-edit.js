@@ -44,6 +44,7 @@ export class WSInlineEdit extends Component {
     this.input.addEventListener('focus', this.onFocus);
     this.input.addEventListener('keyup', this.onKeyUp);
     this.input.addEventListener('blur', this.onBlur);
+    this.input.addEventListener('change', this.stopPropagation);
   }
 
   /**
@@ -62,6 +63,7 @@ export class WSInlineEdit extends Component {
     this.input.removeEventListener('focus', this.onFocus);
     this.input.removeEventListener('keyup', this.onKeyUp);
     this.input.removeEventListener('blur', this.onBlur);
+    this.input.removeEventListener('change', this.stopPropagation);
   }
 
   /**
@@ -99,7 +101,7 @@ export class WSInlineEdit extends Component {
       default:
         this.setState({
           isValid: this.type.validate(inputValue),
-          value: inputValue
+          inputValue
         });
     }
   };
@@ -115,18 +117,39 @@ export class WSInlineEdit extends Component {
   };
 
   /**
+   * Stop native events from bubbling up
+   * @param {Event} event JavaScript event object
+   * @returns {void}
+   */
+  stopPropagation = event => {
+    event.stopPropagation();
+  };
+
+  /**
    * Create component state
    * @param {Object} props React props
-   * @returns {{isEditing: boolean, value: *}}
+   * @returns {{isEditing: boolean, inputValue: *, initialValue: *, isValid: boolean}}
    */
   createState(props) {
     this.type = TypeHandler.getStrategy(props.type, props.options);
     return {
       isEditing: false,
       isValid: true,
-      value: props.value,
+      inputValue: props.value,
       initialValue: props.value
     };
+  }
+
+  /**
+   * Aborts editing and restores the initial value
+   * @returns {void}
+   */
+  abort() {
+    this.setState({
+      isEditing: false,
+      isValid: true,
+      inputValue: this.state.initialValue
+    });
   }
 
   /**
@@ -135,7 +158,7 @@ export class WSInlineEdit extends Component {
    * @returns {{plain: string, value: *}}
    */
   submit(inputValue) {
-    const state = {isEditing: false, value: inputValue};
+    const state = {isEditing: false, inputValue};
     // Propagate value changes
     if (inputValue !== this.state.initialValue && this.type.validate(inputValue)) {
       state.initialValue = inputValue;
@@ -158,7 +181,7 @@ export class WSInlineEdit extends Component {
    * @returns {Object}
    */
   render() {
-    const {isEditing, isValid, value} = this.state;
+    const {isEditing, isValid, inputValue} = this.state;
 
     let classes = 'ws-inline-edit';
     classes += isEditing ? ' is-editing' : '';
@@ -171,7 +194,7 @@ export class WSInlineEdit extends Component {
             type="text"
             className={!isValid ? 'is-invalid' : ''}
             ref={element => { this.input = element; }}
-            value={value}
+            value={inputValue}
           />
           {!isValid &&
             <span className="icon icon16 icon-cross" />

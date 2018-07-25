@@ -14,6 +14,8 @@ export class WSInlineEdit extends Component {
     value: '',
     options: {},
     type: 'text',
+    look: 'default',
+    disabled: false,
     onChange: () => {}
   };
 
@@ -24,6 +26,8 @@ export class WSInlineEdit extends Component {
     value: PropTypes.string,
     options: PropTypes.object,
     type: PropTypes.oneOf(['text', 'number', 'price']),
+    look: PropTypes.oneOf(['narrow', 'default']),
+    disabled: PropTypes.bool,
     onChange: PropTypes.func
   };
 
@@ -43,8 +47,10 @@ export class WSInlineEdit extends Component {
   componentDidMount() {
     this.input.addEventListener('focus', this.onFocus);
     this.input.addEventListener('keyup', this.onKeyUp);
+    this.input.addEventListener('keydown', this.onKeyDown);
     this.input.addEventListener('blur', this.onBlur);
     this.input.addEventListener('change', this.stopPropagation);
+    this.resizeInput();
   }
 
   /**
@@ -61,6 +67,7 @@ export class WSInlineEdit extends Component {
    */
   componentWillUnmount() {
     this.input.removeEventListener('focus', this.onFocus);
+    this.input.removeEventListener('keydown', this.onKeyDown);
     this.input.removeEventListener('keyup', this.onKeyUp);
     this.input.removeEventListener('blur', this.onBlur);
     this.input.removeEventListener('change', this.stopPropagation);
@@ -75,6 +82,7 @@ export class WSInlineEdit extends Component {
     event.stopPropagation();
 
     if (!this.state.isEditing) {
+      this.resizeInput();
       this.setState({isEditing: true}, () => {
         this.input.select();
         this.input.focus();
@@ -89,6 +97,7 @@ export class WSInlineEdit extends Component {
    */
   onKeyUp = event => {
     event.stopPropagation();
+    event.preventDefault();
     const inputValue = event.target.value;
 
     switch (event.key) {
@@ -99,10 +108,25 @@ export class WSInlineEdit extends Component {
         this.abort();
         break;
       default:
+        this.resizeInput();
         this.setState({
           isValid: this.type.validate(inputValue),
           inputValue
         });
+    }
+  };
+
+  /**
+   * Resize already on
+   * @param event
+   */
+  onKeyDown = event => {
+    event.stopPropagation();
+
+    if (event.key.length === 1) {
+      this.resizeInput(event.key);
+    } else {
+      this.resizeInput();
     }
   };
 
@@ -155,12 +179,16 @@ export class WSInlineEdit extends Component {
   /**
    * Propagate changed value
    * @param {string} inputValue Current value in input
-   * @returns {{plain: string, value: *}}
+   * @returns {void}
    */
   submit(inputValue) {
     const state = {isEditing: false, inputValue};
+    // Don't permit submission on wrong values
+    if (!this.type.validate(inputValue)) {
+      return;
+    }
     // Propagate value changes
-    if (inputValue !== this.state.initialValue && this.type.validate(inputValue)) {
+    if (inputValue !== this.state.initialValue) {
       state.initialValue = inputValue;
 
       const eventData = {
@@ -176,16 +204,40 @@ export class WSInlineEdit extends Component {
     this.setState(state);
   }
 
+  resizeInput(additionalChars) {
+    if (this.props.look !== 'narrow') {
+      return;
+    }
+
+    const style = window.getComputedStyle(this.input);
+    const calculator = document.createElement('div');
+    calculator.style.fontSize = style.fontSize;
+    calculator.style.lineHeight = style.lineHeight;
+    calculator.style.margin = style.margin;
+    calculator.style.padding = style.padding;
+    calculator.style.visibility = 'hidden';
+    calculator.style.position = 'absolute';
+    calculator.style.top = '-1000px';
+    calculator.innerText = this.input.value + (additionalChars || '');
+
+    document.body.appendChild(calculator);
+    this.input.style.width = `${calculator.clientWidth}px`;
+    document.body.removeChild(calculator);
+  }
+
   /**
    * Render the complete inline-edit component
    * @returns {Object}
    */
   render() {
     const {isEditing, isValid, inputValue} = this.state;
+    const {type, look, disabled} = this.props;
 
     let classes = 'ws-inline-edit';
     classes += isEditing ? ' is-editing' : '';
-    classes += ` ${this.props.type}`;
+    classes += ` ${type}`;
+    classes += look === 'narrow' ? ' mod-narrow' : '';
+    classes += disabled ? ' is-disabled' : '';
 
     return (
       <div className={classes} ref={element => { this.element = element; }} >

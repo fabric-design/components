@@ -118,7 +118,8 @@ export class WSInlineEdit extends Component {
 
   /**
    * Resize already on
-   * @param event
+   * @param {Event} event JavaScript event object
+   * @returns {void}
    */
   onKeyDown = event => {
     event.stopPropagation();
@@ -160,7 +161,7 @@ export class WSInlineEdit extends Component {
       isEditing: false,
       isValid: true,
       inputValue: props.value,
-      initialValue: props.value
+      initialValue: (props.value || '').toString()
     };
   }
 
@@ -204,6 +205,11 @@ export class WSInlineEdit extends Component {
     this.setState(state);
   }
 
+  /**
+   * Resize the input to it's current value plus additional characters coming from events
+   * @param {string} additionalChars Possible chars which will be added in future (keyDown, keyUp)
+   * @returns {void}
+   */
   resizeInput(additionalChars) {
     if (this.props.look !== 'narrow') {
       return;
@@ -211,8 +217,8 @@ export class WSInlineEdit extends Component {
 
     const style = window.getComputedStyle(this.input);
     const calculator = document.createElement('div');
-    calculator.style.fontSize = style.fontSize;
-    calculator.style.lineHeight = style.lineHeight;
+    calculator.style.fontSize = style.fontSize || '16px';
+    calculator.style.lineHeight = style.lineHeight || '16px';
     calculator.style.margin = style.margin;
     calculator.style.padding = style.padding;
     calculator.style.visibility = 'hidden';

@@ -264,8 +264,9 @@ export class WSHeader extends Component {
    * @returns {JSX} a rendered link
    */
   renderLink(link) {
+    if (!link.target) link.target = '_self';
     return (
-      <a href={link.href} onClick={event => { if (link.onClick) link.onClick(event); }}>
+      <a target={link.target} href={link.href} onClick={event => { if (link.onClick) link.onClick(event); }}>
         {link.label}
       </a>
     );

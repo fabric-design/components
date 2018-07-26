@@ -1,3 +1,13 @@
+<a name="1.0.47"></a>
+## [1.0.47](https://github.bus.zalan.do/fabric-design/components/compare/1.0.46...1.0.47) (2018-07-26)
+
+
+### Features
+
+* **header:** Added target option for nav links ([#190](https://github.bus.zalan.do/fabric-design/components/issues/190)) ([e884e40](https://github.bus.zalan.do/fabric-design/components/commit/e884e40))
+
+
+
 <a name="1.0.46"></a>
 ## [1.0.46](https://github.bus.zalan.do/fabric-design/components/compare/1.0.45...1.0.46) (2018-07-12)
 

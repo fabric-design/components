@@ -223,9 +223,10 @@ define(['exports', '../imports', './storage/cookie-storage', './storage/local-st
     }, {
       key: 'renderLink',
       value: function renderLink(link) {
+        if (!link.target) link.target = '_self';
         return _imports.React.createElement(
           'a',
-          { href: link.href, onClick: function onClick(event) {
+          { target: link.target, href: link.href, onClick: function onClick(event) {
               if (link.onClick) link.onClick(event);
             } },
           link.label

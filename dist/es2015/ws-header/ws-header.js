@@ -181,9 +181,10 @@ export var WSHeader = function (_Component) {
   }, {
     key: 'renderLink',
     value: function renderLink(link) {
+      if (!link.target) link.target = '_self';
       return React.createElement(
         'a',
-        { href: link.href, onClick: function onClick(event) {
+        { target: link.target, href: link.href, onClick: function onClick(event) {
             if (link.onClick) link.onClick(event);
           } },
         link.label

@@ -13,10 +13,11 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * @property {Object|Array<Object>} props.value Selected dropdown item(s)
  * @property {boolean} props.filterable Flag if the dropdown menu is filterable
  * @property {boolean} props.filtered Should be true when items are filtered outside but dropdown has no filter possibility
+ * @property {boolean} props.selectAll Show button to select all items
  * @property {string} props.filter Default filter value
  * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
  * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
- * @property {boolean} props.selectAll Show button to select all items
+ * @property {number} props.minFilterLength Minimum filterlength to make dropdown items visible.
  * @property {Function} props.handle Function used to propagate data
  */
 export class DropdownMenu extends Component {
@@ -32,6 +33,7 @@ export class DropdownMenu extends Component {
     filtered: false,
     placeholder: '',
     limit: 10,
+    minFilterLength: 0,
     selectAll: false,
     handle: () => {}
   };
@@ -48,6 +50,7 @@ export class DropdownMenu extends Component {
     filtered: PropTypes.bool, // True when filtering from outside e.g. multi-select
     placeholder: PropTypes.string,
     limit: PropTypes.number,
+    minFilterLength: PropTypes.number,
     selectAll: PropTypes.bool,
     handle: PropTypes.func
   };
@@ -238,6 +241,12 @@ export class DropdownMenu extends Component {
    */
   getFilteredItems() {
     const regex = new RegExp(this.state.filter, 'i');
+    const isLongEnough = this.state.filter && this.state.filter.length >= this.props.minFilterLength;
+
+    if (!isLongEnough && this.props.minFilterLength > 0) {
+      return [];
+    }
+
     return this.state.items.filter(item => {
       // Don't show items which doesn't match the filter
       if (this.state.filtered && this.state.filter && !regex.test(item.label)) {
@@ -257,7 +266,8 @@ export class DropdownMenu extends Component {
    * @returns {Object}
    */
   getItemAtIndex(index) {
-    const limit = this.state.filtered ? this.props.limit : this.state.items.length;
+    const isLongEnough = this.state.filter && this.state.filter.length >= this.props.minFilterLength;
+    const limit = isLongEnough ? this.props.limit : this.state.items.length;
     const filteredItems = this.getFilteredItems().slice(0, limit);
     let valueLength = 0;
     if (this.context.multiple || this.state.filtered) {
@@ -497,7 +507,7 @@ export class DropdownMenu extends Component {
         {items.map((item, index) => (
           <DropdownMenuItem item={item} handle={this.handlePropagation} key={`item-${index}`} />
         ))}
-        {(!items || !items.length) &&
+        {(!items || !items.length && this.state.isLongEnough) &&
           <DropdownMenuItem item={{label: 'No results found', disabled: true}} key="disabled" />
         }
         {this.context.multiple && [

@@ -44,6 +44,7 @@ function deep(items, getChildren, callback) {
  * @property {boolean} props.inputOnly Flag if the dropdown only contains a text input and a button
  * @property {string} props.filter Default filter value
  * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
+ * @property {number} props.minFilterLength Minimum filterlength to make dropdown items visible.
  * @property {string} props.orientation Dropdown orientation. Can be either left or right
  * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
  * @property {boolean} props.selectAll Show button to select all items
@@ -65,6 +66,7 @@ export class WSDropdown extends Component {
     filter: '',
     filtered: false,
     limit: 10,
+    minFilterLength: 0,
     orientation: 'left',
     placeholder: '',
     width: '',
@@ -89,6 +91,7 @@ export class WSDropdown extends Component {
     filter: PropTypes.string,
     filtered: PropTypes.bool,
     limit: PropTypes.number,
+    minFilterLength: PropTypes.number,
     orientation: PropTypes.oneOf(['left', 'right']),
     placeholder: PropTypes.string,
     width: PropTypes.string,
@@ -385,6 +388,7 @@ export class WSDropdown extends Component {
         items={this.state.items}
         value={this.state.value}
         limit={this.props.limit}
+        minFilterLength={this.props.minFilterLength}
         filter={this.state.filter}
         filterable={this.props.filterable}
         filtered={this.props.filtered}

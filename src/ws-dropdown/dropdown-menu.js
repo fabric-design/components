@@ -472,7 +472,7 @@ export class DropdownMenu extends Component {
           <li className="dropdown-input" key="filter">
             <input
               type="text"
-              value={this.state.filter}
+              defaultValue={this.state.filter}
               placeholder={this.props.placeholder}
               ref={element => { this.input = element; }}
             />

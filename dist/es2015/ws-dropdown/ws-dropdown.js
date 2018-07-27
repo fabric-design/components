@@ -51,6 +51,7 @@ export var WSDropdown = function (_Component) {
       writable: true,
       value: function value(event) {
         event.stopPropagation();
+        event.preventDefault();
         if (!_this.props.disabled) {
           _this.overlay.toggle();
         }

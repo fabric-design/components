@@ -1,4 +1,4 @@
-define(['exports', './ws-header/ws-header', './ws-date-picker/ws-date-picker', './ws-dropdown/ws-dropdown', './ws-inline-edit/ws-inline-edit', './ws-notification/ws-notification', './ws-week-picker/ws-week-picker', './ws-tiles-chart/ws-tiles-chart', './ws-spinner/ws-spinner', './ws-tab-menu/ws-tab-menu', './ws-option-buttons/ws-option-buttons', './ws-multi-select/ws-multi-select'], function (exports, _wsHeader, _wsDatePicker, _wsDropdown, _wsInlineEdit, _wsNotification, _wsWeekPicker, _wsTilesChart, _wsSpinner, _wsTabMenu, _wsOptionButtons, _wsMultiSelect) {
+define(['exports', './ws-header/ws-header', './ws-date-picker/ws-date-picker', './ws-overlay/ws-overlay', './ws-dropdown/ws-dropdown', './ws-inline-edit/ws-inline-edit', './ws-notification/ws-notification', './ws-week-picker/ws-week-picker', './ws-tiles-chart/ws-tiles-chart', './ws-spinner/ws-spinner', './ws-tab-menu/ws-tab-menu', './ws-option-buttons/ws-option-buttons', './ws-multi-select/ws-multi-select'], function (exports, _wsHeader, _wsDatePicker, _wsOverlay, _wsDropdown, _wsInlineEdit, _wsNotification, _wsWeekPicker, _wsTilesChart, _wsSpinner, _wsTabMenu, _wsOptionButtons, _wsMultiSelect) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -14,6 +14,12 @@ define(['exports', './ws-header/ws-header', './ws-date-picker/ws-date-picker', '
     enumerable: true,
     get: function () {
       return _wsDatePicker.WSDatePicker;
+    }
+  });
+  Object.defineProperty(exports, 'WSOverlay', {
+    enumerable: true,
+    get: function () {
+      return _wsOverlay.WSOverlay;
     }
   });
   Object.defineProperty(exports, 'WSDropdown', {

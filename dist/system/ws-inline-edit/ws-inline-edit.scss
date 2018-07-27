@@ -1,20 +1,47 @@
 .ws-inline-edit {
-  @include inset-spacing-squish("xs");
   display: inline-block;
-  line-height: $base-line-height;
-  .inlineValue {
-    display: inline-block;
-    font-weight: normal;
-    line-height: $base-line-height;
-    padding: 0 $space-xs;
+  margin-bottom: 1px;
+  .input-wrapper input {
+    color: inherit;
+    font-size: inherit;
+    line-height: inherit;
   }
-  .inlineInput {
-    transition: all 0.5s ease;
-    &[disabled] {
-      cursor: text;
-      background-color: transparent;
-      border-color: transparent;
-      box-shadow: 0 0 0;
+  &:not(.is-editing) .input-wrapper input {
+    border-color: transparent;
+    box-shadow: none;
+    background: transparent;
+    color: inherit;
+  }
+  &.mod-narrow {
+    .input-wrapper input {
+      padding-top: 0;
+      padding-bottom: 0;
+      border-bottom: 1px solid $mischka;
     }
+    &:hover .input-wrapper input {
+      border-bottom-color: $bombay;
+    }
+  }
+  &.is-disabled .input-wrapper input,
+  &:hover.is-disabled .input-wrapper input {
+    border-bottom-color: transparent;
+    pointer-events: none;
+  }
+  &.number input,
+  &.price input {
+    text-align: right;
+  }
+}
+table td {
+  .ws-inline-edit:not(.mod-narrow) {
+    // Correct table td padding
+    margin: 0 -$space-m;
+    input {
+      padding: 0 $space-m;
+      line-height: inherit;
+    }
+  }
+  .ws-inline-edit.mod-narrow {
+    line-height: $space-l;
   }
 }

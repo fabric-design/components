@@ -136,12 +136,6 @@ var WSDatePicker = exports.WSDatePicker = function (_Component) {
           className: 'icon icon-calendar icon16 ' + className,
           ref: function ref(element) {
             _this3.input = element;
-          },
-          onClick: function onClick(event) {
-            return _this3.flatpickr.open(event);
-          },
-          onKeyDown: function onKeyDown(event) {
-            return _this3.flatpickr.open(event);
           }
         })
       );

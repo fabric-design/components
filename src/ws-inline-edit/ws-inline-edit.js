@@ -48,8 +48,7 @@ export class WSInlineEdit extends Component {
     this.input.addEventListener('focus', this.onFocus);
     this.input.addEventListener('keyup', this.onKeyUp);
     this.input.addEventListener('keydown', this.onKeyDown);
-    this.input.addEventListener('blur', this.onBlur);
-    this.input.addEventListener('change', this.stopPropagation);
+    this.input.addEventListener('change', this.onChange);
     this.resizeInput();
   }
 
@@ -69,8 +68,7 @@ export class WSInlineEdit extends Component {
     this.input.removeEventListener('focus', this.onFocus);
     this.input.removeEventListener('keydown', this.onKeyDown);
     this.input.removeEventListener('keyup', this.onKeyUp);
-    this.input.removeEventListener('blur', this.onBlur);
-    this.input.removeEventListener('change', this.stopPropagation);
+    this.input.removeEventListener('change', this.onChange);
   }
 
   /**
@@ -132,11 +130,11 @@ export class WSInlineEdit extends Component {
   };
 
   /**
-   * Propagate changed value on blur
+   * Propagate changed value on change
    * @param {Event} event JavaScript event object
    * @returns {void}
    */
-  onBlur = event => {
+  onChange = event => {
     event.stopPropagation();
     this.submit(event.target.value);
   };
@@ -202,8 +200,6 @@ export class WSInlineEdit extends Component {
         this.props.onChange(eventData);
       }
     }
-    // Remove focus from input
-    this.input.blur();
 
     this.setState(state);
   }

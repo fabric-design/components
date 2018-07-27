@@ -202,6 +202,9 @@ export class WSInlineEdit extends Component {
         this.props.onChange(eventData);
       }
     }
+    // Remove focus from input
+    this.input.blur();
+
     this.setState(state);
   }
 

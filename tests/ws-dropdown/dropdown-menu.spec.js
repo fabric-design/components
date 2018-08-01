@@ -26,6 +26,19 @@ describe('A DropdownMenu', () => {
     expect(dm.getFilteredItems().length).toBe(2);
   });
 
+  it('filters items only when min length', () => {
+    const dm = new DropdownMenu({items: [{label: 'tt1'}, {label: 'tt2'}, {label: 'tt3'}]});
+    dm.context = {multiple: false};
+
+    expect(dm.getFilteredItems().length).toBe(3);
+    dm.props.minFilterLength = 2;
+    expect(dm.getFilteredItems().length).toBe(0);
+    dm.state.filter = 't';
+    expect(dm.getFilteredItems().length).toBe(0);
+    dm.state.filter = 'tt';
+    expect(dm.getFilteredItems().length).toBe(3);
+  });
+
   it('gets the item for a selection index', () => {
     const items = [{label: 'test'}, {label: 'asd'}, {label: 'qwerty'}];
     const dm = new DropdownMenu({value: [], items});

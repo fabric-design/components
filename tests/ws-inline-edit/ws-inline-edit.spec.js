@@ -15,7 +15,7 @@ describe('A WSInlineEdit', () => {
     input.value = 'new val';
 
     expect(onChange).not.toHaveBeenCalled();
-    input.dispatchEvent(new FocusEvent('blur'));
+    input.dispatchEvent(new Event('change'));
     expect(onChange).toHaveBeenCalled();
   });
 
@@ -28,7 +28,7 @@ describe('A WSInlineEdit', () => {
     inlineEdit.container.addEventListener('change', onChange);
 
     expect(onChange).not.toHaveBeenCalled();
-    input.dispatchEvent(new FocusEvent('blur'));
+    input.dispatchEvent(new Event('change'));
     expect(onChange).toHaveBeenCalled();
   });
 
@@ -39,7 +39,7 @@ describe('A WSInlineEdit', () => {
     input.value = 'test';
 
     expect(onChange).not.toHaveBeenCalled();
-    input.dispatchEvent(new FocusEvent('blur'));
+    input.dispatchEvent(new Event('change'));
     expect(onChange).not.toHaveBeenCalled();
   });
 
@@ -55,7 +55,7 @@ describe('A WSInlineEdit', () => {
     expect(inlineEdit.component.submit).toHaveBeenCalled();
   });
 
-  it('submits on blur', () => {
+  it('submits on change', () => {
     const inlineEdit = new TestComponent(<WSInlineEdit/>);
     spyOn(inlineEdit.component, 'submit');
 
@@ -63,7 +63,7 @@ describe('A WSInlineEdit', () => {
     input.value = 'new val';
 
     expect(inlineEdit.component.submit).not.toHaveBeenCalled();
-    input.dispatchEvent(new FocusEvent('blur'));
+    input.dispatchEvent(new Event('change'));
     expect(inlineEdit.component.submit).toHaveBeenCalled();
   });
 

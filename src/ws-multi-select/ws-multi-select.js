@@ -133,7 +133,7 @@ export class WSMultiSelect extends WSDropdown {
         <input
           type="text"
           placeholder={this.props.placeholder}
-          value={this.state.filter}
+          defaultValue={this.state.filter}
           ref={element => { this.input = element; }}
         />
         <span className="icon icon16 icon-magnifiying-glass" ref={element => { this.icon = element; }} />

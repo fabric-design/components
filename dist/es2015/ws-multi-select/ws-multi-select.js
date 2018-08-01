@@ -120,7 +120,7 @@ export var WSMultiSelect = function (_WSDropdown) {
         React.createElement('input', {
           type: 'text',
           placeholder: this.props.placeholder,
-          value: this.state.filter,
+          defaultValue: this.state.filter,
           ref: function ref(element) {
             _this2.input = element;
           }

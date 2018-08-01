@@ -214,7 +214,7 @@ System.register(['../imports', '../ws-dropdown/ws-dropdown'], function (_export,
               React.createElement('input', {
                 type: 'text',
                 placeholder: this.props.placeholder,
-                value: this.state.filter,
+                defaultValue: this.state.filter,
                 ref: function ref(element) {
                   _this2.input = element;
                 }

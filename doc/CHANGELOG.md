@@ -1,3 +1,8 @@
+<a name="1.0.48"></a>
+## [1.0.48](https://github.bus.zalan.do/fabric-design/components/compare/1.0.47...1.0.48) (2018-08-01)
+
+
+
 <a name="1.0.47"></a>
 ## [1.0.47](https://github.bus.zalan.do/fabric-design/components/compare/1.0.46...1.0.47) (2018-07-26)
 

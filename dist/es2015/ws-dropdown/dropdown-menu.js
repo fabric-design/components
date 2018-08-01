@@ -374,7 +374,7 @@ export var DropdownMenu = function (_Component) {
           { className: 'dropdown-input', key: 'filter' },
           React.createElement('input', {
             type: 'text',
-            value: this.state.filter,
+            defaultValue: this.state.filter,
             placeholder: this.props.placeholder,
             ref: function ref(element) {
               _this3.input = element;

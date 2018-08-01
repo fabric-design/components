@@ -1,6 +1,6 @@
 {
   "name": "fabric-components",
-  "version": "1.0.47",
+  "version": "1.0.48",
   "description": "",
   "scripts": {
     "build": "gulp build && npm run package",

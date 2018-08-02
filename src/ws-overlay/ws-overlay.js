@@ -170,18 +170,21 @@ export class WSOverlay extends Component {
    */
   animateElement(item, animationClass, callback) {
     // Define callback for animation end events
-    const getEventHandler = eventName => {
-      const eventHandler = () => {
-        item.classList.remove(animationClass);
+    const eventHandler = () => {
+      item.classList.remove(animationClass);
+      ANIMATION_END_EVENTS.forEach(eventName => {
         item.removeEventListener(eventName, eventHandler);
-        callback(item);
-      };
-      return eventHandler;
+      });
+      window.removeEventListener('blur', eventHandler);
+      callback(item);
     };
     // Listen for all possible animation end events
     ANIMATION_END_EVENTS.forEach(eventName => {
-      item.addEventListener(eventName, getEventHandler(eventName));
+      item.addEventListener(eventName, eventHandler);
     });
+    // Force execute callback when window is blurred because browsers stop css animations and this leads to
+    // problems as the rendering is resumed after focus again.
+    window.addEventListener('blur', eventHandler);
     // Add class to start animation
     item.classList.add(animationClass);
   }

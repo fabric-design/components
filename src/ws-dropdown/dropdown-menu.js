@@ -439,6 +439,7 @@ export class DropdownMenu extends Component {
       ANIMATION_END_EVENTS.forEach(eventName => {
         item.removeEventListener(eventName, handler);
       });
+      window.removeEventListener('blur', handler);
       item.classList.remove(animationClass);
       callback(item);
     };
@@ -446,6 +447,9 @@ export class DropdownMenu extends Component {
     ANIMATION_END_EVENTS.forEach(eventName => {
       item.addEventListener(eventName, handler);
     });
+    // Force execute callback when window is blurred because browsers stop css animations and this leads to
+    // problems as the rendering is resumed after focus again.
+    window.addEventListener('blur', handler);
     // Increase started event counter for each animation start event
     ANIMATION_START_EVENTS.forEach(eventName => {
       item.addEventListener(eventName, () => { eventCounter += 1; });

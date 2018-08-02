@@ -165,18 +165,20 @@ define(['exports', '../imports'], function (exports, _imports) {
     }, {
       key: 'animateElement',
       value: function animateElement(item, animationClass, callback) {
-        var getEventHandler = function getEventHandler(eventName) {
-          var eventHandler = function eventHandler() {
-            item.classList.remove(animationClass);
+        var eventHandler = function eventHandler() {
+          item.classList.remove(animationClass);
+          ANIMATION_END_EVENTS.forEach(function (eventName) {
             item.removeEventListener(eventName, eventHandler);
-            callback(item);
-          };
-          return eventHandler;
+          });
+          window.removeEventListener('blur', eventHandler);
+          callback(item);
         };
 
         ANIMATION_END_EVENTS.forEach(function (eventName) {
-          item.addEventListener(eventName, getEventHandler(eventName));
+          item.addEventListener(eventName, eventHandler);
         });
+
+        window.addEventListener('blur', eventHandler);
 
         item.classList.add(animationClass);
       }

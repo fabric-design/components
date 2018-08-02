@@ -381,6 +381,7 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
           ANIMATION_END_EVENTS.forEach(function (eventName) {
             item.removeEventListener(eventName, handler);
           });
+          window.removeEventListener('blur', handler);
           item.classList.remove(animationClass);
           callback(item);
         };
@@ -388,6 +389,8 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
         ANIMATION_END_EVENTS.forEach(function (eventName) {
           item.addEventListener(eventName, handler);
         });
+
+        window.addEventListener('blur', handler);
 
         ANIMATION_START_EVENTS.forEach(function (eventName) {
           item.addEventListener(eventName, function () {

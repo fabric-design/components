@@ -150,8 +150,6 @@ export class WSDatePicker extends Component {
           <span
             className={`icon icon-calendar icon16 ${className}`}
             ref={element => { this.input = element; }}
-            onClick={event => this.flatpickr.open(event)}
-            onKeyDown={event => this.flatpickr.open(event)}
           />
         }
       </div>

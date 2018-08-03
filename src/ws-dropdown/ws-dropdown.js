@@ -171,6 +171,7 @@ export class WSDropdown extends Component {
    */
   onTriggerClick = event => {
     event.stopPropagation();
+    event.preventDefault();
     if (!this.props.disabled) {
       this.overlay.toggle();
     }

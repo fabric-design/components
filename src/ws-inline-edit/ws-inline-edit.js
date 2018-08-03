@@ -1,4 +1,5 @@
 import {React, Component, PropTypes} from '../imports';
+import {TypeHandler} from './types/type-handler';
 
 /**
  * This class describes a Preact/React component which renders a inline-edit element.
@@ -7,19 +8,27 @@ import {React, Component, PropTypes} from '../imports';
  */
 export class WSInlineEdit extends Component {
   /**
-   * Types of properties
-   */
-  static propTypes = {
-    text: PropTypes.string,
-    onUpdate: PropTypes.func
-  };
-
-  /**
    * Create default onUpdate function to prevent errors if user don't use it
    */
   static defaultProps = {
-    text: '',
-    onUpdate: () => {}
+    value: '',
+    options: {},
+    type: 'text',
+    look: 'default',
+    disabled: false,
+    onChange: () => {}
+  };
+
+  /**
+   * Types of properties
+   */
+  static propTypes = {
+    value: PropTypes.string,
+    options: PropTypes.object,
+    type: PropTypes.oneOf(['text', 'number', 'price']),
+    look: PropTypes.oneOf(['narrow', 'default']),
+    disabled: PropTypes.bool,
+    onChange: PropTypes.func
   };
 
   /**
@@ -28,67 +37,197 @@ export class WSInlineEdit extends Component {
    */
   constructor(props) {
     super(props);
-    /**
-     * @type {Object}
-     */
-    this.state = {
+    this.state = this.createState(props);
+  }
+
+  /**
+   * Bind event listeners
+   * @returns {void}
+   */
+  componentDidMount() {
+    this.input.addEventListener('focus', this.onFocus);
+    this.input.addEventListener('keyup', this.onKeyUp);
+    this.input.addEventListener('keydown', this.onKeyDown);
+    this.input.addEventListener('change', this.onChange);
+    this.resizeInput();
+  }
+
+  /**
+   * @param {Object} props React props
+   * @returns {void}
+   */
+  componentWillReceiveProps(props) {
+    this.setState(this.createState(props));
+  }
+
+  /**
+   * Unbind event listeners
+   * @returns {void}
+   */
+  componentWillUnmount() {
+    this.input.removeEventListener('focus', this.onFocus);
+    this.input.removeEventListener('keydown', this.onKeyDown);
+    this.input.removeEventListener('keyup', this.onKeyUp);
+    this.input.removeEventListener('change', this.onChange);
+  }
+
+  /**
+   * Handles click on value to enable editing
+   * @param {Event} event JavaScript event object
+   * @returns {void}
+   */
+  onFocus = event => {
+    event.stopPropagation();
+
+    if (!this.state.isEditing) {
+      this.resizeInput();
+      this.setState({isEditing: true}, () => {
+        this.input.select();
+        this.input.focus();
+      });
+    }
+  };
+
+  /**
+   * Handle keyboard events on input
+   * @param {KeyboardEvent} event JavaScript event object
+   * @returns {void}
+   */
+  onKeyUp = event => {
+    event.stopPropagation();
+    event.preventDefault();
+    const inputValue = event.target.value;
+
+    switch (event.key) {
+      case 'Enter':
+        this.submit(inputValue);
+        break;
+      case 'Escape':
+        this.abort();
+        break;
+      default:
+        this.resizeInput();
+        this.setState({
+          isValid: this.type.validate(inputValue),
+          inputValue
+        });
+    }
+  };
+
+  /**
+   * Resize already on
+   * @param {Event} event JavaScript event object
+   * @returns {void}
+   */
+  onKeyDown = event => {
+    event.stopPropagation();
+
+    if (event.key.length === 1) {
+      this.resizeInput(event.key);
+    } else {
+      this.resizeInput();
+    }
+  };
+
+  /**
+   * Propagate changed value on change
+   * @param {Event} event JavaScript event object
+   * @returns {void}
+   */
+  onChange = event => {
+    event.stopPropagation();
+    this.submit(event.target.value);
+  };
+
+  /**
+   * Stop native events from bubbling up
+   * @param {Event} event JavaScript event object
+   * @returns {void}
+   */
+  stopPropagation = event => {
+    event.stopPropagation();
+  };
+
+  /**
+   * Create component state
+   * @param {Object} props React props
+   * @returns {{isEditing: boolean, inputValue: *, initialValue: *, isValid: boolean}}
+   */
+  createState(props) {
+    this.type = TypeHandler.getStrategy(props.type, props.options);
+    return {
       isEditing: false,
-      text: props.text
+      isValid: true,
+      inputValue: props.value,
+      initialValue: (props.value || '').toString()
     };
   }
 
   /**
-   * Function that show input when you click on div and focus it
+   * Aborts editing and restores the initial value
    * @returns {void}
    */
-  editElement() {
-    if (!this.state.isEditing) {
-      this.setState({isEditing: true}, () => {
-        this.editEl.focus();
-      });
-    }
-  }
-
-  /**
-   * Function that save text when click 'Enter' or cancel when click 'Escape' button
-   * @param {Object} e - click event
-   * @returns {Object}
-   */
-  keyAction(e) {
-    if (e.keyCode === 13) {
-      // Enter to save
-      this.setState({
-        text: e.target.value,
-        isEditing: false
-      });
-    } else if (e.keyCode === 27) {
-      // ESC to cancel
-      this.setState({isEditing: false});
-    }
-  }
-
-  /**
-   * Function that save text when input on blur and send text value to updating function
-   * @param {Object} e - click event
-   * @returns {Object}
-   */
-  blurAction(e) {
+  abort() {
     this.setState({
-      text: e.target.value,
-      isEditing: false
+      isEditing: false,
+      isValid: true,
+      inputValue: this.state.initialValue
     });
-    this.updating(e.target.value);
   }
 
   /**
-   * Function that return value for outside use if text is not the same
-   * @param {Object} text - text to show
-   * @returns {Object}
+   * Propagate changed value
+   * @param {string} inputValue Current value in input
+   * @returns {void}
    */
-  updating(text) {
-    if (text !== this.props.text) {
-      this.props.onUpdate(text);
+  submit(inputValue) {
+    const state = {isEditing: false, inputValue};
+    // Don't permit submission on wrong values
+    if (!this.type.validate(inputValue)) {
+      return;
     }
+    // Propagate value changes
+    if (inputValue !== this.state.initialValue) {
+      state.initialValue = inputValue;
+
+      const eventData = {
+        plain: inputValue,
+        value: this.type.convert(inputValue)
+      };
+      this.dispatchEvent('change', eventData);
+
+      if (typeof this.props.onChange === 'function') {
+        this.props.onChange(eventData);
+      }
+    }
+
+    this.setState(state);
+  }
+
+  /**
+   * Resize the input to it's current value plus additional characters coming from events
+   * @param {string} additionalChars Possible chars which will be added in future (keyDown, keyUp)
+   * @returns {void}
+   */
+  resizeInput(additionalChars) {
+    if (this.props.look !== 'narrow') {
+      return;
+    }
+
+    const style = window.getComputedStyle(this.input);
+    const calculator = document.createElement('div');
+    calculator.style.fontSize = style.fontSize || '16px';
+    calculator.style.lineHeight = style.lineHeight || '16px';
+    calculator.style.margin = style.margin;
+    calculator.style.padding = style.padding;
+    calculator.style.visibility = 'hidden';
+    calculator.style.position = 'absolute';
+    calculator.style.top = '-1000px';
+    calculator.innerText = this.input.value + (additionalChars || '');
+
+    document.body.appendChild(calculator);
+    this.input.style.width = `${calculator.clientWidth}px`;
+    document.body.removeChild(calculator);
   }
 
   /**
@@ -96,17 +235,28 @@ export class WSInlineEdit extends Component {
    * @returns {Object}
    */
   render() {
+    const {isEditing, isValid, inputValue} = this.state;
+    const {type, look, disabled} = this.props;
+
+    let classes = 'ws-inline-edit';
+    classes += isEditing ? ' is-editing' : '';
+    classes += ` ${type}`;
+    classes += look === 'narrow' ? ' mod-narrow' : '';
+    classes += disabled ? ' is-disabled' : '';
+
     return (
-      <div className="ws-inline-edit" onClick={() => this.editElement()} onKeyPress={() => this.editElement()}>
-        <input
-          type="text"
-          className="inlineInput"
-          disabled={(!this.state.isEditing) ? 'disabled' : ''}
-          onBlur={e => this.blurAction(e)}
-          onKeyDown={e => this.keyAction(e)}
-          defaultValue={this.state.text}
-          ref={el => { this.editEl = el; }}
-        />
+      <div className={classes} ref={element => { this.element = element; }} >
+        <div className="input-wrapper">
+          <input
+            type="text"
+            className={!isValid ? 'is-invalid' : ''}
+            ref={element => { this.input = element; }}
+            value={inputValue}
+          />
+          {!isValid &&
+            <span className="icon icon16 icon-cross" />
+          }
+        </div>
       </div>
     );
   }

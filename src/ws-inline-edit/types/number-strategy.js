@@ -55,6 +55,10 @@ export class NumberStrategy extends AbstractTypeStrategy {
    * @returns {boolean}
    */
   validate(value) {
+    if (!value) {
+      return false;
+    }
+
     if (this.locale) {
       return NumberStrategy.getPattern(this.locale).test(value);
     }

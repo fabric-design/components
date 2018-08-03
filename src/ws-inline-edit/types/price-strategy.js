@@ -55,6 +55,10 @@ export class PriceStrategy extends AbstractTypeStrategy {
    * @returns {boolean}
    */
   validate(value) {
+    if (!value) {
+      return false;
+    }
+
     return PriceStrategy.getPattern(this.locale).test(value);
   }
 

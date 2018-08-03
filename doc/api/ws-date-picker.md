@@ -49,13 +49,24 @@ Handle date selections and propagate the value via an custom change event and on
 
 Returns **void** 
 
+### onClick
+
+Since we prevent clicks bubbling up the date picker doesn't recognize those when clicking another date picker
+and therefore doesn't close the old one. So we call the necessary fn manually.
+
+**Parameters**
+
+-   `event` **[Event][5]** JavaScript event object
+
+Returns **void** 
+
 ### stopPropagation
 
 Prevent clicks bubbling out
 
 **Parameters**
 
--   `event` **[MouseEvent][5]** JavaScript event object
+-   `event` **[MouseEvent][6]** JavaScript event object
 
 Returns **void** 
 
@@ -64,6 +75,12 @@ Returns **void**
 Render the component
 
 Returns **[Object][2]** 
+
+### flatpickrInstances
+
+Holds all open flatpickr instances to pass captured click event to them
+
+Type: [Array][7]
 
 ### setFormat
 
@@ -83,4 +100,8 @@ Returns **void**
 
 [4]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String
 
-[5]: https://developer.mozilla.org/docs/Web/API/MouseEvent
+[5]: https://developer.mozilla.org/docs/Web/API/Event
+
+[6]: https://developer.mozilla.org/docs/Web/API/MouseEvent
+
+[7]: https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array

@@ -28,6 +28,17 @@ export var WSDatePicker = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (WSDatePicker.__proto__ || Object.getPrototypeOf(WSDatePicker)).call(this, props));
 
+    Object.defineProperty(_this, 'onClick', {
+      enumerable: true,
+      writable: true,
+      value: function value(event) {
+        _this.stopPropagation(event);
+
+        WSDatePicker.flatpickrInstances.forEach(function (pickr) {
+          return pickr.documentClick(event);
+        });
+      }
+    });
     Object.defineProperty(_this, 'stopPropagation', {
       enumerable: true,
       writable: true,
@@ -55,9 +66,10 @@ export var WSDatePicker = function (_Component) {
       }, this.props.options, {
         onChange: this.onChange.bind(this)
       }));
+      WSDatePicker.flatpickrInstances.push(this.flatpickr);
 
       this.input.addEventListener('change', this.stopPropagation);
-      this.element.addEventListener('click', this.stopPropagation);
+      this.element.addEventListener('click', this.onClick);
     }
   }, {
     key: 'componentWillReceiveProps',
@@ -71,13 +83,19 @@ export var WSDatePicker = function (_Component) {
       Object.keys(props.options || {}).forEach(function (key) {
         _this2.flatpickr.set(key, props.options[key]);
       });
+      this.setState({ value: props.value });
     }
   }, {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
-      this.flatpickr.destroy();
       this.input.removeEventListener('change', this.stopPropagation);
-      this.element.removeEventListener('click', this.stopPropagation);
+      this.element.removeEventListener('click', this.onClick);
+      this.flatpickr.destroy();
+
+      var index = WSDatePicker.flatpickrInstances.indexOf(this.flatpickr);
+      if (index !== -1) {
+        WSDatePicker.flatpickrInstances.splice(index, 1);
+      }
     }
   }, {
     key: 'onChange',
@@ -124,12 +142,6 @@ export var WSDatePicker = function (_Component) {
           className: 'icon icon-calendar icon16 ' + className,
           ref: function ref(element) {
             _this3.input = element;
-          },
-          onClick: function onClick(event) {
-            return _this3.flatpickr.open(event);
-          },
-          onKeyDown: function onKeyDown(event) {
-            return _this3.flatpickr.open(event);
           }
         })
       );
@@ -166,4 +178,9 @@ Object.defineProperty(WSDatePicker, 'format', {
   enumerable: true,
   writable: true,
   value: 'd.m.Y'
+});
+Object.defineProperty(WSDatePicker, 'flatpickrInstances', {
+  enumerable: true,
+  writable: true,
+  value: []
 });

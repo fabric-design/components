@@ -15,6 +15,7 @@ define(['module'], function (module) {
     self.changeYear = changeYear;
     self.clear = clear;
     self.close = close;
+    self.documentClick = documentClick;
     self._createElement = createElement;
     self.destroy = destroy;
     self.formatDate = formatDate;

@@ -1,4 +1,4 @@
-System.register(['./ws-header/ws-header', './ws-date-picker/ws-date-picker', './ws-dropdown/ws-dropdown', './ws-inline-edit/ws-inline-edit', './ws-notification/ws-notification', './ws-week-picker/ws-week-picker', './ws-tiles-chart/ws-tiles-chart', './ws-spinner/ws-spinner', './ws-tab-menu/ws-tab-menu', './ws-option-buttons/ws-option-buttons', './ws-multi-select/ws-multi-select'], function (_export, _context) {
+System.register(['./ws-header/ws-header', './ws-date-picker/ws-date-picker', './ws-overlay/ws-overlay', './ws-dropdown/ws-dropdown', './ws-inline-edit/ws-inline-edit', './ws-notification/ws-notification', './ws-week-picker/ws-week-picker', './ws-tiles-chart/ws-tiles-chart', './ws-spinner/ws-spinner', './ws-tab-menu/ws-tab-menu', './ws-option-buttons/ws-option-buttons', './ws-multi-select/ws-multi-select'], function (_export, _context) {
   "use strict";
 
   return {
@@ -12,51 +12,56 @@ System.register(['./ws-header/ws-header', './ws-date-picker/ws-date-picker', './
       _exportObj2.WSDatePicker = _wsDatePickerWsDatePicker.WSDatePicker;
 
       _export(_exportObj2);
-    }, function (_wsDropdownWsDropdown) {
+    }, function (_wsOverlayWsOverlay) {
       var _exportObj3 = {};
-      _exportObj3.WSDropdown = _wsDropdownWsDropdown.WSDropdown;
+      _exportObj3.WSOverlay = _wsOverlayWsOverlay.WSOverlay;
 
       _export(_exportObj3);
-    }, function (_wsInlineEditWsInlineEdit) {
+    }, function (_wsDropdownWsDropdown) {
       var _exportObj4 = {};
-      _exportObj4.WSInlineEdit = _wsInlineEditWsInlineEdit.WSInlineEdit;
+      _exportObj4.WSDropdown = _wsDropdownWsDropdown.WSDropdown;
 
       _export(_exportObj4);
-    }, function (_wsNotificationWsNotification) {
+    }, function (_wsInlineEditWsInlineEdit) {
       var _exportObj5 = {};
-      _exportObj5.WSNotification = _wsNotificationWsNotification.WSNotification;
+      _exportObj5.WSInlineEdit = _wsInlineEditWsInlineEdit.WSInlineEdit;
 
       _export(_exportObj5);
-    }, function (_wsWeekPickerWsWeekPicker) {
+    }, function (_wsNotificationWsNotification) {
       var _exportObj6 = {};
-      _exportObj6.WSWeekPicker = _wsWeekPickerWsWeekPicker.WSWeekPicker;
+      _exportObj6.WSNotification = _wsNotificationWsNotification.WSNotification;
 
       _export(_exportObj6);
-    }, function (_wsTilesChartWsTilesChart) {
+    }, function (_wsWeekPickerWsWeekPicker) {
       var _exportObj7 = {};
-      _exportObj7.WSTilesChart = _wsTilesChartWsTilesChart.WSTilesChart;
+      _exportObj7.WSWeekPicker = _wsWeekPickerWsWeekPicker.WSWeekPicker;
 
       _export(_exportObj7);
-    }, function (_wsSpinnerWsSpinner) {
+    }, function (_wsTilesChartWsTilesChart) {
       var _exportObj8 = {};
-      _exportObj8.WSSpinner = _wsSpinnerWsSpinner.WSSpinner;
+      _exportObj8.WSTilesChart = _wsTilesChartWsTilesChart.WSTilesChart;
 
       _export(_exportObj8);
-    }, function (_wsTabMenuWsTabMenu) {
+    }, function (_wsSpinnerWsSpinner) {
       var _exportObj9 = {};
-      _exportObj9.WSTabMenu = _wsTabMenuWsTabMenu.WSTabMenu;
+      _exportObj9.WSSpinner = _wsSpinnerWsSpinner.WSSpinner;
 
       _export(_exportObj9);
-    }, function (_wsOptionButtonsWsOptionButtons) {
+    }, function (_wsTabMenuWsTabMenu) {
       var _exportObj10 = {};
-      _exportObj10.WSOptionButtons = _wsOptionButtonsWsOptionButtons.WSOptionButtons;
+      _exportObj10.WSTabMenu = _wsTabMenuWsTabMenu.WSTabMenu;
 
       _export(_exportObj10);
-    }, function (_wsMultiSelectWsMultiSelect) {
+    }, function (_wsOptionButtonsWsOptionButtons) {
       var _exportObj11 = {};
-      _exportObj11.WSMultiSelect = _wsMultiSelectWsMultiSelect.WSMultiSelect;
+      _exportObj11.WSOptionButtons = _wsOptionButtonsWsOptionButtons.WSOptionButtons;
 
       _export(_exportObj11);
+    }, function (_wsMultiSelectWsMultiSelect) {
+      var _exportObj12 = {};
+      _exportObj12.WSMultiSelect = _wsMultiSelectWsMultiSelect.WSMultiSelect;
+
+      _export(_exportObj12);
     }],
     execute: function () {}
   };

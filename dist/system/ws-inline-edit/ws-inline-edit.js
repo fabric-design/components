@@ -1,7 +1,7 @@
-System.register(['../imports'], function (_export, _context) {
+System.register(['../imports', './types/type-handler'], function (_export, _context) {
   "use strict";
 
-  var React, Component, PropTypes, _createClass, WSInlineEdit;
+  var React, Component, PropTypes, TypeHandler, _createClass, WSInlineEdit;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -38,6 +38,8 @@ System.register(['../imports'], function (_export, _context) {
       React = _imports.React;
       Component = _imports.Component;
       PropTypes = _imports.PropTypes;
+    }, function (_typesTypeHandler) {
+      TypeHandler = _typesTypeHandler.TypeHandler;
     }],
     execute: function () {
       _createClass = function () {
@@ -66,79 +68,206 @@ System.register(['../imports'], function (_export, _context) {
 
           var _this = _possibleConstructorReturn(this, (WSInlineEdit.__proto__ || Object.getPrototypeOf(WSInlineEdit)).call(this, props));
 
-          _this.state = {
-            isEditing: false,
-            text: props.text
-          };
+          Object.defineProperty(_this, 'onFocus', {
+            enumerable: true,
+            writable: true,
+            value: function value(event) {
+              event.stopPropagation();
+
+              if (!_this.state.isEditing) {
+                _this.resizeInput();
+                _this.setState({ isEditing: true }, function () {
+                  _this.input.select();
+                  _this.input.focus();
+                });
+              }
+            }
+          });
+          Object.defineProperty(_this, 'onKeyUp', {
+            enumerable: true,
+            writable: true,
+            value: function value(event) {
+              event.stopPropagation();
+              event.preventDefault();
+              var inputValue = event.target.value;
+
+              switch (event.key) {
+                case 'Enter':
+                  _this.submit(inputValue);
+                  break;
+                case 'Escape':
+                  _this.abort();
+                  break;
+                default:
+                  _this.resizeInput();
+                  _this.setState({
+                    isValid: _this.type.validate(inputValue),
+                    inputValue: inputValue
+                  });
+              }
+            }
+          });
+          Object.defineProperty(_this, 'onKeyDown', {
+            enumerable: true,
+            writable: true,
+            value: function value(event) {
+              event.stopPropagation();
+
+              if (event.key.length === 1) {
+                _this.resizeInput(event.key);
+              } else {
+                _this.resizeInput();
+              }
+            }
+          });
+          Object.defineProperty(_this, 'onChange', {
+            enumerable: true,
+            writable: true,
+            value: function value(event) {
+              event.stopPropagation();
+              _this.submit(event.target.value);
+            }
+          });
+          Object.defineProperty(_this, 'stopPropagation', {
+            enumerable: true,
+            writable: true,
+            value: function value(event) {
+              event.stopPropagation();
+            }
+          });
+
+          _this.state = _this.createState(props);
           return _this;
         }
 
         _createClass(WSInlineEdit, [{
-          key: 'editElement',
-          value: function editElement() {
-            var _this2 = this;
-
-            if (!this.state.isEditing) {
-              this.setState({ isEditing: true }, function () {
-                _this2.editEl.focus();
-              });
-            }
+          key: 'componentDidMount',
+          value: function componentDidMount() {
+            this.input.addEventListener('focus', this.onFocus);
+            this.input.addEventListener('keyup', this.onKeyUp);
+            this.input.addEventListener('keydown', this.onKeyDown);
+            this.input.addEventListener('change', this.onChange);
+            this.resizeInput();
           }
         }, {
-          key: 'keyAction',
-          value: function keyAction(e) {
-            if (e.keyCode === 13) {
-              this.setState({
-                text: e.target.value,
-                isEditing: false
-              });
-            } else if (e.keyCode === 27) {
-              this.setState({ isEditing: false });
-            }
+          key: 'componentWillReceiveProps',
+          value: function componentWillReceiveProps(props) {
+            this.setState(this.createState(props));
           }
         }, {
-          key: 'blurAction',
-          value: function blurAction(e) {
+          key: 'componentWillUnmount',
+          value: function componentWillUnmount() {
+            this.input.removeEventListener('focus', this.onFocus);
+            this.input.removeEventListener('keydown', this.onKeyDown);
+            this.input.removeEventListener('keyup', this.onKeyUp);
+            this.input.removeEventListener('change', this.onChange);
+          }
+        }, {
+          key: 'createState',
+          value: function createState(props) {
+            this.type = TypeHandler.getStrategy(props.type, props.options);
+            return {
+              isEditing: false,
+              isValid: true,
+              inputValue: props.value,
+              initialValue: (props.value || '').toString()
+            };
+          }
+        }, {
+          key: 'abort',
+          value: function abort() {
             this.setState({
-              text: e.target.value,
-              isEditing: false
+              isEditing: false,
+              isValid: true,
+              inputValue: this.state.initialValue
             });
-            this.updating(e.target.value);
           }
         }, {
-          key: 'updating',
-          value: function updating(text) {
-            if (text !== this.props.text) {
-              this.props.onUpdate(text);
+          key: 'submit',
+          value: function submit(inputValue) {
+            var state = { isEditing: false, inputValue: inputValue };
+
+            if (!this.type.validate(inputValue)) {
+              return;
             }
+
+            if (inputValue !== this.state.initialValue) {
+              state.initialValue = inputValue;
+
+              var eventData = {
+                plain: inputValue,
+                value: this.type.convert(inputValue)
+              };
+              this.dispatchEvent('change', eventData);
+
+              if (typeof this.props.onChange === 'function') {
+                this.props.onChange(eventData);
+              }
+            }
+
+            this.setState(state);
+          }
+        }, {
+          key: 'resizeInput',
+          value: function resizeInput(additionalChars) {
+            if (this.props.look !== 'narrow') {
+              return;
+            }
+
+            var style = window.getComputedStyle(this.input);
+            var calculator = document.createElement('div');
+            calculator.style.fontSize = style.fontSize || '16px';
+            calculator.style.lineHeight = style.lineHeight || '16px';
+            calculator.style.margin = style.margin;
+            calculator.style.padding = style.padding;
+            calculator.style.visibility = 'hidden';
+            calculator.style.position = 'absolute';
+            calculator.style.top = '-1000px';
+            calculator.innerText = this.input.value + (additionalChars || '');
+
+            document.body.appendChild(calculator);
+            this.input.style.width = calculator.clientWidth + 'px';
+            document.body.removeChild(calculator);
           }
         }, {
           key: 'render',
           value: function render() {
-            var _this3 = this;
+            var _this2 = this;
+
+            var _state = this.state,
+                isEditing = _state.isEditing,
+                isValid = _state.isValid,
+                inputValue = _state.inputValue;
+            var _props = this.props,
+                type = _props.type,
+                look = _props.look,
+                disabled = _props.disabled;
+
+
+            var classes = 'ws-inline-edit';
+            classes += isEditing ? ' is-editing' : '';
+            classes += ' ' + type;
+            classes += look === 'narrow' ? ' mod-narrow' : '';
+            classes += disabled ? ' is-disabled' : '';
 
             return React.createElement(
               'div',
-              { className: 'ws-inline-edit', onClick: function onClick() {
-                  return _this3.editElement();
-                }, onKeyPress: function onKeyPress() {
-                  return _this3.editElement();
+              { className: classes, ref: function ref(element) {
+                  _this2.element = element;
                 } },
-              React.createElement('input', {
-                type: 'text',
-                className: 'inlineInput',
-                disabled: !this.state.isEditing ? 'disabled' : '',
-                onBlur: function onBlur(e) {
-                  return _this3.blurAction(e);
-                },
-                onKeyDown: function onKeyDown(e) {
-                  return _this3.keyAction(e);
-                },
-                defaultValue: this.state.text,
-                ref: function ref(el) {
-                  _this3.editEl = el;
-                }
-              })
+              React.createElement(
+                'div',
+                { className: 'input-wrapper' },
+                React.createElement('input', {
+                  type: 'text',
+                  className: !isValid ? 'is-invalid' : '',
+                  ref: function ref(element) {
+                    _this2.input = element;
+                  },
+                  value: inputValue
+                }),
+                !isValid && React.createElement('span', { className: 'icon icon16 icon-cross' })
+              )
             );
           }
         }]);
@@ -148,20 +277,28 @@ System.register(['../imports'], function (_export, _context) {
 
       _export('WSInlineEdit', WSInlineEdit);
 
-      Object.defineProperty(WSInlineEdit, 'propTypes', {
-        enumerable: true,
-        writable: true,
-        value: {
-          text: PropTypes.string,
-          onUpdate: PropTypes.func
-        }
-      });
       Object.defineProperty(WSInlineEdit, 'defaultProps', {
         enumerable: true,
         writable: true,
         value: {
-          text: '',
-          onUpdate: function onUpdate() {}
+          value: '',
+          options: {},
+          type: 'text',
+          look: 'default',
+          disabled: false,
+          onChange: function onChange() {}
+        }
+      });
+      Object.defineProperty(WSInlineEdit, 'propTypes', {
+        enumerable: true,
+        writable: true,
+        value: {
+          value: PropTypes.string,
+          options: PropTypes.object,
+          type: PropTypes.oneOf(['text', 'number', 'price']),
+          look: PropTypes.oneOf(['narrow', 'default']),
+          disabled: PropTypes.bool,
+          onChange: PropTypes.func
         }
       });
     }

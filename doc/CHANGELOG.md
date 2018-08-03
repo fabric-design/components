@@ -1,3 +1,26 @@
+<a name="1.0.51"></a>
+## [1.0.51](https://github.bus.zalan.do/fabric-design/components/compare/1.0.50...1.0.51) (2018-08-03)
+
+
+### Bug Fixes
+
+* **date-picker:** Fixed picker not closing when clicking in another picker ([#194](https://github.bus.zalan.do/fabric-design/components/issues/194)) ([7ee9fc6](https://github.bus.zalan.do/fabric-design/components/commit/7ee9fc6))
+* **inline-edit:** Fixed old import ([123535b](https://github.bus.zalan.do/fabric-design/components/commit/123535b))
+* **inline-edit:** Fixed tests ([262fc72](https://github.bus.zalan.do/fabric-design/components/commit/262fc72))
+* **inline-edit:** Fixed tests ([4997b84](https://github.bus.zalan.do/fabric-design/components/commit/4997b84))
+* **inline-edit:** Use change event instead of blur to prevent duplicate submission ([4d91409](https://github.bus.zalan.do/fabric-design/components/commit/4d91409))
+* **inline-edit:** Validate empty values ([441c7c8](https://github.bus.zalan.do/fabric-design/components/commit/441c7c8))
+* **overlay:** Adding overlay to index to export it ([92a5219](https://github.bus.zalan.do/fabric-design/components/commit/92a5219))
+
+
+### Features
+
+* **inline-edit:** Added narrow style with resizing input ([b64b71f](https://github.bus.zalan.do/fabric-design/components/commit/b64b71f))
+* **inline-edit:** Added tests and prevent native change events ([77508ec](https://github.bus.zalan.do/fabric-design/components/commit/77508ec))
+* **inline-edit:** Rebuilt inline edit with number and price validation ([881fd25](https://github.bus.zalan.do/fabric-design/components/commit/881fd25))
+
+
+
 <a name="1.0.50"></a>
 ## [1.0.50](https://github.bus.zalan.do/fabric-design/components/compare/1.0.49...1.0.50) (2018-08-03)
 

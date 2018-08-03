@@ -11,6 +11,7 @@ System.register([], function (_export, _context) {
     self.changeYear = changeYear;
     self.clear = clear;
     self.close = close;
+    self.documentClick = documentClick;
     self._createElement = createElement;
     self.destroy = destroy;
     self.formatDate = formatDate;

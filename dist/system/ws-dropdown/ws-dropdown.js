@@ -108,6 +108,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input', '../ws-ove
             writable: true,
             value: function value(event) {
               event.stopPropagation();
+              event.preventDefault();
               if (!_this.props.disabled) {
                 _this.overlay.toggle();
               }

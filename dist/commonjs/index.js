@@ -22,6 +22,15 @@ Object.defineProperty(exports, 'WSDatePicker', {
   }
 });
 
+var _wsOverlay = require('./ws-overlay/ws-overlay');
+
+Object.defineProperty(exports, 'WSOverlay', {
+  enumerable: true,
+  get: function get() {
+    return _wsOverlay.WSOverlay;
+  }
+});
+
 var _wsDropdown = require('./ws-dropdown/ws-dropdown');
 
 Object.defineProperty(exports, 'WSDropdown', {

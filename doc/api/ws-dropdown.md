@@ -227,6 +227,7 @@ additional wrapping markup and functionality, you SHOULD NOT use this component 
     -   `props.filterable` **[boolean][3]** Flag if the dropdown menu is filterable
     -   `props.filtered` **[boolean][3]** Should be true when items are filtered outside but dropdown has no filter possibility
     -   `props.filter` **[string][4]** Default filter value
+    -   `props.minFilterLength` **[number][5]** Min length of filter to show any item
     -   `props.placeholder` **[string][4]** Placeholder for text inputs (Filter input or Input only version)
     -   `props.limit` **[number][5]** Limit visible dropdown items. Use together with filterable flag.
     -   `props.selectAll` **[boolean][3]** Show button to select all items
@@ -481,6 +482,7 @@ As trigger type you can choose between an anchor, button or a select like lookin
     -   `props.filterable` **[boolean][5]** Flag if the dropdown menu is filterable
     -   `props.inputOnly` **[boolean][5]** Flag if the dropdown only contains a text input and a button
     -   `props.filter` **[string][4]** Default filter value
+    -   `props.minFilterLength` **[number][6]** Min length of filter to show any item
     -   `props.limit` **[number][6]** Limit visible dropdown items. Use together with filterable flag.
     -   `props.orientation` **[string][4]** Dropdown orientation. Can be either left or right
     -   `props.placeholder` **[string][4]** Placeholder for text inputs (Filter input or Input only version)

@@ -210,7 +210,7 @@ define(['exports', '../imports', '../ws-dropdown/ws-dropdown'], function (export
           _imports.React.createElement('input', {
             type: 'text',
             placeholder: this.props.placeholder,
-            value: this.state.filter,
+            defaultValue: this.state.filter,
             ref: function ref(element) {
               _this2.input = element;
             }

@@ -14,6 +14,7 @@ const ANIMATION_END_EVENTS = ['oAnimationEnd', 'MSAnimationEnd', 'animationend']
  * @property {boolean} props.filterable Flag if the dropdown menu is filterable
  * @property {boolean} props.filtered Should be true when items are filtered outside but dropdown has no filter possibility
  * @property {string} props.filter Default filter value
+ * @property {number} props.minFilterLength Min length of filter to show any item
  * @property {string} props.placeholder Placeholder for text inputs (Filter input or Input only version)
  * @property {number} props.limit Limit visible dropdown items. Use together with filterable flag.
  * @property {boolean} props.selectAll Show button to select all items
@@ -28,8 +29,9 @@ export class DropdownMenu extends Component {
     items: [],
     value: null,
     filterable: false,
-    filter: null,
+    filter: '',
     filtered: false,
+    minFilterLength: 0,
     placeholder: '',
     limit: 10,
     selectAll: false,
@@ -46,6 +48,7 @@ export class DropdownMenu extends Component {
     filterable: PropTypes.bool,
     filter: PropTypes.string,
     filtered: PropTypes.bool, // True when filtering from outside e.g. multi-select
+    minFilterLength: PropTypes.number,
     placeholder: PropTypes.string,
     limit: PropTypes.number,
     selectAll: PropTypes.bool,
@@ -237,6 +240,12 @@ export class DropdownMenu extends Component {
    * @returns {Array<Object>}
    */
   getFilteredItems() {
+    // Abort filtering when the filter value isn't long enough
+    const filterLength = this.state.filter ? this.state.filter.length : 0;
+    if (filterLength < this.props.minFilterLength) {
+      return [];
+    }
+
     const regex = new RegExp(this.state.filter, 'i');
     return this.state.items.filter(item => {
       // Don't show items which doesn't match the filter
@@ -439,6 +448,7 @@ export class DropdownMenu extends Component {
       ANIMATION_END_EVENTS.forEach(eventName => {
         item.removeEventListener(eventName, handler);
       });
+      window.removeEventListener('blur', handler);
       item.classList.remove(animationClass);
       callback(item);
     };
@@ -446,6 +456,9 @@ export class DropdownMenu extends Component {
     ANIMATION_END_EVENTS.forEach(eventName => {
       item.addEventListener(eventName, handler);
     });
+    // Force execute callback when window is blurred because browsers stop css animations and this leads to
+    // problems as the rendering is resumed after focus again.
+    window.addEventListener('blur', handler);
     // Increase started event counter for each animation start event
     ANIMATION_START_EVENTS.forEach(eventName => {
       item.addEventListener(eventName, () => { eventCounter += 1; });
@@ -472,7 +485,7 @@ export class DropdownMenu extends Component {
           <li className="dropdown-input" key="filter">
             <input
               type="text"
-              value={this.state.filter}
+              defaultValue={this.state.filter}
               placeholder={this.props.placeholder}
               ref={element => { this.input = element; }}
             />
@@ -497,8 +510,11 @@ export class DropdownMenu extends Component {
         {items.map((item, index) => (
           <DropdownMenuItem item={item} handle={this.handlePropagation} key={`item-${index}`} />
         ))}
-        {(!items || !items.length) &&
-          <DropdownMenuItem item={{label: 'No results found', disabled: true}} key="disabled" />
+        {this.state.filter.length < this.props.minFilterLength ?
+          <DropdownMenuItem item={{label: 'Nothing filtered', disabled: true}} key="disabled" />
+          :
+          (!items || !items.length) &&
+            <DropdownMenuItem item={{label: 'No results found', disabled: true}} key="disabled" />
         }
         {this.context.multiple && [
           <li className="dropdown-item-separator" key="submit-separator" />,

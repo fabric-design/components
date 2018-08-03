@@ -1,3 +1,38 @@
+<a name="1.0.50"></a>
+## [1.0.50](https://github.bus.zalan.do/fabric-design/components/compare/1.0.49...1.0.50) (2018-08-03)
+
+
+### Features
+
+* **dropdown:** Added minFilterLength property to only show items when filter is long enough ([#195](https://github.bus.zalan.do/fabric-design/components/issues/195)) ([54a2d95](https://github.bus.zalan.do/fabric-design/components/commit/54a2d95))
+
+
+
+<a name="1.0.49"></a>
+## [1.0.49](https://github.bus.zalan.do/fabric-design/components/compare/1.0.48...1.0.49) (2018-08-02)
+
+
+### Bug Fixes
+
+* **overlay:** Fixed broken components when blurring the tab with an open overlay ([#193](https://github.bus.zalan.do/fabric-design/components/issues/193)) ([d4e4d01](https://github.bus.zalan.do/fabric-design/components/commit/d4e4d01))
+
+
+
+<a name="1.0.48"></a>
+## [1.0.48](https://github.bus.zalan.do/fabric-design/components/compare/1.0.47...1.0.48) (2018-08-01)
+
+
+
+<a name="1.0.47"></a>
+## [1.0.47](https://github.bus.zalan.do/fabric-design/components/compare/1.0.46...1.0.47) (2018-07-26)
+
+
+### Features
+
+* **header:** Added target option for nav links ([#190](https://github.bus.zalan.do/fabric-design/components/issues/190)) ([e884e40](https://github.bus.zalan.do/fabric-design/components/commit/e884e40))
+
+
+
 <a name="1.0.46"></a>
 ## [1.0.46](https://github.bus.zalan.do/fabric-design/components/compare/1.0.45...1.0.46) (2018-07-12)
 

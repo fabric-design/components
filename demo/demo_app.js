@@ -35,14 +35,14 @@ render(
       clientId="stups_abba-frontend-release_180e00be-2b66-4e44-ac95-37f10068c015"
       links={[
         (<WSDropdown text="Multiple" type="button" width="500px" placeholder="placeholder!" items={['Save']}/>),
-        {label: 'Link', href: '#LinkValue', onClick: value => console.log(value)},
+        {label: 'Link', href: '#LinkValue', target: '_blank', onClick: value => console.log(value)},
         {
           label: 'Link2',
           href: '#2222',
           isCurrent: true,
           children: [
             {label: 'Sub link 1', href: '#Go go app 1'},
-            {label: 'Sub link 1', href: '#Go go app 1'}
+            {label: 'Sub link 1', href: '#Go go app 1', target:'_blank'}
           ]
         },
         {
@@ -110,7 +110,7 @@ render(
       />
       <br />
       <WSDropdown
-        text="Simple Wide 2" type="select" filterable items={[
+        text="Simple Wide 2" type="select" filterable minFilterLength={2} items={[
           'New',
           {
             label: 'New From Template',

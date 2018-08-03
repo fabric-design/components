@@ -212,6 +212,11 @@ export var DropdownMenu = function (_Component) {
     value: function getFilteredItems() {
       var _this2 = this;
 
+      var filterLength = this.state.filter ? this.state.filter.length : 0;
+      if (filterLength < this.props.minFilterLength) {
+        return [];
+      }
+
       var regex = new RegExp(this.state.filter, 'i');
       return this.state.items.filter(function (item) {
         if (_this2.state.filtered && _this2.state.filter && !regex.test(item.label)) {
@@ -399,7 +404,7 @@ export var DropdownMenu = function (_Component) {
         items.map(function (item, index) {
           return React.createElement(DropdownMenuItem, { item: item, handle: _this3.handlePropagation, key: 'item-' + index });
         }),
-        (!items || !items.length) && React.createElement(DropdownMenuItem, { item: { label: 'No results found', disabled: true }, key: 'disabled' }),
+        this.state.filter.length < this.props.minFilterLength ? React.createElement(DropdownMenuItem, { item: { label: 'Nothing filtered', disabled: true }, key: 'disabled' }) : (!items || !items.length) && React.createElement(DropdownMenuItem, { item: { label: 'No results found', disabled: true }, key: 'disabled' }),
         this.context.multiple && [React.createElement('li', { className: 'dropdown-item-separator', key: 'submit-separator' }), React.createElement(
           'li',
           { className: 'dropdown-submit', key: 'submit' },
@@ -436,8 +441,9 @@ Object.defineProperty(DropdownMenu, 'defaultProps', {
     items: [],
     value: null,
     filterable: false,
-    filter: null,
+    filter: '',
     filtered: false,
+    minFilterLength: 0,
     placeholder: '',
     limit: 10,
     selectAll: false,
@@ -454,6 +460,7 @@ Object.defineProperty(DropdownMenu, 'propTypes', {
     filterable: PropTypes.bool,
     filter: PropTypes.string,
     filtered: PropTypes.bool,
+    minFilterLength: PropTypes.number,
     placeholder: PropTypes.string,
     limit: PropTypes.number,
     selectAll: PropTypes.bool,

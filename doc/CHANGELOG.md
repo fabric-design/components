@@ -1,3 +1,13 @@
+<a name="1.0.50"></a>
+## [1.0.50](https://github.bus.zalan.do/fabric-design/components/compare/1.0.49...1.0.50) (2018-08-03)
+
+
+### Features
+
+* **dropdown:** Added minFilterLength property to only show items when filter is long enough ([#195](https://github.bus.zalan.do/fabric-design/components/issues/195)) ([54a2d95](https://github.bus.zalan.do/fabric-design/components/commit/54a2d95))
+
+
+
 <a name="1.0.49"></a>
 ## [1.0.49](https://github.bus.zalan.do/fabric-design/components/compare/1.0.48...1.0.49) (2018-08-02)
 

@@ -32,6 +32,12 @@ export class WSDatePicker extends Component {
   static format = 'd.m.Y';
 
   /**
+   * Holds all open flatpickr instances to pass captured click event to them
+   * @type {Array}
+   */
+  static flatpickrInstances = [];
+
+  /**
    * Set the format for all date picker instances
    * @param {string} format Format following flatpickr options
    * @returns {void}
@@ -66,9 +72,10 @@ export class WSDatePicker extends Component {
       ...this.props.options,
       onChange: this.onChange.bind(this)
     });
+    WSDatePicker.flatpickrInstances.push(this.flatpickr);
     // Prevent default change event bubbling
     this.input.addEventListener('change', this.stopPropagation);
-    this.element.addEventListener('click', this.stopPropagation);
+    this.element.addEventListener('click', this.onClick);
   }
 
   /**
@@ -84,6 +91,7 @@ export class WSDatePicker extends Component {
     Object.keys(props.options || {}).forEach(key => {
       this.flatpickr.set(key, props.options[key]);
     });
+    this.setState({value: props.value});
   }
 
   /**
@@ -91,9 +99,14 @@ export class WSDatePicker extends Component {
    * @returns {void}
    */
   componentWillUnmount() {
-    this.flatpickr.destroy();
     this.input.removeEventListener('change', this.stopPropagation);
-    this.element.removeEventListener('click', this.stopPropagation);
+    this.element.removeEventListener('click', this.onClick);
+    this.flatpickr.destroy();
+    // Remove reference to flatpickr
+    const index = WSDatePicker.flatpickrInstances.indexOf(this.flatpickr);
+    if (index !== -1) {
+      WSDatePicker.flatpickrInstances.splice(index, 1);
+    }
   }
 
   /**
@@ -110,6 +123,18 @@ export class WSDatePicker extends Component {
       this.props.onChange(selectedDate);
     }
   }
+
+  /**
+   * Since we prevent clicks bubbling up the date picker doesn't recognize those when clicking another date picker
+   * and therefore doesn't close the old one. So we call the necessary fn manually.
+   * @param {Event} event JavaScript event object
+   * @returns {void}
+   */
+  onClick = event => {
+    this.stopPropagation(event);
+    // Notify other picker instances manually to close them
+    WSDatePicker.flatpickrInstances.forEach(pickr => pickr.documentClick(event));
+  };
 
   /**
    * Prevent clicks bubbling out

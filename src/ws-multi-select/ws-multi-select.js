@@ -21,7 +21,6 @@ export class WSMultiSelect extends WSDropdown {
    * @returns {void}
    */
   componentDidMount() {
-    window.select = this;
     this.icon.addEventListener('click', this.onClickIcon);
     this.input.addEventListener('keyup', this.onKeyUp);
     this.input.addEventListener('focus', this.onFocus);

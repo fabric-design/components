@@ -49,6 +49,7 @@ export class WSOverlay extends Component {
   constructor(props) {
     super(props);
     this.contentHeight = 0;
+    this.animations = [];
   }
 
   /**
@@ -97,6 +98,8 @@ export class WSOverlay extends Component {
    * @returns {void}
    */
   open() {
+    // Animations could be finished after open function and this would remove mod-open and the height again
+    this.finishAnimations();
     // Stop if this dropdown is already opened or close previous opened dropdown
     if (WSOverlay.openOverlay === this) {
       return;
@@ -187,6 +190,19 @@ export class WSOverlay extends Component {
     window.addEventListener('blur', eventHandler);
     // Add class to start animation
     item.classList.add(animationClass);
+
+    this.animations.push(eventHandler);
+  }
+
+  /**
+   * Helper method to finish animations when the element changes and they are not done yet
+   * @returns {void}
+   */
+  finishAnimations() {
+    this.animations.forEach(eventHandler => {
+      eventHandler();
+    });
+    this.animations = [];
   }
 
   /**

@@ -47,6 +47,7 @@ export var WSOverlay = function (_Component) {
     });
 
     _this.contentHeight = 0;
+    _this.animations = [];
     return _this;
   }
 
@@ -60,6 +61,8 @@ export var WSOverlay = function (_Component) {
     key: 'open',
     value: function open() {
       var _this2 = this;
+
+      this.finishAnimations();
 
       if (WSOverlay.openOverlay === this) {
         return;
@@ -135,6 +138,16 @@ export var WSOverlay = function (_Component) {
       window.addEventListener('blur', eventHandler);
 
       item.classList.add(animationClass);
+
+      this.animations.push(eventHandler);
+    }
+  }, {
+    key: 'finishAnimations',
+    value: function finishAnimations() {
+      this.animations.forEach(function (eventHandler) {
+        eventHandler();
+      });
+      this.animations = [];
     }
   }, {
     key: 'calculateWidth',

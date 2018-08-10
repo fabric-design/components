@@ -97,6 +97,7 @@ System.register(['../imports'], function (_export, _context) {
           });
 
           _this.contentHeight = 0;
+          _this.animations = [];
           return _this;
         }
 
@@ -110,6 +111,8 @@ System.register(['../imports'], function (_export, _context) {
           key: 'open',
           value: function open() {
             var _this2 = this;
+
+            this.finishAnimations();
 
             if (WSOverlay.openOverlay === this) {
               return;
@@ -185,6 +188,16 @@ System.register(['../imports'], function (_export, _context) {
             window.addEventListener('blur', eventHandler);
 
             item.classList.add(animationClass);
+
+            this.animations.push(eventHandler);
+          }
+        }, {
+          key: 'finishAnimations',
+          value: function finishAnimations() {
+            this.animations.forEach(function (eventHandler) {
+              eventHandler();
+            });
+            this.animations = [];
           }
         }, {
           key: 'calculateWidth',

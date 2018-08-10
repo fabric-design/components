@@ -78,6 +78,12 @@ Animates an element by adding a class with an css animation and executes a callb
 
 Returns **void** 
 
+### finishAnimations
+
+Helper method to finish animations when the element changes and they are not done yet
+
+Returns **void** 
+
 ### calculateWidth
 
 Returns **[string][3]** 

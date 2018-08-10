@@ -93,6 +93,7 @@ define(['exports', '../imports'], function (exports, _imports) {
       });
 
       _this.contentHeight = 0;
+      _this.animations = [];
       return _this;
     }
 
@@ -106,6 +107,8 @@ define(['exports', '../imports'], function (exports, _imports) {
       key: 'open',
       value: function open() {
         var _this2 = this;
+
+        this.finishAnimations();
 
         if (WSOverlay.openOverlay === this) {
           return;
@@ -181,6 +184,16 @@ define(['exports', '../imports'], function (exports, _imports) {
         window.addEventListener('blur', eventHandler);
 
         item.classList.add(animationClass);
+
+        this.animations.push(eventHandler);
+      }
+    }, {
+      key: 'finishAnimations',
+      value: function finishAnimations() {
+        this.animations.forEach(function (eventHandler) {
+          eventHandler();
+        });
+        this.animations = [];
       }
     }, {
       key: 'calculateWidth',

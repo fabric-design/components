@@ -159,7 +159,6 @@ System.register(['../imports', '../ws-dropdown/ws-dropdown'], function (_export,
         _createClass(WSMultiSelect, [{
           key: 'componentDidMount',
           value: function componentDidMount() {
-            window.select = this;
             this.icon.addEventListener('click', this.onClickIcon);
             this.input.addEventListener('keyup', this.onKeyUp);
             this.input.addEventListener('focus', this.onFocus);

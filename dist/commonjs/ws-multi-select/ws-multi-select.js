@@ -73,7 +73,6 @@ var WSMultiSelect = exports.WSMultiSelect = function (_WSDropdown) {
   _createClass(WSMultiSelect, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      window.select = this;
       this.icon.addEventListener('click', this.onClickIcon);
       this.input.addEventListener('keyup', this.onKeyUp);
       this.input.addEventListener('focus', this.onFocus);

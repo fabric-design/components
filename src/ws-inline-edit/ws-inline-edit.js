@@ -57,7 +57,9 @@ export class WSInlineEdit extends Component {
    * @returns {void}
    */
   componentWillReceiveProps(props) {
-    this.setState(this.createState(props));
+    this.setState(this.createState(props), () => {
+      this.resizeInput();
+    });
   }
 
   /**

@@ -146,7 +146,11 @@ define(['exports', '../imports', './types/type-handler'], function (exports, _im
     }, {
       key: 'componentWillReceiveProps',
       value: function componentWillReceiveProps(props) {
-        this.setState(this.createState(props));
+        var _this2 = this;
+
+        this.setState(this.createState(props), function () {
+          _this2.resizeInput();
+        });
       }
     }, {
       key: 'componentWillUnmount',
@@ -226,7 +230,7 @@ define(['exports', '../imports', './types/type-handler'], function (exports, _im
     }, {
       key: 'render',
       value: function render() {
-        var _this2 = this;
+        var _this3 = this;
 
         var _state = this.state,
             isEditing = _state.isEditing,
@@ -247,7 +251,7 @@ define(['exports', '../imports', './types/type-handler'], function (exports, _im
         return _imports.React.createElement(
           'div',
           { className: classes, ref: function ref(element) {
-              _this2.element = element;
+              _this3.element = element;
             } },
           _imports.React.createElement(
             'div',
@@ -256,7 +260,7 @@ define(['exports', '../imports', './types/type-handler'], function (exports, _im
               type: 'text',
               className: !isValid ? 'is-invalid' : '',
               ref: function ref(element) {
-                _this2.input = element;
+                _this3.input = element;
               },
               value: inputValue
             }),

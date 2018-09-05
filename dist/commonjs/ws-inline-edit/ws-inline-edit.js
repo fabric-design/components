@@ -109,7 +109,11 @@ var WSInlineEdit = exports.WSInlineEdit = function (_Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(props) {
-      this.setState(this.createState(props));
+      var _this2 = this;
+
+      this.setState(this.createState(props), function () {
+        _this2.resizeInput();
+      });
     }
   }, {
     key: 'componentWillUnmount',
@@ -189,7 +193,7 @@ var WSInlineEdit = exports.WSInlineEdit = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       var _state = this.state,
           isEditing = _state.isEditing,
@@ -210,7 +214,7 @@ var WSInlineEdit = exports.WSInlineEdit = function (_Component) {
       return _imports.React.createElement(
         'div',
         { className: classes, ref: function ref(element) {
-            _this2.element = element;
+            _this3.element = element;
           } },
         _imports.React.createElement(
           'div',
@@ -219,7 +223,7 @@ var WSInlineEdit = exports.WSInlineEdit = function (_Component) {
             type: 'text',
             className: !isValid ? 'is-invalid' : '',
             ref: function ref(element) {
-              _this2.input = element;
+              _this3.input = element;
             },
             value: inputValue
           }),

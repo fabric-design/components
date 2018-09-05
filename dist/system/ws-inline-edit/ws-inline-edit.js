@@ -152,7 +152,11 @@ System.register(['../imports', './types/type-handler'], function (_export, _cont
         }, {
           key: 'componentWillReceiveProps',
           value: function componentWillReceiveProps(props) {
-            this.setState(this.createState(props));
+            var _this2 = this;
+
+            this.setState(this.createState(props), function () {
+              _this2.resizeInput();
+            });
           }
         }, {
           key: 'componentWillUnmount',
@@ -232,7 +236,7 @@ System.register(['../imports', './types/type-handler'], function (_export, _cont
         }, {
           key: 'render',
           value: function render() {
-            var _this2 = this;
+            var _this3 = this;
 
             var _state = this.state,
                 isEditing = _state.isEditing,
@@ -253,7 +257,7 @@ System.register(['../imports', './types/type-handler'], function (_export, _cont
             return React.createElement(
               'div',
               { className: classes, ref: function ref(element) {
-                  _this2.element = element;
+                  _this3.element = element;
                 } },
               React.createElement(
                 'div',
@@ -262,7 +266,7 @@ System.register(['../imports', './types/type-handler'], function (_export, _cont
                   type: 'text',
                   className: !isValid ? 'is-invalid' : '',
                   ref: function ref(element) {
-                    _this2.input = element;
+                    _this3.input = element;
                   },
                   value: inputValue
                 }),

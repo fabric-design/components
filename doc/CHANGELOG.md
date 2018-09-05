@@ -1,3 +1,13 @@
+<a name="1.0.53"></a>
+## [1.0.53](https://github.bus.zalan.do/fabric-design/components/compare/1.0.52...1.0.53) (2018-09-05)
+
+
+### Bug Fixes
+
+* **inline-edit:** Resize inline edit when value changes from outside ([#198](https://github.bus.zalan.do/fabric-design/components/issues/198)) ([c494292](https://github.bus.zalan.do/fabric-design/components/commit/c494292))
+
+
+
 <a name="1.0.52"></a>
 ## [1.0.52](https://github.bus.zalan.do/fabric-design/components/compare/1.0.51...1.0.52) (2018-08-10)
 

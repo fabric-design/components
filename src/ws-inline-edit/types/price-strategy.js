@@ -1,7 +1,7 @@
 import {AbstractTypeStrategy} from './abstract-type-strategy';
 
-const english = '([0-9]*(,[0-9]{3})*)(\\.[0-9]{2})?';
-const german = '([0-9]*(\\.[0-9]{3})*)(,[0-9]{2})?';
+const english = '([0-9]*(,[0-9]{3})*)(\\.[0-9]{1,2})?';
+const german = '([0-9]*(\\.[0-9]{3})*)(,[0-9]{1,2})?';
 const strip = str => str.replace(/[.,]/g, '');
 
 /**

@@ -49,7 +49,7 @@ export class WSInlineEdit extends Component {
     this.input.addEventListener('keyup', this.onKeyUp);
     this.input.addEventListener('keydown', this.onKeyDown);
     this.input.addEventListener('change', this.onChange);
-    this.resizeInput();
+    setTimeout(() => this.resizeInput(), 0);
   }
 
   /**

@@ -54,8 +54,8 @@ define(['exports', './abstract-type-strategy'], function (exports, _abstractType
     if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
-  var english = '([0-9]*(,[0-9]{3})*)(\\.[0-9]{2})?';
-  var german = '([0-9]*(\\.[0-9]{3})*)(,[0-9]{2})?';
+  var english = '([0-9]*(,[0-9]{3})*)(\\.[0-9]{1,2})?';
+  var german = '([0-9]*(\\.[0-9]{3})*)(,[0-9]{1,2})?';
   var strip = function strip(str) {
     return str.replace(/[.,]/g, '');
   };

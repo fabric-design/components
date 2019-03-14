@@ -8,8 +8,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import { AbstractTypeStrategy } from './abstract-type-strategy';
 
-var english = '([0-9]*(,[0-9]{3})*)(\\.[0-9]{2})?';
-var german = '([0-9]*(\\.[0-9]{3})*)(,[0-9]{2})?';
+var english = '([0-9]*(,[0-9]{3})*)(\\.[0-9]{1,2})?';
+var german = '([0-9]*(\\.[0-9]{3})*)(,[0-9]{1,2})?';
 var strip = function strip(str) {
   return str.replace(/[.,]/g, '');
 };

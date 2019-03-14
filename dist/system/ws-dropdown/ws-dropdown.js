@@ -1,7 +1,7 @@
 System.register(['../imports', './dropdown-menu', './dropdown-input', '../ws-overlay/ws-overlay'], function (_export, _context) {
   "use strict";
 
-  var React, Component, PropTypes, DropdownMenu, DropdownInput, WSOverlay, _typeof, _createClass, WSDropdown;
+  var React, Component, PropTypes, DropdownMenu, DropdownInput, WSOverlay, _extends, _typeof, _createClass, WSDropdown;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -64,6 +64,20 @@ System.register(['../imports', './dropdown-menu', './dropdown-input', '../ws-ove
       WSOverlay = _wsOverlayWsOverlay.WSOverlay;
     }],
     execute: function () {
+      _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
       _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
         return typeof obj;
       } : function (obj) {
@@ -114,6 +128,20 @@ System.register(['../imports', './dropdown-menu', './dropdown-input', '../ws-ove
               }
             }
           });
+          Object.defineProperty(_this, 'onTriggerKeyPress', {
+            enumerable: true,
+            writable: true,
+            value: function value(event) {
+              event.stopPropagation();
+              event.preventDefault();
+              var isEnter = event.key === 'Enter' || event.which === 12;
+              var isNotOpen = WSOverlay.openOverlay !== _this.overlay;
+
+              if (!_this.props.disabled && isEnter && isNotOpen) {
+                _this.overlay.open();
+              }
+            }
+          });
           Object.defineProperty(_this, 'handlePropagation', {
             enumerable: true,
             writable: true,
@@ -145,6 +173,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input', '../ws-ove
           value: function componentDidMount() {
             this.element.addEventListener('click', this.onAnyEvent);
             this.trigger.addEventListener('click', this.onTriggerClick);
+            this.trigger.addEventListener('keypress', this.onTriggerKeyPress);
           }
         }, {
           key: 'componentWillReceiveProps',
@@ -156,6 +185,7 @@ System.register(['../imports', './dropdown-menu', './dropdown-input', '../ws-ove
           value: function componentWillUnmount() {
             this.element.removeEventListener('click', this.onAnyEvent);
             this.trigger.removeEventListener('click', this.onTriggerClick);
+            this.trigger.removeEventListener('keypress', this.onTriggerKeyPress);
           }
         }, {
           key: 'onOpen',
@@ -279,17 +309,22 @@ System.register(['../imports', './dropdown-menu', './dropdown-input', '../ws-ove
               icon = React.createElement('span', { className: 'icon ' + this.props.icon });
             }
             var disabledStyle = this.props.disabled ? ' is-disabled' : '';
+            var additionalProperties = {};
+            if (this.props.tabIndex) {
+              additionalProperties.tabindex = this.props.tabIndex;
+            }
+
             switch (this.props.type) {
               case 'anchor':
                 return React.createElement(
                   'a',
-                  {
+                  _extends({
                     href: '#void',
                     className: 'dropdown-trigger ' + disabledStyle,
                     ref: function ref(element) {
                       _this4.trigger = element;
                     }
-                  },
+                  }, additionalProperties),
                   icon,
                   ' ',
                   this.state.text
@@ -297,12 +332,12 @@ System.register(['../imports', './dropdown-menu', './dropdown-input', '../ws-ove
               case 'button':
                 return React.createElement(
                   'button',
-                  {
+                  _extends({
                     className: 'dropdown-trigger ' + disabledStyle,
                     ref: function ref(element) {
                       _this4.trigger = element;
                     }
-                  },
+                  }, additionalProperties),
                   icon,
                   ' ',
                   this.state.text
@@ -310,12 +345,12 @@ System.register(['../imports', './dropdown-menu', './dropdown-input', '../ws-ove
               case 'select':
                 return React.createElement(
                   'div',
-                  {
+                  _extends({
                     className: 'dropdown-trigger select-box ' + disabledStyle,
                     ref: function ref(element) {
                       _this4.trigger = element;
                     }
-                  },
+                  }, additionalProperties),
                   icon,
                   ' ',
                   this.state.text || this.props.placeholder
@@ -324,13 +359,13 @@ System.register(['../imports', './dropdown-menu', './dropdown-input', '../ws-ove
               default:
                 return React.createElement(
                   'a',
-                  {
+                  _extends({
                     href: '#void',
                     className: 'dropdown-trigger ' + disabledStyle,
                     ref: function ref(element) {
                       _this4.trigger = element;
                     }
-                  },
+                  }, additionalProperties),
                   icon
                 );
             }
@@ -437,7 +472,8 @@ System.register(['../imports', './dropdown-menu', './dropdown-input', '../ws-ove
           value: null,
           onChange: function onChange() {},
           disabled: false,
-          selectAll: false
+          selectAll: false,
+          tabIndex: undefined
         }
       });
       Object.defineProperty(WSDropdown, 'propTypes', {
@@ -462,7 +498,8 @@ System.register(['../imports', './dropdown-menu', './dropdown-input', '../ws-ove
           value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
           onChange: PropTypes.func,
           disabled: PropTypes.bool,
-          selectAll: PropTypes.bool
+          selectAll: PropTypes.bool,
+          tabIndex: PropTypes.oneOf(PropTypes.string, PropTypes.number)
         }
       });
       Object.defineProperty(WSDropdown, 'childContextTypes', {

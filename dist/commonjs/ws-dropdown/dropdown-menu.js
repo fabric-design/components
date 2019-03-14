@@ -58,6 +58,8 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
             _this.focusNextItem(1);
             break;
           case 'Enter':
+            event.preventDefault();
+            event.stopPropagation();
             _this.selectCurrentItem();
             break;
           default:

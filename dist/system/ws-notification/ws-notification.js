@@ -1,7 +1,22 @@
 System.register(['../imports'], function (_export, _context) {
   "use strict";
 
-  var React, Component, _createClass, DEFAULT_NOTIFICATION_LIFETIME, DEFAULT_NOTIFICATION_TYPE, WSNotification;
+  var React, Component, _extends, _createClass, DEFAULT_NOTIFICATION_LIFETIME, DEFAULT_NOTIFICATION_TYPE, WSNotification;
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -39,6 +54,20 @@ System.register(['../imports'], function (_export, _context) {
       Component = _imports.Component;
     }],
     execute: function () {
+      _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
       _createClass = function () {
         function defineProperties(target, props) {
           for (var i = 0; i < props.length; i++) {
@@ -70,7 +99,8 @@ System.register(['../imports'], function (_export, _context) {
 
           _this.state = {
             notifications: [],
-            timeoutId: null
+            timeouts: {},
+            counter: 0
           };
 
           _this.addNotify = _this.addNotify.bind(_this);
@@ -87,8 +117,14 @@ System.register(['../imports'], function (_export, _context) {
         }, {
           key: 'componentDidUpdate',
           value: function componentDidUpdate(prevProps, prevState) {
+            var _this2 = this;
+
             if (prevState.notifications.length < this.state.notifications.length) {
-              this.animateIn(this.state.notifications[this.state.notifications.length - 1], this.state.notifications.length - 1);
+              this.state.notifications.forEach(function (notification) {
+                if (!(notification.id in _this2.state.timeouts)) {
+                  _this2.animateIn(notification);
+                }
+              });
             }
           }
         }, {
@@ -115,51 +151,62 @@ System.register(['../imports'], function (_export, _context) {
             if (!type) {
               type = DEFAULT_NOTIFICATION_TYPE;
             }
+            var counter = this.state.counter + 1;
             this.setState({
               notifications: this.state.notifications.concat([{
-                title: title, description: description, type: type, lifetime: lifetime
-              }])
+                title: title, description: description, type: type, lifetime: lifetime, id: counter
+              }]),
+              counter: counter
             });
           }
         }, {
           key: 'animateIn',
-          value: function animateIn(notification, index) {
-            var _this2 = this;
+          value: function animateIn(notification) {
+            var _this3 = this;
 
             this.list.style.transition = 'none';
             this.list.style.transform = 'translate3d(0, 80px, 0)';
             setTimeout(function () {
-              _this2.list.style.transition = 'transform .35s cubic-bezier(.35, 1, .69, .98) .1s';
-              _this2.list.style.transform = 'translate3d(0, 0, 0)';
+              _this3.list.style.transition = 'transform .35s cubic-bezier(.35, 1, .69, .98) .1s';
+              _this3.list.style.transform = 'translate3d(0, 0, 0)';
             }, 0);
-            clearTimeout(this.state.timeoutId);
-            this.setState({ timeoutId: setTimeout(function () {
-                return _this2.close(index);
-              }, notification.lifetime) });
+
+            this.setState({
+              timeouts: _extends({}, this.state.timeouts, _defineProperty({}, notification.id, setTimeout(function () {
+                _this3.close(notification.id);
+              }, notification.lifetime)))
+            });
           }
         }, {
           key: 'closeAllEvents',
           value: function closeAllEvents() {
             for (var i = 0; i < this.state.notifications.length; i++) {
-              this.close(i);
+              this.close(this.state.notifications[i].id);
             }
           }
         }, {
           key: 'close',
-          value: function close(index) {
-            var notification = this['notification-' + index];
-            if (notification) {
+          value: function close(id) {
+            var index = this.state.notifications.findIndex(function (notification) {
+              return notification.id === id;
+            });
+            if (index >= 0) {
               var notifications = this.state.notifications.slice();
+              var notificationId = notifications[index].id;
+              var timeouts = _extends({}, this.state.timeouts);
+              delete timeouts[notificationId];
+              clearTimeout(this.state.timeouts[notificationId]);
               notifications.splice(index, 1);
               this.setState({
-                notifications: notifications
+                notifications: notifications,
+                timeouts: timeouts
               });
             }
           }
         }, {
           key: 'render',
           value: function render() {
-            var _this3 = this;
+            var _this4 = this;
 
             return React.createElement(
               'div',
@@ -167,7 +214,7 @@ System.register(['../imports'], function (_export, _context) {
               React.createElement(
                 'div',
                 { className: 'ws-notification-list', ref: function ref(element) {
-                    _this3.list = element;
+                    _this4.list = element;
                   } },
                 this.state.notifications.map(function (notification, i) {
                   return React.createElement(
@@ -176,10 +223,10 @@ System.register(['../imports'], function (_export, _context) {
                       className: 'notification ' + notification.type,
                       key: 'notification-' + i,
                       ref: function ref(element) {
-                        _this3['notification-' + i] = element;
+                        _this4['notification-' + i] = element;
                       },
                       onClick: function onClick() {
-                        return _this3.close(i);
+                        return _this4.close(notification.id);
                       }
                     },
                     React.createElement(

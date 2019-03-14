@@ -56,8 +56,8 @@ System.register(['./abstract-type-strategy'], function (_export, _context) {
         };
       }();
 
-      english = '([0-9]*(,[0-9]{3})*)(\\.[0-9]{2})?';
-      german = '([0-9]*(\\.[0-9]{3})*)(,[0-9]{2})?';
+      english = '([0-9]*(,[0-9]{3})*)(\\.[0-9]{1,2})?';
+      german = '([0-9]*(\\.[0-9]{3})*)(,[0-9]{1,2})?';
 
       strip = function strip(str) {
         return str.replace(/[.,]/g, '');

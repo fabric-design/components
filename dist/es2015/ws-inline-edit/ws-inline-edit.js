@@ -92,16 +92,24 @@ export var WSInlineEdit = function (_Component) {
   _createClass(WSInlineEdit, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var _this2 = this;
+
       this.input.addEventListener('focus', this.onFocus);
       this.input.addEventListener('keyup', this.onKeyUp);
       this.input.addEventListener('keydown', this.onKeyDown);
       this.input.addEventListener('change', this.onChange);
-      this.resizeInput();
+      setTimeout(function () {
+        return _this2.resizeInput();
+      }, 0);
     }
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(props) {
-      this.setState(this.createState(props));
+      var _this3 = this;
+
+      this.setState(this.createState(props), function () {
+        _this3.resizeInput();
+      });
     }
   }, {
     key: 'componentWillUnmount',
@@ -167,8 +175,14 @@ export var WSInlineEdit = function (_Component) {
       var calculator = document.createElement('div');
       calculator.style.fontSize = style.fontSize || '16px';
       calculator.style.lineHeight = style.lineHeight || '16px';
-      calculator.style.margin = style.margin;
-      calculator.style.padding = style.padding;
+      calculator.style.marginTop = style.marginTop;
+      calculator.style.marginLeft = style.marginLeft;
+      calculator.style.marginRight = style.marginRight;
+      calculator.style.marginBottom = style.marginBottom;
+      calculator.style.paddingTop = style.paddingTop;
+      calculator.style.paddingLeft = style.paddingLeft;
+      calculator.style.paddingRight = style.paddingRight;
+      calculator.style.paddingBottom = style.paddingBottom;
       calculator.style.visibility = 'hidden';
       calculator.style.position = 'absolute';
       calculator.style.top = '-1000px';
@@ -181,7 +195,7 @@ export var WSInlineEdit = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this4 = this;
 
       var _state = this.state,
           isEditing = _state.isEditing,
@@ -202,7 +216,7 @@ export var WSInlineEdit = function (_Component) {
       return React.createElement(
         'div',
         { className: classes, ref: function ref(element) {
-            _this2.element = element;
+            _this4.element = element;
           } },
         React.createElement(
           'div',
@@ -211,7 +225,7 @@ export var WSInlineEdit = function (_Component) {
             type: 'text',
             className: !isValid ? 'is-invalid' : '',
             ref: function ref(element) {
-              _this2.input = element;
+              _this4.input = element;
             },
             value: inputValue
           }),

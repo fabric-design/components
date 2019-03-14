@@ -95,6 +95,8 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
               _this.focusNextItem(1);
               break;
             case 'Enter':
+              event.preventDefault();
+              event.stopPropagation();
               _this.selectCurrentItem();
               break;
             default:

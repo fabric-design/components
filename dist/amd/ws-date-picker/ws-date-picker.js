@@ -177,7 +177,7 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
       value: function componentWillReceiveProps(props) {
         var _this2 = this;
 
-        if (props.value) {
+        if (props.value || props.reset) {
           this.flatpickr.setDate(props.value, false, this.props.format);
         }
 
@@ -261,6 +261,7 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
       className: '',
       iconOnly: false,
       options: {},
+      reset: false,
       onChange: function onChange() {}
     }
   });
@@ -273,7 +274,8 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
       className: _imports.PropTypes.string,
       iconOnly: _imports.PropTypes.bool,
       options: _imports.PropTypes.object,
-      onChange: _imports.PropTypes.func
+      onChange: _imports.PropTypes.func,
+      reset: _imports.PropTypes.bool
     }
   });
   Object.defineProperty(WSDatePicker, 'format', {

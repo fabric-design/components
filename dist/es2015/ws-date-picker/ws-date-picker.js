@@ -76,7 +76,7 @@ export var WSDatePicker = function (_Component) {
     value: function componentWillReceiveProps(props) {
       var _this2 = this;
 
-      if (props.value) {
+      if (props.value || props.reset) {
         this.flatpickr.setDate(props.value, false, this.props.format);
       }
 
@@ -159,6 +159,7 @@ Object.defineProperty(WSDatePicker, 'defaultProps', {
     className: '',
     iconOnly: false,
     options: {},
+    reset: false,
     onChange: function onChange() {}
   }
 });
@@ -171,7 +172,8 @@ Object.defineProperty(WSDatePicker, 'propTypes', {
     className: PropTypes.string,
     iconOnly: PropTypes.bool,
     options: PropTypes.object,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    reset: PropTypes.bool
   }
 });
 Object.defineProperty(WSDatePicker, 'format', {

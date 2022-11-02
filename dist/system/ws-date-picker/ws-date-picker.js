@@ -175,7 +175,7 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
           value: function componentWillReceiveProps(props) {
             var _this2 = this;
 
-            if (props.value) {
+            if (props.value || props.reset) {
               this.flatpickr.setDate(props.value, false, this.props.format);
             }
 
@@ -261,6 +261,7 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
           className: '',
           iconOnly: false,
           options: {},
+          reset: false,
           onChange: function onChange() {}
         }
       });
@@ -273,7 +274,8 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
           className: PropTypes.string,
           iconOnly: PropTypes.bool,
           options: PropTypes.object,
-          onChange: PropTypes.func
+          onChange: PropTypes.func,
+          reset: PropTypes.bool
         }
       });
       Object.defineProperty(WSDatePicker, 'format', {

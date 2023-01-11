@@ -178,7 +178,7 @@ define(['exports', '../imports', './flatpickr'], function (exports, _imports, _f
         var _this2 = this;
 
         if (props.value || props.reset) {
-          this.flatpickr.setDate(props.value, false, this.props.format);
+          this.flatpickr.setDate(props.value, false, this.constructor.format);
         }
 
         Object.keys(props.options || {}).forEach(function (key) {

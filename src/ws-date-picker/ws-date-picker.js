@@ -87,7 +87,7 @@ export class WSDatePicker extends Component {
    */
   componentWillReceiveProps(props) {
     if (props.value || props.reset) {
-      this.flatpickr.setDate(props.value, false, this.props.format);
+      this.flatpickr.setDate(props.value, false, this.constructor.format);
     }
     // Set options to flatpickr
     Object.keys(props.options || {}).forEach(key => {

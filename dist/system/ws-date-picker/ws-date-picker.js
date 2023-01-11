@@ -176,7 +176,7 @@ System.register(['../imports', './flatpickr'], function (_export, _context) {
             var _this2 = this;
 
             if (props.value || props.reset) {
-              this.flatpickr.setDate(props.value, false, this.props.format);
+              this.flatpickr.setDate(props.value, false, this.constructor.format);
             }
 
             Object.keys(props.options || {}).forEach(function (key) {

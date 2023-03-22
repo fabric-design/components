@@ -53,7 +53,7 @@ $notification-error-color: $flamingo !default;
             &:before {
                 margin-top: 0;
                 font-size: 100%;
-                margin-left: -$space-xs;
+                margin-left: (-$space-xs);
             }
         }
     }

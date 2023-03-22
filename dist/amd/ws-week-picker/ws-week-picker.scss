@@ -1,3 +1,5 @@
+@use "sass:math";
+
 $padding: $space-m;
 
 // to allow padding with setting a transparent border
@@ -121,7 +123,7 @@ $padding: $space-m;
       @include table-padding(0, $padding, $padding, $padding);
 
       td {
-        padding: $space-xxs / 2;
+        padding: math.div($space-xxs, 2);
         font-size: $font-size-small;
       }
       tr:first-child {

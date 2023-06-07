@@ -264,9 +264,10 @@ define(['exports', '../imports', './dropdown-menu-item'], function (exports, _im
           return [];
         }
 
-        var regex = new RegExp(this.state.filter, 'i');
         return this.state.items.filter(function (item) {
-          if (_this2.state.filtered && _this2.state.filter && !regex.test(item.label)) {
+          var filterMatches = !(item.label || '').toLowerCase().includes(_this2.state.filter.toLowerCase());
+
+          if (_this2.state.filtered && _this2.state.filter && filterMatches) {
             return false;
           }
 

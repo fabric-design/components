@@ -248,10 +248,10 @@ export class DropdownMenu extends Component {
       return [];
     }
 
-    const regex = new RegExp(this.state.filter, 'i');
     return this.state.items.filter(item => {
+      const filterMatches = !(item.label || '').toLowerCase().includes(this.state.filter.toLowerCase());
       // Don't show items which doesn't match the filter
-      if (this.state.filtered && this.state.filter && !regex.test(item.label)) {
+      if (this.state.filtered && this.state.filter && filterMatches) {
         return false;
       }
       // When we use a filter or multiple items are selectable we show selected items separately

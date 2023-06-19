@@ -143,7 +143,7 @@ System.register(['../imports', '../ws-dropdown/ws-dropdown'], function (_export,
             writable: true,
             value: function value(event) {
               event.stopPropagation();
-              _this.open();
+              _this.overlay.open();
             }
           }), Object.defineProperty(_this, 'onBlur', {
             enumerable: true,
@@ -151,7 +151,7 @@ System.register(['../imports', '../ws-dropdown/ws-dropdown'], function (_export,
             value: function value(event) {
               event.stopPropagation();
 
-              _this.close();
+              _this.overlay.close();
             }
           }), _temp), _possibleConstructorReturn(_this, _ret);
         }
@@ -160,30 +160,34 @@ System.register(['../imports', '../ws-dropdown/ws-dropdown'], function (_export,
           key: 'componentDidMount',
           value: function componentDidMount() {
             window.select = this;
+            this.icon.addEventListener('click', this.onClickIcon);
             this.input.addEventListener('keyup', this.onKeyUp);
             this.input.addEventListener('focus', this.onFocus);
-            this.input.addEventListener('change', this.onChange);
             this.input.addEventListener('blur', this.onBlur);
-            this.icon.addEventListener('click', this.onClickIcon);
+            this.input.addEventListener('change', this.stopPropagation);
+            this.element.addEventListener('click', this.stopPropagation);
           }
         }, {
           key: 'componentWillUnmount',
           value: function componentWillUnmount() {
+            this.icon.removeEventListener('click', this.onClickIcon);
             this.input.removeEventListener('keyup', this.onKeyUp);
             this.input.removeEventListener('focus', this.onFocus);
-            this.input.removeEventListener('change', this.onChange);
             this.input.removeEventListener('blur', this.onBlur);
-            this.icon.removeEventListener('click', this.onClickIcon);
+            this.input.removeEventListener('change', this.stopPropagation);
+            this.element.removeEventListener('stopPropagation', this.stopPropagation);
           }
         }, {
-          key: 'onChange',
-          value: function onChange(event) {
+          key: 'stopPropagation',
+          value: function stopPropagation(event) {
             event.stopPropagation();
           }
         }, {
           key: 'setValue',
           value: function setValue(item) {
             var value = [].concat(_toConsumableArray(this.state.value), [item]);
+
+            this.setState({ filter: '' });
 
             _get(WSMultiSelect.prototype.__proto__ || Object.getPrototypeOf(WSMultiSelect.prototype), 'setValue', this).call(this, value);
           }
@@ -205,9 +209,14 @@ System.register(['../imports', '../ws-dropdown/ws-dropdown'], function (_export,
             return React.createElement(
               'div',
               { className: 'input-wrapper' },
-              React.createElement('input', { type: 'text', placeholder: this.props.placeholder, ref: function ref(element) {
+              React.createElement('input', {
+                type: 'text',
+                placeholder: this.props.placeholder,
+                value: this.state.filter,
+                ref: function ref(element) {
                   _this2.input = element;
-                } }),
+                }
+              }),
               React.createElement('span', { className: 'icon icon16 icon-magnifiying-glass', ref: function ref(element) {
                   _this2.icon = element;
                 } })

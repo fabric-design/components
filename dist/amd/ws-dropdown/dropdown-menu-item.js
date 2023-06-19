@@ -155,15 +155,17 @@ define(['exports', '../imports', './dropdown-menu'], function (exports, _imports
 
         return _imports.React.createElement(
           'li',
-          {
-            className: itemClass,
-            ref: function ref(element) {
-              _this2.dropdownItem = element;
-            }
-          },
+          { className: itemClass },
           _imports.React.createElement(
             'a',
-            { className: anchorClass, href: item.href, title: item.title || item.label },
+            {
+              className: anchorClass,
+              href: item.href,
+              title: item.title || item.label,
+              ref: function ref(element) {
+                _this2.dropdownItem = element;
+              }
+            },
             (this.props.icon || item.icon) && _imports.React.createElement('i', { className: 'icon ' + (this.props.icon || item.icon) }),
             item.label
           ),

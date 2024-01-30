@@ -73,7 +73,8 @@ export class WSDropdown extends Component {
     value: null,
     onChange: () => {},
     disabled: false,
-    selectAll: false
+    selectAll: false,
+    tabIndex: undefined
   };
 
   /**
@@ -98,7 +99,8 @@ export class WSDropdown extends Component {
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.object, PropTypes.array]),
     onChange: PropTypes.func,
     disabled: PropTypes.bool,
-    selectAll: PropTypes.bool
+    selectAll: PropTypes.bool,
+    tabIndex: PropTypes.oneOf(PropTypes.string, PropTypes.number)
   };
 
   /**
@@ -135,6 +137,7 @@ export class WSDropdown extends Component {
   componentDidMount() {
     this.element.addEventListener('click', this.onAnyEvent);
     this.trigger.addEventListener('click', this.onTriggerClick);
+    this.trigger.addEventListener('keypress', this.onTriggerKeyPress);
   }
 
   /**
@@ -153,6 +156,7 @@ export class WSDropdown extends Component {
   componentWillUnmount() {
     this.element.removeEventListener('click', this.onAnyEvent);
     this.trigger.removeEventListener('click', this.onTriggerClick);
+    this.trigger.removeEventListener('keypress', this.onTriggerKeyPress);
   }
 
   /**
@@ -174,6 +178,22 @@ export class WSDropdown extends Component {
     event.preventDefault();
     if (!this.props.disabled) {
       this.overlay.toggle();
+    }
+  };
+
+  /**
+   * Open dropdown on enter key if not open yet
+   * @param {KeyboardEvent} event JavaScript event object
+   * @returns {void}
+   */
+  onTriggerKeyPress = event => {
+    event.stopPropagation();
+    event.preventDefault();
+    const isEnter = event.key === 'Enter' || event.which === 12;
+    const isNotOpen = WSOverlay.openOverlay !== this.overlay;
+    // Enter key is pressed and dropdown is not disabled
+    if (!this.props.disabled && isEnter && isNotOpen) {
+      this.overlay.open();
     }
   };
 
@@ -328,6 +348,11 @@ export class WSDropdown extends Component {
       icon = <span className={`icon ${this.props.icon}`} />;
     }
     const disabledStyle = this.props.disabled ? ' is-disabled' : '';
+    const additionalProperties = {};
+    if (this.props.tabIndex) {
+      additionalProperties.tabindex = this.props.tabIndex;
+    }
+
     switch (this.props.type) {
       case 'anchor':
         return (
@@ -335,6 +360,7 @@ export class WSDropdown extends Component {
             href="#void"
             className={`dropdown-trigger ${disabledStyle}`}
             ref={element => { this.trigger = element; }}
+            {...additionalProperties}
           >
             {icon} {this.state.text}
           </a>);
@@ -343,6 +369,7 @@ export class WSDropdown extends Component {
           <button
             className={`dropdown-trigger ${disabledStyle}`}
             ref={element => { this.trigger = element; }}
+            {...additionalProperties}
           >
             {icon} {this.state.text}
           </button>);
@@ -351,6 +378,7 @@ export class WSDropdown extends Component {
           <div
             className={`dropdown-trigger select-box ${disabledStyle}`}
             ref={element => { this.trigger = element; }}
+            {...additionalProperties}
           >
             {icon} {this.state.text || this.props.placeholder}
           </div>);
@@ -361,6 +389,7 @@ export class WSDropdown extends Component {
             href="#void"
             className={`dropdown-trigger ${disabledStyle}`}
             ref={element => { this.trigger = element; }}
+            {...additionalProperties}
           >
             {icon}
           </a>);

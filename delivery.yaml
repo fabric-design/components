@@ -1,0 +1,27 @@
+version: "2017-09-20"
+pipeline:
+  - id: build
+    type: script
+    vm_config:
+      type: linux
+      image: cdp-runtime/nodejs-20
+    commands:
+      - desc: Install dependencies
+        cmd: |
+          yarn install
+      - desc: Lint
+        cmd: |
+          yarn lint
+      - desc: Test
+        cmd: |
+          yarn test
+      - desc: Publish
+        cmd: |
+          if [ -z "$CDP_PULL_REQUEST_NUMBER" ]; then
+            echo "Build and publish the application to the npm registry"
+            yarn build
+            cp .npmrc.build .npmrc
+            npm publish
+          else
+            echo "Nothing to publish since this is a PR"
+          fi

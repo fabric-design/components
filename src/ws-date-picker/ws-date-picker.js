@@ -17,6 +17,7 @@ export class WSDatePicker extends Component {
     className: '',
     iconOnly: false,
     options: {},
+    reset: false,
     onChange: () => {}
   };
 
@@ -26,7 +27,8 @@ export class WSDatePicker extends Component {
     className: PropTypes.string,
     iconOnly: PropTypes.bool,
     options: PropTypes.object,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    reset: PropTypes.bool
   };
 
   static format = 'd.m.Y';
@@ -84,8 +86,8 @@ export class WSDatePicker extends Component {
    * @returns {void}
    */
   componentWillReceiveProps(props) {
-    if (props.value) {
-      this.flatpickr.setDate(props.value, false, this.props.format);
+    if (props.value || props.reset) {
+      this.flatpickr.setDate(props.value, false, this.constructor.format);
     }
     // Set options to flatpickr
     Object.keys(props.options || {}).forEach(key => {

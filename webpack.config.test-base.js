@@ -1,11 +1,12 @@
 const path = require('path');
+const {tmpdir} = require('os');
 
 module.exports = {
   devtool: 'inline-source-map', // just do inline source maps instead of the default
   mode: 'development',
   output: {
     filename: 'bundle.test.js',
-    path: path.resolve(__dirname, 'tests')
+    path: path.join(tmpdir(), '_karma_webpack_') + Math.floor(Math.random() * 1000000)
   },
   module: {
     rules: [{
@@ -25,15 +26,20 @@ module.exports = {
       }, {
         loader: 'sass-loader', // compiles Sass to CSS
         options: {
-          includePaths: [
-            'node_modules/fabric-scss/'
-          ],
-        },
+          sassOptions: {
+            includePaths: [
+              'node_modules/fabric-scss/'
+            ]
+          }
+        }
       }]
     },
     {
       test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-      loader: 'url-loader?limit=100000'
+      loader: 'url-loader',
+      options: {
+        limit: 100000
+      }
     }]
   }
 };

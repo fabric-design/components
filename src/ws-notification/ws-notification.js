@@ -25,7 +25,8 @@ export class WSNotification extends Component {
     super();
     this.state = {
       notifications: [],
-      timeoutId: null
+      timeouts: {},
+      counter: 0
     };
     // Bind functions to this scope
     this.addNotify = this.addNotify.bind(this);
@@ -49,10 +50,11 @@ export class WSNotification extends Component {
    */
   componentDidUpdate(prevProps, prevState) {
     if (prevState.notifications.length < this.state.notifications.length) {
-      this.animateIn(
-        this.state.notifications[this.state.notifications.length - 1],
-        this.state.notifications.length - 1
-      );
+      this.state.notifications.forEach(notification => {
+        if (!(notification.id in this.state.timeouts)) {
+          this.animateIn(notification);
+        }
+      });
     }
   }
 
@@ -81,28 +83,38 @@ export class WSNotification extends Component {
     if (!type) {
       type = DEFAULT_NOTIFICATION_TYPE;
     }
+    const counter = this.state.counter + 1;
     this.setState({
       notifications: this.state.notifications.concat([{
-        title, description, type, lifetime
-      }])
+        title, description, type, lifetime, id: counter
+      }]),
+      counter
     });
   }
 
   /**
    * Start to animate in a notification
    * @param {Object} notification The notification to animate in
-   * @param {number} index Index of notification in the list
    * @returns {void}
    */
-  animateIn(notification, index) {
+  animateIn(notification) {
     this.list.style.transition = 'none';
     this.list.style.transform = 'translate3d(0, 80px, 0)';
     setTimeout(() => {
       this.list.style.transition = 'transform .35s cubic-bezier(.35, 1, .69, .98) .1s';
       this.list.style.transform = 'translate3d(0, 0, 0)';
     }, 0);
-    clearTimeout(this.state.timeoutId);
-    this.setState({timeoutId: setTimeout(() => this.close(index), notification.lifetime)});
+
+    this.setState({
+      timeouts: {
+        ...this.state.timeouts,
+        ...{
+          [notification.id]: setTimeout(() => {
+            this.close(notification.id);
+          }, notification.lifetime)
+        }
+      }
+    });
   }
 
   /**
@@ -111,22 +123,27 @@ export class WSNotification extends Component {
    */
   closeAllEvents() {
     for (let i = 0; i < this.state.notifications.length; i++) {
-      this.close(i);
+      this.close(this.state.notifications[i].id);
     }
   }
 
   /**
    * Close a specific notification
-   * @param {number} index The index of the notification in the list
+   * @param {number} id The id of the notification in the list
    * @returns {void}
    */
-  close(index) {
-    const notification = this[`notification-${index}`];
-    if (notification) {
+  close(id) {
+    const index = this.state.notifications.findIndex(notification => notification.id === id);
+    if (index >= 0) {
       const notifications = this.state.notifications.slice();
+      const notificationId = notifications[index].id;
+      const timeouts = {...this.state.timeouts};
+      delete timeouts[notificationId];
+      clearTimeout(this.state.timeouts[notificationId]);
       notifications.splice(index, 1);
       this.setState({
-        notifications
+        notifications,
+        timeouts
       });
     }
   }
@@ -144,7 +161,7 @@ export class WSNotification extends Component {
               className={`notification ${notification.type}`}
               key={`notification-${i}`}
               ref={element => { this[`notification-${i}`] = element; }}
-              onClick={() => this.close(i)}
+              onClick={() => this.close(notification.id)}
             >
               <div className="icons">
                 <i className="icon icon-info" />

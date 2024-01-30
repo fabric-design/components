@@ -177,6 +177,8 @@ export class DropdownMenu extends Component {
         this.focusNextItem(1);
         break;
       case 'Enter':
+        event.preventDefault();
+        event.stopPropagation();
         this.selectCurrentItem();
         break;
       default:

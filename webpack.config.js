@@ -40,9 +40,6 @@ module.exports = {
             test: /([\w-]+)\/\1.js$/,
             use: [
               {
-                loader: path.resolve('webpack-loaders/scss-importer'),
-              },
-              {
                 loader: 'babel-loader',
                 options: {babelrc: true}
               },
@@ -71,11 +68,11 @@ module.exports = {
               {
                 loader: 'sass-loader',
                 options: {
+                  implementation: require('sass'),
                   exclude: 'node_modules/',
                   includePaths: [
                     'node_modules/fabric-scss/'
-                  ],
-                  outputStyle : 'compressed',
+                  ]
                 },
               },
               {
@@ -88,7 +85,7 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: path.join(__dirname, 'demo'),
+    static: path.join(__dirname, 'demo'),
     compress: true,
     port: 8080
   }

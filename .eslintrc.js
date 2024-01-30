@@ -1,10 +1,9 @@
 module.exports = {
   "extends": [
-    "airbnb",
     "plugin:jasmine/recommended"
   ],
   // Required to validate the code as babel interprets it. Used for static properties
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "env": {
     "browser": true,
     "node": true,

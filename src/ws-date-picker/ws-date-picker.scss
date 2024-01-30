@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .ws-date-picker {
   position: relative;
   display: inline-block;
@@ -68,11 +70,11 @@
   }
   &:before {
     border-width: rem(8px);
-    margin: 0 -$space-xs;
+    margin: 0 (-$space-xs);
   }
   &:after {
     border-width: 7px;
-    margin: 0 -$space-xs;
+    margin: 0 (-$space-xs);
   }
   &.arrowTop {
     &:before {
@@ -115,7 +117,7 @@
     .flatpickr-next-month {
       text-decoration: none;
       cursor: pointer;
-      margin-top: -$space-xs;
+      margin-top: (-$space-xs);
       width: rem(30px);
       height: rem(30px);
       line-height: rem(38px);
@@ -124,11 +126,11 @@
       }
       &.flatpickr-prev-month {
         float: left;
-        margin-left: -$space-xs;
+        margin-left: (-$space-xs);
       }
       &.flatpickr-next-month {
         float: right;
-        margin-right: -$space-xs;
+        margin-right: (-$space-xs);
       }
       svg {
         width: rem(18px);
@@ -146,7 +148,7 @@
       color: inherit;
       line-height: inherit;
       font-weight: 300;
-      margin-top: -$space-xxs;
+      margin-top: (-$space-xxs);
       display: inline-block;
       text-align: center;
       span.cur-month {
@@ -359,7 +361,7 @@
     line-height: $space-xl;
     width: $space-xl;
     padding: rem(0 2px);
-    margin-bottom: $space-xxs / 2;
+    margin-bottom: math.div($space-xxs, 2);
     background: $silver;
     text-align: center;
     display: block;

@@ -13,22 +13,17 @@ exports.base = function () {
     compact: false,
     code: true,
     presets: [
-      ['es2015', {
-        modules: false
-      }]
+      '@babel/preset-react'
     ],
     plugins: [
-      ['transform-class-properties', {spec: true}],
-      ['transform-react-jsx', {
-        pragma: 'React.createElement'
-      }]
+      ['@babel/plugin-transform-class-properties', {spec: true}]
     ]
   };
 };
 
 exports.commonjs = function () {
   let options = exports.base();
-  options.plugins.push('transform-es2015-modules-commonjs');
+  options.plugins.push('@babel/plugin-transform-modules-commonjs');
   return options;
 };
 
@@ -40,13 +35,13 @@ exports.docs = function () {
 
 exports.amd = function () {
   let options = exports.base();
-  options.plugins.push('transform-es2015-modules-amd');
+  options.plugins.push('@babel/plugin-transform-modules-amd');
   return options;
 };
 
 exports.system = function () {
   let options = exports.base();
-  options.plugins.push('transform-es2015-modules-systemjs');
+  options.plugins.push('@babel/plugin-transform-modules-systemjs');
   return options;
 };
 

@@ -35,7 +35,7 @@
 table td {
   .ws-inline-edit:not(.mod-narrow) {
     // Correct table td padding
-    margin: 0 -$space-m;
+    margin: 0 (-$space-m);
     input {
       padding: 0 $space-m;
       line-height: inherit;

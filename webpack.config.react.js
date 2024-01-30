@@ -28,11 +28,14 @@ module.exports = {
     },
     {
       test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-      loader: 'url-loader?limit=100000'
+      loader: 'url-loader',
+      options: {
+        limit: 100000
+      }
     }]
   },
   devServer: {
-    contentBase: path.join(__dirname, 'demo'),
+    static: path.join(__dirname, 'demo'),
     compress: true,
     port: 8080
   }

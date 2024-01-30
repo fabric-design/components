@@ -49,7 +49,7 @@ export class WSInlineEdit extends Component {
     this.input.addEventListener('keyup', this.onKeyUp);
     this.input.addEventListener('keydown', this.onKeyDown);
     this.input.addEventListener('change', this.onChange);
-    this.resizeInput();
+    setTimeout(() => this.resizeInput(), 0);
   }
 
   /**
@@ -220,8 +220,14 @@ export class WSInlineEdit extends Component {
     const calculator = document.createElement('div');
     calculator.style.fontSize = style.fontSize || '16px';
     calculator.style.lineHeight = style.lineHeight || '16px';
-    calculator.style.margin = style.margin;
-    calculator.style.padding = style.padding;
+    calculator.style.marginTop = style.marginTop;
+    calculator.style.marginLeft = style.marginLeft;
+    calculator.style.marginRight = style.marginRight;
+    calculator.style.marginBottom = style.marginBottom;
+    calculator.style.paddingTop = style.paddingTop;
+    calculator.style.paddingLeft = style.paddingLeft;
+    calculator.style.paddingRight = style.paddingRight;
+    calculator.style.paddingBottom = style.paddingBottom;
     calculator.style.visibility = 'hidden';
     calculator.style.position = 'absolute';
     calculator.style.top = '-1000px';

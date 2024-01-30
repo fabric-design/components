@@ -40,7 +40,7 @@ describe('A WSInlineEdit.PriceStrategy', () => {
       validate(type, '123,456', false);
       validate(type, '123.456', true);
       validate(type, '12345.6', false);
-      validate(type, '12345,6', false);
+      validate(type, '12345,6', true);
     });
 
     it('english only', () => {
@@ -53,7 +53,7 @@ describe('A WSInlineEdit.PriceStrategy', () => {
       validate(type, '123456789', true);
       validate(type, '123,456', true);
       validate(type, '123.456', false);
-      validate(type, '12345.6', false);
+      validate(type, '12345.6', true);
       validate(type, '12345,6', false);
     });
   });

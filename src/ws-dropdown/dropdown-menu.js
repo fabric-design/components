@@ -248,7 +248,7 @@ export class DropdownMenu extends Component {
       return [];
     }
 
-    const filterValue = this.state.filter.replace(/[.*?^${}()|[]]/g,'$&');
+    const filterValue = this.state.filter.replace(/[.*?^${}()|[]]/g,'\\$&');
     const regex = new RegExp(filterValue, 'i');
 
     return this.state.items.filter(item => {

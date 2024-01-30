@@ -227,7 +227,9 @@ var DropdownMenu = exports.DropdownMenu = function (_Component) {
         return [];
       }
 
-      var regex = new RegExp(this.state.filter, 'i');
+      var filterValue = this.state.filter.replace(/[.*?^${}()|[]]/g, '\\$&');
+      var regex = new RegExp(filterValue, 'i');
+
       return this.state.items.filter(function (item) {
         if (_this2.state.filtered && _this2.state.filter && !regex.test(item.label)) {
           return false;
